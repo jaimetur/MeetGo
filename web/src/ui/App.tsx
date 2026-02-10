@@ -379,15 +379,15 @@ export default function App() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [composer, setComposer] = useState("");
 
-  const INTERESTS = useMemo(() => ([
-    { slug: "coffee", name: "â˜• Quedar para un cafÃ©" },
-    { slug: "walk", name: "ðŸš¶ Paseo / caminar" },
-    { slug: "gym", name: "ðŸ‹ï¸ Gym" },
-    { slug: "beer", name: "ðŸº Cerveza" },
-    { slug: "cinema", name: "ðŸŽ¬ Cine" },
-  ]), []);
+  const INTEREST_EMOJIS: Record<string, string> = {
+    cafe: "☕",
+    senderismo: "🥾",
+    cine: "🎬",
+    deporte: "💪",
+    networking: "🤝",
+  };
 
-  const [joinInterest, setJoinInterest] = useState<string>("coffee");
+  const [joinInterest, setJoinInterest] = useState<string>("");
   const wsRef = useRef<WebSocket | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
 
@@ -396,8 +396,14 @@ export default function App() {
 
   const [feed, setFeed] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState("");
+  const [interests, setInterests] = useState<Interest[]>([]);
 
   const logoSrc = LogoPng || LogoSvg;
+
+  function formatInterestLabel(interest: { slug: string; name: string }) {
+    const emoji = INTEREST_EMOJIS[interest.slug];
+    return emoji ? `${emoji} ${interest.name}` : interest.name;
+  }
 
   async function refreshMe() {
     const u = await api.me();
@@ -422,6 +428,23 @@ export default function App() {
     return () => { window.removeEventListener("click", onDocClick); window.removeEventListener("keydown", onEsc); };
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const list = await api.listInterests();
+        setInterests(list || []);
+      } catch (e) {
+        frontWarn("[INTERESTS] list failed", e);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!joinInterest && interests.length) {
+      setJoinInterest(interests[0].slug);
+    }
+  }, [interests, joinInterest]);
+
   async function doLogin() {
     const tok = await api.login({ email: auth.email, password: auth.pass });
     setToken(tok.access_token);
@@ -430,24 +453,24 @@ export default function App() {
   }
 
   function validateRegister(): string | null {
-    if (!registerForm.email?.trim()) return "Falta el email.";
-    if (!registerForm.password || registerForm.password.length < 6) return "La contraseÃ±a debe tener al menos 6 caracteres.";
-    if (!registerForm.display_name?.trim()) return "Falta el nombre.";
+    if (!registerForm.email?.trim()) return t("register_err_email_missing");
+    if (!registerForm.password || registerForm.password.length < 6) return t("register_err_password_short");
+    if (!registerForm.display_name?.trim()) return t("register_err_name_missing");
 
     const age = calcAge(registerForm.dob);
-    if (age === null) return "Fecha de nacimiento invÃ¡lida.";
-    if (age < 18) return "Debes ser mayor de edad (18+).";
+    if (age === null) return t("register_err_dob_invalid");
+    if (age < 18) return t("register_err_underage");
 
-    if (!registerForm.country) return "Selecciona un paÃ­s.";
+    if (!registerForm.country) return t("register_err_country_missing");
     if (provinceOptions.length) {
-      if (!registerForm.province) return "Selecciona una provincia.";
+      if (!registerForm.province) return t("register_err_province_missing");
     } else {
-      return "AÃºn no hay provincias configuradas para ese paÃ­s.";
+      return t("register_err_province_unavailable");
     }
 
     const digits = normalizePhoneDigits(registerForm.phone_number);
-    if (!registerForm.phone_cc) return "Selecciona un prefijo internacional.";
-    if (digits.length < 6) return "TelÃ©fono invÃ¡lido (muy corto).";
+    if (!registerForm.phone_cc) return t("register_err_phone_cc_missing");
+    if (digits.length < 6) return t("register_err_phone_short");
 
     return null;
   }
@@ -485,13 +508,17 @@ export default function App() {
   }
 
   async function joinRoom() {
+    if (!joinInterest) {
+      alert(t("loading_interests"));
+      return;
+    }
     try {
       frontLog("[ROOMS] joinRoom()", { interest_slug: joinInterest });
       const room = await api.joinRoom(joinInterest);
       await loadRooms();
       await openRoom(room);
     } catch (e: any) {
-      const msg = e?.message || String(e) || "No se pudo entrar en la sala.";
+      const msg = e?.message || String(e) || t("join_room_error");
       frontError("[joinRoom] error", e);
       alert(msg);
     }
@@ -509,7 +536,7 @@ export default function App() {
   function connectWS(roomId: number) {
     const token = getToken();
     if (!token) {
-      frontError("No hay sesiÃ³n (token). Haz login de nuevo.");
+      frontError(t("no_session"));
       return;
     }
     if (wsRef.current) {
@@ -536,7 +563,7 @@ export default function App() {
 
     ws.onerror = (e) => {
       frontError("[WS] error âŒ", e);
-      frontError("Error de conexiÃ³n del chat (WebSocket). Revisa puerto/URL del backend.");
+      frontError(t("chat_ws_error"));
     };
 
     ws.onmessage = (e) => {
@@ -591,15 +618,15 @@ export default function App() {
   async function followUser(userId: number) {
     await api.follow(userId);
     setMenu(null);
-    alert("Siguiendo âœ…");
-    frontLog("Siguiendo âœ…");
+    alert(t("following_ok"));
+    frontLog(t("following_ok"));
   }
 
   async function friendUser(userId: number) {
     await api.friendRequest(userId);
     setMenu(null);
-    alert("Solicitud de amistad enviada âœ…");
-    frontLog("Solicitud de amistad enviada âœ…");
+    alert(t("friend_req_ok"));
+    frontLog(t("friend_req_ok"));
   }
 
   async function loadFeed() {
@@ -619,8 +646,8 @@ export default function App() {
   async function updateMyProfile() {
     if (!me) return;
     await api.updateProfile({ display_name: me.display_name, avatar_url: me.avatar_url || null, bio: me.bio || null, accept_dm: me.accept_dm });
-    alert("Perfil actualizado âœ…");
-    frontLog("Perfil actualizado âœ…");
+    alert(t("profile_updated"));
+    frontLog(t("profile_updated"));
   }
 
   const isLogged = !!me;
@@ -638,16 +665,6 @@ export default function App() {
           </div>
 
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            <select
-              className="input"
-              style={{ width: 120, padding: "6px 10px" }}
-              value={lang}
-              onChange={(e) => changeLang(e.target.value as Lang)}
-            >
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-            </select>
-
             {isLogged ? (
               <button className="tab" onClick={() => { clearToken(); setMe(null); }}>{t("logout")}</button>
             ) : null}
@@ -695,7 +712,7 @@ export default function App() {
                 {registerForm.dob ? (() => {
                   const a = calcAge(registerForm.dob);
                   if (a === null) return t("dob_invalid");
-                  return a < 18 ? `Edad: ${a} (${t("dob_underage")})` : `Edad: ${a}`;
+                  return a < 18 ? t("age_display_underage", { age: a, note: t("dob_underage") }) : t("age_display", { age: a });
                 })() : t("dob_pick")}
               </div>
 
@@ -750,6 +767,19 @@ export default function App() {
               </label>
 
               <button className="btn" onClick={doRegister}>{t("create_account")}</button>
+
+              <div className="item" style={{ marginTop: 12 }}>
+                <div style={{ fontWeight: 900 }}>{t("settings_title")}</div>
+                <label className="small" style={{ display: "block", marginTop: 8 }}>{t("language_label")}</label>
+                <select
+                  className="input"
+                  value={lang}
+                  onChange={(e) => changeLang(e.target.value as Lang)}
+                >
+                  <option value="es">ES</option>
+                  <option value="en">EN</option>
+                </select>
+              </div>
             </>
           ) : (
             <>
@@ -770,13 +800,17 @@ export default function App() {
                   <div className="item" style={{ marginTop: 10 }}>
                     <div style={{ fontWeight: 900 }}>{t("join_room_title")}</div>
                     <div className="small">{t("join_room_desc")}</div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 140px", gap: 8, marginTop: 8 }}>
-                      <select className="input" value={joinInterest} onChange={e => setJoinInterest(e.target.value)}>
-                        {INTERESTS.map(i => (
-                          <option key={i.slug} value={i.slug}>{i.name}</option>
-                        ))}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8, marginTop: 8 }}>
+                      <select className="input" style={{ width: "100%" }} value={joinInterest} onChange={e => setJoinInterest(e.target.value)}>
+                        {interests.length ? (
+                          interests.map(i => (
+                            <option key={i.slug} value={i.slug}>{formatInterestLabel(i)}</option>
+                          ))
+                        ) : (
+                          <option value="">{t("loading_interests")}</option>
+                        )}
                       </select>
-                      <button className="btn primary" onClick={joinRoom}>{t("join_btn")}</button>
+                      <button className="btn primary" style={{ width: "100%" }} onClick={joinRoom}>{t("join_btn")}</button>
                     </div>
                   </div>
 
@@ -790,7 +824,7 @@ export default function App() {
 
                     {rooms.map(r => (
                       <div key={r.id} className={"item " + (selectedRoom?.id === r.id ? "active" : "")} onClick={() => openRoom(r)}>
-                        <div style={{ fontWeight: 800 }}>{r.interest.name}</div>
+                        <div style={{ fontWeight: 800 }}>{formatInterestLabel(r.interest)}</div>
                         <div className="small">{r.province} Â· {r.age_range} Â· #{r.interest.slug}</div>
                       </div>
                     ))}
@@ -811,12 +845,26 @@ export default function App() {
                   <input className="input" value={me.display_name} onChange={e => setMe({ ...me, display_name: e.target.value })} />
                   <input className="input" placeholder={t("avatar_url")} value={me.avatar_url || ""} onChange={e => setMe({ ...me, avatar_url: e.target.value })} />
                   <textarea className="input" rows={4} placeholder={t("bio")} value={me.bio || ""} onChange={e => setMe({ ...me, bio: e.target.value })} />
-                  <label className="small">
-                    <input type="checkbox" checked={me.accept_dm} onChange={e => setMe({ ...me, accept_dm: e.target.checked })} /> {t("accept_dm")}
-                  </label>
-                  <button className="btn primary" onClick={updateMyProfile}>Guardar perfil</button>
+                  <button className="btn primary" onClick={updateMyProfile}>{t("save_profile")}</button>
                 </>
               ) : null}
+
+              <div className="item" style={{ marginTop: 12 }}>
+                <div style={{ fontWeight: 900 }}>{t("settings_title")}</div>
+                <label className="small" style={{ display: "block", marginTop: 8 }}>{t("language_label")}</label>
+                <select
+                  className="input"
+                  value={lang}
+                  onChange={(e) => changeLang(e.target.value as Lang)}
+                >
+                  <option value="es">ES</option>
+                  <option value="en">EN</option>
+                </select>
+                <label className="small" style={{ display: "block", marginTop: 8 }}>
+                  <input type="checkbox" checked={me.accept_dm} onChange={e => setMe({ ...me, accept_dm: e.target.checked })} /> {t("accept_dm")}
+                </label>
+                <button className="btn" onClick={updateMyProfile}>{t("save_settings")}</button>
+              </div>
             </>
           )}
         </div>
@@ -826,13 +874,13 @@ export default function App() {
         <div className="header">
           <div>
             <div style={{ fontWeight: 900 }}>
-              {tab === "rooms" ? (selectedRoom ? selectedRoom.interest.name : t("rooms")) : (tab === "feed" ? t("feed") : t("profile"))}
+              {tab === "rooms" ? (selectedRoom ? formatInterestLabel(selectedRoom.interest) : t("rooms")) : (tab === "feed" ? t("feed") : t("profile"))}
             </div>
             <div className="small">
               {tab === "rooms" && selectedRoom ? `${selectedRoom.province} Â· ${selectedRoom.age_range}` : ""}
             </div>
           </div>
-          <div className="small">MeetGo â€” menos swipe, mÃ¡s vida</div>
+          <div className="small">{t("tagline_long")}</div>
         </div>
 
         <div className="mainBody">
@@ -862,7 +910,7 @@ export default function App() {
                           <div className="time">{fmtTime(m.created_at)}</div>
                           {m.is_deleted ? <div className="time">({m.moderation_reason})</div> : null}
                         </div>
-                        <div className="text">{m.is_deleted ? "Mensaje eliminado por moderaciÃ³n" : m.content}</div>
+                        <div className="text">{m.is_deleted ? t("msg_deleted_by_mod") : m.content}</div>
                       </div>
                     </div>
                   ))}
@@ -906,7 +954,7 @@ export default function App() {
                   <div>
                     <div style={{ fontWeight: 900, fontSize: 18 }}>{me?.display_name}</div>
                     <div className="small">{me?.province} Â· {me?.age_range}</div>
-                    <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{me?.bio || "Sin bio todavÃ­a."}</div>
+                    <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{me?.bio || t("no_bio_yet")}</div>
                   </div>
                 </div>
               </div>
@@ -917,10 +965,10 @@ export default function App() {
 
       {menu ? (
         <div className="menu" style={{ left: menu.x, top: menu.y }} onClick={(e) => e.stopPropagation()}>
-          <button onClick={() => viewProfile(menu.userId)}>Ver perfil</button>
+          <button onClick={() => viewProfile(menu.userId)}>{t("menu_view_profile")}</button>
           <div className="sep" />
-          <button onClick={() => friendUser(menu.userId)}>Enviar solicitud de amistad</button>
-          <button onClick={() => followUser(menu.userId)}>Seguir feed</button>
+          <button onClick={() => friendUser(menu.userId)}>{t("menu_friend_request")}</button>
+          <button onClick={() => followUser(menu.userId)}>{t("menu_follow_feed")}</button>
         </div>
       ) : null}
 
@@ -928,18 +976,18 @@ export default function App() {
         <div className="modalBackdrop" onClick={() => setProfileModal(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modalHeader">
-              <div className="modalTitle">Perfil</div>
-              <button className="tab" onClick={() => setProfileModal(null)}>Cerrar</button>
+              <div className="modalTitle">{t("modal_profile_title")}</div>
+              <button className="tab" onClick={() => setProfileModal(null)}>{t("modal_close")}</button>
             </div>
             <div className="grid2">
               <div className="bigAvatar"><img src={avatarSrc(profileModal.user)} /></div>
               <div>
                 <div style={{ fontWeight: 900, fontSize: 18 }}>{profileModal.user.display_name}</div>
                 <div className="small">{profileModal.user.province} Â· {profileModal.user.age_range}</div>
-                <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{profileModal.user.bio || "Sin bio todavÃ­a."}</div>
+                <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{profileModal.user.bio || t("no_bio_yet")}</div>
                 <div className="actions">
-                  <button className="btn primary" onClick={() => friendUser(profileModal.user.id)}>Amistad</button>
-                  <button className="btn" onClick={() => followUser(profileModal.user.id)}>Seguir</button>
+                  <button className="btn primary" onClick={() => friendUser(profileModal.user.id)}>{t("modal_friend")}</button>
+                  <button className="btn" onClick={() => followUser(profileModal.user.id)}>{t("modal_follow")}</button>
                 </div>
               </div>
             </div>
@@ -964,41 +1012,41 @@ export default function App() {
             background: "rgba(10,10,10,0.92)",
             border: "1px solid rgba(255,255,255,0.15)",
             borderRadius: 12,
-            overflow: "hidden",
+            overflow: "auto",
             zIndex: 9999,
             boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
             display: "grid",
             gridTemplateRows: "40px 1fr 40px",
             resize: "both",
           }}
-        >
-          <div
-            style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 12px", borderBottom: "1px solid rgba(255,255,255,0.12)", cursor: "grab" }}
-            onMouseDown={onDebugDragStart}
           >
-            <div style={{ color: "white", fontWeight: 800 }}>Depurador</div>
+            <div
+              style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 12px", borderBottom: "1px solid rgba(255,255,255,0.12)", cursor: "grab" }}
+              onMouseDown={onDebugDragStart}
+            >
+            <div style={{ color: "white", fontWeight: 800 }}>{t("debug_title")}</div>
             <div style={{ display: "flex", gap: 8 }}>
               <button
                 className={"tab " + (debugTab === "frontend" ? "active" : "")}
                 style={{ padding: "6px 10px", fontSize: 12 }}
                 onClick={() => setDebugTab("frontend")}
               >
-                FrontEnd ({frontLogs.length})
+                {t("debug_frontend_tab", { count: frontLogs.length })}
               </button>
               <button
                 className={"tab " + (debugTab === "services" ? "active" : "")}
                 style={{ padding: "6px 10px", fontSize: 12 }}
                 onClick={() => setDebugTab("services")}
               >
-                Servicios ({svcLogs.length})
+                {t("debug_services_tab", { count: svcLogs.length })}
               </button>
             </div>
             {debugTab === "services" ? (
               <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>
-                {svcLogStatus === "connected" ? "streaming" : (svcLogStatus === "connecting" ? "connecting..." : "error")}
+                {svcLogStatus === "connected" ? t("debug_services_connected") : (svcLogStatus === "connecting" ? t("debug_services_connecting") : t("debug_services_error"))}
               </div>
             ) : (
-              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>ultimas {frontLogs.length} lineas</div>
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>{t("debug_subtitle", { count: frontLogs.length })}</div>
             )}
           </div>
 
@@ -1042,7 +1090,7 @@ export default function App() {
                 else setSvcLogs([]);
               }}
             >
-              Clear
+              {t("debug_clear")}
             </button>
             <button
               className="btn"
@@ -1053,13 +1101,13 @@ export default function App() {
                     ? frontLogs.map(x => `${x.ts} [${x.level.toUpperCase()}] ${x.msg} ${x.data !== undefined ? safeStr(x.data) : ""}`).join("\n")
                     : svcLogs.map(x => `${x.ts} [${x.service}] ${x.line}`).join("\n");
                   navigator.clipboard.writeText(txt);
-                  alert("Copiado OK");
+                  alert(t("debug_copy_ok"));
                 } catch {
-                  alert("No se pudo copiar");
+                  alert(t("debug_copy_fail"));
                 }
               }}
             >
-              Copy
+              {t("debug_copy")}
             </button>
           </div>
         </div>
