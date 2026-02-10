@@ -14,4 +14,5 @@ dependencies = [
   "passlib[bcrypt]==1.7.4",
   "bcrypt==4.1.3",
   "redis==5.2.0",
+  "docker==7.1.0",
 ]

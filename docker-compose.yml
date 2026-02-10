@@ -1,3 +1,4 @@
+name: meetgo
 services:
   db:
     image: postgres:16
@@ -21,6 +22,8 @@ services:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/meetgo
       REDIS_URL: redis://redis:6379/0
       JWT_SECRET: dev-secret-change-me
+      DEBUG_COMPOSE_LOGS: "1"
+      COMPOSE_PROJECT_NAME: meetgo
     ports:
       - "18000:8000"
     depends_on:
@@ -28,7 +31,8 @@ services:
       - redis
     volumes:
       - ./backend/app:/app/app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0 }'"
 
   web:
     build: ./web
@@ -42,7 +46,7 @@ services:
     volumes:
       - ./web:/app
       - /app/node_modules
-    command: npm run dev -- --host 0.0.0.0 --port 5173
+    command: sh -c "npm run dev -- --host 0.0.0.0 --port 5173 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0 }'"
   
 
 volumes:

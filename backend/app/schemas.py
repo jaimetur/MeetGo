@@ -54,6 +54,9 @@ class InterestOut(BaseModel):
 class SetInterestsIn(BaseModel):
     interest_slugs: list[str] = Field(default_factory=list)
 
+class JoinRoomIn(BaseModel):
+    interest_slug: str
+
 class RoomOut(BaseModel):
     id: int
     province: str

@@ -45,6 +45,9 @@ docker compose down
 docker compose down -v
 ```
 
+## Configuration
+- `VITE_API_BASE` in `docker-compose.yml` points to the backend URL used by the web app. Update it if your host IP changes.
+
 ## Quick test flow
 1) Sign up in the web app (left column).
    - If you do not provide an Avatar URL, a DiceBear avatar is used.

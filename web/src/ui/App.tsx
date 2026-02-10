@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   api,
   clearToken,
@@ -51,6 +51,8 @@ type Post = {
   created_at: string;
 };
 
+type Interest = { id: number; slug: string; name: string };
+
 function avatarSrc(u?: { avatar_url?: string | null; display_name?: string }) {
   if (u?.avatar_url) return u.avatar_url;
   const seed = encodeURIComponent((u?.display_name || "user").slice(0, 2));
@@ -91,6 +93,12 @@ function safeStr(x: any) {
   try { return JSON.stringify(x); } catch { return String(x); }
 }
 
+type ServiceLogEntry = {
+  ts: string;
+  service: string;
+  line: string;
+};
+
 export default function App() {
   const [tab, setTab] = useState<"rooms" | "feed" | "profile">("rooms");
   const [lang, setLangState] = useState<Lang>(getLang());
@@ -102,7 +110,15 @@ export default function App() {
 
   // ---- Debug panel state ----
   const [frontLogs, setFrontLogs] = useState<FrontLogEntry[]>([]);
+  const [svcLogs, setSvcLogs] = useState<ServiceLogEntry[]>([]);
+  const [svcLogStatus, setSvcLogStatus] = useState<"connecting" | "connected" | "error">("connecting");
+  const [debugTab, setDebugTab] = useState<"frontend" | "services">("frontend");
+  const [debugPos, setDebugPos] = useState<{ x: number; y: number }>({ x: 12, y: 12 });
   const frontLogsRef = useRef<HTMLDivElement | null>(null);
+  const svcLogsRef = useRef<HTMLDivElement | null>(null);
+  const debugPanelRef = useRef<HTMLDivElement | null>(null);
+  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
+  const dragSelectRef = useRef<string>("");
 
   useEffect(() => {
     if (!DEBUG_FRONTEND_LOG) return;
@@ -147,49 +163,180 @@ export default function App() {
     }, 0);
   }, [frontLogs.length]);
 
+  useEffect(() => {
+    if (!DEBUG_FRONTEND_LOG) return;
+
+    const url = `${api.API_BASE}/debug/compose-logs`;
+    const es = new EventSource(url);
+
+    setSvcLogStatus("connecting");
+    es.onopen = () => setSvcLogStatus("connected");
+    es.onerror = () => setSvcLogStatus("error");
+    es.onmessage = (ev) => {
+      try {
+        const data = JSON.parse(ev.data);
+        if (!data?.line || !data?.service) return;
+        setSvcLogs((prev) => {
+          const next = [...prev, { ts: data.ts || new Date().toISOString(), service: data.service, line: data.line }];
+          if (next.length > 800) next.splice(0, next.length - 800);
+          return next;
+        });
+      } catch {
+        // ignore parse errors
+      }
+    };
+
+    return () => es.close();
+  }, []);
+
+  useEffect(() => {
+    if (!DEBUG_FRONTEND_LOG) return;
+    setTimeout(() => {
+      svcLogsRef.current?.scrollTo({ top: svcLogsRef.current.scrollHeight });
+    }, 0);
+  }, [svcLogs.length]);
+
+  useEffect(() => {
+    if (!DEBUG_FRONTEND_LOG) return;
+
+    const onMove = (e: MouseEvent) => {
+      if (!dragRef.current) return;
+      const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+      const panel = debugPanelRef.current;
+      const w = panel?.offsetWidth || 0;
+      const h = panel?.offsetHeight || 0;
+      const maxX = Math.max(0, window.innerWidth - w);
+      const maxY = Math.max(0, window.innerHeight - h);
+      const nextX = Math.min(Math.max(dragRef.current.origX + dx, 0), maxX);
+      const nextY = Math.min(Math.max(dragRef.current.origY + dy, 0), maxY);
+      setDebugPos({ x: nextX, y: nextY });
+    };
+
+    const onUp = () => {
+      if (!dragRef.current) return;
+      dragRef.current = null;
+      document.body.style.userSelect = dragSelectRef.current;
+    };
+
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+  }, []);
+
+  function onDebugDragStart(e: React.MouseEvent) {
+    const target = e.target as HTMLElement | null;
+    if (target?.closest("button")) return;
+    dragSelectRef.current = document.body.style.userSelect;
+    document.body.style.userSelect = "none";
+    dragRef.current = { startX: e.clientX, startY: e.clientY, origX: debugPos.x, origY: debugPos.y };
+  }
+
   const [me, setMe] = useState<User | null>(null);
   const [auth, setAuth] = useState<{ email: string; pass: string }>({ email: "", pass: "" });
 
   // --------- Country / Province / Phone data ---------
   const COUNTRIES = useMemo(() => ([
-    { code: "ES", name: "España" },
-    { code: "PT", name: "Portugal" },
-    { code: "FR", name: "Francia" },
-    { code: "IT", name: "Italia" },
-    { code: "DE", name: "Alemania" },
-    { code: "GB", name: "Reino Unido" },
-    { code: "US", name: "Estados Unidos" },
-    { code: "MX", name: "México" },
-    { code: "AR", name: "Argentina" },
-    { code: "CO", name: "Colombia" },
+    { code: "ES", labelKey: "country_es_spain" },
+    { code: "PT", labelKey: "country_pt_portugal" },
+    { code: "FR", labelKey: "country_fr_france" },
+    { code: "IT", labelKey: "country_it_italy" },
+    { code: "DE", labelKey: "country_de_germany" },
+    { code: "GB", labelKey: "country_gb_uk" },
+    { code: "US", labelKey: "country_us_usa" },
+    { code: "MX", labelKey: "country_mx_mexico" },
+    { code: "AR", labelKey: "country_ar_argentina" },
+    { code: "CO", labelKey: "country_co_colombia" },
   ]), []);
 
   const CALLING_CODES = useMemo(() => ([
-    { cc: "+34", country: "España" },
-    { cc: "+351", country: "Portugal" },
-    { cc: "+33", country: "Francia" },
-    { cc: "+39", country: "Italia" },
-    { cc: "+49", country: "Alemania" },
-    { cc: "+44", country: "Reino Unido" },
-    { cc: "+1", country: "EE. UU. / Canadá" },
-    { cc: "+52", country: "México" },
-    { cc: "+54", country: "Argentina" },
-    { cc: "+57", country: "Colombia" },
+    { cc: "+34", labelKey: "calling_es_spain" },
+    { cc: "+351", labelKey: "calling_pt_portugal" },
+    { cc: "+33", labelKey: "calling_fr_france" },
+    { cc: "+39", labelKey: "calling_it_italy" },
+    { cc: "+49", labelKey: "calling_de_germany" },
+    { cc: "+44", labelKey: "calling_gb_uk" },
+    { cc: "+1", labelKey: "calling_us_ca" },
+    { cc: "+52", labelKey: "calling_mx_mexico" },
+    { cc: "+54", labelKey: "calling_ar_argentina" },
+    { cc: "+57", labelKey: "calling_co_colombia" },
   ]), []);
 
-  const PROVINCES_BY_COUNTRY: Record<string, string[]> = useMemo(() => ({
+  const PROVINCES_BY_COUNTRY: Record<string, { value: string; labelKey: string }[]> = useMemo(() => ({
     ES: [
-      "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz", "Barcelona", "Burgos",
-      "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba", "Cuenca", "Girona", "Granada",
-      "Guadalajara", "Gipuzkoa", "Huelva", "Huesca", "Illes Balears", "Jaén", "A Coruña", "La Rioja", "Las Palmas",
-      "León", "Lleida", "Lugo", "Madrid", "Málaga", "Murcia", "Navarra", "Ourense", "Palencia", "Pontevedra",
-      "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo",
-      "Valencia", "Valladolid", "Bizkaia", "Zamora", "Zaragoza",
+      { value: "Alava", labelKey: "province_es_alava" },
+      { value: "Albacete", labelKey: "province_es_albacete" },
+      { value: "Alicante", labelKey: "province_es_alicante" },
+      { value: "Almeria", labelKey: "province_es_almeria" },
+      { value: "Asturias", labelKey: "province_es_asturias" },
+      { value: "Avila", labelKey: "province_es_avila" },
+      { value: "Badajoz", labelKey: "province_es_badajoz" },
+      { value: "Barcelona", labelKey: "province_es_barcelona" },
+      { value: "Burgos", labelKey: "province_es_burgos" },
+      { value: "Caceres", labelKey: "province_es_caceres" },
+      { value: "Cadiz", labelKey: "province_es_cadiz" },
+      { value: "Cantabria", labelKey: "province_es_cantabria" },
+      { value: "Castellon", labelKey: "province_es_castellon" },
+      { value: "Ciudad Real", labelKey: "province_es_ciudad_real" },
+      { value: "Cordoba", labelKey: "province_es_cordoba" },
+      { value: "Cuenca", labelKey: "province_es_cuenca" },
+      { value: "Girona", labelKey: "province_es_girona" },
+      { value: "Granada", labelKey: "province_es_granada" },
+      { value: "Guadalajara", labelKey: "province_es_guadalajara" },
+      { value: "Gipuzkoa", labelKey: "province_es_gipuzkoa" },
+      { value: "Huelva", labelKey: "province_es_huelva" },
+      { value: "Huesca", labelKey: "province_es_huesca" },
+      { value: "Illes Balears", labelKey: "province_es_illes_balears" },
+      { value: "Jaen", labelKey: "province_es_jaen" },
+      { value: "A Coruna", labelKey: "province_es_a_coruna" },
+      { value: "La Rioja", labelKey: "province_es_la_rioja" },
+      { value: "Las Palmas", labelKey: "province_es_las_palmas" },
+      { value: "Leon", labelKey: "province_es_leon" },
+      { value: "Lleida", labelKey: "province_es_lleida" },
+      { value: "Lugo", labelKey: "province_es_lugo" },
+      { value: "Madrid", labelKey: "province_es_madrid" },
+      { value: "Malaga", labelKey: "province_es_malaga" },
+      { value: "Murcia", labelKey: "province_es_murcia" },
+      { value: "Navarra", labelKey: "province_es_navarra" },
+      { value: "Ourense", labelKey: "province_es_ourense" },
+      { value: "Palencia", labelKey: "province_es_palencia" },
+      { value: "Pontevedra", labelKey: "province_es_pontevedra" },
+      { value: "Salamanca", labelKey: "province_es_salamanca" },
+      { value: "Santa Cruz de Tenerife", labelKey: "province_es_santa_cruz_de_tenerife" },
+      { value: "Segovia", labelKey: "province_es_segovia" },
+      { value: "Sevilla", labelKey: "province_es_sevilla" },
+      { value: "Soria", labelKey: "province_es_soria" },
+      { value: "Tarragona", labelKey: "province_es_tarragona" },
+      { value: "Teruel", labelKey: "province_es_teruel" },
+      { value: "Toledo", labelKey: "province_es_toledo" },
+      { value: "Valencia", labelKey: "province_es_valencia" },
+      { value: "Valladolid", labelKey: "province_es_valladolid" },
+      { value: "Bizkaia", labelKey: "province_es_bizkaia" },
+      { value: "Zamora", labelKey: "province_es_zamora" },
+      { value: "Zaragoza", labelKey: "province_es_zaragoza" },
     ],
-    // Ejemplos mínimos (amplíalos cuando quieras)
-    PT: ["Lisboa", "Porto", "Braga", "Setúbal", "Aveiro"],
-    FR: ["Île-de-France", "Occitanie", "Nouvelle-Aquitaine", "Auvergne-Rhône-Alpes"],
-    IT: ["Lazio", "Lombardia", "Campania", "Sicilia"],
+    PT: [
+      { value: "Lisboa", labelKey: "province_pt_lisboa" },
+      { value: "Porto", labelKey: "province_pt_porto" },
+      { value: "Braga", labelKey: "province_pt_braga" },
+      { value: "Setubal", labelKey: "province_pt_setubal" },
+      { value: "Aveiro", labelKey: "province_pt_aveiro" },
+    ],
+    FR: [
+      { value: "Ile-de-France", labelKey: "province_fr_ile_de_france" },
+      { value: "Occitanie", labelKey: "province_fr_occitanie" },
+      { value: "Nouvelle-Aquitaine", labelKey: "province_fr_nouvelle_aquitaine" },
+      { value: "Auvergne-Rhone-Alpes", labelKey: "province_fr_auvergne_rhone_alpes" },
+    ],
+    IT: [
+      { value: "Lazio", labelKey: "province_it_lazio" },
+      { value: "Lombardia", labelKey: "province_it_lombardia" },
+      { value: "Campania", labelKey: "province_it_campania" },
+      { value: "Sicilia", labelKey: "province_it_sicilia" },
+    ],
   }), []);
 
   const [registerErr, setRegisterErr] = useState<string | null>(null);
@@ -221,8 +368,8 @@ export default function App() {
       if (registerForm.province) setRegisterForm((prev: any) => ({ ...prev, province: "" }));
       return;
     }
-    if (!opts.includes(registerForm.province)) {
-      setRegisterForm((prev: any) => ({ ...prev, province: opts[0] }));
+    if (!opts.some((p) => p.value === registerForm.province)) {
+      setRegisterForm((prev: any) => ({ ...prev, province: opts[0].value }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [registerForm.country]);
@@ -233,11 +380,11 @@ export default function App() {
   const [composer, setComposer] = useState("");
 
   const INTERESTS = useMemo(() => ([
-    { slug: "coffee", name: "☕ Quedar para un café" },
-    { slug: "walk", name: "🚶 Paseo / caminar" },
-    { slug: "gym", name: "🏋️ Gym" },
-    { slug: "beer", name: "🍺 Cerveza" },
-    { slug: "cinema", name: "🎬 Cine" },
+    { slug: "coffee", name: "â˜• Quedar para un cafÃ©" },
+    { slug: "walk", name: "ðŸš¶ Paseo / caminar" },
+    { slug: "gym", name: "ðŸ‹ï¸ Gym" },
+    { slug: "beer", name: "ðŸº Cerveza" },
+    { slug: "cinema", name: "ðŸŽ¬ Cine" },
   ]), []);
 
   const [joinInterest, setJoinInterest] = useState<string>("coffee");
@@ -284,23 +431,23 @@ export default function App() {
 
   function validateRegister(): string | null {
     if (!registerForm.email?.trim()) return "Falta el email.";
-    if (!registerForm.password || registerForm.password.length < 6) return "La contraseña debe tener al menos 6 caracteres.";
+    if (!registerForm.password || registerForm.password.length < 6) return "La contraseÃ±a debe tener al menos 6 caracteres.";
     if (!registerForm.display_name?.trim()) return "Falta el nombre.";
 
     const age = calcAge(registerForm.dob);
-    if (age === null) return "Fecha de nacimiento inválida.";
+    if (age === null) return "Fecha de nacimiento invÃ¡lida.";
     if (age < 18) return "Debes ser mayor de edad (18+).";
 
-    if (!registerForm.country) return "Selecciona un país.";
+    if (!registerForm.country) return "Selecciona un paÃ­s.";
     if (provinceOptions.length) {
       if (!registerForm.province) return "Selecciona una provincia.";
     } else {
-      return "Aún no hay provincias configuradas para ese país.";
+      return "AÃºn no hay provincias configuradas para ese paÃ­s.";
     }
 
     const digits = normalizePhoneDigits(registerForm.phone_number);
     if (!registerForm.phone_cc) return "Selecciona un prefijo internacional.";
-    if (digits.length < 6) return "Teléfono inválido (muy corto).";
+    if (digits.length < 6) return "TelÃ©fono invÃ¡lido (muy corto).";
 
     return null;
   }
@@ -362,7 +509,7 @@ export default function App() {
   function connectWS(roomId: number) {
     const token = getToken();
     if (!token) {
-      frontError("No hay sesión (token). Haz login de nuevo.");
+      frontError("No hay sesiÃ³n (token). Haz login de nuevo.");
       return;
     }
     if (wsRef.current) {
@@ -378,18 +525,18 @@ export default function App() {
     wsRef.current = ws;
 
     ws.onopen = () => {
-      frontLog("[WS] connected ✅");
+      frontLog("[WS] connected âœ…");
     };
 
     ws.onclose = (e) => {
-      frontWarn("[WS] closed ❌", { code: e.code, reason: e.reason, wasClean: e.wasClean });
+      frontWarn("[WS] closed âŒ", { code: e.code, reason: e.reason, wasClean: e.wasClean });
       alert(t("chat_disconnected"));
       frontError(t("chat_disconnected"));
     };
 
     ws.onerror = (e) => {
-      frontError("[WS] error ❌", e);
-      frontError("Error de conexión del chat (WebSocket). Revisa puerto/URL del backend.");
+      frontError("[WS] error âŒ", e);
+      frontError("Error de conexiÃ³n del chat (WebSocket). Revisa puerto/URL del backend.");
     };
 
     ws.onmessage = (e) => {
@@ -444,15 +591,15 @@ export default function App() {
   async function followUser(userId: number) {
     await api.follow(userId);
     setMenu(null);
-    alert("Siguiendo ✅");
-    frontLog("Siguiendo ✅");
+    alert("Siguiendo âœ…");
+    frontLog("Siguiendo âœ…");
   }
 
   async function friendUser(userId: number) {
     await api.friendRequest(userId);
     setMenu(null);
-    alert("Solicitud de amistad enviada ✅");
-    frontLog("Solicitud de amistad enviada ✅");
+    alert("Solicitud de amistad enviada âœ…");
+    frontLog("Solicitud de amistad enviada âœ…");
   }
 
   async function loadFeed() {
@@ -472,8 +619,8 @@ export default function App() {
   async function updateMyProfile() {
     if (!me) return;
     await api.updateProfile({ display_name: me.display_name, avatar_url: me.avatar_url || null, bio: me.bio || null, accept_dm: me.accept_dm });
-    alert("Perfil actualizado ✅");
-    frontLog("Perfil actualizado ✅");
+    alert("Perfil actualizado âœ…");
+    frontLog("Perfil actualizado âœ…");
   }
 
   const isLogged = !!me;
@@ -560,7 +707,7 @@ export default function App() {
                   onChange={e => setRegisterForm({ ...registerForm, phone_cc: e.target.value })}
                 >
                   {CALLING_CODES.map(x => (
-                    <option key={x.cc} value={x.cc}>{x.cc} · {x.country}</option>
+                    <option key={x.cc} value={x.cc}>{x.cc} Â· {t(x.labelKey)}</option>
                   ))}
                 </select>
                 <input
@@ -578,7 +725,7 @@ export default function App() {
                 onChange={e => setRegisterForm({ ...registerForm, country: e.target.value })}
               >
                 {COUNTRIES.map(c => (
-                  <option key={c.code} value={c.code}>{c.name}</option>
+                  <option key={c.code} value={c.code}>{t(c.labelKey)}</option>
                 ))}
               </select>
 
@@ -590,7 +737,7 @@ export default function App() {
                 onChange={e => setRegisterForm({ ...registerForm, province: e.target.value })}
               >
                 {provinceOptions.length ? (
-                  provinceOptions.map((p: string) => <option key={p} value={p}>{p}</option>)
+                  provinceOptions.map((p) => <option key={p.value} value={p.value}>{t(p.labelKey)}</option>)
                 ) : (
                   <option value="">{t("not_available")}</option>
                 )}
@@ -607,7 +754,7 @@ export default function App() {
           ) : (
             <>
               <div style={{ fontWeight: 800 }}>{t("hello", { name: me.display_name })}</div>
-              <div className="small">{me.province} · {me.age_range}</div>
+              <div className="small">{me.province} Â· {me.age_range}</div>
               <div className="small">{t("right_click_hint")}</div>
 
               <div className="nav">
@@ -644,7 +791,7 @@ export default function App() {
                     {rooms.map(r => (
                       <div key={r.id} className={"item " + (selectedRoom?.id === r.id ? "active" : "")} onClick={() => openRoom(r)}>
                         <div style={{ fontWeight: 800 }}>{r.interest.name}</div>
-                        <div className="small">{r.province} · {r.age_range} · #{r.interest.slug}</div>
+                        <div className="small">{r.province} Â· {r.age_range} Â· #{r.interest.slug}</div>
                       </div>
                     ))}
                   </div>
@@ -682,10 +829,10 @@ export default function App() {
               {tab === "rooms" ? (selectedRoom ? selectedRoom.interest.name : t("rooms")) : (tab === "feed" ? t("feed") : t("profile"))}
             </div>
             <div className="small">
-              {tab === "rooms" && selectedRoom ? `${selectedRoom.province} · ${selectedRoom.age_range}` : ""}
+              {tab === "rooms" && selectedRoom ? `${selectedRoom.province} Â· ${selectedRoom.age_range}` : ""}
             </div>
           </div>
-          <div className="small">MeetGo — meet people, go places</div>
+          <div className="small">MeetGo â€” menos swipe, mÃ¡s vida</div>
         </div>
 
         <div className="mainBody">
@@ -715,7 +862,7 @@ export default function App() {
                           <div className="time">{fmtTime(m.created_at)}</div>
                           {m.is_deleted ? <div className="time">({m.moderation_reason})</div> : null}
                         </div>
-                        <div className="text">{m.is_deleted ? "Mensaje eliminado por moderación" : m.content}</div>
+                        <div className="text">{m.is_deleted ? "Mensaje eliminado por moderaciÃ³n" : m.content}</div>
                       </div>
                     </div>
                   ))}
@@ -758,8 +905,8 @@ export default function App() {
                   </div>
                   <div>
                     <div style={{ fontWeight: 900, fontSize: 18 }}>{me?.display_name}</div>
-                    <div className="small">{me?.province} · {me?.age_range}</div>
-                    <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{me?.bio || "Sin bio todavía."}</div>
+                    <div className="small">{me?.province} Â· {me?.age_range}</div>
+                    <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{me?.bio || "Sin bio todavÃ­a."}</div>
                   </div>
                 </div>
               </div>
@@ -788,8 +935,8 @@ export default function App() {
               <div className="bigAvatar"><img src={avatarSrc(profileModal.user)} /></div>
               <div>
                 <div style={{ fontWeight: 900, fontSize: 18 }}>{profileModal.user.display_name}</div>
-                <div className="small">{profileModal.user.province} · {profileModal.user.age_range}</div>
-                <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{profileModal.user.bio || "Sin bio todavía."}</div>
+                <div className="small">{profileModal.user.province} Â· {profileModal.user.age_range}</div>
+                <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{profileModal.user.bio || "Sin bio todavÃ­a."}</div>
                 <div className="actions">
                   <button className="btn primary" onClick={() => friendUser(profileModal.user.id)}>Amistad</button>
                   <button className="btn" onClick={() => followUser(profileModal.user.id)}>Seguir</button>
@@ -803,12 +950,17 @@ export default function App() {
       {/* ---- DEBUG PANEL ---- */}
       {DEBUG_FRONTEND_LOG ? (
         <div
+          ref={debugPanelRef}
           style={{
             position: "fixed",
-            right: 12,
-            bottom: 12,
-            width: 520,
-            height: 260,
+            left: debugPos.x,
+            top: debugPos.y,
+            width: 720,
+            height: 380,
+            minWidth: 420,
+            minHeight: 200,
+            maxWidth: "calc(100vw - 24px)",
+            maxHeight: "calc(100vh - 24px)",
             background: "rgba(10,10,10,0.92)",
             border: "1px solid rgba(255,255,255,0.15)",
             borderRadius: 12,
@@ -817,35 +969,78 @@ export default function App() {
             boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
             display: "grid",
             gridTemplateRows: "40px 1fr 40px",
+            resize: "both",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 12px", borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
-            <div style={{ color: "white", fontWeight: 800 }}>Depurador (FrontEnd)</div>
-            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>últimas {frontLogs.length} líneas</div>
+          <div
+            style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 12px", borderBottom: "1px solid rgba(255,255,255,0.12)", cursor: "grab" }}
+            onMouseDown={onDebugDragStart}
+          >
+            <div style={{ color: "white", fontWeight: 800 }}>Depurador</div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button
+                className={"tab " + (debugTab === "frontend" ? "active" : "")}
+                style={{ padding: "6px 10px", fontSize: 12 }}
+                onClick={() => setDebugTab("frontend")}
+              >
+                FrontEnd ({frontLogs.length})
+              </button>
+              <button
+                className={"tab " + (debugTab === "services" ? "active" : "")}
+                style={{ padding: "6px 10px", fontSize: 12 }}
+                onClick={() => setDebugTab("services")}
+              >
+                Servicios ({svcLogs.length})
+              </button>
+            </div>
+            {debugTab === "services" ? (
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>
+                {svcLogStatus === "connected" ? "streaming" : (svcLogStatus === "connecting" ? "connecting..." : "error")}
+              </div>
+            ) : (
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>ultimas {frontLogs.length} lineas</div>
+            )}
           </div>
 
-          <div ref={frontLogsRef} style={{ overflow: "auto", padding: 10, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12 }}>
-            {frontLogs.map((l, idx) => (
-              <div key={idx} style={{ marginBottom: 8, color: "white" }}>
-                <div style={{ opacity: 0.8 }}>
-                  <span style={{ marginRight: 8 }}>{l.ts.split("T")[1]?.replace("Z", "")}</span>
-                  <span style={{ marginRight: 8, fontWeight: 800 }}>[{l.level.toUpperCase()}]</span>
-                  <span>{l.msg}</span>
-                </div>
-                {l.data !== undefined ? (
-                  <div style={{ marginTop: 4, opacity: 0.85, whiteSpace: "pre-wrap" }}>
-                    {safeStr(l.data)}
+          {debugTab === "frontend" ? (
+            <div ref={frontLogsRef} style={{ overflow: "auto", padding: 10, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12 }}>
+              {frontLogs.map((l, idx) => (
+                <div key={idx} style={{ marginBottom: 8, color: "white" }}>
+                  <div style={{ opacity: 0.8 }}>
+                    <span style={{ marginRight: 8 }}>{l.ts.split("T")[1]?.replace("Z", "")}</span>
+                    <span style={{ marginRight: 8, fontWeight: 800 }}>[{l.level.toUpperCase()}]</span>
+                    <span>{l.msg}</span>
                   </div>
-                ) : null}
-              </div>
-            ))}
-          </div>
+                  {l.data !== undefined ? (
+                    <div style={{ marginTop: 4, opacity: 0.85, whiteSpace: "pre-wrap" }}>
+                      {safeStr(l.data)}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div ref={svcLogsRef} style={{ overflow: "auto", padding: 10, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12 }}>
+              {svcLogs.map((l, idx) => (
+                <div key={idx} style={{ marginBottom: 8, color: "white" }}>
+                  <div style={{ opacity: 0.8 }}>
+                    <span style={{ marginRight: 8 }}>{l.ts.split("T")[1]?.replace("Z", "")}</span>
+                    <span style={{ marginRight: 8, fontWeight: 800 }}>[{l.service}]</span>
+                    <span>{l.line}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div style={{ display: "flex", gap: 10, padding: "8px 12px", borderTop: "1px solid rgba(255,255,255,0.12)" }}>
             <button
               className="btn"
               style={{ padding: "6px 10px" }}
-              onClick={() => setFrontLogs([])}
+              onClick={() => {
+                if (debugTab === "frontend") setFrontLogs([]);
+                else setSvcLogs([]);
+              }}
             >
               Clear
             </button>
@@ -854,9 +1049,11 @@ export default function App() {
               style={{ padding: "6px 10px" }}
               onClick={() => {
                 try {
-                  const txt = frontLogs.map(x => `${x.ts} [${x.level.toUpperCase()}] ${x.msg} ${x.data !== undefined ? safeStr(x.data) : ""}`).join("\n");
+                  const txt = debugTab === "frontend"
+                    ? frontLogs.map(x => `${x.ts} [${x.level.toUpperCase()}] ${x.msg} ${x.data !== undefined ? safeStr(x.data) : ""}`).join("\n")
+                    : svcLogs.map(x => `${x.ts} [${x.service}] ${x.line}`).join("\n");
                   navigator.clipboard.writeText(txt);
-                  alert("Copiado ✅");
+                  alert("Copiado OK");
                 } catch {
                   alert("No se pudo copiar");
                 }
@@ -870,3 +1067,4 @@ export default function App() {
     </div>
   );
 }
+

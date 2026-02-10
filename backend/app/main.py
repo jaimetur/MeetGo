@@ -15,7 +15,7 @@ from .models import (
 )
 from .schemas import (
     RegisterIn, LoginIn, Token, UserOut, UserSummary, UpdateProfileIn,
-    InterestOut, SetInterestsIn, RoomOut, RoomRuleOut, RoomRuleUpdateIn, RoomMessageOut,
+    InterestOut, SetInterestsIn, JoinRoomIn, RoomOut, RoomRuleOut, RoomRuleUpdateIn, RoomMessageOut,
     DMRequestOut, DMRequestCreateIn, DMRequestResolveIn, DMConversationOut, DMMessageOut,
     FollowOut, FriendRequestOut, FriendRequestCreateIn, FriendRequestResolveIn,
     PostOut, PostCreateIn
@@ -221,6 +221,20 @@ async def my_rooms(db: AsyncSession = Depends(get_db), user: User = Depends(get_
         room = await _get_or_create_room(db, user.province, user.age_range, it.id)
         rooms.append(RoomOut(id=room.id, province=room.province, age_range=room.age_range, interest=_interest_out(it)))
     return rooms
+
+@app.post("/rooms/join", response_model=RoomOut)
+async def join_room(payload: JoinRoomIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    res = await db.execute(select(Interest).where(Interest.slug == payload.interest_slug))
+    interest = res.scalar_one_or_none()
+    if not interest:
+        raise HTTPException(404, "Interest not found")
+
+    res = await db.execute(select(UserInterest).where(UserInterest.user_id == user.id, UserInterest.interest_id == interest.id))
+    if not res.scalar_one_or_none():
+        db.add(UserInterest(user_id=user.id, interest_id=interest.id))
+
+    room = await _get_or_create_room(db, user.province, user.age_range, interest.id)
+    return RoomOut(id=room.id, province=room.province, age_range=room.age_range, interest=_interest_out(interest))
 
 @app.get("/rooms/{room_id}/rules", response_model=RoomRuleOut)
 async def get_room_rules(room_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):

@@ -5,7 +5,7 @@ type Dict = Record<string, string>;
 const STRINGS: Record<Lang, Dict> = {
   es: {
     app_name: "MeetGo",
-    tagline: "menos swipe, más vida",
+    tagline: "Meet people, Go places",
 
     logout: "Salir",
     login_title: "Acceso",
