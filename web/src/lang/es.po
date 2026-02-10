@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+"Language: es\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "app_name"
+msgstr "MeetGo"
+
+msgid "tagline"
+msgstr "Meet people, Go places"
+
+msgid "tagline_long"
+msgstr "MeetGo -- menos swipe, mas vida"
+
+msgid "logout"
+msgstr "Salir"
+
+msgid "login_title"
+msgstr "Acceso"
+
+msgid "login_btn"
+msgstr "Login"
+
+msgid "or_register"
+msgstr "O registrate"
+
+msgid "error_title"
+msgstr "Error"
+
+msgid "email"
+msgstr "Email"
+
+msgid "password"
+msgstr "Password"
+
+msgid "password_hint"
+msgstr "Password (min 6, max 60)"
+
+msgid "name"
+msgstr "Nombre"
+
+msgid "dob_label"
+msgstr "Fecha de nacimiento"
+
+msgid "dob_pick"
+msgstr "Selecciona tu fecha."
+
+msgid "dob_invalid"
+msgstr "Formato invalido."
+
+msgid "dob_underage"
+msgstr "Debes ser mayor de edad (18+)."
+
+msgid "phone_label"
+msgstr "Telefono"
+
+msgid "phone_number"
+msgstr "Numero"
+
+msgid "country_label"
+msgstr "Pais"
+
+msgid "province_label"
+msgstr "Provincia"
+
+msgid "not_available"
+msgstr "(No disponible)"
+
+msgid "avatar_url"
+msgstr "Avatar URL (opcional)"
+
+msgid "bio"
+msgstr "Bio (opcional)"
+
+msgid "accept_dm"
+msgstr "Aceptar privados"
+
+msgid "create_account"
+msgstr "Crear cuenta"
+
+msgid "hello"
+msgstr "Hola, {name}"
+
+msgid "right_click_hint"
+msgstr "Click derecho en un avatar del chat -> perfil / seguir / amistad"
+
+msgid "rooms"
+msgstr "Salas"
+
+msgid "feed"
+msgstr "Feed"
+
+msgid "profile"
+msgstr "Perfil"
+
+msgid "load_my_rooms"
+msgstr "Cargar mis salas"
+
+msgid "join_room_title"
+msgstr "Entrar en una sala"
+
+msgid "join_room_desc"
+msgstr "Elige un interes y entra. Si no existe, se crea."
+
+msgid "join_btn"
+msgstr "Entrar"
+
+msgid "no_rooms_title"
+msgstr "Aun no tienes salas"
+
+msgid "no_rooms_desc"
+msgstr "Usa 'Entrar' arriba para crear/entrar en una."
+
+msgid "tip_title"
+msgstr "Tip"
+
+msgid "tip_body"
+msgstr "Prueba enviar un link o un telefono: el bot lo borrara. Si floodeas, te mutea."
+
+msgid "quick_title"
+msgstr "Accion rapida"
+
+msgid "quick_body"
+msgstr "Click derecho sobre un avatar -> abre menu."
+
+msgid "write_placeholder"
+msgstr "Escribe..."
+
+msgid "send_btn"
+msgstr "Enviar"
+
+msgid "publish_placeholder"
+msgstr "Publica algo..."
+
+msgid "publish_btn"
+msgstr "Publicar"
+
+msgid "refresh_btn"
+msgstr "Refrescar"
+
+msgid "profile_updated"
+msgstr "Perfil actualizado OK"
+
+msgid "following_ok"
+msgstr "Siguiendo OK"
+
+msgid "friend_req_ok"
+msgstr "Solicitud de amistad enviada OK"
+
+msgid "save_profile"
+msgstr "Guardar perfil"
+
+msgid "save_settings"
+msgstr "Guardar ajustes"
+
+msgid "settings_title"
+msgstr "Ajustes"
+
+msgid "language_label"
+msgstr "Idioma"
+
+msgid "menu_view_profile"
+msgstr "Ver perfil"
+
+msgid "menu_friend_request"
+msgstr "Enviar solicitud de amistad"
+
+msgid "menu_follow_feed"
+msgstr "Seguir feed"
+
+msgid "modal_profile_title"
+msgstr "Perfil"
+
+msgid "modal_close"
+msgstr "Cerrar"
+
+msgid "modal_friend"
+msgstr "Amistad"
+
+msgid "modal_follow"
+msgstr "Seguir"
+
+msgid "msg_deleted_by_mod"
+msgstr "Mensaje eliminado por moderacion"
+
+msgid "no_bio_yet"
+msgstr "Sin bio todavia."
+
+msgid "join_room_error"
+msgstr "No se pudo entrar en la sala."
+
+msgid "loading_interests"
+msgstr "Cargando intereses..."
+
+msgid "chat_ws_error"
+msgstr "Error de conexion del chat (WebSocket). Revisa puerto/URL del backend."
+
+msgid "age_display"
+msgstr "Edad: {age}"
+
+msgid "age_display_underage"
+msgstr "Edad: {age} ({note})"
+
+msgid "register_err_email_missing"
+msgstr "Falta el email."
+
+msgid "register_err_password_short"
+msgstr "La contrasena debe tener al menos 6 caracteres."
+
+msgid "register_err_name_missing"
+msgstr "Falta el nombre."
+
+msgid "register_err_dob_invalid"
+msgstr "Fecha de nacimiento invalida."
+
+msgid "register_err_underage"
+msgstr "Debes ser mayor de edad (18+)."
+
+msgid "register_err_country_missing"
+msgstr "Selecciona un pais."
+
+msgid "register_err_province_missing"
+msgstr "Selecciona una provincia."
+
+msgid "register_err_province_unavailable"
+msgstr "Aun no hay provincias configuradas para ese pais."
+
+msgid "register_err_phone_cc_missing"
+msgstr "Selecciona un prefijo internacional."
+
+msgid "register_err_phone_short"
+msgstr "Telefono invalido (muy corto)."
+
+msgid "debug_title"
+msgstr "Depurador"
+
+msgid "debug_subtitle"
+msgstr "ultimas {count} lineas"
+
+msgid "debug_clear"
+msgstr "Clear"
+
+msgid "debug_copy"
+msgstr "Copy"
+
+msgid "debug_copy_ok"
+msgstr "Copiado OK"
+
+msgid "debug_copy_fail"
+msgstr "No se pudo copiar"
+
+msgid "debug_frontend_tab"
+msgstr "FrontEnd ({count})"
+
+msgid "debug_services_tab"
+msgstr "Servicios ({count})"
+
+msgid "debug_services_connected"
+msgstr "streaming"
+
+msgid "debug_services_connecting"
+msgstr "connecting..."
+
+msgid "debug_services_error"
+msgstr "error"
+
+msgid "chat_not_connected"
+msgstr "Chat no conectado (ws=null). Abre una sala primero."
+
+msgid "chat_not_connected_state"
+msgstr "Chat no conectado (WS readyState={state})."
+
+msgid "chat_disconnected"
+msgstr "Chat desconectado. Vuelve a abrir la sala (o haz login de nuevo)."
+
+msgid "no_session"
+msgstr "No hay sesion (token). Haz login de nuevo."
+
+msgid "country_es_spain"
+msgstr "Espana"
+
+msgid "country_pt_portugal"
+msgstr "Portugal"
+
+msgid "country_fr_france"
+msgstr "Francia"
+
+msgid "country_it_italy"
+msgstr "Italia"
+
+msgid "country_de_germany"
+msgstr "Alemania"
+
+msgid "country_gb_uk"
+msgstr "Reino Unido"
+
+msgid "country_us_usa"
+msgstr "Estados Unidos"
+
+msgid "country_mx_mexico"
+msgstr "Mexico"
+
+msgid "country_ar_argentina"
+msgstr "Argentina"
+
+msgid "country_co_colombia"
+msgstr "Colombia"
+
+msgid "calling_es_spain"
+msgstr "Espana"
+
+msgid "calling_pt_portugal"
+msgstr "Portugal"
+
+msgid "calling_fr_france"
+msgstr "Francia"
+
+msgid "calling_it_italy"
+msgstr "Italia"
+
+msgid "calling_de_germany"
+msgstr "Alemania"
+
+msgid "calling_gb_uk"
+msgstr "Reino Unido"
+
+msgid "calling_us_ca"
+msgstr "EE. UU. / Canada"
+
+msgid "calling_mx_mexico"
+msgstr "Mexico"
+
+msgid "calling_ar_argentina"
+msgstr "Argentina"
+
+msgid "calling_co_colombia"
+msgstr "Colombia"
+
+msgid "province_es_alava"
+msgstr "Alava"
+
+msgid "province_es_albacete"
+msgstr "Albacete"
+
+msgid "province_es_alicante"
+msgstr "Alicante"
+
+msgid "province_es_almeria"
+msgstr "Almeria"
+
+msgid "province_es_asturias"
+msgstr "Asturias"
+
+msgid "province_es_avila"
+msgstr "Avila"
+
+msgid "province_es_badajoz"
+msgstr "Badajoz"
+
+msgid "province_es_barcelona"
+msgstr "Barcelona"
+
+msgid "province_es_burgos"
+msgstr "Burgos"
+
+msgid "province_es_caceres"
+msgstr "Caceres"
+
+msgid "province_es_cadiz"
+msgstr "Cadiz"
+
+msgid "province_es_cantabria"
+msgstr "Cantabria"
+
+msgid "province_es_castellon"
+msgstr "Castellon"
+
+msgid "province_es_ciudad_real"
+msgstr "Ciudad Real"
+
+msgid "province_es_cordoba"
+msgstr "Cordoba"
+
+msgid "province_es_cuenca"
+msgstr "Cuenca"
+
+msgid "province_es_girona"
+msgstr "Girona"
+
+msgid "province_es_granada"
+msgstr "Granada"
+
+msgid "province_es_guadalajara"
+msgstr "Guadalajara"
+
+msgid "province_es_gipuzkoa"
+msgstr "Gipuzkoa"
+
+msgid "province_es_huelva"
+msgstr "Huelva"
+
+msgid "province_es_huesca"
+msgstr "Huesca"
+
+msgid "province_es_illes_balears"
+msgstr "Illes Balears"
+
+msgid "province_es_jaen"
+msgstr "Jaen"
+
+msgid "province_es_a_coruna"
+msgstr "A Coruna"
+
+msgid "province_es_la_rioja"
+msgstr "La Rioja"
+
+msgid "province_es_las_palmas"
+msgstr "Las Palmas"
+
+msgid "province_es_leon"
+msgstr "Leon"
+
+msgid "province_es_lleida"
+msgstr "Lleida"
+
+msgid "province_es_lugo"
+msgstr "Lugo"
+
+msgid "province_es_madrid"
+msgstr "Madrid"
+
+msgid "province_es_malaga"
+msgstr "Malaga"
+
+msgid "province_es_murcia"
+msgstr "Murcia"
+
+msgid "province_es_navarra"
+msgstr "Navarra"
+
+msgid "province_es_ourense"
+msgstr "Ourense"
+
+msgid "province_es_palencia"
+msgstr "Palencia"
+
+msgid "province_es_pontevedra"
+msgstr "Pontevedra"
+
+msgid "province_es_salamanca"
+msgstr "Salamanca"
+
+msgid "province_es_santa_cruz_de_tenerife"
+msgstr "Santa Cruz de Tenerife"
+
+msgid "province_es_segovia"
+msgstr "Segovia"
+
+msgid "province_es_sevilla"
+msgstr "Sevilla"
+
+msgid "province_es_soria"
+msgstr "Soria"
+
+msgid "province_es_tarragona"
+msgstr "Tarragona"
+
+msgid "province_es_teruel"
+msgstr "Teruel"
+
+msgid "province_es_toledo"
+msgstr "Toledo"
+
+msgid "province_es_valencia"
+msgstr "Valencia"
+
+msgid "province_es_valladolid"
+msgstr "Valladolid"
+
+msgid "province_es_bizkaia"
+msgstr "Bizkaia"
+
+msgid "province_es_zamora"
+msgstr "Zamora"
+
+msgid "province_es_zaragoza"
+msgstr "Zaragoza"
+
+msgid "province_pt_lisboa"
+msgstr "Lisboa"
+
+msgid "province_pt_porto"
+msgstr "Porto"
+
+msgid "province_pt_braga"
+msgstr "Braga"
+
+msgid "province_pt_setubal"
+msgstr "Setubal"
+
+msgid "province_pt_aveiro"
+msgstr "Aveiro"
+
+msgid "province_fr_ile_de_france"
+msgstr "Ile-de-France"
+
+msgid "province_fr_occitanie"
+msgstr "Occitanie"
+
+msgid "province_fr_nouvelle_aquitaine"
+msgstr "Nouvelle-Aquitaine"
+
+msgid "province_fr_auvergne_rhone_alpes"
+msgstr "Auvergne-Rhone-Alpes"
+
+msgid "province_it_lazio"
+msgstr "Lazio"
+
+msgid "province_it_lombardia"
+msgstr "Lombardia"
+
+msgid "province_it_campania"
+msgstr "Campania"
+
+msgid "province_it_sicilia"
+msgstr "Sicilia"

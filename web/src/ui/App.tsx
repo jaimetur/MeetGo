@@ -11,7 +11,7 @@ import {
   type FrontLogEntry,
 } from "./api";
 import LogoSvg from "../assets/logo.svg";
-import { getLang, setLang, t, type Lang } from "./i18n";
+import { getLang, setLang, t, type Lang } from "./lang";
 
 // ---- Toggle DEBUG PANEL by code only ----
 const DEBUG_FRONTEND_LOG = true;
@@ -91,6 +91,19 @@ function safeStr(x: any) {
   if (x == null) return "";
   if (typeof x === "string") return x;
   try { return JSON.stringify(x); } catch { return String(x); }
+}
+
+function formatTime(ts: string) {
+  const d = new Date(ts);
+  if (Number.isNaN(d.getTime())) return ts;
+  const pad = (n: number, len = 2) => String(n).padStart(len, "0");
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`;
+}
+
+function extractService(msg: string) {
+  const m = msg.match(/^\[([^\]]+)\]\s*/);
+  if (!m) return { service: "frontend", text: msg };
+  return { service: m[1], text: msg.slice(m[0].length) };
 }
 
 type ServiceLogEntry = {
@@ -552,17 +565,17 @@ export default function App() {
     wsRef.current = ws;
 
     ws.onopen = () => {
-      frontLog("[WS] connected âœ…");
+      frontLog("[WS] connected OK");
     };
 
     ws.onclose = (e) => {
-      frontWarn("[WS] closed âŒ", { code: e.code, reason: e.reason, wasClean: e.wasClean });
+      frontWarn("[WS] closed", { code: e.code, reason: e.reason, wasClean: e.wasClean });
       alert(t("chat_disconnected"));
       frontError(t("chat_disconnected"));
     };
 
     ws.onerror = (e) => {
-      frontError("[WS] error âŒ", e);
+      frontError("[WS] error", e);
       frontError(t("chat_ws_error"));
     };
 
@@ -724,7 +737,7 @@ export default function App() {
                   onChange={e => setRegisterForm({ ...registerForm, phone_cc: e.target.value })}
                 >
                   {CALLING_CODES.map(x => (
-                    <option key={x.cc} value={x.cc}>{x.cc} Â· {t(x.labelKey)}</option>
+                    <option key={x.cc} value={x.cc}>{x.cc} - {t(x.labelKey)}</option>
                   ))}
                 </select>
                 <input
@@ -784,7 +797,7 @@ export default function App() {
           ) : (
             <>
               <div style={{ fontWeight: 800 }}>{t("hello", { name: me.display_name })}</div>
-              <div className="small">{me.province} Â· {me.age_range}</div>
+              <div className="small">{me.province} - {me.age_range}</div>
               <div className="small">{t("right_click_hint")}</div>
 
               <div className="nav">
@@ -825,7 +838,7 @@ export default function App() {
                     {rooms.map(r => (
                       <div key={r.id} className={"item " + (selectedRoom?.id === r.id ? "active" : "")} onClick={() => openRoom(r)}>
                         <div style={{ fontWeight: 800 }}>{formatInterestLabel(r.interest)}</div>
-                        <div className="small">{r.province} Â· {r.age_range} Â· #{r.interest.slug}</div>
+                        <div className="small">{r.province} - {r.age_range} - #{r.interest.slug}</div>
                       </div>
                     ))}
                   </div>
@@ -877,7 +890,7 @@ export default function App() {
               {tab === "rooms" ? (selectedRoom ? formatInterestLabel(selectedRoom.interest) : t("rooms")) : (tab === "feed" ? t("feed") : t("profile"))}
             </div>
             <div className="small">
-              {tab === "rooms" && selectedRoom ? `${selectedRoom.province} Â· ${selectedRoom.age_range}` : ""}
+              {tab === "rooms" && selectedRoom ? `${selectedRoom.province} - ${selectedRoom.age_range}` : ""}
             </div>
           </div>
           <div className="small">{t("tagline_long")}</div>
@@ -953,7 +966,7 @@ export default function App() {
                   </div>
                   <div>
                     <div style={{ fontWeight: 900, fontSize: 18 }}>{me?.display_name}</div>
-                    <div className="small">{me?.province} Â· {me?.age_range}</div>
+                    <div className="small">{me?.province} - {me?.age_range}</div>
                     <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{me?.bio || t("no_bio_yet")}</div>
                   </div>
                 </div>
@@ -983,7 +996,7 @@ export default function App() {
               <div className="bigAvatar"><img src={avatarSrc(profileModal.user)} /></div>
               <div>
                 <div style={{ fontWeight: 900, fontSize: 18 }}>{profileModal.user.display_name}</div>
-                <div className="small">{profileModal.user.province} Â· {profileModal.user.age_range}</div>
+                <div className="small">{profileModal.user.province} - {profileModal.user.age_range}</div>
                 <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{profileModal.user.bio || t("no_bio_yet")}</div>
                 <div className="actions">
                   <button className="btn primary" onClick={() => friendUser(profileModal.user.id)}>{t("modal_friend")}</button>
@@ -1052,29 +1065,29 @@ export default function App() {
 
           {debugTab === "frontend" ? (
             <div ref={frontLogsRef} style={{ overflow: "auto", padding: 10, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12 }}>
-              {frontLogs.map((l, idx) => (
-                <div key={idx} style={{ marginBottom: 8, color: "white" }}>
-                  <div style={{ opacity: 0.8 }}>
-                    <span style={{ marginRight: 8 }}>{l.ts.split("T")[1]?.replace("Z", "")}</span>
-                    <span style={{ marginRight: 8, fontWeight: 800 }}>[{l.level.toUpperCase()}]</span>
-                    <span>{l.msg}</span>
-                  </div>
-                  {l.data !== undefined ? (
-                    <div style={{ marginTop: 4, opacity: 0.85, whiteSpace: "pre-wrap" }}>
-                      {safeStr(l.data)}
+              {frontLogs.map((l, idx) => {
+                const info = extractService(l.msg);
+                const ts = formatTime(l.ts);
+                return (
+                  <div key={idx} style={{ marginBottom: 8, color: "white" }}>
+                    <div style={{ opacity: 0.85, whiteSpace: "pre-wrap" }}>
+                      {ts}[{l.level.toUpperCase()}][{info.service}] {info.text}
                     </div>
-                  ) : null}
-                </div>
-              ))}
+                    {l.data !== undefined ? (
+                      <div style={{ marginTop: 4, opacity: 0.85, whiteSpace: "pre-wrap" }}>
+                        {ts}[{l.level.toUpperCase()}][{info.service}] {safeStr(l.data)}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div ref={svcLogsRef} style={{ overflow: "auto", padding: 10, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12 }}>
               {svcLogs.map((l, idx) => (
                 <div key={idx} style={{ marginBottom: 8, color: "white" }}>
-                  <div style={{ opacity: 0.8 }}>
-                    <span style={{ marginRight: 8 }}>{l.ts.split("T")[1]?.replace("Z", "")}</span>
-                    <span style={{ marginRight: 8, fontWeight: 800 }}>[{l.service}]</span>
-                    <span>{l.line}</span>
+                  <div style={{ opacity: 0.85, whiteSpace: "pre-wrap" }}>
+                    {formatTime(l.ts)}[LOG][{l.service}] {l.line}
                   </div>
                 </div>
               ))}
@@ -1098,8 +1111,14 @@ export default function App() {
               onClick={() => {
                 try {
                   const txt = debugTab === "frontend"
-                    ? frontLogs.map(x => `${x.ts} [${x.level.toUpperCase()}] ${x.msg} ${x.data !== undefined ? safeStr(x.data) : ""}`).join("\n")
-                    : svcLogs.map(x => `${x.ts} [${x.service}] ${x.line}`).join("\n");
+                    ? frontLogs.map((x) => {
+                      const info = extractService(x.msg);
+                      const ts = formatTime(x.ts);
+                      const base = `${ts}[${x.level.toUpperCase()}][${info.service}] ${info.text}`;
+                      if (x.data === undefined) return base;
+                      return `${base}\n${ts}[${x.level.toUpperCase()}][${info.service}] ${safeStr(x.data)}`;
+                    }).join("\n")
+                    : svcLogs.map(x => `${formatTime(x.ts)}[LOG][${x.service}] ${x.line}`).join("\n");
                   navigator.clipboard.writeText(txt);
                   alert(t("debug_copy_ok"));
                 } catch {
