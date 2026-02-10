@@ -1,29 +1,59 @@
-# MeetGo — Fullstack (Backend + Web)
-Incluye:
-- Backend FastAPI: salas por provincia + rango edad + interés
-- Chat de sala por WebSocket con moderación automática (borra, strikes, mute, ban)
-- Perfiles con avatar + bio
-- Menú contextual (click derecho en avatar en chat/feed) -> Ver perfil / Solicitud de amistad / Seguir
-- Feed simple estilo Instagram (posts) basado en gente a la que sigues
-- Friend requests estilo Facebook (solicitud + aceptar)
+# MeetGo -- Fullstack (Backend + Web)
+Includes:
+- FastAPI backend: rooms by province + age range + interest
+- Room chat over WebSocket with auto-moderation (delete, strikes, mute, ban)
+- Profiles with avatar + bio
+- Context menu (right-click avatar in chat/feed) -> View profile / Friend request / Follow
+- Simple Instagram-style feed (posts) based on people you follow
+- Facebook-style friend requests (request + accept)
 
-## Arranque
+## Quick start
 ```bash
 docker compose up --build
 ```
 
-- Backend: http://localhost:8000/docs
+- Backend (Swagger): http://localhost:18000/docs
 - Web: http://localhost:5173
 
-## Cómo probar rápido
-1) Regístrate en la web (columna izquierda).
-   - Si no pones Avatar URL, se usa un avatar automático (DiceBear).
-2) Login.
-3) Salas -> Cargar mis salas -> entra en una sala.
-4) En el chat: click derecho sobre el avatar de alguien -> menú.
-5) Feed -> publica un post, sigue a alguien y refresca el feed.
+## Docker commands
+```bash
+# Build and start in the foreground
+docker compose up --build
 
-## Notas importantes (MVP)
-- La subida de fotos no está implementada: `avatar_url` es una URL. Lo normal es añadir S3/CDN.
-- Seguridad/CORS están abiertos por simplicidad.
-- El feed es minimalista (texto). Se puede extender a imágenes, likes, comments, etc.
+# Start in the background
+docker compose up -d
+
+# Stop containers (keeps volumes/data)
+docker compose stop
+
+# Restart all services
+docker compose restart
+
+# Follow logs for all services
+docker compose logs -f
+
+# Follow logs for one service (example: backend)
+docker compose logs -f backend
+
+# Show status
+docker compose ps
+
+# Stop and remove containers (keeps volumes)
+docker compose down
+
+# Stop and remove containers + volumes (erases DB)
+docker compose down -v
+```
+
+## Quick test flow
+1) Sign up in the web app (left column).
+   - If you do not provide an Avatar URL, a DiceBear avatar is used.
+2) Log in.
+3) Rooms -> Load my rooms -> enter a room.
+4) In chat: right-click someone's avatar -> menu.
+5) Feed -> post, follow someone, and refresh the feed.
+
+## Important notes (MVP)
+- Photo uploads are not implemented: `avatar_url` is a URL. Typical setup uses S3/CDN.
+- Security/CORS are open for simplicity.
+- The feed is minimal text-only; can be extended to images, likes, comments, etc.

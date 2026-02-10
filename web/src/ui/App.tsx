@@ -1,7 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { api, clearToken, getToken, setToken } from "./api";
+import {
+  api,
+  clearToken,
+  getToken,
+  setToken,
+  setFrontendLogListener,
+  frontLog,
+  frontWarn,
+  frontError,
+  type FrontLogEntry,
+} from "./api";
 import LogoSvg from "../assets/logo.svg";
 import { getLang, setLang, t, type Lang } from "./i18n";
+
+// ---- Toggle DEBUG PANEL by code only ----
+const DEBUG_FRONTEND_LOG = true;
 
 // If logo.png exists it will be preferred by bundler as static import (optional)
 let LogoPng: string | null = null;
@@ -72,8 +85,14 @@ function apiBaseFromWindow() {
   return { wsProto: proto, host };
 }
 
+function safeStr(x: any) {
+  if (x == null) return "";
+  if (typeof x === "string") return x;
+  try { return JSON.stringify(x); } catch { return String(x); }
+}
+
 export default function App() {
-  const [tab, setTab] = useState<"rooms"|"feed"|"profile">("rooms");
+  const [tab, setTab] = useState<"rooms" | "feed" | "profile">("rooms");
   const [lang, setLangState] = useState<Lang>(getLang());
 
   function changeLang(l: Lang) {
@@ -81,8 +100,55 @@ export default function App() {
     setLangState(l); // force re-render
   }
 
+  // ---- Debug panel state ----
+  const [frontLogs, setFrontLogs] = useState<FrontLogEntry[]>([]);
+  const frontLogsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!DEBUG_FRONTEND_LOG) return;
+
+    // subscribe to api.ts logs
+    setFrontendLogListener((e) => {
+      setFrontLogs((prev) => {
+        const next = [...prev, e];
+        // keep last 500 lines max
+        if (next.length > 500) next.splice(0, next.length - 500);
+        return next;
+      });
+    });
+
+    // capture global runtime errors too
+    const onError = (ev: ErrorEvent) => {
+      frontError("[JS] Uncaught error", {
+        message: ev.message,
+        filename: ev.filename,
+        lineno: ev.lineno,
+        colno: ev.colno,
+      });
+    };
+    const onUnhandled = (ev: PromiseRejectionEvent) => {
+      frontError("[JS] Unhandled rejection", { reason: safeStr(ev.reason) });
+    };
+
+    window.addEventListener("error", onError);
+    window.addEventListener("unhandledrejection", onUnhandled);
+
+    return () => {
+      setFrontendLogListener(null);
+      window.removeEventListener("error", onError);
+      window.removeEventListener("unhandledrejection", onUnhandled);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!DEBUG_FRONTEND_LOG) return;
+    setTimeout(() => {
+      frontLogsRef.current?.scrollTo({ top: frontLogsRef.current.scrollHeight });
+    }, 0);
+  }, [frontLogs.length]);
+
   const [me, setMe] = useState<User | null>(null);
-  const [auth, setAuth] = useState<{email:string; pass:string}>({ email:"", pass:"" });
+  const [auth, setAuth] = useState<{ email: string; pass: string }>({ email: "", pass: "" });
 
   // --------- Country / Province / Phone data ---------
   const COUNTRIES = useMemo(() => ([
@@ -152,7 +218,6 @@ export default function App() {
   useEffect(() => {
     const opts = provinceOptions;
     if (!opts.length) {
-      // no provinces for this country in our list => clear & disable
       if (registerForm.province) setRegisterForm((prev: any) => ({ ...prev, province: "" }));
       return;
     }
@@ -179,8 +244,8 @@ export default function App() {
   const wsRef = useRef<WebSocket | null>(null);
   const messagesRef = useRef<HTMLDivElement | null>(null);
 
-  const [menu, setMenu] = useState<{x:number;y:number; userId:number; name:string} | null>(null);
-  const [profileModal, setProfileModal] = useState<{user: User} | null>(null);
+  const [menu, setMenu] = useState<{ x: number; y: number; userId: number; name: string } | null>(null);
+  const [profileModal, setProfileModal] = useState<{ user: User } | null>(null);
 
   const [feed, setFeed] = useState<Post[]>([]);
   const [newPost, setNewPost] = useState("");
@@ -190,13 +255,14 @@ export default function App() {
   async function refreshMe() {
     const u = await api.me();
     setMe(u);
+    frontLog("[AUTH] me()", u);
     return u as User;
   }
 
   useEffect(() => {
     (async () => {
       if (getToken()) {
-        try { await refreshMe(); } catch { clearToken(); }
+        try { await refreshMe(); } catch (e) { frontWarn("[AUTH] me() failed, clearing token", e); clearToken(); }
       }
     })();
   }, []);
@@ -212,6 +278,7 @@ export default function App() {
   async function doLogin() {
     const tok = await api.login({ email: auth.email, password: auth.pass });
     setToken(tok.access_token);
+    frontLog("[AUTH] login OK");
     await refreshMe();
   }
 
@@ -220,12 +287,10 @@ export default function App() {
     if (!registerForm.password || registerForm.password.length < 6) return "La contraseña debe tener al menos 6 caracteres.";
     if (!registerForm.display_name?.trim()) return "Falta el nombre.";
 
-    // DOB: required, 18+
     const age = calcAge(registerForm.dob);
     if (age === null) return "Fecha de nacimiento inválida.";
     if (age < 18) return "Debes ser mayor de edad (18+).";
 
-    // Country / Province
     if (!registerForm.country) return "Selecciona un país.";
     if (provinceOptions.length) {
       if (!registerForm.province) return "Selecciona una provincia.";
@@ -233,7 +298,6 @@ export default function App() {
       return "Aún no hay provincias configuradas para ese país.";
     }
 
-    // Phone
     const digits = normalizePhoneDigits(registerForm.phone_number);
     if (!registerForm.phone_cc) return "Selecciona un prefijo internacional.";
     if (digits.length < 6) return "Teléfono inválido (muy corto).";
@@ -247,41 +311,41 @@ export default function App() {
     const err = validateRegister();
     if (err) { setRegisterErr(err); return; }
 
-    // Backend payload: only fields the API expects today
     const payload: any = {
       email: registerForm.email.trim(),
       password: registerForm.password,
       display_name: registerForm.display_name.trim(),
-      dob: registerForm.dob,                // YYYY-MM-DD
-      province: registerForm.province,      // used for rooms
+      dob: registerForm.dob,
+      province: registerForm.province,
       accept_dm: !!registerForm.accept_dm,
       avatar_url: registerForm.avatar_url?.trim() || null,
       bio: registerForm.bio?.trim() || null,
-      // country & phone are collected but not sent yet (until backend supports them)
     };
 
     const u = await api.register(payload);
 
-    // auto login
     const tok = await api.login({ email: payload.email, password: payload.password });
     setToken(tok.access_token);
     setMe(u);
+    frontLog("[AUTH] registered + logged in", u);
   }
 
   async function loadRooms() {
     const r = await api.myRooms();
     setRooms(r);
+    frontLog("[ROOMS] myRooms()", r);
     if (!selectedRoom && r.length) setSelectedRoom(r[0]);
   }
 
   async function joinRoom() {
     try {
+      frontLog("[ROOMS] joinRoom()", { interest_slug: joinInterest });
       const room = await api.joinRoom(joinInterest);
       await loadRooms();
       await openRoom(room);
     } catch (e: any) {
       const msg = e?.message || String(e) || "No se pudo entrar en la sala.";
-      console.error("[joinRoom] error:", e);
+      frontError("[joinRoom] error", e);
       alert(msg);
     }
   }
@@ -290,6 +354,7 @@ export default function App() {
     setSelectedRoom(room);
     const history = await api.roomMessages(room.id);
     setMsgs(history);
+    frontLog("[ROOMS] openRoom()", { roomId: room.id, messages: history?.length ?? 0 });
     connectWS(room.id);
     setTimeout(() => messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight }), 50);
   }
@@ -297,7 +362,7 @@ export default function App() {
   function connectWS(roomId: number) {
     const token = getToken();
     if (!token) {
-      console.error("No hay sesión (token). Haz login de nuevo.");
+      frontError("No hay sesión (token). Haz login de nuevo.");
       return;
     }
     if (wsRef.current) {
@@ -308,23 +373,23 @@ export default function App() {
     const wsPort = "18000"; // <-- el puerto host del backend (18000:8000)
     const wsUrl = `${wsProto}//${host}:${wsPort}/ws/rooms/${roomId}?token=${encodeURIComponent(token)}`;
 
-    console.log("[WS] connecting:", wsUrl);
+    frontLog("[WS] connecting", wsUrl);
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
     ws.onopen = () => {
-      console.log("[WS] connected ✅");
+      frontLog("[WS] connected ✅");
     };
 
     ws.onclose = (e) => {
-      console.log("[WS] closed ❌", { code: e.code, reason: e.reason, wasClean: e.wasClean });
+      frontWarn("[WS] closed ❌", { code: e.code, reason: e.reason, wasClean: e.wasClean });
       alert(t("chat_disconnected"));
-      console.error(t("chat_disconnected"));
+      frontError(t("chat_disconnected"));
     };
 
     ws.onerror = (e) => {
-      console.log("[WS] error ❌", e);
-      console.error("Error de conexión del chat (WebSocket). Revisa puerto/URL del backend.");
+      frontError("[WS] error ❌", e);
+      frontError("Error de conexión del chat (WebSocket). Revisa puerto/URL del backend.");
     };
 
     ws.onmessage = (e) => {
@@ -332,17 +397,18 @@ export default function App() {
 
       if (data.type === "room_message") {
         setMsgs(prev => [...prev, data.message]);
-        setTimeout(() => messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior:"smooth" }), 10);
+        setTimeout(() => messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: "smooth" }), 10);
         return;
       }
 
       if (data.type === "error") {
-        alert(`Chat: ${data.code} (${data.detail})`);
-        console.error(`Chat: ${data.code} (${data.detail})`);
+        const s = `Chat: ${data.code} (${data.detail})`;
+        alert(s);
+        frontError(s);
         return;
       }
 
-      console.log("[WS] message (unknown):", data);
+      frontLog("[WS] message (unknown)", data);
     };
   }
 
@@ -350,12 +416,12 @@ export default function App() {
     const ws = wsRef.current;
     if (!ws) {
       alert(t("chat_not_connected"));
-      console.error(t("chat_not_connected"));
+      frontError(t("chat_not_connected"));
       return;
     }
     if (ws.readyState !== 1) {
       alert(t("chat_not_connected_state", { state: ws.readyState }));
-      console.error(t("chat_not_connected_state", { state: ws.readyState }));
+      frontError(t("chat_not_connected_state", { state: ws.readyState }));
       return;
     }
     const content = composer.trim();
@@ -364,7 +430,7 @@ export default function App() {
     setComposer("");
   }
 
-  function onAvatarContextMenu(e: React.MouseEvent, u: {id:number; display_name:string}) {
+  function onAvatarContextMenu(e: React.MouseEvent, u: { id: number; display_name: string }) {
     e.preventDefault();
     setMenu({ x: e.clientX, y: e.clientY, userId: u.id, name: u.display_name });
   }
@@ -379,19 +445,20 @@ export default function App() {
     await api.follow(userId);
     setMenu(null);
     alert("Siguiendo ✅");
-    console.log("Siguiendo ✅");
+    frontLog("Siguiendo ✅");
   }
 
   async function friendUser(userId: number) {
     await api.friendRequest(userId);
     setMenu(null);
     alert("Solicitud de amistad enviada ✅");
-    console.log("Solicitud de amistad enviada ✅");
+    frontLog("Solicitud de amistad enviada ✅");
   }
 
   async function loadFeed() {
     const f = await api.feed();
     setFeed(f);
+    frontLog("[FEED] loaded", f?.length ?? 0);
   }
 
   async function publishPost() {
@@ -406,7 +473,7 @@ export default function App() {
     if (!me) return;
     await api.updateProfile({ display_name: me.display_name, avatar_url: me.avatar_url || null, bio: me.bio || null, accept_dm: me.accept_dm });
     alert("Perfil actualizado ✅");
-    console.log("Perfil actualizado ✅");
+    frontLog("Perfil actualizado ✅");
   }
 
   const isLogged = !!me;
@@ -423,10 +490,10 @@ export default function App() {
             </div>
           </div>
 
-          <div style={{display:"flex", gap:10, alignItems:"center"}}>
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
             <select
               className="input"
-              style={{width: 120, padding: "6px 10px"}}
+              style={{ width: 120, padding: "6px 10px" }}
               value={lang}
               onChange={(e) => changeLang(e.target.value as Lang)}
             >
@@ -443,21 +510,21 @@ export default function App() {
         <div className="sidebar">
           {!isLogged ? (
             <>
-              <div style={{fontWeight:800}}>{t("login_title")}</div>
-              <input className="input" placeholder={t("email")} value={auth.email} onChange={e=>setAuth({...auth, email:e.target.value})} />
-              <input className="input" placeholder={t("password")} type="password" value={auth.pass} onChange={e=>setAuth({...auth, pass:e.target.value})} />
+              <div style={{ fontWeight: 800 }}>{t("login_title")}</div>
+              <input className="input" placeholder={t("email")} value={auth.email} onChange={e => setAuth({ ...auth, email: e.target.value })} />
+              <input className="input" placeholder={t("password")} type="password" value={auth.pass} onChange={e => setAuth({ ...auth, pass: e.target.value })} />
               <button className="btn primary" onClick={doLogin}>{t("login_btn")}</button>
 
               <div className="small">{t("or_register")}</div>
 
               {registerErr ? (
-                <div className="item" style={{border:"1px solid rgba(255,0,0,.25)"}}>
-                  <div style={{fontWeight:900}}>{t("error_title")}</div>
+                <div className="item" style={{ border: "1px solid rgba(255,0,0,.25)" }}>
+                  <div style={{ fontWeight: 900 }}>{t("error_title")}</div>
                   <div className="small">{registerErr}</div>
                 </div>
               ) : null}
 
-              <input className="input" placeholder={t("email")} value={registerForm.email} onChange={e=>setRegisterForm({...registerForm, email:e.target.value})} />
+              <input className="input" placeholder={t("email")} value={registerForm.email} onChange={e => setRegisterForm({ ...registerForm, email: e.target.value })} />
 
               <input
                 className="input"
@@ -468,17 +535,16 @@ export default function App() {
                 onChange={e => setRegisterForm({ ...registerForm, password: e.target.value })}
               />
 
-              <input className="input" placeholder={t("name")} value={registerForm.display_name} onChange={e=>setRegisterForm({...registerForm, display_name:e.target.value})} />
+              <input className="input" placeholder={t("name")} value={registerForm.display_name} onChange={e => setRegisterForm({ ...registerForm, display_name: e.target.value })} />
 
-              {/* DOB: date picker */}
-              <label className="small" style={{display:"block", marginTop:8}}>{t("dob_label")}</label>
+              <label className="small" style={{ display: "block", marginTop: 8 }}>{t("dob_label")}</label>
               <input
                 className="input"
                 type="date"
                 value={registerForm.dob}
-                onChange={e=>setRegisterForm({...registerForm, dob:e.target.value})}
+                onChange={e => setRegisterForm({ ...registerForm, dob: e.target.value })}
               />
-              <div className="small" style={{marginTop:-6}}>
+              <div className="small" style={{ marginTop: -6 }}>
                 {registerForm.dob ? (() => {
                   const a = calcAge(registerForm.dob);
                   if (a === null) return t("dob_invalid");
@@ -486,13 +552,12 @@ export default function App() {
                 })() : t("dob_pick")}
               </div>
 
-              {/* Phone: calling code dropdown + number */}
-              <label className="small" style={{display:"block", marginTop:10}}>{t("phone_label")}</label>
-              <div style={{display:"grid", gridTemplateColumns:"140px 1fr", gap:8}}>
+              <label className="small" style={{ display: "block", marginTop: 10 }}>{t("phone_label")}</label>
+              <div style={{ display: "grid", gridTemplateColumns: "140px 1fr", gap: 8 }}>
                 <select
                   className="input"
                   value={registerForm.phone_cc}
-                  onChange={e=>setRegisterForm({...registerForm, phone_cc:e.target.value})}
+                  onChange={e => setRegisterForm({ ...registerForm, phone_cc: e.target.value })}
                 >
                   {CALLING_CODES.map(x => (
                     <option key={x.cc} value={x.cc}>{x.cc} · {x.country}</option>
@@ -502,28 +567,27 @@ export default function App() {
                   className="input"
                   placeholder={t("phone_number")}
                   value={registerForm.phone_number}
-                  onChange={e=>setRegisterForm({...registerForm, phone_number:e.target.value})}
+                  onChange={e => setRegisterForm({ ...registerForm, phone_number: e.target.value })}
                 />
               </div>
 
-              {/* Country + Province (dependent) */}
-              <label className="small" style={{display:"block", marginTop:10}}>{t("country_label")}</label>
+              <label className="small" style={{ display: "block", marginTop: 10 }}>{t("country_label")}</label>
               <select
                 className="input"
                 value={registerForm.country}
-                onChange={e=>setRegisterForm({...registerForm, country:e.target.value})}
+                onChange={e => setRegisterForm({ ...registerForm, country: e.target.value })}
               >
                 {COUNTRIES.map(c => (
                   <option key={c.code} value={c.code}>{c.name}</option>
                 ))}
               </select>
 
-              <label className="small" style={{display:"block", marginTop:10}}>{t("province_label")}</label>
+              <label className="small" style={{ display: "block", marginTop: 10 }}>{t("province_label")}</label>
               <select
                 className="input"
                 value={registerForm.province}
                 disabled={!provinceOptions.length}
-                onChange={e=>setRegisterForm({...registerForm, province:e.target.value})}
+                onChange={e => setRegisterForm({ ...registerForm, province: e.target.value })}
               >
                 {provinceOptions.length ? (
                   provinceOptions.map((p: string) => <option key={p} value={p}>{p}</option>)
@@ -532,35 +596,35 @@ export default function App() {
                 )}
               </select>
 
-              <input className="input" placeholder={t("avatar_url")} value={registerForm.avatar_url} onChange={e=>setRegisterForm({...registerForm, avatar_url:e.target.value})} />
-              <textarea className="input" placeholder={t("bio")} rows={3} value={registerForm.bio} onChange={e=>setRegisterForm({...registerForm, bio:e.target.value})} />
+              <input className="input" placeholder={t("avatar_url")} value={registerForm.avatar_url} onChange={e => setRegisterForm({ ...registerForm, avatar_url: e.target.value })} />
+              <textarea className="input" placeholder={t("bio")} rows={3} value={registerForm.bio} onChange={e => setRegisterForm({ ...registerForm, bio: e.target.value })} />
               <label className="small">
-                <input type="checkbox" checked={registerForm.accept_dm} onChange={e=>setRegisterForm({...registerForm, accept_dm:e.target.checked})} /> {t("accept_dm")}
+                <input type="checkbox" checked={registerForm.accept_dm} onChange={e => setRegisterForm({ ...registerForm, accept_dm: e.target.checked })} /> {t("accept_dm")}
               </label>
 
               <button className="btn" onClick={doRegister}>{t("create_account")}</button>
             </>
           ) : (
             <>
-              <div style={{fontWeight:800}}>{t("hello", { name: me.display_name })}</div>
+              <div style={{ fontWeight: 800 }}>{t("hello", { name: me.display_name })}</div>
               <div className="small">{me.province} · {me.age_range}</div>
               <div className="small">{t("right_click_hint")}</div>
 
               <div className="nav">
-                <button className={"tab " + (tab==="rooms"?"active":"")} onClick={()=>setTab("rooms")}>{t("rooms")}</button>
-                <button className={"tab " + (tab==="feed"?"active":"")} onClick={()=>{ setTab("feed"); loadFeed(); }}>{t("feed")}</button>
-                <button className={"tab " + (tab==="profile"?"active":"")} onClick={()=>setTab("profile")}>{t("profile")}</button>
+                <button className={"tab " + (tab === "rooms" ? "active" : "")} onClick={() => setTab("rooms")}>{t("rooms")}</button>
+                <button className={"tab " + (tab === "feed" ? "active" : "")} onClick={() => { setTab("feed"); loadFeed(); }}>{t("feed")}</button>
+                <button className={"tab " + (tab === "profile" ? "active" : "")} onClick={() => setTab("profile")}>{t("profile")}</button>
               </div>
 
-              {tab==="rooms" ? (
+              {tab === "rooms" ? (
                 <>
                   <button className="btn primary" onClick={() => loadRooms()}>{t("load_my_rooms")}</button>
 
-                  <div className="item" style={{marginTop:10}}>
-                    <div style={{fontWeight:900}}>{t("join_room_title")}</div>
+                  <div className="item" style={{ marginTop: 10 }}>
+                    <div style={{ fontWeight: 900 }}>{t("join_room_title")}</div>
                     <div className="small">{t("join_room_desc")}</div>
-                    <div style={{display:"grid", gridTemplateColumns:"1fr 140px", gap:8, marginTop:8}}>
-                      <select className="input" value={joinInterest} onChange={e=>setJoinInterest(e.target.value)}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 140px", gap: 8, marginTop: 8 }}>
+                      <select className="input" value={joinInterest} onChange={e => setJoinInterest(e.target.value)}>
                         {INTERESTS.map(i => (
                           <option key={i.slug} value={i.slug}>{i.name}</option>
                         ))}
@@ -569,17 +633,17 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="list" style={{maxHeight: 420}}>
+                  <div className="list" style={{ maxHeight: 420 }}>
                     {rooms.length === 0 ? (
-                      <div className="item" style={{cursor:"default"}}>
-                        <div style={{fontWeight:800}}>{t("no_rooms_title")}</div>
+                      <div className="item" style={{ cursor: "default" }}>
+                        <div style={{ fontWeight: 800 }}>{t("no_rooms_title")}</div>
                         <div className="small">{t("no_rooms_desc")}</div>
                       </div>
                     ) : null}
 
                     {rooms.map(r => (
-                      <div key={r.id} className={"item " + (selectedRoom?.id===r.id?"active":"")} onClick={()=>openRoom(r)}>
-                        <div style={{fontWeight:800}}>{r.interest.name}</div>
+                      <div key={r.id} className={"item " + (selectedRoom?.id === r.id ? "active" : "")} onClick={() => openRoom(r)}>
+                        <div style={{ fontWeight: 800 }}>{r.interest.name}</div>
                         <div className="small">{r.province} · {r.age_range} · #{r.interest.slug}</div>
                       </div>
                     ))}
@@ -587,21 +651,21 @@ export default function App() {
                 </>
               ) : null}
 
-              {tab==="feed" ? (
+              {tab === "feed" ? (
                 <>
-                  <textarea className="input" rows={3} placeholder={t("publish_placeholder")} value={newPost} onChange={e=>setNewPost(e.target.value)} />
+                  <textarea className="input" rows={3} placeholder={t("publish_placeholder")} value={newPost} onChange={e => setNewPost(e.target.value)} />
                   <button className="btn primary" onClick={publishPost}>{t("publish_btn")}</button>
                   <button className="btn" onClick={loadFeed}>{t("refresh_btn")}</button>
                 </>
               ) : null}
 
-              {tab==="profile" ? (
+              {tab === "profile" ? (
                 <>
-                  <input className="input" value={me.display_name} onChange={e=>setMe({...me, display_name:e.target.value})} />
-                  <input className="input" placeholder={t("avatar_url")} value={me.avatar_url || ""} onChange={e=>setMe({...me, avatar_url:e.target.value})} />
-                  <textarea className="input" rows={4} placeholder={t("bio")} value={me.bio || ""} onChange={e=>setMe({...me, bio:e.target.value})} />
+                  <input className="input" value={me.display_name} onChange={e => setMe({ ...me, display_name: e.target.value })} />
+                  <input className="input" placeholder={t("avatar_url")} value={me.avatar_url || ""} onChange={e => setMe({ ...me, avatar_url: e.target.value })} />
+                  <textarea className="input" rows={4} placeholder={t("bio")} value={me.bio || ""} onChange={e => setMe({ ...me, bio: e.target.value })} />
                   <label className="small">
-                    <input type="checkbox" checked={me.accept_dm} onChange={e=>setMe({...me, accept_dm:e.target.checked})} /> {t("accept_dm")}
+                    <input type="checkbox" checked={me.accept_dm} onChange={e => setMe({ ...me, accept_dm: e.target.checked })} /> {t("accept_dm")}
                   </label>
                   <button className="btn primary" onClick={updateMyProfile}>Guardar perfil</button>
                 </>
@@ -614,26 +678,26 @@ export default function App() {
       <div className="card main">
         <div className="header">
           <div>
-            <div style={{fontWeight:900}}>
-              {tab==="rooms" ? (selectedRoom ? selectedRoom.interest.name : t("rooms")) : (tab==="feed" ? t("feed") : t("profile"))}
+            <div style={{ fontWeight: 900 }}>
+              {tab === "rooms" ? (selectedRoom ? selectedRoom.interest.name : t("rooms")) : (tab === "feed" ? t("feed") : t("profile"))}
             </div>
             <div className="small">
-              {tab==="rooms" && selectedRoom ? `${selectedRoom.province} · ${selectedRoom.age_range}` : ""}
+              {tab === "rooms" && selectedRoom ? `${selectedRoom.province} · ${selectedRoom.age_range}` : ""}
             </div>
           </div>
           <div className="small">MeetGo — meet people, go places</div>
         </div>
 
         <div className="mainBody">
-          {tab==="rooms" ? (
+          {tab === "rooms" ? (
             <>
               <div className="list">
-                <div className="item" style={{cursor:"default"}}>
-                  <div style={{fontWeight:800}}>{t("tip_title")}</div>
+                <div className="item" style={{ cursor: "default" }}>
+                  <div style={{ fontWeight: 800 }}>{t("tip_title")}</div>
                   <div className="small">{t("tip_body")}</div>
                 </div>
-                <div className="item" style={{cursor:"default"}}>
-                  <div style={{fontWeight:800}}>{t("quick_title")}</div>
+                <div className="item" style={{ cursor: "default" }}>
+                  <div style={{ fontWeight: 800 }}>{t("quick_title")}</div>
                   <div className="small">{t("quick_body")}</div>
                 </div>
               </div>
@@ -642,7 +706,7 @@ export default function App() {
                 <div className="messages" ref={messagesRef}>
                   {msgs.map(m => (
                     <div key={m.id} className="msgRow">
-                      <div className="avatar" onContextMenu={(e)=>onAvatarContextMenu(e, {id:m.user.id, display_name:m.user.display_name})} title={t("quick_body")}>
+                      <div className="avatar" onContextMenu={(e) => onAvatarContextMenu(e, { id: m.user.id, display_name: m.user.display_name })} title={t("quick_body")}>
                         <img src={avatarSrc(m.user)} alt={m.user.display_name} />
                       </div>
                       <div className="bubble">
@@ -657,22 +721,22 @@ export default function App() {
                   ))}
                 </div>
                 <div className="composer">
-                  <textarea placeholder={t("write_placeholder")} value={composer} onChange={e=>setComposer(e.target.value)} />
+                  <textarea placeholder={t("write_placeholder")} value={composer} onChange={e => setComposer(e.target.value)} />
                   <button className="btn primary" onClick={sendMsg}>{t("send_btn")}</button>
                 </div>
               </div>
             </>
           ) : null}
 
-          {tab==="feed" ? (
-            <div className="chatWrap" style={{gridColumn:"1 / -1"}}>
+          {tab === "feed" ? (
+            <div className="chatWrap" style={{ gridColumn: "1 / -1" }}>
               <div className="messages">
                 {feed.map(p => (
                   <div key={p.id} className="msgRow">
-                    <div className="avatar" onContextMenu={(e)=>onAvatarContextMenu(e, {id:p.user.id, display_name:p.user.display_name})}>
+                    <div className="avatar" onContextMenu={(e) => onAvatarContextMenu(e, { id: p.user.id, display_name: p.user.display_name })}>
                       <img src={avatarSrc(p.user)} alt={p.user.display_name} />
                     </div>
-                    <div className="bubble" style={{maxWidth:"860px"}}>
+                    <div className="bubble" style={{ maxWidth: "860px" }}>
                       <div className="meta">
                         <div className="name">{p.user.display_name}</div>
                         <div className="time">{fmtTime(p.created_at)}</div>
@@ -685,17 +749,17 @@ export default function App() {
             </div>
           ) : null}
 
-          {tab==="profile" ? (
-            <div className="chatWrap" style={{gridColumn:"1 / -1"}}>
+          {tab === "profile" ? (
+            <div className="chatWrap" style={{ gridColumn: "1 / -1" }}>
               <div className="messages">
                 <div className="msgRow">
                   <div className="bigAvatar">
                     <img src={avatarSrc(me || undefined)} />
                   </div>
                   <div>
-                    <div style={{fontWeight:900, fontSize:18}}>{me?.display_name}</div>
+                    <div style={{ fontWeight: 900, fontSize: 18 }}>{me?.display_name}</div>
                     <div className="small">{me?.province} · {me?.age_range}</div>
-                    <div style={{marginTop:10, whiteSpace:"pre-wrap"}}>{me?.bio || "Sin bio todavía."}</div>
+                    <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{me?.bio || "Sin bio todavía."}</div>
                   </div>
                 </div>
               </div>
@@ -705,33 +769,101 @@ export default function App() {
       </div>
 
       {menu ? (
-        <div className="menu" style={{left: menu.x, top: menu.y}} onClick={(e)=>e.stopPropagation()}>
-          <button onClick={()=>viewProfile(menu.userId)}>Ver perfil</button>
+        <div className="menu" style={{ left: menu.x, top: menu.y }} onClick={(e) => e.stopPropagation()}>
+          <button onClick={() => viewProfile(menu.userId)}>Ver perfil</button>
           <div className="sep" />
-          <button onClick={()=>friendUser(menu.userId)}>Enviar solicitud de amistad</button>
-          <button onClick={()=>followUser(menu.userId)}>Seguir feed</button>
+          <button onClick={() => friendUser(menu.userId)}>Enviar solicitud de amistad</button>
+          <button onClick={() => followUser(menu.userId)}>Seguir feed</button>
         </div>
       ) : null}
 
       {profileModal ? (
-        <div className="modalBackdrop" onClick={()=>setProfileModal(null)}>
-          <div className="modal" onClick={(e)=>e.stopPropagation()}>
+        <div className="modalBackdrop" onClick={() => setProfileModal(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modalHeader">
               <div className="modalTitle">Perfil</div>
-              <button className="tab" onClick={()=>setProfileModal(null)}>Cerrar</button>
+              <button className="tab" onClick={() => setProfileModal(null)}>Cerrar</button>
             </div>
             <div className="grid2">
               <div className="bigAvatar"><img src={avatarSrc(profileModal.user)} /></div>
               <div>
-                <div style={{fontWeight:900, fontSize:18}}>{profileModal.user.display_name}</div>
+                <div style={{ fontWeight: 900, fontSize: 18 }}>{profileModal.user.display_name}</div>
                 <div className="small">{profileModal.user.province} · {profileModal.user.age_range}</div>
-                <div style={{marginTop:10, whiteSpace:"pre-wrap"}}>{profileModal.user.bio || "Sin bio todavía."}</div>
+                <div style={{ marginTop: 10, whiteSpace: "pre-wrap" }}>{profileModal.user.bio || "Sin bio todavía."}</div>
                 <div className="actions">
-                  <button className="btn primary" onClick={()=>friendUser(profileModal.user.id)}>Amistad</button>
-                  <button className="btn" onClick={()=>followUser(profileModal.user.id)}>Seguir</button>
+                  <button className="btn primary" onClick={() => friendUser(profileModal.user.id)}>Amistad</button>
+                  <button className="btn" onClick={() => followUser(profileModal.user.id)}>Seguir</button>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* ---- DEBUG PANEL ---- */}
+      {DEBUG_FRONTEND_LOG ? (
+        <div
+          style={{
+            position: "fixed",
+            right: 12,
+            bottom: 12,
+            width: 520,
+            height: 260,
+            background: "rgba(10,10,10,0.92)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 12,
+            overflow: "hidden",
+            zIndex: 9999,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+            display: "grid",
+            gridTemplateRows: "40px 1fr 40px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 12px", borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
+            <div style={{ color: "white", fontWeight: 800 }}>Depurador (FrontEnd)</div>
+            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>últimas {frontLogs.length} líneas</div>
+          </div>
+
+          <div ref={frontLogsRef} style={{ overflow: "auto", padding: 10, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12 }}>
+            {frontLogs.map((l, idx) => (
+              <div key={idx} style={{ marginBottom: 8, color: "white" }}>
+                <div style={{ opacity: 0.8 }}>
+                  <span style={{ marginRight: 8 }}>{l.ts.split("T")[1]?.replace("Z", "")}</span>
+                  <span style={{ marginRight: 8, fontWeight: 800 }}>[{l.level.toUpperCase()}]</span>
+                  <span>{l.msg}</span>
+                </div>
+                {l.data !== undefined ? (
+                  <div style={{ marginTop: 4, opacity: 0.85, whiteSpace: "pre-wrap" }}>
+                    {safeStr(l.data)}
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", gap: 10, padding: "8px 12px", borderTop: "1px solid rgba(255,255,255,0.12)" }}>
+            <button
+              className="btn"
+              style={{ padding: "6px 10px" }}
+              onClick={() => setFrontLogs([])}
+            >
+              Clear
+            </button>
+            <button
+              className="btn"
+              style={{ padding: "6px 10px" }}
+              onClick={() => {
+                try {
+                  const txt = frontLogs.map(x => `${x.ts} [${x.level.toUpperCase()}] ${x.msg} ${x.data !== undefined ? safeStr(x.data) : ""}`).join("\n");
+                  navigator.clipboard.writeText(txt);
+                  alert("Copiado ✅");
+                } catch {
+                  alert("No se pudo copiar");
+                }
+              }}
+            >
+              Copy
+            </button>
           </div>
         </div>
       ) : null}

@@ -1,3 +1,4 @@
+// api.ts
 // const API_BASE = (import.meta as any).env.VITE_API_BASE || "http://localhost:8000";
 const API_BASE =
   (import.meta as any).env.VITE_API_BASE ||
@@ -5,6 +6,50 @@ const API_BASE =
 
 export type Token = { access_token: string };
 
+// ---- Frontend logger hook (App.tsx can subscribe) ----
+type LogLevel = "log" | "warn" | "error";
+export type FrontLogEntry = {
+  ts: string;
+  level: LogLevel;
+  msg: string;
+  data?: any;
+};
+
+let _logListener: ((e: FrontLogEntry) => void) | null = null;
+
+export function setFrontendLogListener(fn: ((e: FrontLogEntry) => void) | null) {
+  _logListener = fn;
+}
+
+function emitFrontLog(level: LogLevel, msg: string, data?: any) {
+  try {
+    _logListener?.({
+      ts: new Date().toISOString(),
+      level,
+      msg,
+      data,
+    });
+  } catch {
+    // never break the app due to logging
+  }
+}
+
+export function frontLog(msg: string, data?: any) {
+  console.log(msg, data);
+  emitFrontLog("log", msg, data);
+}
+
+export function frontWarn(msg: string, data?: any) {
+  console.warn(msg, data);
+  emitFrontLog("warn", msg, data);
+}
+
+export function frontError(msg: string, data?: any) {
+  console.error(msg, data);
+  emitFrontLog("error", msg, data);
+}
+
+// ---- Token helpers ----
 export function getToken(): string {
   return localStorage.getItem("token") || "";
 }
@@ -15,20 +60,86 @@ export function clearToken() {
   localStorage.removeItem("token");
 }
 
+// ---- Error type that preserves HTTP info ----
+export class ApiError extends Error {
+  status: number;
+  url: string;
+  method: string;
+  bodyText?: string;
+
+  constructor(args: { status: number; url: string; method: string; message: string; bodyText?: string }) {
+    super(args.message);
+    this.name = "ApiError";
+    this.status = args.status;
+    this.url = args.url;
+    this.method = args.method;
+    this.bodyText = args.bodyText;
+  }
+}
+
+function safeJsonParse(s: string): any {
+  try {
+    return JSON.parse(s);
+  } catch {
+    return null;
+  }
+}
+
 async function req(path: string, opts: RequestInit = {}) {
   const headers: any = { ...(opts.headers || {}) };
   if (!(opts.body instanceof FormData)) headers["Content-Type"] = headers["Content-Type"] || "application/json";
+
   const token = getToken();
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(API_BASE + path, { ...opts, headers });
-  if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`${res.status} ${txt}`);
+  const url = API_BASE + path;
+  const method = (opts.method || "GET").toUpperCase();
+
+  const started = performance.now();
+  let res: Response;
+
+  try {
+    res = await fetch(url, { ...opts, headers });
+  } catch (e: any) {
+    // network error (DNS, CORS blocking, connection refused, etc.)
+    frontError(`[API] ${method} ${url} NETWORK_ERROR`, { error: e?.message || String(e) });
+    throw new ApiError({
+      status: 0,
+      url,
+      method,
+      message: `NETWORK_ERROR ${e?.message || String(e)}`,
+    });
+  } finally {
+    const tookMs = Math.round(performance.now() - started);
+    // you can log latency here if you want
   }
+
   const ct = res.headers.get("content-type") || "";
-  if (ct.includes("application/json")) return await res.json();
-  return await res.text();
+  const text = await res.text();
+
+  if (!res.ok) {
+    // Log to frontend logger
+    const parsed = safeJsonParse(text);
+    frontError(`[API] ${method} ${path} -> ${res.status}`, {
+      url,
+      status: res.status,
+      response: parsed ?? text,
+    });
+
+    // Build a compact, useful error message
+    const detail = parsed?.detail ? String(parsed.detail) : (text || res.statusText);
+    throw new ApiError({
+      status: res.status,
+      url,
+      method,
+      message: `${res.status} ${detail}`,
+      bodyText: text,
+    });
+  }
+
+  // success
+  if (ct.includes("application/json")) return safeJsonParse(text) ?? {};
+  return text;
 }
 
 export const api = {
@@ -64,6 +175,7 @@ export const api = {
 
   // Create (or fetch) a room for the selected interest in your province & age-range
   async joinRoom(interest_slug: string) {
+    // If your backend is actually /rooms/join-room or /api/rooms/join, this will 404 and you'll see it in Debug panel.
     return await req("/rooms/join", { method: "POST", body: JSON.stringify({ interest_slug }) });
   },
 
