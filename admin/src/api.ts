@@ -1,6 +1,13 @@
-const API_BASE =
-  (import.meta as any).env.VITE_API_BASE ||
-  `${window.location.protocol}//${window.location.hostname}:18000`;
+function computeApiBase() {
+  const envBase = (import.meta as any).env.VITE_API_BASE;
+  if (envBase) return String(envBase).replace(/\/+$/, "");
+  const { protocol, host, hostname, port } = window.location;
+  const isDev = port === "5173" || port === "5172";
+  if (isDev) return `${protocol}//${hostname}:18000`;
+  return `${protocol}//${host}/api`;
+}
+
+const API_BASE = computeApiBase();
 
 export type Token = { access_token: string; password_temp?: boolean };
 

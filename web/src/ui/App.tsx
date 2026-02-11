@@ -8,6 +8,7 @@ import {
   frontLog,
   frontWarn,
   frontError,
+  getWsBase,
   type FrontLogEntry,
 } from "./api";
 import LogoSvg from "../assets/logo.svg";
@@ -103,14 +104,6 @@ function splitPhone(phone: string | null | undefined, callingCodes: { cc: string
     }
   }
   return { cc: "+34", number: raw.replace(/[^\d]/g, "") };
-}
-
-function apiBaseFromWindow() {
-  // If you configured VITE_API_BASE, api.ts will use it.
-  // This is only used to build a WS URL that matches the host.
-  const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-  const host = window.location.hostname;
-  return { wsProto: proto, host };
 }
 
 function safeStr(x: any) {
@@ -1090,9 +1083,8 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
       }
     }
 
-    const { wsProto, host } = apiBaseFromWindow();
-    const wsPort = "18000"; // <-- el puerto host del backend (18000:8000)
-    const wsUrl = `${wsProto}//${host}:${wsPort}/ws/rooms/${roomId}?token=${encodeURIComponent(token)}`;
+    const wsBase = getWsBase();
+    const wsUrl = `${wsBase}/ws/rooms/${roomId}?token=${encodeURIComponent(token)}`;
 
     frontLog("[WS] connecting", wsUrl);
     const ws = new WebSocket(wsUrl);

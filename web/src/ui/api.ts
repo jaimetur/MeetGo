@@ -1,8 +1,22 @@
 // api.ts
-// const API_BASE = (import.meta as any).env.VITE_API_BASE || "http://localhost:8000";
-const API_BASE =
-  (import.meta as any).env.VITE_API_BASE ||
-  `${window.location.protocol}//${window.location.hostname}:18000`;
+function computeApiBase() {
+  const envBase = (import.meta as any).env.VITE_API_BASE;
+  if (envBase) return String(envBase).replace(/\/+$/, "");
+  const { protocol, host, hostname, port } = window.location;
+  const isDev = port === "5173" || port === "5172";
+  if (isDev) return `${protocol}//${hostname}:18000`;
+  return `${protocol}//${host}/api`;
+}
+
+const API_BASE = computeApiBase();
+
+export function getApiBase() {
+  return API_BASE;
+}
+
+export function getWsBase() {
+  return API_BASE.replace(/^http/, "ws");
+}
 
 export type Token = { access_token: string };
 
