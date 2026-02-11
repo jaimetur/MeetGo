@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from .db import SessionLocal
 from .security import decode_token
+from .i18n import t
 from .models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -22,11 +23,11 @@ async def get_current_user(
     res = await db.execute(select(User).where(User.id == user_id))
     user = res.scalar_one_or_none()
     if not user:
-        raise HTTPException(401, "User not found")
+        raise HTTPException(401, t("err_user_not_found"))
     if user.is_banned:
-        raise HTTPException(403, "User banned")
+        raise HTTPException(403, t("err_user_banned"))
     if user.banned_until and user.banned_until > datetime.utcnow():
-        raise HTTPException(403, "User banned")
+        raise HTTPException(403, t("err_user_banned"))
     user.last_seen_at = datetime.utcnow()
     db.add(user)
     await db.commit()

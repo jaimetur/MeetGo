@@ -13,7 +13,8 @@ docker compose up --build
 ```
 
 - Backend (Swagger): http://localhost:18000/docs
-- Web: http://localhost:5173
+- Web (ui_user): http://localhost:5173
+- Admin (ui_admin): http://localhost:5174
 
 ## Docker commands
 ```bash
@@ -32,8 +33,8 @@ docker compose restart
 # Follow logs for all services
 docker compose logs -f
 
-# Follow logs for one service (example: backend)
-docker compose logs -f backend
+# Follow logs for one service (example: app)
+docker compose logs -f app
 
 # Show status
 docker compose ps

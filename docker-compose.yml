@@ -1,5 +1,57 @@
 name: meetgo
 services:
+
+  app:
+    build: app
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/meetgo
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: dev-secret-change-me
+      DEBUG_COMPOSE_LOGS: "1"
+      COMPOSE_PROJECT_NAME: meetgo
+    ports:
+      - "18000:8000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./app/src:/app/src
+      - ./lang:/app/lang
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+  web_user:
+    build: ./web
+    ports:
+      - "5173:5173"
+    depends_on:
+      - app
+    environment:
+      VITE_API_BASE: https://api.meetgo.app
+      VITE_ROOT: /app/web_user
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./web:/app
+      - ./lang:/app/lang
+      - /app/node_modules
+    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port 5173 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+
+  web_admin:
+    build: ./web
+    ports:
+      - "5174:5174"
+    depends_on:
+      - app
+    environment:
+      VITE_API_BASE: https://api.meetgo.app
+      VITE_ROOT: /app/web_admin
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./web:/app
+      - ./lang:/app/lang
+      - /app/node_modules
+    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port 5174 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+
   db:
     image: postgres:16
     environment:
@@ -15,53 +67,6 @@ services:
     image: redis:7
     ports:
       - "6379:6379"
-
-  backend:
-    build: ./backend
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/meetgo
-      REDIS_URL: redis://redis:6379/0
-      JWT_SECRET: dev-secret-change-me
-      DEBUG_COMPOSE_LOGS: "1"
-      COMPOSE_PROJECT_NAME: meetgo
-    ports:
-      - "18000:8000"
-    depends_on:
-      - db
-      - redis
-    volumes:
-      - ./backend/app:/app/app
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-
-  web:
-    build: ./web
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
-    environment:
-      VITE_API_BASE: https://api.meetgo.app
-      CHOKIDAR_USEPOLLING: "true"
-    volumes:
-      - ./web:/app
-      - /app/node_modules
-    command: sh -c "npm run dev -- --host 0.0.0.0 --port 5173 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
-
-  admin:
-    build: ./admin
-    ports:
-      - "5172:5172"
-    depends_on:
-      - backend
-    environment:
-      VITE_API_BASE: https://api.meetgo.app
-      CHOKIDAR_USEPOLLING: "true"
-    volumes:
-      - ./admin:/app
-      - /app/node_modules
-    command: sh -c "npm run dev -- --host 0.0.0.0 --port 5172 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
-  
 
 volumes:
   meetgo_db:

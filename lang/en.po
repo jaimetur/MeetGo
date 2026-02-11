@@ -63,6 +63,9 @@ msgstr "Error"
 msgid "ok_title"
 msgstr "OK"
 
+msgid "cancel"
+msgstr "Cancel"
+
 msgid "register_ok"
 msgstr "Account created successfully."
 
@@ -424,6 +427,15 @@ msgstr "Restore"
 msgid "debug_close"
 msgstr "Close"
 
+msgid "debug_tab_all"
+msgstr "All"
+
+msgid "debug_tab_js"
+msgstr "JavaScript"
+
+msgid "debug_auto_refresh"
+msgstr "Auto refresh"
+
 msgid "debug_maximize"
 msgstr "Maximize"
 
@@ -435,6 +447,9 @@ msgstr "Chat not connected (WS readyState={state})."
 
 msgid "chat_disconnected"
 msgstr "Chat disconnected. Open the room again (or login again)."
+
+msgid "chat_reconnecting"
+msgstr "Reconnecting to chat..."
 
 msgid "no_session"
 msgstr "No session (token). Login again."
@@ -687,3 +702,354 @@ msgstr "Campania"
 
 msgid "province_it_sicilia"
 msgstr "Sicilia"
+
+msgid "admin_users_title"
+msgstr "Users"
+
+msgid "admin_users_search_placeholder"
+msgstr "Search"
+
+msgid "admin_users_search_button"
+msgstr "Search"
+
+msgid "admin_users_select_placeholder"
+msgstr "Select user"
+
+msgid "admin_users_logins_meta"
+msgstr "logins: {count} last: {last}"
+
+msgid "admin_users_last_seen_meta"
+msgstr "last seen: {last} total: {seconds}s"
+
+msgid "admin_users_active_meta"
+msgstr "active: {active} start: {start}"
+
+msgid "admin_yes"
+msgstr "yes"
+
+msgid "admin_no"
+msgstr "no"
+
+msgid "admin_users_edit_title"
+msgstr "Edit user"
+
+msgid "admin_users_name"
+msgstr "Name"
+
+msgid "admin_users_email"
+msgstr "Email"
+
+msgid "admin_users_phone"
+msgstr "Phone"
+
+msgid "admin_users_dob"
+msgstr "DOB (YYYY-MM-DD)"
+
+msgid "admin_users_country"
+msgstr "Country"
+
+msgid "admin_users_province"
+msgstr "Province"
+
+msgid "admin_users_city"
+msgstr "City"
+
+msgid "admin_users_role"
+msgstr "Role"
+
+msgid "admin_users_new_password"
+msgstr "New password"
+
+msgid "admin_users_email_verified"
+msgstr "Email verified"
+
+msgid "admin_users_resend_button"
+msgstr "Resend verification"
+
+msgid "admin_users_resend_ok"
+msgstr "Verification email resent."
+
+msgid "admin_users_resend_error"
+msgstr "Verification resend failed."
+
+msgid "admin_users_blocked"
+msgstr "Blocked"
+
+msgid "admin_users_blocked_until"
+msgstr "Blocked until (YYYY-MM-DD)"
+
+msgid "admin_users_password_label"
+msgstr "Password"
+
+msgid "admin_users_dob_short"
+msgstr "DOB"
+
+msgid "admin_users_missing_fields"
+msgstr "Missing fields: {fields}"
+
+msgid "admin_users_updated"
+msgstr "User updated."
+
+msgid "admin_users_created"
+msgstr "User created."
+
+msgid "admin_users_save_error"
+msgstr "Could not save user."
+
+msgid "admin_users_save_button"
+msgstr "Save"
+
+msgid "admin_users_create_button"
+msgstr "Create"
+
+msgid "admin_users_delete_confirm"
+msgstr "Delete this user? This action cannot be undone."
+
+msgid "admin_users_deleted"
+msgstr "User deleted."
+
+msgid "admin_users_delete_error"
+msgstr "Could not delete."
+
+msgid "admin_users_delete_button"
+msgstr "Delete"
+
+msgid "admin_channels_title"
+msgstr "Channels"
+
+msgid "admin_channels_edit_button"
+msgstr "Edit"
+
+msgid "admin_channels_delete_button"
+msgstr "Delete"
+
+msgid "admin_channels_form_title"
+msgstr "Add / Edit channel"
+
+msgid "admin_channels_name_placeholder"
+msgstr "Channel name"
+
+msgid "admin_channels_slug_label"
+msgstr "Slug: {slug}"
+
+msgid "admin_channels_name_required"
+msgstr "Channel name required."
+
+msgid "admin_channels_updated"
+msgstr "Channel updated."
+
+msgid "admin_channels_created"
+msgstr "Channel created."
+
+msgid "admin_channels_save_error"
+msgstr "Could not save channel."
+
+msgid "admin_channels_save_button"
+msgstr "Save"
+
+msgid "unknown_user"
+msgstr "Unknown"
+
+msgid "email_verify_subject"
+msgstr "Verify your email"
+
+msgid "email_verify_body"
+msgstr "Click to verify: {link}"
+
+msgid "email_reset_subject"
+msgstr "Reset your password"
+
+msgid "email_reset_body"
+msgstr "Reset link: {link}"
+
+msgid "email_smtp_test_subject"
+msgstr "MeetGo SMTP test"
+
+msgid "email_smtp_test_body"
+msgstr "SMTP test email from MeetGo admin."
+
+msgid "err_smtp_sender_not_configured"
+msgstr "SMTP sender not configured"
+
+msgid "err_gmail_not_configured"
+msgstr "Gmail API SMTP not configured"
+
+msgid "err_gmail_token_failed"
+msgstr "Failed to get Gmail access token"
+
+msgid "err_smtp_host_not_configured"
+msgstr "SMTP host not configured"
+
+msgid "err_admin_required"
+msgstr "Admin required"
+
+msgid "err_email_phone_required"
+msgstr "Email and phone required"
+
+msgid "err_password_too_short"
+msgstr "Password too short"
+
+msgid "err_email_already_used"
+msgstr "Email already used"
+
+msgid "err_invalid_phone"
+msgstr "Invalid phone"
+
+msgid "err_phone_already_used"
+msgstr "Phone already used"
+
+msgid "err_email_required"
+msgstr "Email required"
+
+msgid "err_invalid_credentials"
+msgstr "Invalid credentials"
+
+msgid "err_user_banned"
+msgstr "User banned"
+
+msgid "err_password_required"
+msgstr "Password required"
+
+msgid "err_email_not_verified"
+msgstr "Email not verified"
+
+msgid "err_invalid_token"
+msgstr "Invalid token"
+
+msgid "err_token_expired"
+msgstr "Token expired"
+
+msgid "err_missing_to_email"
+msgstr "Missing to_email"
+
+msgid "err_user_not_found"
+msgstr "User not found"
+
+msgid "err_user_no_email"
+msgstr "User has no email"
+
+msgid "err_cannot_delete_self"
+msgstr "Cannot delete self"
+
+msgid "err_interest_exists"
+msgstr "Interest already exists"
+
+msgid "err_interest_not_found"
+msgstr "Interest not found"
+
+msgid "err_dob_change_used"
+msgstr "DOB change already used"
+
+msgid "err_invalid_dob"
+msgstr "Invalid dob"
+
+msgid "err_province_required"
+msgstr "Province required"
+
+msgid "err_phone_change_limited"
+msgstr "Phone change limited to every 30 days"
+
+msgid "err_forbidden_diff_province"
+msgstr "Forbidden (different province)"
+
+msgid "err_room_not_found"
+msgstr "Room not found"
+
+msgid "err_forbidden"
+msgstr "Forbidden"
+
+msgid "err_rules_not_found"
+msgstr "Rules not found"
+
+msgid "err_cannot_dm_self"
+msgstr "Cannot DM yourself"
+
+msgid "err_user_no_dm"
+msgstr "User does not accept DMs"
+
+msgid "err_dm_daily_limit"
+msgstr "Daily DM limit reached (10)"
+
+msgid "err_dm_request_pending"
+msgstr "DM request already pending"
+
+msgid "err_request_not_found"
+msgstr "Request not found"
+
+msgid "err_already_resolved"
+msgstr "Already resolved"
+
+msgid "err_conversation_not_found"
+msgstr "Conversation not found"
+
+msgid "err_cannot_follow_self"
+msgstr "Cannot follow yourself"
+
+msgid "err_cannot_friend_self"
+msgstr "Cannot friend yourself"
+
+msgid "err_already_friends"
+msgstr "Already friends"
+
+msgid "err_request_pending"
+msgstr "Request already pending"
+
+msgid "err_debug_disabled"
+msgstr "Disabled"
+
+msgid "err_docker_sdk_missing"
+msgstr "Docker SDK not installed"
+
+msgid "err_docker_unavailable"
+msgstr "Docker unavailable: {error}"
+
+msgid "err_no_compose_containers"
+msgstr "No compose containers found"
+
+msgid "err_password_too_long"
+msgstr "Password too long (bcrypt limit is 72 bytes). Use a shorter password."
+
+msgid "err_token_missing_sub"
+msgstr "Missing sub"
+
+msgid "log_error_line"
+msgstr "[log error] {error}"
+
+msgid "err_password_required"
+msgstr "Password required"
+
+msgid "log_level_info"
+msgstr "INFO"
+
+msgid "log_level_warn"
+msgstr "WARN"
+
+msgid "log_level_warning"
+msgstr "WARNING"
+
+msgid "log_level_error"
+msgstr "ERROR"
+
+msgid "log_level_debug"
+msgstr "DEBUG"
+
+msgid "svc_database"
+msgstr "MeetGo-Database"
+
+msgid "svc_redis"
+msgstr "MeetGo-Redis"
+
+msgid "svc_app"
+msgstr "MeetGo-App"
+
+msgid "svc_web_user"
+msgstr "MeetGo-Web-User"
+
+msgid "svc_web_admin"
+msgstr "MeetGo-Web-Admin"
+
+msgid "svc_js"
+msgstr "MeetGo-JavaScript"
+
+msgid "svc_prefix"
+msgstr "MeetGo-{service}"

@@ -3,16 +3,17 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import HTTPException, status
 from .config import settings
+from .i18n import t
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password: str) -> str:
     if password is None:
-        raise HTTPException(400, "password is required")
+        raise HTTPException(400, t("err_password_required"))
     # bcrypt limit: 72 bytes (not chars). Emojis can exceed bytes quickly.
     b = password.encode("utf-8")
     if len(b) > 72:
-        raise HTTPException(400, "Password too long (bcrypt limit is 72 bytes). Use a shorter password.")
+        raise HTTPException(400, t("err_password_too_long"))
     return pwd_context.hash(password)
 
 
@@ -31,7 +32,7 @@ def decode_token(token: str) -> str:
         payload = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.JWT_ALG])
         sub = payload.get("sub")
         if not sub:
-            raise ValueError("Missing sub")
+            raise ValueError(t("err_token_missing_sub"))
         return sub
     except (JWTError, ValueError):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=t("err_invalid_token"))

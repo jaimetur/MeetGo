@@ -12,7 +12,7 @@ import {
   type FrontLogEntry,
 } from "./api";
 import LogoSvg from "../assets/logo.svg";
-import { getLang, setLang, t, type Lang } from "./lang";
+import { getLang, setLang, t, type Lang } from "../lang/lang";
 
 // ---- Toggle DEBUG PANEL by code only ----
 const SHOW_FRONTEND_LOG = true;
@@ -130,35 +130,47 @@ function extractService(msg: string) {
 }
 
 function levelMeta(level: "log" | "warn" | "error") {
-  if (level === "warn") return { label: "WARN", color: "#f3b73f" };
-  if (level === "error") return { label: "ERROR", color: "#ff6b6b" };
-  return { label: "INFO", color: "#33d17a" };
+  if (level === "warn") return { label: t("log_level_warn"), color: "#f3b73f" };
+  if (level === "error") return { label: t("log_level_error"), color: "#ff6b6b" };
+  return { label: t("log_level_info"), color: "#33d17a" };
 }
 
 function serviceLevelMeta(line: string) {
   const text = line || "";
   const up = text.toUpperCase();
   if (up.includes("TRACEBACK") || /\b(ERROR|ERR|FATAL|CRITICAL)\b/.test(up)) {
-    return { label: "ERROR", color: "#ff6b6b" };
+    return { label: t("log_level_error"), color: "#ff6b6b" };
   }
   if (/\b(WARN|WARNING)\b/.test(up)) {
-    return { label: "WARNING", color: "#f3b73f" };
+    return { label: t("log_level_warning"), color: "#f3b73f" };
   }
   if (/\b(DEBUG)\b/.test(up)) {
-    return { label: "DEBUG", color: "#c77dff" };
+    return { label: t("log_level_debug"), color: "#c77dff" };
   }
-  return { label: "INFO", color: "#33d17a" };
+  return { label: t("log_level_info"), color: "#33d17a" };
 }
 
 function serviceLabel(service: string) {
   const s = service.toLowerCase();
-  if (s.includes("db") || s.includes("postgres") || s.includes("database")) return "MeetGo-Database";
-  if (s.includes("redis")) return "MeetGo-Redis";
-  if (s.includes("backend")) return "MeetGo-BackEnd";
-  if (s.includes("web")) return "MeetGo-FrontEnd-Web";
-  if (s.includes("frontend-js")) return "MeetGo-FrontEnd-JS";
-  if (s.includes("frontend")) return "MeetGo-FrontEnd-JS";
-  return `MeetGo-${service}`;
+  if (s.includes("db") || s.includes("postgres") || s.includes("database")) return t("svc_database");
+  if (s.includes("redis")) return t("svc_redis");
+  if (s.includes("backend") || s === "app") return t("svc_app");
+  if (s.includes("web_user") || s.includes("web-user") || s === "web") return t("svc_web_user");
+  if (s.includes("web_admin") || s.includes("web-admin") || s === "admin") return t("svc_web_admin");
+  if (s.includes("frontend-js")) return t("svc_js");
+  if (s.includes("frontend")) return t("svc_js");
+  return t("svc_prefix", { service });
+}
+
+function serviceLabelColor(label: string) {
+  const s = label.toLowerCase();
+  if (s.includes("javascript")) return "#ff4d4f";
+  if (s.includes("app")) return "#40a9ff";
+  if (s.includes("web-user")) return "#36cfc9";
+  if (s.includes("web-admin")) return "#9254de";
+  if (s.includes("database")) return "#52c41a";
+  if (s.includes("redis")) return "#fa8c16";
+  return "#f0f0f0";
 }
 
 function flagFromIso(code: string) {
@@ -237,17 +249,19 @@ export default function App() {
   const [frontLogs, setFrontLogs] = useState<FrontLogEntry[]>([]);
   const [svcLogs, setSvcLogs] = useState<ServiceLogEntry[]>([]);
   const [svcLogStatus, setSvcLogStatus] = useState<"connecting" | "connected" | "error">("connecting");
-  const [debugTab, setDebugTab] = useState<string>("web");
+  const [debugServiceFilter, setDebugServiceFilter] = useState<string[]>([]);
+  const [debugFilterOpen, setDebugFilterOpen] = useState(false);
   const [debugMinimized, setDebugMinimized] = useState(true);
   const [debugMaximized, setDebugMaximized] = useState(false);
   const [debugVisible, setDebugVisible] = useState(true);
+  const [debugAutoRefresh, setDebugAutoRefresh] = useState(true);
   const [debugPos, setDebugPos] = useState<{ x: number; y: number }>({ x: 12, y: 12 });
   const [debugSize, setDebugSize] = useState<{ w: number; h: number }>({ w: 1100, h: 520 });
   const [debugReady, setDebugReady] = useState(false);
   const debugPrevRef = useRef<{ pos: { x: number; y: number }; size: { w: number; h: number } } | null>(null);
-  const frontLogsRef = useRef<HTMLDivElement | null>(null);
-  const svcLogsRef = useRef<HTMLDivElement | null>(null);
+  const debugLogsRef = useRef<HTMLDivElement | null>(null);
   const debugPanelRef = useRef<HTMLDivElement | null>(null);
+  const debugFilterRef = useRef<HTMLDivElement | null>(null);
   const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
   const resizeRef = useRef<{
     startX: number;
@@ -298,13 +312,6 @@ export default function App() {
 
   useEffect(() => {
     if (!SHOW_FRONTEND_LOG) return;
-    setTimeout(() => {
-      frontLogsRef.current?.scrollTo({ top: frontLogsRef.current.scrollHeight });
-    }, 0);
-  }, [frontLogs.length]);
-
-  useEffect(() => {
-    if (!SHOW_FRONTEND_LOG) return;
 
     const url = `${api.API_BASE}/debug/compose-logs`;
     const es = new EventSource(url);
@@ -330,11 +337,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!SHOW_FRONTEND_LOG) return;
-    setTimeout(() => {
-      svcLogsRef.current?.scrollTo({ top: svcLogsRef.current.scrollHeight });
-    }, 0);
-  }, [svcLogs.length]);
+    if (!SHOW_FRONTEND_LOG || !debugAutoRefresh) return;
+    const id = window.setInterval(() => {
+      const el = debugLogsRef.current;
+      if (!el) return;
+      el.scrollTo({ top: el.scrollHeight });
+    }, 250);
+    return () => window.clearInterval(id);
+  }, [debugAutoRefresh]);
 
   useEffect(() => {
     if (debugReady || !SHOW_FRONTEND_LOG) return;
@@ -346,17 +356,34 @@ export default function App() {
     setDebugReady(true);
   }, [debugReady, debugSize.h, debugSize.w]);
 
-  const serviceTabs = useMemo(() => {
-    const base = ["web", "backend", "db", "redis"];
+  useEffect(() => {
+    if (!debugFilterOpen) return;
+    const onDoc = (e: MouseEvent) => {
+      const target = e.target as Node | null;
+      if (!target || debugFilterRef.current?.contains(target)) return;
+      setDebugFilterOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [debugFilterOpen]);
+
+  type CombinedLogItem =
+    | { kind: "svc"; ts: string; service: string; line: string }
+    | { kind: "front"; ts: string; service: "frontend"; entry: FrontLogEntry };
+
+  const serviceOptions = useMemo(() => {
+    const base = ["frontend", "app", "web_user", "web_admin", "db", "redis"];
     const set = new Set<string>(base);
     for (const l of svcLogs) set.add(l.service);
     const list = Array.from(set);
     list.sort((a, b) => {
       const order = (s: string) => {
-        if (s === "web") return 0;
-        if (s === "backend") return 1;
-        if (s === "db") return 2;
-        if (s === "redis") return 3;
+        if (s === "frontend") return 0;
+        if (s === "app") return 1;
+        if (s === "web_user") return 2;
+        if (s === "web_admin") return 3;
+        if (s === "db") return 4;
+        if (s === "redis") return 5;
         return 10;
       };
       const oa = order(a);
@@ -367,24 +394,61 @@ export default function App() {
     return list;
   }, [svcLogs]);
 
+  const combinedLogs = useMemo<CombinedLogItem[]>(() => {
+    const items: CombinedLogItem[] = [
+      ...svcLogs.map((l) => ({ kind: "svc" as const, ts: l.ts, service: l.service, line: l.line })),
+      ...frontLogs.map((l) => ({ kind: "front" as const, ts: l.ts, service: "frontend" as const, entry: l })),
+    ];
+    items.sort((a, b) => new Date(a.ts).getTime() - new Date(b.ts).getTime());
+    return items;
+  }, [svcLogs, frontLogs]);
+
+  const filteredLogs = useMemo(() => {
+    if (debugServiceFilter.length === 0) return combinedLogs;
+    const set = new Set(debugServiceFilter);
+    return combinedLogs.filter((item) => set.has(item.service));
+  }, [combinedLogs, debugServiceFilter]);
+
+  const serviceCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const svc of serviceOptions) counts[svc] = 0;
+    for (const item of combinedLogs) {
+      counts[item.service] = (counts[item.service] || 0) + 1;
+    }
+    return counts;
+  }, [serviceOptions, combinedLogs]);
+
+  const filterLabel = useMemo(() => {
+    if (debugServiceFilter.length === 0) return t("debug_tab_all");
+    if (debugServiceFilter.length === 1) {
+      return serviceLabel(debugServiceFilter[0]).replace("MeetGo-", "");
+    }
+    return `${debugServiceFilter.length} servicios`;
+  }, [debugServiceFilter]);
+
+  function toggleServiceFilter(svc: string) {
+    setDebugServiceFilter((prev) => {
+      if (prev.length === 0) return [svc];
+      if (prev.includes(svc)) return prev.filter((x) => x !== svc);
+      return [...prev, svc];
+    });
+  }
+
   function onDebugMaximize() {
-    if (!debugMaximized) {
-      debugPrevRef.current = { pos: debugPos, size: debugSize };
-      setDebugPos({ x: 12, y: 12 });
-      setDebugSize({ w: Math.max(420, window.innerWidth - 24), h: Math.max(200, window.innerHeight - 24) });
-      setDebugMaximized(true);
+    if (debugMaximized) {
+      const prev = debugPrevRef.current;
+      if (prev) {
+        setDebugPos(prev.pos);
+        setDebugSize(prev.size);
+      }
+      setDebugMaximized(false);
       setDebugMinimized(false);
       return;
     }
-  }
-
-  function onDebugRestore() {
-    const prev = debugPrevRef.current;
-    if (prev) {
-      setDebugPos(prev.pos);
-      setDebugSize(prev.size);
-    }
-    setDebugMaximized(false);
+    debugPrevRef.current = { pos: debugPos, size: debugSize };
+    setDebugPos({ x: 12, y: 12 });
+    setDebugSize({ w: Math.max(420, window.innerWidth - 24), h: Math.max(200, window.innerHeight - 24) });
+    setDebugMaximized(true);
     setDebugMinimized(false);
   }
 
@@ -750,6 +814,7 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
   const [joinInterest, setJoinInterest] = useState<string>("");
   const wsRef = useRef<WebSocket | null>(null);
   const wsClosingRef = useRef<boolean>(false);
+  const wsReconnectRef = useRef<number | null>(null);
   const pendingMsgsRef = useRef<{ tempId: number; roomId: number; userId: number; ts: number }[]>([]);
   const messagesRef = useRef<HTMLDivElement | null>(null);
 
@@ -761,9 +826,16 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
   const [interests, setInterests] = useState<Interest[]>([]);
   const [interestsError, setInterestsError] = useState<string | null>(null);
   const [interestsLoading, setInterestsLoading] = useState(false);
+  const [confirmModal, setConfirmModal] = useState<{ message: string } | null>(null);
+  const [infoModal, setInfoModal] = useState<string | null>(null);
+  const confirmResolveRef = useRef<((ok: boolean) => void) | null>(null);
   const sortedInterests = useMemo(() => {
     return [...interests].sort((a, b) => a.name.localeCompare(b.name));
   }, [interests]);
+  const joinableInterests = useMemo(() => {
+    const active = new Set(rooms.map((r) => r.interest.slug));
+    return sortedInterests.filter((i) => !active.has(i.slug));
+  }, [sortedInterests, rooms]);
   const sortedRooms = useMemo(() => {
     return [...rooms].sort((a, b) => a.interest.name.localeCompare(b.interest.name));
   }, [rooms]);
@@ -892,10 +964,14 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
   }, []);
 
   useEffect(() => {
-    if (!joinInterest && interests.length) {
-      setJoinInterest(interests[0].slug);
+    if (!joinableInterests.length) {
+      setJoinInterest("");
+      return;
     }
-  }, [interests, joinInterest]);
+    if (!joinInterest || !joinableInterests.some((i) => i.slug === joinInterest)) {
+      setJoinInterest(joinableInterests[0].slug);
+    }
+  }, [joinableInterests, joinInterest]);
 
   const msgs = selectedRoom ? (msgsByRoom[selectedRoom.id] || []) : [];
 
@@ -904,6 +980,13 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
       const current = prev[roomId] || [];
       const next = typeof updater === "function" ? (updater as (p: Msg[]) => Msg[])(current) : updater;
       return { ...prev, [roomId]: next };
+    });
+  }
+
+  function showConfirm(message: string) {
+    return new Promise<boolean>((resolve) => {
+      confirmResolveRef.current = resolve;
+      setConfirmModal({ message });
     });
   }
 
@@ -1034,7 +1117,7 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
   async function leaveRoom() {
     if (!selectedRoom) return;
     const roomLabel = formatInterestLabel(selectedRoom.interest);
-    const ok = confirm(t("leave_room_confirm", { room: roomLabel }));
+    const ok = await showConfirm(t("leave_room_confirm", { room: roomLabel }));
     if (!ok) return;
     try {
       frontLog("[ROOMS] leaveRoom()", { roomId: selectedRoom.id });
@@ -1051,11 +1134,10 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
       setSelectedRoom(null);
       setMsgsByRoom({});
       await loadRooms(true);
-      alert(t("leave_room_ok"));
     } catch (e: any) {
       const msg = e?.message || String(e) || t("leave_room_error");
       frontError("[leaveRoom] error", e);
-      alert(msg);
+      setInfoModal(msg);
     }
   }
 
@@ -1073,6 +1155,10 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
     if (!token) {
       frontError(t("no_session"));
       return;
+    }
+    if (wsReconnectRef.current) {
+      window.clearTimeout(wsReconnectRef.current);
+      wsReconnectRef.current = null;
     }
     if (wsRef.current) {
       try {
@@ -1102,8 +1188,16 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
         return;
       }
       frontWarn("[WS] closed", { code: e.code, reason: e.reason, wasClean: e.wasClean });
-      alert(t("chat_disconnected"));
-      frontError(t("chat_disconnected"));
+      frontWarn(t("chat_disconnected"));
+      if (!wsReconnectRef.current) {
+        wsReconnectRef.current = window.setTimeout(() => {
+          wsReconnectRef.current = null;
+          if (selectedRoom?.id === roomId) {
+            frontWarn(t("chat_reconnecting"));
+            connectWS(roomId);
+          }
+        }, 1200);
+      }
     };
 
     ws.onerror = (e) => {
@@ -1167,14 +1261,14 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
   function sendMsg() {
     const ws = wsRef.current;
     if (!ws) {
-      alert(t("chat_not_connected"));
-      frontError(t("chat_not_connected"));
+      frontWarn(t("chat_not_connected"));
+      if (selectedRoom) connectWS(selectedRoom.id);
       return;
     }
     if (!selectedRoom || !me) return;
     if (ws.readyState !== 1) {
-      alert(t("chat_not_connected_state", { state: ws.readyState }));
-      frontError(t("chat_not_connected_state", { state: ws.readyState }));
+      frontWarn(t("chat_not_connected_state", { state: ws.readyState }));
+      connectWS(selectedRoom.id);
       return;
     }
     const content = composer.trim();
@@ -1341,10 +1435,18 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
           <div className="brand">
             <img src={logoSrc} alt={t("app_name")} />
             <div>
-              <div className="name">{t("app_name")}</div>
-              <div className="tagline">{t("tagline")}</div>
-              <div className="small">{t("online_users", { users: onlineStats.users })}</div>
-              <div className="small">{t("online_rooms", { rooms: onlineStats.activeRooms })}</div>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", width: "100%" }}>
+                <div className="name">{t("app_name")}</div>
+                <div className="small" style={{ color: "#3ea6ff", textAlign: "right" }}>
+                  {t("online_users", { users: onlineStats.users })}
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", width: "100%" }}>
+                <div className="tagline">{t("tagline")}</div>
+                <div className="small" style={{ color: "#3bd671", textAlign: "right" }}>
+                  {t("online_rooms", { rooms: onlineStats.activeRooms })}
+                </div>
+              </div>
               <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "nowrap", justifyContent: "flex-start", alignItems: "flex-start" }}>
                 <button className={"btn sidebarToggle smallToggle" + (sidebarOpen ? " toggleActive" : "")} onClick={() => setSidebarOpen(v => !v)}>
                   {t("panel_user")}
@@ -1533,8 +1635,8 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
                     <div className="small">{t("join_room_desc")}</div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8, marginTop: 8 }}>
                     <select className="input" style={{ width: "100%" }} value={joinInterest} onChange={e => setJoinInterest(e.target.value)}>
-                      {sortedInterests.length ? (
-                        sortedInterests.map(i => (
+                      {joinableInterests.length ? (
+                        joinableInterests.map(i => (
                           <option key={i.slug} value={i.slug}>{formatInterestLabel(i)}</option>
                         ))
                       ) : (
@@ -1868,6 +1970,53 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
         </div>
       ) : null}
 
+      {confirmModal ? (
+        <div className="modalBackdrop" onClick={() => {
+          confirmResolveRef.current?.(false);
+          confirmResolveRef.current = null;
+          setConfirmModal(null);
+        }}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modalHeader">
+              <div className="modalTitle">{t("app_name")}</div>
+              <button className="tab" onClick={() => {
+                confirmResolveRef.current?.(false);
+                confirmResolveRef.current = null;
+                setConfirmModal(null);
+              }}>{t("modal_close")}</button>
+            </div>
+            <div style={{ whiteSpace: "pre-wrap" }}>{confirmModal.message}</div>
+            <div className="actions" style={{ marginTop: 16 }}>
+              <button className="btn" onClick={() => {
+                confirmResolveRef.current?.(false);
+                confirmResolveRef.current = null;
+                setConfirmModal(null);
+              }}>{t("cancel")}</button>
+              <button className="btn primary" onClick={() => {
+                confirmResolveRef.current?.(true);
+                confirmResolveRef.current = null;
+                setConfirmModal(null);
+              }}>{t("ok_title")}</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {infoModal ? (
+        <div className="modalBackdrop" onClick={() => setInfoModal(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modalHeader">
+              <div className="modalTitle">{t("app_name")}</div>
+              <button className="tab" onClick={() => setInfoModal(null)}>{t("modal_close")}</button>
+            </div>
+            <div style={{ whiteSpace: "pre-wrap" }}>{infoModal}</div>
+            <div className="actions" style={{ marginTop: 16 }}>
+              <button className="btn primary" onClick={() => setInfoModal(null)}>{t("ok_title")}</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       {/* ---- DEBUG PANEL ---- */}
       {SHOW_FRONTEND_LOG && debugVisible ? (
         <div
@@ -1934,37 +2083,70 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
             {!debugMinimized ? (
               <>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  {serviceTabs.slice(0, 1).map((svc) => (
-                    <button
-                      key={svc}
-                      className={"tab " + (debugTab === svc ? "active" : "")}
-                      style={{ padding: "6px 10px", fontSize: 12 }}
-                      onClick={() => setDebugTab(svc)}
-                    >
-                      {serviceLabel(svc).replace("MeetGo-", "")} ({svcLogs.filter(x => x.service === svc).length})
-                    </button>
-                  ))}
-                  <button
-                    className={"tab " + (debugTab === "frontend" ? "active" : "")}
-                    style={{ padding: "6px 10px", fontSize: 12 }}
-                    onClick={() => setDebugTab("frontend")}
+                  <div
+                    ref={debugFilterRef}
+                    style={{ position: "relative" }}
+                    onMouseDown={(e) => e.stopPropagation()}
                   >
-                    FrontEnd-JS ({frontLogs.length})
-                  </button>
-                  {serviceTabs.slice(1).map((svc) => (
                     <button
-                      key={svc}
-                      className={"tab " + (debugTab === svc ? "active" : "")}
-                      style={{ padding: "6px 10px", fontSize: 12 }}
-                      onClick={() => setDebugTab(svc)}
+                      className="tab"
+                      style={{ padding: "6px 10px", fontSize: 12, display: "inline-flex", alignItems: "center", gap: 6 }}
+                      onClick={() => setDebugFilterOpen((open) => !open)}
                     >
-                      {serviceLabel(svc).replace("MeetGo-", "")} ({svcLogs.filter(x => x.service === svc).length})
+                      Servicios: {filterLabel}
+                      <span style={{ opacity: 0.8 }}>▾</span>
                     </button>
-                  ))}
-                </div>
-                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>
-                    {debugTab === "frontend" ? t("debug_subtitle", { count: frontLogs.length }) : (svcLogStatus === "connected" ? t("debug_services_connected") : (svcLogStatus === "connecting" ? t("debug_services_connecting") : t("debug_services_error")))}
+                    {debugFilterOpen ? (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "100%",
+                          left: 0,
+                          marginTop: 6,
+                          background: "rgba(18,18,18,0.98)",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          borderRadius: 10,
+                          padding: 10,
+                          minWidth: 240,
+                          zIndex: 10001,
+                          boxShadow: "0 12px 24px rgba(0,0,0,0.35)",
+                        }}
+                        onMouseDown={(e) => e.stopPropagation()}
+                      >
+                        <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "white", padding: "4px 0" }}>
+                          <input
+                            type="checkbox"
+                            checked={debugServiceFilter.length === 0}
+                            onChange={() => setDebugServiceFilter([])}
+                          />
+                          {t("debug_tab_all")} ({combinedLogs.length})
+                        </label>
+                        <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "6px 0" }} />
+                        {serviceOptions.map((svc) => (
+                          <label key={svc} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "white", padding: "4px 0" }}>
+                            <input
+                              type="checkbox"
+                              checked={debugServiceFilter.length === 0 ? false : debugServiceFilter.includes(svc)}
+                              onChange={() => toggleServiceFilter(svc)}
+                            />
+                            {serviceLabel(svc).replace("MeetGo-", "")} ({serviceCounts[svc] || 0})
+                          </label>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                  {t("debug_subtitle", { count: filteredLogs.length })} - {svcLogStatus === "connected" ? t("debug_services_connected") : (svcLogStatus === "connecting" ? t("debug_services_connecting") : t("debug_services_error"))}
+                  <label style={{ display: "inline-flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+                    <input
+                      type="checkbox"
+                      checked={debugAutoRefresh}
+                      onChange={(e) => setDebugAutoRefresh(e.target.checked)}
+                    />
+                    {t("debug_auto_refresh")}
+                  </label>
+                </div>
               </>
             ) : null}
             <div style={{ marginLeft: "auto", display: "flex", gap: 6 }}>
@@ -1979,18 +2161,10 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
               <button
                 className="tab"
                 style={{ padding: "4px 8px", fontSize: 12 }}
-                title={t("debug_maximize")}
+                title={debugMaximized ? t("debug_restore") : t("debug_maximize")}
                 onClick={onDebugMaximize}
               >
                 []
-              </button>
-              <button
-                className="tab"
-                style={{ padding: "4px 8px", fontSize: 12 }}
-                title={t("debug_restore")}
-                onClick={onDebugRestore}
-              >
-                O
               </button>
               <button
                 className="tab"
@@ -2003,42 +2177,44 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
             </div>
           </div>
 
-          {!debugMinimized && debugTab === "frontend" ? (
-            <div ref={frontLogsRef} style={{ overflow: "auto", padding: 12, paddingBottom: 40, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12, whiteSpace: "pre" }}>
-              {frontLogs.map((l, idx) => {
-                const info = extractService(l.msg);
-                const ts = formatTime(l.ts);
-                const meta = levelMeta(l.level);
-                const svcLabel = serviceLabel("frontend-js");
-                return (
-                  <div key={idx} style={{ marginBottom: 8, color: "white" }}>
-                    <div style={{ opacity: 0.9, color: meta.color }}>
-                      [{svcLabel}] - [{ts}] - [{meta.label}] - {info.text}
-                    </div>
-                    {l.data !== undefined ? (
-                      <div style={{ marginTop: 4, opacity: 0.85, color: meta.color }}>
-                        [{svcLabel}] - [{ts}] - [{meta.label}] - {safeStr(l.data)}
+          {!debugMinimized ? (
+            <div ref={debugLogsRef} style={{ overflow: "auto", padding: 12, paddingBottom: 40, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12, whiteSpace: "pre" }}>
+              {filteredLogs.map((item, idx) => {
+                if (item.kind === "front") {
+                  const l = item.entry;
+                  const info = extractService(l.msg);
+                  const ts = formatTime(l.ts);
+                  const meta = levelMeta(l.level);
+                  const svcLabel = serviceLabel("frontend");
+                  return (
+                    <div key={`front-${idx}`} style={{ marginBottom: 8, color: "white" }}>
+                      <div style={{ opacity: 0.9 }}>
+                        <span style={{ color: serviceLabelColor(svcLabel) }}>[{svcLabel}]</span>
+                        <span style={{ color: meta.color }}> - [{ts}] - [{meta.label}] - {info.text}</span>
                       </div>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (!debugMinimized ? (
-            <div ref={svcLogsRef} style={{ overflow: "auto", padding: 12, paddingBottom: 40, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", fontSize: 12, whiteSpace: "pre" }}>
-              {svcLogs.filter((l) => l.service === debugTab).map((l, idx) => {
-                const clean = cleanDockerLogLine(l.line);
+                      {l.data !== undefined ? (
+                        <div style={{ marginTop: 4, opacity: 0.85 }}>
+                          <span style={{ color: serviceLabelColor(svcLabel) }}>[{svcLabel}]</span>
+                          <span style={{ color: meta.color }}> - [{ts}] - [{meta.label}] - {safeStr(l.data)}</span>
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                }
+                const clean = cleanDockerLogLine(item.line);
                 const meta = serviceLevelMeta(clean);
+                const svcLabel = serviceLabel(item.service);
                 return (
-                  <div key={idx} style={{ marginBottom: 8, color: "white" }}>
-                    <div style={{ opacity: 0.9, color: meta.color }}>
-                      [{serviceLabel(l.service)}] - [{formatTime(l.ts, true)}] - [{meta.label}] - {clean}
+                  <div key={`svc-${idx}`} style={{ marginBottom: 8, color: "white" }}>
+                    <div style={{ opacity: 0.9 }}>
+                      <span style={{ color: serviceLabelColor(svcLabel) }}>[{svcLabel}]</span>
+                      <span style={{ color: meta.color }}> - [{formatTime(item.ts, true)}] - [{meta.label}] - {clean}</span>
                     </div>
                   </div>
                 );
               })}
             </div>
-          ) : null)}
+          ) : null}
 
           {!debugMinimized ? (
             <div style={{ display: "flex", gap: 10, padding: "18px 12px", borderTop: "1px solid rgba(255,255,255,0.12)", alignItems: "center" }}>
@@ -2046,8 +2222,14 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
               className="btn"
               style={{ padding: "12px 16px", minHeight: 48, lineHeight: "20px" }}
               onClick={() => {
-                if (debugTab === "frontend") setFrontLogs([]);
-                else setSvcLogs([]);
+                const filterSet = new Set(debugServiceFilter);
+                const clearAll = debugServiceFilter.length === 0;
+                setFrontLogs((prev) => (clearAll || filterSet.has("frontend") ? [] : prev));
+                setSvcLogs((prev) => {
+                  if (clearAll) return [];
+                  if (filterSet.size === 0) return prev;
+                  return prev.filter((l) => !filterSet.has(l.service));
+                });
               }}
             >
               {t("debug_clear")}
@@ -2057,25 +2239,22 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
               style={{ padding: "12px 16px", minHeight: 48, lineHeight: "20px" }}
               onClick={() => {
                 try {
-                  const txt = debugTab === "frontend"
-                    ? frontLogs.map((x) => {
-                      const info = extractService(x.msg);
-                      const ts = formatTime(x.ts);
-                      const meta = levelMeta(x.level);
+                  const txt = filteredLogs.map((item) => {
+                    if (item.kind === "front") {
+                      const info = extractService(item.entry.msg);
+                      const ts = formatTime(item.entry.ts);
+                      const meta = levelMeta(item.entry.level);
                       const base = `[${serviceLabel("frontend")}] - [${ts}] - [${meta.label}] - ${info.text}`;
-                      if (x.data === undefined) return base;
-                      return `${base}\n[${serviceLabel("frontend")}] - [${ts}] - [${meta.label}] - ${safeStr(x.data)}`;
-                    }).join("\n")
-                    : svcLogs.map(x => {
-                      const clean = cleanDockerLogLine(x.line);
-                      const meta = serviceLevelMeta(clean);
-                      return `[${serviceLabel(x.service)}] - [${formatTime(x.ts, true)}] - [${meta.label}] - ${clean}`;
-                    }).join("\n");
-                  copyToClipboard(txt).then((ok) => {
-                    alert(ok ? t("debug_copy_ok") : t("debug_copy_fail"));
-                  });
+                      if (item.entry.data === undefined) return base;
+                      return `${base}\n[${serviceLabel("frontend")}] - [${ts}] - [${meta.label}] - ${safeStr(item.entry.data)}`;
+                    }
+                    const clean = cleanDockerLogLine(item.line);
+                    const meta = serviceLevelMeta(clean);
+                    return `[${serviceLabel(item.service)}] - [${formatTime(item.ts, true)}] - [${meta.label}] - ${clean}`;
+                  }).join("\n");
+                  copyToClipboard(txt);
                 } catch {
-                  alert(t("debug_copy_fail"));
+                  // silent
                 }
               }}
             >
@@ -2087,15 +2266,10 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
               onClick={() => {
                 try {
                   const sel = window.getSelection()?.toString() || "";
-                  if (!sel.trim()) {
-                    alert(t("debug_copy_selection_empty"));
-                    return;
-                  }
-                  copyToClipboard(sel).then((ok) => {
-                    alert(ok ? t("debug_copy_ok") : t("debug_copy_fail"));
-                  });
+                  if (!sel.trim()) return;
+                  copyToClipboard(sel);
                 } catch {
-                  alert(t("debug_copy_fail"));
+                  // silent
                 }
               }}
             >

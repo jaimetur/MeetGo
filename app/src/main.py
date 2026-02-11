@@ -10,7 +10,7 @@ import urllib.parse
 import urllib.request
 from email.message import EmailMessage
 import smtplib
-from fastapi import FastAPI, Depends, HTTPException, WebSocket
+from fastapi import FastAPI, Depends, HTTPException, WebSocket, Request
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select, delete, or_, and_, text, update, func
@@ -22,7 +22,7 @@ except Exception:
     docker = None
 
 from .config import settings
-from .db import Base, engine
+from .db import Base, engine, SessionLocal
 from .deps import get_db, get_current_user
 from .models import (
     User, Interest, UserInterest, Room, RoomRule, RoomMessage, RoomDiscipline, AppSetting,
@@ -39,6 +39,7 @@ from .schemas import (
 from .security import hash_password, verify_password, create_access_token, decode_token
 from .utils import age_range_from_dob, age_from_dob, can_access_age_range, normalize_age_range, age_range_aliases
 from .chat import room_ws_loop, hub
+from .i18n import t, set_lang, select_lang
 
 app = FastAPI(title="MeetGo Backend")
 
@@ -50,6 +51,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def i18n_middleware(request: Request, call_next):
+    lang_header = request.headers.get("x-lang") or request.headers.get("accept-language") or ""
+    set_lang(select_lang(lang_header))
+    return await call_next(request)
 
 def _user_out(u: User) -> UserOut:
     try:
@@ -118,7 +125,7 @@ async def _send_email(db: AsyncSession, to_email: str, subject: str, body: str):
     mode = smtp.get("mode") or "smtp"
     from_email = smtp.get("from_email") or smtp.get("sender_email") or ""
     if not from_email:
-        raise HTTPException(500, "SMTP sender not configured")
+        raise HTTPException(500, t("err_smtp_sender_not_configured"))
 
     msg = EmailMessage()
     msg["Subject"] = subject
@@ -132,7 +139,7 @@ async def _send_email(db: AsyncSession, to_email: str, subject: str, body: str):
         refresh_token = smtp.get("gmail_refresh_token") or ""
         sender_email = smtp.get("gmail_sender_email") or from_email
         if not (client_id and client_secret and refresh_token and sender_email):
-            raise HTTPException(500, "Gmail API SMTP not configured")
+            raise HTTPException(500, t("err_gmail_not_configured"))
         data = urllib.parse.urlencode({
             "client_id": client_id,
             "client_secret": client_secret,
@@ -144,7 +151,7 @@ async def _send_email(db: AsyncSession, to_email: str, subject: str, body: str):
             token_payload = json.loads(resp.read().decode())
         access_token = token_payload.get("access_token")
         if not access_token:
-            raise HTTPException(500, "Failed to get Gmail access token")
+            raise HTTPException(500, t("err_gmail_token_failed"))
         auth_string = f"user={sender_email}\x01auth=Bearer {access_token}\x01\x01"
         b64 = base64.b64encode(auth_string.encode()).decode()
         with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
@@ -161,7 +168,7 @@ async def _send_email(db: AsyncSession, to_email: str, subject: str, body: str):
     password = smtp.get("password") or ""
     encryption = (smtp.get("encryption") or "starttls").lower()
     if not host:
-        raise HTTPException(500, "SMTP host not configured")
+        raise HTTPException(500, t("err_smtp_host_not_configured"))
     if encryption == "ssl":
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(host, port, context=context, timeout=10) as server:
@@ -181,7 +188,7 @@ async def _send_email(db: AsyncSession, to_email: str, subject: str, body: str):
 
 async def _require_admin(user: User = Depends(get_current_user)) -> User:
     if user.role != "admin":
-        raise HTTPException(403, "Admin required")
+        raise HTTPException(403, t("err_admin_required"))
     return user
 
 @app.on_event("startup")
@@ -234,7 +241,7 @@ async def startup():
         await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS banned_until TIMESTAMP"))
 
     # Seed interests
-    async with AsyncSession(engine) as db:
+    async with SessionLocal() as db:
         # Seed settings
         st = await _get_settings(db)
         if not st.data:
@@ -396,7 +403,9 @@ async def startup():
                 db.add(Interest(slug=slug, name=name))
         await db.commit()
 
-        res = await db.execute(select(User).where(User.role == "admin"))
+        res = await db.execute(
+            select(User).where(or_(User.email == "admin@local", User.phone == "000000000"))
+        )
         admin_user = res.scalar_one_or_none()
         if not admin_user:
             admin_user = User(
@@ -418,8 +427,20 @@ async def startup():
             db.add(admin_user)
             await db.commit()
         else:
+            changed = False
+            if admin_user.role != "admin":
+                admin_user.role = "admin"
+                changed = True
             if admin_user.phone != "000000000":
                 admin_user.phone = "000000000"
+                changed = True
+            if admin_user.email != "admin@local":
+                admin_user.email = "admin@local"
+                changed = True
+            if not admin_user.email_verified:
+                admin_user.email_verified = True
+                changed = True
+            if changed:
                 db.add(admin_user)
                 await db.commit()
 
@@ -427,21 +448,21 @@ async def startup():
 @app.post("/auth/register", response_model=UserOut)
 async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
     if not payload.email or not payload.phone:
-        raise HTTPException(400, "Email and phone required")
+        raise HTTPException(400, t("err_email_phone_required"))
     if not payload.password or len(payload.password) < 6:
-        raise HTTPException(400, "Password too short")
+        raise HTTPException(400, t("err_password_too_short"))
     email = payload.email.strip().lower()
     ar = age_range_from_dob(payload.dob)
 
     res = await db.execute(select(User).where(func.lower(User.email) == email))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Email already used")
+        raise HTTPException(409, t("err_email_already_used"))
     phone_norm = _normalize_phone(payload.phone)
     if not phone_norm:
-        raise HTTPException(400, "Invalid phone")
+        raise HTTPException(400, t("err_invalid_phone"))
     res = await db.execute(select(User).where(User.phone == phone_norm))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Phone already used")
+        raise HTTPException(409, t("err_phone_already_used"))
 
     u = User(
         email=email,
@@ -468,7 +489,12 @@ async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
         st = await _get_settings(db)
         base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
         link = f"{base}/?verify_token={token}"
-        await _send_email(db, u.email, "Verify your email", f"Click to verify: {link}")
+        await _send_email(
+            db,
+            u.email,
+            t("email_verify_subject"),
+            t("email_verify_body", {"link": link}),
+        )
     except Exception:
         # avoid blocking registration on email send errors
         pass
@@ -487,23 +513,23 @@ def _can_access_room(user: User, room: Room) -> bool:
 @app.post("/auth/login", response_model=Token)
 async def login(payload: LoginIn, db: AsyncSession = Depends(get_db)):
     if not payload.email:
-        raise HTTPException(400, "Email required")
+        raise HTTPException(400, t("err_email_required"))
     email = payload.email.strip().lower()
     res = await db.execute(select(User).where(User.email == email))
     u = res.scalar_one_or_none()
     if not u:
-        raise HTTPException(401, "Invalid credentials")
+        raise HTTPException(401, t("err_invalid_credentials"))
     if u.is_banned:
-        raise HTTPException(403, "User banned")
+        raise HTTPException(403, t("err_user_banned"))
     if u.banned_until and u.banned_until > datetime.utcnow():
-        raise HTTPException(403, "User banned")
+        raise HTTPException(403, t("err_user_banned"))
     if u.password_hash and payload.password:
         if not verify_password(payload.password, u.password_hash):
-            raise HTTPException(401, "Invalid credentials")
+            raise HTTPException(401, t("err_invalid_credentials"))
     elif u.password_hash and not payload.password:
-        raise HTTPException(401, "Password required")
+        raise HTTPException(401, t("err_password_required"))
     if not u.email_verified:
-        raise HTTPException(403, "Email not verified")
+        raise HTTPException(403, t("err_email_not_verified"))
     u.login_count = (u.login_count or 0) + 1
     u.last_login_at = datetime.utcnow()
     u.last_seen_at = datetime.utcnow()
@@ -532,7 +558,7 @@ async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
     res = await db.execute(select(User).where(User.email_verification_token == token))
     user = res.scalar_one_or_none()
     if not user:
-        raise HTTPException(404, "Invalid token")
+        raise HTTPException(404, t("err_invalid_token"))
     user.email_verified = True
     user.email_verification_token = None
     db.add(user)
@@ -554,7 +580,12 @@ async def forgot_password(payload: ForgotPasswordIn, db: AsyncSession = Depends(
         st = await _get_settings(db)
         base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
         link = f"{base}/?reset_token={token}"
-        await _send_email(db, user.email, "Reset your password", f"Reset link: {link}")
+        await _send_email(
+            db,
+            user.email,
+            t("email_reset_subject"),
+            t("email_reset_body", {"link": link}),
+        )
     except Exception:
         pass
     return {"ok": True}
@@ -562,13 +593,13 @@ async def forgot_password(payload: ForgotPasswordIn, db: AsyncSession = Depends(
 @app.post("/auth/reset-password", response_model=dict)
 async def reset_password(payload: ResetPasswordIn, db: AsyncSession = Depends(get_db)):
     if len(payload.new_password) < 6:
-        raise HTTPException(400, "Password too short")
+        raise HTTPException(400, t("err_password_too_short"))
     res = await db.execute(select(User).where(User.reset_token == payload.token))
     user = res.scalar_one_or_none()
     if not user:
-        raise HTTPException(404, "Invalid token")
+        raise HTTPException(404, t("err_invalid_token"))
     if user.reset_expires_at and user.reset_expires_at < datetime.utcnow():
-        raise HTTPException(410, "Token expired")
+        raise HTTPException(410, t("err_token_expired"))
     user.password_hash = hash_password(payload.new_password)
     user.reset_token = None
     user.reset_expires_at = None
@@ -598,8 +629,12 @@ async def public_settings(db: AsyncSession = Depends(get_db)):
 async def admin_login(payload: AdminLoginIn, db: AsyncSession = Depends(get_db)):
     res = await db.execute(select(User).where(or_(User.display_name == payload.username, User.email == payload.username)))
     user = res.scalar_one_or_none()
-    if not user:
-        if payload.username == "admin" and payload.password == "admin":
+    if not user and payload.username == "admin" and payload.password == "admin":
+        res = await db.execute(
+            select(User).where(or_(User.email == "admin@local", User.phone == "000000000"))
+        )
+        user = res.scalar_one_or_none()
+        if not user:
             user = User(
                 email="admin@local",
                 phone="000000000",
@@ -620,7 +655,18 @@ async def admin_login(payload: AdminLoginIn, db: AsyncSession = Depends(get_db))
             await db.commit()
             await db.refresh(user)
         else:
-            raise HTTPException(401, "Invalid credentials")
+            if user.role != "admin":
+                user.role = "admin"
+            if user.email != "admin@local":
+                user.email = "admin@local"
+            if user.phone != "000000000":
+                user.phone = "000000000"
+            if not user.email_verified:
+                user.email_verified = True
+            db.add(user)
+            await db.commit()
+    if not user:
+        raise HTTPException(401, t("err_invalid_credentials"))
     if user.role != "admin":
         if payload.username == "admin" and payload.password == "admin":
             user.role = "admin"
@@ -628,9 +674,9 @@ async def admin_login(payload: AdminLoginIn, db: AsyncSession = Depends(get_db))
             db.add(user)
             await db.commit()
         else:
-            raise HTTPException(401, "Invalid credentials")
+            raise HTTPException(401, t("err_invalid_credentials"))
     if not user.password_hash or not verify_password(payload.password, user.password_hash):
-        raise HTTPException(401, "Invalid credentials")
+        raise HTTPException(401, t("err_invalid_credentials"))
     user.login_count = (user.login_count or 0) + 1
     user.last_login_at = datetime.utcnow()
     user.last_seen_at = datetime.utcnow()
@@ -658,8 +704,13 @@ async def admin_put_settings(payload: dict, db: AsyncSession = Depends(get_db), 
 async def admin_smtp_test(payload: AdminSmtpTestIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
     to_email = (payload.to_email or "").strip()
     if not to_email:
-        raise HTTPException(400, "Missing to_email")
-    await _send_email(db, to_email, "MeetGo SMTP test", "SMTP test email from MeetGo admin.")
+        raise HTTPException(400, t("err_missing_to_email"))
+    await _send_email(
+        db,
+        to_email,
+        t("email_smtp_test_subject"),
+        t("email_smtp_test_body"),
+    )
     return {"ok": True}
 
 @app.get("/admin/users", response_model=list[MeOut])
@@ -676,13 +727,13 @@ async def admin_create_user(payload: AdminUserCreateIn, db: AsyncSession = Depen
     email = payload.email.strip().lower()
     res = await db.execute(select(User).where(User.email == email))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Email already used")
+        raise HTTPException(409, t("err_email_already_used"))
     phone_norm = _normalize_phone(payload.phone)
     if not phone_norm:
-        raise HTTPException(400, "Invalid phone")
+        raise HTTPException(400, t("err_invalid_phone"))
     res = await db.execute(select(User).where(User.phone == phone_norm))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Phone already used")
+        raise HTTPException(409, t("err_phone_already_used"))
     ar = age_range_from_dob(payload.dob)
     new_user = User(
         email=email,
@@ -710,7 +761,7 @@ async def admin_update_user(user_id: int, payload: AdminUserUpdateIn, db: AsyncS
     res = await db.execute(select(User).where(User.id == user_id))
     target = res.scalar_one_or_none()
     if not target:
-        raise HTTPException(404, "User not found")
+        raise HTTPException(404, t("err_user_not_found"))
     if payload.display_name is not None:
         target.display_name = payload.display_name.strip()
     if payload.email is not None:
@@ -719,20 +770,20 @@ async def admin_update_user(user_id: int, payload: AdminUserUpdateIn, db: AsyncS
             if email:
                 res = await db.execute(select(User).where(User.email == email))
                 if res.scalar_one_or_none():
-                    raise HTTPException(409, "Email already used")
+                    raise HTTPException(409, t("err_email_already_used"))
             target.email = email
     if payload.phone is not None:
         phone_norm = _normalize_phone(payload.phone)
         if not phone_norm:
-            raise HTTPException(400, "Invalid phone")
+            raise HTTPException(400, t("err_invalid_phone"))
         if phone_norm != target.phone:
             res = await db.execute(select(User).where(User.phone == phone_norm))
             if res.scalar_one_or_none():
-                raise HTTPException(409, "Phone already used")
+                raise HTTPException(409, t("err_phone_already_used"))
             target.phone = phone_norm
     if payload.password is not None:
         if len(payload.password) < 6:
-            raise HTTPException(400, "Password too short")
+            raise HTTPException(400, t("err_password_too_short"))
         target.password_hash = hash_password(payload.password)
     if payload.dob is not None:
         target.dob = payload.dob
@@ -761,9 +812,9 @@ async def admin_resend_verification(user_id: int, db: AsyncSession = Depends(get
     res = await db.execute(select(User).where(User.id == user_id))
     target = res.scalar_one_or_none()
     if not target:
-        raise HTTPException(404, "User not found")
+        raise HTTPException(404, t("err_user_not_found"))
     if not target.email:
-        raise HTTPException(400, "User has no email")
+        raise HTTPException(400, t("err_user_no_email"))
     token = secrets.token_urlsafe(32)
     target.email_verification_token = token
     target.email_verification_sent_at = datetime.utcnow()
@@ -772,13 +823,18 @@ async def admin_resend_verification(user_id: int, db: AsyncSession = Depends(get
     st = await _get_settings(db)
     base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
     link = f"{base}/?verify_token={token}"
-    await _send_email(db, target.email, "Verify your email", f"Click to verify: {link}")
+    await _send_email(
+        db,
+        target.email,
+        t("email_verify_subject"),
+        t("email_verify_body", {"link": link}),
+    )
     return {"ok": True}
 
 @app.delete("/admin/users/{user_id}", response_model=dict)
 async def admin_delete_user(user_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
     if user.id == user_id:
-        raise HTTPException(400, "Cannot delete self")
+        raise HTTPException(400, t("err_cannot_delete_self"))
     conv_ids = select(DMConversation.id).where(or_(DMConversation.user1_id == user_id, DMConversation.user2_id == user_id))
     await db.execute(delete(DMMessage).where(or_(DMMessage.user_id == user_id, DMMessage.conversation_id.in_(conv_ids))))
     await db.execute(delete(DMConversation).where(or_(DMConversation.user1_id == user_id, DMConversation.user2_id == user_id)))
@@ -799,7 +855,7 @@ async def admin_delete_user(user_id: int, db: AsyncSession = Depends(get_db), us
 async def admin_create_interest(payload: AdminInterestIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
     res = await db.execute(select(Interest).where(Interest.slug == payload.slug))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Interest already exists")
+        raise HTTPException(409, t("err_interest_exists"))
     it = Interest(slug=payload.slug, name=payload.name)
     db.add(it)
     await db.commit()
@@ -811,7 +867,7 @@ async def admin_update_interest(interest_id: int, payload: AdminInterestIn, db: 
     res = await db.execute(select(Interest).where(Interest.id == interest_id))
     it = res.scalar_one_or_none()
     if not it:
-        raise HTTPException(404, "Interest not found")
+        raise HTTPException(404, t("err_interest_not_found"))
     it.slug = payload.slug
     it.name = payload.name
     db.add(it)
@@ -833,12 +889,12 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
     if payload.email is not None:
         email = payload.email.strip().lower() or None
         if not email:
-            raise HTTPException(400, "Email required")
+            raise HTTPException(400, t("err_email_required"))
         if email != user.email:
             if email:
                 res = await db.execute(select(User).where(User.email == email))
                 if res.scalar_one_or_none():
-                    raise HTTPException(409, "Email already used")
+                    raise HTTPException(409, t("err_email_already_used"))
             user.email = email
             user.email_verified = False
             token = secrets.token_urlsafe(32)
@@ -848,21 +904,26 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
                 st = await _get_settings(db)
                 base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
                 link = f"{base}/?verify_token={token}"
-                await _send_email(db, user.email, "Verify your email", f"Click to verify: {link}")
+                await _send_email(
+                    db,
+                    user.email,
+                    t("email_verify_subject"),
+                    t("email_verify_body", {"link": link}),
+                )
             except Exception:
                 pass
     if payload.password is not None:
         if len(payload.password) < 6:
-            raise HTTPException(400, "Password too short")
+            raise HTTPException(400, t("err_password_too_short"))
         user.password_hash = hash_password(payload.password)
         user.password_temp = False
     if payload.dob is not None and payload.dob != user.dob:
         if (user.dob_change_count or 0) >= 1:
-            raise HTTPException(409, "DOB change already used")
+            raise HTTPException(409, t("err_dob_change_used"))
         try:
             new_age_range = age_range_from_dob(payload.dob)
         except Exception:
-            raise HTTPException(400, "Invalid dob")
+            raise HTTPException(400, t("err_invalid_dob"))
         if new_age_range != old_age_range:
             left_rooms = True
         user.dob = payload.dob
@@ -876,17 +937,17 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
             left_rooms = True
             user.province = province
         elif not province:
-            raise HTTPException(400, "Province required")
+            raise HTTPException(400, t("err_province_required"))
     if payload.phone is not None:
         phone_norm = _normalize_phone(payload.phone)
         if not phone_norm:
-            raise HTTPException(400, "Invalid phone")
+            raise HTTPException(400, t("err_invalid_phone"))
         if phone_norm != user.phone:
             if user.phone_changed_at and (datetime.utcnow() - user.phone_changed_at) < timedelta(days=30):
-                raise HTTPException(409, "Phone change limited to every 30 days")
+                raise HTTPException(409, t("err_phone_change_limited"))
             res = await db.execute(select(User).where(User.phone == phone_norm))
             if res.scalar_one_or_none():
-                raise HTTPException(409, "Phone already used")
+                raise HTTPException(409, t("err_phone_already_used"))
             user.phone = phone_norm
             user.phone_changed_at = datetime.utcnow()
     if payload.city is not None:
@@ -911,10 +972,10 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_db), me_user: Us
     res = await db.execute(select(User).where(User.id == user_id))
     u = res.scalar_one_or_none()
     if not u:
-        raise HTTPException(404, "User not found")
+        raise HTTPException(404, t("err_user_not_found"))
     # Optional privacy: restrict to same province
     if u.province != me_user.province:
-        raise HTTPException(403, "Forbidden (different province)")
+        raise HTTPException(403, t("err_forbidden_diff_province"))
     return _user_out(u)
 
 # ---------------- Interests ----------------
@@ -986,11 +1047,12 @@ async def join_room(payload: JoinRoomIn, db: AsyncSession = Depends(get_db), use
     res = await db.execute(select(Interest).where(Interest.slug == payload.interest_slug))
     interest = res.scalar_one_or_none()
     if not interest:
-        raise HTTPException(404, "Interest not found")
+        raise HTTPException(404, t("err_interest_not_found"))
 
     res = await db.execute(select(UserInterest).where(UserInterest.user_id == user.id, UserInterest.interest_id == interest.id))
     if not res.scalar_one_or_none():
         db.add(UserInterest(user_id=user.id, interest_id=interest.id))
+        await db.commit()
 
     room = await _get_or_create_room(db, user.province, ar, interest.id)
     return RoomOut(id=room.id, province=room.province, age_range=normalize_age_range(room.age_range), interest=_interest_out(interest))
@@ -1000,9 +1062,9 @@ async def leave_room(payload: LeaveRoomIn, db: AsyncSession = Depends(get_db), u
     res = await db.execute(select(Room).where(Room.id == payload.room_id))
     room = res.scalar_one_or_none()
     if not room:
-        raise HTTPException(404, "Room not found")
+        raise HTTPException(404, t("err_room_not_found"))
     if not _can_access_room(user, room):
-        raise HTTPException(403, "Forbidden")
+        raise HTTPException(403, t("err_forbidden"))
 
     await db.execute(delete(UserInterest).where(UserInterest.user_id == user.id, UserInterest.interest_id == room.interest_id))
     await db.commit()
@@ -1013,13 +1075,13 @@ async def get_room_rules(room_id: int, db: AsyncSession = Depends(get_db), user:
     res = await db.execute(select(Room).where(Room.id == room_id))
     room = res.scalar_one_or_none()
     if not room:
-        raise HTTPException(404, "Room not found")
+        raise HTTPException(404, t("err_room_not_found"))
     if not _can_access_room(user, room):
-        raise HTTPException(403, "Forbidden")
+        raise HTTPException(403, t("err_forbidden"))
     res = await db.execute(select(RoomRule).where(RoomRule.room_id == room_id))
     rule = res.scalar_one_or_none()
     if not rule:
-        raise HTTPException(404, "Rules not found")
+        raise HTTPException(404, t("err_rules_not_found"))
     return RoomRuleOut(room_id=rule.room_id, rules_markdown=rule.rules_markdown, policy_json=rule.policy_json or {})
 
 @app.get("/rooms/{room_id}/messages", response_model=list[RoomMessageOut])
@@ -1027,9 +1089,9 @@ async def list_room_messages(room_id: int, limit: int = 50, db: AsyncSession = D
     res = await db.execute(select(Room).where(Room.id == room_id))
     room = res.scalar_one_or_none()
     if not room:
-        raise HTTPException(404, "Room not found")
+        raise HTTPException(404, t("err_room_not_found"))
     if not _can_access_room(user, room):
-        raise HTTPException(403, "Forbidden")
+        raise HTTPException(403, t("err_forbidden"))
 
     res = await db.execute(select(RoomMessage).where(RoomMessage.room_id == room_id).order_by(RoomMessage.id.desc()).limit(limit))
     msgs = list(reversed(res.scalars().all()))
@@ -1048,7 +1110,7 @@ async def list_room_messages(room_id: int, limit: int = 50, db: AsyncSession = D
             id=m.id,
             room_id=m.room_id,
             user_id=m.user_id,
-            user=users_map.get(m.user_id) or UserSummary(id=m.user_id, display_name="Unknown", avatar_url=None),
+            user=users_map.get(m.user_id) or UserSummary(id=m.user_id, display_name=t("unknown_user"), avatar_url=None),
             content="" if m.is_deleted else m.content,
             created_at=m.created_at,
             is_deleted=m.is_deleted,
@@ -1072,9 +1134,9 @@ async def room_online(room_id: int, db: AsyncSession = Depends(get_db), user: Us
     res = await db.execute(select(Room).where(Room.id == room_id))
     room = res.scalar_one_or_none()
     if not room:
-        raise HTTPException(404, "Room not found")
+        raise HTTPException(404, t("err_room_not_found"))
     if not _can_access_room(user, room):
-        raise HTTPException(403, "Forbidden")
+        raise HTTPException(403, t("err_forbidden"))
     return hub.room_snapshot(room_id)
 
 @app.websocket("/ws/rooms/{room_id}")
@@ -1110,14 +1172,14 @@ async def _dm_daily_key(user_id: int) -> str:
 @app.post("/dm/requests", response_model=DMRequestOut)
 async def create_dm_request(payload: DMRequestCreateIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     if payload.to_user_id == user.id:
-        raise HTTPException(400, "Cannot DM yourself")
+        raise HTTPException(400, t("err_cannot_dm_self"))
 
     res = await db.execute(select(User).where(User.id == payload.to_user_id))
     other = res.scalar_one_or_none()
     if not other:
-        raise HTTPException(404, "User not found")
+        raise HTTPException(404, t("err_user_not_found"))
     if not other.accept_dm:
-        raise HTTPException(403, "User does not accept DMs")
+        raise HTTPException(403, t("err_user_no_dm"))
 
     redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
     key = await _dm_daily_key(user.id)
@@ -1125,11 +1187,11 @@ async def create_dm_request(payload: DMRequestCreateIn, db: AsyncSession = Depen
     if count == 1:
         await redis_client.expire(key, 60 * 60 * 26)
     if count > 10:
-        raise HTTPException(429, "Daily DM limit reached (10)")
+        raise HTTPException(429, t("err_dm_daily_limit"))
 
     res = await db.execute(select(DMRequest).where(DMRequest.from_user_id == user.id, DMRequest.to_user_id == other.id, DMRequest.status == DMStatus.PENDING))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "DM request already pending")
+        raise HTTPException(409, t("err_dm_request_pending"))
 
     req = DMRequest(from_user_id=user.id, to_user_id=other.id, status=DMStatus.PENDING)
     db.add(req)
@@ -1147,11 +1209,11 @@ async def resolve_request(request_id: int, payload: DMRequestResolveIn, db: Asyn
     res = await db.execute(select(DMRequest).where(DMRequest.id == request_id))
     req = res.scalar_one_or_none()
     if not req:
-        raise HTTPException(404, "Request not found")
+        raise HTTPException(404, t("err_request_not_found"))
     if req.to_user_id != user.id:
-        raise HTTPException(403, "Forbidden")
+        raise HTTPException(403, t("err_forbidden"))
     if req.status != DMStatus.PENDING:
-        raise HTTPException(409, "Already resolved")
+        raise HTTPException(409, t("err_already_resolved"))
 
     req.status = DMStatus.ACCEPTED if payload.accept else DMStatus.REJECTED
     req.resolved_at = datetime.utcnow()
@@ -1179,7 +1241,7 @@ async def list_dm_messages(conv_id: int, limit: int = 50, db: AsyncSession = Dep
     res = await db.execute(select(DMConversation).where(DMConversation.id == conv_id))
     conv = res.scalar_one_or_none()
     if not conv or (conv.user1_id != user.id and conv.user2_id != user.id):
-        raise HTTPException(404, "Conversation not found")
+        raise HTTPException(404, t("err_conversation_not_found"))
     res = await db.execute(select(DMMessage).where(DMMessage.conversation_id == conv_id).order_by(DMMessage.id.desc()).limit(limit))
     msgs = list(reversed(res.scalars().all()))
     return [DMMessageOut(id=m.id, conversation_id=m.conversation_id, user_id=m.user_id, content=m.content, created_at=m.created_at) for m in msgs]
@@ -1189,7 +1251,7 @@ async def send_dm_message(conv_id: int, content: str, db: AsyncSession = Depends
     res = await db.execute(select(DMConversation).where(DMConversation.id == conv_id))
     conv = res.scalar_one_or_none()
     if not conv or (conv.user1_id != user.id and conv.user2_id != user.id):
-        raise HTTPException(404, "Conversation not found")
+        raise HTTPException(404, t("err_conversation_not_found"))
     msg = DMMessage(conversation_id=conv_id, user_id=user.id, content=content.strip())
     db.add(msg); await db.commit(); await db.refresh(msg)
     return DMMessageOut(id=msg.id, conversation_id=msg.conversation_id, user_id=msg.user_id, content=msg.content, created_at=msg.created_at)
@@ -1198,11 +1260,11 @@ async def send_dm_message(conv_id: int, content: str, db: AsyncSession = Depends
 @app.post("/follow/{user_id}", response_model=FollowOut)
 async def follow_user(user_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     if user_id == user.id:
-        raise HTTPException(400, "Cannot follow yourself")
+        raise HTTPException(400, t("err_cannot_follow_self"))
     res = await db.execute(select(User).where(User.id == user_id))
     other = res.scalar_one_or_none()
     if not other or other.province != user.province:
-        raise HTTPException(404, "User not found")
+        raise HTTPException(404, t("err_user_not_found"))
     res = await db.execute(select(Follow).where(Follow.follower_id == user.id, Follow.following_id == user_id))
     if res.scalar_one_or_none():
         return FollowOut(follower_id=user.id, following_id=user_id)
@@ -1220,20 +1282,20 @@ async def unfollow_user(user_id: int, db: AsyncSession = Depends(get_db), user: 
 @app.post("/friends/requests", response_model=FriendRequestOut)
 async def create_friend_request(payload: FriendRequestCreateIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     if payload.to_user_id == user.id:
-        raise HTTPException(400, "Cannot friend yourself")
+        raise HTTPException(400, t("err_cannot_friend_self"))
     res = await db.execute(select(User).where(User.id == payload.to_user_id))
     other = res.scalar_one_or_none()
     if not other or other.province != user.province:
-        raise HTTPException(404, "User not found")
+        raise HTTPException(404, t("err_user_not_found"))
 
     # Already friends?
     res = await db.execute(select(Friendship).where(Friendship.user_id == user.id, Friendship.friend_id == other.id))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Already friends")
+        raise HTTPException(409, t("err_already_friends"))
 
     res = await db.execute(select(FriendRequest).where(FriendRequest.from_user_id == user.id, FriendRequest.to_user_id == other.id, FriendRequest.status == FriendRequestStatus.PENDING))
     if res.scalar_one_or_none():
-        raise HTTPException(409, "Request already pending")
+        raise HTTPException(409, t("err_request_pending"))
 
     fr = FriendRequest(from_user_id=user.id, to_user_id=other.id, status=FriendRequestStatus.PENDING)
     db.add(fr); await db.commit(); await db.refresh(fr)
@@ -1249,11 +1311,11 @@ async def resolve_friend_request(request_id: int, payload: FriendRequestResolveI
     res = await db.execute(select(FriendRequest).where(FriendRequest.id == request_id))
     req = res.scalar_one_or_none()
     if not req:
-        raise HTTPException(404, "Request not found")
+        raise HTTPException(404, t("err_request_not_found"))
     if req.to_user_id != user.id:
-        raise HTTPException(403, "Forbidden")
+        raise HTTPException(403, t("err_forbidden"))
     if req.status != FriendRequestStatus.PENDING:
-        raise HTTPException(409, "Already resolved")
+        raise HTTPException(409, t("err_already_resolved"))
 
     req.status = FriendRequestStatus.ACCEPTED if payload.accept else FriendRequestStatus.REJECTED
     req.resolved_at = datetime.utcnow()
@@ -1296,7 +1358,7 @@ async def get_feed(limit: int = 50, db: AsyncSession = Depends(get_db), user: Us
         resu = await db.execute(select(User).where(User.id.in_(uids)))
         for u in resu.scalars().all():
             umap[u.id] = _user_summary(u)
-    return [PostOut(id=p.id, user_id=p.user_id, user=umap.get(p.user_id) or UserSummary(id=p.user_id, display_name="Unknown", avatar_url=None), content=p.content, created_at=p.created_at) for p in posts]
+    return [PostOut(id=p.id, user_id=p.user_id, user=umap.get(p.user_id) or UserSummary(id=p.user_id, display_name=t("unknown_user"), avatar_url=None), content=p.content, created_at=p.created_at) for p in posts]
 
 # ---------------- Debug: docker compose logs ----------------
 def _compose_containers(client):
@@ -1308,18 +1370,18 @@ def _compose_containers(client):
 @app.get("/debug/compose-logs")
 async def compose_logs():
     if os.getenv("DEBUG_COMPOSE_LOGS") != "1":
-        raise HTTPException(404, "Disabled")
+        raise HTTPException(404, t("err_debug_disabled"))
     if docker is None:
-        raise HTTPException(500, "Docker SDK not installed")
+        raise HTTPException(500, t("err_docker_sdk_missing"))
 
     try:
         client = docker.from_env()
         containers = _compose_containers(client)
     except Exception as e:
-        raise HTTPException(500, f"Docker unavailable: {e}")
+        raise HTTPException(500, t("err_docker_unavailable", {"error": e}))
 
     if not containers:
-        raise HTTPException(404, "No compose containers found")
+        raise HTTPException(404, t("err_no_compose_containers"))
 
     queue: asyncio.Queue[dict] = asyncio.Queue()
     stop_event = threading.Event()
@@ -1337,7 +1399,7 @@ async def compose_logs():
                 payload = {"ts": datetime.utcnow().isoformat() + "Z", "service": service, "line": line}
                 loop.call_soon_threadsafe(queue.put_nowait, payload)
         except Exception as e:
-            payload = {"ts": datetime.utcnow().isoformat() + "Z", "service": service, "line": f"[log error] {e}"}
+            payload = {"ts": datetime.utcnow().isoformat() + "Z", "service": service, "line": t("log_error_line", {"error": e})}
             loop.call_soon_threadsafe(queue.put_nowait, payload)
 
     threads = []

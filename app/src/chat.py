@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import redis.asyncio as redis
 
 from .models import RoomDiscipline, RoomMessage, User
+from .i18n import t
 from .moderation import decide_action, apply_action
 
 class RoomHub:
@@ -83,7 +84,7 @@ async def _user_summary(db: AsyncSession, user_id: int) -> dict:
     res = await db.execute(select(User).where(User.id == user_id))
     u = res.scalar_one_or_none()
     if not u:
-        return {"id": user_id, "display_name": "Unknown", "avatar_url": None}
+        return {"id": user_id, "display_name": t("unknown_user"), "avatar_url": None}
     return {"id": u.id, "display_name": u.display_name, "avatar_url": u.avatar_url}
 
 async def room_ws_loop(ws: WebSocket, room_id: int, user_id: int, db: AsyncSession, redis_client: redis.Redis):
@@ -112,20 +113,21 @@ async def room_ws_loop(ws: WebSocket, room_id: int, user_id: int, db: AsyncSessi
 
             action = await decide_action(db, redis_client, msg)
             await apply_action(db, msg, action)
+            payload_msg = {
+                "id": msg.id,
+                "room_id": msg.room_id,
+                "user_id": msg.user_id,
+                "user": await _user_summary(db, msg.user_id),
+                "content": "" if msg.is_deleted else msg.content,
+                "created_at": msg.created_at,
+                "is_deleted": msg.is_deleted,
+                "moderation_reason": msg.moderation_reason,
+            }
             await db.commit()
 
             await hub.broadcast(room_id, {
                 "type": "room_message",
-                "message": {
-                    "id": msg.id,
-                    "room_id": msg.room_id,
-                    "user_id": msg.user_id,
-                    "user": await _user_summary(db, msg.user_id),
-                    "content": "" if msg.is_deleted else msg.content,
-                    "created_at": msg.created_at,
-                    "is_deleted": msg.is_deleted,
-                    "moderation_reason": msg.moderation_reason,
-                }
+                "message": payload_msg,
             })
     except WebSocketDisconnect:
         logger.info("WS disconnect room=%s user=%s", room_id, user_id)

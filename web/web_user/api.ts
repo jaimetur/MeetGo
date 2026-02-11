@@ -1,4 +1,5 @@
 // api.ts
+import { getLang } from "../lang/lang";
 function computeApiBase() {
   const envBase = (import.meta as any).env.VITE_API_BASE;
   if (envBase) return String(envBase).replace(/\/+$/, "");
@@ -102,6 +103,7 @@ function safeJsonParse(s: string): any {
 async function req(path: string, opts: RequestInit = {}) {
   const headers: any = { ...(opts.headers || {}) };
   if (!(opts.body instanceof FormData)) headers["Content-Type"] = headers["Content-Type"] || "application/json";
+  headers["X-Lang"] = getLang();
 
   const token = getToken();
   if (token) headers["Authorization"] = `Bearer ${token}`;

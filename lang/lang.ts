@@ -2,8 +2,8 @@ export type Lang = "es" | "en";
 
 type Dict = Record<string, string>;
 
-import esPo from "../lang/es.po?raw";
-import enPo from "../lang/en.po?raw";
+import esPo from "./es.po?raw";
+import enPo from "./en.po?raw";
 
 function unescapePo(s: string) {
   return s
