@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Fixed backend startup by pinning bcrypt and aligning age range enum values.
+- Added startup migration to extend Postgres age range enum with new values.
+- Removed backend reload mode from compose to avoid dead listener on startup.
+- Reworked admin UI: form-based settings editor, simplified channels with auto-slug, and user selector dropdown.
+- Added admin UI error/validation messages for user/channel creation.
+- Fixed register form defaults and surfaced API errors to the UI.
+- Hid register form behind a "Nuevo Usuario" toggle in the login panel.
+- Added success banner on account creation and clearer register feedback.
+- Relaxed backend CORS to fix browser registration requests.
+- Added legacy-prefixed age range handling to unblock registration on old data.
+- Fixed admin user deletion by cleaning related records before removing users.
+- Fixed admin user deletion crash by importing RoomDiscipline.
+- Colored service logs by severity with correct [ERROR]/[WARNING]/[DEBUG] tags.
+- Added delete confirmation and red delete button in admin users.
+- Added user-facing login error message when backend rejects login.
+- Added SMTP test email button in admin settings.
+- Added admin action to resend verification email.
+- Switched login to email-based authentication and normalized stored emails.
+- Added interest loading error/ retry UI.
+- Moved register phone field after name and split online summary into two lines.
+- Updated phone prefix selector to show country flag and name with prefix.
+- Cleared rooms and closed chat sockets on logout.
+- Added country flag labels for phone prefix dropdowns.
+- Auto-load rooms on login, removed "Cargar mis salas", and simplified panel toggle labels.
+- Moved room location/age into rooms panel and simplified tips.
+- Removed room name from header and reduced panel heights for mobile.
+- Moved panel toggle buttons under online stats and moved logout next to profile tab.
+- Made panel toggle buttons compact and increased logo size.
+- Stored room messages per-room to avoid cross-room mixing.
+- Increased logo size and forced left alignment for panel toggles under logo.
+- Reduced heights for user panel, rooms panel, and chat container.
+- Stacked brand text and buttons under the logo.
+- Cropped logo SVG viewBox to reduce vertical whitespace.
+- Moved active room details into header title while keeping the slogan.
+- Reduced logo size to match new rectangular asset.
+- Reduced logo size by another 10%.
+- Slightly increased panel toggle button size.
+- Increased panel toggle button size.
+- Increased panel toggle button size further.
+- Reduced rooms panel height slightly more than chat container.
+- Moved logout button next to panel toggles under the logo.
+- Styled logout button as red.
+- Strengthened logout button red color.
+- Reduced rooms panel height and added scroll for rooms list over 5 items.
+- Moved "Abandonar Sala" under users button and styled it red.
+- Reduced user and room panel heights to ~70% of previous size.
+- Removed fixed main/chat heights and constrained message list to reduce blank space.
+- Increased chat message max height to restore panel size.
+- Increased panel minimum heights to restore overall layout.
+- Stretched rooms and chat panels to fill their container height.
+- Ensured rooms and chat panels stretch to full grid height.
+- Expanded panels to fill container height and removed artificial message height cap.
+- Reduced chat panel height to about half via messages max-height.
+- Restored chat panel to full height by removing max-height limit.
+- Capped rooms panel height.
+- Moved rooms actions above the rooms list.
+- Ensured rooms list scrolls independently so action buttons stay fixed.
+- Increased rooms panel max height.
+- Increased rooms panel max height a bit more.
+- Removed rooms panel scroll to let list expand while space allows.
+- Increased logo size and left-aligned panel toggles.
+- Defaulted DM opt-in on register and removed the checkbox from registration UI.
+- Renamed user panel toggle labels and added active room name above tips.
 - Added backend room join endpoint to align frontend with /rooms/join.
 - Removed backend Docker debug log endpoint to avoid missing docker module on startup.
 - Added docker log timestamps for backend and web services via compose commands.
@@ -12,3 +75,18 @@ All notable changes to this project will be documented in this file.
 - Updated room interest loading to use backend interests and restored emoji labels.
 - Improved debug panel log formatting with timestamp + service tags.
 - Fixed assorted frontend text and separator display issues.
+- Added debug panel corner resize handles and enter-to-send chat behavior.
+- Added backend websocket logging to help diagnose disconnects.
+- Restored compose log streaming endpoint for the services debug panel.
+- Added UI flow to leave a room with confirmation.
+- Updated age range buckets to 18-30, 31-50, 51+ and tightened room access by age.
+- Moved the leave-room control into the left panel with updated label.
+- Added collapsible Settings and Edit Profile sections with country/city and profile fields.
+- Enforced province/age change handling to leave rooms, with DOB change limited to once.
+- Added new interest categories (cycling, motors, travel, sports, etc.).
+- Added online user counts and users panel in rooms UI.
+- Added sidebar hide toggle and improved dropdown styling and logo size.
+- Moved room list into the rooms panel with its own hide toggle and presence summary.
+- Added admin frontend scaffolding on port 5172 and admin APIs for users, settings, and channels.
+- Added email verification and SMTP-based password reset flows.
+- Switched user login to phone-only with required email verification on register.

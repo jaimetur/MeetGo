@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
@@ -22,4 +23,11 @@ async def get_current_user(
     user = res.scalar_one_or_none()
     if not user:
         raise HTTPException(401, "User not found")
+    if user.is_banned:
+        raise HTTPException(403, "User banned")
+    if user.banned_until and user.banned_until > datetime.utcnow():
+        raise HTTPException(403, "User banned")
+    user.last_seen_at = datetime.utcnow()
+    db.add(user)
+    await db.commit()
     return user

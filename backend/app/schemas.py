@@ -5,13 +5,15 @@ from .models import AgeRange, DMStatus, FriendRequestStatus
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+    password_temp: bool = False
 
 class RegisterIn(BaseModel):
-    email: str | None = None
-    phone: str | None = None
+    email: str
+    phone: str
     password: str | None = None
     display_name: str
     dob: str  # YYYY-MM-DD
+    country: str | None = None
     province: str
     city: str | None = None
     accept_dm: bool = False
@@ -19,8 +21,7 @@ class RegisterIn(BaseModel):
     bio: str | None = None
 
 class LoginIn(BaseModel):
-    email: str | None = None
-    phone: str | None = None
+    email: str
     password: str | None = None
 
 class UserOut(BaseModel):
@@ -28,11 +29,25 @@ class UserOut(BaseModel):
     display_name: str
     dob: str
     age_range: AgeRange
+    country: str | None
     province: str
     city: str | None
     accept_dm: bool
     avatar_url: str | None
     bio: str | None
+
+class MeOut(UserOut):
+    email: str | None
+    dob_change_count: int
+    email_verified: bool
+    role: str
+    phone: str | None
+    login_count: int
+    last_login_at: datetime | None
+    last_seen_at: datetime | None
+    total_connected_seconds: int
+    session_active: bool
+    session_started_at: datetime | None
 
 class UserSummary(BaseModel):
     id: int
@@ -41,10 +56,55 @@ class UserSummary(BaseModel):
 
 class UpdateProfileIn(BaseModel):
     display_name: str | None = None
+    email: str | None = None
+    password: str | None = None
+    dob: str | None = None
+    country: str | None = None
+    province: str | None = None
+    phone: str | None = None
     city: str | None = None
     accept_dm: bool | None = None
     avatar_url: str | None = None
     bio: str | None = None
+
+class ForgotPasswordIn(BaseModel):
+    email: str
+
+class ResetPasswordIn(BaseModel):
+    token: str
+    new_password: str
+
+class VerifyEmailIn(BaseModel):
+    token: str
+
+class AdminLoginIn(BaseModel):
+    username: str
+    password: str
+
+class AdminUserUpdateIn(BaseModel):
+    display_name: str | None = None
+    email: str | None = None
+    phone: str | None = None
+    password: str | None = None
+    role: str | None = None
+    email_verified: bool | None = None
+    is_banned: bool | None = None
+    banned_until: datetime | None = None
+    dob: str | None = None
+    country: str | None = None
+    province: str | None = None
+    city: str | None = None
+
+class AdminUserCreateIn(BaseModel):
+    display_name: str
+    email: str
+    phone: str
+    password: str
+    dob: str
+    country: str | None = None
+    province: str
+    city: str | None = None
+    role: str | None = None
 
 class InterestOut(BaseModel):
     id: int
@@ -56,6 +116,9 @@ class SetInterestsIn(BaseModel):
 
 class JoinRoomIn(BaseModel):
     interest_slug: str
+
+class LeaveRoomIn(BaseModel):
+    room_id: int
 
 class RoomOut(BaseModel):
     id: int
@@ -134,3 +197,10 @@ class PostOut(BaseModel):
 
 class PostCreateIn(BaseModel):
     content: str
+
+class AdminInterestIn(BaseModel):
+    slug: str
+    name: str
+
+class AdminSmtpTestIn(BaseModel):
+    to_email: str

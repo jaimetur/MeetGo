@@ -1,50 +1,90 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+import asyncio
+import base64
+import json
+import os
+import secrets
+import ssl
+import threading
+import urllib.parse
+import urllib.request
+from email.message import EmailMessage
+import smtplib
 from fastapi import FastAPI, Depends, HTTPException, WebSocket
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select, delete, or_, and_
+from sqlalchemy import select, delete, or_, and_, text, update, func
 from sqlalchemy.ext.asyncio import AsyncSession
 import redis.asyncio as redis
+try:
+    import docker
+except Exception:
+    docker = None
 
 from .config import settings
 from .db import Base, engine
 from .deps import get_db, get_current_user
 from .models import (
-    User, Interest, UserInterest, Room, RoomRule, RoomMessage,
+    User, Interest, UserInterest, Room, RoomRule, RoomMessage, RoomDiscipline, AppSetting,
     DMRequest, DMConversation, DMMessage, DMStatus,
     Follow, FriendRequest, FriendRequestStatus, Friendship, Post
 )
 from .schemas import (
-    RegisterIn, LoginIn, Token, UserOut, UserSummary, UpdateProfileIn,
-    InterestOut, SetInterestsIn, JoinRoomIn, RoomOut, RoomRuleOut, RoomRuleUpdateIn, RoomMessageOut,
+    RegisterIn, LoginIn, Token, UserOut, MeOut, UserSummary, UpdateProfileIn,
+    InterestOut, SetInterestsIn, JoinRoomIn, LeaveRoomIn, RoomOut, RoomRuleOut, RoomRuleUpdateIn, RoomMessageOut,
     DMRequestOut, DMRequestCreateIn, DMRequestResolveIn, DMConversationOut, DMMessageOut,
     FollowOut, FriendRequestOut, FriendRequestCreateIn, FriendRequestResolveIn,
-    PostOut, PostCreateIn
+    PostOut, PostCreateIn, ForgotPasswordIn, ResetPasswordIn, AdminLoginIn, AdminUserUpdateIn, AdminUserCreateIn, AdminInterestIn, AdminSmtpTestIn
 )
 from .security import hash_password, verify_password, create_access_token, decode_token
-from .utils import age_range_from_dob
-from .chat import room_ws_loop
+from .utils import age_range_from_dob, age_from_dob, can_access_age_range, normalize_age_range, age_range_aliases
+from .chat import room_ws_loop, hub
 
 app = FastAPI(title="MeetGo Backend")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # tighten in prod
+    allow_origin_regex=".*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 def _user_out(u: User) -> UserOut:
+    try:
+        ar = age_range_from_dob(u.dob)
+    except Exception:
+        ar = u.age_range
+    country = u.country or "ES"
     return UserOut(
         id=u.id,
         display_name=u.display_name,
         dob=u.dob,
-        age_range=u.age_range,
+        age_range=ar,
+        country=country,
         province=u.province,
         city=u.city,
         accept_dm=u.accept_dm,
         avatar_url=u.avatar_url,
         bio=u.bio,
+    )
+
+def _me_out(u: User) -> MeOut:
+    base = _user_out(u)
+    return MeOut(
+        **base.model_dump(),
+        email=u.email,
+        dob_change_count=u.dob_change_count or 0,
+        email_verified=bool(u.email_verified),
+        role=u.role or "user",
+        phone=u.phone,
+        login_count=u.login_count or 0,
+        last_login_at=u.last_login_at,
+        last_seen_at=u.last_seen_at,
+        total_connected_seconds=u.total_connected_seconds or 0,
+        session_active=bool(u.session_active),
+        session_started_at=u.session_started_at,
     )
 
 def _user_summary(u: User) -> UserSummary:
@@ -53,19 +93,302 @@ def _user_summary(u: User) -> UserSummary:
 def _interest_out(i: Interest) -> InterestOut:
     return InterestOut(id=i.id, slug=i.slug, name=i.name)
 
+def _normalize_phone(phone: str) -> str:
+    digits = "".join(ch for ch in (phone or "") if ch.isdigit())
+    if not digits:
+        return ""
+    if phone.strip().startswith("+"):
+        return f"+{digits}"
+    return f"+{digits}"
+
+async def _get_settings(db: AsyncSession) -> AppSetting:
+    res = await db.execute(select(AppSetting).where(AppSetting.id == 1))
+    st = res.scalar_one_or_none()
+    if st:
+        return st
+    st = AppSetting(id=1, data={})
+    db.add(st)
+    await db.commit()
+    await db.refresh(st)
+    return st
+
+async def _send_email(db: AsyncSession, to_email: str, subject: str, body: str):
+    st = await _get_settings(db)
+    smtp = (st.data or {}).get("smtp") or {}
+    mode = smtp.get("mode") or "smtp"
+    from_email = smtp.get("from_email") or smtp.get("sender_email") or ""
+    if not from_email:
+        raise HTTPException(500, "SMTP sender not configured")
+
+    msg = EmailMessage()
+    msg["Subject"] = subject
+    msg["From"] = from_email
+    msg["To"] = to_email
+    msg.set_content(body)
+
+    if mode == "gmail_api":
+        client_id = smtp.get("gmail_client_id") or ""
+        client_secret = smtp.get("gmail_client_secret") or ""
+        refresh_token = smtp.get("gmail_refresh_token") or ""
+        sender_email = smtp.get("gmail_sender_email") or from_email
+        if not (client_id and client_secret and refresh_token and sender_email):
+            raise HTTPException(500, "Gmail API SMTP not configured")
+        data = urllib.parse.urlencode({
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "refresh_token": refresh_token,
+            "grant_type": "refresh_token",
+        }).encode()
+        req = urllib.request.Request("https://oauth2.googleapis.com/token", data=data)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            token_payload = json.loads(resp.read().decode())
+        access_token = token_payload.get("access_token")
+        if not access_token:
+            raise HTTPException(500, "Failed to get Gmail access token")
+        auth_string = f"user={sender_email}\x01auth=Bearer {access_token}\x01\x01"
+        b64 = base64.b64encode(auth_string.encode()).decode()
+        with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
+            server.ehlo()
+            server.starttls(context=ssl.create_default_context())
+            server.ehlo()
+            server.docmd("AUTH", "XOAUTH2 " + b64)
+            server.send_message(msg)
+        return
+
+    host = smtp.get("host") or ""
+    port = int(smtp.get("port") or 587)
+    username = smtp.get("username") or ""
+    password = smtp.get("password") or ""
+    encryption = (smtp.get("encryption") or "starttls").lower()
+    if not host:
+        raise HTTPException(500, "SMTP host not configured")
+    if encryption == "ssl":
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(host, port, context=context, timeout=10) as server:
+            if username:
+                server.login(username, password)
+            server.send_message(msg)
+        return
+
+    with smtplib.SMTP(host, port, timeout=10) as server:
+        server.ehlo()
+        if encryption == "starttls":
+            server.starttls(context=ssl.create_default_context())
+            server.ehlo()
+        if username:
+            server.login(username, password)
+        server.send_message(msg)
+
+async def _require_admin(user: User = Depends(get_current_user)) -> User:
+    if user.role != "admin":
+        raise HTTPException(403, "Admin required")
+    return user
+
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        # Ensure enum has both legacy and new values.
+        await conn.execute(text("""
+        DO $$
+        BEGIN
+            IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'agerange') THEN
+                CREATE TYPE agerange AS ENUM ('18_30');
+            END IF;
+        END $$;
+        """))
+        await conn.execute(text("""
+        DO $$
+        BEGIN
+            IF EXISTS (SELECT 1 FROM pg_type WHERE typname = 'agerange') THEN
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS '18_30';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS '31_50';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS '51_plus';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS '31_55';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS '55_plus';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS 'R18_30';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS 'R31_50';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS 'R51_PLUS';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS 'R31_55';
+                ALTER TYPE agerange ADD VALUE IF NOT EXISTS 'R55_PLUS';
+            END IF;
+        END $$;
+        """))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS country VARCHAR(2)"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS dob_change_count INTEGER DEFAULT 0"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS role VARCHAR(32) DEFAULT 'user'"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN DEFAULT FALSE"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verification_token VARCHAR(128)"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verification_sent_at TIMESTAMP"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token VARCHAR(128)"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_expires_at TIMESTAMP"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS password_temp BOOLEAN DEFAULT FALSE"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS phone_changed_at TIMESTAMP"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS login_count INTEGER DEFAULT 0"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS last_login_at TIMESTAMP"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS last_seen_at TIMESTAMP"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS session_started_at TIMESTAMP"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS session_active BOOLEAN DEFAULT FALSE"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS total_connected_seconds INTEGER DEFAULT 0"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS is_banned BOOLEAN DEFAULT FALSE"))
+        await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS banned_until TIMESTAMP"))
 
     # Seed interests
     async with AsyncSession(engine) as db:
+        # Seed settings
+        st = await _get_settings(db)
+        if not st.data:
+            st.data = {
+                "app_base_url": "http://localhost:5173",
+                "smtp": {
+                    "mode": "smtp",
+                    "host": "",
+                    "port": 587,
+                    "encryption": "starttls",
+                    "username": "",
+                    "password": "",
+                    "from_email": "",
+                    "gmail_client_id": "",
+                    "gmail_client_secret": "",
+                    "gmail_refresh_token": "",
+                    "gmail_sender_email": "",
+                },
+                "languages": [
+                    {"code": "es", "name": "Espanol"},
+                    {"code": "en", "name": "English"},
+                ],
+                "age_ranges": [
+                    {"key": "18_30", "label": "18-30", "min": 18, "max": 30},
+                    {"key": "31_50", "label": "31-50", "min": 31, "max": 50},
+                    {"key": "51_plus", "label": "51+", "min": 51, "max": None},
+                ],
+                "countries": [
+                    {"code": "ES", "name": "Espana"},
+                    {"code": "PT", "name": "Portugal"},
+                    {"code": "FR", "name": "Francia"},
+                    {"code": "IT", "name": "Italia"},
+                    {"code": "DE", "name": "Alemania"},
+                    {"code": "GB", "name": "Reino Unido"},
+                    {"code": "US", "name": "Estados Unidos"},
+                    {"code": "MX", "name": "Mexico"},
+                    {"code": "AR", "name": "Argentina"},
+                    {"code": "CO", "name": "Colombia"},
+                ],
+                "calling_codes": [
+                    {"cc": "+34", "name": "Espana"},
+                    {"cc": "+351", "name": "Portugal"},
+                    {"cc": "+33", "name": "Francia"},
+                    {"cc": "+39", "name": "Italia"},
+                    {"cc": "+49", "name": "Alemania"},
+                    {"cc": "+44", "name": "Reino Unido"},
+                    {"cc": "+1", "name": "Estados Unidos"},
+                    {"cc": "+52", "name": "Mexico"},
+                    {"cc": "+54", "name": "Argentina"},
+                    {"cc": "+57", "name": "Colombia"},
+                ],
+                "provinces_by_country": {
+                    "ES": [
+                        {"value": "Alava", "name": "Alava"},
+                        {"value": "Albacete", "name": "Albacete"},
+                        {"value": "Alicante", "name": "Alicante"},
+                        {"value": "Almeria", "name": "Almeria"},
+                        {"value": "Asturias", "name": "Asturias"},
+                        {"value": "Avila", "name": "Avila"},
+                        {"value": "Badajoz", "name": "Badajoz"},
+                        {"value": "Barcelona", "name": "Barcelona"},
+                        {"value": "Burgos", "name": "Burgos"},
+                        {"value": "Caceres", "name": "Caceres"},
+                        {"value": "Cadiz", "name": "Cadiz"},
+                        {"value": "Cantabria", "name": "Cantabria"},
+                        {"value": "Castellon", "name": "Castellon"},
+                        {"value": "Ciudad Real", "name": "Ciudad Real"},
+                        {"value": "Cordoba", "name": "Cordoba"},
+                        {"value": "Cuenca", "name": "Cuenca"},
+                        {"value": "Girona", "name": "Girona"},
+                        {"value": "Granada", "name": "Granada"},
+                        {"value": "Guadalajara", "name": "Guadalajara"},
+                        {"value": "Gipuzkoa", "name": "Gipuzkoa"},
+                        {"value": "Huelva", "name": "Huelva"},
+                        {"value": "Huesca", "name": "Huesca"},
+                        {"value": "Illes Balears", "name": "Illes Balears"},
+                        {"value": "Jaen", "name": "Jaen"},
+                        {"value": "A Coruna", "name": "A Coruna"},
+                        {"value": "La Rioja", "name": "La Rioja"},
+                        {"value": "Las Palmas", "name": "Las Palmas"},
+                        {"value": "Leon", "name": "Leon"},
+                        {"value": "Lleida", "name": "Lleida"},
+                        {"value": "Lugo", "name": "Lugo"},
+                        {"value": "Madrid", "name": "Madrid"},
+                        {"value": "Malaga", "name": "Malaga"},
+                        {"value": "Murcia", "name": "Murcia"},
+                        {"value": "Navarra", "name": "Navarra"},
+                        {"value": "Ourense", "name": "Ourense"},
+                        {"value": "Palencia", "name": "Palencia"},
+                        {"value": "Pontevedra", "name": "Pontevedra"},
+                        {"value": "Salamanca", "name": "Salamanca"},
+                        {"value": "Santa Cruz de Tenerife", "name": "Santa Cruz de Tenerife"},
+                        {"value": "Segovia", "name": "Segovia"},
+                        {"value": "Sevilla", "name": "Sevilla"},
+                        {"value": "Soria", "name": "Soria"},
+                        {"value": "Tarragona", "name": "Tarragona"},
+                        {"value": "Teruel", "name": "Teruel"},
+                        {"value": "Toledo", "name": "Toledo"},
+                        {"value": "Valencia", "name": "Valencia"},
+                        {"value": "Valladolid", "name": "Valladolid"},
+                        {"value": "Bizkaia", "name": "Bizkaia"},
+                        {"value": "Zamora", "name": "Zamora"},
+                        {"value": "Zaragoza", "name": "Zaragoza"},
+                    ],
+                    "PT": [
+                        {"value": "Lisboa", "name": "Lisboa"},
+                        {"value": "Porto", "name": "Porto"},
+                        {"value": "Braga", "name": "Braga"},
+                        {"value": "Setubal", "name": "Setubal"},
+                        {"value": "Aveiro", "name": "Aveiro"},
+                    ],
+                    "FR": [
+                        {"value": "Ile-de-France", "name": "Ile-de-France"},
+                        {"value": "Occitanie", "name": "Occitanie"},
+                        {"value": "Nouvelle-Aquitaine", "name": "Nouvelle-Aquitaine"},
+                        {"value": "Auvergne-Rhone-Alpes", "name": "Auvergne-Rhone-Alpes"},
+                    ],
+                    "IT": [
+                        {"value": "Lazio", "name": "Lazio"},
+                        {"value": "Lombardia", "name": "Lombardia"},
+                        {"value": "Campania", "name": "Campania"},
+                        {"value": "Sicilia", "name": "Sicilia"},
+                    ],
+                },
+                "cities_by_country": {},
+            }
+            db.add(st)
+            await db.commit()
+
         defaults = [
-            ("cafe", "Quedar para un café"),
+            ("cafe", "Quedar para un cafe"),
             ("senderismo", "Senderismo"),
             ("cine", "Cine"),
             ("deporte", "Deporte"),
             ("networking", "Networking"),
+            ("ciclismo", "Ciclismo"),
+            ("mtb", "MTB"),
+            ("motos", "Motos"),
+            ("coches", "Coches"),
+            ("playa", "Playa"),
+            ("viajes", "Viajes"),
+            ("lectura", "Lectura"),
+            ("picnics", "Picnics"),
+            ("cerveza", "Quedar para una Cerveza"),
+            ("copas", "Quedar para unas Copas"),
+            ("deportes", "Deportes (general)"),
+            ("deportes_aire_libre", "Deportes al aire libre"),
+            ("deportes_acuaticos", "Deportes acuaticos"),
+            ("futbol", "Futbol"),
+            ("futbol_sala", "Futbol sala"),
+            ("tenis", "Tenis"),
+            ("padel", "Padel"),
+            ("fitness", "Fitness"),
+            ("crossfit", "CrossFit"),
         ]
         for slug, name in defaults:
             res = await db.execute(select(Interest).where(Interest.slug == slug))
@@ -73,68 +396,499 @@ async def startup():
                 db.add(Interest(slug=slug, name=name))
         await db.commit()
 
+        res = await db.execute(select(User).where(User.role == "admin"))
+        admin_user = res.scalar_one_or_none()
+        if not admin_user:
+            admin_user = User(
+                email="admin@local",
+                phone="000000000",
+                password_hash=hash_password("admin"),
+                display_name="admin",
+                dob="1980-01-01",
+                age_range=age_range_from_dob("1980-01-01"),
+                country="ES",
+                province="Madrid",
+                city=None,
+                accept_dm=False,
+                avatar_url=None,
+                bio="",
+                role="admin",
+                email_verified=True,
+            )
+            db.add(admin_user)
+            await db.commit()
+        else:
+            if admin_user.phone != "000000000":
+                admin_user.phone = "000000000"
+                db.add(admin_user)
+                await db.commit()
+
 # ---------------- Auth ----------------
 @app.post("/auth/register", response_model=UserOut)
 async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
-    if not payload.email and not payload.phone:
-        raise HTTPException(400, "Provide email or phone")
+    if not payload.email or not payload.phone:
+        raise HTTPException(400, "Email and phone required")
+    if not payload.password or len(payload.password) < 6:
+        raise HTTPException(400, "Password too short")
+    email = payload.email.strip().lower()
     ar = age_range_from_dob(payload.dob)
 
-    if payload.email:
-        res = await db.execute(select(User).where(User.email == payload.email))
-        if res.scalar_one_or_none():
-            raise HTTPException(409, "Email already used")
-    if payload.phone:
-        res = await db.execute(select(User).where(User.phone == payload.phone))
-        if res.scalar_one_or_none():
-            raise HTTPException(409, "Phone already used")
+    res = await db.execute(select(User).where(func.lower(User.email) == email))
+    if res.scalar_one_or_none():
+        raise HTTPException(409, "Email already used")
+    phone_norm = _normalize_phone(payload.phone)
+    if not phone_norm:
+        raise HTTPException(400, "Invalid phone")
+    res = await db.execute(select(User).where(User.phone == phone_norm))
+    if res.scalar_one_or_none():
+        raise HTTPException(409, "Phone already used")
 
     u = User(
-        email=payload.email,
-        phone=payload.phone,
-        password_hash=hash_password(payload.password) if payload.password else None,
+        email=email,
+        phone=phone_norm,
+        password_hash=hash_password(payload.password),
         display_name=payload.display_name,
         dob=payload.dob,
         age_range=ar,
+        country=payload.country or "ES",
         province=payload.province.strip(),
         city=(payload.city.strip() if payload.city else None),
         accept_dm=bool(payload.accept_dm),
         avatar_url=payload.avatar_url,
         bio=payload.bio,
+        email_verified=False,
     )
+    token = secrets.token_urlsafe(32)
+    u.email_verification_token = token
+    u.email_verification_sent_at = datetime.utcnow()
     db.add(u)
     await db.commit()
     await db.refresh(u)
+    try:
+        st = await _get_settings(db)
+        base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
+        link = f"{base}/?verify_token={token}"
+        await _send_email(db, u.email, "Verify your email", f"Click to verify: {link}")
+    except Exception:
+        # avoid blocking registration on email send errors
+        pass
     return _user_out(u)
+
+def _can_access_room(user: User, room: Room) -> bool:
+    if room.province != user.province:
+        return False
+    try:
+        user_age = age_from_dob(user.dob)
+        user_range = age_range_from_dob(user.dob)
+    except Exception:
+        return False
+    return can_access_age_range(user_age, user_range, room.age_range)
 
 @app.post("/auth/login", response_model=Token)
 async def login(payload: LoginIn, db: AsyncSession = Depends(get_db)):
-    if not payload.email and not payload.phone:
-        raise HTTPException(400, "Provide email or phone")
-    q = select(User)
-    if payload.email:
-        q = q.where(User.email == payload.email)
-    else:
-        q = q.where(User.phone == payload.phone)
-    res = await db.execute(q)
+    if not payload.email:
+        raise HTTPException(400, "Email required")
+    email = payload.email.strip().lower()
+    res = await db.execute(select(User).where(User.email == email))
     u = res.scalar_one_or_none()
     if not u:
         raise HTTPException(401, "Invalid credentials")
+    if u.is_banned:
+        raise HTTPException(403, "User banned")
+    if u.banned_until and u.banned_until > datetime.utcnow():
+        raise HTTPException(403, "User banned")
     if u.password_hash and payload.password:
         if not verify_password(payload.password, u.password_hash):
             raise HTTPException(401, "Invalid credentials")
     elif u.password_hash and not payload.password:
         raise HTTPException(401, "Password required")
-    return Token(access_token=create_access_token(str(u.id)))
+    if not u.email_verified:
+        raise HTTPException(403, "Email not verified")
+    u.login_count = (u.login_count or 0) + 1
+    u.last_login_at = datetime.utcnow()
+    u.last_seen_at = datetime.utcnow()
+    if not u.session_active:
+        u.session_active = True
+        u.session_started_at = datetime.utcnow()
+    db.add(u)
+    await db.commit()
+    return Token(access_token=create_access_token(str(u.id)), password_temp=bool(u.password_temp))
 
-@app.get("/me", response_model=UserOut)
+@app.post("/auth/logout", response_model=dict)
+async def logout(user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+    now = datetime.utcnow()
+    if user.session_active and user.session_started_at:
+        delta = now - user.session_started_at
+        user.total_connected_seconds = (user.total_connected_seconds or 0) + int(delta.total_seconds())
+    user.session_active = False
+    user.session_started_at = None
+    user.last_seen_at = now
+    db.add(user)
+    await db.commit()
+    return {"ok": True}
+
+@app.get("/auth/verify-email", response_model=dict)
+async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
+    res = await db.execute(select(User).where(User.email_verification_token == token))
+    user = res.scalar_one_or_none()
+    if not user:
+        raise HTTPException(404, "Invalid token")
+    user.email_verified = True
+    user.email_verification_token = None
+    db.add(user)
+    await db.commit()
+    return {"ok": True}
+
+@app.post("/auth/forgot-password", response_model=dict)
+async def forgot_password(payload: ForgotPasswordIn, db: AsyncSession = Depends(get_db)):
+    res = await db.execute(select(User).where(User.email == payload.email))
+    user = res.scalar_one_or_none()
+    if not user:
+        return {"ok": True}
+    token = secrets.token_urlsafe(32)
+    user.reset_token = token
+    user.reset_expires_at = datetime.utcnow() + timedelta(hours=2)
+    db.add(user)
+    await db.commit()
+    try:
+        st = await _get_settings(db)
+        base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
+        link = f"{base}/?reset_token={token}"
+        await _send_email(db, user.email, "Reset your password", f"Reset link: {link}")
+    except Exception:
+        pass
+    return {"ok": True}
+
+@app.post("/auth/reset-password", response_model=dict)
+async def reset_password(payload: ResetPasswordIn, db: AsyncSession = Depends(get_db)):
+    if len(payload.new_password) < 6:
+        raise HTTPException(400, "Password too short")
+    res = await db.execute(select(User).where(User.reset_token == payload.token))
+    user = res.scalar_one_or_none()
+    if not user:
+        raise HTTPException(404, "Invalid token")
+    if user.reset_expires_at and user.reset_expires_at < datetime.utcnow():
+        raise HTTPException(410, "Token expired")
+    user.password_hash = hash_password(payload.new_password)
+    user.reset_token = None
+    user.reset_expires_at = None
+    user.password_temp = False
+    db.add(user)
+    await db.commit()
+    return {"ok": True}
+
+@app.get("/me", response_model=MeOut)
 async def me(user: User = Depends(get_current_user)):
-    return _user_out(user)
+    return _me_out(user)
 
-@app.patch("/me/profile", response_model=UserOut)
+@app.get("/settings/public", response_model=dict)
+async def public_settings(db: AsyncSession = Depends(get_db)):
+    st = await _get_settings(db)
+    data = st.data or {}
+    return {
+        "languages": data.get("languages") or [],
+        "age_ranges": data.get("age_ranges") or [],
+        "countries": data.get("countries") or [],
+        "calling_codes": data.get("calling_codes") or [],
+        "provinces_by_country": data.get("provinces_by_country") or {},
+        "cities_by_country": data.get("cities_by_country") or {},
+    }
+
+@app.post("/admin/login", response_model=Token)
+async def admin_login(payload: AdminLoginIn, db: AsyncSession = Depends(get_db)):
+    res = await db.execute(select(User).where(or_(User.display_name == payload.username, User.email == payload.username)))
+    user = res.scalar_one_or_none()
+    if not user:
+        if payload.username == "admin" and payload.password == "admin":
+            user = User(
+                email="admin@local",
+                phone="000000000",
+                password_hash=hash_password("admin"),
+                display_name="admin",
+                dob="1980-01-01",
+                age_range=age_range_from_dob("1980-01-01"),
+                country="ES",
+                province="Madrid",
+                city=None,
+                accept_dm=False,
+                avatar_url=None,
+                bio="",
+                role="admin",
+                email_verified=True,
+            )
+            db.add(user)
+            await db.commit()
+            await db.refresh(user)
+        else:
+            raise HTTPException(401, "Invalid credentials")
+    if user.role != "admin":
+        if payload.username == "admin" and payload.password == "admin":
+            user.role = "admin"
+            user.email_verified = True
+            db.add(user)
+            await db.commit()
+        else:
+            raise HTTPException(401, "Invalid credentials")
+    if not user.password_hash or not verify_password(payload.password, user.password_hash):
+        raise HTTPException(401, "Invalid credentials")
+    user.login_count = (user.login_count or 0) + 1
+    user.last_login_at = datetime.utcnow()
+    user.last_seen_at = datetime.utcnow()
+    if not user.session_active:
+        user.session_active = True
+        user.session_started_at = datetime.utcnow()
+    db.add(user)
+    await db.commit()
+    return Token(access_token=create_access_token(str(user.id)), password_temp=bool(user.password_temp))
+
+@app.get("/admin/settings", response_model=dict)
+async def admin_get_settings(db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    st = await _get_settings(db)
+    return st.data or {}
+
+@app.put("/admin/settings", response_model=dict)
+async def admin_put_settings(payload: dict, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    st = await _get_settings(db)
+    st.data = payload or {}
+    db.add(st)
+    await db.commit()
+    return st.data
+
+@app.post("/admin/smtp/test", response_model=dict)
+async def admin_smtp_test(payload: AdminSmtpTestIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    to_email = (payload.to_email or "").strip()
+    if not to_email:
+        raise HTTPException(400, "Missing to_email")
+    await _send_email(db, to_email, "MeetGo SMTP test", "SMTP test email from MeetGo admin.")
+    return {"ok": True}
+
+@app.get("/admin/users", response_model=list[MeOut])
+async def admin_list_users(q: str | None = None, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    query = select(User)
+    if q:
+        like = f"%{q}%"
+        query = query.where(or_(User.display_name.ilike(like), User.email.ilike(like), User.phone.ilike(like)))
+    res = await db.execute(query.order_by(User.id.desc()).limit(200))
+    return [_me_out(u) for u in res.scalars().all()]
+
+@app.post("/admin/users", response_model=MeOut)
+async def admin_create_user(payload: AdminUserCreateIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    email = payload.email.strip().lower()
+    res = await db.execute(select(User).where(User.email == email))
+    if res.scalar_one_or_none():
+        raise HTTPException(409, "Email already used")
+    phone_norm = _normalize_phone(payload.phone)
+    if not phone_norm:
+        raise HTTPException(400, "Invalid phone")
+    res = await db.execute(select(User).where(User.phone == phone_norm))
+    if res.scalar_one_or_none():
+        raise HTTPException(409, "Phone already used")
+    ar = age_range_from_dob(payload.dob)
+    new_user = User(
+        email=email,
+        phone=phone_norm,
+        password_hash=hash_password(payload.password),
+        display_name=payload.display_name,
+        dob=payload.dob,
+        age_range=ar,
+        country=payload.country or "ES",
+        province=payload.province.strip(),
+        city=(payload.city.strip() if payload.city else None),
+        accept_dm=False,
+        avatar_url=None,
+        bio="",
+        role=payload.role or "user",
+        email_verified=True,
+    )
+    db.add(new_user)
+    await db.commit()
+    await db.refresh(new_user)
+    return _me_out(new_user)
+
+@app.patch("/admin/users/{user_id}", response_model=MeOut)
+async def admin_update_user(user_id: int, payload: AdminUserUpdateIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    res = await db.execute(select(User).where(User.id == user_id))
+    target = res.scalar_one_or_none()
+    if not target:
+        raise HTTPException(404, "User not found")
+    if payload.display_name is not None:
+        target.display_name = payload.display_name.strip()
+    if payload.email is not None:
+        email = payload.email.strip().lower() or None
+        if email != target.email:
+            if email:
+                res = await db.execute(select(User).where(User.email == email))
+                if res.scalar_one_or_none():
+                    raise HTTPException(409, "Email already used")
+            target.email = email
+    if payload.phone is not None:
+        phone_norm = _normalize_phone(payload.phone)
+        if not phone_norm:
+            raise HTTPException(400, "Invalid phone")
+        if phone_norm != target.phone:
+            res = await db.execute(select(User).where(User.phone == phone_norm))
+            if res.scalar_one_or_none():
+                raise HTTPException(409, "Phone already used")
+            target.phone = phone_norm
+    if payload.password is not None:
+        if len(payload.password) < 6:
+            raise HTTPException(400, "Password too short")
+        target.password_hash = hash_password(payload.password)
+    if payload.dob is not None:
+        target.dob = payload.dob
+        target.age_range = age_range_from_dob(payload.dob)
+    if payload.country is not None:
+        target.country = payload.country
+    if payload.province is not None:
+        target.province = payload.province
+    if payload.city is not None:
+        target.city = payload.city
+    if payload.role is not None:
+        target.role = payload.role
+    if payload.email_verified is not None:
+        target.email_verified = payload.email_verified
+    if payload.is_banned is not None:
+        target.is_banned = payload.is_banned
+    if payload.banned_until is not None:
+        target.banned_until = payload.banned_until
+    db.add(target)
+    await db.commit()
+    await db.refresh(target)
+    return _me_out(target)
+
+@app.post("/admin/users/{user_id}/resend-verification", response_model=dict)
+async def admin_resend_verification(user_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    res = await db.execute(select(User).where(User.id == user_id))
+    target = res.scalar_one_or_none()
+    if not target:
+        raise HTTPException(404, "User not found")
+    if not target.email:
+        raise HTTPException(400, "User has no email")
+    token = secrets.token_urlsafe(32)
+    target.email_verification_token = token
+    target.email_verification_sent_at = datetime.utcnow()
+    db.add(target)
+    await db.commit()
+    st = await _get_settings(db)
+    base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
+    link = f"{base}/?verify_token={token}"
+    await _send_email(db, target.email, "Verify your email", f"Click to verify: {link}")
+    return {"ok": True}
+
+@app.delete("/admin/users/{user_id}", response_model=dict)
+async def admin_delete_user(user_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    if user.id == user_id:
+        raise HTTPException(400, "Cannot delete self")
+    conv_ids = select(DMConversation.id).where(or_(DMConversation.user1_id == user_id, DMConversation.user2_id == user_id))
+    await db.execute(delete(DMMessage).where(or_(DMMessage.user_id == user_id, DMMessage.conversation_id.in_(conv_ids))))
+    await db.execute(delete(DMConversation).where(or_(DMConversation.user1_id == user_id, DMConversation.user2_id == user_id)))
+    await db.execute(delete(DMRequest).where(or_(DMRequest.from_user_id == user_id, DMRequest.to_user_id == user_id)))
+    await db.execute(delete(FriendRequest).where(or_(FriendRequest.from_user_id == user_id, FriendRequest.to_user_id == user_id)))
+    await db.execute(delete(Friendship).where(or_(Friendship.user_id == user_id, Friendship.friend_id == user_id)))
+    await db.execute(delete(Follow).where(or_(Follow.follower_id == user_id, Follow.following_id == user_id)))
+    await db.execute(delete(Post).where(Post.user_id == user_id))
+    await db.execute(delete(RoomMessage).where(RoomMessage.user_id == user_id))
+    await db.execute(delete(RoomDiscipline).where(RoomDiscipline.user_id == user_id))
+    await db.execute(delete(UserInterest).where(UserInterest.user_id == user_id))
+    await db.execute(update(RoomRule).where(RoomRule.updated_by_user_id == user_id).values(updated_by_user_id=None))
+    await db.execute(delete(User).where(User.id == user_id))
+    await db.commit()
+    return {"ok": True}
+
+@app.post("/admin/interests", response_model=InterestOut)
+async def admin_create_interest(payload: AdminInterestIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    res = await db.execute(select(Interest).where(Interest.slug == payload.slug))
+    if res.scalar_one_or_none():
+        raise HTTPException(409, "Interest already exists")
+    it = Interest(slug=payload.slug, name=payload.name)
+    db.add(it)
+    await db.commit()
+    await db.refresh(it)
+    return _interest_out(it)
+
+@app.patch("/admin/interests/{interest_id}", response_model=InterestOut)
+async def admin_update_interest(interest_id: int, payload: AdminInterestIn, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    res = await db.execute(select(Interest).where(Interest.id == interest_id))
+    it = res.scalar_one_or_none()
+    if not it:
+        raise HTTPException(404, "Interest not found")
+    it.slug = payload.slug
+    it.name = payload.name
+    db.add(it)
+    await db.commit()
+    await db.refresh(it)
+    return _interest_out(it)
+
+@app.delete("/admin/interests/{interest_id}", response_model=dict)
+async def admin_delete_interest(interest_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(_require_admin)):
+    await db.execute(delete(Interest).where(Interest.id == interest_id))
+    await db.commit()
+    return {"ok": True}
+@app.patch("/me/profile", response_model=MeOut)
 async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    left_rooms = False
+    old_age_range = age_range_from_dob(user.dob)
     if payload.display_name is not None:
         user.display_name = payload.display_name.strip()
+    if payload.email is not None:
+        email = payload.email.strip().lower() or None
+        if not email:
+            raise HTTPException(400, "Email required")
+        if email != user.email:
+            if email:
+                res = await db.execute(select(User).where(User.email == email))
+                if res.scalar_one_or_none():
+                    raise HTTPException(409, "Email already used")
+            user.email = email
+            user.email_verified = False
+            token = secrets.token_urlsafe(32)
+            user.email_verification_token = token
+            user.email_verification_sent_at = datetime.utcnow()
+            try:
+                st = await _get_settings(db)
+                base = (st.data or {}).get("app_base_url") or "http://localhost:5173"
+                link = f"{base}/?verify_token={token}"
+                await _send_email(db, user.email, "Verify your email", f"Click to verify: {link}")
+            except Exception:
+                pass
+    if payload.password is not None:
+        if len(payload.password) < 6:
+            raise HTTPException(400, "Password too short")
+        user.password_hash = hash_password(payload.password)
+        user.password_temp = False
+    if payload.dob is not None and payload.dob != user.dob:
+        if (user.dob_change_count or 0) >= 1:
+            raise HTTPException(409, "DOB change already used")
+        try:
+            new_age_range = age_range_from_dob(payload.dob)
+        except Exception:
+            raise HTTPException(400, "Invalid dob")
+        if new_age_range != old_age_range:
+            left_rooms = True
+        user.dob = payload.dob
+        user.age_range = new_age_range
+        user.dob_change_count = (user.dob_change_count or 0) + 1
+    if payload.country is not None:
+        user.country = payload.country or None
+    if payload.province is not None:
+        province = payload.province.strip()
+        if province and province != user.province:
+            left_rooms = True
+            user.province = province
+        elif not province:
+            raise HTTPException(400, "Province required")
+    if payload.phone is not None:
+        phone_norm = _normalize_phone(payload.phone)
+        if not phone_norm:
+            raise HTTPException(400, "Invalid phone")
+        if phone_norm != user.phone:
+            if user.phone_changed_at and (datetime.utcnow() - user.phone_changed_at) < timedelta(days=30):
+                raise HTTPException(409, "Phone change limited to every 30 days")
+            res = await db.execute(select(User).where(User.phone == phone_norm))
+            if res.scalar_one_or_none():
+                raise HTTPException(409, "Phone already used")
+            user.phone = phone_norm
+            user.phone_changed_at = datetime.utcnow()
     if payload.city is not None:
         user.city = payload.city.strip() if payload.city else None
     if payload.accept_dm is not None:
@@ -143,11 +897,13 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
         user.avatar_url = payload.avatar_url
     if payload.bio is not None:
         user.bio = payload.bio
+    if left_rooms:
+        await db.execute(delete(UserInterest).where(UserInterest.user_id == user.id))
     user.last_active_at = datetime.utcnow()
     db.add(user)
     await db.commit()
     await db.refresh(user)
-    return _user_out(user)
+    return _me_out(user)
 
 # Public profile
 @app.get("/users/{user_id}", response_model=UserOut)
@@ -180,7 +936,8 @@ async def set_my_interests(payload: SetInterestsIn, db: AsyncSession = Depends(g
 
 # ---------------- Rooms ----------------
 async def _get_or_create_room(db: AsyncSession, province: str, age_range, interest_id: int) -> Room:
-    res = await db.execute(select(Room).where(Room.province == province, Room.age_range == age_range, Room.interest_id == interest_id))
+    aliases = age_range_aliases(age_range)
+    res = await db.execute(select(Room).where(Room.province == province, Room.age_range.in_(aliases), Room.interest_id == interest_id))
     room = res.scalar_one_or_none()
     if room:
         return room
@@ -209,6 +966,7 @@ async def _get_or_create_room(db: AsyncSession, province: str, age_range, intere
 
 @app.get("/rooms/my", response_model=list[RoomOut])
 async def my_rooms(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    ar = age_range_from_dob(user.dob)
     res = await db.execute(select(UserInterest.interest_id).where(UserInterest.user_id == user.id))
     interest_ids = list(res.scalars().all())
     if not interest_ids:
@@ -218,12 +976,13 @@ async def my_rooms(db: AsyncSession = Depends(get_db), user: User = Depends(get_
 
     rooms = []
     for it in interests:
-        room = await _get_or_create_room(db, user.province, user.age_range, it.id)
-        rooms.append(RoomOut(id=room.id, province=room.province, age_range=room.age_range, interest=_interest_out(it)))
+        room = await _get_or_create_room(db, user.province, ar, it.id)
+        rooms.append(RoomOut(id=room.id, province=room.province, age_range=normalize_age_range(room.age_range), interest=_interest_out(it)))
     return rooms
 
 @app.post("/rooms/join", response_model=RoomOut)
 async def join_room(payload: JoinRoomIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    ar = age_range_from_dob(user.dob)
     res = await db.execute(select(Interest).where(Interest.slug == payload.interest_slug))
     interest = res.scalar_one_or_none()
     if not interest:
@@ -233,8 +992,21 @@ async def join_room(payload: JoinRoomIn, db: AsyncSession = Depends(get_db), use
     if not res.scalar_one_or_none():
         db.add(UserInterest(user_id=user.id, interest_id=interest.id))
 
-    room = await _get_or_create_room(db, user.province, user.age_range, interest.id)
-    return RoomOut(id=room.id, province=room.province, age_range=room.age_range, interest=_interest_out(interest))
+    room = await _get_or_create_room(db, user.province, ar, interest.id)
+    return RoomOut(id=room.id, province=room.province, age_range=normalize_age_range(room.age_range), interest=_interest_out(interest))
+
+@app.post("/rooms/leave", response_model=dict)
+async def leave_room(payload: LeaveRoomIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    res = await db.execute(select(Room).where(Room.id == payload.room_id))
+    room = res.scalar_one_or_none()
+    if not room:
+        raise HTTPException(404, "Room not found")
+    if not _can_access_room(user, room):
+        raise HTTPException(403, "Forbidden")
+
+    await db.execute(delete(UserInterest).where(UserInterest.user_id == user.id, UserInterest.interest_id == room.interest_id))
+    await db.commit()
+    return {"ok": True}
 
 @app.get("/rooms/{room_id}/rules", response_model=RoomRuleOut)
 async def get_room_rules(room_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
@@ -242,7 +1014,7 @@ async def get_room_rules(room_id: int, db: AsyncSession = Depends(get_db), user:
     room = res.scalar_one_or_none()
     if not room:
         raise HTTPException(404, "Room not found")
-    if room.province != user.province or room.age_range != user.age_range:
+    if not _can_access_room(user, room):
         raise HTTPException(403, "Forbidden")
     res = await db.execute(select(RoomRule).where(RoomRule.room_id == room_id))
     rule = res.scalar_one_or_none()
@@ -256,7 +1028,7 @@ async def list_room_messages(room_id: int, limit: int = 50, db: AsyncSession = D
     room = res.scalar_one_or_none()
     if not room:
         raise HTTPException(404, "Room not found")
-    if room.province != user.province or room.age_range != user.age_range:
+    if not _can_access_room(user, room):
         raise HTTPException(403, "Forbidden")
 
     res = await db.execute(select(RoomMessage).where(RoomMessage.room_id == room_id).order_by(RoomMessage.id.desc()).limit(limit))
@@ -284,6 +1056,27 @@ async def list_room_messages(room_id: int, limit: int = 50, db: AsyncSession = D
         ))
     return out
 
+@app.get("/rooms/online")
+async def rooms_online(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    snapshots = hub.all_snapshots()
+    room_ids = [s["room_id"] for s in snapshots]
+    if not room_ids:
+        return []
+    res = await db.execute(select(Room).where(Room.id.in_(room_ids)))
+    rooms = res.scalars().all()
+    allowed = {r.id for r in rooms if _can_access_room(user, r)}
+    return [s for s in snapshots if s["room_id"] in allowed]
+
+@app.get("/rooms/{room_id}/online")
+async def room_online(room_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    res = await db.execute(select(Room).where(Room.id == room_id))
+    room = res.scalar_one_or_none()
+    if not room:
+        raise HTTPException(404, "Room not found")
+    if not _can_access_room(user, room):
+        raise HTTPException(403, "Forbidden")
+    return hub.room_snapshot(room_id)
+
 @app.websocket("/ws/rooms/{room_id}")
 async def room_ws(room_id: int, websocket: WebSocket):
     token = websocket.query_params.get("token")
@@ -304,7 +1097,7 @@ async def room_ws(room_id: int, websocket: WebSocket):
             await websocket.close(code=1008); return
         res = await db.execute(select(User).where(User.id == user_id))
         u = res.scalar_one_or_none()
-        if not u or room.province != u.province or room.age_range != u.age_range:
+        if not u or not _can_access_room(u, room):
             await websocket.close(code=1008); return
 
         await room_ws_loop(websocket, room_id, user_id, db, redis_client)
@@ -504,3 +1297,66 @@ async def get_feed(limit: int = 50, db: AsyncSession = Depends(get_db), user: Us
         for u in resu.scalars().all():
             umap[u.id] = _user_summary(u)
     return [PostOut(id=p.id, user_id=p.user_id, user=umap.get(p.user_id) or UserSummary(id=p.user_id, display_name="Unknown", avatar_url=None), content=p.content, created_at=p.created_at) for p in posts]
+
+# ---------------- Debug: docker compose logs ----------------
+def _compose_containers(client):
+    project = os.getenv("COMPOSE_PROJECT_NAME")
+    if project:
+        return client.containers.list(filters={"label": f"com.docker.compose.project={project}"})
+    return client.containers.list(filters={"label": "com.docker.compose.project"})
+
+@app.get("/debug/compose-logs")
+async def compose_logs():
+    if os.getenv("DEBUG_COMPOSE_LOGS") != "1":
+        raise HTTPException(404, "Disabled")
+    if docker is None:
+        raise HTTPException(500, "Docker SDK not installed")
+
+    try:
+        client = docker.from_env()
+        containers = _compose_containers(client)
+    except Exception as e:
+        raise HTTPException(500, f"Docker unavailable: {e}")
+
+    if not containers:
+        raise HTTPException(404, "No compose containers found")
+
+    queue: asyncio.Queue[dict] = asyncio.Queue()
+    stop_event = threading.Event()
+    loop = asyncio.get_running_loop()
+
+    def _pump(container, service: str):
+        try:
+            for raw in container.logs(stream=True, follow=True, timestamps=True, tail=200):
+                if stop_event.is_set():
+                    break
+                try:
+                    line = raw.decode("utf-8", errors="replace").rstrip("\n")
+                except Exception:
+                    line = str(raw)
+                payload = {"ts": datetime.utcnow().isoformat() + "Z", "service": service, "line": line}
+                loop.call_soon_threadsafe(queue.put_nowait, payload)
+        except Exception as e:
+            payload = {"ts": datetime.utcnow().isoformat() + "Z", "service": service, "line": f"[log error] {e}"}
+            loop.call_soon_threadsafe(queue.put_nowait, payload)
+
+    threads = []
+    for c in containers:
+        service = c.labels.get("com.docker.compose.service", c.name)
+        t = threading.Thread(target=_pump, args=(c, service), daemon=True)
+        t.start()
+        threads.append(t)
+
+    async def event_stream():
+        try:
+            while True:
+                item = await queue.get()
+                yield f"data: {json.dumps(item)}\n\n"
+        except asyncio.CancelledError:
+            raise
+        finally:
+            stop_event.set()
+            for t in threads:
+                t.join(timeout=0.2)
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")

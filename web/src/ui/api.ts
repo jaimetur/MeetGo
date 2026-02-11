@@ -152,6 +152,22 @@ export const api = {
   async login(payload: any) {
     return await req("/auth/login", { method: "POST", body: JSON.stringify(payload) });
   },
+  async logout() {
+    return await req("/auth/logout", { method: "POST" });
+  },
+  async verifyEmail(token: string) {
+    const qs = encodeURIComponent(token);
+    return await req(`/auth/verify-email?token=${qs}`);
+  },
+  async forgotPassword(email: string) {
+    return await req("/auth/forgot-password", { method: "POST", body: JSON.stringify({ email }) });
+  },
+  async resetPassword(token: string, new_password: string) {
+    return await req("/auth/reset-password", { method: "POST", body: JSON.stringify({ token, new_password }) });
+  },
+  async publicSettings() {
+    return await req("/settings/public");
+  },
 
   async me() {
     return await req("/me");
@@ -163,6 +179,12 @@ export const api = {
 
   async listInterests() {
     return await req("/interests");
+  },
+  async roomsOnline() {
+    return await req("/rooms/online");
+  },
+  async roomOnline(roomId: number) {
+    return await req(`/rooms/${roomId}/online`);
   },
 
   async setInterests(slugs: string[]) {
@@ -177,6 +199,10 @@ export const api = {
   async joinRoom(interest_slug: string) {
     // If your backend is actually /rooms/join-room or /api/rooms/join, this will 404 and you'll see it in Debug panel.
     return await req("/rooms/join", { method: "POST", body: JSON.stringify({ interest_slug }) });
+  },
+
+  async leaveRoom(room_id: number) {
+    return await req("/rooms/leave", { method: "POST", body: JSON.stringify({ room_id }) });
   },
 
   async roomMessages(roomId: number) {

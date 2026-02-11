@@ -8,8 +8,17 @@ from .db import Base
 
 class AgeRange(str, enum.Enum):
     R18_30 = "18_30"
+    R31_50 = "31_50"
+    R51_PLUS = "51_plus"
+    # Backwards compatibility with existing DB values.
     R31_55 = "31_55"
     R55_PLUS = "55_plus"
+    # Legacy prefixed values from older enums.
+    R18_30_LEGACY = "R18_30"
+    R31_50_LEGACY = "R31_50"
+    R51_PLUS_LEGACY = "R51_PLUS"
+    R31_55_LEGACY = "R31_55"
+    R55_PLUS_LEGACY = "R55_PLUS"
 
 class DMStatus(str, enum.Enum):
     PENDING = "PENDING"
@@ -31,9 +40,14 @@ class User(Base):
 
     display_name: Mapped[str] = mapped_column(String(64))
     dob: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD
-    age_range: Mapped[AgeRange] = mapped_column(Enum(AgeRange), index=True)
+    age_range: Mapped[AgeRange] = mapped_column(
+        Enum(AgeRange, values_callable=lambda obj: [e.value for e in obj], name="agerange"),
+        index=True,
+    )
+    country: Mapped[str | None] = mapped_column(String(2), index=True, nullable=True)
     province: Mapped[str] = mapped_column(String(64), index=True)
     city: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    dob_change_count: Mapped[int] = mapped_column(Integer, default=0)
 
     # Profile
     avatar_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
@@ -42,6 +56,22 @@ class User(Base):
     accept_dm: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     last_active_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    role: Mapped[str] = mapped_column(String(32), default="user", index=True)
+    email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    email_verification_token: Mapped[str | None] = mapped_column(String(128), nullable=True, index=True)
+    email_verification_sent_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    reset_token: Mapped[str | None] = mapped_column(String(128), nullable=True, index=True)
+    reset_expires_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    password_temp: Mapped[bool] = mapped_column(Boolean, default=False)
+    phone_changed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    login_count: Mapped[int] = mapped_column(Integer, default=0)
+    last_login_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    last_seen_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    session_started_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    session_active: Mapped[bool] = mapped_column(Boolean, default=False)
+    total_connected_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    is_banned: Mapped[bool] = mapped_column(Boolean, default=False)
+    banned_until: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
 class Interest(Base):
     __tablename__ = "interests"
@@ -59,7 +89,10 @@ class Room(Base):
     __tablename__ = "rooms"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     province: Mapped[str] = mapped_column(String(64), index=True)
-    age_range: Mapped[AgeRange] = mapped_column(Enum(AgeRange), index=True)
+    age_range: Mapped[AgeRange] = mapped_column(
+        Enum(AgeRange, values_callable=lambda obj: [e.value for e in obj], name="agerange"),
+        index=True,
+    )
     interest_id: Mapped[int] = mapped_column(ForeignKey("interests.id"), index=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -147,3 +180,8 @@ class Post(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     content: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+class AppSetting(Base):
+    __tablename__ = "app_settings"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    data: Mapped[dict] = mapped_column(JSON, default=dict)

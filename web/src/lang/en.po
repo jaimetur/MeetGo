@@ -21,11 +21,53 @@ msgstr "Access"
 msgid "login_btn"
 msgstr "Login"
 
+msgid "forgot_password_btn"
+msgstr "Forgot password"
+
+msgid "new_user_btn"
+msgstr "New user"
+
+msgid "hide_register_btn"
+msgstr "Hide registration"
+
+msgid "forgot_password_prompt"
+msgstr "Enter your email to recover your password"
+
+msgid "forgot_password_sent"
+msgstr "If the email exists, we sent a reset link."
+
+msgid "reset_password_title"
+msgstr "Reset password"
+
+msgid "reset_password_btn"
+msgstr "Reset"
+
+msgid "reset_password_ok"
+msgstr "Password updated."
+
+msgid "verify_email_ok"
+msgstr "Email verified."
+
+msgid "verify_email_fail"
+msgstr "Email verification failed."
+
+msgid "register_verify_email"
+msgstr "Check your email to verify your account."
+
 msgid "or_register"
 msgstr "Or register"
 
 msgid "error_title"
 msgstr "Error"
+
+msgid "ok_title"
+msgstr "OK"
+
+msgid "register_ok"
+msgstr "Account created successfully."
+
+msgid "login_error_generic"
+msgstr "Could not log in."
 
 msgid "email"
 msgstr "Email"
@@ -63,6 +105,9 @@ msgstr "Country"
 msgid "province_label"
 msgstr "Province/State"
 
+msgid "city_label"
+msgstr "City"
+
 msgid "not_available"
 msgstr "(Not available)"
 
@@ -80,9 +125,6 @@ msgstr "Create account"
 
 msgid "hello"
 msgstr "Hi, {name}"
-
-msgid "right_click_hint"
-msgstr "Right click an avatar -> profile / follow / friend"
 
 msgid "rooms"
 msgstr "Rooms"
@@ -105,6 +147,18 @@ msgstr "Pick an interest and join. If it does not exist, it will be created."
 msgid "join_btn"
 msgstr "Join"
 
+msgid "leave_room_btn"
+msgstr "Leave room"
+
+msgid "leave_room_confirm"
+msgstr "Leave room {room}?"
+
+msgid "leave_room_ok"
+msgstr "Left the room."
+
+msgid "leave_room_error"
+msgstr "Could not leave the room."
+
 msgid "no_rooms_title"
 msgstr "You have no rooms yet"
 
@@ -115,13 +169,8 @@ msgid "tip_title"
 msgstr "Tip"
 
 msgid "tip_body"
-msgstr "Try sending a link or a phone: the bot will delete it. Flooding will mute you."
+msgstr "Right click an avatar to open the menu."
 
-msgid "quick_title"
-msgstr "Quick action"
-
-msgid "quick_body"
-msgstr "Right click an avatar -> menu."
 
 msgid "write_placeholder"
 msgstr "Type..."
@@ -153,8 +202,98 @@ msgstr "Save profile"
 msgid "save_settings"
 msgstr "Save settings"
 
+msgid "settings_saved"
+msgstr "Settings saved."
+
+msgid "edit_profile_title"
+msgstr "Edit profile"
+
+msgid "new_password"
+msgstr "New password"
+
+msgid "dob_change_note"
+msgstr "Date of birth can only be changed once and requires review."
+
+msgid "warn_province_change"
+msgstr "Changing province will remove you from your current rooms. Continue?"
+
+msgid "warn_country_change"
+msgstr "Changing country will update your profile. Continue?"
+
+msgid "warn_dob_change"
+msgstr "Changing date of birth is allowed only once and requires review. Continue?"
+
+msgid "warn_dob_change_range"
+msgstr "Changing date of birth will change your age range and remove you from your rooms. It is allowed only once and requires review. Continue?"
+
+msgid "dob_change_limit"
+msgstr "You already requested a date of birth change."
+
+msgid "yes"
+msgstr "Yes"
+
+msgid "no"
+msgstr "No"
+
+msgid "users_online"
+msgstr "Users: {count}"
+
+msgid "users_panel_title"
+msgstr "Online users"
+
+msgid "show_users_panel"
+msgstr "Show users"
+
+msgid "hide_users_panel"
+msgstr "Hide users"
+
+msgid "close_panel"
+msgstr "Close"
+
+msgid "users_none"
+msgstr "No connected users"
+
+msgid "users_no_room"
+msgstr "Select a room to see users."
+
+msgid "online_summary"
+msgstr "Users online: {users} · Active rooms: {rooms}"
+
+msgid "online_users"
+msgstr "Users online: {users}"
+
+msgid "online_rooms"
+msgstr "Active rooms: {rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "Hide rooms"
+
+msgid "show_rooms_panel"
+msgstr "Show rooms"
+
 msgid "settings_title"
 msgstr "Settings"
+
+msgid "hide_panel"
+msgstr "Hide panel"
+
+msgid "show_panel"
+msgstr "Show panel"
+
+msgid "hide_user_panel"
+msgstr "Hide User Panel"
+
+msgid "show_user_panel"
+msgstr "Show User Panel"
+
+msgid "panel_user"
+msgstr "User Panel"
+
+msgid "panel_rooms"
+msgstr "Rooms Panel"
+
+msgid "no_room_selected"
+msgstr "No active room"
 
 msgid "language_label"
 msgstr "Language"
@@ -191,6 +330,12 @@ msgstr "Could not join the room."
 
 msgid "loading_interests"
 msgstr "Loading interests..."
+
+msgid "interests_load_error"
+msgstr "Could not load interests."
+
+msgid "retry_btn"
+msgstr "Retry"
 
 msgid "chat_ws_error"
 msgstr "Chat connection error (WebSocket). Check backend port/URL."
@@ -243,6 +388,12 @@ msgstr "Clear"
 msgid "debug_copy"
 msgstr "Copy"
 
+msgid "debug_copy_selection"
+msgstr "Copy selection"
+
+msgid "debug_copy_selection_empty"
+msgstr "No selection to copy"
+
 msgid "debug_copy_ok"
 msgstr "Copied OK"
 
@@ -263,6 +414,18 @@ msgstr "connecting..."
 
 msgid "debug_services_error"
 msgstr "error"
+
+msgid "debug_minimize"
+msgstr "Minimize"
+
+msgid "debug_restore"
+msgstr "Restore"
+
+msgid "debug_close"
+msgstr "Close"
+
+msgid "debug_maximize"
+msgstr "Maximize"
 
 msgid "chat_not_connected"
 msgstr "Chat not connected (ws=null). Open a room first."

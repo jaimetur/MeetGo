@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import datetime
 from typing import Dict, Set
 
@@ -13,16 +14,39 @@ from .moderation import decide_action, apply_action
 class RoomHub:
     def __init__(self):
         self.rooms: Dict[int, Set[WebSocket]] = {}
+        self.room_user_counts: Dict[int, Dict[int, int]] = {}
+        self.room_users: Dict[int, Dict[int, dict]] = {}
+        self.ws_users: Dict[WebSocket, int] = {}
 
-    async def connect(self, room_id: int, ws: WebSocket):
+    async def connect(self, room_id: int, ws: WebSocket, user_id: int, user_summary: dict):
         await ws.accept()
         self.rooms.setdefault(room_id, set()).add(ws)
+        self.ws_users[ws] = user_id
+        counts = self.room_user_counts.setdefault(room_id, {})
+        counts[user_id] = counts.get(user_id, 0) + 1
+        users = self.room_users.setdefault(room_id, {})
+        users[user_id] = user_summary
 
-    def disconnect(self, room_id: int, ws: WebSocket):
+    def disconnect(self, room_id: int, ws: WebSocket, user_id: int | None = None):
         if room_id in self.rooms and ws in self.rooms[room_id]:
             self.rooms[room_id].remove(ws)
             if not self.rooms[room_id]:
                 del self.rooms[room_id]
+        if user_id is None:
+            user_id = self.ws_users.pop(ws, None)
+        else:
+            self.ws_users.pop(ws, None)
+        counts = self.room_user_counts.get(room_id)
+        if counts and user_id in counts:
+            counts[user_id] -= 1
+            if counts[user_id] <= 0:
+                del counts[user_id]
+                users = self.room_users.get(room_id)
+                if users and user_id in users:
+                    del users[user_id]
+        if counts is not None and not counts:
+            self.room_user_counts.pop(room_id, None)
+            self.room_users.pop(room_id, None)
 
     async def broadcast(self, room_id: int, payload: dict):
         dead = []
@@ -32,8 +56,16 @@ class RoomHub:
             except Exception:
                 dead.append(ws)
         for ws in dead:
-            self.disconnect(room_id, ws)
+            self.disconnect(room_id, ws, None)
 
+    def room_snapshot(self, room_id: int) -> dict:
+        users = list((self.room_users.get(room_id) or {}).values())
+        return {"room_id": room_id, "count": len(users), "users": users}
+
+    def all_snapshots(self) -> list[dict]:
+        return [self.room_snapshot(room_id) for room_id in self.room_users.keys()]
+
+logger = logging.getLogger("meetgo.chat")
 hub = RoomHub()
 
 async def is_muted_or_banned(db: AsyncSession, room_id: int, user_id: int) -> tuple[bool, bool, str | None]:
@@ -55,7 +87,9 @@ async def _user_summary(db: AsyncSession, user_id: int) -> dict:
     return {"id": u.id, "display_name": u.display_name, "avatar_url": u.avatar_url}
 
 async def room_ws_loop(ws: WebSocket, room_id: int, user_id: int, db: AsyncSession, redis_client: redis.Redis):
-    await hub.connect(room_id, ws)
+    user_summary = await _user_summary(db, user_id)
+    await hub.connect(room_id, ws, user_id, user_summary)
+    await hub.broadcast(room_id, {"type": "room_presence", "presence": hub.room_snapshot(room_id)})
     try:
         while True:
             raw = await ws.receive_text()
@@ -94,6 +128,9 @@ async def room_ws_loop(ws: WebSocket, room_id: int, user_id: int, db: AsyncSessi
                 }
             })
     except WebSocketDisconnect:
-        pass
+        logger.info("WS disconnect room=%s user=%s", room_id, user_id)
+    except Exception:
+        logger.exception("WS error room=%s user=%s", room_id, user_id)
     finally:
-        hub.disconnect(room_id, ws)
+        hub.disconnect(room_id, ws, user_id)
+        await hub.broadcast(room_id, {"type": "room_presence", "presence": hub.room_snapshot(room_id)})

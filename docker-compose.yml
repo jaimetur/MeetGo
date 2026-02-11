@@ -32,7 +32,7 @@ services:
     volumes:
       - ./backend/app:/app/app
       - /var/run/docker.sock:/var/run/docker.sock
-    command: sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0 }'"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   web:
     build: ./web
@@ -46,7 +46,21 @@ services:
     volumes:
       - ./web:/app
       - /app/node_modules
-    command: sh -c "npm run dev -- --host 0.0.0.0 --port 5173 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0 }'"
+    command: sh -c "npm run dev -- --host 0.0.0.0 --port 5173 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+
+  admin:
+    build: ./admin
+    ports:
+      - "5172:5172"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE: http://192.168.1.11:18000
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./admin:/app
+      - /app/node_modules
+    command: sh -c "npm run dev -- --host 0.0.0.0 --port 5172 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
   
 
 volumes:

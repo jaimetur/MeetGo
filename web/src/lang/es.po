@@ -21,11 +21,53 @@ msgstr "Acceso"
 msgid "login_btn"
 msgstr "Login"
 
+msgid "forgot_password_btn"
+msgstr "He olvidado mi contrasena"
+
+msgid "new_user_btn"
+msgstr "Nuevo Usuario"
+
+msgid "hide_register_btn"
+msgstr "Ocultar registro"
+
+msgid "forgot_password_prompt"
+msgstr "Introduce tu email para recuperar la contrasena"
+
+msgid "forgot_password_sent"
+msgstr "Si el email existe, te hemos enviado un enlace."
+
+msgid "reset_password_title"
+msgstr "Restablecer contrasena"
+
+msgid "reset_password_btn"
+msgstr "Restablecer"
+
+msgid "reset_password_ok"
+msgstr "Contrasena actualizada."
+
+msgid "verify_email_ok"
+msgstr "Email verificado correctamente."
+
+msgid "verify_email_fail"
+msgstr "No se pudo verificar el email."
+
+msgid "register_verify_email"
+msgstr "Revisa tu email para verificar la cuenta."
+
 msgid "or_register"
 msgstr "O registrate"
 
 msgid "error_title"
 msgstr "Error"
+
+msgid "ok_title"
+msgstr "OK"
+
+msgid "register_ok"
+msgstr "Cuenta creada correctamente."
+
+msgid "login_error_generic"
+msgstr "No se pudo iniciar sesion."
 
 msgid "email"
 msgstr "Email"
@@ -63,6 +105,9 @@ msgstr "Pais"
 msgid "province_label"
 msgstr "Provincia"
 
+msgid "city_label"
+msgstr "Ciudad"
+
 msgid "not_available"
 msgstr "(No disponible)"
 
@@ -80,9 +125,6 @@ msgstr "Crear cuenta"
 
 msgid "hello"
 msgstr "Hola, {name}"
-
-msgid "right_click_hint"
-msgstr "Click derecho en un avatar del chat -> perfil / seguir / amistad"
 
 msgid "rooms"
 msgstr "Salas"
@@ -105,6 +147,18 @@ msgstr "Elige un interes y entra. Si no existe, se crea."
 msgid "join_btn"
 msgstr "Entrar"
 
+msgid "leave_room_btn"
+msgstr "Abandonar Sala"
+
+msgid "leave_room_confirm"
+msgstr "Abandonar la sala {room}?"
+
+msgid "leave_room_ok"
+msgstr "Has salido de la sala."
+
+msgid "leave_room_error"
+msgstr "No se pudo salir de la sala."
+
 msgid "no_rooms_title"
 msgstr "Aun no tienes salas"
 
@@ -115,13 +169,8 @@ msgid "tip_title"
 msgstr "Tip"
 
 msgid "tip_body"
-msgstr "Prueba enviar un link o un telefono: el bot lo borrara. Si floodeas, te mutea."
+msgstr "Click derecho sobre un avatar para abrir el menu."
 
-msgid "quick_title"
-msgstr "Accion rapida"
-
-msgid "quick_body"
-msgstr "Click derecho sobre un avatar -> abre menu."
 
 msgid "write_placeholder"
 msgstr "Escribe..."
@@ -153,8 +202,98 @@ msgstr "Guardar perfil"
 msgid "save_settings"
 msgstr "Guardar ajustes"
 
+msgid "settings_saved"
+msgstr "Ajustes guardados."
+
+msgid "edit_profile_title"
+msgstr "Editar perfil"
+
+msgid "new_password"
+msgstr "Nueva contrasena"
+
+msgid "dob_change_note"
+msgstr "El cambio de fecha de nacimiento solo se permite una vez y requiere revision."
+
+msgid "warn_province_change"
+msgstr "Cambiar provincia te sacara de todas tus salas actuales. Continuar?"
+
+msgid "warn_country_change"
+msgstr "Cambiar pais actualizara tu perfil. Continuar?"
+
+msgid "warn_dob_change"
+msgstr "Cambiar la fecha de nacimiento solo se permite una vez y requiere revision. Continuar?"
+
+msgid "warn_dob_change_range"
+msgstr "Cambiar la fecha de nacimiento cambiara tu rango y te sacara de tus salas actuales. Solo se permite una vez y requiere revision. Continuar?"
+
+msgid "dob_change_limit"
+msgstr "Ya has solicitado un cambio de fecha de nacimiento."
+
+msgid "yes"
+msgstr "Si"
+
+msgid "no"
+msgstr "No"
+
+msgid "users_online"
+msgstr "Usuarios: {count}"
+
+msgid "users_panel_title"
+msgstr "Usuarios conectados"
+
+msgid "show_users_panel"
+msgstr "Ver usuarios"
+
+msgid "hide_users_panel"
+msgstr "Ocultar usuarios"
+
+msgid "close_panel"
+msgstr "Cerrar"
+
+msgid "users_none"
+msgstr "Sin usuarios conectados"
+
+msgid "users_no_room"
+msgstr "Selecciona una sala para ver los usuarios."
+
+msgid "online_summary"
+msgstr "Usuarios online: {users} · Salas activas: {rooms}"
+
+msgid "online_users"
+msgstr "Usuarios online: {users}"
+
+msgid "online_rooms"
+msgstr "Salas activas: {rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "Ocultar salas"
+
+msgid "show_rooms_panel"
+msgstr "Mostrar salas"
+
 msgid "settings_title"
 msgstr "Ajustes"
+
+msgid "hide_panel"
+msgstr "Ocultar panel"
+
+msgid "show_panel"
+msgstr "Mostrar panel"
+
+msgid "hide_user_panel"
+msgstr "Ocultar Panel de Usuario"
+
+msgid "show_user_panel"
+msgstr "Mostrar Panel de Usuario"
+
+msgid "panel_user"
+msgstr "Panel Usuario"
+
+msgid "panel_rooms"
+msgstr "Panel Salas"
+
+msgid "no_room_selected"
+msgstr "Ninguna sala activa"
 
 msgid "language_label"
 msgstr "Idioma"
@@ -191,6 +330,12 @@ msgstr "No se pudo entrar en la sala."
 
 msgid "loading_interests"
 msgstr "Cargando intereses..."
+
+msgid "interests_load_error"
+msgstr "No se pudieron cargar los intereses."
+
+msgid "retry_btn"
+msgstr "Reintentar"
 
 msgid "chat_ws_error"
 msgstr "Error de conexion del chat (WebSocket). Revisa puerto/URL del backend."
@@ -238,10 +383,16 @@ msgid "debug_subtitle"
 msgstr "ultimas {count} lineas"
 
 msgid "debug_clear"
-msgstr "Clear"
+msgstr "Limpiar"
 
 msgid "debug_copy"
-msgstr "Copy"
+msgstr "Copiar"
+
+msgid "debug_copy_selection"
+msgstr "Copiar seleccion"
+
+msgid "debug_copy_selection_empty"
+msgstr "No hay seleccion para copiar"
 
 msgid "debug_copy_ok"
 msgstr "Copiado OK"
@@ -263,6 +414,18 @@ msgstr "connecting..."
 
 msgid "debug_services_error"
 msgstr "error"
+
+msgid "debug_minimize"
+msgstr "Minimizar"
+
+msgid "debug_restore"
+msgstr "Restaurar"
+
+msgid "debug_close"
+msgstr "Cerrar"
+
+msgid "debug_maximize"
+msgstr "Maximizar"
 
 msgid "chat_not_connected"
 msgstr "Chat no conectado (ws=null). Abre una sala primero."
