@@ -15,15 +15,17 @@ services:
       - db
       - redis
     volumes:
-      - ./app/src:/app/src
-      - ./lang:/app/lang
+      - ${REPO_DIR}/app/src:/app/src
+      - ${REPO_DIR}/lang:/app/lang
       - /var/run/docker.sock:/var/run/docker.sock
     command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
 
   web_user:
-    build: ./web
+    build: ${REPO_DIR}/web
     ports:
-      - "5173:5173"
+      - "${PORT_USER}:${PORT_USER}"
     depends_on:
       - app
     environment:
@@ -31,15 +33,17 @@ services:
       VITE_ROOT: /app/web_user
       CHOKIDAR_USEPOLLING: "true"
     volumes:
-      - ./web:/app
-      - ./lang:/app/lang
+      - ${REPO_DIR}/web:/app
+      - ${REPO_DIR}/lang:/app/lang
       - /app/node_modules
-    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port 5173 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port ${PORT_USER} 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+    restart: unless-stopped
+
 
   web_admin:
-    build: ./web
+    build: ${REPO_DIR}/web
     ports:
-      - "5174:5174"
+      - "${PORT_ADMIN}:${PORT_ADMIN}"
     depends_on:
       - app
     environment:
@@ -47,10 +51,12 @@ services:
       VITE_ROOT: /app/web_admin
       CHOKIDAR_USEPOLLING: "true"
     volumes:
-      - ./web:/app
-      - ./lang:/app/lang
+      - ${REPO_DIR}/web:/app
+      - ${REPO_DIR}/lang:/app/lang
       - /app/node_modules
-    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port 5174 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port ${PORT_ADMIN} 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
+    restart: unless-stopped
+
 
   db:
     image: postgres:16
@@ -62,11 +68,14 @@ services:
     #  - "5432:5432"
     volumes:
       - meetgo_db:/var/lib/postgresql/data
+    restart: unless-stopped
+
 
   redis:
     image: redis:7
     ports:
       - "6379:6379"
+    restart: unless-stopped
 
 volumes:
   meetgo_db:
