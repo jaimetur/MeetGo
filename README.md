@@ -16,6 +16,36 @@ docker compose up --build
 - Web (ui_user): http://localhost:5173
 - Admin (ui_admin): http://localhost:5174
 
+## Desarrollo local desde PyCharm (sin Docker)
+
+1. Instala PostgreSQL 16 y Redis, crea la base de datos `meetgo`, e inicia ambos
+   servicios. En macOS con Homebrew:
+
+   ```bash
+   brew install postgresql@16 redis
+   brew services start postgresql@16
+   brew services start redis
+   createdb meetgo
+   ```
+
+2. Instala Node.js 20 o superior y las dependencias una vez:
+
+   ```bash
+   python -m pip install -e app
+   cd web && npm install
+   ```
+
+3. En PyCharm, selecciona el intérprete Python del proyecto y crea una
+   configuración de tipo **Python** con la raíz del proyecto como *Working
+   directory*:
+
+   - `MeetGo.py` inicia la API y la interfaz de usuario en
+     `http://127.0.0.1:5173`.
+   - `MeetGoAdmin.py` inicia la API y la interfaz de administración en
+     `http://127.0.0.1:5174`.
+
+   Detener la configuración detiene los procesos que haya iniciado.
+
 ## Docker commands
 ```bash
 # Build and start in the foreground

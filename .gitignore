@@ -1,0 +1,17 @@
+# Node.js dependencies and build output
+/web/node_modules/
+/web/dist/
+
+# Python environments and generated metadata
+/.venv/
+/venv/
+/app/.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# PyCharm
+/.idea/

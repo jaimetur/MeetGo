@@ -716,8 +716,6 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
     dob: "",
     country: "ES",
     province: "Madrid",
-    phone_cc: "+34",
-    phone_number: "",
     accept_dm: true,
     avatar_url: "",
     bio: "",
