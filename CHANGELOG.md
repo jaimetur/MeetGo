@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added separate PyCharm entry points for the user and administration interfaces.
+- Added cross-platform local setup instructions for macOS, Linux, and Windows.
+- Added local Vite support for the shared translation resources.
+- Added the missing `greenlet` backend dependency for SQLAlchemy async startup.
+- Removed duplicate registration phone fields that caused Vite warnings.
 - Fixed backend startup by pinning bcrypt and aligning age range enum values.
 - Added startup migration to extend Postgres age range enum with new values.
 - Removed backend reload mode from compose to avoid dead listener on startup.

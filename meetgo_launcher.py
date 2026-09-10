@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import platform
 import shutil
 import socket
 import subprocess
@@ -16,8 +17,8 @@ ROOT = Path(__file__).resolve().parent
 APP_DIR = ROOT / "app"
 WEB_DIR = ROOT / "web"
 INTERFACES = {
-    "user": ("web_user", "5173", "usuario"),
-    "admin": ("web_admin", "5174", "administración"),
+    "user": ("web_user", "5173", "user interface"),
+    "admin": ("web_admin", "5174", "administration interface"),
 }
 
 
@@ -27,7 +28,9 @@ def port_is_open(port: int) -> bool:
         return connection.connect_ex(("127.0.0.1", port)) == 0
 
 
-def start_homebrew_service(service: str, port: int) -> bool:
+def start_macos_homebrew_service(service: str, port: int) -> bool:
+    if platform.system() != "Darwin":
+        return False
     brew = shutil.which("brew")
     if not brew:
         return False
@@ -42,13 +45,15 @@ def start_homebrew_service(service: str, port: int) -> bool:
 
 def require_local_services() -> None:
     missing: list[str] = []
-    if not port_is_open(5432) and not start_homebrew_service("postgresql@16", 5432):
+    if not port_is_open(5432) and not start_macos_homebrew_service("postgresql@16", 5432):
         missing.append("PostgreSQL")
-    if not port_is_open(6379) and not start_homebrew_service("redis", 6379):
+    if not port_is_open(6379) and not start_macos_homebrew_service("redis", 6379):
         missing.append("Redis")
     if missing:
         print(
-            "No se puede iniciar MeetGo. Instala e inicia: " + ", ".join(missing),
+            "MeetGo cannot start. Start "
+            + ", ".join(missing)
+            + " and see the README for your operating-system setup.",
             file=sys.stderr,
         )
         raise SystemExit(1)
@@ -63,7 +68,7 @@ def node_executable() -> str:
     for candidate in candidates:
         if candidate and Path(candidate).is_file():
             return candidate
-    print("No se encontró Node.js. Instala Node.js 20 o superior y vuelve a ejecutar.", file=sys.stderr)
+    print("Node.js was not found. Install Node.js 20 or later and run again.", file=sys.stderr)
     raise SystemExit(1)
 
 
@@ -81,7 +86,7 @@ def terminate(processes: list[subprocess.Popen[object]]) -> None:
 def launch(interface: str) -> None:
     require_local_services()
     if not (WEB_DIR / "node_modules" / "vite").exists():
-        print("Faltan las dependencias web. Ejecuta `npm install` dentro de web/.", file=sys.stderr)
+        print("Web dependencies are missing. Run `npm install` inside web/.", file=sys.stderr)
         raise SystemExit(1)
     node = node_executable()
 
@@ -128,7 +133,7 @@ def launch(interface: str) -> None:
     except BaseException:
         terminate(processes)
         raise
-    print(f"MeetGo {label} listo: http://127.0.0.1:{port}")
+    print(f"MeetGo {label} ready: http://127.0.0.1:{port}")
 
     try:
         while True:
@@ -137,6 +142,6 @@ def launch(interface: str) -> None:
                     raise SystemExit(exit_code)
             time.sleep(0.25)
     except KeyboardInterrupt:
-        print("\nDeteniendo MeetGo...")
+        print("\nStopping MeetGo...")
     finally:
         terminate(processes)

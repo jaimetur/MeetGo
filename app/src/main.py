@@ -1007,10 +1007,10 @@ async def _get_or_create_room(db: AsyncSession, province: str, age_range, intere
     await db.flush()
 
     default_rules = (
-        "- Respeto. Cero acoso.\n"
-        "- No spam ni autopromo.\n"
-        "- No compartas teléfono en la sala; usa privado si procede.\n"
-        "- Si incumples, el bot puede borrar, silenciar o banear.\n"
+        "- Be respectful. Zero harassment.\n"
+        "- No spam or self-promotion.\n"
+        "- Do not share phone numbers in the room; use private messages when appropriate.\n"
+        "- Breaking these rules can result in deletion, muting, or a ban.\n"
     )
     default_policy = {
         "max_messages_per_minute": settings.DEFAULT_MAX_MSGS_PER_MIN,

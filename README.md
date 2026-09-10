@@ -16,35 +16,84 @@ docker compose up --build
 - Web (ui_user): http://localhost:5173
 - Admin (ui_admin): http://localhost:5174
 
-## Desarrollo local desde PyCharm (sin Docker)
+## Local development with PyCharm (without Docker)
 
-1. Instala PostgreSQL 16 y Redis, crea la base de datos `meetgo`, e inicia ambos
-   servicios. En macOS con Homebrew:
+All platforms need Python 3.11 or later, Node.js 20 or later, PostgreSQL 16,
+and Redis (or a compatible Redis server). The launcher expects PostgreSQL on
+port `5432`, Redis on port `6379`, and a database named `meetgo`.
 
-   ```bash
-   brew install postgresql@16 redis
-   brew services start postgresql@16
-   brew services start redis
-   createdb meetgo
-   ```
+### macOS
 
-2. Instala Node.js 20 o superior y las dependencias una vez:
+Install and start the services with Homebrew:
 
-   ```bash
-   python -m pip install -e app
-   cd web && npm install
-   ```
+```bash
+brew install postgresql@16 redis node
+brew services start postgresql@16
+brew services start redis
+createdb meetgo
+```
 
-3. En PyCharm, selecciona el intérprete Python del proyecto y crea una
-   configuración de tipo **Python** con la raíz del proyecto como *Working
-   directory*:
+`MeetGo.py` and `MeetGoAdmin.py` also try to start the two Homebrew services
+automatically when they are installed but stopped.
 
-   - `MeetGo.py` inicia la API y la interfaz de usuario en
-     `http://127.0.0.1:5173`.
-   - `MeetGoAdmin.py` inicia la API y la interfaz de administración en
-     `http://127.0.0.1:5174`.
+### Linux
 
-   Detener la configuración detiene los procesos que haya iniciado.
+On Ubuntu or Debian, install and start the services with:
+
+```bash
+sudo apt update
+sudo apt install postgresql redis-server
+sudo systemctl enable --now postgresql redis-server
+sudo -u postgres createuser --pwprompt meetgo
+sudo -u postgres createdb -O meetgo meetgo
+```
+
+Install Node.js 20 or later using your distribution's recommended method. Set
+`DATABASE_URL` in your PyCharm run configuration with the credentials created
+above:
+
+```text
+DATABASE_URL=postgresql+asyncpg://meetgo:your-password@127.0.0.1:5432/meetgo
+```
+
+### Windows
+
+Install PostgreSQL 16 and Node.js 20 or later using their official installers.
+Install a local Redis-compatible server, such as Memurai, or run Redis through
+WSL2. Start both services from the Windows Services panel, then create the
+database with pgAdmin or:
+
+```powershell
+psql -U postgres -c "CREATE DATABASE meetgo;"
+```
+
+Set the following environment variables in the PyCharm run configuration,
+substituting your PostgreSQL password:
+
+```text
+DATABASE_URL=postgresql+asyncpg://postgres:your-password@127.0.0.1:5432/meetgo
+REDIS_URL=redis://127.0.0.1:6379/0
+```
+
+### Install project dependencies
+
+Install the project dependencies once:
+
+```bash
+python -m pip install -e app
+cd web && npm install
+```
+
+### Configure PyCharm
+
+In PyCharm, select the project Python interpreter and create a **Python** run
+configuration with the project root as its *Working directory*:
+
+- `MeetGo.py` starts the API and user interface at `http://127.0.0.1:5173`.
+- `MeetGoAdmin.py` starts the API and administration interface at
+  `http://127.0.0.1:5174`.
+
+Stopping the run configuration stops the processes it started.
 
 ## Docker commands
 ```bash
