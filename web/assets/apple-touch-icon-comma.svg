@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="comma" x1="20" y1="158" x2="62" y2="125" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#007fc5"/>
+      <stop offset="1" stop-color="#00add4"/>
+    </linearGradient>
+  </defs>
+  <path d="M8 148c10-4 19-11 26-20 4 3 8 6 12 10-10 5-22 9-34 11-2 0-3 0-4-1Z" fill="url(#comma)"/>
+</svg>

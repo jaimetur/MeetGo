@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- Added an iOS home-screen icon with the MeetGo navigation arrow, served from `web/assets`.
 - Added separate PyCharm entry points for the user and administration interfaces.
 - Added cross-platform local setup instructions for macOS, Linux, and Windows.
 - Added local Vite support for the shared translation resources.

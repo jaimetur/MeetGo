@@ -11,6 +11,7 @@ const langDir = fs.existsSync(path.join(__dirname, "lang", "lang.ts"))
 
 export default defineConfig({
   root: process.env.VITE_ROOT || ".",
+  publicDir: path.join(__dirname, "assets"),
   plugins: [react()],
   resolve: {
     alias: {
