@@ -50,7 +50,9 @@ live in the `meetgo_data` volume.
 
 ### Turning on subscriptions, payments and push notifications
 
-Everything is set in the administration site, **Suscripciones** tab:
+Everything is set in the administration site. First, in **Ajustes**, set the public web
+address to `https://meetgo.app`: email links and the return from Stripe use it. Then, in
+the **Suscripciones** tab:
 1. **Stripe** (web payments): paste the secret key (the two prices are created
    automatically) and the webhook signing secret. In the Stripe dashboard, add a webhook to
    the URL shown there with the events `checkout.session.completed` and

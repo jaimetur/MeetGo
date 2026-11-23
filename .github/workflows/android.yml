@@ -1,0 +1,87 @@
+name: 🤖 Android app
+
+# Builds the Android app (the MeetGo web app full screen, with push notifications and Google Play subscriptions).
+# - On every change in android/ it refreshes the rolling "android-latest" pre-release, from which
+#   tools/deploy-android.sh takes the APK to the server, which serves it at /downloads/android.apk.
+# - Called by another workflow with a release tag, it attaches the APK and the AAB to that version's release instead.
+on:
+  push:
+    branches: [main, "[0-9]+.[0-9]+.[0-9]+"]
+    paths: ["android/**", ".github/workflows/android.yml"]
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      release_tag:
+        description: "Release (vX.Y.Z) to attach the APK and the AAB to"
+        type: string
+        required: true
+
+concurrency:
+  group: meetgo-android-${{ github.ref }}-${{ inputs.release_tag || 'rolling' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: "8.11.1"
+      - name: Signing key (if the keystore is in the secrets)
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/meetgo.jks"; echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/meetgo.jks" >> "$GITHUB_ENV"; fi
+      - name: Firebase configuration (if it is in the secrets; without it the app has no push notifications)
+        env:
+          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON_B64" ]; then echo "$GOOGLE_SERVICES_JSON_B64" | base64 -d > android/app/google-services.json; else echo "No GOOGLE_SERVICES_JSON_B64: building without push notifications."; fi
+      - name: Build
+        working-directory: android
+        env:
+          MEETGO_ANDROID_BUILD: ${{ github.run_number }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        # APK to install directly, AAB for Google Play
+        run: gradle --no-daemon assembleRelease bundleRelease
+      - name: Version
+        run: |
+          MM=$(sed -n 's/.*versionName = "\([0-9]*\.[0-9]*\)\.".*/\1/p' android/app/build.gradle.kts)
+          echo "ANDROID_VERSION=$MM.${{ github.run_number }}" >> "$GITHUB_ENV"
+      - name: Publish to the rolling android-latest pre-release
+        if: ${{ !inputs.release_tag }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk meetgo-android.apk
+          cp android/app/build/outputs/bundle/release/app-release.aab meetgo-android.aab
+          TITLE="Android app (rolling build)"
+          NOTES="Latest build of the Android app, rebuilt on every change in android/: meetgo-android.apk to install directly, meetgo-android.aab for Google Play. It is a rolling build (hence a pre-release); android-build.txt says which build, commit and version it is."
+          if gh release view android-latest >/dev/null 2>&1; then
+            gh release edit android-latest --title "$TITLE" --notes "$NOTES" --prerelease
+          else
+            gh release create android-latest --prerelease --title "$TITLE" --notes "$NOTES"
+          fi
+          gh release upload android-latest meetgo-android.apk meetgo-android.aab --clobber
+          # read by tools/deploy-android.sh: "build <run number> · <commit> · <version>"
+          echo "build ${{ github.run_number }} · ${GITHUB_SHA::7} · $ANDROID_VERSION" > android-build.txt
+          gh release upload android-latest android-build.txt --clobber
+      - name: Attach to the version release
+        if: ${{ inputs.release_tag }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T="${{ inputs.release_tag }}"
+          cp android/app/build/outputs/apk/release/app-release.apk "meetgo-android-$T.apk"
+          cp android/app/build/outputs/bundle/release/app-release.aab "meetgo-android-$T.aab"
+          gh release upload "$T" "meetgo-android-$T.apk" "meetgo-android-$T.aab" --clobber

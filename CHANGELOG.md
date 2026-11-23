@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - New web app at `/app/`: conversation list with filters and unread and mention badges, channels, groups and direct messages, threads in a side panel, members panel with profile cards and moderation actions, replies, reactions, mentions with suggestions, emoji, attachments by button or paste, drafts, editing, search, a "new messages" divider and a jump-to-latest button, dark and light themes, and a phone layout with bottom navigation.
 - Installable web app (PWA) with Web Push notifications, and a subscription page (card payment through Stripe, or Google Play inside the Android app) with promotional codes.
 - Public landing page at `/` with the launch campaign counter, pricing, downloads and FAQ, plus draft privacy and terms pages.
+- Android app (`android/`): the web app in a native shell with push notifications (Firebase Cloud Messaging) grouped by conversation with quick reply and mark as read, Google Play Billing, App Links for `https://meetgo.app/app/c/...`, sharing text and images into MeetGo, camera in the file picker, downloads, and first-run server and offline screens. GitHub Actions builds and signs the APK and AAB and publishes them as the `android-latest` pre-release; `tools/deploy-android.sh` copies the APK to the server, which serves it at `/downloads/android.apk`.
 - Administration: plan column and free-access control for users, a moderation queue for reports, subscription, Stripe, Google Play and Firebase settings, and promotional codes.
 
 #### 🚀 Enhancements:
@@ -41,6 +42,7 @@ All notable changes to this project will be documented in this file.
 #### 📚 Documentation:
 - Added backend tests (`app/tests`) and how to run them.
 - Rewrote the README: features, deployment behind a reverse proxy, and how to turn on payments and push notifications.
+- Added `docs/ANDROID.md`: signing key, GitHub secrets, Firebase, Google Play subscription and App Links setup. `tools/CreateUpdateRelease.py` now also updates the Android version.
 
 ---
 

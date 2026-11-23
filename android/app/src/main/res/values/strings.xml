@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">MeetGo</string>
+    <string name="server_intro">Tu servidor de MeetGo: la dirección en la que abres MeetGo en el navegador.</string>
+    <string name="server_label">Dirección del servidor</string>
+    <string name="server_go">Continuar</string>
+    <string name="server_checking">Comprobando…</string>
+    <string name="server_error">En esa dirección no responde ningún servidor de MeetGo. Revísala y revisa tu conexión.</string>
+    <string name="server_help">Después entra con tu cuenta de MeetGo o crea una nueva.</string>
+    <string name="offline">No se puede conectar con el servidor de MeetGo. Revisa tu conexión.</string>
+    <string name="retry">Reintentar</string>
+    <string name="change_server">Cambiar el servidor</string>
+    <string name="choose_file">Elegir archivo</string>
+    <string name="saved_downloads">Guardado en Descargas: %1$s</string>
+    <string name="no_purchase">No hay ninguna suscripción de MeetGo en la cuenta de Google de este móvil.</string>
+    <string name="purchase_pending">El pago está pendiente. Cuando Google Play lo confirme, restaura la compra.</string>
+    <string name="purchase_failed">No se ha podido completar la compra.</string>
+    <string name="channel_dm">Mensajes directos</string>
+    <string name="channel_group">Grupos</string>
+    <string name="channel_channel">Menciones en canales</string>
+    <string name="you">Tú</string>
+    <string name="notif_reply">Responder</string>
+    <string name="notif_mark_read">Marcar como leído</string>
+    <string name="notif_subscription">Necesitas una suscripción activa</string>
+    <string name="notif_signed_out">Abre MeetGo y vuelve a entrar para responder</string>
+    <string name="notif_failed">No se ha podido enviar la respuesta</string>
+</resources>

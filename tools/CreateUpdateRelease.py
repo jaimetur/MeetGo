@@ -4,7 +4,8 @@
 Adapted from DriveTest Analyzer's and BodyLens' tool of the same name. A MeetGo release is:
   - a branch named after the version (X.Y.Z), committed and pushed to origin;
   - a `## Release: vX.Y.Z` block on top of CHANGELOG.md, whose header gives the current version and release date;
-  - the same version in app/pyproject.toml, web/package.json and web/package-lock.json.
+  - the same version in app/pyproject.toml, web/package.json and web/package-lock.json;
+  - the major.minor of the Android app's versionName (android/app/build.gradle.kts; the patch is the CI build number).
 
 Usage:
   python tools/CreateUpdateRelease.py                                 # window (Tk); questions in the terminal without Tk
@@ -28,6 +29,7 @@ CHANGELOG_PATH = ROOT / 'CHANGELOG.md'
 PYPROJECT_PATH = ROOT / 'app' / 'pyproject.toml'
 PACKAGE_JSON_PATH = ROOT / 'web' / 'package.json'
 PACKAGE_LOCK_PATH = ROOT / 'web' / 'package-lock.json'
+ANDROID_GRADLE_PATH = ROOT / 'android' / 'app' / 'build.gradle.kts'
 # only X.Y.Z: release branches are named like that and pyproject.toml needs a valid Python version
 VERSION_PATTERN = r'\d+\.\d+\.\d+'
 DATE_PATTERN = r'\d{4}-\d{2}-\d{2}'
@@ -105,6 +107,15 @@ def replace_package_lock_version(content: str, version: str) -> str:
     return content
 
 
+def replace_android_version(content: str, version: str) -> str:
+    """Return the Gradle script with the major.minor of versionName updated (the patch is the CI build number)."""
+    major, minor, _ = version.split('.')
+    content, count = re.subn(r'(versionName\s*=\s*")\d+\.\d+\.(")', rf'\g<1>{major}.{minor}.\g<2>', content, count=1)
+    if count != 1:
+        raise RuntimeError('Unable to update versionName in android/app/build.gradle.kts.')
+    return content
+
+
 def replace_current_changelog_metadata(content: str, version: str, release_date: str) -> str:
     """Return changelog content with its current release header updated."""
     content, release_count = re.subn(r'^## Release: v[^\s]+\s*$', f'## Release: v{version}', content, count=1,
@@ -141,6 +152,8 @@ def release_file_contents(version: str, release_date: str, *, create_changelog_r
     }
     if PACKAGE_LOCK_PATH.exists():
         out[PACKAGE_LOCK_PATH] = replace_package_lock_version(PACKAGE_LOCK_PATH.read_text(encoding='utf-8'), version)
+    if ANDROID_GRADLE_PATH.exists():
+        out[ANDROID_GRADLE_PATH] = replace_android_version(ANDROID_GRADLE_PATH.read_text(encoding='utf-8'), version)
     return out
 
 
@@ -308,8 +321,8 @@ def window() -> None:
             messagebox.showerror('Update failed', str(exc), parent=root)
             return
         messagebox.showinfo('Release metadata updated',
-                            'CHANGELOG.md, app/pyproject.toml, web/package.json and web/package-lock.json were '
-                            'updated.', parent=root)
+                            'CHANGELOG.md, app/pyproject.toml, web/package.json, web/package-lock.json and the '
+                            'Android versionName were updated.', parent=root)
         root.destroy()
 
     def apply_create_release() -> None:

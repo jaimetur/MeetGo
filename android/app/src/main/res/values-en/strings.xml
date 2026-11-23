@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="server_intro">Your MeetGo server: the address you open MeetGo at in the browser.</string>
+    <string name="server_label">Server address</string>
+    <string name="server_go">Continue</string>
+    <string name="server_checking">Checking…</string>
+    <string name="server_error">No MeetGo server answers at that address. Check it and your connection.</string>
+    <string name="server_help">Then sign in with your MeetGo account or create a new one.</string>
+    <string name="offline">Cannot connect to the MeetGo server. Check your connection.</string>
+    <string name="retry">Retry</string>
+    <string name="change_server">Change the server</string>
+    <string name="choose_file">Choose a file</string>
+    <string name="saved_downloads">Saved in Downloads: %1$s</string>
+    <string name="no_purchase">There is no MeetGo subscription on the Google account of this phone.</string>
+    <string name="purchase_pending">The payment is pending. When Google Play confirms it, restore the purchase.</string>
+    <string name="purchase_failed">The purchase could not be completed.</string>
+    <string name="channel_dm">Direct messages</string>
+    <string name="channel_group">Groups</string>
+    <string name="channel_channel">Mentions in channels</string>
+    <string name="you">You</string>
+    <string name="notif_reply">Reply</string>
+    <string name="notif_mark_read">Mark as read</string>
+    <string name="notif_subscription">You need an active subscription</string>
+    <string name="notif_signed_out">Open MeetGo and sign in again to reply</string>
+    <string name="notif_failed">The reply could not be sent</string>
+</resources>

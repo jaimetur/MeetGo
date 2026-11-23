@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- files the web app saves (NativeBridge.saveFile), shared with other apps -->
+    <cache-path name="shared" path="shared/" />
+    <!-- photos taken with the camera app for the page -->
+    <cache-path name="camera" path="camera/" />
+</paths>
