@@ -8,7 +8,6 @@ import {
 } from "../board";
 import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, toast, useStore } from "../store";
-import { MyCommunitiesStrip } from "./Communities";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { Avatar, Icon, Modal, Wordmark, useClickOutside } from "./common";
 
@@ -416,7 +415,6 @@ export function HomePage() {
           </div>
           <button className="btn go" onClick={() => navigate("/publish")}><Icon name="plus" size="sm" />{t("ui_nav_publish")}</button>
         </header>
-        <MyCommunitiesStrip />
         <FilterChips value={filter} onChange={setFilter} />
         <PostList feed={feed} empty={empty} />
       </div>

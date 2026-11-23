@@ -516,28 +516,4 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 }
 
 /** Home: the communities I belong to, one tap away (board, chat and members). */
-export function MyCommunitiesStrip() {
-  const mine = useStore((s) => s.myCommunities);
-  useEffect(() => {
-    if (mine === null) loadMyCommunities();
-  }, [mine]);
-  if (!mine || !mine.length) return null;
-  return (
-    <nav className="mystrip" aria-label={t("ui_community_yours")}>
-      {mine.map((c) => (
-        <button key={c.id} className="mystrip-item" onClick={() => navigate(communityPath(c.id))}>
-          <span className="mystrip-badge" style={{ background: coverGradient("c" + c.id) }}>
-            <Icon name={hobbyIcon(c.slug, c.title)} />
-            {c.upcoming_count ? <span className="bdg">{c.upcoming_count}</span> : null}
-          </span>
-          <span className="mystrip-name">{c.title}</span>
-        </button>
-      ))}
-      <button className="mystrip-item" onClick={() => navigate("/communities")}>
-        <span className="mystrip-badge more"><Icon name="plus" /></span>
-        <span className="mystrip-name">{t("ui_community_more")}</span>
-      </button>
-    </nav>
-  );
-}
 

@@ -314,7 +314,7 @@ a.logo { text-decoration: none; }
 .linkbtn { color: var(--cyan); font-weight: 600; }
 
 /* ---------- mobile nav ---------- */
-.mnav { display: none; }
+.mnav, .mfab { display: none; }
 
 @media (max-width: 1180px) {
   .shell { --menuw: 76px; }
@@ -337,7 +337,7 @@ a.logo { text-decoration: none; }
   .shell:not(.chat-open) > .chat { display: none; }
   .kb .mnav { display: none; }
   /* conversations keep the tab bar too: the chat ends just above it */
-  .shell { --mnavh: 64px; }
+  .shell { --mnavh: 70px; }
   .shell.conv .chat { padding-bottom: var(--mnavh); }
   .shell.conv .composer, .shell.conv .composer.compact, .shell.conv .readonly { margin-bottom: 8px; }
   .kb .shell.conv .chat { padding-bottom: 0; }
@@ -364,7 +364,7 @@ a.logo { text-decoration: none; }
   .cname { font-size: 15.5px; }
   .cprev { font-size: 13.5px; }
   .lbody { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
-  .page { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .page { padding-bottom: calc(var(--mnavh, 70px) + 84px); }
   .toasts { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 
   /* the tab bar sits at the bottom edge, frosted, with the current tab lit */
@@ -379,6 +379,13 @@ a.logo { text-decoration: none; }
   .mnav button.on { color: var(--blue); background: color-mix(in srgb, var(--blue) 15%, transparent); }
   :root:not([data-theme="light"]) .mnav button.on { color: var(--cyan); }
   .mnav button.on .ic { fill: currentColor; fill-opacity: 0.2; stroke-width: 2.1; }
+  .mnav .ml { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* publish: a round button at the side, above the tab bar */
+  .mfab { display: grid; place-items: center; position: absolute; z-index: 26; right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(var(--mnavh, 64px) + 14px); width: 56px; height: 56px; border-radius: 50%; color: var(--on-go);
+    background: var(--grad-go); box-shadow: 0 10px 26px rgba(24, 215, 140, 0.4); }
+  .mfab .ic { width: 28px; height: 28px; stroke-width: 2.6; }
+  .kb .mfab { display: none; }
   .mnav .bdg { position: absolute; top: 3px; left: calc(50% + 4px); transform: scale(0.85); box-shadow: 0 0 0 2px var(--panel); }
 
   /* conversation: header like a navigation bar, messages as bubbles */
@@ -427,9 +434,16 @@ a.logo { text-decoration: none; }
   .ltitle { font-size: 22px; }
   .lsec { color: var(--cyan); }
   :root[data-theme="light"] .lsec { color: var(--blue); }
-  .mnav button.on { color: #fff; background: var(--grad); box-shadow: 0 6px 16px rgba(30, 144, 255, 0.35); }
-  :root:not([data-theme="light"]) .mnav button.on { color: #fff; }
-  .mnav button.on .ic { fill: rgba(255, 255, 255, 0.25); fill-opacity: 1; }
+  /* each tab has its own colour: the icon always, the whole tab when it is the current one */
+  .mnav .t-home { --tc: #1e90ff; --tc2: #00c2ff; }
+  .mnav .t-plans { --tc: #ff8a3d; --tc2: #ffc23d; }
+  .mnav .t-communities { --tc: #22c55e; --tc2: #18d7c8; }
+  .mnav .t-chats { --tc: #a855f7; --tc2: #ec4899; }
+  .mnav .t-account { --tc: #f43f5e; --tc2: #fb7185; }
+  .mnav button { height: 56px; font-size: 11px; gap: 4px; }
+  .mnav button .ic { width: 27px; height: 27px; stroke-width: 2.2; color: var(--tc); fill: var(--tc); fill-opacity: 0.18; }
+  .mnav button.on, :root:not([data-theme="light"]) .mnav button.on { color: #fff; background: linear-gradient(135deg, var(--tc), var(--tc2)); box-shadow: 0 6px 16px color-mix(in srgb, var(--tc) 40%, transparent); }
+  .mnav button.on .ic { color: #fff; fill: #fff; fill-opacity: 0.25; }
   /* In Safari the strip under the tab bar belongs to the browser: paint it like the bar, and only leave room
      for the home indicator when installed on the home screen. */
   html:has(.shell:not(.conv)), html:has(.shell:not(.conv)) body { background: var(--panel); }
@@ -443,7 +457,7 @@ a.logo { text-decoration: none; }
 @media (max-width: 820px) and (display-mode: standalone) {
   /* the icons sit just above the home indicator, as in native tab bars */
   .mnav { padding-bottom: max(6px, calc(max(env(safe-area-inset-bottom, 0px), var(--home-ind, 0px)) - 10px)); }
-  .shell { --mnavh: calc(58px + max(6px, calc(max(env(safe-area-inset-bottom, 0px), var(--home-ind, 0px)) - 10px))); }
+  .shell { --mnavh: calc(64px + max(6px, calc(max(env(safe-area-inset-bottom, 0px), var(--home-ind, 0px)) - 10px))); }
 }
 /* Installed on the iPhone, viewport.ts sizes #root to the whole screen (--app-height): the page behind it too. */
 @media (display-mode: standalone) {
@@ -742,10 +756,7 @@ a.logo { text-decoration: none; }
   .screen.withchat .dtitle { font-size: 20px; }
   .embedchat { min-height: 0; }
   .embedchat .composer { margin-bottom: 8px; }
-  /* the big ＋ in the middle of the tab bar */
   .mnav { align-items: center; }
-  .mnav button.plus { flex: 0 0 auto; width: 54px; height: 54px; border-radius: 18px; margin: -20px 4px 0; background: var(--grad-go); color: var(--on-go); box-shadow: 0 10px 24px rgba(24, 215, 200, 0.42); display: grid; place-items: center; }
-  .mnav button.plus .ic { width: 28px; height: 28px; stroke-width: 2.6; }
 }
 @media (prefers-reduced-motion: reduce) {
   .shimmer, .sk { animation: none; }
@@ -804,12 +815,4 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 }
 
 /* ---------- home: my communities strip ---------- */
-.mystrip { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 14px; margin: 0 -2px; overscroll-behavior-x: contain; }
-.mystrip::-webkit-scrollbar { display: none; }
-.mystrip-item { flex: none; width: 70px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.mystrip-badge { position: relative; width: 60px; height: 60px; border-radius: 20px; display: grid; place-items: center; color: #fff; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22); }
-.mystrip-badge .ic { width: 28px; height: 28px; stroke-width: 2; }
-.mystrip-badge .bdg { position: absolute; top: -4px; right: -4px; box-shadow: 0 0 0 2px var(--bg); }
-.mystrip-badge.more { background: var(--panel2); color: var(--muted); border: 1px dashed var(--line2); box-shadow: none; }
-.mystrip-name { font-size: 12px; font-weight: 600; color: var(--fg); max-width: 70px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
