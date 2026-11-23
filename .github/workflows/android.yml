@@ -54,6 +54,10 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         # APK to install directly, AAB for Google Play
         run: gradle --no-daemon assembleRelease bundleRelease
+      - name: Signing certificate (its SHA-256 goes in the server's ANDROID_CERT_SHA256)
+        run: |
+          APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n 1)
+          "$APKSIGNER" verify --print-certs android/app/build/outputs/apk/release/app-release.apk | grep -iE "SHA-256|DN:" || true
       - name: Enable KVM (for the emulator of the smoke test)
         if: ${{ !inputs.release_tag }}
         run: |

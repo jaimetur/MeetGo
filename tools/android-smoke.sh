@@ -18,4 +18,5 @@ adb exec-out screencap -p > smoke/screen.png 2>/dev/null
 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 && adb shell cat /sdcard/ui.xml > smoke/ui.xml 2>/dev/null
 echo "== on screen:"; grep -o 'text="[^"]\+"\|content-desc="[^"]\+"' smoke/ui.xml | head -40
 echo "== result: $(cat smoke/result.txt)"; cat smoke/start.txt; echo "== crash"; cat smoke/crash.txt
+echo "== log"; grep -iE "AndroidRuntime|ActivityManager|ActivityTaskManager|libc|DEBUG|crash|died|killed|renderer|app\.meetgo|cr_|WebView" smoke/full-log.txt | tail -150
 exit 0
