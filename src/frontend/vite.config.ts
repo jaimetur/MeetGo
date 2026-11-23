@@ -50,7 +50,10 @@ function appRoutes(): Plugin {
 
 /** The branding files are served and published at the site root (/icon-192.png, /og-image.png...). */
 function branding(): Plugin {
-  const files = fs.existsSync(brandingDir) ? fs.readdirSync(brandingDir).filter((f) => !f.startsWith(".")) : [];
+  // Only files: hosts like Synology add folders of their own (@eaDir) next to them.
+  const files = fs.existsSync(brandingDir)
+    ? fs.readdirSync(brandingDir).filter((f) => !f.startsWith(".") && !f.startsWith("@") && fs.statSync(path.join(brandingDir, f)).isFile())
+    : [];
   const types: Record<string, string> = { ".png": "image/png", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".webp": "image/webp" };
   return {
     name: "meetgo-branding",
