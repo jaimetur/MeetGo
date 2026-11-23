@@ -40,6 +40,19 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
   }
 }
 
+/** The registration once its service worker is active: subscribing before that fails. */
+async function activeRegistration(): Promise<ServiceWorkerRegistration | null> {
+  if (!(await registerServiceWorker())) return null;
+  return navigator.serviceWorker.ready;
+}
+
+/** Whether this browser really has a Web Push subscription (permission alone is not enough). */
+export async function webPushSubscribed(): Promise<boolean> {
+  if (!webPushSupported() || Notification.permission !== "granted") return false;
+  const reg = await navigator.serviceWorker.getRegistration();
+  return !!(await reg?.pushManager.getSubscription());
+}
+
 /** Ask permission (from a click) and subscribe this browser to Web Push. */
 export async function enableWebPush(): Promise<boolean> {
   if (!webPushSupported()) return false;
@@ -51,7 +64,7 @@ export async function enableWebPush(): Promise<boolean> {
 /** Re-subscribe silently when permission was already granted. */
 export async function subscribeExisting(): Promise<boolean> {
   if (!webPushSupported() || Notification.permission !== "granted") return false;
-  const reg = await registerServiceWorker();
+  const reg = await activeRegistration();
   if (!reg) return false;
   const { webpush_public_key } = await api.pushConfig();
   if (!webpush_public_key) return false;

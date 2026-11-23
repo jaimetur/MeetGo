@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getLang, setLang, t } from "@lang";
 import { api } from "../api";
 import { isNativeApp, native } from "../native";
-import { disableWebPush, enableWebPush, webPushPermission, webPushSupported } from "../push";
+import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
 import { chatPath, navigate } from "../router";
 import { loadConversations, setState, toast, useStore } from "../store";
 import type { Interest, Message } from "../types";
@@ -264,7 +264,11 @@ export function AccountPage() {
   const [password, setPassword] = useState("");
   const [interests, setInterests] = useState<Interest[]>([]);
   const [mine, setMine] = useState<string[]>([]);
-  const [pushState, setPushState] = useState(webPushPermission());
+  // "on" only when this browser has a real subscription; "denied" when the browser blocks notifications.
+  const [pushState, setPushState] = useState<"on" | "off" | "denied" | "busy">(webPushPermission() === "denied" ? "denied" : "off");
+  useEffect(() => {
+    webPushSubscribed().then((on) => setPushState((s) => (s === "denied" ? s : on ? "on" : "off"))).catch(() => undefined);
+  }, []);
   const [theme, setTheme] = useState(() => {
     try {
       return localStorage.getItem("theme") || "system";
@@ -308,15 +312,25 @@ export function AccountPage() {
     }
   }
   async function togglePush() {
-    if (pushState === "granted") {
-      await disableWebPush();
+    if (pushState === "on") {
+      setPushState("busy");
+      await disableWebPush().catch(() => undefined);
+      setPushState("off");
       toast(t("ui_push_off"));
       return;
     }
-    const ok = await enableWebPush().catch(() => false);
-    setPushState(webPushPermission());
-    toast(ok ? t("ui_push_on") : t("ui_push_denied"), ok ? "info" : "error");
+    setPushState("busy");
+    let ok = false;
+    try {
+      ok = await enableWebPush();
+    } catch (e) {
+      console.error("Web Push", e);
+    }
+    const denied = webPushPermission() === "denied";
+    setPushState(ok ? "on" : denied ? "denied" : "off");
+    toast(ok ? t("ui_push_on") : denied ? t("ui_push_denied") : t("ui_push_failed"), ok ? "info" : "error");
   }
+
   function changeTheme(value: string) {
     setTheme(value);
     try {
@@ -393,8 +407,8 @@ export function AccountPage() {
         {isNativeApp ? (
           <button className="btn" onClick={() => native.openNotificationSettings()}>{t("ui_open_notification_settings")}</button>
         ) : webPushSupported() ? (
-          <div className="row"><span className="grow">{pushState === "granted" ? t("ui_push_enabled_here") : pushState === "denied" ? t("ui_push_blocked") : t("ui_push_disabled_here")}</span>
-            <button className="btn sm" disabled={pushState === "denied"} onClick={togglePush}>{pushState === "granted" ? t("ui_disable") : t("ui_enable")}</button></div>
+          <div className="row"><span className="grow">{pushState === "on" ? t("ui_push_enabled_here") : pushState === "denied" ? t("ui_push_blocked") : t("ui_push_disabled_here")}</span>
+            <button className="btn sm" disabled={pushState === "denied" || pushState === "busy"} onClick={togglePush}>{pushState === "on" ? t("ui_disable") : t("ui_enable")}</button></div>
         ) : <div className="muted">{t("ui_push_unsupported")}</div>}
         <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_notifications_hint")}</div>
         <div className="stack" style={{ gap: 8, marginTop: 8, borderTop: "1px solid var(--line)", paddingTop: 12 }}>
