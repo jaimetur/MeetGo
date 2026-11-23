@@ -95,6 +95,21 @@ configuration with the project root as its *Working directory*:
 
 Stopping the run configuration stops the processes it started.
 
+## Releases
+
+Run `tools/CreateUpdateRelease.py` with the project interpreter (PyCharm run
+configuration **CreateUpdateRelease**). The current version and release date
+come from the first `## Release:` header of `CHANGELOG.md`.
+
+- **Update Current Release** rewrites that header and sets the same version in
+  `app/pyproject.toml`, `web/package.json` and `web/package-lock.json`.
+- **Create New Release** creates a branch named after the new version (`X.Y.Z`),
+  adds an empty release block on top of `CHANGELOG.md`, updates the same
+  version files, then commits and pushes the branch to `origin`.
+
+Without Tk it asks in the terminal. It also accepts
+`--update VERSION DATE` and `--create VERSION DATE [--dirty commit|carry|discard]`.
+
 ## Docker commands
 ```bash
 # Build and start in the foreground

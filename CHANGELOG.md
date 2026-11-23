@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## Release: v0.1.0
+### Release Date: 2026-09-10
+- Added `tools/CreateUpdateRelease.py` and its PyCharm run configuration to update the current release or create, commit and push a new release branch.
 - Added an iOS home-screen icon with the MeetGo navigation arrow, served from `web/assets`.
 - Added separate PyCharm entry points for the user and administration interfaces.
 - Added cross-platform local setup instructions for macOS, Linux, and Windows.
