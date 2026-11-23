@@ -28,7 +28,10 @@ async def get_current_user(
         raise HTTPException(403, t("err_user_banned"))
     if user.banned_until and user.banned_until > datetime.utcnow():
         raise HTTPException(403, t("err_user_banned"))
-    user.last_seen_at = datetime.utcnow()
-    db.add(user)
-    await db.commit()
+    now = datetime.utcnow()
+    # Record activity at most once a minute instead of writing on every request.
+    if not user.last_seen_at or (now - user.last_seen_at).total_seconds() > 60:
+        user.last_seen_at = now
+        db.add(user)
+        await db.commit()
     return user

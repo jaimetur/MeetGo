@@ -96,6 +96,9 @@ def launch(interface: str) -> None:
     environment.setdefault("DATABASE_URL", f"postgresql+asyncpg://{local_user}@127.0.0.1:5432/meetgo")
     environment.setdefault("REDIS_URL", "redis://127.0.0.1:6379/0")
     environment.setdefault("JWT_SECRET", "dev-secret-change-me")
+    environment.setdefault("MEETGO_ENV", "dev")
+    # Local development only: the first administrator gets this password when none exists yet.
+    environment.setdefault("ADMIN_PASSWORD", "admin")
 
     backend = [
         sys.executable,

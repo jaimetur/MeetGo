@@ -1053,3 +1053,12 @@ msgstr "MeetGo-JavaScript"
 
 msgid "svc_prefix"
 msgstr "MeetGo-{service}"
+
+msgid "err_interest_in_use"
+msgstr "Este canal tiene salas con mensajes; renómbralo en lugar de borrarlo"
+
+msgid "err_empty_message"
+msgstr "El mensaje está vacío"
+
+msgid "err_message_too_long"
+msgstr "El mensaje es demasiado largo"

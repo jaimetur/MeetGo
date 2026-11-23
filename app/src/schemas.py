@@ -1,6 +1,18 @@
-from datetime import datetime
-from pydantic import BaseModel, Field
+from datetime import datetime, timezone
+from typing import Annotated
+
+from pydantic import BaseModel, Field, PlainSerializer
 from .models import AgeRange, DMStatus, FriendRequestStatus
+
+
+def utc_iso(value: datetime) -> str:
+    """Serialize as UTC with a trailing Z; stored datetimes without a zone are UTC."""
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+UTCDateTime = Annotated[datetime, PlainSerializer(utc_iso, return_type=str)]
 
 class Token(BaseModel):
     access_token: str
@@ -43,11 +55,11 @@ class MeOut(UserOut):
     role: str
     phone: str | None
     login_count: int
-    last_login_at: datetime | None
-    last_seen_at: datetime | None
+    last_login_at: UTCDateTime | None
+    last_seen_at: UTCDateTime | None
     total_connected_seconds: int
     session_active: bool
-    session_started_at: datetime | None
+    session_started_at: UTCDateTime | None
 
 class UserSummary(BaseModel):
     id: int
@@ -89,7 +101,7 @@ class AdminUserUpdateIn(BaseModel):
     role: str | None = None
     email_verified: bool | None = None
     is_banned: bool | None = None
-    banned_until: datetime | None = None
+    banned_until: UTCDateTime | None = None
     dob: str | None = None
     country: str | None = None
     province: str | None = None
@@ -141,7 +153,7 @@ class RoomMessageOut(BaseModel):
     user_id: int
     user: UserSummary
     content: str
-    created_at: datetime
+    created_at: UTCDateTime
     is_deleted: bool
     moderation_reason: str | None
 
@@ -150,7 +162,7 @@ class DMRequestOut(BaseModel):
     from_user_id: int
     to_user_id: int
     status: DMStatus
-    created_at: datetime
+    created_at: UTCDateTime
 
 class DMRequestCreateIn(BaseModel):
     to_user_id: int
@@ -168,7 +180,7 @@ class DMMessageOut(BaseModel):
     conversation_id: int
     user_id: int
     content: str
-    created_at: datetime
+    created_at: UTCDateTime
 
 # Social
 class FollowOut(BaseModel):
@@ -180,7 +192,7 @@ class FriendRequestOut(BaseModel):
     from_user_id: int
     to_user_id: int
     status: FriendRequestStatus
-    created_at: datetime
+    created_at: UTCDateTime
 
 class FriendRequestCreateIn(BaseModel):
     to_user_id: int
@@ -193,7 +205,7 @@ class PostOut(BaseModel):
     user_id: int
     user: UserSummary
     content: str
-    created_at: datetime
+    created_at: UTCDateTime
 
 class PostCreateIn(BaseModel):
     content: str

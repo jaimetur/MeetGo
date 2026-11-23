@@ -1,4 +1,5 @@
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Optional
@@ -11,8 +12,30 @@ from .config import settings
 from .models import RoomRule, RoomDiscipline, RoomMessage
 
 URL_RE = re.compile(r"""(?ix)\b(https?://|www\.)\S+""")
-PHONE_RE = re.compile(r"""(?x)\b(?:\+?34\s*)?(?:6|7|8|9)\d{2}(?:\s*\d{3}){2}\b""")
+# Spanish 9-digit numbers (optionally with a prefix) and any number written with an international
+# prefix (+ or 00), allowing spaces, dots or dashes between digits.
+PHONE_RE = re.compile(
+    r"""(?x)
+    (?<![\w+])(?:(?:\+|00)\d{1,3}[\s.\-]?)?[6-9](?:[\s.\-]?\d){8}(?!\w)
+    | (?<![\w+])(?:\+|00)\d(?:[\s.\-]?\d){7,13}(?!\w)
+    """
+)
 TOXIC_WORDS = set([w.strip().lower() for w in settings.DEFAULT_TOXIC_WORDS.split(",") if w.strip()])
+
+
+def _fold(s: str) -> str:
+    """Lower-case and strip accents so "imbécil" matches "imbecil"."""
+    return "".join(c for c in unicodedata.normalize("NFD", s.lower()) if unicodedata.category(c) != "Mn")
+
+
+def _toxic_re(words: set[str]) -> re.Pattern[str] | None:
+    folded = sorted({_fold(w) for w in words if w})
+    if not folded:
+        return None
+    return re.compile(r"\b(?:" + "|".join(re.escape(w) for w in folded) + r")\b")
+
+
+_TOXIC_RE = _toxic_re(TOXIC_WORDS)
 
 @dataclass
 class ModAction:
@@ -30,8 +53,8 @@ def _caps_ratio(s: str) -> float:
     return caps / max(1, len(letters))
 
 def _contains_toxicity(s: str) -> bool:
-    low = s.lower()
-    return any(w in low for w in TOXIC_WORDS)
+    """Match whole words only: "reputación" or "disputa" must not count as insults."""
+    return bool(_TOXIC_RE and _TOXIC_RE.search(_fold(s)))
 
 async def get_room_policy(db: AsyncSession, room_id: int) -> dict:
     res = await db.execute(select(RoomRule).where(RoomRule.room_id == room_id))

@@ -4,10 +4,13 @@ services:
   app:
     build: app
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/meetgo
-      REDIS_URL: redis://redis:6379/0
-      JWT_SECRET: dev-secret-change-me
-      DEBUG_COMPOSE_LOGS: "1"
+      MEETGO_ENV: production
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.local}@db:5432/meetgo
+      REDIS_URL: redis://:${REDIS_PASSWORD:?Set REDIS_PASSWORD in .env.local}@redis:6379/0
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET (32+ random characters) in .env.local}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://meetgo.app,https://www.meetgo.app,https://admin.meetgo.app}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       COMPOSE_PROJECT_NAME: meetgo
     ports:
       - "18000:8000"
@@ -17,8 +20,7 @@ services:
     volumes:
       - ${REPO_DIR}/app/src:/app/src
       - ${REPO_DIR}/lang:/app/lang
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
     restart: unless-stopped
 
 
@@ -63,7 +65,7 @@ services:
     environment:
       POSTGRES_DB: meetgo
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.local}
     #ports:
     #  - "5432:5432"
     volumes:
@@ -73,8 +75,7 @@ services:
 
   redis:
     image: redis:7
-    ports:
-      - "6379:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD:?Set REDIS_PASSWORD in .env.local}
     restart: unless-stopped
 
 volumes:

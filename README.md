@@ -8,9 +8,16 @@ Includes:
 - Facebook-style friend requests (request + accept)
 
 ## Quick start
+Secrets are not stored in the repository. Copy the template and fill in random values:
+
 ```bash
-docker compose up --build
+cp .env.local.example .env.local
+./dockers_run.sh
 ```
+
+The first administrator is created only when none exists, with `ADMIN_EMAIL` and
+`ADMIN_PASSWORD` from `.env.local`. If `ADMIN_PASSWORD` is empty, a random password is
+printed once in the `app` logs.
 
 - Backend (Swagger): http://localhost:18000/docs
 - Web (ui_user): http://localhost:5173
@@ -93,7 +100,12 @@ configuration with the project root as its *Working directory*:
 - `MeetGoAdmin.py` starts the API and administration interface at
   `http://127.0.0.1:5174`.
 
-Stopping the run configuration stops the processes it started.
+Stopping the run configuration stops the processes it started. Locally the first
+administrator is `admin@local` with password `admin`.
+
+### Backend tests
+
+See [app/tests/README.md](app/tests/README.md).
 
 ## Releases
 
@@ -111,6 +123,9 @@ Without Tk it asks in the terminal. It also accepts
 `--update VERSION DATE` and `--create VERSION DATE [--dirty commit|carry|discard]`.
 
 ## Docker commands
+Pass both env files to every `docker compose` command, for example
+`docker compose --env-file .env --env-file .env.local up -d`.
+
 ```bash
 # Build and start in the foreground
 docker compose up --build

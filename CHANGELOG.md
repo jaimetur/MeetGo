@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## Release: v0.1.0
 ### Release Date: 2026-09-10
+- Removed the built-in `admin`/`admin` administration login; the first administrator now comes from `ADMIN_EMAIL`/`ADMIN_PASSWORD` and existing accounts are never changed at startup.
+- Moved Docker secrets (`JWT_SECRET`, PostgreSQL and Redis passwords) to an untracked `.env.local`, stopped publishing Redis, removed the Docker socket and the reload mode from the production compose file, and refused the development JWT secret in production.
+- Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
+- Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.
+- Fixed moderation deleting words that contain an insult (for example "reputación"), and detected international phone numbers.
+- Fixed sign-in without a password for accounts that have none, server errors for under-age or malformed birth dates, crossed friend requests and deleting a channel in use.
+- Sent emails in the background, serialized API dates as UTC with a `Z`, capped history pages, limited message length, reused one Redis connection and fixed the chat reconnection.
+- Added backend tests (`app/tests`).
 - Added `tools/CreateUpdateRelease.py` and its PyCharm run configuration to update the current release or create, commit and push a new release branch.
 - Added an iOS home-screen icon with the MeetGo navigation arrow, served from `web/assets`.
 - Added separate PyCharm entry points for the user and administration interfaces.

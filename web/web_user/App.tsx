@@ -15,7 +15,7 @@ import LogoSvg from "../assets/logo.svg";
 import { getLang, setLang, t, type Lang } from "../lang/lang";
 
 // ---- Toggle DEBUG PANEL by code only ----
-const SHOW_FRONTEND_LOG = true;
+const SHOW_FRONTEND_LOG = false;
 
 // If logo.png exists it will be preferred by bundler as static import (optional)
 let LogoPng: string | null = null;
@@ -811,6 +811,7 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
 
   const [joinInterest, setJoinInterest] = useState<string>("");
   const wsRef = useRef<WebSocket | null>(null);
+  const selectedRoomIdRef = useRef<number | null>(null);
   const wsClosingRef = useRef<boolean>(false);
   const wsReconnectRef = useRef<number | null>(null);
   const pendingMsgsRef = useRef<{ tempId: number; roomId: number; userId: number; ts: number }[]>([]);
@@ -1139,7 +1140,12 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
     }
   }
 
+  useEffect(() => {
+    selectedRoomIdRef.current = selectedRoom?.id ?? null;
+  }, [selectedRoom]);
+
   async function openRoom(room: Room) {
+    selectedRoomIdRef.current = room.id;
     setSelectedRoom(room);
     const history = await api.roomMessages(room.id);
     setMsgsForRoom(room.id, history);
@@ -1170,7 +1176,7 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
     const wsBase = getWsBase();
     const wsUrl = `${wsBase}/ws/rooms/${roomId}?token=${encodeURIComponent(token)}`;
 
-    frontLog("[WS] connecting", wsUrl);
+    frontLog("[WS] connecting", `${wsBase}/ws/rooms/${roomId}`);
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
@@ -1190,7 +1196,7 @@ function callingCodeLabel(x: { cc: string; labelKey?: string; name?: string; cod
       if (!wsReconnectRef.current) {
         wsReconnectRef.current = window.setTimeout(() => {
           wsReconnectRef.current = null;
-          if (selectedRoom?.id === roomId) {
+          if (selectedRoomIdRef.current === roomId) {
             frontWarn(t("chat_reconnecting"));
             connectWS(roomId);
           }
