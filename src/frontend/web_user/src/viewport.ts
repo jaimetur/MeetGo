@@ -5,6 +5,9 @@
  * - pinch zoom is blocked (iOS ignores user-scalable=no);
  * - the class "kb" on <html> says the on-screen keyboard is open.
  */
+const standalone = () =>
+  (navigator as any).standalone === true || window.matchMedia("(display-mode: standalone)").matches;
+
 export function setupViewport() {
   const root = document.documentElement;
   const vv = window.visualViewport;
@@ -19,6 +22,15 @@ export function setupViewport() {
       // Only with the keyboard open: fit the app above it, so the header and the composer stay visible.
       root.style.setProperty("--app-height", `${Math.round(height)}px`);
       root.style.setProperty("--app-top", `${Math.round(vv ? vv.offsetTop : 0)}px`);
+    } else if (standalone()) {
+      // Installed on the iPhone, iOS reports a viewport shorter than the screen (it takes the status bar off) while
+      // the app is drawn from the top of the screen: size it to the whole screen, edge to edge.
+      const portrait = window.innerHeight >= window.innerWidth;
+      const full = portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+      root.style.setProperty("--app-height", `${Math.max(full, window.innerHeight)}px`);
+      root.style.setProperty("--app-top", "0px");
+      // Phones with a home indicator (no home button): if iOS reports no bottom safe area, keep its space anyway.
+      root.style.setProperty("--home-ind", portrait && Math.max(screen.width, screen.height) >= 812 ? "34px" : "0px");
     } else {
       // Otherwise the app fills the whole screen, also the strip under Safari's own bottom bar.
       root.style.removeProperty("--app-height");
