@@ -8,7 +8,7 @@ import { chatPath, dropQueryParams, navigate, queryParam, useRoute } from "../ro
 import { getState, loadConversations, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen } from "./Auth";
 import { ChatView } from "./Chat";
-import { Icon } from "./common";
+import { Icon, InstallHint, Splash } from "./common";
 import { SidePanel } from "./Panels";
 import { AccountPage, ExplorePage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
 import { Paywall } from "./Paywall";
@@ -57,6 +57,10 @@ export function signOut() {
 export default function App() {
   const me = useStore((s) => s.me);
   const [booting, setBooting] = useState(true);
+  // The opening screen stays at least a moment the first time the app opens in this tab.
+  const [splash, setSplash] = useState<"on" | "leaving" | "off">(() => {
+    try { return sessionStorage.getItem("splashSeen") ? "off" : "on"; } catch { return "on"; }
+  });
 
   useEffect(() => {
     applyTheme();
@@ -75,15 +79,25 @@ export default function App() {
         }
         dropQueryParams("verify_token");
       }
+      const started = Date.now();
       if (getToken()) await startSession().catch(() => setToken(""));
       setBooting(false);
+      window.setTimeout(() => setSplash((s) => (s === "on" ? "leaving" : s)), Math.max(0, 1400 - (Date.now() - started)));
+      window.setTimeout(() => {
+        setSplash("off");
+        try { sessionStorage.setItem("splashSeen", "1"); } catch { /* private mode */ }
+      }, Math.max(0, 1400 - (Date.now() - started)) + 450);
     })();
     return () => mq.removeEventListener?.("change", onChange);
   }, []);
 
-  if (booting) return <div className="auth"><div className="logo"><span className="m">Meet</span><span className="g">Go</span></div></div>;
-  if (!me) return <AuthScreen onSignedIn={startSession} />;
-  return <Shell />;
+  if (booting) return <Splash />;
+  return (
+    <>
+      {me ? <Shell /> : <AuthScreen onSignedIn={startSession} />}
+      {splash !== "off" ? <Splash leaving={splash === "leaving"} /> : null}
+    </>
+  );
 }
 
 export async function startSession() {
@@ -227,6 +241,7 @@ function Shell() {
         ))}
       </nav>
 
+      {route.name !== "chat" ? <InstallHint /> : null}
       {paywall ? <Paywall onClose={() => setState({ paywall: false })} /> : null}
       <Toasts />
     </div>

@@ -2827,3 +2827,15 @@ msgstr "On a big screen you see the list, the channel and the thread or the memb
 
 msgid "landing_web_title"
 msgstr "All your conversations at a glance"
+
+msgid "ui_splash_tagline"
+msgstr "Talk to people near you. Then meet up."
+
+msgid "ui_install_title"
+msgstr "Install MeetGo"
+
+msgid "ui_install_ios"
+msgstr "Tap Share and then «Add to Home Screen»: it opens full screen, like an app."
+
+msgid "ui_install_dismiss"
+msgstr "Not now"

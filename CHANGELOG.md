@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- The app opens with a splash screen (icon, logo and tagline), the phone header shows the icon and the MeetGo logo over a glow in the brand colours, the active tab is lit with the brand gradient, and on the iPhone a notice explains how to install it on the home screen. In Safari the strip under the tab bar is painted like the bar.
 - All the branding images (icons, logos and the social sharing image) live in `assets/branding/` at the repository root, as in BodyLens; the web sites keep serving them at the same addresses.
 - While subscriptions are off in the administration, the app is free: the web app, the sign-up form and the landing page hide plans, prices, codes and the launch campaign, and no plan reminders are sent. Switching subscriptions on shows them again.
 - Split the backend into routers and services, with one shared Redis connection, real-time events fanned out through Redis for several processes, and presence kept in Redis.

@@ -114,3 +114,54 @@ export function useClickOutside(ref: React.RefObject<HTMLElement>, onOutside: ()
 
 export const QUICK_REACTIONS = ["👍", "❤️", "😂", "😮", "😢", "🙏"];
 export const EMOJIS = ["😀", "😂", "😊", "😍", "😎", "🤔", "😅", "😢", "😮", "😡", "👍", "👎", "👏", "🙌", "🙏", "💪", "❤️", "🔥", "🎉", "✨", "☕", "🍻", "🥾", "🚴", "🎾", "⚽", "🏖️", "🎬", "📍", "📅", "✅", "❓"];
+
+/** The MeetGo wordmark with the arrow of the icon, in the brand gradients. */
+export function Wordmark({ size = 24 }: { size?: number }) {
+  return (
+    <span className="wordmark" style={{ fontSize: size }} aria-label="MeetGo">
+      <span className="m">Meet</span><span className="g">Go</span>
+      <svg viewBox="0 0 30 24" aria-hidden="true" style={{ width: size * 0.95, height: size * 0.78 }}>
+        <defs><linearGradient id="wmGo" x1="0" x2="1"><stop offset="0" stopColor="#43d854" /><stop offset="1" stopColor="#18d7c8" /></linearGradient></defs>
+        <circle cx="3" cy="19" r="3" fill="url(#wmGo)" /><path d="M11 2 L29 12 L11 22 Z" fill="url(#wmGo)" />
+      </svg>
+    </span>
+  );
+}
+
+/** Opening screen: icon, wordmark and tagline while the app starts. */
+export function Splash({ leaving = false }: { leaving?: boolean }) {
+  return (
+    <div className={"splash" + (leaving ? " leaving" : "")} role="status" aria-label="MeetGo">
+      <div className="splash-glow" aria-hidden="true" />
+      <img className="splash-icon" src="/apple-touch-icon.png" alt="" />
+      <Wordmark size={40} />
+      <p className="splash-tag">{t("ui_splash_tagline")}</p>
+      <span className="dots splash-dots" aria-hidden="true"><i /><i /><i /></span>
+    </div>
+  );
+}
+
+/** iPhone Safari only: how to install the app on the home screen (shown until dismissed). */
+export function InstallHint() {
+  const [show, setShow] = React.useState(() => {
+    try {
+      const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      const standalone = (navigator as any).standalone || window.matchMedia("(display-mode: standalone)").matches;
+      return ios && !standalone && localStorage.getItem("installHint") !== "no";
+    } catch {
+      return false;
+    }
+  });
+  if (!show) return null;
+  const close = () => {
+    try { localStorage.setItem("installHint", "no"); } catch { /* private mode */ }
+    setShow(false);
+  };
+  return (
+    <div className="installhint" role="dialog" aria-label={t("ui_install_title")}>
+      <img src="/apple-touch-icon.png" alt="" />
+      <div className="grow"><b>{t("ui_install_title")}</b><div>{t("ui_install_ios")}</div></div>
+      <button className="iconbtn" onClick={close} aria-label={t("ui_install_dismiss")}><Icon name="x" /></button>
+    </div>
+  );
+}

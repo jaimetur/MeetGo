@@ -2827,3 +2827,15 @@ msgstr "En la pantalla grande ves la lista, el canal y el hilo o los miembros a 
 
 msgid "landing_web_title"
 msgstr "Todas tus conversaciones de un vistazo"
+
+msgid "ui_splash_tagline"
+msgstr "Habla con gente de tu zona. Y quedad."
+
+msgid "ui_install_title"
+msgstr "Instala MeetGo"
+
+msgid "ui_install_ios"
+msgstr "Pulsa Compartir y luego «Añadir a pantalla de inicio»: se abre a pantalla completa, como una app."
+
+msgid "ui_install_dismiss"
+msgstr "Ahora no"
