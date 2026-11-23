@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from .db import SessionLocal, engine
 from .i18n import select_lang, set_lang
+from .services import notify_email
 from .migrate import run_migrations
 from .redis_conn import close_redis
 from .routers import admin, auth, billing, conversations, devices, me, messages, public, realtime, social
@@ -52,9 +53,11 @@ async def startup():
 async def on_startup():
     await startup()
     await gateway.start()
+    notify_email.start()
 
 
 @app.on_event("shutdown")
 async def on_shutdown():
+    await notify_email.stop()
     await gateway.stop()
     await close_redis()

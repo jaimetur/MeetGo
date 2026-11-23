@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import contextmanager
 from contextvars import ContextVar
 from pathlib import Path
 
@@ -92,6 +93,16 @@ def set_lang(lang: str) -> None:
 
 def get_lang() -> str:
     return _lang_var.get()
+
+
+@contextmanager
+def use_lang(lang: str | None):
+    """Write in another language for a moment (emails go out in the language of the person who gets them)."""
+    token = _lang_var.set("en" if lang == "en" else "es")
+    try:
+        yield
+    finally:
+        _lang_var.reset(token)
 
 
 def t(key: str, vars: dict[str, str | int] | None = None) -> str:

@@ -105,6 +105,11 @@ class User(Base):
     banned_until: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     # Accounts created while subscriptions are enabled need an active plan or grant to write.
     access_required: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    # Automatic emails: language of the person (es/en), their choices ({"mentions": bool, ...}; missing keys use the
+    # defaults) and when the last digest of unread messages went out.
+    lang: Mapped[str] = mapped_column(String(8), default="es", server_default="es")
+    email_prefs: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    last_digest_email_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class Interest(Base):
@@ -214,6 +219,8 @@ class ConversationMember(Base):
     last_strike_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     silenced_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     banned: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Newest message already covered by an email, so a digest never repeats a message.
+    email_notified_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
 
 
 class Message(Base):
@@ -334,3 +341,11 @@ class PlaySubscription(Base):
     expiry: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     checked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class EmailNotice(Base):
+    """One-off automatic emails already sent (for example "your free year ends in 7 days"), so they go out once."""
+    __tablename__ = "email_notices"
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    key: Mapped[str] = mapped_column(String(96), primary_key=True)
+    sent_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

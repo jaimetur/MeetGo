@@ -27,17 +27,20 @@ All notable changes to this project will be documented in this file.
 - Public landing page at `/` with the launch campaign counter, pricing, downloads and FAQ, plus draft privacy and terms pages.
 - Android app (`android/`): the web app in a native shell with push notifications (Firebase Cloud Messaging) grouped by conversation with quick reply and mark as read, Google Play Billing, App Links for `https://meetgo.app/app/c/...`, sharing text and images into MeetGo, camera in the file picker, downloads, and first-run server and offline screens. GitHub Actions builds and signs the APK and AAB and publishes them as the `android-latest` pre-release; `tools/deploy-android.sh` copies the APK to the server, which serves it at `/downloads/android.apk`.
 - Administration: plan column and free-access control for users, a moderation queue for reports, subscription, Stripe, Google Play and Firebase settings, and promotional codes.
+- Automatic emails, like BodyLens, with a shared layout in each person's language: a summary of unread mentions, replies and messages (after a delay, never while connected, at most once every few hours), friend and direct-message requests, being added to a group, new reports for administrators, moderation notices and reminders before free access ends. Each person chooses them in Account → Notifications, every email has a link to stop it, and administrators can switch them off or tune the delays in Settings.
+- The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
 - Split the backend into routers and services, with one shared Redis connection, real-time events fanned out through Redis for several processes, and presence kept in Redis.
 - The web sites are built with Vite and served by nginx in production instead of the Vite development server.
 - Removed the prefilled `admin`/`admin` credentials from the administration sign-in form and added the administration texts that were missing from the translations.
 - The web app behaves like a native app on the iPhone and other phones: no zoom, no bounce at the start or end of lists and pages, 16 px fields, the screen fitted to the visible area with the keyboard open, room for the notch and the home bar in panels, sheets and dialogs, larger touch targets and the bottom tab bar on every main screen.
-- New phone look: a floating, frosted bottom tab bar with the current tab lit, conversations as bubbles (yours on the right), date pills, a one-line composer with round buttons, a large title, and the brand colour on the new-chat button, the active filter and each channel.
+- New phone look: a frosted bottom tab bar with the current tab lit, conversations as bubbles (yours on the right), date pills, a one-line composer with round buttons, a large title, and the brand colour on the new-chat button, the active filter and each channel.
 - Account: change your province and correct your date of birth (once); your channels move to the new province and age range. On phones, swipe between the main tabs; the tab bar sits at the bottom edge.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
+- Sign-up now checks that the email is a real address (name@domain.tld).
 - Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.
 - Fixed moderation deleting words that contain an insult (for example "reputación"), and detected international phone numbers.
 - Fixed sign-in without a password for accounts that have none, server errors for under-age or malformed birth dates, crossed friend requests and deleting a channel in use.

@@ -10,6 +10,7 @@ from ..models import Attachment, Message, Report, User
 from ..schemas import MessageCreateIn, MessageEditIn, ReportIn
 from ..services.conversations import get_membership, messages_out, require_member
 from ..services.messaging import delete_message, edit_message, send_message, set_reaction
+from ..services.notify_email import notify_admins_report
 from ..services.storage import attachment_out, check_signature, file_path, save_upload
 
 router = APIRouter(tags=["messages"])
@@ -127,7 +128,9 @@ async def report_message(message_id: int, payload: ReportIn, db: AsyncSession = 
     try:
         await db.commit()
     except IntegrityError:
-        await db.rollback()
+        await db.rollback()  # already reported by this person
+        return {"ok": True}
+    await notify_admins_report(db, payload.reason)
     return {"ok": True}
 
 

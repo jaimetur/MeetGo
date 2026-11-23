@@ -8,16 +8,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..deps import get_current_user, get_db, require_write_access
 from ..i18n import t
 from ..models import Conversation, ConversationMember, Friendship, Interest, User, UserInterest
-from ..schemas import InterestOut, MeOut, SetInterestsIn, UpdateProfileIn, UserOut
-from ..services.app_settings import app_base_url, get_settings_row
+from ..schemas import EmailPrefsIn, InterestOut, MeOut, SetInterestsIn, UpdateProfileIn, UserOut
+from ..services.app_settings import get_settings_row
 from ..services.conversations import (
     AGE_LABELS, can_join_channel, join, join_interest_channel, leave_interest_channel, move_channels_to_zone,
     user_age_key,
 )
-from ..services.email import send_email_background
+from ..services.notify_email import account_email
 from ..services.realtime import online_ids
 from ..security import hash_password
-from .common import me_out, normalize_phone, parse_dob, user_out
+from .common import me_out, normalize_phone, parse_dob, user_out, valid_email
 
 router = APIRouter(tags=["me"])
 
@@ -42,10 +42,13 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
         if not name or len(name) > 64:
             raise HTTPException(400, t("err_display_name"))
         user.display_name = name
+    password_changed = False
     if payload.email is not None:
         email = payload.email.strip().lower()
-        if not email or "@" not in email:
+        if not email:
             raise HTTPException(400, t("err_email_required"))
+        if not valid_email(email):
+            raise HTTPException(400, t("err_invalid_email"))
         if email != user.email:
             if (await db.execute(select(User.id).where(User.email == email))).first():
                 raise HTTPException(409, t("err_email_already_used"))
@@ -54,13 +57,13 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
             user.email_verified = False
             user.email_verification_token = token
             user.email_verification_sent_at = datetime.utcnow()
-            link = f"{await app_base_url(db)}/app/?verify_token={token}"
-            await send_email_background(db, email, t("email_verify_subject"), t("email_verify_body", {"link": link}))
+            await account_email(db, user, "email_verify", None, f"/app/?verify_token={token}")
     if payload.password is not None:
         if len(payload.password) < 6:
             raise HTTPException(400, t("err_password_too_short"))
         user.password_hash = hash_password(payload.password)
         user.password_temp = False
+        password_changed = True
     if payload.dob is not None and payload.dob != user.dob:
         if (user.dob_change_count or 0) >= 1:
             raise HTTPException(409, t("err_dob_change_used"))
@@ -97,6 +100,21 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
     if (user.province, user_age_key(user)) != (old_province, old_age):
         # A new zone means the channels of the new province or age range.
         await move_channels_to_zone(db, user, old_province, old_age)
+    await db.commit()
+    await db.refresh(user)
+    if password_changed:
+        await account_email(db, user, "email_password_changed", None, "/app/")
+    return me_out(user)
+
+
+@router.patch("/me/email-prefs", response_model=MeOut)
+async def update_email_prefs(payload: EmailPrefsIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """Which automatic emails you get."""
+    prefs = dict(user.email_prefs or {})
+    for key, value in payload.model_dump(exclude_none=True).items():
+        if key != "reports" or user.role == "admin":
+            prefs[key] = bool(value)
+    user.email_prefs = prefs
     await db.commit()
     await db.refresh(user)
     return me_out(user)

@@ -6,14 +6,14 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..deps import get_current_user, get_db
-from ..i18n import t
+from ..i18n import get_lang, t
 from ..models import User
+from ..redis_conn import get_redis
 from ..schemas import AdminLoginIn, ForgotPasswordIn, LoginIn, RegisterIn, ResetPasswordIn, Token, UserOut
 from ..security import create_access_token, hash_password, verify_password
-from ..services.app_settings import app_base_url
 from ..services.billing import billing_config, redeem_code
-from ..services.email import send_email_background
-from .common import normalize_phone, parse_dob, user_out
+from ..services.notify_email import account_email
+from .common import normalize_phone, parse_dob, user_out, valid_email
 
 router = APIRouter(tags=["auth"])
 
@@ -25,7 +25,7 @@ async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
     if not payload.password or len(payload.password) < 6:
         raise HTTPException(400, t("err_password_too_short"))
     email = payload.email.strip().lower()
-    if "@" not in email or len(email) > 255:
+    if not valid_email(email):
         raise HTTPException(400, t("err_invalid_email"))
     ar = parse_dob(payload.dob)
     display_name = (payload.display_name or "").strip()
@@ -48,7 +48,7 @@ async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
         city=(payload.city.strip() if payload.city else None), accept_dm=bool(payload.accept_dm),
         avatar_url=payload.avatar_url, bio=payload.bio, email_verified=False,
         email_verification_token=token, email_verification_sent_at=datetime.utcnow(),
-        access_required=billing["enabled"],
+        access_required=billing["enabled"], lang=get_lang(),
     )
     db.add(u)
     await db.flush()
@@ -57,9 +57,23 @@ async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
         await redeem_code(db, u, payload.promo_code)
     await db.commit()
     await db.refresh(u)
-    link = f"{await app_base_url(db)}/app/?verify_token={token}"
-    await send_email_background(db, u.email, t("email_verify_subject"), t("email_verify_body", {"link": link}))
+    await account_email(db, u, "email_verify", None, f"/app/?verify_token={token}")
     return user_out(u)
+
+
+@router.post("/auth/resend-verification", response_model=dict)
+async def resend_verification(payload: ForgotPasswordIn, db: AsyncSession = Depends(get_db)):
+    """A new verification email, at most every 2 minutes per address. The answer never says whether the account exists."""
+    email = (payload.email or "").strip().lower()
+    if not valid_email(email) or not await get_redis().set(f"mail:verify:{email}", "1", nx=True, ex=120):
+        return {"ok": True}
+    user = (await db.execute(select(User).where(func.lower(User.email) == email))).scalar_one_or_none()
+    if user and not user.email_verified:
+        user.email_verification_token = user.email_verification_token or secrets.token_urlsafe(32)
+        user.email_verification_sent_at = datetime.utcnow()
+        await db.commit()
+        await account_email(db, user, "email_verify", None, f"/app/?verify_token={user.email_verification_token}")
+    return {"ok": True}
 
 
 @router.post("/auth/login", response_model=Token)
@@ -75,6 +89,7 @@ async def login(payload: LoginIn, db: AsyncSession = Depends(get_db)):
     if not u.email_verified:
         raise HTTPException(403, t("err_email_not_verified"))
     now = datetime.utcnow()
+    u.lang = get_lang()
     u.login_count = (u.login_count or 0) + 1
     u.last_login_at = now
     u.last_seen_at = now
@@ -119,8 +134,7 @@ async def forgot_password(payload: ForgotPasswordIn, db: AsyncSession = Depends(
     user.reset_token = token
     user.reset_expires_at = datetime.utcnow() + timedelta(hours=2)
     await db.commit()
-    link = f"{await app_base_url(db)}/app/?reset_token={token}"
-    await send_email_background(db, user.email, t("email_reset_subject"), t("email_reset_body", {"link": link}))
+    await account_email(db, user, "email_reset", None, f"/app/?reset_token={token}")
     return {"ok": True}
 
 
@@ -139,6 +153,7 @@ async def reset_password(payload: ResetPasswordIn, db: AsyncSession = Depends(ge
     user.reset_expires_at = None
     user.password_temp = False
     await db.commit()
+    await account_email(db, user, "email_password_changed", None, "/app/")
     return {"ok": True}
 
 

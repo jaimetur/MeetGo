@@ -392,6 +392,18 @@ export function AccountPage() {
             <button className="btn sm" disabled={pushState === "denied"} onClick={togglePush}>{pushState === "granted" ? t("ui_disable") : t("ui_enable")}</button></div>
         ) : <div className="muted">{t("ui_push_unsupported")}</div>}
         <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_notifications_hint")}</div>
+        <div className="stack" style={{ gap: 8, marginTop: 8, borderTop: "1px solid var(--line)", paddingTop: 12 }}>
+          <b>{t("ui_emails")}</b>
+          {!me.email_verified ? <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_unverified")}</div> : null}
+          {["mentions", "messages", "requests", "reports"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
+            <label key={k} className="check">
+              <input id={`acc-email-${k}`} type="checkbox" checked={!!me.email_prefs![k]}
+                onChange={(e) => api.emailPrefs({ [k]: e.target.checked }).then((u) => setState({ me: u })).catch((err) => toast(err.message, "error"))} />
+              {t("ui_email_" + k)}
+            </label>
+          ))}
+          <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_hint")}</div>
+        </div>
       </div>
 
       <h2>{t("ui_appearance")}</h2>

@@ -50,17 +50,22 @@ function Login({ onSignedIn, setView }: { onSignedIn: () => Promise<void>; setVi
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [unverified, setUnverified] = useState(false);
+  const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError("");
+    setUnverified(false);
+    setNotice("");
     try {
       const res = await api.login(email.trim(), password);
       setToken(res.access_token);
       await onSignedIn();
     } catch (err: any) {
       setError(err.message);
+      setUnverified(err.status === 403 && err.message === t("err_email_not_verified"));
       setToken("");
     } finally {
       setBusy(false);
@@ -72,6 +77,13 @@ function Login({ onSignedIn, setView }: { onSignedIn: () => Promise<void>; setVi
       <label className="fld">{t("ui_email")}<input id="login-email" className="inp" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></label>
       <label className="fld">{t("ui_password")}<input id="login-password" className="inp" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} /></label>
       {error ? <div className="err" role="alert">{error}</div> : null}
+      {unverified ? (
+        <button type="button" className="linkbtn" style={{ textAlign: "left" }}
+          onClick={() => api.resendVerification(email.trim()).then(() => { setUnverified(false); setError(""); setNotice(t("ui_verification_resent")); }).catch((e) => setError(e.message))}>
+          {t("ui_resend_verification")}
+        </button>
+      ) : null}
+      {notice ? <div className="ok" role="status">{notice}</div> : null}
       <button className="btn pri block" disabled={busy}>{busy ? t("ui_wait") : t("ui_login_btn")}</button>
       <div className="row" style={{ justifyContent: "space-between" }}>
         <button type="button" className="linkbtn" onClick={() => setView("forgot")}>{t("ui_forgot")}</button>

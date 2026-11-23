@@ -8,6 +8,7 @@ from fastapi import HTTPException
 from ..i18n import t
 from ..models import User
 from ..schemas import MeOut, UserOut, UserSummary
+from ..services.notify_email import prefs_of
 from ..utils import age_range_from_dob
 
 _CALLING_CODES = {"ES": "34", "PT": "351", "FR": "33", "IT": "39", "DE": "49", "GB": "44", "US": "1", "MX": "52", "AR": "54", "CO": "57"}
@@ -55,6 +56,14 @@ def user_out(u: User) -> UserOut:
     )
 
 
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s.]{2,}$")
+
+
+def valid_email(email: str) -> bool:
+    """An address people can receive mail at (name@domain.tld), required to sign up."""
+    return len(email) <= 255 and bool(EMAIL_RE.match(email))
+
+
 def me_out(u: User) -> MeOut:
     return MeOut(
         **user_out(u).model_dump(),
@@ -62,6 +71,7 @@ def me_out(u: User) -> MeOut:
         role=u.role or "user", phone=u.phone, login_count=u.login_count or 0, last_login_at=u.last_login_at,
         last_seen_at=u.last_seen_at, total_connected_seconds=u.total_connected_seconds or 0,
         session_active=bool(u.session_active), session_started_at=u.session_started_at,
+        email_prefs=prefs_of(u),
     )
 
 

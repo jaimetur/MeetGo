@@ -643,6 +643,31 @@ export default function App() {
               </div>
 
               <div className="section">
+                <h4>{t("admin_email_notifications_section")}</h4>
+                <label className="row" style={{ gap: 8, alignItems: "center" }}>
+                  <input
+                    type="checkbox"
+                    checked={settings.email_notifications?.enabled ?? true}
+                    onChange={(e) => updateSettings("email_notifications.enabled", e.target.checked)}
+                  />
+                  <span>{t("admin_email_notifications_enabled")}</span>
+                </label>
+                <label className="label">{t("admin_email_notifications_delay")}</label>
+                <input
+                  className="input" type="number" min={1}
+                  value={settings.email_notifications?.delay_minutes ?? 15}
+                  onChange={(e) => updateSettings("email_notifications.delay_minutes", Number(e.target.value) || 1)}
+                />
+                <label className="label">{t("admin_email_notifications_cooldown")}</label>
+                <input
+                  className="input" type="number" min={0} step={0.5}
+                  value={settings.email_notifications?.cooldown_hours ?? 3}
+                  onChange={(e) => updateSettings("email_notifications.cooldown_hours", Number(e.target.value) || 0)}
+                />
+                <div className="muted">{t("admin_email_notifications_hint")}</div>
+              </div>
+
+              <div className="section">
                 <h4>{t("admin_smtp_section")}</h4>
                 <div className="row">
                   <label className="label">{t("admin_smtp_mode")}</label>

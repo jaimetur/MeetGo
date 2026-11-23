@@ -1,12 +1,12 @@
 from datetime import datetime
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .db import SessionLocal
 from .security import decode_token
-from .i18n import t
+from .i18n import get_lang, t
 from .models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -16,6 +16,7 @@ async def get_db() -> AsyncSession:
         yield session
 
 async def get_current_user(
+    request: Request,
     token: str = Depends(oauth2_scheme),
     db: AsyncSession = Depends(get_db),
 ) -> User:
@@ -29,9 +30,12 @@ async def get_current_user(
     if user.banned_until and user.banned_until > datetime.utcnow():
         raise HTTPException(403, t("err_user_banned"))
     now = datetime.utcnow()
-    # Record activity at most once a minute instead of writing on every request.
-    if not user.last_seen_at or (now - user.last_seen_at).total_seconds() > 60:
+    # Record activity at most once a minute instead of writing on every request; also the language emails use.
+    # Only requests from the web app say the language (X-Lang); calls from the Android shell do not.
+    lang = get_lang() if request.headers.get("x-lang") else user.lang
+    if not user.last_seen_at or (now - user.last_seen_at).total_seconds() > 60 or user.lang != lang:
         user.last_seen_at = now
+        user.lang = lang
         db.add(user)
         await db.commit()
     return user

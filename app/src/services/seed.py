@@ -29,6 +29,8 @@ DEFAULT_SETTINGS = {
         "gmail_refresh_token": "",
         "gmail_sender_email": "",
     },
+    # Automatic notification emails (mentions, unread messages, requests, reports, moderation, plan reminders).
+    "email_notifications": {"enabled": True, "delay_minutes": 15, "cooldown_hours": 3},
     "languages": [
         {"code": "es", "name": "Espanol"},
         {"code": "en", "name": "English"},

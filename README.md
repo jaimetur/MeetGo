@@ -65,6 +65,24 @@ the **Suscripciones** tab:
 4. Switch on **subscriptions** when payments work: from then on, new accounts need a plan,
    a free trial or a promotional code to write.
 
+### Automatic emails
+
+With outgoing mail set in **Ajustes** (SMTP or Gmail API, with a test button), MeetGo sends:
+- **Account emails, always:** email confirmation (required to sign in; the sign-in screen can send it again),
+  password reset and a notice when the password changes.
+- **Notifications, if switched on** in **Ajustes → Emails automáticos** (on by default) and in each person's
+  **Cuenta → Notificaciones**:
+  - a summary of unread mentions and replies, and of unread messages in groups and direct messages;
+  - friend and direct-message requests and their acceptance, and being added to a group;
+  - new reports, for administrators;
+  - moderation notices (silenced, banned, removed);
+  - reminders 7 days and 1 day before free access ends, and when it has ended.
+- Unread messages are never emailed one by one. Every 5 minutes the server sends one email per person with
+  what they have not read after a delay (15 minutes by default), never while they are connected and at most
+  once every few hours (3 by default). Both values are set in the administration.
+- Every notification email has a link to stop that kind of email without signing in, plus the
+  List-Unsubscribe headers. Emails go out in each person's language.
+
 The **Códigos** tab manages promotional codes; LANZAMIENTO (alias MEETGO50) is created
 with 50 places of one free year.
 

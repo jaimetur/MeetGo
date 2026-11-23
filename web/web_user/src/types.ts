@@ -13,6 +13,7 @@ export type Me = UserSummary & {
   role: string;
   email_verified: boolean;
   dob_change_count: number;
+  email_prefs?: Record<string, boolean>;
 };
 
 export type Kind = "channel" | "group" | "dm";

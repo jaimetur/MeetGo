@@ -8,7 +8,7 @@ from ..deps import get_current_user, get_db, require_write_access
 from ..i18n import t
 from ..models import Follow, FriendRequest, FriendRequestStatus, Friendship, Post, User
 from ..schemas import FollowOut, FriendRequestCreateIn, FriendRequestOut, FriendRequestResolveIn, PostCreateIn, PostOut, UserSummary
-from ..services import realtime
+from ..services import notify_email, realtime
 from ..services.conversations import user_summary
 from .common import summary
 
@@ -75,12 +75,14 @@ async def create_friend_request(payload: FriendRequestCreateIn, db: AsyncSession
         await _add_friendship(db, user.id, other.id)
         await db.commit()
         await realtime.publish([user.id, other.id], {"type": "requests.changed"})
+        await notify_email.notify(db, other, "requests", "email_friend_accepted", {"name": user.display_name}, "/app/people")
         return _fr_out(reverse)
     fr = FriendRequest(from_user_id=user.id, to_user_id=other.id, status=FriendRequestStatus.PENDING)
     db.add(fr)
     await db.commit()
     await db.refresh(fr)
     await realtime.publish([other.id], {"type": "requests.changed"})
+    await notify_email.notify(db, other, "requests", "email_friend_request", {"name": user.display_name}, "/app/people")
     return _fr_out(fr)
 
 
@@ -107,6 +109,9 @@ async def resolve_friend_request(request_id: int, payload: FriendRequestResolveI
         await _add_friendship(db, req.from_user_id, req.to_user_id)
     await db.commit()
     await realtime.publish([req.from_user_id, user.id], {"type": "requests.changed"})
+    if payload.accept:
+        await notify_email.notify(db, await db.get(User, req.from_user_id), "requests", "email_friend_accepted",
+                                  {"name": user.display_name}, "/app/people")
     return {"ok": True}
 
 

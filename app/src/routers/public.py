@@ -1,11 +1,18 @@
 import json
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse, JSONResponse
+import html
+
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..config import settings
-from ..i18n import t
+from ..deps import get_db
+from ..i18n import t, use_lang
+from ..models import User
+from ..services import notify_email
+from ..services.app_settings import app_base_url
 
 router = APIRouter(tags=["public"])
 
@@ -46,3 +53,28 @@ async def assetlinks():
                    "sha256_cert_fingerprints": fingerprints},
     }] if fingerprints else []
     return JSONResponse(statements)
+
+
+# ---------- links to stop automatic emails ----------
+
+@router.get("/email/unsubscribe", response_class=HTMLResponse)
+@router.post("/email/unsubscribe", response_class=HTMLResponse)
+async def email_unsubscribe(u: int, k: str, s: str, db: AsyncSession = Depends(get_db)):
+    """The link at the bottom of notification emails (and one-click List-Unsubscribe). Signed, so no sign-in is needed."""
+    user = await db.get(User, u)
+    if not user or not notify_email.check_unsubscribe(u, k, s):
+        raise HTTPException(404, t("err_invalid_token"))
+    await notify_email.unsubscribe(db, user, k)
+    base = await app_base_url(db)
+    with use_lang(user.lang):
+        title, body, link = t("email_unsubscribed_title"), t(f"email_unsubscribed_{k}"), t("email_footer_manage")
+    page = (
+        '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+        f"<title>MeetGo</title></head><body style=\"margin:0;padding:40px 16px;background:#eef1f5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#142036\">"
+        '<div style="max-width:480px;margin:0 auto;background:#fff;border-radius:14px;padding:26px 24px">'
+        '<div style="font-size:22px;font-weight:700;margin-bottom:14px"><span style="color:#1e90ff">Meet</span><span style="color:#1f9d4a">Go</span></div>'
+        f"<h1 style=\"font-size:19px;margin:0 0 10px\">{html.escape(title)}</h1><p>{html.escape(body)}</p>"
+        f"<p><a href=\"{html.escape(base + '/app/account', quote=True)}\" style=\"color:#1e90ff\">{html.escape(link)}</a></p>"
+        "</div></body></html>"
+    )
+    return HTMLResponse(page)

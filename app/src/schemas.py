@@ -61,6 +61,14 @@ class MeOut(UserOut):
     total_connected_seconds: int
     session_active: bool
     session_started_at: UTCDateTime | None
+    # Which automatic emails the person gets (mentions, messages, requests and, for administrators, reports).
+    email_prefs: dict[str, bool] = Field(default_factory=dict)
+
+class EmailPrefsIn(BaseModel):
+    mentions: bool | None = None
+    messages: bool | None = None
+    requests: bool | None = None
+    reports: bool | None = None
 
 class UserSummary(BaseModel):
     id: int

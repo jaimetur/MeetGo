@@ -15,7 +15,7 @@ from ..schemas import (
     ConversationUpdateIn, DMOpenIn, DMRequestResolveIn, GroupCreateIn, MemberRoleIn, MemberSettingsIn, MembersAddIn,
     ModerateIn, ReadIn,
 )
-from ..services import realtime
+from ..services import notify_email, realtime
 from ..services.conversations import (
     conversations_out, dm_between, get_membership, is_staff, join, messages_out, require_member, user_summary,
 )
@@ -152,6 +152,9 @@ async def add_members(conv_id: int, payload: MembersAddIn, db: AsyncSession = De
             added.append(uid)
     await db.commit()
     await _changed(db, conv.id)
+    for uid in added:
+        await notify_email.notify(db, await db.get(User, uid), "requests", "email_group_added",
+                                  {"name": user.display_name, "group": conv.title or ""}, f"/app/c/{conv.id}")
     return {"added": added}
 
 
@@ -225,6 +228,11 @@ async def moderate_member(conv_id: int, user_id: int, payload: ModerateIn, db: A
         await db.delete(target)
     await db.commit()
     await _changed(db, conv.id, extra=[user_id])
+    if payload.action in ("silence", "ban", "remove"):
+        target_user = await db.get(User, user_id)
+        place = await notify_email.conversation_label(db, conv)
+        await notify_email.notify(db, target_user, None, f"email_mod_{payload.action}", {"place": place, "minutes": payload.minutes},
+                                  None if payload.action == "remove" else f"/app/c/{conv.id}")
     return {"ok": True}
 
 
@@ -325,6 +333,7 @@ async def open_dm(payload: DMOpenIn, db: AsyncSession = Depends(get_db), user: U
     db.add(req)
     await db.commit()
     await realtime.publish([other.id], {"type": "requests.changed"})
+    await notify_email.notify(db, other, "requests", "email_dm_request", {"name": user.display_name}, "/app/people")
     return {"request_id": req.id, "status": "pending"}
 
 
@@ -353,6 +362,8 @@ async def resolve_dm_request(request_id: int, payload: DMRequestResolveIn, db: A
     await realtime.publish([req.from_user_id, user.id], {"type": "requests.changed"})
     if conv_id:
         await realtime.publish([req.from_user_id, user.id], {"type": "conversation.changed", "conversation_id": conv_id})
+        await notify_email.notify(db, await db.get(User, req.from_user_id), "requests", "email_dm_accepted",
+                                  {"name": user.display_name}, f"/app/c/{conv_id}")
     return {"ok": True, "conversation_id": conv_id}
 
 
