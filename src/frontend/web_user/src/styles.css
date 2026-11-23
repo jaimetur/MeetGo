@@ -846,3 +846,20 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   color: #fff; background: linear-gradient(135deg, #7c3aed, #0ea5e9); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35); max-width: calc(100% - 24px); }
 .actingbar .btn { background: rgba(255, 255, 255, 0.2); color: #fff; border-color: transparent; white-space: nowrap; }
 .acchero-admin { margin-right: 6px; }
+
+/* ---- a community's chat on phones: a slim bar, and only messages and the message box while writing ---- */
+.cchatbar { display: none; }
+@media (max-width: 820px) {
+  .screen.withchat .cchatbar { display: flex; align-items: center; gap: 8px; flex: none; padding: calc(6px + env(safe-area-inset-top, 0px)) 8px 6px 4px;
+    border-bottom: 1px solid var(--line); background: var(--panel); }
+  .screen.withchat .cchatbar .cbadge { border-radius: 11px; flex: none; }
+  .screen.withchat .cchatbar .cbadge .cbadge-ic { width: 18px; height: 18px; }
+  .cchatbar-title { font-weight: 700; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cchatbar-meta { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .screen.withchat .chero, .screen.withchat .chead2-main, .screen.withchat .chead2-tags, .screen.withchat .cdescfull { display: none; }
+  .screen.withchat .chead2 { padding-bottom: 6px; }
+  .screen.withchat .ctabs { margin-top: 8px; }
+  .screen.withchat .embedchat .chead { display: none; }
+  .typing .screen.withchat .chead2, .kb .screen.withchat .chead2 { display: none; }
+  .typing .screen.withchat, .kb .screen.withchat { padding-bottom: 0; }
+}

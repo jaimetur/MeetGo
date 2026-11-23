@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { t } from "@lang";
 import { api, fileUrl } from "../api";
 import { coverGradient } from "../board";
-import { communityPath, goBack, navigate } from "../router";
+import { chatPath, communityPath, goBack, navigate } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, UserSummary } from "../types";
 import { ChatView } from "./Chat";
@@ -261,8 +261,20 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           {c.joined ? <button className="iconbtn glass" onClick={() => setLeave(true)} aria-label={t("ui_community_leave")} title={t("ui_community_leave")}><Icon name="door" /></button> : null}
         </div>
       </div>
+      {/* phones, in the chat: one slim bar instead of the cover and the big header, so the messages get the room */}
+      <div className="cchatbar">
+        <button className="iconbtn" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
+        <CommunityBadge c={c} size={34} />
+        <div className="grow" style={{ minWidth: 0 }}>
+          <div className="cchatbar-title">{c.title}</div>
+          <div className="muted cchatbar-meta">{t("ui_members_n", { n: c.member_count })}{c.online_count ? <> · <span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</> : null}</div>
+        </div>
+        {c.rules ? <button className="iconbtn" onClick={() => setRules(true)} aria-label={t("ui_community_rules")} title={t("ui_community_rules")}><Icon name="shield" /></button> : null}
+        <button className="iconbtn" onClick={() => navigate(chatPath(c.conversation_id))} aria-label={t("ui_community_chat_full")} title={t("ui_community_chat_full")}><Icon name="chat" /></button>
+        {manager ? <button className="iconbtn" onClick={() => setSettings(true)} aria-label={t("ui_community_settings")} title={t("ui_community_settings")}><Icon name="sliders" /></button> : null}
+      </div>
       <div className="swrap chead2">
-        <div className="row" style={{ alignItems: "flex-end", gap: 14 }}>
+        <div className="row chead2-main" style={{ alignItems: "flex-end", gap: 14 }}>
           <CommunityBadge c={c} size={72} />
           <div className="grow" style={{ minWidth: 0, paddingBottom: 4 }}>
             <h1 className="dtitle" style={{ margin: 0 }}>{c.title}</h1>
@@ -274,7 +286,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           <span className="deskonly"><JoinButton c={c} onChange={setC} big /></span>
         </div>
         {c.description ? <p className="cdescfull">{c.description}</p> : null}
-        <div className="row" style={{ flexWrap: "wrap" }}>
+        <div className="row chead2-tags" style={{ flexWrap: "wrap" }}>
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.board_mode === "admins" ? <span className="ktag"><Icon name="megaphone" size="sm" />{t("ui_community_board_admins")}</span> : null}
           {c.role ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role] || "ui_role_member")}</span> : null}

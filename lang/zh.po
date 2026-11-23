@@ -3956,6 +3956,9 @@ msgstr "你正在使用账号 {name}"
 msgid "ui_back_to_my_account"
 msgstr "返回我的账号"
 
+msgid "ui_community_chat_full"
+msgstr "全屏打开聊天"
+
 msgid "ui_community_ban_hint"
 msgstr "对方会被移出且不能再加入。"
 

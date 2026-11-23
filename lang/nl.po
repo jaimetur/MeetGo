@@ -3956,6 +3956,9 @@ msgstr "Je gebruikt het account {name}"
 msgid "ui_back_to_my_account"
 msgstr "Terug naar mijn account"
 
+msgid "ui_community_chat_full"
+msgstr "Chat schermvullend openen"
+
 msgid "ui_community_ban_hint"
 msgstr "Diegene vertrekt en kan niet meer lid worden."
 

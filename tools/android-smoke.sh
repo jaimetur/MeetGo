@@ -14,5 +14,8 @@ adb logcat -d -b crash > smoke/crash.txt 2>&1
 adb logcat -d > smoke/full-log.txt 2>&1
 grep -E "AndroidRuntime|FATAL|meetgo|chromium|WebView" smoke/full-log.txt | tail -300 > smoke/log.txt
 adb exec-out screencap -p > smoke/screen.png 2>/dev/null
+# what is on screen, as text (the log is readable even when the artifacts cannot be kept)
+adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 && adb shell cat /sdcard/ui.xml > smoke/ui.xml 2>/dev/null
+echo "== on screen:"; grep -o 'text="[^"]\+"\|content-desc="[^"]\+"' smoke/ui.xml | head -40
 echo "== result: $(cat smoke/result.txt)"; cat smoke/start.txt; echo "== crash"; cat smoke/crash.txt
 exit 0

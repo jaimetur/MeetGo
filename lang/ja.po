@@ -3956,6 +3956,9 @@ msgstr "アカウント {name} を使用中"
 msgid "ui_back_to_my_account"
 msgstr "自分のアカウントに戻る"
 
+msgid "ui_community_chat_full"
+msgstr "チャットを全画面で開く"
+
 msgid "ui_community_ban_hint"
 msgstr "退出させ、再参加できなくなります。"
 

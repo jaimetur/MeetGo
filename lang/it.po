@@ -3956,6 +3956,9 @@ msgstr "Stai usando l'account {name}"
 msgid "ui_back_to_my_account"
 msgstr "Torna al mio account"
 
+msgid "ui_community_chat_full"
+msgstr "Apri la chat a schermo intero"
+
 msgid "ui_community_ban_hint"
 msgstr "Esce e non potrà più unirsi."
 

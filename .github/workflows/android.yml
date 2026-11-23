@@ -71,11 +71,13 @@ jobs:
           script: sh tools/android-smoke.sh
       - name: Keep the smoke test results
         if: ${{ !inputs.release_tag }}
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: android-smoke
           path: smoke/
           if-no-files-found: ignore
+          retention-days: 3
       - name: Version
         run: |
           MM=$(sed -n 's/.*versionName = "\([0-9]*\.[0-9]*\)\.".*/\1/p' android/app/build.gradle.kts)

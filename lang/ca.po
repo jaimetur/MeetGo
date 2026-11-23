@@ -3956,6 +3956,9 @@ msgstr "Estàs fent servir el compte {name}"
 msgid "ui_back_to_my_account"
 msgstr "Tornar al meu compte"
 
+msgid "ui_community_chat_full"
+msgstr "Obrir el xat a pantalla completa"
+
 msgid "ui_community_ban_hint"
 msgstr "En surt i no s’hi podrà tornar a unir."
 
