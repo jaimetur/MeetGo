@@ -163,8 +163,27 @@ function Shell() {
   ];
   const current = route.name === "chat" ? "home" : route.name;
 
+  // Phones: swipe left or right on a main screen to go to the next or previous tab.
+  const swipe = React.useRef<{ x: number; y: number; t: number } | null>(null);
+  const tabIndex = nav.findIndex((n) => n.name === route.name);
+  const onTouchStart = (e: React.TouchEvent) => {
+    const el = e.target as HTMLElement;
+    swipe.current = tabIndex < 0 || e.touches.length > 1 || el.closest(".chips, input, textarea, select, .modal-bg, .sheet-bg")
+      ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = swipe.current;
+    swipe.current = null;
+    if (!start || !window.matchMedia("(max-width: 820px)").matches) return;
+    const dx = e.changedTouches[0].clientX - start.x;
+    const dy = e.changedTouches[0].clientY - start.y;
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2 || Date.now() - start.t > 700) return;
+    const next = nav[tabIndex + (dx < 0 ? 1 : -1)];
+    if (next) navigate(next.name === "home" ? "/" : "/" + next.name);
+  };
+
   return (
-    <div className={shellClass}>
+    <div className={shellClass} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <nav className="rail" aria-label={t("ui_nav")}>
         <div className="mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M7 5 19 12 7 19z" fill="#fff" /></svg></div>
         {nav.map((n) => (
