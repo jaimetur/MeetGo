@@ -109,7 +109,7 @@ def t(key: str, vars: dict[str, str | int] | None = None) -> str:
         _load_lang("es")
         _load_lang("en")
     d = _dicts.get(lang, {})
-    s = d.get(key) or _dicts.get("es", {}).get(key) or key
+    s = d.get(key) or _dicts.get("en", {}).get(key) or key  # English is the source language
     if vars:
         for k, v in vars.items():
             s = s.replace(f"{{{k}}}", str(v))

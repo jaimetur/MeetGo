@@ -1,3 +1,5 @@
+// English (en.po) is the source language: every other catalog is a translation of it, and anything
+// missing in a translation falls back to English. See lang/README.md.
 export type Lang = "es" | "en";
 
 type Dict = Record<string, string>;
@@ -75,9 +77,13 @@ export function setLang(l: Lang) {
 }
 
 export function t(key: string, vars?: Record<string, string | number>) {
-  const lang = getLang();
-  const dict = DICTS[lang] || DICTS.es;
-  let s = dict[key] || DICTS.es[key] || key;
+  return translate(getLang(), key, vars);
+}
+
+/** The text of `key` in `lang` (the landing page keeps its own language choice). */
+export function translate(lang: Lang, key: string, vars?: Record<string, string | number>) {
+  const dict = DICTS[lang] || DICTS.en;
+  let s = dict[key] || DICTS.en[key] || key;
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.replaceAll(`{${k}}`, String(v));

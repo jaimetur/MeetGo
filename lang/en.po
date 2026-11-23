@@ -1,3 +1,4 @@
+# MeetGo translations. English is the source language: edit texts here first (see lang/README.md).
 msgid ""
 msgstr ""
 "Language: en\n"
@@ -2448,3 +2449,381 @@ msgstr "You have already corrected your date of birth once."
 
 msgid "ui_zone_hint"
 msgstr "Your channels are those of your province and age range. If you change your province or date of birth, you move to the channels of the new zone."
+
+msgid "landing_a0"
+msgstr "Nothing. MeetGo is free: create your account and use it without limits, no card needed."
+
+msgid "landing_a1"
+msgstr "€2.50 a month or €25 a year, with a 7-day free trial. Both options include everything."
+
+msgid "landing_a2"
+msgstr "Create your account with the code LANZAMIENTO while places last. It is only for the first 50 accounts and we don't ask for a card."
+
+msgid "landing_a3"
+msgstr "Your account becomes read-only until you subscribe: you can read your conversations but not write. Nothing is deleted."
+
+msgid "landing_a4"
+msgstr "Nobody. Your number is not on your profile, and messages sharing numbers in channels are removed automatically."
+
+msgid "landing_a5"
+msgstr "Yes, MeetGo is for people over 18. Channels are grouped by age range: 18-30, 31-50 and over 50."
+
+msgid "landing_a6"
+msgstr "Every province in Spain. Your channels are those of your province and age range, one for each hobby you choose."
+
+msgid "landing_a7"
+msgstr "From your MeetGo account if you pay by card, or from Google Play if you subscribed in the app. You keep access until the end of the paid period."
+
+msgid "landing_a8"
+msgstr "On Android, download the app. On iPhone, open meetgo.app/app in Safari and add it to your Home Screen."
+
+msgid "landing_cta_how"
+msgstr "See how it works"
+
+msgid "landing_cta_register"
+msgstr "Create account"
+
+msgid "landing_dl_android_btn"
+msgstr "Download APK"
+
+msgid "landing_dl_android_p"
+msgstr "The app with instant notifications and quick reply. Download the APK and install it."
+
+msgid "landing_dl_build"
+msgstr "Version {version}"
+
+msgid "landing_dl_k"
+msgstr "Download"
+
+msgid "landing_dl_play_btn"
+msgstr "Coming soon"
+
+msgid "landing_dl_play_p"
+msgstr "We are preparing the store listing. With your MeetGo account you will pick up where you left off."
+
+msgid "landing_dl_soon"
+msgstr "Coming very soon"
+
+msgid "landing_dl_soon2"
+msgstr "Coming soon"
+
+msgid "landing_dl_title"
+msgstr "With you on your phone and your computer"
+
+msgid "landing_dl_web_btn"
+msgstr "Open MeetGo"
+
+msgid "landing_dl_web_p"
+msgstr "Open MeetGo in your browser. On iPhone, tap Share and “Add to Home Screen” to keep it like an app."
+
+msgid "landing_dl_web_t"
+msgstr "iPhone and web"
+
+msgid "landing_eyebrow"
+msgstr "Chat by province, age and interests"
+
+msgid "landing_f1_k"
+msgstr "Local channels"
+
+msgid "landing_f1_l1"
+msgstr "Threads with a summary of replies and participants"
+
+msgid "landing_f1_l2"
+msgstr "Mentions with their own inbox, and alerts only when someone names you"
+
+msgid "landing_f1_l3"
+msgstr "A new-messages divider and a button to jump to the latest"
+
+msgid "landing_f1_l4"
+msgstr "Reactions, quoted replies and pinned messages"
+
+msgid "landing_f1_p"
+msgstr "Every topic gets its own thread and the main conversation stays clean. Catch up on what you missed without endless scrolling."
+
+msgid "landing_f1_t"
+msgstr "Many voices at once, all readable"
+
+msgid "landing_f2_k"
+msgstr "Private groups"
+
+msgid "landing_f2_l1"
+msgstr "Invitation links and admin roles"
+
+msgid "landing_f2_l2"
+msgstr "Photos and files up to 10 MB"
+
+msgid "landing_f2_l3"
+msgstr "Read receipts to know who has seen it"
+
+msgid "landing_f2_l4"
+msgstr "Mute or pin any group"
+
+msgid "landing_f2_p"
+msgstr "Create a group with your friends or share an invitation link with whoever signed up in the channel."
+
+msgid "landing_f2_t"
+msgstr "From “count me in” to a done deal"
+
+msgid "landing_f3_k"
+msgstr "Direct messages"
+
+msgid "landing_f3_l1"
+msgstr "Instant notifications, with quick reply on Android"
+
+msgid "landing_f3_l2"
+msgstr "See who is typing and who is online"
+
+msgid "landing_f3_l3"
+msgstr "Your phone number is never shown"
+
+msgid "landing_f3_p"
+msgstr "With friends you chat right away. With anyone else a request comes first, and only if they accept direct messages."
+
+msgid "landing_f3_t"
+msgstr "In private, when you both want it"
+
+msgid "landing_f_app"
+msgstr "Open the app"
+
+msgid "landing_f_contact"
+msgstr "Contact:"
+
+msgid "landing_f_privacy"
+msgstr "Privacy"
+
+msgid "landing_f_terms"
+msgstr "Terms"
+
+msgid "landing_faq_k"
+msgstr "FAQ"
+
+msgid "landing_faq_title"
+msgstr "What people usually ask"
+
+msgid "landing_feat_k"
+msgstr "Features"
+
+msgid "landing_feat_p"
+msgstr "Big channels stay readable, groups are yours and direct messages arrive instantly."
+
+msgid "landing_feat_title"
+msgstr "Made for chatting with lots of people without getting lost"
+
+msgid "landing_final_p"
+msgstr "Come in, pick your hobbies and say hi."
+
+msgid "landing_final_title"
+msgstr "Your next plan <span class=\"go\">is already talking</span>"
+
+msgid "landing_hero_lead"
+msgstr "Channels with people from your province, your age range and your hobbies. When a plan comes up, start a group and sort it out in private."
+
+msgid "landing_hero_title"
+msgstr "Talk to people <span class=\"meet\">near you</span>. Then <span class=\"go\">meet up</span>."
+
+msgid "landing_how_k"
+msgstr "How it works"
+
+msgid "landing_how_title"
+msgstr "From chat to plan in three steps"
+
+msgid "landing_more_k"
+msgstr "And also"
+
+msgid "landing_more_title"
+msgstr "A good atmosphere is no accident"
+
+msgid "landing_nav_download"
+msgstr "Download"
+
+msgid "landing_nav_faq"
+msgstr "FAQ"
+
+msgid "landing_nav_features"
+msgstr "Features"
+
+msgid "landing_nav_how"
+msgstr "How it works"
+
+msgid "landing_nav_prices"
+msgstr "Pricing"
+
+msgid "landing_pr_btn"
+msgstr "Start the trial"
+
+msgid "landing_pr_eq"
+msgstr "Works out at €2.08 a month"
+
+msgid "landing_pr_k"
+msgstr "Pricing"
+
+msgid "landing_pr_l1"
+msgstr "7-day free trial"
+
+msgid "landing_pr_l2"
+msgstr "Channels, groups and direct messages"
+
+msgid "landing_pr_l3"
+msgstr "Cancel any time"
+
+msgid "landing_pr_m"
+msgstr "Monthly"
+
+msgid "landing_pr_month"
+msgstr "/month"
+
+msgid "landing_pr_note"
+msgstr "Pay by card (Stripe) on the web or with Google Play in the app. Prices include VAT."
+
+msgid "landing_pr_p"
+msgstr "Every feature in both plans. 7-day free trial and cancel any time."
+
+msgid "landing_pr_save"
+msgstr "Save 17%"
+
+msgid "landing_pr_title"
+msgstr "Less than a coffee a month"
+
+msgid "landing_pr_y"
+msgstr "Yearly"
+
+msgid "landing_pr_year"
+msgstr "/year"
+
+msgid "landing_promo_badge"
+msgstr "Launch campaign"
+
+msgid "landing_promo_copied"
+msgstr "Copied!"
+
+msgid "landing_promo_copy"
+msgstr "Copy"
+
+msgid "landing_promo_cta"
+msgstr "Get my free year"
+
+msgid "landing_promo_eyebrow"
+msgstr "Launch · {left} free places left"
+
+msgid "landing_promo_left"
+msgstr "places left"
+
+msgid "landing_promo_of"
+msgstr "of {max}"
+
+msgid "landing_promo_text"
+msgstr "Create your account with the code and pay nothing for a whole year. Only for the first"
+
+msgid "landing_promo_text2"
+msgstr "accounts."
+
+msgid "landing_promo_title"
+msgstr "<span class=\"sunt\">1 year free</span> for the first accounts"
+
+msgid "landing_q0"
+msgstr "How much does it cost?"
+
+msgid "landing_q1"
+msgstr "How much does it cost?"
+
+msgid "landing_q2"
+msgstr "How do I get the free year?"
+
+msgid "landing_q3"
+msgstr "What happens when the free year ends?"
+
+msgid "landing_q4"
+msgstr "Who sees my phone number?"
+
+msgid "landing_q5"
+msgstr "Is there a minimum age?"
+
+msgid "landing_q6"
+msgstr "Which cities does it work in?"
+
+msgid "landing_q7"
+msgstr "How do I cancel?"
+
+msgid "landing_q8"
+msgstr "Is there an app for Android and iPhone?"
+
+msgid "landing_s1_p"
+msgstr "Hiking, padel, cinema, coffee… Each hobby is a channel with people from your province and age range."
+
+msgid "landing_s1_t"
+msgstr "Pick your hobbies"
+
+msgid "landing_s2_p"
+msgstr "Reply in threads to keep things tidy, mention anyone and react without flooding the chat."
+
+msgid "landing_s2_t"
+msgstr "Chat in your channels"
+
+msgid "landing_s3_p"
+msgstr "Create a private group, invite whoever is in and sort out cars, times and photos without the noise."
+
+msgid "landing_s3_t"
+msgstr "Plan it in a group"
+
+msgid "landing_signin"
+msgstr "Sign in"
+
+msgid "landing_skip"
+msgstr "Skip to content"
+
+msgid "landing_strip_devices"
+msgstr "Web, Android and iPhone"
+
+msgid "landing_strip_mod"
+msgstr "Active moderation"
+
+msgid "landing_strip_phone"
+msgstr "Your phone number stays hidden"
+
+msgid "landing_strip_zone"
+msgstr "Your province and age range"
+
+msgid "landing_t1_p"
+msgstr "Insults, spam and phone numbers posted in public are removed on their own."
+
+msgid "landing_t1_t"
+msgstr "Automatic moderation"
+
+msgid "landing_t2_p"
+msgstr "Report a message in two taps; moderators can silence or remove people."
+
+msgid "landing_t2_t"
+msgstr "Reports and moderators"
+
+msgid "landing_t3_p"
+msgstr "When a channel gets too busy, its moderators set the pace."
+
+msgid "landing_t3_t"
+msgstr "Slow mode"
+
+msgid "landing_t4_p"
+msgstr "Everything, mentions only or nothing, per conversation. Mute what you don't want to hear."
+
+msgid "landing_t4_t"
+msgstr "Alerts your way"
+
+msgid "landing_t5_p"
+msgstr "Find that message with the meeting time across all your conversations."
+
+msgid "landing_t5_t"
+msgstr "Search"
+
+msgid "landing_t6_p"
+msgstr "Share the summit photo, the route track or the booking PDF."
+
+msgid "landing_t6_t"
+msgstr "Photos and files"
+
+msgid "landing_web_k"
+msgstr "On your computer too"
+
+msgid "landing_web_p"
+msgstr "On a big screen you see the list, the channel and the thread or the members at the same time."
+
+msgid "landing_web_title"
+msgstr "All your conversations at a glance"

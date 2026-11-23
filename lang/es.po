@@ -1,3 +1,4 @@
+# MeetGo translations: Spanish. Translated from en.po, the source language (see lang/README.md).
 msgid ""
 msgstr ""
 "Language: es\n"
@@ -2448,3 +2449,381 @@ msgstr "Ya has corregido tu fecha de nacimiento una vez."
 
 msgid "ui_zone_hint"
 msgstr "Tus canales son los de tu provincia y tu franja de edad. Si cambias la provincia o la fecha de nacimiento, pasas a los canales de la nueva zona."
+
+msgid "landing_a0"
+msgstr "Nada. MeetGo es gratis: crea tu cuenta y úsala sin límites, sin tarjeta."
+
+msgid "landing_a1"
+msgstr "2,50 € al mes o 25 € al año, con 7 días de prueba gratis. Las dos opciones incluyen todo."
+
+msgid "landing_a2"
+msgstr "Crea tu cuenta con el código LANZAMIENTO mientras queden plazas. Es solo para las 50 primeras cuentas y no te pedimos tarjeta."
+
+msgid "landing_a3"
+msgstr "Tu cuenta pasa a modo lectura hasta que te suscribas: puedes leer tus conversaciones, pero no escribir. No se borra nada."
+
+msgid "landing_a4"
+msgstr "Nadie. Tu teléfono no aparece en tu perfil y los mensajes que comparten números en los canales se retiran automáticamente."
+
+msgid "landing_a5"
+msgstr "Sí, MeetGo es para mayores de 18 años. Los canales se agrupan por rango de edad: 18-30, 31-50 y más de 50."
+
+msgid "landing_a6"
+msgstr "En todas las provincias de España. Tus canales son los de tu provincia y tu rango de edad, uno por cada afición que elijas."
+
+msgid "landing_a7"
+msgstr "Desde tu cuenta en MeetGo si pagas con tarjeta, o desde Google Play si te suscribiste en la app. Sigues teniendo acceso hasta el final del periodo pagado."
+
+msgid "landing_a8"
+msgstr "En Android, descarga la app. En iPhone, abre meetgo.app/app en Safari y añádela a la pantalla de inicio."
+
+msgid "landing_cta_how"
+msgstr "Ver cómo funciona"
+
+msgid "landing_cta_register"
+msgstr "Crear cuenta"
+
+msgid "landing_dl_android_btn"
+msgstr "Descargar APK"
+
+msgid "landing_dl_android_p"
+msgstr "La app con notificaciones al instante y respuesta rápida. Descarga el APK e instálalo."
+
+msgid "landing_dl_build"
+msgstr "Versión {version}"
+
+msgid "landing_dl_k"
+msgstr "Descarga"
+
+msgid "landing_dl_play_btn"
+msgstr "Próximamente"
+
+msgid "landing_dl_play_p"
+msgstr "Estamos preparando la ficha en la tienda. Con tu cuenta de MeetGo podrás seguir donde lo dejaste."
+
+msgid "landing_dl_soon"
+msgstr "Muy pronto"
+
+msgid "landing_dl_soon2"
+msgstr "Próximamente"
+
+msgid "landing_dl_title"
+msgstr "Contigo en el móvil y en el ordenador"
+
+msgid "landing_dl_web_btn"
+msgstr "Abrir MeetGo"
+
+msgid "landing_dl_web_p"
+msgstr "Abre MeetGo en el navegador. En iPhone, toca Compartir y «Añadir a pantalla de inicio» para tenerla como una app."
+
+msgid "landing_dl_web_t"
+msgstr "iPhone y web"
+
+msgid "landing_eyebrow"
+msgstr "Chat por provincia, edad e intereses"
+
+msgid "landing_f1_k"
+msgstr "Canales de tu zona"
+
+msgid "landing_f1_l1"
+msgstr "Hilos con resumen de respuestas y participantes"
+
+msgid "landing_f1_l2"
+msgstr "Menciones con bandeja propia y aviso solo cuando te nombran"
+
+msgid "landing_f1_l3"
+msgstr "Separador de mensajes nuevos y botón para ir al último"
+
+msgid "landing_f1_l4"
+msgstr "Reacciones, respuestas citadas y mensajes fijados"
+
+msgid "landing_f1_p"
+msgstr "Cada tema tiene su hilo y la conversación principal queda limpia. Ves lo que te has perdido sin hacer scroll infinito."
+
+msgid "landing_f1_t"
+msgstr "Muchos hablando a la vez, todo legible"
+
+msgid "landing_f2_k"
+msgstr "Grupos privados"
+
+msgid "landing_f2_l1"
+msgstr "Enlaces de invitación y roles de administración"
+
+msgid "landing_f2_l2"
+msgstr "Fotos y archivos de hasta 10 MB"
+
+msgid "landing_f2_l3"
+msgstr "Confirmación de lectura para saber quién lo ha visto"
+
+msgid "landing_f2_l4"
+msgstr "Silencia o fija los grupos que quieras"
+
+msgid "landing_f2_p"
+msgstr "Crea un grupo con tus amigos o comparte un enlace de invitación con quien se apuntó en el canal."
+
+msgid "landing_f2_t"
+msgstr "Del «me apunto» al plan cerrado"
+
+msgid "landing_f3_k"
+msgstr "Mensajes directos"
+
+msgid "landing_f3_l1"
+msgstr "Notificaciones al instante, con respuesta rápida en Android"
+
+msgid "landing_f3_l2"
+msgstr "Indicador de «escribiendo» y de quién está en línea"
+
+msgid "landing_f3_l3"
+msgstr "Tu número de teléfono nunca se muestra"
+
+msgid "landing_f3_p"
+msgstr "Con tus amigos hablas al momento. Con el resto, primero llega una solicitud, y solo si esa persona acepta mensajes directos."
+
+msgid "landing_f3_t"
+msgstr "Por privado, cuando los dos queréis"
+
+msgid "landing_f_app"
+msgstr "Abrir la app"
+
+msgid "landing_f_contact"
+msgstr "Contacto:"
+
+msgid "landing_f_privacy"
+msgstr "Privacidad"
+
+msgid "landing_f_terms"
+msgstr "Términos"
+
+msgid "landing_faq_k"
+msgstr "Preguntas"
+
+msgid "landing_faq_title"
+msgstr "Lo que suele preguntarse"
+
+msgid "landing_feat_k"
+msgstr "Funciones"
+
+msgid "landing_feat_p"
+msgstr "Los canales grandes se leen bien, los grupos son tuyos y los mensajes directos llegan al momento."
+
+msgid "landing_feat_title"
+msgstr "Pensada para chatear con mucha gente sin perderte"
+
+msgid "landing_final_p"
+msgstr "Entra, elige tus aficiones y saluda."
+
+msgid "landing_final_title"
+msgstr "Tu próximo plan <span class=\"go\">ya está hablando</span>"
+
+msgid "landing_hero_lead"
+msgstr "Canales con personas de tu provincia, tu edad y tus aficiones. Cuando surge el plan, creáis un grupo y lo cerráis por privado."
+
+msgid "landing_hero_title"
+msgstr "Habla con gente <span class=\"meet\">de tu zona</span>. Y <span class=\"go\">quedad</span>."
+
+msgid "landing_how_k"
+msgstr "Cómo funciona"
+
+msgid "landing_how_title"
+msgstr "De la conversación al plan, en tres pasos"
+
+msgid "landing_more_k"
+msgstr "Y además"
+
+msgid "landing_more_title"
+msgstr "Un buen ambiente no es casualidad"
+
+msgid "landing_nav_download"
+msgstr "Descarga"
+
+msgid "landing_nav_faq"
+msgstr "Preguntas"
+
+msgid "landing_nav_features"
+msgstr "Funciones"
+
+msgid "landing_nav_how"
+msgstr "Cómo funciona"
+
+msgid "landing_nav_prices"
+msgstr "Precios"
+
+msgid "landing_pr_btn"
+msgstr "Empezar la prueba"
+
+msgid "landing_pr_eq"
+msgstr "Sale a 2,08 € al mes"
+
+msgid "landing_pr_k"
+msgstr "Precios"
+
+msgid "landing_pr_l1"
+msgstr "7 días de prueba gratis"
+
+msgid "landing_pr_l2"
+msgstr "Canales, grupos y mensajes directos"
+
+msgid "landing_pr_l3"
+msgstr "Cancela cuando quieras"
+
+msgid "landing_pr_m"
+msgstr "Mensual"
+
+msgid "landing_pr_month"
+msgstr "/mes"
+
+msgid "landing_pr_note"
+msgstr "Pago con tarjeta (Stripe) en la web o con Google Play en la app. Precios con IVA incluido."
+
+msgid "landing_pr_p"
+msgstr "Todas las funciones en los dos planes. 7 días de prueba gratis y cancelas cuando quieras."
+
+msgid "landing_pr_save"
+msgstr "Ahorra un 17 %"
+
+msgid "landing_pr_title"
+msgstr "Menos que un café al mes"
+
+msgid "landing_pr_y"
+msgstr "Anual"
+
+msgid "landing_pr_year"
+msgstr "/año"
+
+msgid "landing_promo_badge"
+msgstr "Campaña de lanzamiento"
+
+msgid "landing_promo_copied"
+msgstr "¡Copiado!"
+
+msgid "landing_promo_copy"
+msgstr "Copiar"
+
+msgid "landing_promo_cta"
+msgstr "Quiero mi año gratis"
+
+msgid "landing_promo_eyebrow"
+msgstr "Lanzamiento · quedan {left} plazas gratis"
+
+msgid "landing_promo_left"
+msgstr "plazas libres"
+
+msgid "landing_promo_of"
+msgstr "de {max}"
+
+msgid "landing_promo_text"
+msgstr "Crea tu cuenta con el código y no pagas nada durante un año. Solo para las primeras"
+
+msgid "landing_promo_text2"
+msgstr "cuentas."
+
+msgid "landing_promo_title"
+msgstr "<span class=\"sunt\">1 año gratis</span> para las primeras cuentas"
+
+msgid "landing_q0"
+msgstr "¿Cuánto cuesta?"
+
+msgid "landing_q1"
+msgstr "¿Cuánto cuesta?"
+
+msgid "landing_q2"
+msgstr "¿Cómo consigo el año gratis?"
+
+msgid "landing_q3"
+msgstr "¿Qué pasa cuando acaba el año gratis?"
+
+msgid "landing_q4"
+msgstr "¿Quién ve mi teléfono?"
+
+msgid "landing_q5"
+msgstr "¿Hay edad mínima?"
+
+msgid "landing_q6"
+msgstr "¿En qué ciudades funciona?"
+
+msgid "landing_q7"
+msgstr "¿Cómo cancelo?"
+
+msgid "landing_q8"
+msgstr "¿Hay app para Android y para iPhone?"
+
+msgid "landing_s1_p"
+msgstr "Senderismo, pádel, cine, café… Cada afición es un canal con gente de tu provincia y tu rango de edad."
+
+msgid "landing_s1_t"
+msgstr "Elige tus aficiones"
+
+msgid "landing_s2_p"
+msgstr "Responde en hilos para no perder el hilo, menciona a quien quieras y reacciona sin llenar el chat."
+
+msgid "landing_s2_t"
+msgstr "Conversa en tus canales"
+
+msgid "landing_s3_p"
+msgstr "Crea un grupo privado, invita a quien se apunta y organizad coches, horas y fotos sin ruido."
+
+msgid "landing_s3_t"
+msgstr "Monta el plan en un grupo"
+
+msgid "landing_signin"
+msgstr "Entrar"
+
+msgid "landing_skip"
+msgstr "Saltar al contenido"
+
+msgid "landing_strip_devices"
+msgstr "Web, Android e iPhone"
+
+msgid "landing_strip_mod"
+msgstr "Moderación activa"
+
+msgid "landing_strip_phone"
+msgstr "Tu teléfono no se muestra"
+
+msgid "landing_strip_zone"
+msgstr "Tu provincia y tu rango de edad"
+
+msgid "landing_t1_p"
+msgstr "Los insultos, el spam y los teléfonos compartidos en abierto se retiran solos."
+
+msgid "landing_t1_t"
+msgstr "Moderación automática"
+
+msgid "landing_t2_p"
+msgstr "Denuncia un mensaje en dos toques; los moderadores pueden silenciar o expulsar."
+
+msgid "landing_t2_t"
+msgstr "Denuncias y moderadores"
+
+msgid "landing_t3_p"
+msgstr "Cuando un canal se anima demasiado, sus moderadores marcan el ritmo."
+
+msgid "landing_t3_t"
+msgstr "Modo lento"
+
+msgid "landing_t4_p"
+msgstr "Todo, solo menciones o nada, por conversación. Silencia lo que no quieras oír."
+
+msgid "landing_t4_t"
+msgstr "Avisos a tu medida"
+
+msgid "landing_t5_p"
+msgstr "Encuentra aquel mensaje con la hora de la quedada en todas tus conversaciones."
+
+msgid "landing_t5_t"
+msgstr "Búsqueda"
+
+msgid "landing_t6_p"
+msgstr "Comparte la foto de la cumbre, el track de la ruta o el PDF de la reserva."
+
+msgid "landing_t6_t"
+msgstr "Fotos y archivos"
+
+msgid "landing_web_k"
+msgstr "También en el ordenador"
+
+msgid "landing_web_p"
+msgstr "En la pantalla grande ves la lista, el canal y el hilo o los miembros a la vez."
+
+msgid "landing_web_title"
+msgstr "Todas tus conversaciones de un vistazo"

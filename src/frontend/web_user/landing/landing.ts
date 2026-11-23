@@ -1,5 +1,7 @@
 // MeetGo public pages: language switch, launch-campaign counter, Android download state and reveal on scroll.
 
+import { translate } from "@lang";
+
 type Promo = { code: string; duration: string; max: number | null; left: number | null; expires_on: string | null };
 
 function apiBase(): string {
@@ -15,97 +17,23 @@ const API = apiBase();
 
 // ---------- language ----------
 
-const EN: Record<string, string> = {
-  skip: "Skip to content",
-  nav_how: "How it works", nav_features: "Features", nav_prices: "Pricing", nav_download: "Download", nav_faq: "FAQ",
-  signin: "Sign in",
-  eyebrow: "Chat by province, age and interests",
-  hero_title: 'Talk to people <span class="meet">near you</span>. Then <span class="go">meet up</span>.',
-  hero_lead: "Channels with people from your province, your age range and your hobbies. When a plan comes up, start a group and sort it out in private.",
-  cta_register: "Create account", cta_how: "See how it works",
-  strip_zone: "Your province and age range", strip_mod: "Active moderation", strip_phone: "Your phone number stays hidden",
-  strip_devices: "Web, Android and iPhone",
-  promo_badge: "Launch campaign",
-  promo_title: '<span class="sunt">1 year free</span> for the first accounts',
-  promo_text: "Create your account with the code and pay nothing for a whole year. Only for the first",
-  promo_text2: "accounts.",
-  promo_copy: "Copy", promo_copied: "Copied!", promo_left: "places left", promo_of: "of {max}",
-  promo_cta: "Get my free year", promo_eyebrow: "Launch · {left} free places left",
-  how_k: "How it works", how_title: "From chat to plan in three steps",
-  s1_t: "Pick your hobbies", s1_p: "Hiking, padel, cinema, coffee… Each hobby is a channel with people from your province and age range.",
-  s2_t: "Chat in your channels", s2_p: "Reply in threads to keep things tidy, mention anyone and react without flooding the chat.",
-  s3_t: "Plan it in a group", s3_p: "Create a private group, invite whoever is in and sort out cars, times and photos without the noise.",
-  feat_k: "Features", feat_title: "Made for chatting with lots of people without getting lost",
-  feat_p: "Big channels stay readable, groups are yours and direct messages arrive instantly.",
-  f1_k: "Local channels", f1_t: "Many voices at once, all readable",
-  f1_p: "Every topic gets its own thread and the main conversation stays clean. Catch up on what you missed without endless scrolling.",
-  f1_l1: "Threads with a summary of replies and participants", f1_l2: "Mentions with their own inbox, and alerts only when someone names you",
-  f1_l3: "A new-messages divider and a button to jump to the latest", f1_l4: "Reactions, quoted replies and pinned messages",
-  f2_k: "Private groups", f2_t: "From “count me in” to a done deal",
-  f2_p: "Create a group with your friends or share an invitation link with whoever signed up in the channel.",
-  f2_l1: "Invitation links and admin roles", f2_l2: "Photos and files up to 10 MB", f2_l3: "Read receipts to know who has seen it",
-  f2_l4: "Mute or pin any group",
-  f3_k: "Direct messages", f3_t: "In private, when you both want it",
-  f3_p: "With friends you chat right away. With anyone else a request comes first, and only if they accept direct messages.",
-  f3_l1: "Instant notifications, with quick reply on Android", f3_l2: "See who is typing and who is online",
-  f3_l3: "Your phone number is never shown",
-  more_k: "And also", more_title: "A good atmosphere is no accident",
-  t1_t: "Automatic moderation", t1_p: "Insults, spam and phone numbers posted in public are removed on their own.",
-  t2_t: "Reports and moderators", t2_p: "Report a message in two taps; moderators can silence or remove people.",
-  t3_t: "Slow mode", t3_p: "When a channel gets too busy, its moderators set the pace.",
-  t4_t: "Alerts your way", t4_p: "Everything, mentions only or nothing, per conversation. Mute what you don't want to hear.",
-  t5_t: "Search", t5_p: "Find that message with the meeting time across all your conversations.",
-  t6_t: "Photos and files", t6_p: "Share the summit photo, the route track or the booking PDF.",
-  web_k: "On your computer too", web_title: "All your conversations at a glance",
-  web_p: "On a big screen you see the list, the channel and the thread or the members at the same time.",
-  dl_k: "Download", dl_title: "With you on your phone and your computer",
-  dl_android_p: "The app with instant notifications and quick reply. Download the APK and install it.",
-  dl_soon: "Coming very soon", dl_android_btn: "Download APK", dl_build: "Version {version}",
-  dl_play_p: "We are preparing the store listing. With your MeetGo account you will pick up where you left off.",
-  dl_soon2: "Coming soon", dl_play_btn: "Coming soon",
-  dl_web_t: "iPhone and web",
-  dl_web_p: "Open MeetGo in your browser. On iPhone, tap Share and “Add to Home Screen” to keep it like an app.",
-  dl_web_btn: "Open MeetGo",
-  pr_k: "Pricing", pr_title: "Less than a coffee a month",
-  pr_p: "Every feature in both plans. 7-day free trial and cancel any time.",
-  pr_m: "Monthly", pr_month: "/month", pr_y: "Yearly", pr_year: "/year", pr_save: "Save 17%", pr_eq: "Works out at €2.08 a month",
-  pr_l1: "7-day free trial", pr_l2: "Channels, groups and direct messages", pr_l3: "Cancel any time", pr_btn: "Start the trial",
-  pr_note: "Pay by card (Stripe) on the web or with Google Play in the app. Prices include VAT.",
-  faq_k: "FAQ", faq_title: "What people usually ask",
-  q0: "How much does it cost?", a0: "Nothing. MeetGo is free: create your account and use it without limits, no card needed.",
-  q1: "How much does it cost?", a1: "€2.50 a month or €25 a year, with a 7-day free trial. Both options include everything.",
-  q2: "How do I get the free year?", a2: "Create your account with the code LANZAMIENTO while places last. It is only for the first 50 accounts and we don't ask for a card.",
-  q3: "What happens when the free year ends?", a3: "Your account becomes read-only until you subscribe: you can read your conversations but not write. Nothing is deleted.",
-  q4: "Who sees my phone number?", a4: "Nobody. Your number is not on your profile, and messages sharing numbers in channels are removed automatically.",
-  q5: "Is there a minimum age?", a5: "Yes, MeetGo is for people over 18. Channels are grouped by age range: 18-30, 31-50 and over 50.",
-  q6: "Which cities does it work in?", a6: "Every province in Spain. Your channels are those of your province and age range, one for each hobby you choose.",
-  q7: "How do I cancel?", a7: "From your MeetGo account if you pay by card, or from Google Play if you subscribed in the app. You keep access until the end of the paid period.",
-  q8: "Is there an app for Android and iPhone?", a8: "On Android, download the app. On iPhone, open meetgo.app/app in Safari and add it to your Home Screen.",
-  final_title: 'Your next plan <span class="go">is already talking</span>', final_p: "Come in, pick your hobbies and say hi.",
-  f_privacy: "Privacy", f_terms: "Terms", f_app: "Open the app", f_contact: "Contact:",
-};
-const ES_EXTRA: Record<string, string> = {
-  promo_copied: "¡Copiado!", promo_of: "de {max}", promo_eyebrow: "Lanzamiento · quedan {left} plazas gratis",
-  dl_build: "Versión {version}",
-};
 
-let lang: "es" | "en" = "es";
-const original = new Map<Element, string>();
+
+
+// The page is written in English; every language (English included) comes from lang/<lang>.po as landing_<key>.
+let lang: "es" | "en" = "en";
 
 function tr(key: string, vars: Record<string, string | number> = {}): string {
-  const fromDom = [...original.entries()].find(([el]) => (el as HTMLElement).dataset.i18n === key)?.[1];
-  let s = lang === "en" ? (EN[key] ?? fromDom ?? key) : (ES_EXTRA[key] ?? fromDom ?? key);
-  for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, String(v));
-  return s;
+  return translate(lang, `landing_${key}`, vars);
 }
 
 function applyLang(next: "es" | "en") {
   lang = next;
   document.documentElement.lang = next;
   document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
-    if (!original.has(el)) original.set(el, el.innerHTML);
     const key = el.dataset.i18n!;
-    el.innerHTML = next === "en" && EN[key] ? EN[key] : original.get(el)!;
+    const text = translate(next, `landing_${key}`);
+    if (text !== `landing_${key}`) el.innerHTML = text;
   });
   document.querySelectorAll<HTMLButtonElement>("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
   try { localStorage.setItem("meetgo.lang", next); } catch { /* private mode */ }
@@ -267,13 +195,12 @@ function setupTopBar() {
 
 function init() {
   setText("year", String(new Date().getFullYear()));
-  document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => original.set(el, el.innerHTML));
   document.querySelectorAll<HTMLButtonElement>("[data-lang]").forEach((b) =>
     b.addEventListener("click", () => applyLang(b.dataset.lang === "en" ? "en" : "es")));
   let saved: string | null = null;
   try { saved = localStorage.getItem("meetgo.lang"); } catch { /* private mode */ }
-  const prefersEn = !saved && navigator.language && !navigator.language.toLowerCase().startsWith("es");
-  if (saved === "en" || prefersEn) applyLang("en");
+  const prefersEs = !saved && !!navigator.language && navigator.language.toLowerCase().startsWith("es");
+  applyLang(saved === "es" || prefersEs ? "es" : "en");
   setupTopBar();
   setupReveal();
   setupCopy();
