@@ -282,6 +282,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           <span className="grow" />
           {!c.joined ? <span className="phoneonly"><JoinButton c={c} onChange={setC} big /></span> : null}
         </div>
+        {c.ban_until ? <div className="bannedbar"><Icon name="shield" size="sm" />{t("ui_you_are_banned", { until: fmtUntil(c.ban_until) })}</div> : null}
         <div className="segtabs ctabs" role="tablist">
           {tabs.map(([k, label]) => (
             <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? "on" : ""} onClick={() => navigate(communityPath(id, k), true)}>{label}</button>
@@ -363,6 +364,16 @@ function CommunityChat({ c, onJoined }: { c: Community; onJoined: (c: Community)
   return <div className="embedchat"><ChatView key={c.conversation_id} conversationId={c.conversation_id} around={null} embedded /></div>;
 }
 
+/** "Mon 24, 18:30" in the person's language, for the end of a ban. */
+export function fmtUntil(iso: string | null | undefined): string {
+  if (!iso) return "";
+  try {
+    return new Date(iso).toLocaleString(undefined, { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  } catch {
+    return iso;
+  }
+}
+
 function Members({ c, onChange }: { c: Community; onChange: () => void }) {
   const me = useStore((s) => s.me);
   const [q, setQ] = useState("");
@@ -373,7 +384,10 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
   // MeetGo's administrators manage every community as if they were its owner.
   const globalAdmin = me?.role === "admin";
   const staff = globalAdmin || (!!c.role && STAFF_ROLES.includes(c.role));
+  // Invitations, join requests and lifting bans: owner and admins (people linked to bot-admin).
+  const isAdmin = globalAdmin || c.role === "owner" || c.role === "admin";
   const myRank = me?.role === "admin" ? 4 : RANK[c.role || "member"] ?? 0;
+  const [bans, setBans] = useState<{ user: UserSummary; forever: boolean; until: string | null; strikes: number }[]>([]);
 
   const load = useCallback(() => {
     api.communityMembers(c.id, q.trim()).then(setList).catch(() => setList([]));
@@ -383,9 +397,38 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
     return () => window.clearTimeout(id);
   }, [load, q]);
   const loadRequests = useCallback(() => {
-    if (staff) api.communityRequests(c.id).then(setRequests).catch(() => setRequests([]));
-  }, [c.id, staff]);
+    if (isAdmin) api.communityRequests(c.id).then(setRequests).catch(() => setRequests([]));
+  }, [c.id, isAdmin]);
   useEffect(loadRequests, [loadRequests]);
+  const loadBans = useCallback(() => {
+    if (staff) api.communityBans(c.id).then(setBans).catch(() => setBans([]));
+  }, [c.id, staff]);
+  useEffect(loadBans, [loadBans]);
+
+  async function banFor(m: { id: number; display_name: string }, hours: number | null) {
+    const ask = hours ? t("ui_ban_confirm_hours", { name: m.display_name, hours }) : `${t("ui_community_ban_member")}: ${m.display_name}\n${t("ui_community_ban_hint")}`;
+    if (!window.confirm(ask)) return;
+    try {
+      await api.banCommunityMember(c.id, m.id, hours);
+      toast(t("ui_banned_toast", { name: m.display_name }));
+      load();
+      loadBans();
+      onChange();
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
+  async function unban(m: { id: number; display_name: string }) {
+    try {
+      await api.unbanCommunityMember(c.id, m.id);
+      toast(t("ui_unbanned_toast", { name: m.display_name }));
+      load();
+      loadBans();
+      onChange();
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
 
   async function resolve(userId: number, accept: boolean) {
     try {
@@ -431,13 +474,13 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
     }
   }
 
-  const sorted = useMemo(() => [...(list || [])].sort((a, b) => (RANK[b.role] ?? 0) - (RANK[a.role] ?? 0) || Number(b.online) - Number(a.online) || a.display_name.localeCompare(b.display_name)), [list]);
+  const sorted = useMemo(() => [...(list || [])].sort((a, b) => Number(!!b.bot) - Number(!!a.bot) || (RANK[b.role] ?? 0) - (RANK[a.role] ?? 0) || Number(b.online) - Number(a.online) || a.display_name.localeCompare(b.display_name)), [list]);
   // Owner names admins; owner and admins name moderators; only above someone's rank can you change or remove them.
-  const roleOptions = (m: CommunityMember) => (globalAdmin || c.role === "owner" ? ["admin", "moderator", "member"] : c.role === "admin" ? ["moderator", "member"] : []).filter(() => m.id !== me?.id && (RANK[m.role] ?? 0) < myRank);
+  const roleOptions = (m: CommunityMember) => (globalAdmin || c.role === "owner" ? ["admin", "moderator", "member"] : c.role === "admin" ? ["moderator", "member"] : []).filter(() => !m.bot && m.id !== me?.id && (RANK[m.role] ?? 0) < myRank);
 
   return (
     <div className="swrap stack" style={{ gap: 14 }}>
-      {staff && requests.length ? (
+      {isAdmin && requests.length ? (
         <section className="box">
           <h3 className="boxtitle">{t("ui_community_requests_n", { n: requests.length })}</h3>
           <div className="plist">
@@ -452,7 +495,25 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
           </div>
         </section>
       ) : null}
-      {staff ? (
+      {staff && bans.length ? (
+        <section className="box">
+          <h3 className="boxtitle">{t("ui_bans_title", { n: bans.length })}</h3>
+          <div className="plist">
+            {bans.map((b) => (
+              <div key={b.user.id} className="item">
+                <Avatar user={b.user} size={36} />
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: 600 }}>{b.user.display_name}</div>
+                  <div className="banned-note">{b.forever ? t("ui_banned_forever") : t("ui_banned_until", { until: fmtUntil(b.until) })}</div>
+                </div>
+                {isAdmin ? <button className="btn sm" onClick={() => unban(b.user)}>{t("ui_unban")}</button> : null}
+              </div>
+            ))}
+          </div>
+          {!isAdmin ? <p className="muted" style={{ margin: "6px 0 0", fontSize: 12.5 }}>{t("ui_unban_admins_only")}</p> : null}
+        </section>
+      ) : null}
+      {isAdmin ? (
         <section className="box stack">
           <h3 className="boxtitle">{t("ui_invite_link")}</h3>
           <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_invite_hint")}</p>
@@ -475,18 +536,26 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
         <div className="plist">
           {sorted.map((m) => {
             const opts = roleOptions(m);
-            const canRemove = staff && m.id !== me?.id && (RANK[m.role] ?? 0) < myRank;
+            const canRemove = staff && !m.bot && m.id !== me?.id && (RANK[m.role] ?? 0) < myRank;
+            const linked = m.role === "admin" ? "@bot-admin" : m.role === "moderator" ? "@bot-moderator" : null;
             return (
-              <div key={m.id} className="item">
-                <Avatar user={m} size={36} online={m.online} />
+              <div key={m.id} className={"item" + (m.bot ? " botrow" : "")}>
+                {m.bot ? <span className="botav" aria-hidden="true">🤖</span> : <Avatar user={m} size={36} online={m.online} />}
                 <div className="grow" style={{ minWidth: 0 }}>
-                  <div className="row" style={{ gap: 6 }}>
-                    <span style={{ fontWeight: 600 }}>{m.display_name}</span>
+                  <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
+                    <span style={{ fontWeight: 600 }}>{m.bot ? "@" + m.display_name : m.display_name}</span>
+                    {m.bot ? <span className="role bot">{t("ui_bot_label")}</span> : null}
                     {m.role !== "member" ? <span className="role">{t(ROLE_KEYS[m.role])}</span> : null}
                   </div>
-                  <div className="muted" style={{ fontSize: 12 }}>{m.online ? t("ui_online") : t("ui_offline")}</div>
+                  <div className="muted" style={{ fontSize: 12 }}>
+                    {m.bot ? t(m.role === "admin" ? "ui_bot_admin_hint" : "ui_bot_moderator_hint")
+                      : m.ban_until ? <span className="banned-note">{t("ui_banned_until", { until: fmtUntil(m.ban_until) })}</span>
+                      : linked && !m.bot ? t("ui_bot_linked", { bot: linked })
+                      : m.online ? t("ui_online") : t("ui_offline")}
+                  </div>
                 </div>
-                {canRemove ? <button className="btn sm danger" onClick={() => remove(m, true)}><Icon name="shield" size="sm" />{t("ui_community_ban_short")}</button> : null}
+                {m.ban_until && isAdmin ? <button className="btn sm" onClick={() => unban(m)}>{t("ui_unban")}</button> : null}
+                {canRemove && !m.ban_until ? <button className="btn sm danger" onClick={() => setManage(m)}><Icon name="shield" size="sm" />{t("ui_ban_title")}</button> : null}
                 {opts.length || canRemove ? <button className="iconbtn" title={t("ui_community_manage")} aria-label={t("ui_community_manage")} onClick={() => setManage(m)}><Icon name="sliders" size="sm" /></button> : null}
               </div>
             );
@@ -506,10 +575,15 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
           ) : null}
           {manage.id !== me?.id && (RANK[manage.role] ?? 0) < myRank ? (
             <div className="stack" style={{ gap: 8 }}>
-              <button className="btn block" onClick={() => { remove(manage); setManage(null); }}><Icon name="door" size="sm" />{t("ui_community_remove_member")}</button>
-              <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_community_remove_hint")}</div>
-              <button className="btn danger block" onClick={() => { remove(manage, true); setManage(null); }}><Icon name="shield" size="sm" />{t("ui_community_ban_member")}</button>
+              <h4 className="boxtitle" style={{ margin: "6px 0 0" }}>{t("ui_ban_title")}</h4>
+              <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_ban_hint")}</div>
+              <div className="banbtns">
+                {[6, 24, 24 * 7].map((h) => <button key={h} className="btn" onClick={() => { banFor(manage, h); setManage(null); }}>{t(h === 6 ? "ui_ban_6h" : h === 24 ? "ui_ban_24h" : "ui_ban_7d")}</button>)}
+              </div>
+              <button className="btn danger block" onClick={() => { banFor(manage, null); setManage(null); }}><Icon name="shield" size="sm" />{t("ui_ban_forever")}</button>
               <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_community_ban_hint")}</div>
+              <button className="btn block" style={{ marginTop: 6 }} onClick={() => { remove(manage); setManage(null); }}><Icon name="door" size="sm" />{t("ui_community_remove_member")}</button>
+              <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_community_remove_hint")}</div>
             </div>
           ) : null}
         </Modal>

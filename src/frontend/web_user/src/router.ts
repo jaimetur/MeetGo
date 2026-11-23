@@ -13,7 +13,8 @@ export type Route =
   | { name: "mentions" }
   | { name: "account" }
   | { name: "share" }
-  | { name: "join"; code: string };
+  | { name: "join"; code: string }
+  | { name: "admin" };
 
 const BASE = "/app";
 const listeners = new Set<() => void>();
@@ -54,6 +55,7 @@ function parse(): Route {
     case "/mentions": return { name: "mentions" };
     case "/account": return { name: "account" };
     case "/share": return { name: "share" };
+    case "/admin": return { name: "admin" };
     default: return { name: "home" };
   }
 }

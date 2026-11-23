@@ -1064,6 +1064,39 @@ msgstr "消息为空"
 msgid "err_message_too_long"
 msgstr "消息太长"
 
+msgid "err_banned_until"
+msgstr "你在此社区被封禁至 {until}。"
+
+msgid "err_banned_for_now"
+msgstr "你暂时在此社区被封禁。"
+
+msgid "automod_rule_toxicity"
+msgstr "禁止辱骂和骚扰"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "社区内禁止发布电话号码"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "社区内禁止发布链接"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} 因违反规则被封禁 {hours} 小时：{rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} 因再次违反规则被永久封禁：{rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "你已被封禁 {hours} 小时"
+
+msgid "email_banned_hours_body"
+msgstr "你发布的内容违反了社区规则（{rule}）。在 {hours} 小时内你可以阅读但不能发言。如果再次违反，封禁时间会更长。"
+
+msgid "email_banned_forever_subject"
+msgstr "你已被社区封禁"
+
+msgid "email_banned_forever_body"
+msgstr "你再次违反了社区规则（{rule}），已被永久封禁。只有社区管理员可以解除封禁。"
+
 msgid "err_banned_here"
 msgstr "你不能在此会话中发言"
 
@@ -3793,6 +3826,135 @@ msgstr "驱逐出社区"
 
 msgid "ui_community_ban_short"
 msgstr "踢出"
+
+msgid "ui_ban_confirm_hours"
+msgstr "封禁 {name} {hours} 小时？对方可以阅读但不能发言。"
+
+msgid "ui_banned_toast"
+msgstr "{name} 已被封禁"
+
+msgid "ui_unbanned_toast"
+msgstr "已解除 {name} 的封禁"
+
+msgid "ui_bans_title"
+msgstr "已封禁（{n}）"
+
+msgid "ui_banned_forever"
+msgstr "永久封禁"
+
+msgid "ui_banned_until"
+msgstr "封禁至 {until}"
+
+msgid "ui_unban"
+msgstr "解除封禁"
+
+msgid "ui_unban_admins_only"
+msgstr "只有管理员可以解除封禁。"
+
+msgid "ui_bot_label"
+msgstr "机器人"
+
+msgid "ui_bot_admin_hint"
+msgstr "社区管理机器人：邀请、申请和封禁"
+
+msgid "ui_bot_moderator_hint"
+msgstr "审核机器人：自动执行规则"
+
+msgid "ui_bot_linked"
+msgstr "已关联 {bot}"
+
+msgid "ui_ban_title"
+msgstr "封禁"
+
+msgid "ui_ban_hint"
+msgstr "封禁期间可以阅读但不能发言。"
+
+msgid "ui_ban_6h"
+msgstr "6 小时"
+
+msgid "ui_ban_24h"
+msgstr "24 小时"
+
+msgid "ui_ban_7d"
+msgstr "7 天"
+
+msgid "ui_ban_forever"
+msgstr "永久"
+
+msgid "ui_you_are_banned"
+msgstr "你在此社区被封禁至 {until}：可以阅读但不能发言。"
+
+msgid "ui_admin_only"
+msgstr "只有 MeetGo 管理员可以查看。"
+
+msgid "ui_admin_reports"
+msgstr "审核"
+
+msgid "ui_admin_users"
+msgstr "用户"
+
+msgid "ui_admin_bots"
+msgstr "机器人账号"
+
+msgid "ui_nav_admin"
+msgstr "管理"
+
+msgid "ui_admin_panel"
+msgstr "完整面板"
+
+msgid "ui_admin_no_reports"
+msgstr "没有待处理的举报。"
+
+msgid "ui_admin_reported_by"
+msgstr "举报人：{name}"
+
+msgid "ui_admin_open"
+msgstr "打开"
+
+msgid "ui_admin_delete_content"
+msgstr "删除内容"
+
+msgid "ui_admin_dismiss"
+msgstr "忽略"
+
+msgid "ui_admin_search_users"
+msgstr "按名称、邮箱或电话搜索"
+
+msgid "ui_admin_role_admin"
+msgstr "MeetGo 管理员"
+
+msgid "ui_admin_blocked"
+msgstr "已封锁"
+
+msgid "ui_admin_remove_admin"
+msgstr "取消管理员"
+
+msgid "ui_admin_make_admin"
+msgstr "设为管理员"
+
+msgid "ui_admin_unblock"
+msgstr "解除封锁"
+
+msgid "ui_admin_block"
+msgstr "封锁账号"
+
+msgid "ui_admin_bots_hint"
+msgstr "使用机器人账号在任何社区中以它们的身份操作。通过顶部的提示返回你的账号。"
+
+msgid "ui_admin_automod_on"
+msgstr "规则自动审核：已开启"
+
+msgid "ui_admin_automod_off"
+msgstr "规则自动审核：已关闭（缺少 Claude API 密钥）"
+
+msgid "ui_admin_enter_as"
+msgstr "以 {name} 身份进入"
+
+msgid "ui_acting_as"
+msgstr "你正在使用账号 {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "返回我的账号"
 
 msgid "ui_community_ban_hint"
 msgstr "对方会被移出且不能再加入。"

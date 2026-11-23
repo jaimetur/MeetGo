@@ -41,6 +41,20 @@ communities of the new zone is up to the person (Explore); choosing interests st
 | `GET /communities/{id}/members` | `q?` | `[{...UserSummary, role, online}]` |
 | `PUT /communities/{id}/members/{user_id}/role` | owner/admin: `{role: "admin" \| "moderator" \| "member"}` | `{ok}` (only the owner names admins) |
 | `DELETE /communities/{id}/members/{user_id}` | staff | remove someone |
+| `POST /communities/{id}/members/{user_id}/ban` | staff: `{hours: int \| null}` | `{ok}`: banned for `hours` (reads, cannot write) or, with `null`, for good |
+| `POST /communities/{id}/members/{user_id}/unban` | owner/admin | `{ok}`: lifts a ban (only admins) |
+| `GET /communities/{id}/bans` | staff | `[{user, forever, until, strikes}]` |
+
+**Bots.** Every community has two bot accounts as members: `bot-admin` (role `admin`) and `bot-moderator` (role
+`moderator`); a database trigger adds them to new communities. Being "linked" to a bot is having its role: admins are
+linked to bot-admin, moderators to bot-moderator, and MeetGo's administrators to both everywhere. Bots are not counted
+in `member_count` and cannot be moderated. Invitations, join requests and lifting bans need owner or admin; banning
+needs moderator. Members carry `bot`, `ban_until` and `strikes`; `Community.ban_until` is set while I am banned.
+
+**Moderation bot.** With `ANTHROPIC_API_KEY`, what members write (chat, posts, comments) is checked with Claude against
+the rules; insults, phone numbers and links count too. Breaking a rule removes it and bans the author 6 h, then 24 h,
+then for good (`strikes` counts them); bot-moderator says so in the chat and the person gets a notification.
+Administrators: `GET /admin/bots`, `POST /admin/bots/{id}/session` (a session as the bot), `GET /admin/automod`.
 
 `Community`:
 ```json

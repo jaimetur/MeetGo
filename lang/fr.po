@@ -1063,6 +1063,39 @@ msgstr "Le message est vide"
 msgid "err_message_too_long"
 msgstr "Le message est trop long"
 
+msgid "err_banned_until"
+msgstr "Vous êtes banni de cette communauté jusqu'au {until}."
+
+msgid "err_banned_for_now"
+msgstr "Vous êtes banni de cette communauté pour le moment."
+
+msgid "automod_rule_toxicity"
+msgstr "Pas d'insultes ni de harcèlement"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "Pas de numéros de téléphone dans la communauté"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "Pas de liens dans la communauté"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} est banni pour {hours} heures pour avoir enfreint une règle : {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} est banni définitivement pour avoir de nouveau enfreint les règles : {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "Vous avez été banni pour {hours} heures"
+
+msgid "email_banned_hours_body"
+msgstr "Un de vos messages enfreint une règle de la communauté ({rule}). Pendant {hours} heures, vous pourrez lire mais pas écrire. Si cela se reproduit, le bannissement sera plus long."
+
+msgid "email_banned_forever_subject"
+msgstr "Vous avez été banni d'une communauté"
+
+msgid "email_banned_forever_body"
+msgstr "Vous avez de nouveau enfreint les règles de la communauté ({rule}) et vous avez été banni définitivement. Seul un admin de la communauté peut lever le bannissement."
+
 msgid "err_banned_here"
 msgstr "Tu ne peux pas écrire dans cette conversation"
 
@@ -3792,6 +3825,135 @@ msgstr "Exclure de la communauté"
 
 msgid "ui_community_ban_short"
 msgstr "Exclure"
+
+msgid "ui_ban_confirm_hours"
+msgstr "Bannir {name} pendant {hours} heures ? Il pourra lire mais pas écrire."
+
+msgid "ui_banned_toast"
+msgstr "{name} est banni"
+
+msgid "ui_unbanned_toast"
+msgstr "Bannissement levé pour {name}"
+
+msgid "ui_bans_title"
+msgstr "Bannis ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Banni définitivement"
+
+msgid "ui_banned_until"
+msgstr "Banni jusqu'au {until}"
+
+msgid "ui_unban"
+msgstr "Lever le bannissement"
+
+msgid "ui_unban_admins_only"
+msgstr "Seul un admin peut lever un bannissement."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Bot administrateur de la communauté : invitations, demandes et bannissements"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Bot modérateur : applique les règles automatiquement"
+
+msgid "ui_bot_linked"
+msgstr "Lié à {bot}"
+
+msgid "ui_ban_title"
+msgstr "Bannir"
+
+msgid "ui_ban_hint"
+msgstr "Pendant ce temps, il pourra lire mais pas écrire."
+
+msgid "ui_ban_6h"
+msgstr "6 heures"
+
+msgid "ui_ban_24h"
+msgstr "24 heures"
+
+msgid "ui_ban_7d"
+msgstr "7 jours"
+
+msgid "ui_ban_forever"
+msgstr "Définitif"
+
+msgid "ui_you_are_banned"
+msgstr "Vous êtes banni de cette communauté jusqu'au {until} : vous pouvez lire mais pas écrire."
+
+msgid "ui_admin_only"
+msgstr "Seuls les administrateurs de MeetGo peuvent voir ceci."
+
+msgid "ui_admin_reports"
+msgstr "Modération"
+
+msgid "ui_admin_users"
+msgstr "Utilisateurs"
+
+msgid "ui_admin_bots"
+msgstr "Comptes bot"
+
+msgid "ui_nav_admin"
+msgstr "Administration"
+
+msgid "ui_admin_panel"
+msgstr "Panneau complet"
+
+msgid "ui_admin_no_reports"
+msgstr "Aucun signalement en attente."
+
+msgid "ui_admin_reported_by"
+msgstr "Signalé par {name}"
+
+msgid "ui_admin_open"
+msgstr "Ouvrir"
+
+msgid "ui_admin_delete_content"
+msgstr "Supprimer le contenu"
+
+msgid "ui_admin_dismiss"
+msgstr "Ignorer"
+
+msgid "ui_admin_search_users"
+msgstr "Rechercher par nom, e-mail ou téléphone"
+
+msgid "ui_admin_role_admin"
+msgstr "Admin MeetGo"
+
+msgid "ui_admin_blocked"
+msgstr "Bloqué"
+
+msgid "ui_admin_remove_admin"
+msgstr "Retirer admin"
+
+msgid "ui_admin_make_admin"
+msgstr "Rendre admin"
+
+msgid "ui_admin_unblock"
+msgstr "Débloquer"
+
+msgid "ui_admin_block"
+msgstr "Bloquer le compte"
+
+msgid "ui_admin_bots_hint"
+msgstr "Utilisez les comptes bot pour agir en leur nom dans n'importe quelle communauté. Revenez à votre compte depuis l'avis en haut."
+
+msgid "ui_admin_automod_on"
+msgstr "Modération automatique des règles : activée"
+
+msgid "ui_admin_automod_off"
+msgstr "Modération automatique des règles : désactivée (clé de l'API Claude manquante)"
+
+msgid "ui_admin_enter_as"
+msgstr "Entrer en tant que {name}"
+
+msgid "ui_acting_as"
+msgstr "Vous utilisez le compte {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Revenir à mon compte"
 
 msgid "ui_community_ban_hint"
 msgstr "La personne part et ne pourra plus revenir."

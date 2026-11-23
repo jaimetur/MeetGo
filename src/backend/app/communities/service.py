@@ -2,6 +2,7 @@
 
 import re
 import unicodedata
+from datetime import timedelta
 
 from fastapi import HTTPException
 from sqlalchemy import and_, func, or_, select
@@ -34,7 +35,60 @@ def active(member: ConversationMember | None) -> bool:
 
 
 def staff_of(member: ConversationMember | None, user: User) -> bool:
+    """Owner, admins and moderators (people linked to bot-admin or bot-moderator), and MeetGo's administrators."""
     return user.role == "admin" or bool(active(member) and member.role in STAFF)
+
+
+def admin_of(member: ConversationMember | None, user: User) -> bool:
+    """Owner and admins (linked to bot-admin), and MeetGo's administrators: invitations, requests, lifting bans."""
+    return user.role == "admin" or bool(active(member) and member.role in ("owner", "admin"))
+
+
+def rank_of(member: ConversationMember | None, user: User) -> int:
+    """Lower is higher: MeetGo's administrators rank as owners."""
+    if user.role == "admin":
+        return 0
+    return ROLE_RANK.get(member.role, 9) if active(member) else 9
+
+
+def banned_now(member: ConversationMember | None) -> bool:
+    return bool(member and member.ban_until and member.ban_until > utcnow())
+
+
+# The bots' sanctions for breaking the rules: 6 hours, then 24 hours, then for good.
+SANCTION_HOURS = (6, 24)
+
+
+def ban(member: ConversationMember, hours: int | None) -> None:
+    """Ban for some hours (reads but cannot write), or for good (out of the community, cannot come back)."""
+    if hours:
+        member.ban_until = utcnow() + timedelta(hours=hours)
+    else:
+        member.banned = True
+        member.ban_until = None
+        member.role = "member"
+        member.hidden = True
+
+
+def sanction(member: ConversationMember) -> int | None:
+    """One more rule broken: the next ban of the ladder. Returns its hours, or None for a ban for good."""
+    member.strikes = (member.strikes or 0) + 1
+    member.last_strike_at = utcnow()
+    hours = SANCTION_HOURS[member.strikes - 1] if member.strikes <= len(SANCTION_HOURS) else None
+    ban(member, hours)
+    return hours
+
+
+def lift_ban(member: ConversationMember) -> None:
+    member.ban_until = None
+    if member.banned:
+        member.banned = False
+        member.hidden = False
+
+
+async def bot_ids(db: AsyncSession) -> dict[str, int]:
+    """{"admin": id of bot-admin, "moderator": id of bot-moderator}."""
+    return dict((await db.execute(select(User.bot_role, User.id).where(User.bot_role.is_not(None)))).all())
 
 
 def can_see(user: User, conv: Conversation, member: ConversationMember | None) -> bool:
@@ -68,10 +122,11 @@ async def ensure_interest_channels(db: AsyncSession, user: User) -> None:
 
 
 async def staff_ids(db: AsyncSession, conversation_id: int) -> list[int]:
+    bots = set((await bot_ids(db)).values())
     res = await db.execute(select(ConversationMember.user_id).where(
         ConversationMember.conversation_id == conversation_id, ConversationMember.role.in_(STAFF),
         ConversationMember.away.is_(False), ConversationMember.banned.is_(False)))
-    return list(res.scalars().all())
+    return [u for u in res.scalars().all() if u not in bots]
 
 
 async def communities_out(db: AsyncSession, user: User, convs: list[Conversation], detail: bool = False) -> list[dict]:
@@ -83,9 +138,10 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
     if interest_ids:
         interests = {i.id: i for i in (await db.execute(select(Interest).where(Interest.id.in_(interest_ids)))).scalars().all()}
     members: dict[int, list[int]] = {}
+    bots = set((await bot_ids(db)).values())
     for cid, uid in (await db.execute(select(ConversationMember.conversation_id, ConversationMember.user_id).where(
             ConversationMember.conversation_id.in_(ids), ConversationMember.banned.is_(False),
-            ConversationMember.away.is_(False)))).all():
+            ConversationMember.away.is_(False), ConversationMember.user_id.not_in(bots or {0})))).all():
         members.setdefault(cid, []).append(uid)
     online = await online_ids({u for uids in members.values() for u in uids})
     mine = {m.conversation_id: m for m in (await db.execute(select(ConversationMember).where(
@@ -121,19 +177,23 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "upcoming_count": upcoming.get(c.id, 0),
             "conversation_id": c.id,
             "rules": c.rules_markdown or "",
-            "invite_code": c.invite_code if detail and staff_of(member, user) else None,
+            "invite_code": c.invite_code if detail and admin_of(member, user) else None,
+            "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
         })
     return out
 
 
 async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool = False) -> list[dict]:
-    await ensure_interest_channels(db, user)
+    if not user.bot_role:
+        await ensure_interest_channels(db, user)
     my_ids = select(ConversationMember.conversation_id).where(
         ConversationMember.user_id == user.id, ConversationMember.away.is_(False), ConversationMember.banned.is_(False))
-    query = (select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(
-        Conversation.kind == "channel", Conversation.province == user.province,
-        Conversation.age_range == user_age_key(user)))
+    query = select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(Conversation.kind == "channel")
+    if user.bot_role:  # the bots are in every community, of every zone
+        query = query.where(Conversation.id.in_(my_ids)).limit(300)
+    else:
+        query = query.where(Conversation.province == user.province, Conversation.age_range == user_age_key(user))
     if mine:
         query = query.where(Conversation.id.in_(my_ids))
     else:
@@ -149,8 +209,10 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
 
 async def hand_over_ownership(db: AsyncSession, conv: Conversation, leaving_user_id: int) -> None:
     """The owner leaves: the oldest admin, or else the oldest member, becomes the owner."""
+    bots = set((await bot_ids(db)).values())
     base = select(ConversationMember).where(
         ConversationMember.conversation_id == conv.id, ConversationMember.user_id != leaving_user_id,
+        ConversationMember.user_id.not_in(bots or {0}),
         ConversationMember.away.is_(False), ConversationMember.banned.is_(False))
     nxt = (await db.execute(base.where(ConversationMember.role == "admin").order_by(ConversationMember.joined_at).limit(1))).scalar_one_or_none()
     if not nxt:

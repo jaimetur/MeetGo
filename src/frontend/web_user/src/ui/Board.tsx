@@ -368,6 +368,7 @@ function matchesFilter(p: Post, f: FeedFilter) {
 /** Phone header: the icon and the wordmark over the brand glow, with shortcuts. */
 export function PhoneTop({ title }: { title?: string }) {
   const requests = useStore((s) => s.requests);
+  const me = useStore((s) => s.me);
   const conversations = useStore((s) => s.conversations);
   const mentions = Object.values(conversations).reduce((n, c) => n + c.mention_count, 0);
   const req = requests.friends + requests.dms;
@@ -376,6 +377,7 @@ export function PhoneTop({ title }: { title?: string }) {
       <img className="appicon" src="/apple-touch-icon.png" alt="" />
       {title ? <span className="phonetitle">{title}</span> : <Wordmark size={24} />}
       <span className="grow" />
+      {me?.role === "admin" ? <button className="iconbtn glass" aria-label={t("ui_nav_admin")} title={t("ui_nav_admin")} onClick={() => navigate("/admin")}><Icon name="shield" /></button> : null}
       <button className="iconbtn glass" aria-label={t("ui_nav_communities")} title={t("ui_nav_communities")} onClick={() => navigate("/communities")}><Icon name="compass" /></button>
       <button className="iconbtn glass" aria-label={t("ui_nav_people")} title={t("ui_nav_people")} onClick={() => navigate("/people")}>
         <Icon name="users" />{req ? <span className="bdg dotbdg">{req > 9 ? "9+" : req}</span> : null}

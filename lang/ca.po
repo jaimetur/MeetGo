@@ -1064,6 +1064,39 @@ msgstr "El missatge és buit"
 msgid "err_message_too_long"
 msgstr "El missatge és massa llarg"
 
+msgid "err_banned_until"
+msgstr "Estàs bandejat en aquesta comunitat fins al {until}."
+
+msgid "err_banned_for_now"
+msgstr "Estàs bandejat en aquesta comunitat per un temps."
+
+msgid "automod_rule_toxicity"
+msgstr "Res d'insults ni assetjament"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "Sense telèfons a la comunitat"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "Sense enllaços a la comunitat"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} queda bandejat {hours} hores per incomplir una norma: {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} queda bandejat definitivament per tornar a incomplir les normes: {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "T'han bandejat {hours} hores"
+
+msgid "email_banned_hours_body"
+msgstr "Una cosa que vas escriure incompleix una norma de la comunitat ({rule}). Durant {hours} hores podràs llegir però no escriure. Si torna a passar, el bandeig serà més llarg."
+
+msgid "email_banned_forever_subject"
+msgstr "T'han bandejat d'una comunitat"
+
+msgid "email_banned_forever_body"
+msgstr "Has tornat a incomplir les normes de la comunitat ({rule}) i t'han bandejat definitivament. Només un admin de la comunitat pot treure el bandeig."
+
 msgid "err_banned_here"
 msgstr "No pots escriure en aquesta conversa"
 
@@ -3793,6 +3826,135 @@ msgstr "Expulsa de la comunitat"
 
 msgid "ui_community_ban_short"
 msgstr "Expulsa"
+
+msgid "ui_ban_confirm_hours"
+msgstr "Bandejar {name} durant {hours} hores? Podrà llegir però no escriure."
+
+msgid "ui_banned_toast"
+msgstr "{name} queda bandejat"
+
+msgid "ui_unbanned_toast"
+msgstr "Bandeig tret a {name}"
+
+msgid "ui_bans_title"
+msgstr "Bandejats ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Bandejat definitivament"
+
+msgid "ui_banned_until"
+msgstr "Bandejat fins al {until}"
+
+msgid "ui_unban"
+msgstr "Treure bandeig"
+
+msgid "ui_unban_admins_only"
+msgstr "Només un admin pot treure un bandeig."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Bot administrador de la comunitat: invitacions, sol·licituds i bandejos"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Bot moderador: aplica les normes automàticament"
+
+msgid "ui_bot_linked"
+msgstr "Vinculat a {bot}"
+
+msgid "ui_ban_title"
+msgstr "Bandejar"
+
+msgid "ui_ban_hint"
+msgstr "Mentre duri podrà llegir però no escriure."
+
+msgid "ui_ban_6h"
+msgstr "6 hores"
+
+msgid "ui_ban_24h"
+msgstr "24 hores"
+
+msgid "ui_ban_7d"
+msgstr "7 dies"
+
+msgid "ui_ban_forever"
+msgstr "Definitiu"
+
+msgid "ui_you_are_banned"
+msgstr "Estàs bandejat en aquesta comunitat fins al {until}: pots llegir però no escriure."
+
+msgid "ui_admin_only"
+msgstr "Només els administradors de MeetGo poden veure això."
+
+msgid "ui_admin_reports"
+msgstr "Moderació"
+
+msgid "ui_admin_users"
+msgstr "Usuaris"
+
+msgid "ui_admin_bots"
+msgstr "Comptes bot"
+
+msgid "ui_nav_admin"
+msgstr "Administració"
+
+msgid "ui_admin_panel"
+msgstr "Tauler complet"
+
+msgid "ui_admin_no_reports"
+msgstr "No hi ha denúncies pendents."
+
+msgid "ui_admin_reported_by"
+msgstr "Denunciat per {name}"
+
+msgid "ui_admin_open"
+msgstr "Obrir"
+
+msgid "ui_admin_delete_content"
+msgstr "Esborrar contingut"
+
+msgid "ui_admin_dismiss"
+msgstr "Descartar"
+
+msgid "ui_admin_search_users"
+msgstr "Cerca per nom, correu o telèfon"
+
+msgid "ui_admin_role_admin"
+msgstr "Admin de MeetGo"
+
+msgid "ui_admin_blocked"
+msgstr "Bloquejat"
+
+msgid "ui_admin_remove_admin"
+msgstr "Treure admin"
+
+msgid "ui_admin_make_admin"
+msgstr "Fer admin"
+
+msgid "ui_admin_unblock"
+msgstr "Desbloquejar"
+
+msgid "ui_admin_block"
+msgstr "Bloquejar compte"
+
+msgid "ui_admin_bots_hint"
+msgstr "Fes servir els comptes bot per actuar com ells a qualsevol comunitat. Torna al teu compte des de l'avís de dalt."
+
+msgid "ui_admin_automod_on"
+msgstr "Moderació automàtica de normes: activada"
+
+msgid "ui_admin_automod_off"
+msgstr "Moderació automàtica de normes: desactivada (falta la clau de l'API de Claude)"
+
+msgid "ui_admin_enter_as"
+msgstr "Entrar com a {name}"
+
+msgid "ui_acting_as"
+msgstr "Estàs fent servir el compte {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Tornar al meu compte"
 
 msgid "ui_community_ban_hint"
 msgstr "En surt i no s’hi podrà tornar a unir."

@@ -1064,6 +1064,39 @@ msgstr "Il messaggio è vuoto"
 msgid "err_message_too_long"
 msgstr "Il messaggio è troppo lungo"
 
+msgid "err_banned_until"
+msgstr "Sei bannato da questa community fino al {until}."
+
+msgid "err_banned_for_now"
+msgstr "Sei bannato da questa community per un po'."
+
+msgid "automod_rule_toxicity"
+msgstr "Niente insulti né molestie"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "Niente numeri di telefono nella community"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "Niente link nella community"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} è bannato per {hours} ore per aver violato una regola: {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} è bannato definitivamente per aver violato di nuovo le regole: {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "Sei stato bannato per {hours} ore"
+
+msgid "email_banned_hours_body"
+msgstr "Qualcosa che hai scritto viola una regola della community ({rule}). Per {hours} ore potrai leggere ma non scrivere. Se succede di nuovo, il ban sarà più lungo."
+
+msgid "email_banned_forever_subject"
+msgstr "Sei stato bannato da una community"
+
+msgid "email_banned_forever_body"
+msgstr "Hai violato di nuovo le regole della community ({rule}) e sei stato bannato definitivamente. Solo un admin della community può togliere il ban."
+
 msgid "err_banned_here"
 msgstr "Non puoi scrivere in questa conversazione"
 
@@ -3793,6 +3826,135 @@ msgstr "Espelli dalla comunità"
 
 msgid "ui_community_ban_short"
 msgstr "Espelli"
+
+msgid "ui_ban_confirm_hours"
+msgstr "Bannare {name} per {hours} ore? Potrà leggere ma non scrivere."
+
+msgid "ui_banned_toast"
+msgstr "{name} è stato bannato"
+
+msgid "ui_unbanned_toast"
+msgstr "Ban rimosso per {name}"
+
+msgid "ui_bans_title"
+msgstr "Bannati ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Bannato definitivamente"
+
+msgid "ui_banned_until"
+msgstr "Bannato fino al {until}"
+
+msgid "ui_unban"
+msgstr "Togli ban"
+
+msgid "ui_unban_admins_only"
+msgstr "Solo un admin può togliere un ban."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Bot amministratore della community: inviti, richieste e ban"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Bot moderatore: applica le regole automaticamente"
+
+msgid "ui_bot_linked"
+msgstr "Collegato a {bot}"
+
+msgid "ui_ban_title"
+msgstr "Banna"
+
+msgid "ui_ban_hint"
+msgstr "Finché dura potrà leggere ma non scrivere."
+
+msgid "ui_ban_6h"
+msgstr "6 ore"
+
+msgid "ui_ban_24h"
+msgstr "24 ore"
+
+msgid "ui_ban_7d"
+msgstr "7 giorni"
+
+msgid "ui_ban_forever"
+msgstr "Definitivo"
+
+msgid "ui_you_are_banned"
+msgstr "Sei bannato da questa community fino al {until}: puoi leggere ma non scrivere."
+
+msgid "ui_admin_only"
+msgstr "Solo gli amministratori di MeetGo possono vederlo."
+
+msgid "ui_admin_reports"
+msgstr "Moderazione"
+
+msgid "ui_admin_users"
+msgstr "Utenti"
+
+msgid "ui_admin_bots"
+msgstr "Account bot"
+
+msgid "ui_nav_admin"
+msgstr "Amministrazione"
+
+msgid "ui_admin_panel"
+msgstr "Pannello completo"
+
+msgid "ui_admin_no_reports"
+msgstr "Nessuna segnalazione in attesa."
+
+msgid "ui_admin_reported_by"
+msgstr "Segnalato da {name}"
+
+msgid "ui_admin_open"
+msgstr "Apri"
+
+msgid "ui_admin_delete_content"
+msgstr "Elimina contenuto"
+
+msgid "ui_admin_dismiss"
+msgstr "Ignora"
+
+msgid "ui_admin_search_users"
+msgstr "Cerca per nome, email o telefono"
+
+msgid "ui_admin_role_admin"
+msgstr "Admin di MeetGo"
+
+msgid "ui_admin_blocked"
+msgstr "Bloccato"
+
+msgid "ui_admin_remove_admin"
+msgstr "Togli admin"
+
+msgid "ui_admin_make_admin"
+msgstr "Rendi admin"
+
+msgid "ui_admin_unblock"
+msgstr "Sblocca"
+
+msgid "ui_admin_block"
+msgstr "Blocca account"
+
+msgid "ui_admin_bots_hint"
+msgstr "Usa gli account bot per agire come loro in qualsiasi community. Torna al tuo account dall'avviso in alto."
+
+msgid "ui_admin_automod_on"
+msgstr "Moderazione automatica delle regole: attiva"
+
+msgid "ui_admin_automod_off"
+msgstr "Moderazione automatica delle regole: disattivata (manca la chiave dell'API di Claude)"
+
+msgid "ui_admin_enter_as"
+msgstr "Entra come {name}"
+
+msgid "ui_acting_as"
+msgstr "Stai usando l'account {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Torna al mio account"
 
 msgid "ui_community_ban_hint"
 msgstr "Esce e non potrà più unirsi."

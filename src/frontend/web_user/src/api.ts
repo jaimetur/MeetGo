@@ -38,6 +38,33 @@ export function setToken(value: string) {
   }
 }
 
+// While a MeetGo administrator uses a bot account, their own session waits here.
+const OWNER_TOKEN_KEY = "owner_token";
+export function ownerToken(): string {
+  try {
+    return localStorage.getItem(OWNER_TOKEN_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+export function actAs(botToken: string) {
+  try {
+    if (!ownerToken()) localStorage.setItem(OWNER_TOKEN_KEY, getToken());
+  } catch {
+    /* without storage the switch lasts this tab */
+  }
+  setToken(botToken);
+}
+export function backToOwner() {
+  const own = ownerToken();
+  try {
+    localStorage.removeItem(OWNER_TOKEN_KEY);
+  } catch {
+    /* nothing to clean */
+  }
+  if (own) setToken(own);
+}
+
 export class ApiError extends Error {
   status: number;
   constructor(status: number, message: string) {
@@ -183,6 +210,17 @@ export const api = {
   resolveCommunityRequest: (id: number, userId: number, accept: boolean) => req(`/communities/${id}/requests/${userId}/resolve`, { method: "POST", json: { accept } }),
   communityMembers: (id: number, q = "") => req<CommunityMember[]>(`/communities/${id}/members${qs({ q })}`),
   setCommunityRole: (id: number, userId: number, role: string) => req(`/communities/${id}/members/${userId}/role`, { method: "PUT", json: { role } }),
+  banCommunityMember: (id: number, userId: number, hours: number | null) => req(`/communities/${id}/members/${userId}/ban`, { method: "POST", json: { hours } }),
+  unbanCommunityMember: (id: number, userId: number) => req(`/communities/${id}/members/${userId}/unban`, { method: "POST" }),
+  communityBans: (id: number) => req<{ user: UserSummary; forever: boolean; until: string | null; strikes: number }[]>(`/communities/${id}/bans`),
+  // MeetGo administration (administrators only)
+  adminReports: () => req<any[]>("/admin/reports"),
+  adminResolveReport: (id: number, status: "dismissed" | "actioned", deleteContent: boolean) => req(`/admin/reports/${id}/resolve`, { method: "POST", json: { status, delete_message: deleteContent } }),
+  adminUsers: (q: string) => req<any[]>(`/admin/users${q ? `?q=${encodeURIComponent(q)}` : ""}`),
+  adminUpdateUser: (id: number, patch: Record<string, unknown>) => req(`/admin/users/${id}`, { method: "PATCH", json: patch }),
+  adminBots: () => req<(UserSummary & { bot_role: string })[]>("/admin/bots"),
+  adminAutomod: () => req<{ enabled: boolean; model: string }>("/admin/automod"),
+  adminBotSession: (id: number) => req<{ access_token: string }>(`/admin/bots/${id}/session`, { method: "POST" }),
   removeCommunityMember: (id: number, userId: number, ban = false) => req(`/communities/${id}/members/${userId}${ban ? "?ban=1" : ""}`, { method: "DELETE" }),
 
   // board and plans

@@ -15,6 +15,9 @@ services:
       CORS_ORIGINS: ${CORS_ORIGINS:-https://meetgo.app,https://www.meetgo.app,https://admin.meetgo.app}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@local}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      # Moderation bot: reads community messages against their rules with Claude (off without a key).
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      MODERATION_MODEL: ${MODERATION_MODEL:-claude-opus-5-5}
       PUBLIC_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
       ANDROID_CERT_SHA256: ${ANDROID_CERT_SHA256:-}
       DATA_DIR: /data

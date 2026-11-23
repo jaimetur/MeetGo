@@ -72,6 +72,8 @@ def require_poster(conv: Conversation, member: ConversationMember | None, user: 
             raise HTTPException(403, t("err_join_community_first"))
         if member.silenced_until and member.silenced_until > utcnow():
             raise HTTPException(403, t("err_silenced_until", {"until": member.silenced_until.strftime("%H:%M")}))
+        if member.ban_until and member.ban_until > utcnow():
+            raise HTTPException(403, t("err_banned_until", {"until": member.ban_until.strftime("%d/%m %H:%M")}))
     if conv.board_mode == "admins" and not staff_of(member, user):
         raise HTTPException(403, t("err_board_admins_only"))
 
@@ -84,6 +86,8 @@ def comment_block(post: BoardPost, member: ConversationMember | None, user: User
         return "err_comments_off"
     if user.role != "admin" and not active(member):
         return "err_join_community_first"
+    if user.role != "admin" and member.ban_until and member.ban_until > utcnow():
+        return "err_banned_for_now"
     if post.comments_mode == "attendees" and not (
             my_status == "going" or post.author_id == user.id or staff_of(member, user)):
         return "err_comments_attendees_only"

@@ -1063,6 +1063,39 @@ msgstr "A mensagem está vazia"
 msgid "err_message_too_long"
 msgstr "A mensagem é demasiado longa"
 
+msgid "err_banned_until"
+msgstr "Estás banido desta comunidade até {until}."
+
+msgid "err_banned_for_now"
+msgstr "Estás banido desta comunidade por algum tempo."
+
+msgid "automod_rule_toxicity"
+msgstr "Nada de insultos nem assédio"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "Sem números de telefone na comunidade"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "Sem links na comunidade"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} fica banido {hours} horas por violar uma regra: {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} fica banido definitivamente por voltar a violar as regras: {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "Foste banido durante {hours} horas"
+
+msgid "email_banned_hours_body"
+msgstr "Algo que escreveste viola uma regra da comunidade ({rule}). Durante {hours} horas poderás ler mas não escrever. Se voltar a acontecer, o banimento será mais longo."
+
+msgid "email_banned_forever_subject"
+msgstr "Foste banido de uma comunidade"
+
+msgid "email_banned_forever_body"
+msgstr "Voltaste a violar as regras da comunidade ({rule}) e foste banido definitivamente. Só um admin da comunidade pode retirar o banimento."
+
 msgid "err_banned_here"
 msgstr "Não podes escrever nesta conversa"
 
@@ -3792,6 +3825,135 @@ msgstr "Expulsar da comunidade"
 
 msgid "ui_community_ban_short"
 msgstr "Expulsar"
+
+msgid "ui_ban_confirm_hours"
+msgstr "Banir {name} durante {hours} horas? Poderá ler mas não escrever."
+
+msgid "ui_banned_toast"
+msgstr "{name} foi banido"
+
+msgid "ui_unbanned_toast"
+msgstr "Banimento retirado a {name}"
+
+msgid "ui_bans_title"
+msgstr "Banidos ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Banido definitivamente"
+
+msgid "ui_banned_until"
+msgstr "Banido até {until}"
+
+msgid "ui_unban"
+msgstr "Retirar banimento"
+
+msgid "ui_unban_admins_only"
+msgstr "Só um admin pode retirar um banimento."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Bot administrador da comunidade: convites, pedidos e banimentos"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Bot moderador: aplica as regras automaticamente"
+
+msgid "ui_bot_linked"
+msgstr "Ligado a {bot}"
+
+msgid "ui_ban_title"
+msgstr "Banir"
+
+msgid "ui_ban_hint"
+msgstr "Enquanto durar poderá ler mas não escrever."
+
+msgid "ui_ban_6h"
+msgstr "6 horas"
+
+msgid "ui_ban_24h"
+msgstr "24 horas"
+
+msgid "ui_ban_7d"
+msgstr "7 dias"
+
+msgid "ui_ban_forever"
+msgstr "Definitivo"
+
+msgid "ui_you_are_banned"
+msgstr "Estás banido desta comunidade até {until}: podes ler mas não escrever."
+
+msgid "ui_admin_only"
+msgstr "Só os administradores do MeetGo podem ver isto."
+
+msgid "ui_admin_reports"
+msgstr "Moderação"
+
+msgid "ui_admin_users"
+msgstr "Utilizadores"
+
+msgid "ui_admin_bots"
+msgstr "Contas bot"
+
+msgid "ui_nav_admin"
+msgstr "Administração"
+
+msgid "ui_admin_panel"
+msgstr "Painel completo"
+
+msgid "ui_admin_no_reports"
+msgstr "Não há denúncias pendentes."
+
+msgid "ui_admin_reported_by"
+msgstr "Denunciado por {name}"
+
+msgid "ui_admin_open"
+msgstr "Abrir"
+
+msgid "ui_admin_delete_content"
+msgstr "Apagar conteúdo"
+
+msgid "ui_admin_dismiss"
+msgstr "Descartar"
+
+msgid "ui_admin_search_users"
+msgstr "Procurar por nome, email ou telefone"
+
+msgid "ui_admin_role_admin"
+msgstr "Admin do MeetGo"
+
+msgid "ui_admin_blocked"
+msgstr "Bloqueada"
+
+msgid "ui_admin_remove_admin"
+msgstr "Retirar admin"
+
+msgid "ui_admin_make_admin"
+msgstr "Tornar admin"
+
+msgid "ui_admin_unblock"
+msgstr "Desbloquear"
+
+msgid "ui_admin_block"
+msgstr "Bloquear conta"
+
+msgid "ui_admin_bots_hint"
+msgstr "Usa as contas bot para agir como elas em qualquer comunidade. Volta à tua conta a partir do aviso no topo."
+
+msgid "ui_admin_automod_on"
+msgstr "Moderação automática de regras: ativada"
+
+msgid "ui_admin_automod_off"
+msgstr "Moderação automática de regras: desativada (falta a chave da API do Claude)"
+
+msgid "ui_admin_enter_as"
+msgstr "Entrar como {name}"
+
+msgid "ui_acting_as"
+msgstr "Estás a usar a conta {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Voltar à minha conta"
 
 msgid "ui_community_ban_hint"
 msgstr "Sai e não poderá voltar a juntar-se."

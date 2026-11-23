@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = "admin@local"
     ADMIN_PASSWORD: str = ""
 
+    # Moderation bot of the communities: checks what people write against each community's rules with Claude.
+    # Without a key the rules are not checked automatically (the other automatic moderation still runs).
+    ANTHROPIC_API_KEY: str = ""
+    MODERATION_MODEL: str = "claude-opus-5-5"
+
     # Container logs for the administration panel (needs the Docker socket mounted).
     DEBUG_COMPOSE_LOGS: bool = False
 

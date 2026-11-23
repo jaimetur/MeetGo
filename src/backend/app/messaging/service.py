@@ -9,12 +9,13 @@ from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
-from app.core.i18n import t
+from app.core.i18n import t, use_lang
 from app.core.models import Attachment, Conversation, ConversationMember, Message, MessageReaction, User, utcnow
 from app.core.redis_conn import get_redis
 from app.realtime import service as realtime
 from app.conversations.service import is_staff, messages_out
-from app.messaging.moderation import apply_strike, decide_action
+from app.communities import automod
+from app.messaging.moderation import decide_action
 
 logger = logging.getLogger("meetgo.messaging")
 EDIT_WINDOW = timedelta(hours=48)
@@ -41,6 +42,8 @@ def check_can_write(conv: Conversation, member: ConversationMember) -> None:
         raise HTTPException(403, t("err_banned_here"))
     if member.silenced_until and member.silenced_until > utcnow():
         raise HTTPException(403, t("err_silenced_until", {"until": member.silenced_until.strftime("%H:%M")}))
+    if member.ban_until and member.ban_until > utcnow():
+        raise HTTPException(403, t("err_banned_until", {"until": member.ban_until.strftime("%d/%m %H:%M")}))
 
 
 async def send_message(
@@ -100,6 +103,7 @@ async def send_message(
                   reply_to_id=reply_to_id, thread_root_id=root.id if root else None,
                   also_in_channel=bool(root and also_in_channel), mentions=mentions, created_at=now)
 
+    broken_rule: str | None = None
     if conv.kind == "channel" and body and not staff:
         action = await decide_action(get_redis(), conv, user.id, body)
         if action.delete_message:
@@ -107,7 +111,12 @@ async def send_message(
             msg.moderation_reason = action.reason or "MODERATED"
             msg.mentions = []
             attachments = []
-        apply_strike(conv, member, action)
+        if action.reason in automod.RULE_REASONS:
+            # Insults, phone numbers and links break the rules: the moderation bot's ladder of bans.
+            with use_lang(user.lang):
+                broken_rule = t(f"automod_rule_{action.reason.lower()}")
+        elif action.mute_minutes:  # flooding: a short silence
+            member.silenced_until = now + timedelta(minutes=action.mute_minutes)
 
     db.add(msg)
     await db.flush()
@@ -122,7 +131,8 @@ async def send_message(
         conv.last_message_at = now
         member.last_read_message_id = max(member.last_read_message_id or 0, msg.id)
     await db.execute(update(ConversationMember).where(
-        ConversationMember.conversation_id == conv.id, ConversationMember.hidden.is_(True)).values(hidden=False))
+        ConversationMember.conversation_id == conv.id, ConversationMember.hidden.is_(True),
+        ConversationMember.banned.is_(False)).values(hidden=False))
     await db.commit()
 
     payload = (await messages_out(db, [msg], user.id))[0]
@@ -134,6 +144,10 @@ async def send_message(
     if not msg.deleted_at:
         from app.push.service import notify_message
         _background(notify_message(conv.id, msg.id))
+        if conv.kind == "channel" and not staff and body:
+            _background(automod.check_message(conv.id, msg.id))
+    if broken_rule:
+        await automod.punish(db, conv, user.id, broken_rule)
     return payload, True
 
 

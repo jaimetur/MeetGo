@@ -1064,6 +1064,39 @@ msgstr "Die Nachricht ist leer"
 msgid "err_message_too_long"
 msgstr "Die Nachricht ist zu lang"
 
+msgid "err_banned_until"
+msgstr "Du bist in dieser Community bis {until} gesperrt."
+
+msgid "err_banned_for_now"
+msgstr "Du bist in dieser Community vorübergehend gesperrt."
+
+msgid "automod_rule_toxicity"
+msgstr "Keine Beleidigungen oder Belästigung"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "Keine Telefonnummern in der Community"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "Keine Links in der Community"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} ist für {hours} Stunden gesperrt, weil eine Regel verletzt wurde: {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} ist dauerhaft gesperrt, weil die Regeln erneut verletzt wurden: {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "Du wurdest für {hours} Stunden gesperrt"
+
+msgid "email_banned_hours_body"
+msgstr "Etwas, das du geschrieben hast, verstößt gegen eine Regel der Community ({rule}). {hours} Stunden lang kannst du lesen, aber nicht schreiben. Passiert es wieder, wird die Sperre länger."
+
+msgid "email_banned_forever_subject"
+msgstr "Du wurdest aus einer Community gesperrt"
+
+msgid "email_banned_forever_body"
+msgstr "Du hast erneut gegen die Regeln der Community verstoßen ({rule}) und wurdest dauerhaft gesperrt. Nur ein Admin der Community kann die Sperre aufheben."
+
 msgid "err_banned_here"
 msgstr "Du kannst in dieser Unterhaltung nicht schreiben"
 
@@ -3793,6 +3826,135 @@ msgstr "Aus der Community ausschließen"
 
 msgid "ui_community_ban_short"
 msgstr "Ausschließen"
+
+msgid "ui_ban_confirm_hours"
+msgstr "{name} für {hours} Stunden sperren? Lesen geht, schreiben nicht."
+
+msgid "ui_banned_toast"
+msgstr "{name} ist gesperrt"
+
+msgid "ui_unbanned_toast"
+msgstr "Sperre für {name} aufgehoben"
+
+msgid "ui_bans_title"
+msgstr "Gesperrt ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Dauerhaft gesperrt"
+
+msgid "ui_banned_until"
+msgstr "Gesperrt bis {until}"
+
+msgid "ui_unban"
+msgstr "Sperre aufheben"
+
+msgid "ui_unban_admins_only"
+msgstr "Nur ein Admin kann eine Sperre aufheben."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Admin-Bot der Community: Einladungen, Anfragen und Sperren"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Moderations-Bot: wendet die Regeln automatisch an"
+
+msgid "ui_bot_linked"
+msgstr "Verknüpft mit {bot}"
+
+msgid "ui_ban_title"
+msgstr "Sperren"
+
+msgid "ui_ban_hint"
+msgstr "Solange sie dauert, kann die Person lesen, aber nicht schreiben."
+
+msgid "ui_ban_6h"
+msgstr "6 Stunden"
+
+msgid "ui_ban_24h"
+msgstr "24 Stunden"
+
+msgid "ui_ban_7d"
+msgstr "7 Tage"
+
+msgid "ui_ban_forever"
+msgstr "Dauerhaft"
+
+msgid "ui_you_are_banned"
+msgstr "Du bist in dieser Community bis {until} gesperrt: Du kannst lesen, aber nicht schreiben."
+
+msgid "ui_admin_only"
+msgstr "Nur MeetGo-Administratoren sehen das."
+
+msgid "ui_admin_reports"
+msgstr "Moderation"
+
+msgid "ui_admin_users"
+msgstr "Nutzer"
+
+msgid "ui_admin_bots"
+msgstr "Bot-Konten"
+
+msgid "ui_nav_admin"
+msgstr "Verwaltung"
+
+msgid "ui_admin_panel"
+msgstr "Vollständiges Panel"
+
+msgid "ui_admin_no_reports"
+msgstr "Keine offenen Meldungen."
+
+msgid "ui_admin_reported_by"
+msgstr "Gemeldet von {name}"
+
+msgid "ui_admin_open"
+msgstr "Öffnen"
+
+msgid "ui_admin_delete_content"
+msgstr "Inhalt löschen"
+
+msgid "ui_admin_dismiss"
+msgstr "Verwerfen"
+
+msgid "ui_admin_search_users"
+msgstr "Nach Name, E-Mail oder Telefon suchen"
+
+msgid "ui_admin_role_admin"
+msgstr "MeetGo-Admin"
+
+msgid "ui_admin_blocked"
+msgstr "Gesperrt"
+
+msgid "ui_admin_remove_admin"
+msgstr "Admin entfernen"
+
+msgid "ui_admin_make_admin"
+msgstr "Zum Admin machen"
+
+msgid "ui_admin_unblock"
+msgstr "Entsperren"
+
+msgid "ui_admin_block"
+msgstr "Konto sperren"
+
+msgid "ui_admin_bots_hint"
+msgstr "Nutze die Bot-Konten, um in jeder Community als sie zu handeln. Über den Hinweis oben kommst du zu deinem Konto zurück."
+
+msgid "ui_admin_automod_on"
+msgstr "Automatische Regelmoderation: an"
+
+msgid "ui_admin_automod_off"
+msgstr "Automatische Regelmoderation: aus (der Claude-API-Schlüssel fehlt)"
+
+msgid "ui_admin_enter_as"
+msgstr "Als {name} eintreten"
+
+msgid "ui_acting_as"
+msgstr "Du nutzt das Konto {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Zurück zu meinem Konto"
 
 msgid "ui_community_ban_hint"
 msgstr "Die Person verlässt die Community und kann nicht mehr beitreten."

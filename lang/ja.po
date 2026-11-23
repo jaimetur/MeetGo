@@ -1064,6 +1064,39 @@ msgstr "メッセージが空です"
 msgid "err_message_too_long"
 msgstr "メッセージが長すぎます"
 
+msgid "err_banned_until"
+msgstr "このコミュニティでは {until} まで投稿が禁止されています。"
+
+msgid "err_banned_for_now"
+msgstr "このコミュニティでは一時的に投稿が禁止されています。"
+
+msgid "automod_rule_toxicity"
+msgstr "侮辱や嫌がらせは禁止"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "コミュニティでの電話番号の共有は禁止"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "コミュニティでのリンクは禁止"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} さんはルール違反により {hours} 時間BANされました：{rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} さんは再度のルール違反により永久BANされました：{rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "{hours} 時間BANされました"
+
+msgid "email_banned_hours_body"
+msgstr "あなたの投稿がコミュニティのルール（{rule}）に違反しました。{hours} 時間は閲覧のみ可能で、投稿はできません。再度違反するとBANの期間が長くなります。"
+
+msgid "email_banned_forever_subject"
+msgstr "コミュニティから永久BANされました"
+
+msgid "email_banned_forever_body"
+msgstr "コミュニティのルール（{rule}）に再度違反したため、永久BANされました。BANを解除できるのはコミュニティの管理者だけです。"
+
 msgid "err_banned_here"
 msgstr "この会話には書き込めません"
 
@@ -3793,6 +3826,135 @@ msgstr "コミュニティから追放"
 
 msgid "ui_community_ban_short"
 msgstr "追放"
+
+msgid "ui_ban_confirm_hours"
+msgstr "{name} さんを {hours} 時間BANしますか？閲覧はできますが投稿はできません。"
+
+msgid "ui_banned_toast"
+msgstr "{name} さんをBANしました"
+
+msgid "ui_unbanned_toast"
+msgstr "{name} さんのBANを解除しました"
+
+msgid "ui_bans_title"
+msgstr "BAN中（{n}）"
+
+msgid "ui_banned_forever"
+msgstr "永久BAN"
+
+msgid "ui_banned_until"
+msgstr "{until} までBAN"
+
+msgid "ui_unban"
+msgstr "BANを解除"
+
+msgid "ui_unban_admins_only"
+msgstr "BANを解除できるのは管理者だけです。"
+
+msgid "ui_bot_label"
+msgstr "ボット"
+
+msgid "ui_bot_admin_hint"
+msgstr "コミュニティ管理ボット：招待、参加申請、BAN"
+
+msgid "ui_bot_moderator_hint"
+msgstr "モデレーションボット：ルールを自動で適用"
+
+msgid "ui_bot_linked"
+msgstr "{bot} と連携"
+
+msgid "ui_ban_title"
+msgstr "BAN"
+
+msgid "ui_ban_hint"
+msgstr "期間中は閲覧のみ可能で、投稿はできません。"
+
+msgid "ui_ban_6h"
+msgstr "6時間"
+
+msgid "ui_ban_24h"
+msgstr "24時間"
+
+msgid "ui_ban_7d"
+msgstr "7日間"
+
+msgid "ui_ban_forever"
+msgstr "永久"
+
+msgid "ui_you_are_banned"
+msgstr "このコミュニティでは {until} までBANされています：閲覧はできますが投稿はできません。"
+
+msgid "ui_admin_only"
+msgstr "MeetGo の管理者のみ表示できます。"
+
+msgid "ui_admin_reports"
+msgstr "モデレーション"
+
+msgid "ui_admin_users"
+msgstr "ユーザー"
+
+msgid "ui_admin_bots"
+msgstr "ボットアカウント"
+
+msgid "ui_nav_admin"
+msgstr "管理"
+
+msgid "ui_admin_panel"
+msgstr "管理パネル"
+
+msgid "ui_admin_no_reports"
+msgstr "未処理の通報はありません。"
+
+msgid "ui_admin_reported_by"
+msgstr "通報者：{name}"
+
+msgid "ui_admin_open"
+msgstr "開く"
+
+msgid "ui_admin_delete_content"
+msgstr "内容を削除"
+
+msgid "ui_admin_dismiss"
+msgstr "却下"
+
+msgid "ui_admin_search_users"
+msgstr "名前、メール、電話番号で検索"
+
+msgid "ui_admin_role_admin"
+msgstr "MeetGo 管理者"
+
+msgid "ui_admin_blocked"
+msgstr "ブロック中"
+
+msgid "ui_admin_remove_admin"
+msgstr "管理者を解除"
+
+msgid "ui_admin_make_admin"
+msgstr "管理者にする"
+
+msgid "ui_admin_unblock"
+msgstr "ブロック解除"
+
+msgid "ui_admin_block"
+msgstr "アカウントをブロック"
+
+msgid "ui_admin_bots_hint"
+msgstr "ボットアカウントを使うと、どのコミュニティでもボットとして操作できます。上部の通知から自分のアカウントに戻れます。"
+
+msgid "ui_admin_automod_on"
+msgstr "ルールの自動モデレーション：オン"
+
+msgid "ui_admin_automod_off"
+msgstr "ルールの自動モデレーション：オフ（Claude API キーがありません）"
+
+msgid "ui_admin_enter_as"
+msgstr "{name} として入る"
+
+msgid "ui_acting_as"
+msgstr "アカウント {name} を使用中"
+
+msgid "ui_back_to_my_account"
+msgstr "自分のアカウントに戻る"
 
 msgid "ui_community_ban_hint"
 msgstr "退出させ、再参加できなくなります。"

@@ -10,10 +10,10 @@ from app.core.app_settings import app_base_url
 from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
 from app.core.models import CommunityRequest, Conversation, ConversationMember, User, UserInterest, utcnow
-from app.core.schemas import CommunityCreateIn, CommunityUpdateIn, MemberRoleIn, ResolveIn
+from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, MemberRoleIn, ResolveIn
 from app.communities.service import (
-    ROLE_RANK, active, communities_out, community_member_filter, get_community, hand_over_ownership, in_zone,
-    list_communities, pending_request, staff_ids, staff_of,
+    ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
+    hand_over_ownership, in_zone, lift_ban, list_communities, pending_request, rank_of, staff_ids, staff_of,
 )
 from app.conversations.service import get_membership, join, user_age_key, user_summary
 from app.mail import notify_email
@@ -37,6 +37,24 @@ async def _changed(db: AsyncSession, conv_id: int, extra: list[int] | None = Non
 def _require_staff(member: ConversationMember | None, user: User) -> None:
     if not staff_of(member, user):
         raise HTTPException(403, t("err_forbidden"))
+
+
+def _require_admin(member: ConversationMember | None, user: User) -> None:
+    if not admin_of(member, user):
+        raise HTTPException(403, t("err_forbidden"))
+
+
+async def _target(db: AsyncSession, conv: Conversation, member: ConversationMember | None, user: User,
+                  user_id: int, *, include_banned: bool = False) -> ConversationMember:
+    """Someone I can moderate: below me, not a bot, not the owner."""
+    target = await get_membership(db, conv.id, user_id)
+    if not target or target.away or (target.banned and not include_banned):
+        raise HTTPException(404, t("err_user_not_found"))
+    if user_id in (await bot_ids(db)).values() or user_id == user.id:
+        raise HTTPException(403, t("err_forbidden"))
+    if target.role == "owner" or (user.role != "admin" and rank_of(member, user) >= ROLE_RANK.get(target.role, 9)):
+        raise HTTPException(403, t("err_forbidden"))
+    return target
 
 
 async def _join_member(db: AsyncSession, conv: Conversation, user: User) -> None:
@@ -158,7 +176,7 @@ async def join_community(community_id: int, db: AsyncSession = Depends(get_db), 
 @router.post("/communities/{community_id}/invite", response_model=dict)
 async def new_invite(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     conv, member = await get_community(db, community_id, user)
-    _require_staff(member, user)
+    _require_admin(member, user)
     conv.invite_code = secrets.token_urlsafe(9)
     await db.commit()
     return {"code": conv.invite_code, "url": f"{await app_base_url(db)}/app/join/{conv.invite_code}"}
@@ -171,6 +189,8 @@ async def leave(community_id: int, db: AsyncSession = Depends(get_db), user: Use
         raise HTTPException(404, t("err_conversation_not_found"))
     if member.banned:
         return {"ok": True}  # the ban stays
+    if banned_now(member):  # leaving does not end a ban
+        raise HTTPException(409, t("err_banned_until", {"until": member.ban_until.strftime("%d/%m %H:%M")}))
     if member.role == "owner":
         await hand_over_ownership(db, conv, user.id)
     await db.delete(member)
@@ -185,7 +205,7 @@ async def leave(community_id: int, db: AsyncSession = Depends(get_db), user: Use
 @router.get("/communities/{community_id}/requests", response_model=list[dict])
 async def list_requests(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     conv, member = await get_community(db, community_id, user)
-    _require_staff(member, user)
+    _require_admin(member, user)
     res = await db.execute(select(CommunityRequest, User).join(User, User.id == CommunityRequest.user_id).where(
         CommunityRequest.conversation_id == conv.id, CommunityRequest.status == "pending").order_by(CommunityRequest.id))
     return [{"user": user_summary(u), "created_at": r.created_at.isoformat().replace("+00:00", "Z")} for r, u in res.all()]
@@ -195,7 +215,7 @@ async def list_requests(community_id: int, db: AsyncSession = Depends(get_db), u
 async def resolve_request(community_id: int, user_id: int, payload: ResolveIn, db: AsyncSession = Depends(get_db),
                           user: User = Depends(get_current_user)):
     conv, member = await get_community(db, community_id, user)
-    _require_staff(member, user)
+    _require_admin(member, user)
     req = await pending_request(db, conv.id, user_id)
     if not req:
         raise HTTPException(404, t("err_request_not_found"))
@@ -230,8 +250,10 @@ async def members(community_id: int, q: str = "", limit: int = 200, db: AsyncSes
         query = query.where(User.display_name.ilike(f"%{q.strip()}%"))
     rows = (await db.execute(query.limit(max(1, min(limit, 500))))).all()
     online = await realtime.online_ids([u.id for _, u in rows])
-    out = [{**user_summary(u), "role": m.role, "online": u.id in online} for m, u in rows]
-    out.sort(key=lambda x: (ROLE_RANK.get(x["role"], 9), not x["online"], x["display_name"].lower()))
+    out = [{**user_summary(u), "role": m.role, "online": u.id in online, "bot": bool(u.bot_role),
+            "ban_until": m.ban_until.isoformat().replace("+00:00", "Z") if banned_now(m) else None,
+            "strikes": m.strikes or 0} for m, u in rows]
+    out.sort(key=lambda x: (not x["bot"], ROLE_RANK.get(x["role"], 9), not x["online"], x["display_name"].lower()))
     return out
 
 
@@ -244,7 +266,7 @@ async def set_role(community_id: int, user_id: int, payload: MemberRoleIn, db: A
     if not (is_owner or (active(member) and member.role == "admin")):
         raise HTTPException(403, t("err_forbidden"))
     target = await get_membership(db, conv.id, user_id)
-    if not active(target) or target.role == "owner":
+    if not active(target) or target.role == "owner" or user_id in (await bot_ids(db)).values():
         raise HTTPException(404, t("err_user_not_found"))
     if (payload.role == "admin" or target.role == "admin") and not is_owner:
         raise HTTPException(403, t("err_forbidden"))
@@ -260,19 +282,53 @@ async def remove_member(community_id: int, user_id: int, ban: bool = False, db: 
     """Remove someone (they may join again), or with ?ban=1 expel them: they cannot join again."""
     conv, member = await get_community(db, community_id, user)
     _require_staff(member, user)
-    target = await get_membership(db, conv.id, user_id)
-    if not target or target.away:
-        raise HTTPException(404, t("err_user_not_found"))
-    if target.role == "owner" or (user.role != "admin" and ROLE_RANK[member.role] >= ROLE_RANK.get(target.role, 9)):
-        raise HTTPException(403, t("err_forbidden"))
+    target = await _target(db, conv, member, user, user_id)
     if ban:
-        # kept (so they cannot join again) but out of their lists
-        target.banned = True
-        target.role = "member"
-        target.hidden = True
+        ban_member(target, None)  # kept (so they cannot join again) but out of their lists
     else:
         await db.delete(target)
     await db.commit()
     await _changed(db, conv.id, extra=[user_id])
     await realtime.publish([user_id], {"type": "membership.removed", "conversation_id": conv.id})
     return {"ok": True}
+
+
+@router.post("/communities/{community_id}/members/{user_id}/ban", response_model=dict)
+async def ban_user(community_id: int, user_id: int, payload: BanIn, db: AsyncSession = Depends(get_db),
+                   user: User = Depends(get_current_user)):
+    """Moderators and admins ban for some hours (reads, cannot write) or, without hours, for good."""
+    conv, member = await get_community(db, community_id, user)
+    _require_staff(member, user)
+    target = await _target(db, conv, member, user, user_id)
+    ban_member(target, payload.hours)
+    await db.commit()
+    await _changed(db, conv.id, extra=[user_id])
+    if not payload.hours:
+        await realtime.publish([user_id], {"type": "membership.removed", "conversation_id": conv.id})
+    return {"ok": True}
+
+
+@router.post("/communities/{community_id}/members/{user_id}/unban", response_model=dict)
+async def unban_user(community_id: int, user_id: int, db: AsyncSession = Depends(get_db),
+                     user: User = Depends(get_current_user)):
+    """Only admins (and the owner) lift a ban, also one the moderation bot put."""
+    conv, member = await get_community(db, community_id, user)
+    _require_admin(member, user)
+    target = await _target(db, conv, member, user, user_id, include_banned=True)
+    lift_ban(target)
+    await db.commit()
+    await _changed(db, conv.id, extra=[user_id])
+    return {"ok": True}
+
+
+@router.get("/communities/{community_id}/bans", response_model=list[dict])
+async def list_bans(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """People banned for a while or for good (staff)."""
+    conv, member = await get_community(db, community_id, user)
+    _require_staff(member, user)
+    rows = (await db.execute(select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
+        ConversationMember.conversation_id == conv.id,
+        (ConversationMember.banned.is_(True)) | (ConversationMember.ban_until > utcnow())))).all()
+    return [{"user": user_summary(u), "forever": m.banned,
+             "until": None if m.banned or not m.ban_until else m.ban_until.isoformat().replace("+00:00", "Z"),
+             "strikes": m.strikes or 0} for m, u in rows]

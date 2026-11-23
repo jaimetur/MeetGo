@@ -1,3 +1,4 @@
+import logging
 import asyncio
 import json
 import os
@@ -21,7 +22,7 @@ from app.core.schemas import (
     AdminAccessIn, AdminInterestIn, AdminSmtpTestIn, AdminUserCreateIn, AdminUserUpdateIn, InterestOut, MeOut, PromoCodeIn,
     ReportResolveIn,
 )
-from app.core.security import decode_token, hash_password
+from app.core.security import create_access_token, decode_token, hash_password
 from app.billing import service as billing
 from app.core.app_settings import get_section, get_settings_row, set_section
 from app.billing.service import normalise_code, promo_out
@@ -38,6 +39,7 @@ try:
 except Exception:  # pragma: no cover
     docker = None
 
+logger = logging.getLogger("meetgo.admin")
 router = APIRouter(prefix="/admin", tags=["admin"])
 # Sections holding secrets: edited only through their own endpoints, never returned in full.
 PROTECTED_SECTIONS = {"stripe", "play", "fcm", "webpush", "billing"}
@@ -249,6 +251,30 @@ async def delete_interest(interest_id: int, db: AsyncSession = Depends(get_db), 
     await db.execute(delete(Interest).where(Interest.id == interest_id))
     await db.commit()
     return {"ok": True}
+
+
+# ---------- community bots ----------
+
+@router.get("/bots", response_model=list[dict])
+async def list_bots(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    bots = (await db.execute(select(User).where(User.bot_role.is_not(None)).order_by(User.id))).scalars().all()
+    return [{**user_summary(b), "bot_role": b.bot_role} for b in bots]
+
+
+@router.get("/automod", response_model=dict)
+async def automod_status(admin: User = Depends(require_admin)):
+    """Whether the moderation bot checks the communities' rules (it needs ANTHROPIC_API_KEY)."""
+    return {"enabled": bool(settings.ANTHROPIC_API_KEY), "model": settings.MODERATION_MODEL}
+
+
+@router.post("/bots/{user_id}/session", response_model=dict)
+async def bot_session(user_id: int, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """A session as a bot account (bot-admin, bot-moderator) for MeetGo's administrators."""
+    bot = await db.get(User, user_id)
+    if not bot or not bot.bot_role:
+        raise HTTPException(404, t("err_user_not_found"))
+    logger.info("Administrator %s opened a session as %s", admin.id, bot.display_name)
+    return {"access_token": create_access_token(str(bot.id), 12 * 60)}
 
 
 # ---------- moderation ----------

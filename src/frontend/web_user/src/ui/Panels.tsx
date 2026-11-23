@@ -141,6 +141,11 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
     if (!window.confirm(ask)) return;
     void run(() => api.removeCommunityMember(conv.id, userId, ban), t(ban ? "ui_community_member_banned" : "ui_community_member_removed", { name: user.display_name })).then(onClose);
   }
+  function banFor(hours: number | null) {
+    if (hours === null) return kick(true);
+    if (!window.confirm(t("ui_ban_confirm_hours", { name: user.display_name, hours }))) return;
+    void run(() => api.banCommunityMember(conv.id, userId, hours), t("ui_banned_toast", { name: user.display_name })).then(onClose);
+  }
   async function message() {
     try {
       const res = await api.openDm(userId);
@@ -181,8 +186,10 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
               : <button className="btn sm" onClick={() => run(() => api.moderate(conv.id, userId, "silence", 60), t("ui_done"))}>{t("ui_silence_1h")}</button>}
             {conv.kind === "channel" ? (
               <>
+                <button className="btn sm" onClick={() => banFor(6)}>{t("ui_ban_6h")}</button>
+                <button className="btn sm" onClick={() => banFor(24)}>{t("ui_ban_24h")}</button>
+                <button className="btn sm danger" onClick={() => banFor(null)}><Icon name="shield" size="sm" />{t("ui_ban_forever")}</button>
                 <button className="btn sm" onClick={() => kick(false)}><Icon name="door" size="sm" />{t("ui_community_remove_member")}</button>
-                <button className="btn sm danger" onClick={() => kick(true)}><Icon name="shield" size="sm" />{t("ui_community_ban_member")}</button>
               </>
             ) : (
               <button className="btn sm danger" onClick={() => run(() => api.moderate(conv.id, userId, conv.kind === "group" ? "remove" : "ban"), t("ui_done"))}>{conv.kind === "group" ? t("ui_remove_member") : t("ui_ban")}</button>

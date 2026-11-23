@@ -7,6 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.board import service as board
 from app.board.service import PLAN_KINDS, as_utc, get_post, is_plan, posts_out
+from app.communities import automod
+from app.messaging.service import _background
 from app.communities.service import active, get_community, staff_of
 from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
@@ -92,6 +94,7 @@ async def create_post(community_id: int, payload: BoardPostIn, db: AsyncSession 
         await board.create_plan_chat(db, post, user)
     await db.commit()
     await _publish(db, conv.id, {"type": "post.created", "community_id": conv.id, "post_id": post.id})
+    _background(automod.check_post(post.id))
     if post.chat_conversation_id:
         await realtime.publish([user.id], {"type": "conversation.changed", "conversation_id": post.chat_conversation_id})
     return await _post_out(db, user, post)
@@ -308,6 +311,7 @@ async def add_comment(post_id: int, payload: CommentIn, db: AsyncSession = Depen
     out = board.comment_out(comment, user, user, staff_of(member, user))
     await _publish(db, conv.id, {"type": "comment.created", "community_id": conv.id, "post_id": post.id,
                                  "comment": {**out, "can_delete": False}})
+    _background(automod.check_comment(comment.id))
     return out
 
 

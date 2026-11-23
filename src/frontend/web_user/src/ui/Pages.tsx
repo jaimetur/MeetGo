@@ -339,6 +339,7 @@ export function AccountPage() {
           <div className="acchero-meta">{me.email}</div>
           <div className="acchero-meta">{me.province}{ageLabel ? ` · ${ageLabel}` : ""}</div>
         </div>
+        {me.role === "admin" ? <button className="btn sm acchero-admin" onClick={() => navigate("/admin")}><Icon name="shield" size="sm" />{t("ui_nav_admin")}</button> : null}
         <button className="btn sm danger acchero-out" onClick={signOut}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
       </div>
 

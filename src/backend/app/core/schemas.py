@@ -51,6 +51,7 @@ class UserOut(BaseModel):
 
 class MeOut(UserOut):
     email: str | None
+    bot_role: str | None = None  # bot-admin / bot-moderator accounts
     dob_change_count: int
     email_verified: bool
     role: str
@@ -102,6 +103,10 @@ class VerifyEmailIn(BaseModel):
 class AdminLoginIn(BaseModel):
     username: str
     password: str
+
+class BanIn(BaseModel):
+    hours: int | None = Field(default=None, ge=1, le=24 * 365)  # None: for good
+
 
 class AdminUserUpdateIn(BaseModel):
     display_name: str | None = None

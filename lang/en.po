@@ -1064,6 +1064,39 @@ msgstr "The message is empty"
 msgid "err_message_too_long"
 msgstr "The message is too long"
 
+msgid "err_banned_until"
+msgstr "You are banned in this community until {until}."
+
+msgid "err_banned_for_now"
+msgstr "You are banned in this community for now."
+
+msgid "automod_rule_toxicity"
+msgstr "No insults or harassment"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "No phone numbers in the community"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "No links in the community"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} is banned for {hours} hours for breaking a rule: {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} has been banned for good for breaking the rules again: {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "You have been banned for {hours} hours"
+
+msgid "email_banned_hours_body"
+msgstr "Something you wrote broke a community rule ({rule}). For {hours} hours you can read but not write. If it happens again the ban will be longer."
+
+msgid "email_banned_forever_subject"
+msgstr "You have been banned from a community"
+
+msgid "email_banned_forever_body"
+msgstr "You broke the community rules again ({rule}) and you have been banned for good. Only an admin of the community can lift it."
+
 msgid "err_banned_here"
 msgstr "You can't write in this conversation"
 
@@ -3794,6 +3827,135 @@ msgstr "Expel from the community"
 
 msgid "ui_community_ban_short"
 msgstr "Expel"
+
+msgid "ui_ban_confirm_hours"
+msgstr "Ban {name} for {hours} hours? They will read but not write."
+
+msgid "ui_banned_toast"
+msgstr "{name} is banned"
+
+msgid "ui_unbanned_toast"
+msgstr "Ban lifted for {name}"
+
+msgid "ui_bans_title"
+msgstr "Banned ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Banned for good"
+
+msgid "ui_banned_until"
+msgstr "Banned until {until}"
+
+msgid "ui_unban"
+msgstr "Lift ban"
+
+msgid "ui_unban_admins_only"
+msgstr "Only an admin can lift a ban."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Community admin bot: invitations, requests and bans"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Moderation bot: applies the rules automatically"
+
+msgid "ui_bot_linked"
+msgstr "Linked to {bot}"
+
+msgid "ui_ban_title"
+msgstr "Ban"
+
+msgid "ui_ban_hint"
+msgstr "While it lasts they can read but not write."
+
+msgid "ui_ban_6h"
+msgstr "6 hours"
+
+msgid "ui_ban_24h"
+msgstr "24 hours"
+
+msgid "ui_ban_7d"
+msgstr "7 days"
+
+msgid "ui_ban_forever"
+msgstr "For good"
+
+msgid "ui_you_are_banned"
+msgstr "You are banned in this community until {until}: you can read but not write."
+
+msgid "ui_admin_only"
+msgstr "Only MeetGo administrators can see this."
+
+msgid "ui_admin_reports"
+msgstr "Moderation"
+
+msgid "ui_admin_users"
+msgstr "Users"
+
+msgid "ui_admin_bots"
+msgstr "Bot accounts"
+
+msgid "ui_nav_admin"
+msgstr "Administration"
+
+msgid "ui_admin_panel"
+msgstr "Full panel"
+
+msgid "ui_admin_no_reports"
+msgstr "No reports waiting."
+
+msgid "ui_admin_reported_by"
+msgstr "Reported by {name}"
+
+msgid "ui_admin_open"
+msgstr "Open"
+
+msgid "ui_admin_delete_content"
+msgstr "Delete content"
+
+msgid "ui_admin_dismiss"
+msgstr "Dismiss"
+
+msgid "ui_admin_search_users"
+msgstr "Search by name, email or phone"
+
+msgid "ui_admin_role_admin"
+msgstr "MeetGo admin"
+
+msgid "ui_admin_blocked"
+msgstr "Blocked"
+
+msgid "ui_admin_remove_admin"
+msgstr "Remove admin"
+
+msgid "ui_admin_make_admin"
+msgstr "Make admin"
+
+msgid "ui_admin_unblock"
+msgstr "Unblock"
+
+msgid "ui_admin_block"
+msgstr "Block account"
+
+msgid "ui_admin_bots_hint"
+msgstr "Use the bot accounts to act as them in any community. Go back to your account from the notice at the top."
+
+msgid "ui_admin_automod_on"
+msgstr "Automatic rules moderation: on"
+
+msgid "ui_admin_automod_off"
+msgstr "Automatic rules moderation: off (the Claude API key is missing)"
+
+msgid "ui_admin_enter_as"
+msgstr "Enter as {name}"
+
+msgid "ui_acting_as"
+msgstr "You are using the account {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Back to my account"
 
 msgid "ui_community_ban_hint"
 msgstr "They leave and cannot join again."

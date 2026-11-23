@@ -1064,6 +1064,39 @@ msgstr "Het bericht is leeg"
 msgid "err_message_too_long"
 msgstr "Het bericht is te lang"
 
+msgid "err_banned_until"
+msgstr "Je bent in deze community geblokkeerd tot {until}."
+
+msgid "err_banned_for_now"
+msgstr "Je bent in deze community tijdelijk geblokkeerd."
+
+msgid "automod_rule_toxicity"
+msgstr "Geen beledigingen of intimidatie"
+
+msgid "automod_rule_phone_not_allowed"
+msgstr "Geen telefoonnummers in de community"
+
+msgid "automod_rule_links_not_allowed"
+msgstr "Geen links in de community"
+
+msgid "bot_banned_hours"
+msgstr "🚫 {name} is {hours} uur geblokkeerd wegens het overtreden van een regel: {rule}"
+
+msgid "bot_banned_forever"
+msgstr "🚫 {name} is definitief geblokkeerd wegens het opnieuw overtreden van de regels: {rule}"
+
+msgid "email_banned_hours_subject"
+msgstr "Je bent {hours} uur geblokkeerd"
+
+msgid "email_banned_hours_body"
+msgstr "Iets wat je schreef overtreedt een regel van de community ({rule}). {hours} uur lang kun je lezen maar niet schrijven. Gebeurt het weer, dan duurt de blokkade langer."
+
+msgid "email_banned_forever_subject"
+msgstr "Je bent geblokkeerd in een community"
+
+msgid "email_banned_forever_body"
+msgstr "Je hebt de regels van de community opnieuw overtreden ({rule}) en bent definitief geblokkeerd. Alleen een admin van de community kan de blokkade opheffen."
+
 msgid "err_banned_here"
 msgstr "Je kunt niet schrijven in dit gesprek"
 
@@ -3793,6 +3826,135 @@ msgstr "Uit de community zetten"
 
 msgid "ui_community_ban_short"
 msgstr "Verwijderen"
+
+msgid "ui_ban_confirm_hours"
+msgstr "{name} {hours} uur blokkeren? Diegene kan lezen maar niet schrijven."
+
+msgid "ui_banned_toast"
+msgstr "{name} is geblokkeerd"
+
+msgid "ui_unbanned_toast"
+msgstr "Blokkade van {name} opgeheven"
+
+msgid "ui_bans_title"
+msgstr "Geblokkeerd ({n})"
+
+msgid "ui_banned_forever"
+msgstr "Definitief geblokkeerd"
+
+msgid "ui_banned_until"
+msgstr "Geblokkeerd tot {until}"
+
+msgid "ui_unban"
+msgstr "Blokkade opheffen"
+
+msgid "ui_unban_admins_only"
+msgstr "Alleen een admin kan een blokkade opheffen."
+
+msgid "ui_bot_label"
+msgstr "Bot"
+
+msgid "ui_bot_admin_hint"
+msgstr "Adminbot van de community: uitnodigingen, verzoeken en blokkades"
+
+msgid "ui_bot_moderator_hint"
+msgstr "Moderatiebot: past de regels automatisch toe"
+
+msgid "ui_bot_linked"
+msgstr "Gekoppeld aan {bot}"
+
+msgid "ui_ban_title"
+msgstr "Blokkeren"
+
+msgid "ui_ban_hint"
+msgstr "Zolang het duurt kan diegene lezen maar niet schrijven."
+
+msgid "ui_ban_6h"
+msgstr "6 uur"
+
+msgid "ui_ban_24h"
+msgstr "24 uur"
+
+msgid "ui_ban_7d"
+msgstr "7 dagen"
+
+msgid "ui_ban_forever"
+msgstr "Definitief"
+
+msgid "ui_you_are_banned"
+msgstr "Je bent in deze community geblokkeerd tot {until}: je kunt lezen maar niet schrijven."
+
+msgid "ui_admin_only"
+msgstr "Alleen MeetGo-beheerders zien dit."
+
+msgid "ui_admin_reports"
+msgstr "Moderatie"
+
+msgid "ui_admin_users"
+msgstr "Gebruikers"
+
+msgid "ui_admin_bots"
+msgstr "Botaccounts"
+
+msgid "ui_nav_admin"
+msgstr "Beheer"
+
+msgid "ui_admin_panel"
+msgstr "Volledig paneel"
+
+msgid "ui_admin_no_reports"
+msgstr "Geen meldingen in behandeling."
+
+msgid "ui_admin_reported_by"
+msgstr "Gemeld door {name}"
+
+msgid "ui_admin_open"
+msgstr "Openen"
+
+msgid "ui_admin_delete_content"
+msgstr "Inhoud verwijderen"
+
+msgid "ui_admin_dismiss"
+msgstr "Negeren"
+
+msgid "ui_admin_search_users"
+msgstr "Zoek op naam, e-mail of telefoon"
+
+msgid "ui_admin_role_admin"
+msgstr "MeetGo-admin"
+
+msgid "ui_admin_blocked"
+msgstr "Geblokkeerd"
+
+msgid "ui_admin_remove_admin"
+msgstr "Admin intrekken"
+
+msgid "ui_admin_make_admin"
+msgstr "Admin maken"
+
+msgid "ui_admin_unblock"
+msgstr "Deblokkeren"
+
+msgid "ui_admin_block"
+msgstr "Account blokkeren"
+
+msgid "ui_admin_bots_hint"
+msgstr "Gebruik de botaccounts om in elke community als hen te handelen. Ga terug naar je account via de melding bovenaan."
+
+msgid "ui_admin_automod_on"
+msgstr "Automatische regelmoderatie: aan"
+
+msgid "ui_admin_automod_off"
+msgstr "Automatische regelmoderatie: uit (de Claude API-sleutel ontbreekt)"
+
+msgid "ui_admin_enter_as"
+msgstr "Binnengaan als {name}"
+
+msgid "ui_acting_as"
+msgstr "Je gebruikt het account {name}"
+
+msgid "ui_back_to_my_account"
+msgstr "Terug naar mijn account"
 
 msgid "ui_community_ban_hint"
 msgstr "Diegene vertrekt en kan niet meer lid worden."

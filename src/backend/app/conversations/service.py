@@ -175,9 +175,10 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
     ids = [c.id for _, c in rows]
 
     counts = dict((await db.execute(
-        select(ConversationMember.conversation_id, func.count()).where(
+        select(ConversationMember.conversation_id, func.count())
+        .join(User, User.id == ConversationMember.user_id).where(
             ConversationMember.conversation_id.in_(ids), ConversationMember.banned.is_(False),
-            ConversationMember.away.is_(False))
+            ConversationMember.away.is_(False), User.bot_role.is_(None))  # the community bots do not count
         .group_by(ConversationMember.conversation_id))).all())
 
     main_stream = or_(Message.thread_root_id.is_(None), Message.also_in_channel.is_(True))

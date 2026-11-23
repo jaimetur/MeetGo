@@ -110,6 +110,8 @@ class User(Base):
     lang: Mapped[str] = mapped_column(String(8), default="es", server_default="es")
     email_prefs: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     last_digest_email_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # Bot accounts (bot-admin, bot-moderator): the role they have in every community; None for people.
+    bot_role: Mapped[str | None] = mapped_column(String(16), nullable=True)
 
 
 class Interest(Base):
@@ -222,6 +224,8 @@ class ConversationMember(Base):
     last_strike_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     silenced_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     banned: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Temporary ban in a community: until then the person reads but cannot write (chat, board, comments).
+    ban_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     # Newest message already covered by an email, so a digest never repeats a message.
     email_notified_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
     # Channel of a zone the person has left: kept (with its role) but hidden, silent and read-only until they return.

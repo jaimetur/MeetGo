@@ -11,6 +11,7 @@ export type Me = UserSummary & {
   accept_dm: boolean;
   bio?: string | null;
   role: string;
+  bot_role?: string | null;
   email_verified: boolean;
   dob_change_count: number;
   email_prefs?: Record<string, boolean>;
@@ -143,10 +144,11 @@ export type Community = {
   conversation_id: number;
   rules?: string | null;
   invite_code?: string | null;
+  ban_until?: string | null;
   created_at: string;
 };
 
-export type CommunityMember = UserSummary & { role: CommunityRole; online: boolean };
+export type CommunityMember = UserSummary & { role: CommunityRole; online: boolean; bot?: boolean; ban_until?: string | null; strikes?: number };
 
 export type PostKind = "thread" | "meetup" | "event" | "notice";
 export type CommentsMode = "all" | "attendees" | "off";

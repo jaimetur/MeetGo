@@ -3,7 +3,7 @@
 import logging
 import secrets
 
-from sqlalchemy import func, select
+from sqlalchemy import text, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
@@ -179,6 +179,29 @@ async def seed(db: AsyncSession) -> None:
             db.add(Interest(slug=slug, name=name))
     await db.commit()
     await ensure_admin(db)
+    await ensure_bots(db)
+
+
+BOTS = {"admin": "bot-admin", "moderator": "bot-moderator"}
+
+
+async def ensure_bots(db: AsyncSession) -> None:
+    """The bot accounts exist and are members of every community (new ones get them from a database trigger)."""
+    have = set((await db.execute(select(User.bot_role).where(User.bot_role.is_not(None)))).scalars().all())
+    for role, name in BOTS.items():
+        if role not in have:
+            db.add(User(email=None, phone=None, password_hash=None, display_name=name, dob="1990-01-01",
+                        age_range=age_range_from_dob("1990-01-01"), country="ES", province="MeetGo", accept_dm=False,
+                        bio="", role="user", email_verified=True, bot_role=role))
+    await db.commit()
+    await db.execute(text("""
+        INSERT INTO conversation_members (conversation_id, user_id, role, joined_at, last_read_message_id, notify,
+                                          pinned, hidden, strikes, banned, email_notified_message_id, away)
+        SELECT c.id, u.id, u.bot_role, now(), 0, 'none', false, false, 0, false, 0, false
+        FROM conversations c CROSS JOIN users u
+        WHERE c.kind = 'channel' AND u.bot_role IS NOT NULL
+        ON CONFLICT DO NOTHING"""))
+    await db.commit()
 
 
 async def ensure_admin(db: AsyncSession) -> None:

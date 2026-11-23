@@ -14,6 +14,7 @@ import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
 import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
 import { PlansPage, RightColumn } from "./Plans";
+import { ActingAsBar, AdminPage } from "./Admin";
 import { Paywall } from "./Paywall";
 import { Sidebar } from "./Sidebar";
 
@@ -129,6 +130,7 @@ function Shell() {
   const route = useRoute();
   const conversations = useStore((s) => s.conversations);
   const requests = useStore((s) => s.requests);
+  const me = useStore((s) => s.me);
   const connected = useStore((s) => s.connected);
   const paywall = useStore((s) => s.paywall);
   const unread = Object.values(conversations).reduce((n, c) => n + (c.notify === "none" || (c.muted_until && new Date(c.muted_until) > new Date()) ? 0 : c.unread_count), 0);
@@ -203,6 +205,7 @@ function Shell() {
     { name: "people", icon: "users", label: t("ui_nav_people"), badge: requestsTotal },
     { name: "mentions", icon: "at", label: t("ui_nav_mentions"), badge: mentions, at: true },
     { name: "account", icon: "user", label: t("ui_nav_profile"), badge: 0 },
+    ...(me?.role === "admin" ? [{ name: "admin", icon: "shield", label: t("ui_nav_admin"), badge: 0 }] : []),
   ];
   // Phones: Home · Plans · Communities · Chats · Profile, and a round ＋ to publish at the side. Swiping moves
   // between the tabs.
@@ -278,6 +281,7 @@ function Shell() {
       {route.name === "account" ? <AccountPage /> : null}
       {route.name === "share" ? <SharePage /> : null}
       {route.name === "join" ? <JoinPage code={route.code} /> : null}
+      {route.name === "admin" ? <AdminPage /> : null}
 
       {withRight ? <RightColumn /> : null}
       {route.name === "chat" && panelOpen ? <SidePanel conversationId={route.id} thread={route.thread} panel={route.panel} /> : null}
@@ -295,6 +299,7 @@ function Shell() {
 
       {route.name !== "chat" && !detail ? <InstallHint /> : null}
       {paywall ? <Paywall onClose={() => setState({ paywall: false })} /> : null}
+      <ActingAsBar />
       <Toasts />
     </div>
   );
