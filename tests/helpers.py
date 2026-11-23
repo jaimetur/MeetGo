@@ -32,3 +32,20 @@ async def befriend(client, a, b):
     await client.post("/friends/requests", json={"to_user_id": b_me["id"]}, headers=a_headers)
     res = await client.post("/friends/requests", json={"to_user_id": a_me["id"]}, headers=b_headers)
     assert res.json()["status"] == "ACCEPTED"
+
+
+async def register(client, email="ana@example.com", name="Ana", dob="1990-05-01", phone="612345678", **extra):
+    payload = {"email": email, "phone": phone, "password": "secret123", "display_name": name,
+               "dob": dob, "country": "ES", "province": "Madrid", **extra}
+    return await client.post("/auth/register", json=payload)
+
+
+async def verified_token(client, db_session, email="ana@example.com", **kw):
+    res = await register(client, email=email, **kw)
+    assert res.status_code == 200, res.text
+    async with db_session() as db:
+        await db.execute(update(User).where(User.email == email).values(email_verified=True))
+        await db.commit()
+    res = await client.post("/auth/login", json={"email": email, "password": "secret123"})
+    assert res.status_code == 200, res.text
+    return {"Authorization": f"Bearer {res.json()['access_token']}"}

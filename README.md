@@ -169,7 +169,7 @@ administrator is `admin@local` with password `admin`. The user site opens the la
 
 ### Backend tests
 
-See [app/tests/README.md](app/tests/README.md).
+See [tests/README.md](tests/README.md): one folder per module, run with `pytest` from the repository root.
 
 ## Releases
 

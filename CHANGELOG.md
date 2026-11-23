@@ -52,6 +52,7 @@ All notable changes to this project will be documented in this file.
 - Sent emails in the background, serialized API dates as UTC with a `Z`, capped history pages, limited message length, reused one Redis connection and fixed the chat reconnection.
 
 #### 📚 Documentation:
+- Moved the tests to `tests/` at the repository root, one folder per module (as in BodyLens), run with `pytest` from the root.
 - Added backend tests (`app/tests`) and how to run them.
 - Rewrote the README: features, deployment behind a reverse proxy, and how to turn on payments and push notifications.
 - Added `docs/ANDROID.md`: signing key, GitHub secrets, Firebase, Google Play subscription and App Links setup. `tools/CreateUpdateRelease.py` now also updates the Android version.
