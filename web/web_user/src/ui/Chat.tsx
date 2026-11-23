@@ -459,12 +459,12 @@ export function MessageItem(props: {
     <div>
       {separators}
       <div
-        className={["msg", cont ? "cont" : "", mentioned ? "mention" : "", props.flash ? "flash" : "", m.pending ? "pending" : "", m.failed ? "failed" : ""].join(" ")}
+        className={["msg", mine ? "mine" : "", cont ? "cont" : "", mentioned ? "mention" : "", props.flash ? "flash" : "", m.pending ? "pending" : "", m.failed ? "failed" : ""].join(" ")}
         onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onTouchMove={cancelPress}
         onContextMenu={(e) => { if (window.matchMedia("(pointer: coarse)").matches) { e.preventDefault(); actions.openSheet(m); } }}
       >
         <div className="avcol"><button onClick={() => m.sender && actions.profile(m.sender.id)} aria-label={m.sender?.display_name}><Avatar user={m.sender} size={inThread ? 32 : 38} /></button></div>
-        <div style={{ minWidth: 0 }}>
+        <div className="mbody">
           {!cont ? (
             <div className="mh">
               <button className="who" onClick={() => m.sender && actions.profile(m.sender.id)}>{mine ? t("ui_you") : m.sender?.display_name || t("ui_deleted_user")}</button>

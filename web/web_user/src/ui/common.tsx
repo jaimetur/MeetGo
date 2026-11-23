@@ -59,7 +59,10 @@ export function Avatar({ user, size = 38, online }: { user: UserSummary | null |
 export function ConvIcon({ conv, size = 40 }: { conv: Conversation; size?: number }) {
   if (conv.kind === "dm") return <Avatar user={conv.other_user} size={size} online={conv.other_user?.online} />;
   if (conv.kind === "channel") {
-    return <div className="chan" style={{ width: size, height: size, fontSize: size * 0.45 }} aria-hidden="true">#</div>;
+    const color = colorFor(conv.slug || conv.id);
+    return (
+      <div className="chan" style={{ width: size, height: size, fontSize: size * 0.45, color, background: `color-mix(in srgb, ${color} 15%, transparent)` }} aria-hidden="true">#</div>
+    );
   }
   if (conv.avatar_url) return <Avatar user={{ id: conv.id, display_name: conv.title, avatar_url: conv.avatar_url }} size={size} />;
   const small = Math.round(size * 0.66);

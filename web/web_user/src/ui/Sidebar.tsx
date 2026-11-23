@@ -50,7 +50,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
       <div className="lhead">
         <div className="row">
           <div className="ltitle grow">{t("ui_nav_chats")}</div>
-          <button className="iconbtn" title={t("ui_new_chat")} aria-label={t("ui_new_chat")} onClick={() => setNewChat(true)}><Icon name="edit" /></button>
+          <button className="iconbtn compose" title={t("ui_new_chat")} aria-label={t("ui_new_chat")} onClick={() => setNewChat(true)}><Icon name="edit" /></button>
         </div>
         <div className="search">
           <Icon name="search" size="sm" />
