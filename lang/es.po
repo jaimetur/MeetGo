@@ -2619,7 +2619,7 @@ msgid "landing_hero_lead"
 msgstr "Canales con personas de tu provincia, tu edad y tus aficiones. Cuando surge el plan, creáis un grupo y lo cerráis por privado."
 
 msgid "landing_hero_title"
-msgstr "Habla con gente <span class=\"meet\">de tu zona</span>. ¡Y <span class=\"go\">queda con ellos</span>!"
+msgstr "Habla con gente <span class=\"meet\">de tu zona.</span> <span class=\"go\">¡Y queda con ellos!</span>"
 
 msgid "landing_how_k"
 msgstr "Cómo funciona"

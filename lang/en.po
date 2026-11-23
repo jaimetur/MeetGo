@@ -2619,7 +2619,7 @@ msgid "landing_hero_lead"
 msgstr "Channels with people from your province, your age range and your hobbies. When a plan comes up, start a group and sort it out in private."
 
 msgid "landing_hero_title"
-msgstr "Talk to people <span class=\"meet\">near you</span>. Then <span class=\"go\">meet up</span>."
+msgstr "Talk to people <span class=\"meet\">near you.</span> <span class=\"go\">Then meet up.</span>"
 
 msgid "landing_how_k"
 msgstr "How it works"
