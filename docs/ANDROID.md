@@ -96,6 +96,17 @@ The API checks every purchase token with Google and acknowledges it:
 3. Paste the JSON key in MeetGo's administration → **Subscriptions** → **Google Play** → *Cuenta de servicio (JSON)*
    (package `app.meetgo.android`, product `meetgo`).
 
+### 4b. Google Play: the reviewer's account
+
+The app needs an account, so *App content → App access* asks for one for Google's reviewers:
+
+1. Create it in MeetGo's administration → Users (for example `playreview@meetgo.app`, a province and a date of
+   birth of an adult) with a password of your own, and put that address and password in *App access*.
+2. Fill its zone with demo activity (demo people, communities with chat, board posts, plans with their plan chat):
+   `docker compose … exec app python -m app.demo.play_review playreview@meetgo.app`. It can run again at any time.
+   Demo people have addresses at `demo.meetgo.invalid`, no password and "Cuenta de demostración" in their bio; no
+   email is ever sent to them.
+
 ### 5. App Links
 
 Android only opens `https://meetgo.app/app/c/...` links in the app if both `https://meetgo.app` and

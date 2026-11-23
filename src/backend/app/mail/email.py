@@ -71,6 +71,8 @@ async def send_email(db: AsyncSession, to_email: str, subject: str, body: str, h
 async def send_email_background(db: AsyncSession, to_email: str, subject: str, body: str, html: str | None = None,
                                 headers: dict[str, str] | None = None) -> None:
     """Queue an email without making the request wait for the mail server."""
+    if (to_email or "").lower().endswith(".invalid"):  # demo accounts (app/demo): no mailbox behind them
+        return
     smtp = await get_section(db, "smtp")
 
     async def run():
