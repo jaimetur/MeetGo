@@ -40,6 +40,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
+- Fixed the empty band under the phone tab bar in Safari: the app fills the whole screen and only fits the visible area while the keyboard is open.
 - Sign-up now checks that the email is a real address (name@domain.tld).
 - Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.
 - Fixed moderation deleting words that contain an insult (for example "reputación"), and detected international phone numbers.
