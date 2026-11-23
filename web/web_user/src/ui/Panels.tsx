@@ -4,7 +4,7 @@ import { api } from "../api";
 import { chatPath, navigate, queryParam } from "../router";
 import { getState, loadConversations, loadThread, refreshConversation, toast, useStore } from "../store";
 import type { Conversation, Member, Message } from "../types";
-import { Composer, MessageItem, type MessageActions } from "./Chat";
+import { ActionSheet, Composer, MessageItem, type MessageActions } from "./Chat";
 import { Avatar, Icon, convTitle } from "./common";
 
 export function SidePanel({ conversationId, thread, panel }: { conversationId: number; thread: number | null; panel: "members" | "info" | null }) {
@@ -34,6 +34,7 @@ function ThreadPanel({ conv, rootId }: { conv: Conversation; rootId: number }) {
   const typingMap = useStore((s) => s.typing[conv.id]);
   const billing = useStore((s) => s.billing);
   const [replyTo, setReplyTo] = useState<Message | null>(null);
+  const [sheetFor, setSheetFor] = useState<Message | null>(null);
   useEffect(() => {
     loadThread(rootId, conv.id).catch((e) => toast(e.message, "error"));
   }, [rootId, conv.id]);
@@ -48,7 +49,7 @@ function ThreadPanel({ conv, rootId }: { conv: Conversation; rootId: number }) {
     pin: () => undefined,
     copy: (m) => navigator.clipboard?.writeText(m.body).catch(() => undefined),
     openMenu: () => undefined,
-    openSheet: () => undefined,
+    openSheet: setSheetFor,
     jump: () => undefined,
     retry: () => undefined,
     profile: (id) => navigate(chatPath(conv.id, { panel: "members" }) + `&user=${id}`),
@@ -65,6 +66,7 @@ function ThreadPanel({ conv, rootId }: { conv: Conversation; rootId: number }) {
       </div>
       <div className="typing">{typing.length ? <><span className="dots"><i /><i /><i /></span>{t("ui_typing_one", { name: typing[0] })}</> : null}</div>
       {readOnly ? null : <Composer conv={conv} threadRootId={rootId} replyTo={replyTo} onCancelReply={() => setReplyTo(null)} compact />}
+      {sheetFor ? <ActionSheet m={sheetFor} conv={conv} meId={me?.id} staff={staff} actions={actions} onClose={() => setSheetFor(null)} inThread /> : null}
     </>
   );
 }

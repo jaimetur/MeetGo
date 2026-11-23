@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getLang, setLang, t } from "@lang";
 import { api, setToken } from "../api";
+import { isNativeApp } from "../native";
 import { queryParam } from "../router";
 
 type View = "login" | "register" | "forgot" | "reset" | "sent";
@@ -15,24 +16,31 @@ export function AuthScreen({ onSignedIn }: { onSignedIn: () => Promise<void> }) 
     setLangState(next);
   };
 
+  const logo = <><span className="m">Meet</span><span className="g">Go</span></>;
   return (
     <div className="auth">
-      <div className="box" key={lang}>
-        <div className="row">
-          <div className="logo grow" aria-label="MeetGo"><span className="m">Meet</span><span className="g">Go</span></div>
+      <div className="authcol" key={lang}>
+        {/* The logo and the "Home page" button go to the public website (not in the Android app, which has no website). */}
+        <div className="authtop">
+          {isNativeApp
+            ? <div className="logo grow" aria-label="MeetGo">{logo}</div>
+            : <a className="logo grow" href="/" aria-label={t("ui_home_page")}>{logo}</a>}
+          {isNativeApp ? null : <a className="btn sm home" href="/"><span aria-hidden="true">🏠</span><span className="lbl">{t("ui_home_page")}</span></a>}
           <button className="btn sm" onClick={switchLang}>{lang === "es" ? "EN" : "ES"}</button>
         </div>
-        {view === "login" ? <Login onSignedIn={onSignedIn} setView={setView} /> : null}
-        {view === "register" ? <Register setView={setView} /> : null}
-        {view === "forgot" ? <Forgot setView={setView} /> : null}
-        {view === "reset" ? <Reset token={resetToken || ""} setView={setView} /> : null}
-        {view === "sent" ? (
-          <div className="stack">
-            <h1>{t("ui_check_email_title")}</h1>
-            <p className="muted">{t("ui_check_email_body")}</p>
-            <button className="btn pri" onClick={() => setView("login")}>{t("ui_go_login")}</button>
-          </div>
-        ) : null}
+        <div className="box">
+          {view === "login" ? <Login onSignedIn={onSignedIn} setView={setView} /> : null}
+          {view === "register" ? <Register setView={setView} /> : null}
+          {view === "forgot" ? <Forgot setView={setView} /> : null}
+          {view === "reset" ? <Reset token={resetToken || ""} setView={setView} /> : null}
+          {view === "sent" ? (
+            <div className="stack">
+              <h1>{t("ui_check_email_title")}</h1>
+              <p className="muted">{t("ui_check_email_body")}</p>
+              <button className="btn pri" onClick={() => setView("login")}>{t("ui_go_login")}</button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

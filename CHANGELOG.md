@@ -32,11 +32,15 @@ All notable changes to this project will be documented in this file.
 - Split the backend into routers and services, with one shared Redis connection, real-time events fanned out through Redis for several processes, and presence kept in Redis.
 - The web sites are built with Vite and served by nginx in production instead of the Vite development server.
 - Removed the prefilled `admin`/`admin` credentials from the administration sign-in form and added the administration texts that were missing from the translations.
+- The web app behaves like a native app on the iPhone and other phones: no zoom, no bounce at the start or end of lists and pages, 16 px fields, the screen fitted to the visible area with the keyboard open, room for the notch and the home bar in panels, sheets and dialogs, larger touch targets and the bottom tab bar on every main screen.
+- The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
 - Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.
 - Fixed moderation deleting words that contain an insult (for example "reputación"), and detected international phone numbers.
 - Fixed sign-in without a password for accounts that have none, server errors for under-age or malformed birth dates, crossed friend requests and deleting a channel in use.
+- Fixed long-pressing a message on a phone: the actions sheet closed as soon as the finger lifted, and in threads it did not open at all.
+- Fixed the extra margins around the Channels, People, Mentions and Account screens, which on the iPhone also left them under the status bar.
 - Sent emails in the background, serialized API dates as UTC with a `Z`, capped history pages, limited message length, reused one Redis connection and fixed the chat reconnection.
 
 #### 📚 Documentation:

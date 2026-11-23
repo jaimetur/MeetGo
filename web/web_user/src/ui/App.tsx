@@ -150,7 +150,8 @@ function Shell() {
 
   const panelOpen = route.name === "chat" && (!!route.thread || !!route.panel);
   const isPage = ["explore", "people", "mentions", "account", "share", "join"].includes(route.name);
-  const shellClass = ["shell", panelOpen ? "with-panel" : "", isPage ? "page" : "", route.name !== "home" ? "chat-open" : ""].join(" ");
+  // "conv": inside a conversation the phone hides the bottom tab bar; the other screens keep it.
+  const shellClass = ["shell", panelOpen ? "with-panel" : "", isPage ? "is-page" : "", route.name !== "home" ? "chat-open" : "", route.name === "chat" ? "conv" : ""].join(" ");
   const requestsTotal = requests.friends + requests.dms;
 
   const nav = [

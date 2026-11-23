@@ -1441,6 +1441,9 @@ msgstr "Ir al último mensaje"
 msgid "ui_go_login"
 msgstr "Ir a entrar"
 
+msgid "ui_home_page"
+msgstr "Página de inicio"
+
 msgid "ui_group_members_hint"
 msgstr "Puedes añadir a tus amigos ahora, o compartir el enlace de invitación después."
 

@@ -1441,6 +1441,9 @@ msgstr "Go to latest"
 msgid "ui_go_login"
 msgstr "Back to sign in"
 
+msgid "ui_home_page"
+msgstr "Home page"
+
 msgid "ui_group_members_hint"
 msgstr "Add your friends now, or share the invitation link later."
 

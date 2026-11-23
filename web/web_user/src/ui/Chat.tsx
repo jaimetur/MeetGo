@@ -337,7 +337,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
       </button>
       <div className="acts" ref={ref} style={{ position: "relative" }}>
         <button className="iconbtn" title={t("ui_search_in_chat")} aria-label={t("ui_search_in_chat")} onClick={() => setSearch(true)}><Icon name="search" /></button>
-        <button className="iconbtn" title={t("ui_threads")} aria-label={t("ui_threads")} onClick={() => navigate(chatPath(conv.id, { panel: "info" }))}><Icon name="info" /></button>
+        <button className="iconbtn opt" title={t("ui_threads")} aria-label={t("ui_threads")} onClick={() => navigate(chatPath(conv.id, { panel: "info" }))}><Icon name="info" /></button>
         {conv.kind !== "dm" ? <button className="iconbtn" title={t("ui_members")} aria-label={t("ui_members")} onClick={() => navigate(chatPath(conv.id, { panel: "members" }))}><Icon name="users" /></button> : null}
         <button className="iconbtn" title={t("ui_more")} aria-label={t("ui_more")} aria-expanded={menu} onClick={() => setMenu((v) => !v)}><Icon name="more" /></button>
         {menu ? (
@@ -418,6 +418,7 @@ export function MessageItem(props: {
 }) {
   const { m, prev, conv, meId, staff, actions, inThread } = props;
   const pressTimer = useRef<number | null>(null);
+  const longPressed = useRef(false);
   const menuRef = useRef<HTMLDivElement>(null);
   useClickOutside(menuRef, () => props.closeMenu?.(), !!props.menuOpen);
   const newDay = !prev || dayKey(prev.created_at) !== dayKey(m.created_at);
@@ -439,10 +440,19 @@ export function MessageItem(props: {
   }
 
   const onTouchStart = () => {
-    pressTimer.current = window.setTimeout(() => actions.openSheet(m), 450);
+    longPressed.current = false;
+    pressTimer.current = window.setTimeout(() => {
+      longPressed.current = true;
+      actions.openSheet(m);
+    }, 450);
   };
   const cancelPress = () => {
     if (pressTimer.current) window.clearTimeout(pressTimer.current);
+  };
+  // After a long press, lifting the finger must not "click" the sheet that just opened under it (it would close it).
+  const onTouchEnd = (e: React.TouchEvent) => {
+    cancelPress();
+    if (longPressed.current) e.preventDefault();
   };
 
   return (
@@ -450,7 +460,7 @@ export function MessageItem(props: {
       {separators}
       <div
         className={["msg", cont ? "cont" : "", mentioned ? "mention" : "", props.flash ? "flash" : "", m.pending ? "pending" : "", m.failed ? "failed" : ""].join(" ")}
-        onTouchStart={onTouchStart} onTouchEnd={cancelPress} onTouchMove={cancelPress}
+        onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onTouchMove={cancelPress}
         onContextMenu={(e) => { if (window.matchMedia("(pointer: coarse)").matches) { e.preventDefault(); actions.openSheet(m); } }}
       >
         <div className="avcol"><button onClick={() => m.sender && actions.profile(m.sender.id)} aria-label={m.sender?.display_name}><Avatar user={m.sender} size={inThread ? 32 : 38} /></button></div>
@@ -529,7 +539,7 @@ function MenuActions({ m, conv, mine, canEdit, staff, actions, inThread, done }:
   );
 }
 
-function ActionSheet({ m, conv, meId, staff, actions, onClose }: { m: Message; conv: Conversation; meId?: number; staff: boolean; actions: MessageActions; onClose: () => void }) {
+export function ActionSheet({ m, conv, meId, staff, actions, onClose, inThread }: { m: Message; conv: Conversation; meId?: number; staff: boolean; actions: MessageActions; onClose: () => void; inThread?: boolean }) {
   const mine = m.sender?.id === meId;
   const canEdit = mine && !m.deleted && Date.now() - new Date(m.created_at).getTime() < 48 * 3600000;
   return (
@@ -538,7 +548,7 @@ function ActionSheet({ m, conv, meId, staff, actions, onClose }: { m: Message; c
         <div className="grab" />
         <div className="rbar">{QUICK_REACTIONS.map((e) => <button key={e} onClick={() => { actions.react(m, e); onClose(); }}>{e}</button>)}</div>
         <div className="menu" style={{ position: "static", boxShadow: "none", border: 0, background: "transparent" }}>
-          <MenuActions m={m} conv={conv} mine={mine} canEdit={canEdit} staff={staff} actions={actions} done={onClose} />
+          <MenuActions m={m} conv={conv} mine={mine} canEdit={canEdit} staff={staff} actions={actions} inThread={inThread} done={onClose} />
         </div>
       </div>
     </div>
@@ -755,7 +765,7 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
   const placeholder = threadRootId ? t("ui_reply_in_thread_ph") : conv.kind === "channel" ? t("ui_message_in", { name: convTitle(conv) }) : t("ui_message_to", { name: conv.title });
 
   return (
-    <div className="composer" style={compact ? { margin: "8px 12px 12px" } : undefined}>
+    <div className={"composer" + (compact ? " compact" : "")}>
       {suggest && candidates.length ? (
         <div className="suggest" role="listbox">
           {candidates.map((m, i) => (
