@@ -3723,3 +3723,45 @@ msgstr "Communautés · {zone}"
 
 msgid "ui_sec_plans"
 msgstr "Chats des plans"
+
+msgid "ui_rt_text"
+msgstr "texte"
+
+msgid "ui_rt_toolbar"
+msgstr "Mise en forme"
+
+msgid "ui_rt_bold"
+msgstr "Gras"
+
+msgid "ui_rt_italic"
+msgstr "Italique"
+
+msgid "ui_rt_underline"
+msgstr "Souligné"
+
+msgid "ui_rt_strike"
+msgstr "Barré"
+
+msgid "ui_rt_heading"
+msgstr "Titre"
+
+msgid "ui_rt_list"
+msgstr "Liste"
+
+msgid "ui_rt_callout"
+msgstr "Encadré"
+
+msgid "ui_rt_color"
+msgstr "Couleur"
+
+msgid "ui_rt_edit"
+msgstr "Modifier"
+
+msgid "ui_rt_preview"
+msgstr "Aperçu"
+
+msgid "ui_rt_empty"
+msgstr "Rien d’écrit pour l’instant."
+
+msgid "ui_rt_help"
+msgstr "# titre · - liste · > encadré · **gras** · *italique* · {green}couleur{/} · emojis 🎉"

@@ -5,6 +5,32 @@ import type { Conversation, UserSummary } from "../types";
 import { colorFor, initials } from "../util";
 
 const PATHS: Record<string, string> = {
+  // hobbies (community icons)
+  mountain: "M3 20h18L14.5 8l-3.5 6-2.5-3.5zM14.5 8l1.6-2.8L18 8",
+  bike: "M3 16.5a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M14 16.5a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M6.5 16.5 10 9h5l2.5 7.5M10 9 8.8 6H7M14 6h2.5",
+  book: "M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M8 7h8M8 10.5h6",
+  film: "M4 4h16v16H4zM8 4v16M16 4v16M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4",
+  car: "M4 16v-3.5L6.5 7h11l2.5 5.5V16zM4 12.5h16M6.5 16v2.5M17.5 16v2.5M7.5 14.2h.01M16.5 14.2h.01",
+  dumbbell: "M2.5 10v4M5.5 7v10M8.5 8.5v7M15.5 8.5v7M18.5 7v10M21.5 10v4M8.5 12h7",
+  ball: "M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM12 7.5l3.8 2.8-1.5 4.5H9.7l-1.5-4.5zM12 3v4.5M15.8 10.3l4.6-1.6M14.3 14.8l2.8 4M9.7 14.8l-2.8 4M8.2 10.3 3.6 8.7",
+  racket: "M10 14a5.5 5.5 0 1 0 7.8-7.8A5.5 5.5 0 0 0 10 14zM10 14l-6.5 6.5M12.3 6.7l5 5M10.5 9l5 5M7.5 15.5l1.5 1.5",
+  umbrella: "M3 12a9 9 0 0 1 18 0zM12 12v7a2 2 0 0 1-4 0M12 3v-1",
+  beer: "M6 8h9v12H6zM15 11h2.5a2 2 0 0 1 2 2v2.5a2 2 0 0 1-2 2H15M6 8a2.5 2.5 0 0 1 3.5-2.3 3 3 0 0 1 5.5 2.3M9 11.5v5.5M12 11.5v5.5",
+  coffee: "M4 9h13v4.5A5.5 5.5 0 0 1 11.5 19h-2A5.5 5.5 0 0 1 4 13.5zM17 10.5h1.5a2.5 2.5 0 0 1 0 5H16.5M8 2.5c-.8 1 .8 2 0 3.5M12 2.5c-.8 1 .8 2 0 3.5M3 21.5h15",
+  cocktail: "M4 4h16l-8 9.5zM12 13.5V20M8 20h8M15 4l2.5-2.5",
+  plane: "M10.5 13.5 3 10.5l1.5-1.5 7.5 1 4.5-5c1-1 2.5-1 3 0s0 2-1 3l-5 4.5 1 7.5-1.5 1.5-3-7.5-3 3V20l-1.5-2.5L3 16h2.5z",
+  moto: "M2.5 16a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M14.5 16a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M6 16l3.5-5h5.5l3 5M12.5 11l-1.5-4h3l2 4",
+  network: "M12 3a2.5 2.5 0 1 0 0 5a2.5 2.5 0 1 0 0-5zM5 16a2.5 2.5 0 1 0 0 5a2.5 2.5 0 1 0 0-5zM19 16a2.5 2.5 0 1 0 0 5a2.5 2.5 0 1 0 0-5zM12 8v4M12 12 6.5 16.5M12 12l5.5 4.5",
+  basket: "M3.5 10h17l-2 10h-13zM8 10l3.5-6.5M16 10l-3.5-6.5M4.5 14.5h15M9.5 10v10M14.5 10v10",
+  waves: "M2.5 15c2-2 3.5-2 5.5 0s3.5 2 5.5 0 3.5-2 5.5 0 2.2 1.3 2.5 1M2.5 19.5c2-2 3.5-2 5.5 0s3.5 2 5.5 0 3.5-2 5.5 0 2.2 1.3 2.5 1M15.5 4.5a2.5 2.5 0 1 0 0 5a2.5 2.5 0 1 0 0-5zM9 11.5l3-4.5 3.5 2.5",
+  trees: "M7 3l4 7H8.5l3 5h-9l3-5H3zM7 15v6M17 7.5l3.5 5.5h-2l2.5 4h-8l2.5-4h-2zM17 17v4",
+  trophy: "M7 4h10v5a5 5 0 0 1-10 0zM7 5.5H4a3 3 0 0 0 3 4M17 5.5h3a3 3 0 0 1-3 4M12 14v4M8 20.5h8M9.5 18h5",
+  camera: "M3.5 7.5h4l2-3h5l2 3h4V19h-17zM12 10a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z",
+  music: "M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0a3 3 0 1 1 6 0zM20 16a3 3 0 1 1-6 0a3 3 0 1 1 6 0z",
+  palette: "M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.9 1.4-2-.5-1.3.4-2.5 1.8-2.5H18a3 3 0 0 0 3-3A9 9 0 0 0 12 3zM7.5 11h.01M10 7h.01M14.5 7h.01M17 11h.01",
+  paw: "M12 13c-3 0-5.5 3-5.5 5.5 0 1.5 1.5 2.5 3 2l2.5-.8 2.5.8c1.5.5 3-.5 3-2C17.5 16 15 13 12 13zM5 9.5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M15 9.5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M8.5 5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M11.5 5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0",
+  gamepad: "M6 8h12a4 4 0 0 1 4 4v1.5a3.5 3.5 0 0 1-6.2 2.2L14.5 14h-5l-1.3 1.7A3.5 3.5 0 0 1 2 13.5V12a4 4 0 0 1 4-4zM7 10.5v3M5.5 12h3M15.5 11.5h.01M17.5 13h.01",
+  food: "M5 3v8a3 3 0 0 0 6 0V3M8 3v18M18 21V3c-2.5 1-4 3.5-4 7v4h4",
   search: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM16.5 16.5 21 21",
   chat: "M4 5h16v11H10l-5 4v-4H4z",
   compass: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z",
@@ -74,7 +100,9 @@ export function ConvIcon({ conv, size = 40 }: { conv: Conversation; size?: numbe
   if (conv.kind === "channel") {
     const color = colorFor(conv.slug || conv.id);
     return (
-      <div className="chan" style={{ width: size, height: size, fontSize: size * 0.45, color, background: `color-mix(in srgb, ${color} 15%, transparent)` }} aria-hidden="true">#</div>
+      <div className="chan" style={{ width: size, height: size, color, background: `color-mix(in srgb, ${color} 15%, transparent)` }} aria-hidden="true">
+        <Icon name={hobbyIcon(conv.slug, conv.title)} />
+      </div>
     );
   }
   if (conv.avatar_url) return <Avatar user={{ id: conv.id, display_name: conv.title, avatar_url: conv.avatar_url }} size={size} />;
@@ -178,3 +206,22 @@ export function InstallHint() {
     </div>
   );
 }
+
+/** The icon that represents a community's hobby, from its slug or title (any language). */
+const HOBBY_ICONS: [RegExp, string][] = [
+  [/sender|hik|trek|monta|mountain|randonn|wander/, "mountain"], [/cicl|bici|bike|cycl|mtb|velo|rad/, "bike"],
+  [/lect|libro|book|read|lectur|livre|lettur/, "book"], [/cine|film|movie|pel/, "film"], [/coche|car|auto/, "car"],
+  [/moto/, "moto"], [/fitness|crossfit|gym|gimnas|muscul/, "dumbbell"], [/futbol|fútbol|football|soccer|calcio/, "ball"],
+  [/tenis|tennis|padel|pádel/, "racket"], [/playa|beach|plage|spiaggia/, "umbrella"], [/cerveza|beer|bière|birra|bier/, "beer"],
+  [/caf[eé]|coffee/, "coffee"], [/copa|cocktail|drink|vino|wine/, "cocktail"], [/viaj|travel|voyage|viagg|reis/, "plane"],
+  [/network|negocio|business|emprend/, "network"], [/picnic|pícnic/, "basket"], [/acuat|acuát|nata|surf|swim|water|kayak|vela/, "waves"],
+  [/aire_libre|aire libre|outdoor|naturaleza|nature/, "trees"], [/foto|photo/, "camera"], [/m[uú]sic|concier|music/, "music"],
+  [/arte|art|pint|paint|dibuj/, "palette"], [/perro|mascot|dog|pet|gato/, "paw"], [/juego|game|videojue|gaming/, "gamepad"],
+  [/cocina|comida|food|cook|gastro|tapas|cena/, "food"], [/deporte|sport/, "trophy"],
+];
+
+export function hobbyIcon(slug?: string | null, title?: string | null): string {
+  const text = `${slug || ""} ${title || ""}`.toLowerCase();
+  return HOBBY_ICONS.find(([re]) => re.test(text))?.[1] || "users";
+}
+

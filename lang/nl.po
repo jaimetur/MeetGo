@@ -3724,3 +3724,45 @@ msgstr "{name} verlaat de community en de chat."
 
 msgid "ui_community_no_members"
 msgstr "Nog geen leden"
+
+msgid "ui_rt_text"
+msgstr "tekst"
+
+msgid "ui_rt_toolbar"
+msgstr "Opmaak"
+
+msgid "ui_rt_bold"
+msgstr "Vet"
+
+msgid "ui_rt_italic"
+msgstr "Cursief"
+
+msgid "ui_rt_underline"
+msgstr "Onderstreept"
+
+msgid "ui_rt_strike"
+msgstr "Doorgestreept"
+
+msgid "ui_rt_heading"
+msgstr "Kop"
+
+msgid "ui_rt_list"
+msgstr "Lijst"
+
+msgid "ui_rt_callout"
+msgstr "Uitgelicht kader"
+
+msgid "ui_rt_color"
+msgstr "Kleur"
+
+msgid "ui_rt_edit"
+msgstr "Bewerken"
+
+msgid "ui_rt_preview"
+msgstr "Voorbeeld"
+
+msgid "ui_rt_empty"
+msgstr "Nog niets geschreven."
+
+msgid "ui_rt_help"
+msgstr "# kop · - lijst · > uitgelicht · **vet** · *cursief* · {green}kleur{/} · emoji’s 🎉"

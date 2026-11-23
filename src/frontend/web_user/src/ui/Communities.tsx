@@ -7,7 +7,8 @@ import { communityPath, goBack, navigate } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, UserSummary } from "../types";
 import { ChatView } from "./Chat";
-import { Avatar, Icon, Modal } from "./common";
+import { Avatar, Icon, Modal, hobbyIcon } from "./common";
+import { RichEditor, RichText } from "./RichText";
 import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostList, STAFF_ROLES, Seg, usePostFeed } from "./Board";
 
 const ACCESS_KEYS: Record<AccessMode, string> = { open: "ui_community_access_open", request: "ui_community_access_request", invite: "ui_community_access_invite" };
@@ -21,8 +22,8 @@ function zoneLabel(c: Community) {
 function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
   if (c.avatar_url) return <img className="cbadge" src={fileUrl(c.avatar_url)} alt="" style={{ width: size, height: size }} />;
   return (
-    <span className="cbadge" style={{ width: size, height: size, background: coverGradient("c" + c.id), fontSize: size * 0.42 }} aria-hidden="true">
-      {c.kind === "interest" ? "#" : c.title.slice(0, 1).toUpperCase()}
+    <span className="cbadge" style={{ width: size, height: size, background: coverGradient("c" + c.id) }} aria-hidden="true">
+      <Icon name={hobbyIcon(c.slug, c.title)} className="cbadge-ic" />
     </span>
   );
 }
@@ -65,16 +66,21 @@ function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Communit
 function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community) => void }) {
   return (
     <article className="ccard" role="link" tabIndex={0} onClick={() => navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && navigate(communityPath(c.id))}>
-      <div className="ccover" style={{ background: coverGradient("c" + c.id) }} />
+      {/* the hobby's silhouette as a soft watermark, tinted with the community's colours */}
+      <span className="cwm" style={{ background: coverGradient("c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
       <div className="cbody">
-        <CommunityBadge c={c} />
-        <div className="ctitle">{c.title}</div>
-        {c.description ? <p className="cdesc">{c.description}</p> : null}
-        <div className="cstats">
-          <span>{t("ui_members_n", { n: c.member_count })}</span>
-          {c.online_count ? <span><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</span> : null}
-          {c.upcoming_count ? <span>{t("ui_community_plans_n", { n: c.upcoming_count })}</span> : null}
+        <div className="ctop">
+          <CommunityBadge c={c} />
+          <div style={{ minWidth: 0 }}>
+            <div className="ctitle">{c.title}</div>
+            <div className="cstats">
+              <span>{t("ui_members_n", { n: c.member_count })}</span>
+              {c.online_count ? <span><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</span> : null}
+              {c.upcoming_count ? <span>{t("ui_community_plans_n", { n: c.upcoming_count })}</span> : null}
+            </div>
+          </div>
         </div>
+        {c.description ? <p className="cdesc">{c.description}</p> : null}
         <div className="row">
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.role && c.role !== "member" ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role])}</span> : null}
@@ -190,7 +196,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       {!community ? <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_create_lead")}</p> : null}
       <label className="fld">{t("ui_community_f_title")}<input id="cm-title" className="inp" maxLength={80} value={form.title} onChange={(e) => set({ title: e.target.value })} placeholder={t("ui_community_title_ph")} /></label>
       <label className="fld">{t("ui_description")}<textarea id="cm-desc" className="inp" rows={3} maxLength={1000} value={form.description} onChange={(e) => set({ description: e.target.value })} placeholder={t("ui_community_desc_ph")} /></label>
-      {community ? <label className="fld">{t("ui_community_f_rules")}<textarea id="cm-rules" className="inp" rows={4} maxLength={4000} value={form.rules} onChange={(e) => set({ rules: e.target.value })} /></label> : null}
+      {community ? <div className="fld">{t("ui_community_f_rules")}<RichEditor id="cm-rules" value={form.rules} onChange={(v) => set({ rules: v })} /></div> : null}
       <div className="fld"><span>{t("ui_community_f_access")}</span>
         <Seg label={t("ui_community_f_access")} value={form.access_mode} onChange={(access_mode) => set({ access_mode })}
           options={[["open", t("ui_community_access_open")], ["request", t("ui_community_access_request")], ["invite", t("ui_community_access_invite")]]} />
@@ -246,6 +252,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
   return (
     <main className={"screen community" + (tab === "chat" && c.joined ? " withchat" : "")}>
       <div className="chero" style={{ background: coverGradient("c" + c.id, 120) }}>
+        <span className="chero-art" aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /><Icon name={hobbyIcon(c.slug, c.title)} /><Icon name={hobbyIcon(c.slug, c.title)} /></span>
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
           <span className="grow" />
@@ -290,7 +297,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           confirm={t("ui_community_leave")} danger onConfirm={doLeave} onClose={() => setLeave(false)} />
       ) : null}
       {settings ? <CommunityFormModal community={c} onClose={() => setSettings(false)} onSaved={(x) => setC({ ...c, ...x })} /> : null}
-      {rules ? <Modal title={t("ui_community_rules")} onClose={() => setRules(false)}><div style={{ whiteSpace: "pre-wrap" }}>{c.rules}</div></Modal> : null}
+      {rules ? <Modal title={t("ui_community_rules")} onClose={() => setRules(false)}><div className="rulescard"><RichText text={c.rules || ""} /></div></Modal> : null}
     </main>
   );
 }

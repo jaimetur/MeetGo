@@ -6,6 +6,7 @@ import { getState, loadConversations, loadThread, refreshConversation, toast, us
 import type { Conversation, Member, Message } from "../types";
 import { ActionSheet, Composer, MessageItem, type MessageActions } from "./Chat";
 import { Avatar, Icon, convTitle } from "./common";
+import { RichEditor, RichText } from "./RichText";
 
 export function SidePanel({ conversationId, thread, panel }: { conversationId: number; thread: number | null; panel: "members" | "info" | null }) {
   const conv = useStore((s) => s.conversations[conversationId]);
@@ -210,14 +211,14 @@ function InfoPanel({ conv }: { conv: Conversation }) {
   }
 
   return (
-    <div className="sbody" style={{ padding: 14, display: "flex", flexDirection: "column", gap: 14 }}>
+    <div className="sbody infopanel" style={{ padding: 16, display: "flex", flexDirection: "column", gap: 16 }}>
       <div>
-        <div style={{ fontFamily: "var(--display)", fontWeight: 650, fontSize: 17 }}>{convTitle(conv)}</div>
-        <div className="muted" style={{ fontSize: 12.5 }}>{conv.kind === "channel" ? `${conv.subtitle} · ` : ""}{conv.kind !== "dm" ? t("ui_members_n", { n: conv.member_count }) : ""}</div>
+        <div className="info-title">{convTitle(conv)}</div>
+        <div className="muted info-meta">{conv.kind === "channel" ? `${conv.subtitle} · ` : ""}{conv.kind !== "dm" ? t("ui_members_n", { n: conv.member_count }) : ""}</div>
         {conv.description && !(staff && conv.kind === "group") ? <p style={{ fontSize: 13 }}>{conv.description}</p> : null}
       </div>
       {conv.rules_markdown && !staff ? (
-        <div className="box" style={{ padding: 12 }}><div className="lsec" style={{ padding: "0 0 6px" }}>{t("ui_rules")}</div><div style={{ whiteSpace: "pre-wrap", fontSize: 13 }}>{conv.rules_markdown}</div></div>
+        <div className="rulescard"><div className="rulescard-head"><Icon name="shield" />{t("ui_rules")}</div><RichText text={conv.rules_markdown} /></div>
       ) : null}
       {conv.kind === "group" && staff ? (
         <div className="stack">
@@ -232,7 +233,7 @@ function InfoPanel({ conv }: { conv: Conversation }) {
               {[0, 5, 10, 30, 60, 300].map((s) => <option key={s} value={s}>{s ? t("ui_seconds_n", { n: s }) : t("ui_off")}</option>)}
             </select>
           </label>
-          <label className="fld">{t("ui_rules")}<textarea id="info-rules" className="inp" rows={5} value={rules} onChange={(e) => setRules(e.target.value)} /></label>
+          <div className="fld">{t("ui_rules")}<RichEditor id="info-rules" value={rules} onChange={setRules} /></div>
           <button className="btn pri" onClick={save}>{t("ui_save")}</button>
         </div>
       ) : null}

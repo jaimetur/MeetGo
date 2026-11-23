@@ -3725,3 +3725,45 @@ msgstr "{name} saldrá de la comunidad y de su chat."
 
 msgid "ui_community_no_members"
 msgstr "Aún no hay miembros"
+
+msgid "ui_rt_text"
+msgstr "texto"
+
+msgid "ui_rt_toolbar"
+msgstr "Formato"
+
+msgid "ui_rt_bold"
+msgstr "Negrita"
+
+msgid "ui_rt_italic"
+msgstr "Cursiva"
+
+msgid "ui_rt_underline"
+msgstr "Subrayado"
+
+msgid "ui_rt_strike"
+msgstr "Tachado"
+
+msgid "ui_rt_heading"
+msgstr "Título"
+
+msgid "ui_rt_list"
+msgstr "Lista"
+
+msgid "ui_rt_callout"
+msgstr "Recuadro destacado"
+
+msgid "ui_rt_color"
+msgstr "Color"
+
+msgid "ui_rt_edit"
+msgstr "Editar"
+
+msgid "ui_rt_preview"
+msgstr "Vista previa"
+
+msgid "ui_rt_empty"
+msgstr "Todavía no hay nada escrito."
+
+msgid "ui_rt_help"
+msgstr "# título · - lista · > destacado · **negrita** · *cursiva* · {green}color{/} · emojis 🎉"

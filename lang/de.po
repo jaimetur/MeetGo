@@ -3724,3 +3724,45 @@ msgstr "Communities · {zone}"
 
 msgid "ui_sec_plans"
 msgstr "Plan-Chats"
+
+msgid "ui_rt_text"
+msgstr "Text"
+
+msgid "ui_rt_toolbar"
+msgstr "Formatierung"
+
+msgid "ui_rt_bold"
+msgstr "Fett"
+
+msgid "ui_rt_italic"
+msgstr "Kursiv"
+
+msgid "ui_rt_underline"
+msgstr "Unterstrichen"
+
+msgid "ui_rt_strike"
+msgstr "Durchgestrichen"
+
+msgid "ui_rt_heading"
+msgstr "Überschrift"
+
+msgid "ui_rt_list"
+msgstr "Liste"
+
+msgid "ui_rt_callout"
+msgstr "Hinweisbox"
+
+msgid "ui_rt_color"
+msgstr "Farbe"
+
+msgid "ui_rt_edit"
+msgstr "Bearbeiten"
+
+msgid "ui_rt_preview"
+msgstr "Vorschau"
+
+msgid "ui_rt_empty"
+msgstr "Noch nichts geschrieben."
+
+msgid "ui_rt_help"
+msgstr "# Überschrift · - Liste · > Hinweis · **fett** · *kursiv* · {green}Farbe{/} · Emojis 🎉"

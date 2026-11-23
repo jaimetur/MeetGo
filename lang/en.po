@@ -3725,3 +3725,45 @@ msgstr "{name} will leave the community and its chat."
 
 msgid "ui_community_no_members"
 msgstr "No members yet"
+
+msgid "ui_rt_text"
+msgstr "text"
+
+msgid "ui_rt_toolbar"
+msgstr "Formatting"
+
+msgid "ui_rt_bold"
+msgstr "Bold"
+
+msgid "ui_rt_italic"
+msgstr "Italic"
+
+msgid "ui_rt_underline"
+msgstr "Underline"
+
+msgid "ui_rt_strike"
+msgstr "Strikethrough"
+
+msgid "ui_rt_heading"
+msgstr "Heading"
+
+msgid "ui_rt_list"
+msgstr "List"
+
+msgid "ui_rt_callout"
+msgstr "Highlight box"
+
+msgid "ui_rt_color"
+msgstr "Colour"
+
+msgid "ui_rt_edit"
+msgstr "Edit"
+
+msgid "ui_rt_preview"
+msgstr "Preview"
+
+msgid "ui_rt_empty"
+msgstr "Nothing written yet."
+
+msgid "ui_rt_help"
+msgstr "# heading · - list · > highlight · **bold** · *italic* · {green}colour{/} · emojis 🎉"

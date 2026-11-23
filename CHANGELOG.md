@@ -35,6 +35,8 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Communities show an icon of their hobby (hiking, cycling, reading, cinema, football, padel, beach, coffee, travel…) on compact cards and on their cover, also in the chat list. Rules support headings, lists, highlight boxes, bold, italic, underline, colours and emojis, with a formatting toolbar and a preview, and the information panel is easier to read on phones.
+- Installed on the iPhone, the app fills the whole screen (iOS left a strip the height of the status bar empty at the bottom), and the tab bar sits just above the home indicator.
 - Account page reorganised: a card with your photo, name, email and area and the sign-out button always in view, and tabs for profile (about you, your area, privacy and security), interests, notifications and settings.
 - The app opens with a splash screen (icon, logo and tagline), the phone header shows the icon and the MeetGo logo over a glow in the brand colours, the active tab is lit with the brand gradient, and on the iPhone a notice explains how to install it on the home screen. In Safari the strip under the tab bar is painted like the bar.
 - All the branding images (icons, logos and the social sharing image) live in `assets/branding/` at the repository root, as in BodyLens; the web sites keep serving them at the same addresses.
@@ -48,6 +50,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
+- Fixed translations whose text ends in quotes losing the last quote.
 - Fixed the empty band under the phone tab bar in Safari: the app fills the whole screen and only fits the visible area while the keyboard is open.
 - Sign-up now checks that the email is a real address (name@domain.tld).
 - Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.

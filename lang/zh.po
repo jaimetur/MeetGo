@@ -3724,3 +3724,45 @@ msgstr "{name} 将退出该社区及其聊天。"
 
 msgid "ui_community_no_members"
 msgstr "还没有成员"
+
+msgid "ui_rt_text"
+msgstr "文字"
+
+msgid "ui_rt_toolbar"
+msgstr "格式"
+
+msgid "ui_rt_bold"
+msgstr "粗体"
+
+msgid "ui_rt_italic"
+msgstr "斜体"
+
+msgid "ui_rt_underline"
+msgstr "下划线"
+
+msgid "ui_rt_strike"
+msgstr "删除线"
+
+msgid "ui_rt_heading"
+msgstr "标题"
+
+msgid "ui_rt_list"
+msgstr "列表"
+
+msgid "ui_rt_callout"
+msgstr "提示框"
+
+msgid "ui_rt_color"
+msgstr "颜色"
+
+msgid "ui_rt_edit"
+msgstr "编辑"
+
+msgid "ui_rt_preview"
+msgstr "预览"
+
+msgid "ui_rt_empty"
+msgstr "还没有内容。"
+
+msgid "ui_rt_help"
+msgstr "# 标题 · - 列表 · > 提示 · **粗体** · *斜体* · {green}颜色{/} · 表情 🎉"

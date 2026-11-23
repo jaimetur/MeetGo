@@ -3724,3 +3724,45 @@ msgstr "{name} uscirà dalla comunità e dalla sua chat."
 
 msgid "ui_community_no_members"
 msgstr "Ancora nessun membro"
+
+msgid "ui_rt_text"
+msgstr "testo"
+
+msgid "ui_rt_toolbar"
+msgstr "Formattazione"
+
+msgid "ui_rt_bold"
+msgstr "Grassetto"
+
+msgid "ui_rt_italic"
+msgstr "Corsivo"
+
+msgid "ui_rt_underline"
+msgstr "Sottolineato"
+
+msgid "ui_rt_strike"
+msgstr "Barrato"
+
+msgid "ui_rt_heading"
+msgstr "Titolo"
+
+msgid "ui_rt_list"
+msgstr "Elenco"
+
+msgid "ui_rt_callout"
+msgstr "Riquadro in evidenza"
+
+msgid "ui_rt_color"
+msgstr "Colore"
+
+msgid "ui_rt_edit"
+msgstr "Modifica"
+
+msgid "ui_rt_preview"
+msgstr "Anteprima"
+
+msgid "ui_rt_empty"
+msgstr "Non c’è ancora niente di scritto."
+
+msgid "ui_rt_help"
+msgstr "# titolo · - elenco · > in evidenza · **grassetto** · *corsivo* · {green}colore{/} · emoji 🎉"

@@ -3724,3 +3724,45 @@ msgstr "{name}さんはコミュニティとそのチャットから外れます
 
 msgid "ui_community_no_members"
 msgstr "メンバーはまだいません"
+
+msgid "ui_rt_text"
+msgstr "テキスト"
+
+msgid "ui_rt_toolbar"
+msgstr "書式"
+
+msgid "ui_rt_bold"
+msgstr "太字"
+
+msgid "ui_rt_italic"
+msgstr "斜体"
+
+msgid "ui_rt_underline"
+msgstr "下線"
+
+msgid "ui_rt_strike"
+msgstr "取り消し線"
+
+msgid "ui_rt_heading"
+msgstr "見出し"
+
+msgid "ui_rt_list"
+msgstr "リスト"
+
+msgid "ui_rt_callout"
+msgstr "強調ボックス"
+
+msgid "ui_rt_color"
+msgstr "色"
+
+msgid "ui_rt_edit"
+msgstr "編集"
+
+msgid "ui_rt_preview"
+msgstr "プレビュー"
+
+msgid "ui_rt_empty"
+msgstr "まだ何も書かれていません。"
+
+msgid "ui_rt_help"
+msgstr "# 見出し · - リスト · > 強調 · **太字** · *斜体* · {green}色{/} · 絵文字 🎉"
