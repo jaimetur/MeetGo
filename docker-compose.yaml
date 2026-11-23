@@ -11,6 +11,9 @@ services:
       CORS_ORIGINS: ${CORS_ORIGINS:-https://meetgo.app,https://www.meetgo.app,https://admin.meetgo.app}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@local}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      PUBLIC_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
+      ANDROID_CERT_SHA256: ${ANDROID_CERT_SHA256:-}
+      DATA_DIR: /data
       COMPOSE_PROJECT_NAME: meetgo
     ports:
       - "18000:8000"
@@ -20,6 +23,7 @@ services:
     volumes:
       - ${REPO_DIR}/app/src:/app/src
       - ${REPO_DIR}/lang:/app/lang
+      - meetgo_data:/data
     command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
     restart: unless-stopped
 
@@ -80,3 +84,4 @@ services:
 
 volumes:
   meetgo_db:
+  meetgo_data:

@@ -1062,3 +1062,105 @@ msgstr "El mensaje está vacío"
 
 msgid "err_message_too_long"
 msgstr "El mensaje es demasiado largo"
+
+msgid "err_banned_here"
+msgstr "No puedes escribir en esta conversación"
+
+msgid "err_display_name"
+msgstr "El nombre debe tener entre 1 y 64 caracteres"
+
+msgid "err_edit_window"
+msgstr "Solo puedes editar un mensaje durante 48 horas"
+
+msgid "err_file_empty"
+msgstr "El fichero está vacío"
+
+msgid "err_file_not_found"
+msgstr "Fichero no encontrado"
+
+msgid "err_file_too_big"
+msgstr "El fichero supera los 10 MB"
+
+msgid "err_file_type"
+msgstr "Ese tipo de fichero no se admite"
+
+msgid "err_invalid_email"
+msgstr "Email no válido"
+
+msgid "err_invalid_plan"
+msgstr "Plan no válido"
+
+msgid "err_invalid_reaction"
+msgstr "Reacción no válida"
+
+msgid "err_invite_invalid"
+msgstr "Esta invitación ya no es válida"
+
+msgid "err_message_deleted"
+msgstr "El mensaje se ha eliminado"
+
+msgid "err_message_not_found"
+msgstr "Mensaje no encontrado"
+
+msgid "err_no_subscription"
+msgstr "No tienes una suscripción web"
+
+msgid "err_payments_failed"
+msgstr "El pago no se ha podido completar"
+
+msgid "err_payments_not_configured"
+msgstr "Los pagos aún no están configurados"
+
+msgid "err_promo_already_used"
+msgstr "Ya has usado un código promocional"
+
+msgid "err_promo_below_used"
+msgstr "El máximo no puede ser menor que las plazas ya usadas"
+
+msgid "err_promo_exhausted"
+msgstr "Este código ya no tiene plazas libres"
+
+msgid "err_promo_invalid"
+msgstr "Código promocional no válido"
+
+msgid "err_purchase_inactive"
+msgstr "Esa compra no está activa"
+
+msgid "err_purchase_invalid"
+msgstr "No se ha podido verificar la compra con Google Play"
+
+msgid "err_purchase_other_account"
+msgstr "Esa compra pertenece a otra cuenta"
+
+msgid "err_report_own"
+msgstr "No puedes denunciar tus propios mensajes"
+
+msgid "err_service_account"
+msgstr "La cuenta de servicio no es válida"
+
+msgid "err_silenced_until"
+msgstr "Estás silenciado en esta conversación hasta las {until}"
+
+msgid "err_slow_mode"
+msgstr "Modo lento: espera {seconds} s para volver a escribir"
+
+msgid "err_subscription_required"
+msgstr "Necesitas una suscripción activa para escribir"
+
+msgid "err_too_many_reactions"
+msgstr "Demasiadas reacciones en este mensaje"
+
+msgid "sys_group_created"
+msgstr "{name} ha creado el grupo"
+
+msgid "sys_member_added"
+msgstr "{by} ha añadido a {name}"
+
+msgid "sys_member_joined"
+msgstr "{name} se ha unido con una invitación"
+
+msgid "sys_member_left"
+msgstr "{name} ha salido del grupo"
+
+msgid "sys_member_removed"
+msgstr "{by} ha quitado a {name}"

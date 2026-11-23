@@ -1,7 +1,9 @@
 """Test setup: a disposable PostgreSQL and Redis (see tests/README.md)."""
 
 import os
+import tempfile
 
+os.environ["DATA_DIR"] = tempfile.mkdtemp(prefix="meetgo-test-data-")
 os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://postgres:test@127.0.0.1:55432/meetgo_test")
 os.environ.setdefault("REDIS_URL", "redis://127.0.0.1:56379/15")
 os.environ["MEETGO_ENV"] = "test"

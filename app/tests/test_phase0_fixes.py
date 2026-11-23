@@ -2,10 +2,10 @@
 
 from sqlalchemy import select, update
 
-from src.models import Interest, Room, User
-from src.moderation import PHONE_RE, _contains_toxicity
-from src.main import _normalize_phone
+from src.models import Conversation, Interest, User
+from src.routers.common import normalize_phone as _normalize_phone
 from src.security import hash_password
+from src.services.moderation import PHONE_RE, contains_toxicity as _contains_toxicity
 
 
 async def register(client, email="ana@example.com", name="Ana", dob="1990-05-01", phone="612345678", **extra):
@@ -76,7 +76,8 @@ async def test_deleting_a_channel_in_use_is_refused_cleanly(client, db_session):
     headers = {"Authorization": f"Bearer {admin.json()['access_token']}"}
     async with db_session() as db:
         interest = (await db.execute(select(Interest).where(Interest.slug == "cine"))).scalar_one()
-        db.add(Room(province="Madrid", age_range="31_50", interest_id=interest.id))
+        db.add(Conversation(kind="channel", province="Madrid", age_range="31_50", interest_id=interest.id,
+                            slow_mode_seconds=0, rules_markdown="", policy_json={}))
         await db.commit()
         interest_id = interest.id
     res = await client.delete(f"/admin/interests/{interest_id}", headers=headers)
@@ -90,7 +91,7 @@ async def test_api_datetimes_are_utc_with_z(client, db_session):
 
 
 async def test_debug_logs_endpoint_is_off_by_default(client):
-    res = await client.get("/debug/compose-logs")
+    res = await client.get("/admin/compose-logs")
     assert res.status_code == 404
 
 

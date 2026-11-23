@@ -2,16 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
-## Release: v0.1.0
-### Release Date: 2026-09-10
+## Release: v0.2.0
+### Release Date: 2026-11-23
+#### ⚠️ Breaking Changes:
+- Rooms and private chats become conversations: channels (by province, age range and interest), private groups and direct messages. Existing rooms, their messages and direct messages move over automatically on the first start; the old tables are kept untouched.
+- The API changed: rooms (`/rooms/...`, `/ws/rooms/...`) and the old direct-message endpoints are replaced by `/conversations/...`, `/messages/...` and a single WebSocket at `/ws`, opened with a one-use ticket from `/realtime/ticket`.
+- The database schema is now managed with Alembic migrations that run at startup.
 - Removed the built-in `admin`/`admin` administration login; the first administrator now comes from `ADMIN_EMAIL`/`ADMIN_PASSWORD` and existing accounts are never changed at startup.
 - Moved Docker secrets (`JWT_SECRET`, PostgreSQL and Redis passwords) to an untracked `.env.local`, stopped publishing Redis, removed the Docker socket and the reload mode from the production compose file, and refused the development JWT secret in production.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
+
+#### 🌟 New Features:
+- Private groups with invitation links, owners, administrators and moderators; members join, leave and can be removed, and the oldest member inherits a group whose owner leaves.
+- Direct messages open at once between friends; with anybody else they start with a request, if that person accepts direct messages.
+- Threads, replies quoting a message, reactions, editing (48 hours) and deleting messages, mentions with a mentions inbox, unread counts, read receipts in direct messages and groups, and "is typing" in real time.
+- Image and file attachments (up to 10 MB) with thumbnails, served through signed links.
+- Message search in your conversations, channel discovery for your zone, people search, pinned messages and pinned or muted conversations.
+- Push notifications: Web Push for browsers and Firebase Cloud Messaging for the Android app, following each member's notification choice.
+- Reports of messages and a moderation queue for administrators; channel moderators can silence, ban or remove people, and channels can have a slow mode.
+- Subscriptions of 2.50 €/month or 25 €/year through Stripe (web) or Google Play (Android), with a 7-day trial; accounts created before subscriptions were enabled stay free.
+- Launch campaign: the public code LANZAMIENTO (alias MEETGO50) gives one year free to the first 50 accounts. Administrators manage codes, free access and payment settings.
+
+#### 🚀 Enhancements:
+- Split the backend into routers and services, with one shared Redis connection, real-time events fanned out through Redis for several processes, and presence kept in Redis.
+
+#### 🐛 Bug fixes:
 - Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.
 - Fixed moderation deleting words that contain an insult (for example "reputación"), and detected international phone numbers.
 - Fixed sign-in without a password for accounts that have none, server errors for under-age or malformed birth dates, crossed friend requests and deleting a channel in use.
 - Sent emails in the background, serialized API dates as UTC with a `Z`, capped history pages, limited message length, reused one Redis connection and fixed the chat reconnection.
-- Added backend tests (`app/tests`).
+
+#### 📚 Documentation:
+- Added backend tests (`app/tests`) and how to run them.
+
+---
+
+## Release: v0.1.0
+### Release Date: 2026-09-10
 - Added `tools/CreateUpdateRelease.py` and its PyCharm run configuration to update the current release or create, commit and push a new release branch.
 - Added an iOS home-screen icon with the MeetGo navigation arrow, served from `web/assets`.
 - Added separate PyCharm entry points for the user and administration interfaces.

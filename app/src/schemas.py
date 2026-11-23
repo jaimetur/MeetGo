@@ -31,6 +31,7 @@ class RegisterIn(BaseModel):
     accept_dm: bool = False
     avatar_url: str | None = None
     bio: str | None = None
+    promo_code: str | None = None
 
 class LoginIn(BaseModel):
     email: str
@@ -216,3 +217,109 @@ class AdminInterestIn(BaseModel):
 
 class AdminSmtpTestIn(BaseModel):
     to_email: str
+
+
+# ---------------- Messaging ----------------
+
+class GroupCreateIn(BaseModel):
+    title: str = Field(min_length=1, max_length=120)
+    description: str | None = Field(default=None, max_length=1000)
+    member_ids: list[int] = Field(default_factory=list, max_length=200)
+
+
+class ConversationUpdateIn(BaseModel):
+    title: str | None = Field(default=None, min_length=1, max_length=120)
+    description: str | None = Field(default=None, max_length=1000)
+    avatar_url: str | None = Field(default=None, max_length=512)
+    slow_mode_seconds: int | None = Field(default=None, ge=0, le=3600)
+    rules_markdown: str | None = Field(default=None, max_length=4000)
+    pinned_message_id: int | None = None
+
+
+class MembersAddIn(BaseModel):
+    user_ids: list[int] = Field(min_length=1, max_length=200)
+
+
+class MemberRoleIn(BaseModel):
+    role: str = Field(pattern="^(admin|moderator|member)$")
+
+
+class MemberSettingsIn(BaseModel):
+    notify: str | None = Field(default=None, pattern="^(all|mentions|none)$")
+    mute_minutes: int | None = Field(default=None, ge=0, le=60 * 24 * 365)
+    pinned: bool | None = None
+
+
+class ModerateIn(BaseModel):
+    action: str = Field(pattern="^(silence|unsilence|ban|unban|remove)$")
+    minutes: int = Field(default=60, ge=1, le=60 * 24 * 30)
+
+
+class MessageCreateIn(BaseModel):
+    body: str = Field(default="", max_length=8000)
+    client_id: str | None = Field(default=None, max_length=64)
+    reply_to_id: int | None = None
+    thread_root_id: int | None = None
+    also_in_channel: bool = False
+    mention_ids: list[int] = Field(default_factory=list, max_length=50)
+    attachment_ids: list[int] = Field(default_factory=list, max_length=10)
+
+
+class MessageEditIn(BaseModel):
+    body: str = Field(max_length=8000)
+
+
+class ReadIn(BaseModel):
+    message_id: int
+
+
+class ReportIn(BaseModel):
+    reason: str = Field(pattern="^(spam|harassment|hate|sexual|violence|other)$")
+    details: str | None = Field(default=None, max_length=1000)
+
+
+class DMOpenIn(BaseModel):
+    user_id: int
+
+
+class DeviceIn(BaseModel):
+    kind: str = Field(pattern="^(fcm|webpush)$")
+    token: str = Field(min_length=10, max_length=4096)
+    keys: dict = Field(default_factory=dict)
+
+
+# ---------------- Subscriptions ----------------
+
+class RedeemIn(BaseModel):
+    code: str = Field(min_length=1, max_length=64)
+
+
+class CheckoutIn(BaseModel):
+    plan: str = Field(pattern="^(monthly|yearly)$")
+
+
+class CompleteIn(BaseModel):
+    session_id: str = Field(min_length=5, max_length=255)
+
+
+class PlayLinkIn(BaseModel):
+    token: str = Field(min_length=10, max_length=4096)
+    product: str | None = Field(default=None, max_length=64)
+
+
+class AdminAccessIn(BaseModel):
+    free_until: str = Field(pattern=r"^(lifetime|none|\d{4}-\d{2}-\d{2})$")
+
+
+class PromoCodeIn(BaseModel):
+    code: str = Field(min_length=2, max_length=64)
+    aliases: list[str] = Field(default_factory=list, max_length=10)
+    duration: str = Field(pattern=r"^(1m|3m|6m|1y|life|\d{4}-\d{2}-\d{2})$")
+    max_uses: int | None = Field(default=None, ge=1)
+    public: bool = False
+    expires_on: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+
+class ReportResolveIn(BaseModel):
+    status: str = Field(pattern="^(dismissed|actioned)$")
+    delete_message: bool = False

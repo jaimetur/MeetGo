@@ -33,6 +33,15 @@ class Settings(BaseSettings):
     DEFAULT_TOXIC_WORDS: str = "puta,puto,idiota,imbecil,subnormal,maricon,violacion"
     MAX_MESSAGE_CHARS: int = 4000
 
+    # Uploaded attachments and downloadable files (Android APK) live here.
+    DATA_DIR: str = "data"
+    # Public address of this API, used in links sent outside the app (push, emails, Stripe).
+    PUBLIC_API_BASE: str = "http://127.0.0.1:18000"
+
+    # Android App Links: package name and SHA-256 fingerprints of the signing certificate(s).
+    ANDROID_PACKAGE: str = "app.meetgo.android"
+    ANDROID_CERT_SHA256: str = ""
+
     @property
     def is_production(self) -> bool:
         return self.MEETGO_ENV.lower() in ("prod", "production")

@@ -1062,3 +1062,105 @@ msgstr "The message is empty"
 
 msgid "err_message_too_long"
 msgstr "The message is too long"
+
+msgid "err_banned_here"
+msgstr "You can't write in this conversation"
+
+msgid "err_display_name"
+msgstr "The name must be 1 to 64 characters long"
+
+msgid "err_edit_window"
+msgstr "You can only edit a message for 48 hours"
+
+msgid "err_file_empty"
+msgstr "The file is empty"
+
+msgid "err_file_not_found"
+msgstr "File not found"
+
+msgid "err_file_too_big"
+msgstr "The file is larger than 10 MB"
+
+msgid "err_file_type"
+msgstr "That type of file is not supported"
+
+msgid "err_invalid_email"
+msgstr "Invalid email"
+
+msgid "err_invalid_plan"
+msgstr "Invalid plan"
+
+msgid "err_invalid_reaction"
+msgstr "Invalid reaction"
+
+msgid "err_invite_invalid"
+msgstr "This invitation is no longer valid"
+
+msgid "err_message_deleted"
+msgstr "The message was deleted"
+
+msgid "err_message_not_found"
+msgstr "Message not found"
+
+msgid "err_no_subscription"
+msgstr "You have no web subscription"
+
+msgid "err_payments_failed"
+msgstr "The payment could not be completed"
+
+msgid "err_payments_not_configured"
+msgstr "Payments are not set up yet"
+
+msgid "err_promo_already_used"
+msgstr "You already used a promotional code"
+
+msgid "err_promo_below_used"
+msgstr "The maximum can't be lower than the places already used"
+
+msgid "err_promo_exhausted"
+msgstr "This code has no places left"
+
+msgid "err_promo_invalid"
+msgstr "Invalid promotional code"
+
+msgid "err_purchase_inactive"
+msgstr "That purchase is not active"
+
+msgid "err_purchase_invalid"
+msgstr "The purchase could not be verified with Google Play"
+
+msgid "err_purchase_other_account"
+msgstr "That purchase belongs to another account"
+
+msgid "err_report_own"
+msgstr "You can't report your own messages"
+
+msgid "err_service_account"
+msgstr "The service account is not valid"
+
+msgid "err_silenced_until"
+msgstr "You are silenced in this conversation until {until}"
+
+msgid "err_slow_mode"
+msgstr "Slow mode: wait {seconds} s to write again"
+
+msgid "err_subscription_required"
+msgstr "You need an active subscription to write"
+
+msgid "err_too_many_reactions"
+msgstr "Too many reactions on this message"
+
+msgid "sys_group_created"
+msgstr "{name} created the group"
+
+msgid "sys_member_added"
+msgstr "{by} added {name}"
+
+msgid "sys_member_joined"
+msgstr "{name} joined with an invitation"
+
+msgid "sys_member_left"
+msgstr "{name} left the group"
+
+msgid "sys_member_removed"
+msgstr "{by} removed {name}"

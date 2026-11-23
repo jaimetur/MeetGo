@@ -35,3 +35,20 @@ async def get_current_user(
         db.add(user)
         await db.commit()
     return user
+
+
+async def require_write_access(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    """Writing needs an active plan or free access; without one the account is read-only."""
+    from .services.billing import has_write_access
+    if not await has_write_access(db, user):
+        raise HTTPException(402, t("err_subscription_required"))
+    return user
+
+
+async def require_admin(user: User = Depends(get_current_user)) -> User:
+    if user.role != "admin":
+        raise HTTPException(403, t("err_admin_required"))
+    return user
