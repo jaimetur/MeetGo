@@ -15,7 +15,9 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Base64
+import android.view.ViewGroup
 import android.webkit.CookieManager
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.URLUtil
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
@@ -243,6 +245,16 @@ class MainActivity : ComponentActivity() {
 
             override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, response: WebResourceResponse) {
                 if (request.isForMainFrame && response.statusCode >= 500) page.value = Page.ERROR
+            }
+
+            // The page's renderer crashed or was killed to free memory: without this, Android ends the whole app.
+            // Start again with a new WebView instead.
+            override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+                if (web === view) web = null
+                (view.parent as? ViewGroup)?.removeView(view)
+                view.destroy()
+                recreate()
+                return true
             }
         }
         webChromeClient = object : WebChromeClient() {

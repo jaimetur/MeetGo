@@ -12,12 +12,12 @@ if (file("google-services.json").exists()) {
 
 android {
     namespace = "app.meetgo.android"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "app.meetgo.android"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         // the patch is the CI build number; tools/CreateUpdateRelease.py rewrites the major.minor
         versionCode = (System.getenv("MEETGO_ANDROID_BUILD") ?: "1").toInt()
         versionName = "0.2." + (System.getenv("MEETGO_ANDROID_BUILD") ?: "0")
@@ -56,7 +56,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("com.android.billingclient:billing-ktx:7.1.1")
+    implementation("com.android.billingclient:billing-ktx:8.0.0")
     implementation("androidx.fragment:fragment-ktx:1.8.5")   // activity results need Fragment 1.3+ (lint)
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-messaging")
