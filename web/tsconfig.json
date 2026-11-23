@@ -10,7 +10,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strict": true
+    "strict": true,
+    "types": ["vite/client"],
+    "paths": { "@lang": ["./lang/lang.ts", "../lang/lang.ts"] }
   },
-  "include": ["src"]
+  "include": ["web_user", "web_admin", "vite-env.d.ts"]
 }

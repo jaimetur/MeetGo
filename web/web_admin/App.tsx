@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { api, clearToken, frontError, getToken, setFrontendLogListener, setToken, type FrontLogEntry } from "./api";
-import { t } from "../lang/lang";
+import { api, clearToken, frontError, getToken, setFrontendLogListener, setToken, type FrontLogEntry, type Plan } from "./api";
+import { t } from "@lang";
+import { madridYmd, planLabel, t2 } from "./strings";
+import ModerationTab from "./ModerationTab";
+import BillingTab from "./BillingTab";
+import PromoCodesTab from "./PromoCodesTab";
 
 // ---- Toggle DEBUG PANEL by code only ----
 const SHOW_FRONTEND_LOG = true;
@@ -24,9 +28,19 @@ type User = {
   total_connected_seconds?: number;
   session_active?: boolean;
   session_started_at?: string | null;
+  access_required?: boolean;
+  plan?: Plan;
 };
 
 type Interest = { id: number; slug: string; name: string };
+
+/** Free access control of the user form: none, until a day, or lifetime. */
+type AccessForm = { mode: "none" | "date" | "lifetime"; date: string };
+
+function accessFromPlan(u: User): AccessForm {
+  if (u.plan?.kind !== "gift") return { mode: "none", date: "" };
+  return u.plan.until ? { mode: "date", date: madridYmd(u.plan.until) } : { mode: "lifetime", date: "" };
+}
 
 function safeStr(x: any) {
   if (x == null) return "";
@@ -152,8 +166,8 @@ type ServiceLogEntry = {
 
 export default function App() {
   const [token, setTokenState] = useState(getToken());
-  const [tab, setTab] = useState<"users" | "settings" | "interests">("users");
-  const [login, setLogin] = useState({ username: "admin", password: "admin" });
+  const [tab, setTab] = useState<"users" | "settings" | "interests" | "moderation" | "billing" | "codes">("users");
+  const [login, setLogin] = useState({ username: "", password: "" });
   const [settings, setSettings] = useState<any>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [userQuery, setUserQuery] = useState("");
@@ -173,6 +187,7 @@ export default function App() {
     city: "",
   });
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [accessForm, setAccessForm] = useState<AccessForm>({ mode: "none", date: "" });
   const [interests, setInterests] = useState<Interest[]>([]);
   const [interestName, setInterestName] = useState("");
   const [selectedInterestId, setSelectedInterestId] = useState<number | null>(null);
@@ -184,7 +199,8 @@ export default function App() {
   // ---- Debug panel state ----
   const [frontLogs, setFrontLogs] = useState<FrontLogEntry[]>([]);
   const [svcLogs, setSvcLogs] = useState<ServiceLogEntry[]>([]);
-  const [svcLogStatus, setSvcLogStatus] = useState<"connecting" | "connected" | "error">("connecting");
+  const [svcLogStatus, setSvcLogStatus] = useState<"connecting" | "connected" | "error" | "disabled">("connecting");
+  const [svcLogDetail, setSvcLogDetail] = useState("");
   const [debugServiceFilter, setDebugServiceFilter] = useState<string[]>([]);
   const [debugFilterOpen, setDebugFilterOpen] = useState(false);
   const [debugMinimized, setDebugMinimized] = useState(true);
@@ -244,14 +260,27 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!SHOW_FRONTEND_LOG) return;
+    if (!SHOW_FRONTEND_LOG || !token) return;
 
-    const url = `${api.API_BASE}/debug/compose-logs`;
-    const es = new EventSource(url);
+    const es = new EventSource(api.composeLogsUrl());
+    let stopped = false;
 
     setSvcLogStatus("connecting");
+    setSvcLogDetail("");
     es.onopen = () => setSvcLogStatus("connected");
-    es.onerror = () => setSvcLogStatus("error");
+    es.onerror = () => {
+      // While CONNECTING the browser retries by itself; CLOSED means the server refused the stream
+      // (404 when DEBUG_COMPOSE_LOGS is off): ask once why and do not reconnect.
+      if (es.readyState !== EventSource.CLOSED) {
+        setSvcLogStatus("error");
+        return;
+      }
+      api.composeLogsProbe().then(({ status, detail }) => {
+        if (stopped) return;
+        setSvcLogStatus(status === 404 ? "disabled" : "error");
+        setSvcLogDetail(status === 404 ? "" : detail);
+      });
+    };
     es.onmessage = (ev) => {
       try {
         const data = JSON.parse(ev.data);
@@ -266,8 +295,11 @@ export default function App() {
       }
     };
 
-    return () => es.close();
-  }, []);
+    return () => {
+      stopped = true;
+      es.close();
+    };
+  }, [token]);
 
   useEffect(() => {
     if (!SHOW_FRONTEND_LOG || !debugAutoRefresh) return;
@@ -577,6 +609,9 @@ export default function App() {
           <button className={tab === "users" ? "tab active" : "tab"} onClick={() => setTab("users")}>{t("admin_tab_users")}</button>
           <button className={tab === "settings" ? "tab active" : "tab"} onClick={() => setTab("settings")}>{t("admin_tab_settings")}</button>
           <button className={tab === "interests" ? "tab active" : "tab"} onClick={() => setTab("interests")}>{t("admin_tab_channels")}</button>
+          <button className={tab === "moderation" ? "tab active" : "tab"} onClick={() => setTab("moderation")}>{t2("tab_moderation")}</button>
+          <button className={tab === "billing" ? "tab active" : "tab"} onClick={() => setTab("billing")}>{t2("tab_billing")}</button>
+          <button className={tab === "codes" ? "tab active" : "tab"} onClick={() => setTab("codes")}>{t2("tab_codes")}</button>
           <button
             className="tab"
             onClick={() => {
@@ -856,6 +891,7 @@ export default function App() {
                   const u = usersById.get(id);
                   if (!u) return;
                   setSelectedUserId(u.id);
+                  setAccessForm(accessFromPlan(u));
                   setUserForm({
                     display_name: u.display_name || "",
                     email: u.email || "",
@@ -884,6 +920,7 @@ export default function App() {
               {users.map((u) => (
                 <div key={u.id} className={"listItem" + (selectedUserId === u.id ? " active" : "")} onClick={() => {
                   setSelectedUserId(u.id);
+                  setAccessForm(accessFromPlan(u));
                   setUserForm({
                     display_name: u.display_name || "",
                     email: u.email || "",
@@ -901,6 +938,9 @@ export default function App() {
                 }}>
                   <div className="title">{u.display_name}</div>
                   <div className="meta">{u.email || ""} {u.phone || ""}</div>
+                  <div className="meta">
+                    {t2("plan_label")}: <span className={"pill " + planLabel(u.plan).tone}>{planLabel(u.plan).text}</span>
+                  </div>
                   <div className="meta">{t("admin_users_logins_meta", { count: u.login_count || 0, last: u.last_login_at || "-" })}</div>
                   <div className="meta">{t("admin_users_last_seen_meta", { last: u.last_seen_at || "-", seconds: u.total_connected_seconds || 0 })}</div>
                   <div className="meta">{t("admin_users_active_meta", { active: u.session_active ? t("admin_yes") : t("admin_no"), start: u.session_started_at || "-" })}</div>
@@ -943,6 +983,46 @@ export default function App() {
               {t("admin_users_blocked")}
             </label>
             <input className="input" placeholder={t("admin_users_blocked_until")} value={userForm.banned_until} onChange={(e) => setUserForm({ ...userForm, banned_until: e.target.value })} />
+            <div className="section sub">
+              <label className="label">{t2("access_title")}</label>
+              <div className="row">
+                <select
+                  className="input"
+                  value={accessForm.mode}
+                  disabled={!selectedUserId}
+                  onChange={(e) => setAccessForm({ ...accessForm, mode: e.target.value as AccessForm["mode"] })}
+                >
+                  <option value="none">{t2("access_none")}</option>
+                  <option value="date">{t2("access_until")}</option>
+                  <option value="lifetime">{t2("access_lifetime")}</option>
+                </select>
+                {accessForm.mode === "date" ? (
+                  <input className="input" type="date" value={accessForm.date} onChange={(e) => setAccessForm({ ...accessForm, date: e.target.value })} />
+                ) : null}
+                <button
+                  className="btn"
+                  disabled={!selectedUserId}
+                  onClick={async () => {
+                    if (!selectedUserId) return;
+                    setUserMessage("");
+                    if (accessForm.mode === "date" && !accessForm.date) {
+                      setUserMessage(t2("access_date_required"));
+                      return;
+                    }
+                    try {
+                      await api.setAccess(selectedUserId, accessForm.mode === "date" ? accessForm.date : accessForm.mode);
+                      setUserMessage(t2("access_saved"));
+                      await loadUsers();
+                    } catch (e: any) {
+                      setUserMessage(e?.message || t2("save_error"));
+                    }
+                  }}
+                >
+                  {t2("access_apply")}
+                </button>
+              </div>
+              <div className="muted">{selectedUserId ? t2("access_hint") : t2("access_new_user_hint")}</div>
+            </div>
             <div className="row">
               <button className="btn primary" onClick={async () => {
                 setUserMessage("");
@@ -1004,7 +1084,16 @@ export default function App() {
                   <div className="meta">{i.slug}</div>
                   <div className="row">
                     <button className="btn" onClick={() => { setSelectedInterestId(i.id); setInterestName(i.name); }}>{t("admin_channels_edit_button")}</button>
-                    <button className="btn" onClick={async () => { await api.deleteInterest(i.id); await loadInterests(); }}>{t("admin_channels_delete_button")}</button>
+                    <button className="btn" onClick={async () => {
+                      setInterestMessage("");
+                      try {
+                        await api.deleteInterest(i.id);
+                        await loadInterests();
+                      } catch (e: any) {
+                        // 409 when channels use it: the backend explains why
+                        setInterestMessage(e?.message || t2("save_error"));
+                      }
+                    }}>{t("admin_channels_delete_button")}</button>
                   </div>
                 </div>
               ))}
@@ -1042,6 +1131,10 @@ export default function App() {
           </div>
         </div>
       ) : null}
+
+      {tab === "moderation" ? <ModerationTab /> : null}
+      {tab === "billing" ? <BillingTab /> : null}
+      {tab === "codes" ? <PromoCodesTab /> : null}
 
       {/* ---- DEBUG PANEL ---- */}
       {SHOW_FRONTEND_LOG && debugVisible ? (
@@ -1163,7 +1256,7 @@ export default function App() {
                   </div>
                 </div>
                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                  {t("debug_subtitle", { count: filteredLogs.length })} - {svcLogStatus === "connected" ? t("debug_services_connected") : (svcLogStatus === "connecting" ? t("debug_services_connecting") : t("debug_services_error"))}
+                  {t("debug_subtitle", { count: filteredLogs.length })} - {svcLogStatus === "connected" ? t("debug_services_connected") : (svcLogStatus === "connecting" ? t("debug_services_connecting") : svcLogStatus === "disabled" ? t2("logs_disabled") : t("debug_services_error") + (svcLogDetail ? ` (${svcLogDetail})` : ""))}
                   <label style={{ display: "inline-flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
                     <input
                       type="checkbox"

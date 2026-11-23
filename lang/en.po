@@ -1164,3 +1164,1038 @@ msgstr "{name} left the group"
 
 msgid "sys_member_removed"
 msgstr "{by} removed {name}"
+
+msgid "ui_accept"
+msgstr "Accept"
+
+msgid "ui_accept_dm"
+msgstr "Accept direct messages from people who aren't my friends"
+
+msgid "ui_access_ends"
+msgstr "{plan} plan: ends on {date}"
+
+msgid "ui_access_free"
+msgstr "Your account has free access"
+
+msgid "ui_access_grant_life"
+msgstr "Free access for life"
+
+msgid "ui_access_grant_until"
+msgstr "Free access until {date}"
+
+msgid "ui_access_none"
+msgstr "No subscription: your account is read-only"
+
+msgid "ui_access_play"
+msgstr "Google Play subscription until {date}"
+
+msgid "ui_access_renews"
+msgstr "{plan} plan: renews on {date}"
+
+msgid "ui_access_trial"
+msgstr "Free trial of the {plan} plan until {date}"
+
+msgid "ui_account_title"
+msgstr "Your account"
+
+msgid "ui_activity"
+msgstr "Activity"
+
+msgid "ui_add"
+msgstr "Add"
+
+msgid "ui_add_friend"
+msgstr "Add friend"
+
+msgid "ui_add_friends"
+msgstr "Add friends"
+
+msgid "ui_added"
+msgstr "Added"
+
+msgid "ui_also_send_to"
+msgstr "Also send to {name}"
+
+msgid "ui_appearance"
+msgstr "Appearance"
+
+msgid "ui_apply"
+msgstr "Apply"
+
+msgid "ui_attach"
+msgstr "Attach"
+
+msgid "ui_attachment"
+msgstr "Attachment"
+
+msgid "ui_avatar_url"
+msgstr "Profile picture (link)"
+
+msgid "ui_back"
+msgstr "Back"
+
+msgid "ui_ban"
+msgstr "Ban"
+
+msgid "ui_bio"
+msgstr "About you"
+
+msgid "ui_cancel"
+msgstr "Cancel"
+
+msgid "ui_cancel_plan"
+msgstr "Cancel subscription"
+
+msgid "ui_change_server"
+msgstr "Change server"
+
+msgid "ui_channel_start"
+msgstr "This is the start of the channel. People from {zone} with your interests talk here."
+
+msgid "ui_check_email_body"
+msgstr "We sent you a link to confirm your email. Open it, then sign in with your password."
+
+msgid "ui_check_email_title"
+msgstr "Check your email"
+
+msgid "ui_choose"
+msgstr "Choose…"
+
+msgid "ui_clear"
+msgstr "Clear"
+
+msgid "ui_close"
+msgstr "Close"
+
+msgid "ui_code_applied"
+msgstr "Code applied"
+
+msgid "ui_connected"
+msgstr "Connected"
+
+msgid "ui_conversation_gone"
+msgstr "This conversation is no longer available"
+
+msgid "ui_copied"
+msgstr "Copied"
+
+msgid "ui_copy"
+msgstr "Copy"
+
+msgid "ui_country"
+msgstr "Country"
+
+msgid "ui_create_account"
+msgstr "Create account"
+
+msgid "ui_create_group"
+msgstr "Create group"
+
+msgid "ui_decline"
+msgstr "Decline"
+
+msgid "ui_delete"
+msgstr "Delete"
+
+msgid "ui_deleted_user"
+msgstr "Deleted user"
+
+msgid "ui_description"
+msgstr "Description"
+
+msgid "ui_details_optional"
+msgstr "Details (optional)"
+
+msgid "ui_direct_message"
+msgstr "Direct message"
+
+msgid "ui_disable"
+msgstr "Turn off"
+
+msgid "ui_display_name"
+msgstr "Display name"
+
+msgid "ui_dm_request_sent"
+msgstr "Request sent: you can talk once they accept it"
+
+msgid "ui_dm_requests"
+msgstr "Want to message you"
+
+msgid "ui_dm_start"
+msgstr "This is your private conversation with {name}."
+
+msgid "ui_dob"
+msgstr "Date of birth"
+
+msgid "ui_done"
+msgstr "Done"
+
+msgid "ui_edit"
+msgstr "Edit"
+
+msgid "ui_edit_hint"
+msgstr "Enter to save · Esc to cancel"
+
+msgid "ui_edit_in_chat"
+msgstr "Edit the message from the conversation"
+
+msgid "ui_edited"
+msgstr "edited"
+
+msgid "ui_email"
+msgstr "Email"
+
+msgid "ui_email_verified"
+msgstr "Email confirmed. You can sign in now."
+
+msgid "ui_emoji"
+msgstr "Emoji"
+
+msgid "ui_empty_body"
+msgstr "Pick your interests to join your area's channels, or create a group with your friends."
+
+msgid "ui_empty_title"
+msgstr "You have no conversations yet"
+
+msgid "ui_enable"
+msgstr "Turn on"
+
+msgid "ui_enter_hint"
+msgstr "Enter to send · Shift+Enter for a new line"
+
+msgid "ui_err_generic"
+msgstr "Something went wrong (error {status}). Try again."
+
+msgid "ui_err_invalid_data"
+msgstr "Check the form fields"
+
+msgid "ui_err_network"
+msgstr "Can't reach the server. Check your internet connection."
+
+msgid "ui_explore_channels"
+msgstr "Explore channels"
+
+msgid "ui_explore_lead"
+msgstr "Channels in {zone}. Join the ones you like."
+
+msgid "ui_explore_title"
+msgstr "Channels"
+
+msgid "ui_f_all"
+msgstr "All"
+
+msgid "ui_f_channels"
+msgstr "Channels"
+
+msgid "ui_f_direct"
+msgstr "Direct"
+
+msgid "ui_f_groups"
+msgstr "Groups"
+
+msgid "ui_f_mentions"
+msgstr "Mentions"
+
+msgid "ui_f_unread"
+msgstr "Unread"
+
+msgid "ui_feed_empty"
+msgstr "No posts yet. Follow people to see theirs here."
+
+msgid "ui_feed_hint"
+msgstr "Your followers will see it"
+
+msgid "ui_feed_placeholder"
+msgstr "What are you up to?"
+
+msgid "ui_find_people"
+msgstr "Find people"
+
+msgid "ui_follow"
+msgstr "Follow"
+
+msgid "ui_forgot"
+msgstr "Forgot your password?"
+
+msgid "ui_forgot_sent"
+msgstr "If an account uses that email, we sent it a link to change the password."
+
+msgid "ui_forgot_title"
+msgstr "Reset your password"
+
+msgid "ui_friend"
+msgstr "Friend"
+
+msgid "ui_friend_request_sent"
+msgstr "Friend request sent"
+
+msgid "ui_friend_requests"
+msgstr "Friend requests"
+
+msgid "ui_friends"
+msgstr "Friends"
+
+msgid "ui_go_latest"
+msgstr "Go to latest"
+
+msgid "ui_go_login"
+msgstr "Back to sign in"
+
+msgid "ui_group_members_hint"
+msgstr "Add your friends now, or share the invitation link later."
+
+msgid "ui_group_name"
+msgstr "Group name"
+
+msgid "ui_group_name_ph"
+msgstr "Saturday hike"
+
+msgid "ui_group_start"
+msgstr "This is the start of the group. Plan things together here."
+
+msgid "ui_have_account"
+msgstr "I already have an account"
+
+msgid "ui_hide_chat"
+msgstr "Hide conversation"
+
+msgid "ui_info"
+msgstr "Info"
+
+msgid "ui_interests"
+msgstr "Interests"
+
+msgid "ui_interests_lead"
+msgstr "Each interest joins you to its channel in {zone} for your age range."
+
+msgid "ui_invite_link"
+msgstr "Invitation link"
+
+msgid "ui_join"
+msgstr "Join"
+
+msgid "ui_join_group"
+msgstr "Join group"
+
+msgid "ui_language"
+msgstr "Language"
+
+msgid "ui_last_at"
+msgstr "last at {time}"
+
+msgid "ui_leave_channel"
+msgstr "Leave channel"
+
+msgid "ui_leave_group"
+msgstr "Leave group"
+
+msgid "ui_loading"
+msgstr "Loading…"
+
+msgid "ui_login_btn"
+msgstr "Sign in"
+
+msgid "ui_login_title"
+msgstr "Sign in to MeetGo"
+
+msgid "ui_logout"
+msgstr "Sign out"
+
+msgid "ui_make_admin"
+msgstr "Make admin"
+
+msgid "ui_make_member"
+msgstr "Remove admin"
+
+msgid "ui_manage_payment"
+msgstr "Manage payment and invoices"
+
+msgid "ui_members"
+msgstr "Members"
+
+msgid "ui_members_n"
+msgstr "{n} members"
+
+msgid "ui_mentions_lead"
+msgstr "Messages that mention you."
+
+msgid "ui_mentions_title"
+msgstr "Mentions"
+
+msgid "ui_message_actions"
+msgstr "Message actions"
+
+msgid "ui_message_in"
+msgstr "Message {name}"
+
+msgid "ui_message_to"
+msgstr "Message {name}"
+
+msgid "ui_mod_caps"
+msgstr "Removed by moderation: too many capitals"
+
+msgid "ui_mod_flood"
+msgstr "Removed by moderation: too many messages in a row"
+
+msgid "ui_mod_generic"
+msgstr "Removed by moderation"
+
+msgid "ui_mod_links"
+msgstr "Removed by moderation: links aren't allowed in this channel"
+
+msgid "ui_mod_phone"
+msgstr "Removed by moderation: don't share phone numbers in the channel"
+
+msgid "ui_mod_removed"
+msgstr "Removed by a moderator"
+
+msgid "ui_mod_toxic"
+msgstr "Removed by moderation: offensive language"
+
+msgid "ui_moderation"
+msgstr "Moderation"
+
+msgid "ui_monthly"
+msgstr "Monthly"
+
+msgid "ui_more"
+msgstr "More"
+
+msgid "ui_msg_deleted"
+msgstr "Message deleted"
+
+msgid "ui_mute_1h"
+msgstr "Mute for 1 hour"
+
+msgid "ui_mute_week"
+msgstr "Mute for 1 week"
+
+msgid "ui_nav"
+msgstr "Navigation"
+
+msgid "ui_nav_account"
+msgstr "Account"
+
+msgid "ui_nav_channels"
+msgstr "Channels"
+
+msgid "ui_nav_chats"
+msgstr "Chats"
+
+msgid "ui_nav_mentions"
+msgstr "Mentions"
+
+msgid "ui_nav_people"
+msgstr "People"
+
+msgid "ui_needs_request"
+msgstr "Needs a request"
+
+msgid "ui_new_chat"
+msgstr "New conversation"
+
+msgid "ui_new_group"
+msgstr "New group"
+
+msgid "ui_new_link"
+msgstr "New link"
+
+msgid "ui_new_messages"
+msgstr "New messages"
+
+msgid "ui_new_messages_n"
+msgstr "{n} new messages"
+
+msgid "ui_no_dms"
+msgstr "Doesn't accept direct messages"
+
+msgid "ui_no_friends_hint"
+msgstr "Add friends from a channel by tapping their name, or find them in «Find people»."
+
+msgid "ui_no_friends_yet"
+msgstr "You have no friends on MeetGo yet"
+
+msgid "ui_no_mentions"
+msgstr "Nobody has mentioned you yet"
+
+msgid "ui_no_requests"
+msgstr "You have no pending requests"
+
+msgid "ui_no_results"
+msgstr "No results"
+
+msgid "ui_notifications"
+msgstr "Notifications"
+
+msgid "ui_notifications_hint"
+msgstr "Groups and direct messages notify every message; channels only when you're mentioned. Change it in each conversation's menu."
+
+msgid "ui_notify_all"
+msgstr "Notify every message"
+
+msgid "ui_notify_current"
+msgstr "Notifications: {mode}"
+
+msgid "ui_notify_mentions"
+msgstr "Notify mentions only"
+
+msgid "ui_notify_none"
+msgstr "Never notify"
+
+msgid "ui_off"
+msgstr "Off"
+
+msgid "ui_offline"
+msgstr "Offline"
+
+msgid "ui_offline_n"
+msgstr "Offline · {n}"
+
+msgid "ui_online"
+msgstr "Online"
+
+msgid "ui_online_n"
+msgstr "Online · {n}"
+
+msgid "ui_open"
+msgstr "Open"
+
+msgid "ui_open_notification_settings"
+msgstr "Phone notification settings"
+
+msgid "ui_password"
+msgstr "Password"
+
+msgid "ui_password_change"
+msgstr "New password (optional)"
+
+msgid "ui_password_new"
+msgstr "Password (at least 6 characters)"
+
+msgid "ui_payments_soon"
+msgstr "Payments aren't active on this server yet."
+
+msgid "ui_paywall_lead"
+msgstr "Your account can read but not write. Subscribe to take part in channels, groups and direct messages."
+
+msgid "ui_paywall_title"
+msgstr "Subscribe to MeetGo"
+
+msgid "ui_people_title"
+msgstr "People"
+
+msgid "ui_per_month"
+msgstr "per month"
+
+msgid "ui_per_year"
+msgstr "per year"
+
+msgid "ui_phone"
+msgstr "Phone (never shown to anyone)"
+
+msgid "ui_pick_conversation"
+msgstr "Pick a conversation"
+
+msgid "ui_pick_conversation_hint"
+msgstr "Or start a new one with the pencil button."
+
+msgid "ui_pin"
+msgstr "Pin message"
+
+msgid "ui_pin_chat"
+msgstr "Pin conversation"
+
+msgid "ui_pinned"
+msgstr "Pinned"
+
+msgid "ui_plan_active"
+msgstr "Subscription active! Thanks for supporting MeetGo."
+
+msgid "ui_profile"
+msgstr "Profile"
+
+msgid "ui_promo_code"
+msgstr "Promotional code"
+
+msgid "ui_province"
+msgstr "Province"
+
+msgid "ui_publish"
+msgstr "Post"
+
+msgid "ui_push_blocked"
+msgstr "Notifications are blocked in this browser; allow them in its settings."
+
+msgid "ui_push_denied"
+msgstr "Notifications were not turned on"
+
+msgid "ui_push_disabled_here"
+msgstr "Notifications are off in this browser"
+
+msgid "ui_push_enabled_here"
+msgstr "Notifications are on in this browser"
+
+msgid "ui_push_off"
+msgstr "Notifications turned off"
+
+msgid "ui_push_on"
+msgstr "Notifications turned on"
+
+msgid "ui_push_unsupported"
+msgstr "This browser doesn't support notifications. On iPhone, add MeetGo to the home screen."
+
+msgid "ui_react"
+msgstr "React"
+
+msgid "ui_read"
+msgstr "Read"
+
+msgid "ui_read_only"
+msgstr "Your account is read-only until you subscribe."
+
+msgid "ui_reason"
+msgstr "Reason"
+
+msgid "ui_reason_spam"
+msgstr "Spam or advertising"
+
+msgid "ui_reason_harassment"
+msgstr "Harassment"
+
+msgid "ui_reason_hate"
+msgstr "Hate or discrimination"
+
+msgid "ui_reason_sexual"
+msgstr "Sexual content"
+
+msgid "ui_reason_violence"
+msgstr "Violence or threats"
+
+msgid "ui_reason_other"
+msgstr "Something else"
+
+msgid "ui_reconnecting"
+msgstr "Reconnecting…"
+
+msgid "ui_register_lead"
+msgstr "You'll talk with people from your province and age range. Your phone number is never shown."
+
+msgid "ui_register_legal"
+msgstr "By creating an account you confirm you are 18 or older and accept the terms and the privacy policy."
+
+msgid "ui_register_title"
+msgstr "Create your account"
+
+msgid "ui_remove"
+msgstr "Remove"
+
+msgid "ui_remove_member"
+msgstr "Remove from group"
+
+msgid "ui_replied_in_thread"
+msgstr "replied in a thread"
+
+msgid "ui_replies_n"
+msgstr "{n} replies"
+
+msgid "ui_reply"
+msgstr "Reply"
+
+msgid "ui_reply_in_thread_ph"
+msgstr "Reply in thread"
+
+msgid "ui_reply_thread"
+msgstr "Reply in a thread"
+
+msgid "ui_replying_to"
+msgstr "Replying to"
+
+msgid "ui_report"
+msgstr "Report"
+
+msgid "ui_report_in_chat"
+msgstr "Report the message from the conversation"
+
+msgid "ui_report_title"
+msgstr "Report message"
+
+msgid "ui_reported"
+msgstr "Thanks. Moderators will review it."
+
+msgid "ui_request"
+msgstr "Request"
+
+msgid "ui_requests"
+msgstr "Requests"
+
+msgid "ui_reset_done"
+msgstr "Password changed. You can sign in now."
+
+msgid "ui_reset_title"
+msgstr "New password"
+
+msgid "ui_restore_purchase"
+msgstr "Restore purchase"
+
+msgid "ui_resume_plan"
+msgstr "Resume subscription"
+
+msgid "ui_retry"
+msgstr "Retry"
+
+msgid "ui_role_owner"
+msgstr "Owner"
+
+msgid "ui_role_admin"
+msgstr "Admin"
+
+msgid "ui_role_moderator"
+msgstr "Mod"
+
+msgid "ui_role_member"
+msgstr "Member"
+
+msgid "ui_rules"
+msgstr "Rules"
+
+msgid "ui_save"
+msgstr "Save"
+
+msgid "ui_save_17"
+msgstr "Save 17%"
+
+msgid "ui_saved"
+msgstr "Saved"
+
+msgid "ui_search_in"
+msgstr "Search in {name}"
+
+msgid "ui_search_in_chat"
+msgstr "Search in conversation"
+
+msgid "ui_search_members"
+msgstr "Search members"
+
+msgid "ui_search_people"
+msgstr "Search by name"
+
+msgid "ui_search_people_hint"
+msgstr "Type at least two letters. You'll see your friends and people from your province."
+
+msgid "ui_search_placeholder"
+msgstr "Search conversations or messages"
+
+msgid "ui_sec_channels"
+msgstr "Channels"
+
+msgid "ui_sec_channels_zone"
+msgstr "Channels · {zone}"
+
+msgid "ui_sec_direct"
+msgstr "Direct"
+
+msgid "ui_sec_groups"
+msgstr "Groups"
+
+msgid "ui_sec_messages"
+msgstr "Messages"
+
+msgid "ui_sec_pinned"
+msgstr "Pinned"
+
+msgid "ui_seconds_n"
+msgstr "{n} seconds"
+
+msgid "ui_send"
+msgstr "Send"
+
+msgid "ui_send_link"
+msgstr "Send link"
+
+msgid "ui_send_message"
+msgstr "Send message"
+
+msgid "ui_sent"
+msgstr "Sent"
+
+msgid "ui_session"
+msgstr "Session"
+
+msgid "ui_share_lead"
+msgstr "Choose where to share it ({n} files)."
+
+msgid "ui_share_nothing"
+msgstr "There is nothing to share."
+
+msgid "ui_share_title"
+msgstr "Share to MeetGo"
+
+msgid "ui_side_panel"
+msgstr "Side panel"
+
+msgid "ui_silence_1h"
+msgstr "Silence for 1 hour"
+
+msgid "ui_silenced_until"
+msgstr "You are silenced in this conversation until {time}."
+
+msgid "ui_slow_mode"
+msgstr "Slow mode: one message every {seconds} s"
+
+msgid "ui_slow_mode_label"
+msgstr "Slow mode"
+
+msgid "ui_staff_n"
+msgstr "Moderators · {n}"
+
+msgid "ui_subscribe"
+msgstr "Subscribe"
+
+msgid "ui_subscribe_card"
+msgstr "Subscribe with card"
+
+msgid "ui_subscribe_play"
+msgstr "Subscribe with Google Play"
+
+msgid "ui_subscription"
+msgstr "Subscription"
+
+msgid "ui_switch_monthly"
+msgstr "Switch to monthly"
+
+msgid "ui_switch_yearly"
+msgstr "Switch to yearly (save 17%)"
+
+msgid "ui_theme"
+msgstr "Theme"
+
+msgid "ui_theme_dark"
+msgstr "Dark"
+
+msgid "ui_theme_light"
+msgstr "Light"
+
+msgid "ui_theme_system"
+msgstr "Match system"
+
+msgid "ui_thread"
+msgstr "Thread"
+
+msgid "ui_threads"
+msgstr "Info and rules"
+
+msgid "ui_today"
+msgstr "Today"
+
+msgid "ui_trial_days"
+msgstr "The first {n} days are free. Cancel any time."
+
+msgid "ui_typing_many"
+msgstr "{name} and {n} more are typing…"
+
+msgid "ui_typing_one"
+msgstr "{name} is typing…"
+
+msgid "ui_typing_short"
+msgstr "typing…"
+
+msgid "ui_typing_two"
+msgstr "{a} and {b} are typing…"
+
+msgid "ui_unfollow"
+msgstr "Unfollow"
+
+msgid "ui_unmute"
+msgstr "Unmute"
+
+msgid "ui_unpin"
+msgstr "Unpin message"
+
+msgid "ui_unpin_chat"
+msgstr "Unpin conversation"
+
+msgid "ui_unsilence"
+msgstr "Unsilence"
+
+msgid "ui_uploading"
+msgstr "Uploading…"
+
+msgid "ui_wait"
+msgstr "One moment…"
+
+msgid "ui_wants_friend"
+msgstr "{name} wants to be your friend"
+
+msgid "ui_wants_to_write"
+msgstr "{name} wants to message you"
+
+msgid "ui_write"
+msgstr "Message"
+
+msgid "ui_yearly"
+msgstr "Yearly"
+
+msgid "ui_yesterday"
+msgstr "Yesterday"
+
+msgid "ui_you"
+msgstr "You"
+
+msgid "admin_add_calling_code"
+msgstr "Add calling code"
+
+msgid "admin_add_country"
+msgstr "Add country"
+
+msgid "admin_add_language"
+msgstr "Add language"
+
+msgid "admin_add_range"
+msgstr "Add range"
+
+msgid "admin_age_ranges_title"
+msgstr "Age ranges"
+
+msgid "admin_app_section"
+msgstr "Application"
+
+msgid "admin_base_url"
+msgstr "Public web address"
+
+msgid "admin_base_url_placeholder"
+msgstr "https://meetgo.app"
+
+msgid "admin_calling_code_placeholder"
+msgstr "+34"
+
+msgid "admin_calling_codes_title"
+msgstr "Calling codes"
+
+msgid "admin_code"
+msgstr "Code"
+
+msgid "admin_countries_title"
+msgstr "Countries"
+
+msgid "admin_delete"
+msgstr "Delete"
+
+msgid "admin_gmail_client_id"
+msgstr "Gmail: client ID"
+
+msgid "admin_gmail_client_secret"
+msgstr "Gmail: client secret"
+
+msgid "admin_gmail_refresh_token"
+msgstr "Gmail: refresh token"
+
+msgid "admin_gmail_sender_email"
+msgstr "Gmail: sender email"
+
+msgid "admin_key"
+msgstr "Key"
+
+msgid "admin_label"
+msgstr "Label"
+
+msgid "admin_languages_title"
+msgstr "Languages"
+
+msgid "admin_loading"
+msgstr "Loading…"
+
+msgid "admin_login_button"
+msgstr "Sign in"
+
+msgid "admin_login_password"
+msgstr "Password"
+
+msgid "admin_login_username"
+msgstr "Email or username"
+
+msgid "admin_logout"
+msgstr "Sign out"
+
+msgid "admin_max"
+msgstr "Max"
+
+msgid "admin_min"
+msgstr "Min"
+
+msgid "admin_name"
+msgstr "Name"
+
+msgid "admin_provinces_title"
+msgstr "Provinces"
+
+msgid "admin_settings_error"
+msgstr "The settings could not be saved"
+
+msgid "admin_settings_save"
+msgstr "Save settings"
+
+msgid "admin_settings_saved"
+msgstr "Settings saved"
+
+msgid "admin_settings_title"
+msgstr "Settings"
+
+msgid "admin_smtp_encryption"
+msgstr "Encryption"
+
+msgid "admin_smtp_from_email"
+msgstr "Sender email"
+
+msgid "admin_smtp_host"
+msgstr "SMTP server"
+
+msgid "admin_smtp_mode"
+msgstr "Sending mode"
+
+msgid "admin_smtp_mode_gmail"
+msgstr "Gmail API"
+
+msgid "admin_smtp_mode_smtp"
+msgstr "SMTP"
+
+msgid "admin_smtp_password"
+msgstr "SMTP password"
+
+msgid "admin_smtp_port"
+msgstr "Port"
+
+msgid "admin_smtp_section"
+msgstr "Outgoing email"
+
+msgid "admin_smtp_ssl"
+msgstr "SSL"
+
+msgid "admin_smtp_starttls"
+msgstr "STARTTLS"
+
+msgid "admin_smtp_test_button"
+msgstr "Send test email"
+
+msgid "admin_smtp_test_email"
+msgstr "Send test to"
+
+msgid "admin_smtp_test_error"
+msgstr "The test email could not be sent"
+
+msgid "admin_smtp_test_ok"
+msgstr "Test email sent"
+
+msgid "admin_smtp_username"
+msgstr "SMTP username"
+
+msgid "admin_tab_channels"
+msgstr "Channels"
+
+msgid "admin_tab_settings"
+msgstr "Settings"
+
+msgid "admin_tab_users"
+msgstr "Users"
+
+msgid "admin_title"
+msgstr "MeetGo administration"

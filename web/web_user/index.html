@@ -1,18 +1,449 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#102436" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="MeetGo" />
-    <title>MeetGo</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" href="/apple-touch-icon.png" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/main.tsx"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MeetGo · Chatea y queda con gente de tu zona</title>
+<meta name="description" content="Canales de chat con gente de tu provincia, tu edad y tus aficiones, grupos para organizar planes y mensajes directos. En la web y en Android. 1 año gratis para las 50 primeras cuentas.">
+<meta name="theme-color" content="#0b1220">
+<link rel="canonical" href="https://meetgo.app/">
+<link rel="icon" type="image/png" href="/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MeetGo">
+<meta property="og:url" content="https://meetgo.app/">
+<meta property="og:title" content="MeetGo · Chatea y queda con gente de tu zona">
+<meta property="og:description" content="Canales por provincia, edad e intereses, grupos para quedar y mensajes directos. 1 año gratis para las 50 primeras cuentas.">
+<meta property="og:image" content="https://meetgo.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MeetGo · Chatea y queda con gente de tu zona">
+<meta name="twitter:description" content="Canales por provincia, edad e intereses, grupos para quedar y mensajes directos.">
+<meta name="twitter:image" content="https://meetgo.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/landing/landing.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MeetGo",
+  "url": "https://meetgo.app/",
+  "applicationCategory": "SocialNetworkingApplication",
+  "operatingSystem": "Web, Android",
+  "description": "Canales de chat con gente de tu provincia, tu edad y tus aficiones, grupos privados para organizar planes y mensajes directos.",
+  "inLanguage": ["es", "en"],
+  "offers": [
+    {"@type": "Offer", "name": "Mensual", "price": "2.50", "priceCurrency": "EUR", "category": "subscription"},
+    {"@type": "Offer", "name": "Anual", "price": "25.00", "priceCurrency": "EUR", "category": "subscription"}
+  ]
+}
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lgMeet" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e90ff"/><stop offset="1" stop-color="#00c2ff"/></linearGradient>
+    <linearGradient id="lgGo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#43d854"/><stop offset="1" stop-color="#18d7c8"/></linearGradient>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4v-4H4z"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2c2.2.7 3.5 2.6 3.5 5.8"/></symbol>
+    <symbol id="i-at" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-thread" viewBox="0 0 24 24"><path d="M4 5h16v10h-9l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-2.5-6.5z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-device" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-android" viewBox="0 0 24 24"><path d="M5 10v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6zM5 10a7 7 0 0 1 14 0M8 4l1.5 2.5M16 4l-1.5 2.5M9.5 8h.01M14.5 8h.01M8 18v3M16 18v3"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-check2" viewBox="0 0 24 24"><path d="m2 13 4 4 8-9M10 16l1 1 9-10"/></symbol>
+  </defs>
+</svg>
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="MeetGo">
+      <span class="wm"><span class="meet">Meet</span><span class="go">Go</span></span><svg class="arrow" viewBox="0 0 30 24" aria-hidden="true"><circle cx="3" cy="19" r="3" fill="url(#lgGo)"/><path d="M11 2 L29 12 L11 22 Z" fill="url(#lgGo)"/></svg>
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#como" data-i18n="nav_how">Cómo funciona</a>
+      <a href="#funciones" data-i18n="nav_features">Funciones</a>
+      <a href="#precios" data-i18n="nav_prices">Precios</a>
+      <a href="#descarga" data-i18n="nav_download">Descarga</a>
+      <a href="#preguntas" data-i18n="nav_faq">Preguntas</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn sec" href="/app/" data-i18n="signin">Entrar</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap">
+    <div>
+      <a class="eyebrow" id="eyebrow" href="#como"><i></i><span data-i18n="eyebrow">Chat por provincia, edad e intereses</span></a>
+      <h1 id="hero-title" data-i18n="hero_title">Habla con gente <span class="meet">de tu zona</span>. Y <span class="go">quedad</span>.</h1>
+      <p class="lead" data-i18n="hero_lead">Canales con personas de tu provincia, tu edad y tus aficiones. Cuando surge el plan, creáis un grupo y lo cerráis por privado.</p>
+      <div class="cta">
+        <a class="btn pri" href="/app/?view=register" data-i18n="cta_register">Crear cuenta</a>
+        <a class="btn sec" href="#como" data-i18n="cta_how">Ver cómo funciona</a>
+      </div>
+      <div class="chips" aria-label="Ejemplos de canales">
+        <span class="chip"><b>#</b>senderismo</span><span class="chip"><b>#</b>padel</span><span class="chip"><b>#</b>quedar-para-un-cafe</span><span class="chip">Madrid · 31-50</span>
+      </div>
+    </div>
+
+    <div class="stack" aria-hidden="true">
+      <!-- left: a busy channel -->
+      <div class="phone back"><div class="scr">
+        <div class="sbar"><span>12:45</span><span>5G 82%</span></div>
+        <div class="phd"><svg class="ic"><use href="#i-back"/></svg><div class="chan" style="width:30px;height:30px;font-size:13px">#</div><div class="t2"><b>senderismo</b><span>Madrid · 31-50 · <span class="on">37 en línea</span></span></div></div>
+        <div class="pbody">
+          <div class="msg"><div class="av" style="background:#f59e0b">ES</div><div><div class="mh"><span class="who">Elena Sanz</span><span class="mod">MOD</span><span class="when">12:02</span></div><div class="mt">Propongo Siete Picos desde el puerto de Navacerrada. 11 km, unas 4 h.</div><div class="reacts"><span class="react mine">🥾 9</span><span class="react">👍 6</span></div><div class="tsum"><span class="mini"><span class="av" style="background:#06b6d4">SA</span><span class="av" style="background:#ef4444">IT</span></span>12 respuestas</div></div></div>
+          <div class="sysm"><svg class="ic"><use href="#i-shield"/></svg>Mensaje retirado: número de teléfono</div>
+          <div class="newsep">Mensajes nuevos</div>
+          <div class="msg"><div class="av" style="background:#ec4899">LM</div><div><div class="mh"><span class="who">Lucía Martín</span><span class="when">12:31</span></div><div class="quote"><b>Iván</b> · ¿Sitio en el coche desde Alcobendas?</div><div class="mt">Salgo a las 8, me quedan 2 plazas</div></div></div>
+          <div class="msg mention"><div class="av" style="background:#84cc16">JP</div><div><div class="mh"><span class="who">Jorge Peña</span><span class="when">12:36</span></div><div class="mt"><span class="at">@Álex</span> ¿qué tal el último tramo de la Maliciosa?</div></div></div>
+        </div>
+        <div class="typing"><span class="dots"><i></i><i></i><i></i></span>Pablo y 2 más escriben…</div>
+        <div class="comp"><div class="fld">Mensaje en #senderismo</div><div class="send"><svg class="ic"><use href="#i-send"/></svg></div></div>
+      </div></div>
+
+      <!-- right: a private group -->
+      <div class="phone back2"><div class="scr">
+        <div class="sbar"><span>12:46</span><span>5G 81%</span></div>
+        <div class="phd"><svg class="ic"><use href="#i-back"/></svg><div class="grp" style="width:30px;height:30px"><div class="av" style="background:#3b82f6">CR</div><div class="av" style="background:#f59e0b">ES</div></div><div class="t2"><b>Ruta Cercedilla sábado</b><span>8 miembros</span></div></div>
+        <div class="pbody">
+          <div class="sysm" style="padding-left:12px"><svg class="ic"><use href="#i-users"/></svg>Elena te ha añadido al grupo</div>
+          <div class="msg"><div class="av" style="background:#f59e0b">ES</div><div><div class="mh"><span class="who">Elena Sanz</span><span class="when">12:30</span></div><div class="mt">Coches: Carlos (4), Lucía (2) y yo (3)</div></div></div>
+          <div class="msg"><div class="av" style="background:#3b82f6">CR</div><div><div class="mh"><span class="who">Carlos Ruiz</span><span class="when">12:38</span></div><div class="mt">Salimos a las 8:15 de Moncloa</div><div class="photo"></div><div class="reacts"><span class="react">🙌 5</span></div></div></div>
+        </div>
+        <div class="comp"><svg class="ic"><use href="#i-camera"/></svg><div class="fld">Mensaje</div><div class="send"><svg class="ic"><use href="#i-send"/></svg></div></div>
+      </div></div>
+
+      <!-- front: the chat list -->
+      <div class="phone float"><div class="scr">
+        <div class="sbar"><span>12:44</span><span>5G 82%</span></div>
+        <div class="phd"><div class="t">Chats</div><svg class="ic"><use href="#i-search"/></svg></div>
+        <div class="pchips"><span class="on">Todo</span><span>No leídos</span><span>Canales</span><span>Grupos</span></div>
+        <div class="pbody">
+          <div class="lsec">Canales · Madrid 31-50</div>
+          <div class="row"><div class="chan">#</div><div style="min-width:0"><div class="n">senderismo</div><div class="p w">Lucía: ¿Alguien conoce la Pedriza?</div></div><div class="m">12:41<div><span class="bdg at">@</span><span class="bdg">23</span></div></div></div>
+          <div class="row"><div class="chan">#</div><div style="min-width:0"><div class="n">padel</div><div class="p w">Iván: Pista libre mañana a las 20h</div></div><div class="m">12:05<span class="bdg">4</span></div></div>
+          <div class="lsec">Grupos</div>
+          <div class="row"><div class="grp"><div class="av" style="background:#3b82f6">CR</div><div class="av" style="background:#f59e0b">ES</div></div><div style="min-width:0"><div class="n">Ruta Cercedilla sábado</div><div class="p w">Carlos: Salimos a las 8:15</div></div><div class="m">12:38<span class="bdg">2</span></div></div>
+          <div class="lsec">Directos</div>
+          <div class="row"><div class="av l" style="background:#ec4899">LM<span class="dot"></span></div><div style="min-width:0"><div class="n">Lucía Martín</div><div class="p"><span class="typ">escribiendo…</span></div></div><div class="m">12:44<span class="bdg">1</span></div></div>
+          <div class="row"><div class="av l" style="background:#8b5cf6">MG<span class="dot"></span></div><div style="min-width:0"><div class="n">Marta Gil</div><div class="p">Gracias por el track 🙌</div></div><div class="m">lun</div></div>
+          <div class="fab"><svg class="ic"><use href="#i-edit"/></svg></div>
+        </div>
+        <div class="pnav">
+          <div class="on"><svg class="ic"><use href="#i-chat"/></svg>Chats<span class="bdg">30</span></div>
+          <div><svg class="ic"><use href="#i-compass"/></svg>Canales</div>
+          <div><svg class="ic"><use href="#i-users"/></svg>Personas</div>
+          <div><svg class="ic"><use href="#i-user"/></svg>Perfil</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="strip_zone">Tu provincia y tu rango de edad</span></span>
+    <span><svg class="ic"><use href="#i-shield"/></svg><span data-i18n="strip_mod">Moderación activa</span></span>
+    <span><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="strip_phone">Tu teléfono no se muestra</span></span>
+    <span><svg class="ic"><use href="#i-device"/></svg><span data-i18n="strip_devices">Web, Android e iPhone</span></span>
+  </div>
+</div>
+
+<section class="promo" id="promo" hidden aria-labelledby="promo-title">
+  <div class="wrap">
+    <div class="pbox rv">
+      <div>
+        <span class="pbadge"><i></i><span data-i18n="promo_badge">Campaña de lanzamiento</span></span>
+        <h2 id="promo-title" data-i18n="promo_title"><span class="sunt">1 año gratis</span> para las primeras cuentas</h2>
+        <p><span data-i18n="promo_text">Crea tu cuenta con el código y no pagas nada durante un año. Solo para las primeras</span> <b id="promoMax">50</b> <span data-i18n="promo_text2">cuentas.</span></p>
+        <button type="button" class="pcode" id="promoCode" aria-label="Copiar el código LANZAMIENTO"><span id="promoCodeText">LANZAMIENTO</span><small data-i18n="promo_copy">Copiar</small></button>
+      </div>
+      <div class="pr">
+        <div class="pleft"><b id="promoLeft">50</b><span data-i18n="promo_left">plazas libres</span></div>
+        <div class="pbar" role="progressbar" aria-label="Plazas usadas" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0" id="promoBarWrap"><i id="promoBar"></i></div>
+        <small id="promoOf">de 50</small>
+        <a class="btn sun" id="promoCta" href="/app/?view=register&amp;code=LANZAMIENTO" data-i18n="promo_cta">Quiero mi año gratis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="como" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="how_k">Cómo funciona</span><h2 id="how-title" data-i18n="how_title">De la conversación al plan, en tres pasos</h2></div>
+    <ol class="steps">
+      <li class="rv"><h3 data-i18n="s1_t">Elige tus aficiones</h3><p data-i18n="s1_p">Senderismo, pádel, cine, café… Cada afición es un canal con gente de tu provincia y tu rango de edad.</p></li>
+      <li class="rv"><h3 data-i18n="s2_t">Conversa en tus canales</h3><p data-i18n="s2_p">Responde en hilos para no perder el hilo, menciona a quien quieras y reacciona sin llenar el chat.</p></li>
+      <li class="rv"><h3 data-i18n="s3_t">Monta el plan en un grupo</h3><p data-i18n="s3_p">Crea un grupo privado, invita a quien se apunta y organizad coches, horas y fotos sin ruido.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="funciones" aria-labelledby="feat-title" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="feat_k">Funciones</span><h2 id="feat-title" data-i18n="feat_title">Pensada para chatear con mucha gente sin perderte</h2>
+      <p data-i18n="feat_p">Los canales grandes se leen bien, los grupos son tuyos y los mensajes directos llegan al momento.</p></div>
+
+    <div class="feat" style="--k:var(--cyan)">
+      <div class="rv">
+        <span class="tag" data-i18n="f1_k">Canales de tu zona</span>
+        <h3 data-i18n="f1_t">Muchos hablando a la vez, todo legible</h3>
+        <p data-i18n="f1_p">Cada tema tiene su hilo y la conversación principal queda limpia. Ves lo que te has perdido sin hacer scroll infinito.</p>
+        <ul>
+          <li data-i18n="f1_l1">Hilos con resumen de respuestas y participantes</li>
+          <li data-i18n="f1_l2">Menciones con bandeja propia y aviso solo cuando te nombran</li>
+          <li data-i18n="f1_l3">Separador de mensajes nuevos y botón para ir al último</li>
+          <li data-i18n="f1_l4">Reacciones, respuestas citadas y mensajes fijados</li>
+        </ul>
+      </div>
+      <div class="media rv" aria-hidden="true"><div class="glow"></div>
+        <div class="phone"><div class="scr">
+          <div class="sbar"><span>12:46</span><span>5G 81%</span></div>
+          <div class="phd"><svg class="ic"><use href="#i-back"/></svg><div class="t2"><b>Hilo</b><span>#senderismo · 12 respuestas</span></div></div>
+          <div class="pbody">
+            <div class="msg" style="border-bottom:1px solid var(--m-line);padding-bottom:9px"><div class="av" style="background:#f59e0b">ES</div><div><div class="mh"><span class="who">Elena Sanz</span><span class="when">12:02</span></div><div class="mt">Propongo Siete Picos desde el puerto de Navacerrada. 11 km, unas 4 h.</div><div class="reacts"><span class="react mine">🥾 9</span><span class="react">👍 6</span></div></div></div>
+            <div class="msg"><div class="av" style="background:#06b6d4">SA</div><div><div class="mh"><span class="who">Sara Alonso</span><span class="when">12:22</span></div><div class="mt">¿Hay fuente en el camino?</div></div></div>
+            <div class="msg"><div class="av" style="background:#f59e0b">ES</div><div><div class="mh"><span class="who">Elena Sanz</span><span class="when">12:25</span></div><div class="mt">Sí, la de los Geólogos. Llevad 1,5 l igualmente.</div></div></div>
+            <div class="msg"><div class="av" style="background:#8b5cf6">MG</div><div><div class="mh"><span class="who">Marta Gil</span><span class="when">12:31</span></div><div class="mt">Llevo bastones de sobra si alguien los necesita</div><div class="reacts"><span class="react">❤️ 3</span></div></div></div>
+            <div class="msg"><div class="av" style="background:#ef4444">IT</div><div><div class="mh"><span class="who">Iván Torres</span><span class="when">12:43</span></div><div class="mt">Apuntado. ¿Comemos arriba o bajamos?</div></div></div>
+          </div>
+          <div class="comp"><svg class="ic"><use href="#i-camera"/></svg><div class="fld">Responder en el hilo</div><div class="send"><svg class="ic"><use href="#i-send"/></svg></div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="feat rev" style="--k:var(--green)">
+      <div class="rv">
+        <span class="tag" data-i18n="f2_k">Grupos privados</span>
+        <h3 data-i18n="f2_t">Del «me apunto» al plan cerrado</h3>
+        <p data-i18n="f2_p">Crea un grupo con tus amigos o comparte un enlace de invitación con quien se apuntó en el canal.</p>
+        <ul>
+          <li data-i18n="f2_l1">Enlaces de invitación y roles de administración</li>
+          <li data-i18n="f2_l2">Fotos y archivos de hasta 10 MB</li>
+          <li data-i18n="f2_l3">Confirmación de lectura para saber quién lo ha visto</li>
+          <li data-i18n="f2_l4">Silencia o fija los grupos que quieras</li>
+        </ul>
+      </div>
+      <div class="media rv" aria-hidden="true"><div class="glow"></div>
+        <div class="phone"><div class="scr">
+          <div class="sbar"><span>12:39</span><span>5G 83%</span></div>
+          <div class="phd"><svg class="ic"><use href="#i-back"/></svg><div class="grp" style="width:30px;height:30px"><div class="av" style="background:#3b82f6">CR</div><div class="av" style="background:#f59e0b">ES</div></div><div class="t2"><b>Ruta Cercedilla sábado</b><span>8 miembros · <span class="on">5 en línea</span></span></div></div>
+          <div class="pbody">
+            <div class="sysm" style="padding-left:12px"><svg class="ic"><use href="#i-users"/></svg>Elena ha creado el grupo</div>
+            <div class="msg"><div class="av" style="background:#f59e0b">ES</div><div><div class="mh"><span class="who">Elena Sanz</span><span class="when">12:30</span></div><div class="mt">Somos 8. Coches: Carlos (4), Lucía (2) y yo (3).</div></div></div>
+            <div class="msg"><div class="av" style="background:#3b82f6">CR</div><div><div class="mh"><span class="who">Carlos Ruiz</span><span class="when">12:38</span></div><div class="mt">Salimos a las 8:15 de Moncloa, dársena de interurbanos</div><div class="photo"></div></div></div>
+            <div class="msg"><div class="av" style="background:#7c5cff">TÚ</div><div><div class="mh"><span class="who">Tú</span><span class="when">12:39 <svg class="ic" style="width:12px;height:12px;color:var(--cyan);vertical-align:-2px"><use href="#i-check2"/></svg></span></div><div class="quote"><b>Carlos</b> · Salimos a las 8:15 de Moncloa</div><div class="mt">Perfecto, llevo café para todos ☕</div></div></div>
+          </div>
+          <div class="comp"><svg class="ic"><use href="#i-camera"/></svg><div class="fld">Mensaje</div><div class="send"><svg class="ic"><use href="#i-send"/></svg></div></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="feat" style="--k:var(--blue)">
+      <div class="rv">
+        <span class="tag" data-i18n="f3_k">Mensajes directos</span>
+        <h3 data-i18n="f3_t">Por privado, cuando los dos queréis</h3>
+        <p data-i18n="f3_p">Con tus amigos hablas al momento. Con el resto, primero llega una solicitud, y solo si esa persona acepta mensajes directos.</p>
+        <ul>
+          <li data-i18n="f3_l1">Notificaciones al instante, con respuesta rápida en Android</li>
+          <li data-i18n="f3_l2">Indicador de «escribiendo» y de quién está en línea</li>
+          <li data-i18n="f3_l3">Tu número de teléfono nunca se muestra</li>
+        </ul>
+      </div>
+      <div class="media rv" aria-hidden="true"><div class="glow"></div>
+        <div class="phone"><div class="scr">
+          <div class="sbar"><span>12:44</span><span>5G 82%</span></div>
+          <div class="notif"><div class="ap"><i></i>MeetGo · ahora</div><div class="nb"><div class="av" style="background:#ec4899">LM</div><div><b>Lucía Martín</b>¿Te apuntas al sábado? Me queda una plaza</div></div><div class="na"><span>Responder</span><span>Marcar como leído</span></div></div>
+          <div class="phd"><svg class="ic"><use href="#i-back"/></svg><div class="av" style="background:#ec4899">LM<span class="dot"></span></div><div class="t2"><b>Lucía Martín</b><span class="on">En línea</span></div></div>
+          <div class="pbody">
+            <div class="msg"><div class="av" style="background:#7c5cff">TÚ</div><div><div class="mh"><span class="who">Tú</span><span class="when">12:20</span></div><div class="mt">¡Hola! Vi en #senderismo que sales de Alcobendas</div></div></div>
+            <div class="msg"><div class="av" style="background:#ec4899">LM</div><div><div class="mh"><span class="who">Lucía Martín</span><span class="when">12:42</span></div><div class="mt">Sí, a las 8. Me queda una plaza</div></div></div>
+            <div class="msg cont"><div class="av" style="background:#ec4899">LM</div><div><div class="mt">¿Te apuntas al sábado?</div></div></div>
+          </div>
+          <div class="typing"><span class="dots"><i></i><i></i><i></i></span>Lucía está escribiendo…</div>
+          <div class="comp"><svg class="ic"><use href="#i-camera"/></svg><div class="fld">Mensaje a Lucía</div><div class="send"><svg class="ic"><use href="#i-send"/></svg></div></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="more-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="more_k">Y además</span><h2 id="more-title" data-i18n="more_title">Un buen ambiente no es casualidad</h2></div>
+    <div class="grid">
+      <div class="tile rv" style="--k:var(--teal)"><svg class="ic"><use href="#i-shield"/></svg><h3 data-i18n="t1_t">Moderación automática</h3><p data-i18n="t1_p">Los insultos, el spam y los teléfonos compartidos en abierto se retiran solos.</p></div>
+      <div class="tile rv" style="--k:var(--coral)"><svg class="ic"><use href="#i-flag"/></svg><h3 data-i18n="t2_t">Denuncias y moderadores</h3><p data-i18n="t2_p">Denuncia un mensaje en dos toques; los moderadores pueden silenciar o expulsar.</p></div>
+      <div class="tile rv" style="--k:var(--sun)"><svg class="ic"><use href="#i-clock"/></svg><h3 data-i18n="t3_t">Modo lento</h3><p data-i18n="t3_p">Cuando un canal se anima demasiado, sus moderadores marcan el ritmo.</p></div>
+      <div class="tile rv" style="--k:var(--blue)"><svg class="ic"><use href="#i-bell"/></svg><h3 data-i18n="t4_t">Avisos a tu medida</h3><p data-i18n="t4_p">Todo, solo menciones o nada, por conversación. Silencia lo que no quieras oír.</p></div>
+      <div class="tile rv" style="--k:var(--green)"><svg class="ic"><use href="#i-search"/></svg><h3 data-i18n="t5_t">Búsqueda</h3><p data-i18n="t5_p">Encuentra aquel mensaje con la hora de la quedada en todas tus conversaciones.</p></div>
+      <div class="tile rv" style="--k:var(--cyan)"><svg class="ic"><use href="#i-image"/></svg><h3 data-i18n="t6_t">Fotos y archivos</h3><p data-i18n="t6_p">Comparte la foto de la cumbre, el track de la ruta o el PDF de la reserva.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="web-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="web_k">También en el ordenador</span><h2 id="web-title" data-i18n="web_title">Todas tus conversaciones de un vistazo</h2>
+      <p data-i18n="web_p">En la pantalla grande ves la lista, el canal y el hilo o los miembros a la vez.</p></div>
+    <div class="rv" aria-hidden="true">
+      <div class="laptop"><div class="lscr">
+        <div class="lrail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
+        <div class="llist">
+          <div class="lt">Chats</div>
+          <div class="lsec">Canales · Madrid 31-50</div>
+          <div class="row sel"><div class="chan">#</div><div style="min-width:0"><div class="n">senderismo</div><div class="p w">Lucía: ¿Alguien conoce la Pedriza?</div></div><div class="m">12:41<span class="bdg">23</span></div></div>
+          <div class="row"><div class="chan">#</div><div style="min-width:0"><div class="n">padel</div><div class="p w">Iván: Pista libre a las 20h</div></div><div class="m">12:05<span class="bdg">4</span></div></div>
+          <div class="row"><div class="chan">#</div><div style="min-width:0"><div class="n">quedar-para-un-cafe</div><div class="p">Sara: Café en Malasaña</div></div><div class="m">11:30</div></div>
+          <div class="lsec">Grupos</div>
+          <div class="row"><div class="grp"><div class="av" style="background:#3b82f6">CR</div><div class="av" style="background:#f59e0b">ES</div></div><div style="min-width:0"><div class="n">Ruta Cercedilla sábado</div><div class="p w">Carlos: Salimos a las 8:15</div></div><div class="m">12:38<span class="bdg">2</span></div></div>
+          <div class="lsec">Directos</div>
+          <div class="row"><div class="av l" style="background:#ec4899">LM<span class="dot"></span></div><div style="min-width:0"><div class="n">Lucía Martín</div><div class="p"><span class="typ">escribiendo…</span></div></div><div class="m">12:44<span class="bdg">1</span></div></div>
+        </div>
+        <div class="lchat">
+          <div class="hd"><div class="chan" style="width:26px;height:26px;font-size:12px">#</div><div><b>senderismo</b><br><span>Madrid · 31-50 · 248 miembros · 37 en línea</span></div></div>
+          <div class="msg"><div class="av" style="background:#10b981">PO</div><div><div class="mh"><span class="who">Pablo Ortega</span><span class="mod">MOD</span><span class="when">11:58</span></div><div class="mt">Previsión para el sábado en la sierra: sol y 14 °C</div></div></div>
+          <div class="msg"><div class="av" style="background:#f59e0b">ES</div><div><div class="mh"><span class="who">Elena Sanz</span><span class="mod">MOD</span><span class="when">12:02</span></div><div class="mt">Propongo Siete Picos desde el puerto de Navacerrada. 11 km, unas 4 h.</div><div class="reacts"><span class="react mine">🥾 9</span><span class="react">👍 6</span></div><div class="tsum"><span class="mini"><span class="av" style="background:#06b6d4">SA</span><span class="av" style="background:#ef4444">IT</span><span class="av" style="background:#8b5cf6">MG</span></span>12 respuestas · última hace 3 min</div></div></div>
+          <div class="newsep">Mensajes nuevos</div>
+          <div class="msg"><div class="av" style="background:#ec4899">LM</div><div><div class="mh"><span class="who">Lucía Martín</span><span class="when">12:31</span></div><div class="quote"><b>Iván Torres</b> · ¿Alguien tiene sitio en el coche desde Alcobendas?</div><div class="mt">Salgo a las 8, me quedan 2 plazas</div></div></div>
+          <div class="msg mention"><div class="av" style="background:#84cc16">JP</div><div><div class="mh"><span class="who">Jorge Peña</span><span class="when">12:36</span></div><div class="mt"><span class="at">@Álex</span> tú hiciste la Maliciosa el mes pasado, ¿qué tal el último tramo?</div></div></div>
+        </div>
+        <div class="lside">
+          <div class="hd">Miembros</div>
+          <div class="lsec">Moderadores · 2</div>
+          <div class="mr"><div class="av" style="background:#f59e0b">ES<span class="dot"></span></div>Elena Sanz</div>
+          <div class="mr"><div class="av" style="background:#10b981">PO<span class="dot"></span></div>Pablo Ortega</div>
+          <div class="lsec">En línea · 35</div>
+          <div class="mr"><div class="av" style="background:#ec4899">LM<span class="dot"></span></div>Lucía Martín</div>
+          <div class="mr"><div class="av" style="background:#ef4444">IT<span class="dot"></span></div>Iván Torres</div>
+          <div class="mr"><div class="av" style="background:#06b6d4">SA<span class="dot"></span></div>Sara Alonso</div>
+          <div class="mr"><div class="av" style="background:#84cc16">JP<span class="dot"></span></div>Jorge Peña</div>
+          <div class="mr"><div class="av" style="background:#8b5cf6">MG<span class="dot"></span></div>Marta Gil</div>
+        </div>
+      </div></div>
+      <div class="base"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="descarga" aria-labelledby="dl-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="dl_k">Descarga</span><h2 id="dl-title" data-i18n="dl_title">Contigo en el móvil y en el ordenador</h2></div>
+    <div class="dls">
+      <div class="dl rv" style="--k:var(--green)">
+        <div class="ico"><svg class="ic"><use href="#i-android"/></svg></div>
+        <h3>Android</h3>
+        <p data-i18n="dl_android_p">La app con notificaciones al instante y respuesta rápida. Descarga el APK e instálalo.</p>
+        <small id="apkInfo" data-i18n="dl_soon">Muy pronto</small>
+        <a class="btn pri" id="apkBtn" href="#" aria-disabled="true" data-i18n="dl_android_btn">Descargar APK</a>
+      </div>
+      <div class="dl rv" style="--k:var(--blue)">
+        <div class="ico"><svg class="ic"><use href="#i-play"/></svg></div>
+        <h3>Google Play</h3>
+        <p data-i18n="dl_play_p">Estamos preparando la ficha en la tienda. Con tu cuenta de MeetGo podrás seguir donde lo dejaste.</p>
+        <small data-i18n="dl_soon2">Próximamente</small>
+        <span class="btn sec" aria-disabled="true" data-i18n="dl_play_btn">Próximamente</span>
+      </div>
+      <div class="dl rv" style="--k:var(--teal)">
+        <div class="ico"><svg class="ic"><use href="#i-globe"/></svg></div>
+        <h3 data-i18n="dl_web_t">iPhone y web</h3>
+        <p data-i18n="dl_web_p">Abre MeetGo en el navegador. En iPhone, toca Compartir y «Añadir a pantalla de inicio» para tenerla como una app.</p>
+        <small>meetgo.app/app</small>
+        <a class="btn sec" href="/app/" data-i18n="dl_web_btn">Abrir MeetGo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="precios" aria-labelledby="price-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="pr_k">Precios</span><h2 id="price-title" data-i18n="pr_title">Menos que un café al mes</h2>
+      <p data-i18n="pr_p">Todas las funciones en los dos planes. 7 días de prueba gratis y cancelas cuando quieras.</p></div>
+    <div class="prices">
+      <div class="price rv">
+        <h3 data-i18n="pr_m">Mensual</h3>
+        <div class="amt">2,50 €<small data-i18n="pr_month">/mes</small></div>
+        <ul><li data-i18n="pr_l1">7 días de prueba gratis</li><li data-i18n="pr_l2">Canales, grupos y mensajes directos</li><li data-i18n="pr_l3">Cancela cuando quieras</li></ul>
+        <a class="btn sec" href="/app/?view=register" data-i18n="pr_btn">Empezar la prueba</a>
+      </div>
+      <div class="price best rv">
+        <span class="badge" data-i18n="pr_save">Ahorra un 17 %</span>
+        <h3 data-i18n="pr_y">Anual</h3>
+        <div class="amt">25 €<small data-i18n="pr_year">/año</small></div>
+        <p class="eq" data-i18n="pr_eq">Sale a 2,08 € al mes</p>
+        <ul><li data-i18n="pr_l1">7 días de prueba gratis</li><li data-i18n="pr_l2">Canales, grupos y mensajes directos</li><li data-i18n="pr_l3">Cancela cuando quieras</li></ul>
+        <a class="btn pri" href="/app/?view=register" data-i18n="pr_btn">Empezar la prueba</a>
+      </div>
+    </div>
+    <p class="pnote" data-i18n="pr_note">Pago con tarjeta (Stripe) en la web o con Google Play en la app. Precios con IVA incluido.</p>
+  </div>
+</section>
+
+<section class="sec" id="preguntas" aria-labelledby="faq-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh rv"><span class="k" data-i18n="faq_k">Preguntas</span><h2 id="faq-title" data-i18n="faq_title">Lo que suele preguntarse</h2></div>
+    <div class="faq">
+      <details class="rv"><summary data-i18n="q1">¿Cuánto cuesta?</summary><p data-i18n="a1">2,50 € al mes o 25 € al año, con 7 días de prueba gratis. Las dos opciones incluyen todo.</p></details>
+      <details class="rv"><summary data-i18n="q2">¿Cómo consigo el año gratis?</summary><p data-i18n="a2">Crea tu cuenta con el código LANZAMIENTO mientras queden plazas. Es solo para las 50 primeras cuentas y no te pedimos tarjeta.</p></details>
+      <details class="rv"><summary data-i18n="q3">¿Qué pasa cuando acaba el año gratis?</summary><p data-i18n="a3">Tu cuenta pasa a modo lectura hasta que te suscribas: puedes leer tus conversaciones, pero no escribir. No se borra nada.</p></details>
+      <details class="rv"><summary data-i18n="q4">¿Quién ve mi teléfono?</summary><p data-i18n="a4">Nadie. Tu teléfono no aparece en tu perfil y los mensajes que comparten números en los canales se retiran automáticamente.</p></details>
+      <details class="rv"><summary data-i18n="q5">¿Hay edad mínima?</summary><p data-i18n="a5">Sí, MeetGo es para mayores de 18 años. Los canales se agrupan por rango de edad: 18-30, 31-50 y más de 50.</p></details>
+      <details class="rv"><summary data-i18n="q6">¿En qué ciudades funciona?</summary><p data-i18n="a6">En todas las provincias de España. Tus canales son los de tu provincia y tu rango de edad, uno por cada afición que elijas.</p></details>
+      <details class="rv"><summary data-i18n="q7">¿Cómo cancelo?</summary><p data-i18n="a7">Desde tu cuenta en MeetGo si pagas con tarjeta, o desde Google Play si te suscribiste en la app. Sigues teniendo acceso hasta el final del periodo pagado.</p></details>
+      <details class="rv"><summary data-i18n="q8">¿Hay app para Android y para iPhone?</summary><p data-i18n="a8">En Android, descarga la app. En iPhone, abre meetgo.app/app en Safari y añádela a la pantalla de inicio.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" aria-labelledby="final-title">
+  <div class="wrap">
+    <h2 id="final-title" class="rv" data-i18n="final_title">Tu próximo plan <span class="go">ya está hablando</span></h2>
+    <p class="rv" data-i18n="final_p">Entra, elige tus aficiones y saluda.</p>
+    <div class="cta rv">
+      <a class="btn pri" href="/app/?view=register" data-i18n="cta_register">Crear cuenta</a>
+      <a class="btn sec" href="/app/" data-i18n="signin">Entrar</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> MeetGo</span>
+    <a href="/privacy.html" data-i18n="f_privacy">Privacidad</a>
+    <a href="/terms.html" data-i18n="f_terms">Términos</a>
+    <a href="/app/" data-i18n="f_app">Abrir la app</a>
+    <span><span data-i18n="f_contact">Contacto:</span> <span class="mail">soporte@meetgo.app</span></span>
+  </div>
+</footer>
+<script type="module" src="/landing/landing.ts"></script>
+</body>
 </html>

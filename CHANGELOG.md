@@ -22,9 +22,15 @@ All notable changes to this project will be documented in this file.
 - Reports of messages and a moderation queue for administrators; channel moderators can silence, ban or remove people, and channels can have a slow mode.
 - Subscriptions of 2.50 €/month or 25 €/year through Stripe (web) or Google Play (Android), with a 7-day trial; accounts created before subscriptions were enabled stay free.
 - Launch campaign: the public code LANZAMIENTO (alias MEETGO50) gives one year free to the first 50 accounts. Administrators manage codes, free access and payment settings.
+- New web app at `/app/`: conversation list with filters and unread and mention badges, channels, groups and direct messages, threads in a side panel, members panel with profile cards and moderation actions, replies, reactions, mentions with suggestions, emoji, attachments by button or paste, drafts, editing, search, a "new messages" divider and a jump-to-latest button, dark and light themes, and a phone layout with bottom navigation.
+- Installable web app (PWA) with Web Push notifications, and a subscription page (card payment through Stripe, or Google Play inside the Android app) with promotional codes.
+- Public landing page at `/` with the launch campaign counter, pricing, downloads and FAQ, plus draft privacy and terms pages.
+- Administration: plan column and free-access control for users, a moderation queue for reports, subscription, Stripe, Google Play and Firebase settings, and promotional codes.
 
 #### 🚀 Enhancements:
 - Split the backend into routers and services, with one shared Redis connection, real-time events fanned out through Redis for several processes, and presence kept in Redis.
+- The web sites are built with Vite and served by nginx in production instead of the Vite development server.
+- Removed the prefilled `admin`/`admin` credentials from the administration sign-in form and added the administration texts that were missing from the translations.
 
 #### 🐛 Bug fixes:
 - Fixed the room WebSocket holding a database connection while idle, which hung the API with about 15 connected users.
@@ -34,6 +40,7 @@ All notable changes to this project will be documented in this file.
 
 #### 📚 Documentation:
 - Added backend tests (`app/tests`) and how to run them.
+- Rewrote the README: features, deployment behind a reverse proxy, and how to turn on payments and push notifications.
 
 ---
 

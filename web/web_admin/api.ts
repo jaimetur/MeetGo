@@ -1,4 +1,4 @@
-import { getLang } from "../lang/lang";
+import { getLang } from "@lang";
 
 function computeApiBase() {
   const envBase = (import.meta as any).env.VITE_API_BASE;
@@ -97,7 +97,13 @@ async function req(path: string, opts: RequestInit = {}) {
       status: res.status,
       response: parsed ?? text,
     });
-    throw new Error(text || res.statusText);
+    // FastAPI answers {"detail": "message"} (or a list of field errors): show the message itself.
+    const detail = parsed?.detail;
+    const message = typeof detail === "string" ? detail
+      : Array.isArray(detail) ? detail.map((d: any) => d?.msg).filter(Boolean).join("; ") : "";
+    const err: Error & { status?: number } = new Error(message || text || res.statusText);
+    err.status = res.status;
+    throw err;
   }
   try {
     return JSON.parse(text);
@@ -148,4 +154,137 @@ export const api = {
   async deleteInterest(id: number) {
     return await req(`/admin/interests/${id}`, { method: "DELETE" });
   },
+  async setAccess(id: number, free_until: "lifetime" | "none" | string) {
+    return await req(`/admin/users/${id}/access`, { method: "PUT", body: JSON.stringify({ free_until }) });
+  },
+  async reports(status: ReportStatus = "open"): Promise<Report[]> {
+    return await req(`/admin/reports?status=${encodeURIComponent(status)}`);
+  },
+  async resolveReport(id: number, payload: { status: "dismissed" | "actioned"; delete_message: boolean }) {
+    return await req(`/admin/reports/${id}/resolve`, { method: "POST", body: JSON.stringify(payload) });
+  },
+  async billing(): Promise<BillingInfo> {
+    return await req("/admin/billing");
+  },
+  async saveBilling(payload: BillingUpdate): Promise<BillingInfo> {
+    return await req("/admin/billing", { method: "PUT", body: JSON.stringify(payload) });
+  },
+  async promoCodes(): Promise<PromoCode[]> {
+    return await req("/admin/promo-codes");
+  },
+  async savePromoCode(payload: PromoCodeIn): Promise<PromoCode> {
+    return await req("/admin/promo-codes", { method: "PUT", body: JSON.stringify(payload) });
+  },
+  async deletePromoCode(code: string) {
+    return await req(`/admin/promo-codes/${encodeURIComponent(code)}`, { method: "DELETE" });
+  },
+  /** Channel moderation; the backend only allows it to members (staff) of that conversation. */
+  async moderateMember(conversationId: number, userId: number, action: ModerateAction, minutes = 60) {
+    return await req(`/conversations/${conversationId}/members/${userId}/moderate`, {
+      method: "POST",
+      body: JSON.stringify({ action, minutes }),
+    });
+  },
+  /** EventSource cannot send headers, so the administrator token goes in the query string. */
+  composeLogsUrl() {
+    return `${API_BASE}/admin/compose-logs?token=${encodeURIComponent(getToken())}`;
+  },
+  /** Status of the logs endpoint after the EventSource failed (404 = DEBUG_COMPOSE_LOGS off). */
+  async composeLogsProbe(): Promise<{ status: number; detail: string }> {
+    const ctrl = new AbortController();
+    try {
+      const res = await fetch(api.composeLogsUrl(), { signal: ctrl.signal });
+      if (res.ok) {
+        ctrl.abort(); // a stream: only the status was needed
+        return { status: res.status, detail: "" };
+      }
+      const parsed = safeJsonParse(await res.text());
+      return { status: res.status, detail: typeof parsed?.detail === "string" ? parsed.detail : "" };
+    } catch {
+      return { status: 0, detail: "" };
+    }
+  },
 };
+
+// ---- Types of the administration endpoints ----
+
+export type Plan = {
+  kind: "free" | "none" | "gift" | "web" | "play";
+  source?: string | null;
+  plan?: string | null;
+  status?: string | null;
+  until?: string | null;
+};
+
+export type UserSummary = { id: number; display_name: string; avatar_url?: string | null };
+
+export type Attachment = {
+  id: number;
+  file_name: string;
+  mime: string;
+  size: number;
+  width?: number | null;
+  height?: number | null;
+  url: string;
+  thumb_url?: string | null;
+};
+
+export type ReportStatus = "open" | "dismissed" | "actioned";
+
+export type Report = {
+  id: number;
+  reason: string;
+  details?: string | null;
+  status: ReportStatus;
+  created_at: string;
+  reporter: UserSummary | null;
+  message: {
+    id: number;
+    conversation_id: number;
+    sender: UserSummary | null;
+    body: string;
+    original_body?: string | null;
+    deleted: boolean;
+    created_at: string;
+    attachments: Attachment[];
+  } | null;
+};
+
+export type BillingInfo = {
+  enabled: boolean;
+  trial_days: number;
+  stripe: { configured: boolean; webhook_configured: boolean; prices: Record<string, string>; webhook_url: string };
+  play: { package: string; product: string; configured: boolean; store_url: string };
+  fcm: { configured: boolean; project_id?: string | null };
+  counts: { gift: number; web: number; play: number };
+};
+
+export type BillingUpdate = {
+  enabled?: boolean;
+  trial_days?: number;
+  stripe?: { secret?: string; webhook?: string };
+  play?: { package?: string; product?: string; store_url?: string; service_account?: string };
+  fcm?: { service_account: string };
+};
+
+export type PromoCode = {
+  code: string;
+  aliases: string[];
+  duration: string;
+  max: number | null;
+  used: number;
+  left: number | null;
+  public: boolean;
+  expires_on: string | null;
+};
+
+export type PromoCodeIn = {
+  code: string;
+  aliases: string[];
+  duration: string;
+  max_uses: number | null;
+  public: boolean;
+  expires_on: string | null;
+};
+
+export type ModerateAction = "silence" | "unsilence" | "ban" | "unban" | "remove";

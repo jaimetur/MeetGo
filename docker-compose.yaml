@@ -29,38 +29,30 @@ services:
 
 
   web_user:
-    build: ${REPO_DIR}/web
+    build:
+      context: ${REPO_DIR}
+      dockerfile: web/Dockerfile
+      args:
+        VITE_ROOT: web_user
+        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
     ports:
-      - "${PORT_USER}:${PORT_USER}"
+      - "${PORT_USER}:80"
     depends_on:
       - app
-    environment:
-      VITE_API_BASE: https://api.meetgo.app
-      VITE_ROOT: /app/web_user
-      CHOKIDAR_USEPOLLING: "true"
-    volumes:
-      - ${REPO_DIR}/web:/app
-      - ${REPO_DIR}/lang:/app/lang
-      - /app/node_modules
-    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port ${PORT_USER} 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
     restart: unless-stopped
 
 
   web_admin:
-    build: ${REPO_DIR}/web
+    build:
+      context: ${REPO_DIR}
+      dockerfile: web/Dockerfile
+      args:
+        VITE_ROOT: web_admin
+        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
     ports:
-      - "${PORT_ADMIN}:${PORT_ADMIN}"
+      - "${PORT_ADMIN}:80"
     depends_on:
       - app
-    environment:
-      VITE_API_BASE: https://api.meetgo.app
-      VITE_ROOT: /app/web_admin
-      CHOKIDAR_USEPOLLING: "true"
-    volumes:
-      - ${REPO_DIR}/web:/app
-      - ${REPO_DIR}/lang:/app/lang
-      - /app/node_modules
-    command: sh -c "npx vite --config /app/vite.config.ts --host 0.0.0.0 --port ${PORT_ADMIN} 2>&1 | awk '{ print strftime(\"%Y-%m-%dT%H:%M:%S%z\"), $0; fflush(); }'"
     restart: unless-stopped
 
 

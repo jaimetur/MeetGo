@@ -136,7 +136,8 @@ def launch(interface: str) -> None:
     except BaseException:
         terminate(processes)
         raise
-    print(f"MeetGo {label} ready: http://127.0.0.1:{port}")
+    path = "/app/" if interface == "user" else "/"
+    print(f"MeetGo {label} ready: http://127.0.0.1:{port}{path}")
 
     try:
         while True:

@@ -1,11 +1,30 @@
-# MeetGo -- Fullstack (Backend + Web)
-Includes:
-- FastAPI backend: rooms by province + age range + interest
-- Room chat over WebSocket with auto-moderation (delete, strikes, mute, ban)
-- Profiles with avatar + bio
-- Context menu (right-click avatar in chat/feed) -> View profile / Friend request / Follow
-- Simple Instagram-style feed (posts) based on people you follow
-- Facebook-style friend requests (request + accept)
+# MeetGo
+
+Messaging for meeting people nearby: chat channels by province, age range and interest,
+private groups and direct messages, on the web and in an Android app.
+
+- **Backend** (`app/`): FastAPI, SQLAlchemy async, PostgreSQL (Alembic migrations run at
+  startup), Redis (real-time fan-out, presence, rate limits).
+- **Web** (`web/web_user/`): the public landing at `/` and the messaging app at `/app/`
+  (React, TypeScript, Vite; installable as a PWA with Web Push).
+- **Administration** (`web/web_admin/`): users, channels, moderation queue, subscriptions,
+  promotional codes and settings.
+- **Android** (`android/`): Kotlin shell around the web app with push notifications (FCM),
+  quick reply, App Links, sharing into the app and Google Play Billing. See
+  [docs/ANDROID.md](docs/ANDROID.md).
+
+What the app does:
+- Channels per zone (province + age range) and interest, joined from your interests, with
+  automatic moderation (flood, links, phone numbers, shouting, insults), moderators, reports
+  and slow mode.
+- Private groups with invitation links and roles; direct messages between friends, or after
+  a request with anybody who accepts them.
+- Threads, replies, reactions, mentions, editing and deleting, attachments with thumbnails,
+  search, unread counts, read receipts, typing indicators and presence, all in real time
+  over one WebSocket.
+- Subscriptions of 2.50 €/month or 25 €/year (Stripe on the web, Google Play in the app)
+  with a 7-day trial, and the launch code LANZAMIENTO: one year free for the first 50
+  accounts. Accounts created before subscriptions were switched on stay free.
 
 ## Quick start
 Secrets are not stored in the repository. Copy the template and fill in random values:
@@ -19,9 +38,33 @@ The first administrator is created only when none exists, with `ADMIN_EMAIL` and
 `ADMIN_PASSWORD` from `.env.local`. If `ADMIN_PASSWORD` is empty, a random password is
 printed once in the `app` logs.
 
-- Backend (Swagger): http://localhost:18000/docs
-- Web (ui_user): http://localhost:5173
-- Admin (ui_admin): http://localhost:5174
+- API (Swagger): http://localhost:18000/docs
+- Landing: http://localhost:5173/ and the app: http://localhost:5173/app/
+- Administration: http://localhost:5174
+
+The web services build the sites with Vite and serve them with nginx (`web/Dockerfile`,
+`web/nginx.conf`); `VITE_API_BASE` comes from `PUBLIC_API_BASE`. Put a TLS reverse proxy in
+front: `meetgo.app` → `PORT_USER`, `admin.meetgo.app` → `PORT_ADMIN`, `api.meetgo.app` →
+port 18000 (it must pass WebSocket upgrades for `/ws`). Uploaded files and the Android APK
+live in the `meetgo_data` volume.
+
+### Turning on subscriptions, payments and push notifications
+
+Everything is set in the administration site, **Suscripciones** tab:
+1. **Stripe** (web payments): paste the secret key (the two prices are created
+   automatically) and the webhook signing secret. In the Stripe dashboard, add a webhook to
+   the URL shown there with the events `checkout.session.completed` and
+   `customer.subscription.*`.
+2. **Google Play** (Android payments): package `app.meetgo.android`, subscription product
+   `meetgo` with base plans `monthly` and `yearly`, and a service account with access to the
+   Play Developer API.
+3. **Firebase** (Android push): paste the service account JSON of the Firebase project.
+   Browsers use Web Push, whose keys are created automatically.
+4. Switch on **subscriptions** when payments work: from then on, new accounts need a plan,
+   a free trial or a promotional code to write.
+
+The **Códigos** tab manages promotional codes; LANZAMIENTO (alias MEETGO50) is created
+with 50 places of one free year.
 
 ## Local development with PyCharm (without Docker)
 
@@ -101,7 +144,8 @@ configuration with the project root as its *Working directory*:
   `http://127.0.0.1:5174`.
 
 Stopping the run configuration stops the processes it started. Locally the first
-administrator is `admin@local` with password `admin`.
+administrator is `admin@local` with password `admin`. The user site opens the landing at
+`/` and the app at `/app/`.
 
 ### Backend tests
 
@@ -156,17 +200,19 @@ docker compose down -v
 ```
 
 ## Configuration
-- `VITE_API_BASE` in `docker-compose.yml` points to the backend URL used by the web app. Update it if your host IP changes.
+- `VITE_API_BASE` (build argument of the web services, from `PUBLIC_API_BASE`) is the API
+  address the sites call. Without it, the sites use `:18000` on the same host during
+  development and `https://api.meetgo.app` on `meetgo.app`.
+- `CORS_ORIGINS` lists the browser origins allowed to call the API.
 
 ## Quick test flow
-1) Sign up in the web app (left column).
-   - If you do not provide an Avatar URL, a DiceBear avatar is used.
-2) Log in.
-3) Rooms -> Load my rooms -> enter a room.
-4) In chat: right-click someone's avatar -> menu.
-5) Feed -> post, follow someone, and refresh the feed.
+1. Open `/app/`, create an account (optionally with the code LANZAMIENTO) and confirm the
+   email link (locally, set `email_verified` in the database if SMTP is not configured).
+2. In **Cuenta**, choose some interests: you join their channels for your province and age.
+3. Write in a channel, reply in a thread, react, mention someone with `@`.
+4. Add a friend from their profile card and start a direct message or a group (pencil button).
 
-## Important notes (MVP)
-- Photo uploads are not implemented: `avatar_url` is a URL. Typical setup uses S3/CDN.
-- Security/CORS are open for simplicity.
-- The feed is minimal text-only; can be extended to images, likes, comments, etc.
+## Notes
+- Avatars are links (`avatar_url`); attachments are stored in `DATA_DIR/uploads`.
+- Moderation can read messages on the server, so messages are not end-to-end encrypted.
+- The legal pages (`/privacy.html`, `/terms.html`) are drafts pending legal review.
