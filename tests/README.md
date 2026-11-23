@@ -13,7 +13,7 @@ docker run -d --name meetgo-test-redis -p 56379:6379 redis:7
 Then, from the repository root (the settings are in `pytest.ini`):
 
 ```bash
-.venv/bin/python -m pip install -e "app[dev]"
+.venv/bin/python -m pip install -e ".[dev]"
 .venv/bin/python -m pytest
 .venv/bin/python -m pytest tests/emails   # one module
 ```

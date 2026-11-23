@@ -1,6 +1,6 @@
 from sqlalchemy import update
 
-from src.models import User
+from app.core.models import User
 
 _phone = [600000000]
 

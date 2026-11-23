@@ -2,8 +2,8 @@
 
 from sqlalchemy import text
 
-from src.db import engine
-from src.migrate import run_migrations
+from app.core.db import engine
+from app.core.migrate import run_migrations
 
 
 async def test_rooms_and_direct_messages_are_migrated():

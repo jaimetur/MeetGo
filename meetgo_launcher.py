@@ -14,8 +14,8 @@ from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parent
-APP_DIR = ROOT / "app"
-WEB_DIR = ROOT / "web"
+APP_DIR = ROOT / "src" / "backend"
+WEB_DIR = ROOT / "src" / "frontend"
 INTERFACES = {
     "user": ("web_user", "5173", "user interface"),
     "admin": ("web_admin", "5174", "administration interface"),
@@ -86,7 +86,7 @@ def terminate(processes: list[subprocess.Popen[object]]) -> None:
 def launch(interface: str) -> None:
     require_local_services()
     if not (WEB_DIR / "node_modules" / "vite").exists():
-        print("Web dependencies are missing. Run `npm install` inside web/.", file=sys.stderr)
+        print("Web dependencies are missing. Run `npm install` inside src/frontend/.", file=sys.stderr)
         raise SystemExit(1)
     node = node_executable()
 
@@ -104,14 +104,14 @@ def launch(interface: str) -> None:
         sys.executable,
         "-m",
         "uvicorn",
-        "src.main:app",
+        "app.main:app",
         "--host",
         "127.0.0.1",
         "--port",
         "18000",
         "--reload",
         "--reload-dir",
-        "src",
+        "app",
     ]
     frontend = [
         node,

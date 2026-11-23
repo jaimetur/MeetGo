@@ -2,8 +2,8 @@
 
 from starlette.testclient import TestClient
 
-from src import redis_conn
-from src.main import app
+from app.core import redis_conn
+from app.main import app
 
 
 def _user(tc, email, name):
@@ -47,8 +47,8 @@ def test_message_and_typing_reach_the_other_member():
 
 async def _verify_all():
     from sqlalchemy import update
-    from src.db import SessionLocal
-    from src.models import User
+    from app.core.db import SessionLocal
+    from app.core.models import User
     async with SessionLocal() as db:
         await db.execute(update(User).values(email_verified=True))
         await db.commit()

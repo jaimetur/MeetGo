@@ -3,15 +3,30 @@
 Messaging for meeting people nearby: chat channels by province, age range and interest,
 private groups and direct messages, on the web and in an Android app.
 
-- **Backend** (`app/`): FastAPI, SQLAlchemy async, PostgreSQL (Alembic migrations run at
+- **Backend** (`src/backend/app/`, one folder per module): FastAPI, SQLAlchemy async, PostgreSQL (Alembic migrations run at
   startup), Redis (real-time fan-out, presence, rate limits).
-- **Web** (`web/web_user/`): the public landing at `/` and the messaging app at `/app/`
+- **Web** (`src/frontend/web_user/`): the public landing at `/` and the messaging app at `/app/`
   (React, TypeScript, Vite; installable as a PWA with Web Push).
-- **Administration** (`web/web_admin/`): users, channels, moderation queue, subscriptions,
+- **Administration** (`src/frontend/web_admin/`): users, channels, moderation queue, subscriptions,
   promotional codes and settings.
 - **Android** (`android/`): Kotlin shell around the web app with push notifications (FCM),
   quick reply, App Links, sharing into the app and Google Play Billing. See
   [docs/ANDROID.md](docs/ANDROID.md).
+
+Repository layout (the same as BodyLens):
+
+```text
+android/            Android app (Kotlin shell around the web app)
+assets/branding/    icons, logos and the social sharing image
+docker/             Dockerfile (API), Dockerfile.web (sites), nginx.conf, compose.yml, .env, start scripts
+docs/               Android, Firebase and Google Play setup
+lang/               translations (es.po, en.po) shared by the backend and the web sites
+src/backend/app/    API by module: auth, accounts, social, conversations, messaging, realtime, push, mail,
+                    billing, admin, public; core/ has the configuration, database, models and migrations
+src/frontend/       web_user (landing and app), web_admin, Vite and package.json
+tests/              backend tests, one folder per module
+tools/              release and deployment tools
+```
 
 What the app does:
 - Channels per zone (province + age range) and interest, joined from your interests, with
@@ -30,20 +45,20 @@ What the app does:
 Secrets are not stored in the repository. Copy the template and fill in random values:
 
 ```bash
-cp .env.local.example .env.local
-./dockers_run.sh
+cp docker/.env.local.example docker/.env.local
+docker/dockers_run.sh
 ```
 
 The first administrator is created only when none exists, with `ADMIN_EMAIL` and
-`ADMIN_PASSWORD` from `.env.local`. If `ADMIN_PASSWORD` is empty, a random password is
+`ADMIN_PASSWORD` from `docker/.env.local`. If `ADMIN_PASSWORD` is empty, a random password is
 printed once in the `app` logs.
 
 - API (Swagger): http://localhost:18000/docs
 - Landing: http://localhost:5173/ and the app: http://localhost:5173/app/
 - Administration: http://localhost:5174
 
-The web services build the sites with Vite and serve them with nginx (`web/Dockerfile`,
-`web/nginx.conf`); `VITE_API_BASE` comes from `PUBLIC_API_BASE`. Put a TLS reverse proxy in
+The web services build the sites with Vite and serve them with nginx (`docker/Dockerfile.web`,
+`docker/nginx.conf`); `VITE_API_BASE` comes from `PUBLIC_API_BASE`. Put a TLS reverse proxy in
 front: `meetgo.app` → `PORT_USER`, `admin.meetgo.app` → `PORT_ADMIN`, `api.meetgo.app` →
 port 18000 (it must pass WebSocket upgrades for `/ws`). Uploaded files and the Android APK
 live in the `meetgo_data` volume.
@@ -150,8 +165,8 @@ REDIS_URL=redis://127.0.0.1:6379/0
 Install the project dependencies once:
 
 ```bash
-python -m pip install -e app
-cd web && npm install
+python -m pip install -e ".[dev]"
+cd src/frontend && npm install
 ```
 
 ### Configure PyCharm
@@ -178,7 +193,7 @@ configuration **CreateUpdateRelease**). The current version and release date
 come from the first `## Release:` header of `CHANGELOG.md`.
 
 - **Update Current Release** rewrites that header and sets the same version in
-  `app/pyproject.toml`, `web/package.json` and `web/package-lock.json`.
+  `pyproject.toml`, `src/frontend/package.json` and `src/frontend/package-lock.json`.
 - **Create New Release** creates a branch named after the new version (`X.Y.Z`),
   adds an empty release block on top of `CHANGELOG.md`, updates the same
   version files, then commits and pushes the branch to `origin`.
@@ -187,8 +202,9 @@ Without Tk it asks in the terminal. It also accepts
 `--update VERSION DATE` and `--create VERSION DATE [--dirty commit|carry|discard]`.
 
 ## Docker commands
-Pass both env files to every `docker compose` command, for example
-`docker compose --env-file .env --env-file .env.local up -d`.
+Everything Docker is in `docker/` (`Dockerfile`, `Dockerfile.web`, `nginx.conf`, `compose.yml`, `.env`).
+Run the commands from that folder and pass both env files, for example
+`cd docker && docker compose --env-file .env --env-file .env.local up -d`.
 
 ```bash
 # Build and start in the foreground

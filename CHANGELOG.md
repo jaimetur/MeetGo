@@ -52,6 +52,7 @@ All notable changes to this project will be documented in this file.
 - Sent emails in the background, serialized API dates as UTC with a `Z`, capped history pages, limited message length, reused one Redis connection and fixed the chat reconnection.
 
 #### 📚 Documentation:
+- Reorganised the repository like BodyLens: `docker/` (Dockerfiles, nginx, compose, env and start scripts), `pyproject.toml` at the root, the API in `src/backend/app/` with one folder per module (auth, accounts, social, conversations, messaging, realtime, push, mail, billing, admin, public, and `core/`), the web sites in `src/frontend/`, translations kept in `lang/`.
 - Moved the tests to `tests/` at the repository root, one folder per module (as in BodyLens), run with `pytest` from the root.
 - Added backend tests (`app/tests`) and how to run them.
 - Rewrote the README: features, deployment behind a reverse proxy, and how to turn on payments and push notifications.

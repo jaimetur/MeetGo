@@ -4,7 +4,7 @@
 Adapted from DriveTest Analyzer's and BodyLens' tool of the same name. A MeetGo release is:
   - a branch named after the version (X.Y.Z), committed and pushed to origin;
   - a `## Release: vX.Y.Z` block on top of CHANGELOG.md, whose header gives the current version and release date;
-  - the same version in app/pyproject.toml, web/package.json and web/package-lock.json;
+  - the same version in pyproject.toml, src/frontend/package.json and src/frontend/package-lock.json;
   - the major.minor of the Android app's versionName (android/app/build.gradle.kts; the patch is the CI build number).
 
 Usage:
@@ -26,9 +26,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CHANGELOG_PATH = ROOT / 'CHANGELOG.md'
-PYPROJECT_PATH = ROOT / 'app' / 'pyproject.toml'
-PACKAGE_JSON_PATH = ROOT / 'web' / 'package.json'
-PACKAGE_LOCK_PATH = ROOT / 'web' / 'package-lock.json'
+PYPROJECT_PATH = ROOT / 'pyproject.toml'
+PACKAGE_JSON_PATH = ROOT / 'src' / 'frontend' / 'package.json'
+PACKAGE_LOCK_PATH = ROOT / 'src' / 'frontend' / 'package-lock.json'
 ANDROID_GRADLE_PATH = ROOT / 'android' / 'app' / 'build.gradle.kts'
 # only X.Y.Z: release branches are named like that and pyproject.toml needs a valid Python version
 VERSION_PATTERN = r'\d+\.\d+\.\d+'
@@ -83,7 +83,7 @@ def replace_pyproject_version(content: str, version: str) -> str:
     content, count = re.subn(r'^(version\s*=\s*")[^"]+("\s*)$', rf'\g<1>{version}\g<2>', content, count=1,
                              flags=re.MULTILINE)
     if count != 1:
-        raise RuntimeError('Unable to update the project version in app/pyproject.toml.')
+        raise RuntimeError('Unable to update the project version in pyproject.toml.')
     return content
 
 
@@ -92,7 +92,7 @@ def replace_package_json_version(content: str, version: str) -> str:
     content, count = re.subn(r'^(  "version": ")[^"]+(")', rf'\g<1>{version}\g<2>', content, count=1,
                              flags=re.MULTILINE)
     if count != 1:
-        raise RuntimeError('Unable to update the version in web/package.json.')
+        raise RuntimeError('Unable to update the version in src/frontend/package.json.')
     return content
 
 
@@ -103,7 +103,7 @@ def replace_package_lock_version(content: str, version: str) -> str:
     content, root_count = re.subn(r'("packages": \{\s*"": \{\s*"name": "[^"]*",\s*"version": ")[^"]+(")',
                                   rf'\g<1>{version}\g<2>', content, count=1)
     if top_count != 1 or root_count != 1:
-        raise RuntimeError('Unable to update the version in web/package-lock.json.')
+        raise RuntimeError('Unable to update the version in src/frontend/package-lock.json.')
     return content
 
 
@@ -321,7 +321,7 @@ def window() -> None:
             messagebox.showerror('Update failed', str(exc), parent=root)
             return
         messagebox.showinfo('Release metadata updated',
-                            'CHANGELOG.md, app/pyproject.toml, web/package.json, web/package-lock.json and the '
+                            'CHANGELOG.md, pyproject.toml, src/frontend/package.json, src/frontend/package-lock.json and the '
                             'Android versionName were updated.', parent=root)
         root.destroy()
 

@@ -1,0 +1,84 @@
+# MeetGo: API, user web site, administration, PostgreSQL and Redis. Paths are relative to this folder (docker/).
+# Start it with docker/dockers_run.sh (it passes .env and the secrets in .env.local).
+name: meetgo
+services:
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      MEETGO_ENV: production
+      DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.local}@db:5432/meetgo
+      REDIS_URL: redis://:${REDIS_PASSWORD:?Set REDIS_PASSWORD in .env.local}@redis:6379/0
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET (32+ random characters) in .env.local}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://meetgo.app,https://www.meetgo.app,https://admin.meetgo.app}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      PUBLIC_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
+      ANDROID_CERT_SHA256: ${ANDROID_CERT_SHA256:-}
+      DATA_DIR: /data
+      COMPOSE_PROJECT_NAME: meetgo
+    ports:
+      - "18000:8000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      # Hot code: the code and translations of the stack folder replace those in the image.
+      - ../src/backend/app:/srv/app
+      - ../lang:/srv/lang
+      - meetgo_data:/data
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
+    restart: unless-stopped
+
+
+  web_user:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+      args:
+        VITE_ROOT: web_user
+        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
+    ports:
+      - "${PORT_USER}:80"
+    depends_on:
+      - app
+    restart: unless-stopped
+
+
+  web_admin:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+      args:
+        VITE_ROOT: web_admin
+        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
+    ports:
+      - "${PORT_ADMIN}:80"
+    depends_on:
+      - app
+    restart: unless-stopped
+
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: meetgo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.local}
+    #ports:
+    #  - "5432:5432"
+    volumes:
+      - meetgo_db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+
+  redis:
+    image: redis:7
+    command: redis-server --requirepass ${REDIS_PASSWORD:?Set REDIS_PASSWORD in .env.local}
+    restart: unless-stopped
+
+volumes:
+  meetgo_db:
+  meetgo_data:

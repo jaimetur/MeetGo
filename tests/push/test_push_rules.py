@@ -2,8 +2,8 @@
 
 from datetime import timedelta
 
-from src.models import Conversation, ConversationMember, Message, utcnow
-from src.services.push import _wants
+from app.core.models import Conversation, ConversationMember, Message, utcnow
+from app.push.service import _wants
 
 
 def _member(user_id, notify="all", **kw):

@@ -7,9 +7,9 @@ import time
 
 from sqlalchemy import select
 
-from src.models import User
-from src.services.app_settings import set_section
-from src.services.crypto import encrypt
+from app.core.models import User
+from app.core.app_settings import set_section
+from app.core.crypto import encrypt
 from tests.helpers import admin_headers, make_user
 
 

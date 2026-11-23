@@ -1,11 +1,10 @@
 # Node.js dependencies and build output
-/web/node_modules/
-/web/dist/
+/src/frontend/node_modules/
+/src/frontend/dist/
 
 # Python environments and generated metadata
 /.venv/
 /venv/
-/app/.venv/
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -18,7 +17,7 @@ __pycache__/
 
 # Local secrets
 /.env.local
+/docker/.env.local
 
 # Local data (uploads, downloads)
 /data/
-/app/data/

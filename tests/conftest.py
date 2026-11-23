@@ -15,9 +15,9 @@ import httpx  # noqa: E402
 import pytest  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
-from src import redis_conn  # noqa: E402
-from src.db import SessionLocal, engine  # noqa: E402
-from src.main import app, startup  # noqa: E402
+from app.core import redis_conn  # noqa: E402
+from app.core.db import SessionLocal, engine  # noqa: E402
+from app.main import app, startup  # noqa: E402
 
 
 @pytest.fixture(autouse=True)

@@ -2,10 +2,10 @@
 
 from sqlalchemy import select, update
 
-from src.models import Conversation, Interest, User
-from src.routers.common import normalize_phone as _normalize_phone
-from src.security import hash_password
-from src.services.moderation import PHONE_RE, contains_toxicity as _contains_toxicity
+from app.core.models import Conversation, Interest, User
+from app.accounts.common import normalize_phone as _normalize_phone
+from app.core.security import hash_password
+from app.messaging.moderation import PHONE_RE, contains_toxicity as _contains_toxicity
 
 from tests.helpers import register, verified_token  # noqa: F401
 
@@ -51,7 +51,7 @@ def test_phone_numbers_get_the_country_prefix():
 
 
 async def test_existing_admin_password_is_not_reset_on_restart(client, db_session):
-    from src.main import startup
+    from app.main import startup
     async with db_session() as db:
         await db.execute(update(User).where(User.role == "admin").values(password_hash=hash_password("changed-password")))
         await db.commit()

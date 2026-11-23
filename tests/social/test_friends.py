@@ -2,10 +2,10 @@
 
 from sqlalchemy import select, update
 
-from src.models import Conversation, Interest, User
-from src.routers.common import normalize_phone as _normalize_phone
-from src.security import hash_password
-from src.services.moderation import PHONE_RE, contains_toxicity as _contains_toxicity
+from app.core.models import Conversation, Interest, User
+from app.accounts.common import normalize_phone as _normalize_phone
+from app.core.security import hash_password
+from app.messaging.moderation import PHONE_RE, contains_toxicity as _contains_toxicity
 
 from tests.helpers import register, verified_token  # noqa: F401
 

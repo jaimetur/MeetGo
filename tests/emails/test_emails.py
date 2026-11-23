@@ -6,10 +6,10 @@ from datetime import timedelta
 import pytest
 from sqlalchemy import update
 
-from src.models import AccessGrant, Message, User, naive_utcnow, utcnow
-from src.services import email as mailer
-from src.services import notify_email
-from src.services.app_settings import set_section
+from app.core.models import AccessGrant, Message, User, naive_utcnow, utcnow
+from app.mail import email as mailer
+from app.mail import notify_email
+from app.core.app_settings import set_section
 
 from tests.helpers import befriend, make_user
 
