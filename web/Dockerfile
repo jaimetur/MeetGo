@@ -15,4 +15,6 @@ FROM nginx:1.27-alpine
 ARG VITE_ROOT=web_user
 COPY web/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /src/web/dist/${VITE_ROOT} /usr/share/nginx/html
+# Some hosts (Synology ACL shares) send the build context with mode 000: nginx must be able to read the files.
+RUN chmod -R a+rX /usr/share/nginx/html
 EXPOSE 80
