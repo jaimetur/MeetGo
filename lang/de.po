@@ -3791,6 +3791,9 @@ msgstr "Die Person kann später wieder beitreten."
 msgid "ui_community_ban_member"
 msgstr "Aus der Community ausschließen"
 
+msgid "ui_community_ban_short"
+msgstr "Ausschließen"
+
 msgid "ui_community_ban_hint"
 msgstr "Die Person verlässt die Community und kann nicht mehr beitreten."
 

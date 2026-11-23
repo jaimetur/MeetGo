@@ -3790,6 +3790,9 @@ msgstr "La personne pourra revenir plus tard."
 msgid "ui_community_ban_member"
 msgstr "Exclure de la communauté"
 
+msgid "ui_community_ban_short"
+msgstr "Exclure"
+
 msgid "ui_community_ban_hint"
 msgstr "La personne part et ne pourra plus revenir."
 

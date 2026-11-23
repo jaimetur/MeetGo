@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - Communities: themed areas of each zone with a board and a chat room. Anyone can create one, open to all, by request (an admin approves) or by invitation link; owners name admins and admins name moderators; the board can be open to members or read-only with only admins publishing. Changing province or age range leaves the old zone's communities and brings them back, as they were, on return.
-- Community staff, and the administrators of MeetGo, manage each member from the members list: change their role, take them out (they can join again) or expel them (they cannot come back).
+- Community staff, and the administrators of MeetGo, expel someone with the Expel button next to each member, or by tapping their name in the community chat (take out: they can join again; expel: they cannot come back); the settings button next to each member also changes their role.
 - The title of a community chat opens its community page.
 - On phones the tab bar stays visible inside conversations too, with the message box just above it; opening the app with `?vp=1` shows what the phone reports about its screen, to adjust the layout.
 - The app updates itself: when it comes back to the screen (and every few minutes) it checks whether a new version has been published and reloads, so the app installed on the phone no longer keeps an old version.

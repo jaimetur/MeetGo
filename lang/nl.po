@@ -3791,6 +3791,9 @@ msgstr "Diegene kan later opnieuw lid worden."
 msgid "ui_community_ban_member"
 msgstr "Uit de community zetten"
 
+msgid "ui_community_ban_short"
+msgstr "Verwijderen"
+
 msgid "ui_community_ban_hint"
 msgstr "Diegene vertrekt en kan niet meer lid worden."
 

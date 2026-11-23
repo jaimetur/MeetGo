@@ -3792,6 +3792,9 @@ msgstr "Podrá volver a unirse más adelante."
 msgid "ui_community_ban_member"
 msgstr "Expulsar de la comunidad"
 
+msgid "ui_community_ban_short"
+msgstr "Expulsar"
+
 msgid "ui_community_ban_hint"
 msgstr "Sale y no podrá volver a unirse."
 

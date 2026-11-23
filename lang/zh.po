@@ -3791,6 +3791,9 @@ msgstr "对方以后可以重新加入。"
 msgid "ui_community_ban_member"
 msgstr "驱逐出社区"
 
+msgid "ui_community_ban_short"
+msgstr "踢出"
+
 msgid "ui_community_ban_hint"
 msgstr "对方会被移出且不能再加入。"
 

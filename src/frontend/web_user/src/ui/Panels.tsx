@@ -135,6 +135,12 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
       toast(e.message, "error");
     }
   }
+  // Communities: take someone out (they may join again) or expel them (they cannot come back).
+  function kick(ban: boolean) {
+    const ask = `${t(ban ? "ui_community_ban_member" : "ui_community_remove_member")}: ${user.display_name}\n${t(ban ? "ui_community_ban_hint" : "ui_community_remove_hint")}`;
+    if (!window.confirm(ask)) return;
+    void run(() => api.removeCommunityMember(conv.id, userId, ban), t(ban ? "ui_community_member_banned" : "ui_community_member_removed", { name: user.display_name })).then(onClose);
+  }
   async function message() {
     try {
       const res = await api.openDm(userId);
@@ -173,7 +179,14 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
             {member?.silenced_until
               ? <button className="btn sm" onClick={() => run(() => api.moderate(conv.id, userId, "unsilence"), t("ui_done"))}>{t("ui_unsilence")}</button>
               : <button className="btn sm" onClick={() => run(() => api.moderate(conv.id, userId, "silence", 60), t("ui_done"))}>{t("ui_silence_1h")}</button>}
-            <button className="btn sm danger" onClick={() => run(() => api.moderate(conv.id, userId, conv.kind === "group" ? "remove" : "ban"), t("ui_done"))}>{conv.kind === "group" ? t("ui_remove_member") : t("ui_ban")}</button>
+            {conv.kind === "channel" ? (
+              <>
+                <button className="btn sm" onClick={() => kick(false)}><Icon name="door" size="sm" />{t("ui_community_remove_member")}</button>
+                <button className="btn sm danger" onClick={() => kick(true)}><Icon name="shield" size="sm" />{t("ui_community_ban_member")}</button>
+              </>
+            ) : (
+              <button className="btn sm danger" onClick={() => run(() => api.moderate(conv.id, userId, conv.kind === "group" ? "remove" : "ban"), t("ui_done"))}>{conv.kind === "group" ? t("ui_remove_member") : t("ui_ban")}</button>
+            )}
             {conv.kind === "group" && conv.role === "owner" ? (
               member?.role === "admin"
                 ? <button className="btn sm" onClick={() => run(() => api.setRole(conv.id, userId, "member"), t("ui_done"))}>{t("ui_make_member")}</button>

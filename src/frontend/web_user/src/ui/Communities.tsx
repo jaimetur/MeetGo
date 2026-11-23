@@ -419,6 +419,8 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
     }
   }
   async function remove(m: CommunityMember, ban = false) {
+    const ask = `${t(ban ? "ui_community_ban_member" : "ui_community_remove_member")}: ${m.display_name}\n${t(ban ? "ui_community_ban_hint" : "ui_community_remove_hint")}`;
+    if (!window.confirm(ask)) return;
     try {
       await api.removeCommunityMember(c.id, m.id, ban);
       toast(t(ban ? "ui_community_member_banned" : "ui_community_member_removed", { name: m.display_name }));
@@ -484,7 +486,8 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
                   </div>
                   <div className="muted" style={{ fontSize: 12 }}>{m.online ? t("ui_online") : t("ui_offline")}</div>
                 </div>
-                {opts.length || canRemove ? <button className="btn sm" onClick={() => setManage(m)}><Icon name="sliders" size="sm" />{t("ui_community_manage")}</button> : null}
+                {canRemove ? <button className="btn sm danger" onClick={() => remove(m, true)}><Icon name="shield" size="sm" />{t("ui_community_ban_short")}</button> : null}
+                {opts.length || canRemove ? <button className="iconbtn" title={t("ui_community_manage")} aria-label={t("ui_community_manage")} onClick={() => setManage(m)}><Icon name="sliders" size="sm" /></button> : null}
               </div>
             );
           })}

@@ -3792,6 +3792,9 @@ msgstr "They can join again later."
 msgid "ui_community_ban_member"
 msgstr "Expel from the community"
 
+msgid "ui_community_ban_short"
+msgstr "Expel"
+
 msgid "ui_community_ban_hint"
 msgstr "They leave and cannot join again."
 

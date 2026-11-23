@@ -3791,6 +3791,9 @@ msgstr "Podrà tornar a unir-s’hi més endavant."
 msgid "ui_community_ban_member"
 msgstr "Expulsa de la comunitat"
 
+msgid "ui_community_ban_short"
+msgstr "Expulsa"
+
 msgid "ui_community_ban_hint"
 msgstr "En surt i no s’hi podrà tornar a unir."
 

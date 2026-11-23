@@ -3791,6 +3791,9 @@ msgstr "あとで再び参加できます。"
 msgid "ui_community_ban_member"
 msgstr "コミュニティから追放"
 
+msgid "ui_community_ban_short"
+msgstr "追放"
+
 msgid "ui_community_ban_hint"
 msgstr "退出させ、再参加できなくなります。"
 

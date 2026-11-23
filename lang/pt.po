@@ -3790,6 +3790,9 @@ msgstr "Poderá voltar a juntar-se mais tarde."
 msgid "ui_community_ban_member"
 msgstr "Expulsar da comunidade"
 
+msgid "ui_community_ban_short"
+msgstr "Expulsar"
+
 msgid "ui_community_ban_hint"
 msgstr "Sai e não poderá voltar a juntar-se."
 
