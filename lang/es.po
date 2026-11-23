@@ -2842,3 +2842,18 @@ msgstr "Ahora no"
 
 msgid "ui_push_failed"
 msgstr "No se han podido activar las notificaciones en este navegador. Vuelve a intentarlo o usa otro navegador."
+
+msgid "ui_settings"
+msgstr "Ajustes"
+
+msgid "ui_section_about"
+msgstr "Sobre ti"
+
+msgid "ui_section_zone"
+msgstr "Tu zona"
+
+msgid "ui_section_privacy"
+msgstr "Privacidad y seguridad"
+
+msgid "ui_section_push"
+msgstr "Avisos en este dispositivo"

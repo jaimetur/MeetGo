@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+from functools import lru_cache
 from contextvars import ContextVar
 from pathlib import Path
 
@@ -74,19 +75,31 @@ def _load_lang(lang: str) -> dict[str, str]:
     return data
 
 
+@lru_cache(maxsize=1)
+def supported() -> frozenset[str]:
+    """Every lang/<code>.po is a language (English is the source)."""
+    base = next((p / "lang" for p in Path(__file__).resolve().parents if (p / "lang" / "en.po").exists()), Path("lang"))
+    return frozenset(f.stem for f in base.glob("*.po")) or frozenset({"en"})
+
+
+def _valid(lang: str | None) -> str:
+    return lang if lang in supported() else "en"
+
+
 def select_lang(header: str | None) -> str:
+    """The first language of X-Lang / Accept-Language that MeetGo has ("fr-FR,fr;q=0.9" → "fr")."""
     if not header:
         return "es"
-    value = header.lower()
-    if "en" in value:
-        return "en"
-    if "es" in value:
-        return "es"
-    return "es"
+    langs = supported()
+    for part in header.lower().split(","):
+        code = part.split(";")[0].strip().split("-")[0]
+        if code in langs:
+            return code
+    return "en"
 
 
 def set_lang(lang: str) -> None:
-    _lang_var.set("en" if lang == "en" else "es")
+    _lang_var.set(_valid(lang))
 
 
 def get_lang() -> str:
@@ -96,7 +109,7 @@ def get_lang() -> str:
 @contextmanager
 def use_lang(lang: str | None):
     """Write in another language for a moment (emails go out in the language of the person who gets them)."""
-    token = _lang_var.set("en" if lang == "en" else "es")
+    token = _lang_var.set(_valid(lang))
     try:
         yield
     finally:
@@ -105,10 +118,9 @@ def use_lang(lang: str | None):
 
 def t(key: str, vars: dict[str, str | int] | None = None) -> str:
     lang = get_lang()
-    if not _dicts:
-        _load_lang("es")
+    d = _load_lang(lang) if lang not in _dicts else _dicts[lang]
+    if "en" not in _dicts:
         _load_lang("en")
-    d = _dicts.get(lang, {})
     s = d.get(key) or _dicts.get("en", {}).get(key) or key  # English is the source language
     if vars:
         for k, v in vars.items():

@@ -1,0 +1,2859 @@
+# MeetGo translations: Catalan. Translated from en.po, the source language (see lang/README.md).
+msgid ""
+msgstr ""
+"Language: ca\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "app_name"
+msgstr "MeetGo"
+
+msgid "tagline"
+msgstr "menys lliscar, més vida"
+
+msgid "tagline_long"
+msgstr "MeetGo -- menys lliscar, més vida"
+
+msgid "logout"
+msgstr "Tanca la sessió"
+
+msgid "login_title"
+msgstr "Accés"
+
+msgid "login_btn"
+msgstr "Entra"
+
+msgid "forgot_password_btn"
+msgstr "He oblidat la contrasenya"
+
+msgid "new_user_btn"
+msgstr "Usuari nou"
+
+msgid "hide_register_btn"
+msgstr "Amaga el registre"
+
+msgid "forgot_password_prompt"
+msgstr "Introdueix el teu correu per recuperar la contrasenya"
+
+msgid "forgot_password_sent"
+msgstr "Si el correu existeix, t'hem enviat un enllaç per restablir-la."
+
+msgid "reset_password_title"
+msgstr "Restableix la contrasenya"
+
+msgid "reset_password_btn"
+msgstr "Restableix"
+
+msgid "reset_password_ok"
+msgstr "Contrasenya actualitzada."
+
+msgid "verify_email_ok"
+msgstr "Correu verificat."
+
+msgid "verify_email_fail"
+msgstr "No s'ha pogut verificar el correu."
+
+msgid "register_verify_email"
+msgstr "Revisa el correu per verificar el teu compte."
+
+msgid "or_register"
+msgstr "O registra't"
+
+msgid "error_title"
+msgstr "Error"
+
+msgid "ok_title"
+msgstr "D'acord"
+
+msgid "cancel"
+msgstr "Cancel·la"
+
+msgid "register_ok"
+msgstr "Compte creat correctament."
+
+msgid "login_error_generic"
+msgstr "No s'ha pogut iniciar la sessió."
+
+msgid "email"
+msgstr "Correu electrònic"
+
+msgid "password"
+msgstr "Contrasenya"
+
+msgid "password_hint"
+msgstr "Contrasenya (mín. 6, màx. 60)"
+
+msgid "name"
+msgstr "Nom"
+
+msgid "dob_label"
+msgstr "Data de naixement"
+
+msgid "dob_pick"
+msgstr "Tria la teva data."
+
+msgid "dob_invalid"
+msgstr "Format no vàlid."
+
+msgid "dob_underage"
+msgstr "Has de ser major de 18 anys."
+
+msgid "phone_label"
+msgstr "Telèfon"
+
+msgid "phone_number"
+msgstr "Número"
+
+msgid "country_label"
+msgstr "País"
+
+msgid "province_label"
+msgstr "Província/Estat"
+
+msgid "city_label"
+msgstr "Ciutat"
+
+msgid "not_available"
+msgstr "(No disponible)"
+
+msgid "avatar_url"
+msgstr "URL de l'avatar (opcional)"
+
+msgid "bio"
+msgstr "Biografia (opcional)"
+
+msgid "accept_dm"
+msgstr "Permet missatges directes"
+
+msgid "create_account"
+msgstr "Crea un compte"
+
+msgid "hello"
+msgstr "Hola, {name}"
+
+msgid "rooms"
+msgstr "Sales"
+
+msgid "feed"
+msgstr "Mur"
+
+msgid "profile"
+msgstr "Perfil"
+
+msgid "load_my_rooms"
+msgstr "Carrega les meves sales"
+
+msgid "join_room_title"
+msgstr "Uneix-te a una sala"
+
+msgid "join_room_desc"
+msgstr "Tria un interès i uneix-t'hi. Si no existeix, es crearà."
+
+msgid "join_btn"
+msgstr "Uneix-m'hi"
+
+msgid "leave_room_btn"
+msgstr "Surt de la sala"
+
+msgid "leave_room_confirm"
+msgstr "Vols sortir de la sala {room}?"
+
+msgid "leave_room_ok"
+msgstr "Has sortit de la sala."
+
+msgid "leave_room_error"
+msgstr "No s'ha pogut sortir de la sala."
+
+msgid "no_rooms_title"
+msgstr "Encara no tens cap sala"
+
+msgid "no_rooms_desc"
+msgstr "Fes servir «Uneix-m'hi» a dalt per crear-ne una o unir-t'hi."
+
+msgid "tip_title"
+msgstr "Consell"
+
+msgid "tip_body"
+msgstr "Fes clic dret en un avatar per obrir el menú."
+
+
+msgid "write_placeholder"
+msgstr "Escriu..."
+
+msgid "send_btn"
+msgstr "Envia"
+
+msgid "publish_placeholder"
+msgstr "Publica alguna cosa..."
+
+msgid "publish_btn"
+msgstr "Publica"
+
+msgid "refresh_btn"
+msgstr "Actualitza"
+
+msgid "profile_updated"
+msgstr "Perfil actualitzat correctament"
+
+msgid "following_ok"
+msgstr "Ara el segueixes"
+
+msgid "friend_req_ok"
+msgstr "Sol·licitud d'amistat enviada"
+
+msgid "save_profile"
+msgstr "Desa el perfil"
+
+msgid "save_settings"
+msgstr "Desa la configuració"
+
+msgid "settings_saved"
+msgstr "Configuració desada."
+
+msgid "edit_profile_title"
+msgstr "Edita el perfil"
+
+msgid "new_password"
+msgstr "Contrasenya nova"
+
+msgid "dob_change_note"
+msgstr "La data de naixement només es pot canviar una vegada i cal que sigui revisada."
+
+msgid "warn_province_change"
+msgstr "Si canvies de província, sortiràs de les teves sales actuals. Vols continuar?"
+
+msgid "warn_country_change"
+msgstr "Si canvies de país, s'actualitzarà el teu perfil. Vols continuar?"
+
+msgid "warn_dob_change"
+msgstr "La data de naixement només es pot canviar una vegada i cal que sigui revisada. Vols continuar?"
+
+msgid "warn_dob_change_range"
+msgstr "Si canvies la data de naixement, canviarà el teu rang d'edat i sortiràs de les teves sales. Només es permet una vegada i cal que sigui revisada. Vols continuar?"
+
+msgid "dob_change_limit"
+msgstr "Ja has demanat un canvi de data de naixement."
+
+msgid "yes"
+msgstr "Sí"
+
+msgid "no"
+msgstr "No"
+
+msgid "users_online"
+msgstr "Usuaris: {count}"
+
+msgid "users_panel_title"
+msgstr "Usuaris en línia"
+
+msgid "show_users_panel"
+msgstr "Mostra els usuaris"
+
+msgid "hide_users_panel"
+msgstr "Amaga els usuaris"
+
+msgid "close_panel"
+msgstr "Tanca"
+
+msgid "users_none"
+msgstr "Cap usuari connectat"
+
+msgid "users_no_room"
+msgstr "Tria una sala per veure els usuaris."
+
+msgid "online_summary"
+msgstr "Usuaris en línia: {users} · Sales actives: {rooms}"
+
+msgid "online_users"
+msgstr "Usuaris en línia: {users}"
+
+msgid "online_rooms"
+msgstr "Sales actives: {rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "Amaga les sales"
+
+msgid "show_rooms_panel"
+msgstr "Mostra les sales"
+
+msgid "settings_title"
+msgstr "Configuració"
+
+msgid "hide_panel"
+msgstr "Amaga el tauler"
+
+msgid "show_panel"
+msgstr "Mostra el tauler"
+
+msgid "hide_user_panel"
+msgstr "Amaga el tauler d'usuari"
+
+msgid "show_user_panel"
+msgstr "Mostra el tauler d'usuari"
+
+msgid "panel_user"
+msgstr "Tauler d'usuari"
+
+msgid "panel_rooms"
+msgstr "Tauler de sales"
+
+msgid "no_room_selected"
+msgstr "Cap sala activa"
+
+msgid "language_label"
+msgstr "Idioma"
+
+msgid "menu_view_profile"
+msgstr "Veure el perfil"
+
+msgid "menu_friend_request"
+msgstr "Envia sol·licitud d'amistat"
+
+msgid "menu_follow_feed"
+msgstr "Segueix el mur"
+
+msgid "modal_profile_title"
+msgstr "Perfil"
+
+msgid "modal_close"
+msgstr "Tanca"
+
+msgid "modal_friend"
+msgstr "Amic"
+
+msgid "modal_follow"
+msgstr "Segueix"
+
+msgid "msg_deleted_by_mod"
+msgstr "Missatge eliminat per moderació"
+
+msgid "no_bio_yet"
+msgstr "Encara no té biografia."
+
+msgid "join_room_error"
+msgstr "No t'has pogut unir a la sala."
+
+msgid "loading_interests"
+msgstr "Carregant interessos..."
+
+msgid "interests_load_error"
+msgstr "No s'han pogut carregar els interessos."
+
+msgid "retry_btn"
+msgstr "Torna-ho a provar"
+
+msgid "chat_ws_error"
+msgstr "Error de connexió del xat (WebSocket). Revisa el port/URL del servidor."
+
+msgid "age_display"
+msgstr "Edat: {age}"
+
+msgid "age_display_underage"
+msgstr "Edat: {age} ({note})"
+
+msgid "register_err_email_missing"
+msgstr "El correu és obligatori."
+
+msgid "register_err_password_short"
+msgstr "La contrasenya ha de tenir almenys 6 caràcters."
+
+msgid "register_err_name_missing"
+msgstr "El nom és obligatori."
+
+msgid "register_err_dob_invalid"
+msgstr "Data de naixement no vàlida."
+
+msgid "register_err_underage"
+msgstr "Has de ser major de 18 anys."
+
+msgid "register_err_country_missing"
+msgstr "Selecciona un país."
+
+msgid "register_err_province_missing"
+msgstr "Selecciona una província/estat."
+
+msgid "register_err_province_unavailable"
+msgstr "Encara no hi ha províncies configurades per a aquest país."
+
+msgid "register_err_phone_cc_missing"
+msgstr "Selecciona un prefix telefònic internacional."
+
+msgid "register_err_phone_short"
+msgstr "El número de telèfon és massa curt."
+
+msgid "debug_title"
+msgstr "Depurador"
+
+msgid "debug_subtitle"
+msgstr "últimes {count} línies"
+
+msgid "debug_clear"
+msgstr "Neteja"
+
+msgid "debug_copy"
+msgstr "Copia"
+
+msgid "debug_copy_selection"
+msgstr "Copia la selecció"
+
+msgid "debug_copy_selection_empty"
+msgstr "No hi ha cap selecció per copiar"
+
+msgid "debug_copy_ok"
+msgstr "Copiat"
+
+msgid "debug_copy_fail"
+msgstr "No s'ha pogut copiar"
+
+msgid "debug_frontend_tab"
+msgstr "FrontEnd ({count})"
+
+msgid "debug_services_tab"
+msgstr "Serveis ({count})"
+
+msgid "debug_services_connected"
+msgstr "en directe"
+
+msgid "debug_services_connecting"
+msgstr "connectant..."
+
+msgid "debug_services_error"
+msgstr "error"
+
+msgid "debug_minimize"
+msgstr "Minimitza"
+
+msgid "debug_restore"
+msgstr "Restaura"
+
+msgid "debug_close"
+msgstr "Tanca"
+
+msgid "debug_tab_all"
+msgstr "Tot"
+
+msgid "debug_tab_js"
+msgstr "JavaScript"
+
+msgid "debug_auto_refresh"
+msgstr "Actualització automàtica"
+
+msgid "debug_maximize"
+msgstr "Maximitza"
+
+msgid "chat_not_connected"
+msgstr "Xat no connectat (ws=null). Obre una sala primer."
+
+msgid "chat_not_connected_state"
+msgstr "Xat no connectat (WS readyState={state})."
+
+msgid "chat_disconnected"
+msgstr "Xat desconnectat. Torna a obrir la sala (o torna a iniciar la sessió)."
+
+msgid "chat_reconnecting"
+msgstr "Reconnectant al xat..."
+
+msgid "no_session"
+msgstr "Sense sessió (token). Torna a iniciar la sessió."
+
+msgid "country_es_spain"
+msgstr "Espanya"
+
+msgid "country_pt_portugal"
+msgstr "Portugal"
+
+msgid "country_fr_france"
+msgstr "França"
+
+msgid "country_it_italy"
+msgstr "Itàlia"
+
+msgid "country_de_germany"
+msgstr "Alemanya"
+
+msgid "country_gb_uk"
+msgstr "Regne Unit"
+
+msgid "country_us_usa"
+msgstr "Estats Units"
+
+msgid "country_mx_mexico"
+msgstr "Mèxic"
+
+msgid "country_ar_argentina"
+msgstr "Argentina"
+
+msgid "country_co_colombia"
+msgstr "Colòmbia"
+
+msgid "calling_es_spain"
+msgstr "Espanya"
+
+msgid "calling_pt_portugal"
+msgstr "Portugal"
+
+msgid "calling_fr_france"
+msgstr "França"
+
+msgid "calling_it_italy"
+msgstr "Itàlia"
+
+msgid "calling_de_germany"
+msgstr "Alemanya"
+
+msgid "calling_gb_uk"
+msgstr "Regne Unit"
+
+msgid "calling_us_ca"
+msgstr "EUA / Canadà"
+
+msgid "calling_mx_mexico"
+msgstr "Mèxic"
+
+msgid "calling_ar_argentina"
+msgstr "Argentina"
+
+msgid "calling_co_colombia"
+msgstr "Colòmbia"
+
+msgid "province_es_alava"
+msgstr "Àlaba"
+
+msgid "province_es_albacete"
+msgstr "Albacete"
+
+msgid "province_es_alicante"
+msgstr "Alacant"
+
+msgid "province_es_almeria"
+msgstr "Almeria"
+
+msgid "province_es_asturias"
+msgstr "Astúries"
+
+msgid "province_es_avila"
+msgstr "Àvila"
+
+msgid "province_es_badajoz"
+msgstr "Badajoz"
+
+msgid "province_es_barcelona"
+msgstr "Barcelona"
+
+msgid "province_es_burgos"
+msgstr "Burgos"
+
+msgid "province_es_caceres"
+msgstr "Càceres"
+
+msgid "province_es_cadiz"
+msgstr "Cadis"
+
+msgid "province_es_cantabria"
+msgstr "Cantàbria"
+
+msgid "province_es_castellon"
+msgstr "Castelló"
+
+msgid "province_es_ciudad_real"
+msgstr "Ciutat Reial"
+
+msgid "province_es_cordoba"
+msgstr "Còrdova"
+
+msgid "province_es_cuenca"
+msgstr "Conca"
+
+msgid "province_es_girona"
+msgstr "Girona"
+
+msgid "province_es_granada"
+msgstr "Granada"
+
+msgid "province_es_guadalajara"
+msgstr "Guadalajara"
+
+msgid "province_es_gipuzkoa"
+msgstr "Guipúscoa"
+
+msgid "province_es_huelva"
+msgstr "Huelva"
+
+msgid "province_es_huesca"
+msgstr "Osca"
+
+msgid "province_es_illes_balears"
+msgstr "Illes Balears"
+
+msgid "province_es_jaen"
+msgstr "Jaén"
+
+msgid "province_es_a_coruna"
+msgstr "La Corunya"
+
+msgid "province_es_la_rioja"
+msgstr "La Rioja"
+
+msgid "province_es_las_palmas"
+msgstr "Las Palmas"
+
+msgid "province_es_leon"
+msgstr "Lleó"
+
+msgid "province_es_lleida"
+msgstr "Lleida"
+
+msgid "province_es_lugo"
+msgstr "Lugo"
+
+msgid "province_es_madrid"
+msgstr "Madrid"
+
+msgid "province_es_malaga"
+msgstr "Màlaga"
+
+msgid "province_es_murcia"
+msgstr "Múrcia"
+
+msgid "province_es_navarra"
+msgstr "Navarra"
+
+msgid "province_es_ourense"
+msgstr "Ourense"
+
+msgid "province_es_palencia"
+msgstr "Palència"
+
+msgid "province_es_pontevedra"
+msgstr "Pontevedra"
+
+msgid "province_es_salamanca"
+msgstr "Salamanca"
+
+msgid "province_es_santa_cruz_de_tenerife"
+msgstr "Santa Cruz de Tenerife"
+
+msgid "province_es_segovia"
+msgstr "Segòvia"
+
+msgid "province_es_sevilla"
+msgstr "Sevilla"
+
+msgid "province_es_soria"
+msgstr "Sòria"
+
+msgid "province_es_tarragona"
+msgstr "Tarragona"
+
+msgid "province_es_teruel"
+msgstr "Terol"
+
+msgid "province_es_toledo"
+msgstr "Toledo"
+
+msgid "province_es_valencia"
+msgstr "València"
+
+msgid "province_es_valladolid"
+msgstr "Valladolid"
+
+msgid "province_es_bizkaia"
+msgstr "Biscaia"
+
+msgid "province_es_zamora"
+msgstr "Zamora"
+
+msgid "province_es_zaragoza"
+msgstr "Saragossa"
+
+msgid "province_pt_lisboa"
+msgstr "Lisboa"
+
+msgid "province_pt_porto"
+msgstr "Porto"
+
+msgid "province_pt_braga"
+msgstr "Braga"
+
+msgid "province_pt_setubal"
+msgstr "Setúbal"
+
+msgid "province_pt_aveiro"
+msgstr "Aveiro"
+
+msgid "province_fr_ile_de_france"
+msgstr "Illa de França"
+
+msgid "province_fr_occitanie"
+msgstr "Occitània"
+
+msgid "province_fr_nouvelle_aquitaine"
+msgstr "Nova Aquitània"
+
+msgid "province_fr_auvergne_rhone_alpes"
+msgstr "Alvèrnia-Roine-Alps"
+
+msgid "province_it_lazio"
+msgstr "Laci"
+
+msgid "province_it_lombardia"
+msgstr "Llombardia"
+
+msgid "province_it_campania"
+msgstr "Campània"
+
+msgid "province_it_sicilia"
+msgstr "Sicília"
+
+msgid "admin_users_title"
+msgstr "Usuaris"
+
+msgid "admin_users_search_placeholder"
+msgstr "Cerca"
+
+msgid "admin_users_search_button"
+msgstr "Cerca"
+
+msgid "admin_users_select_placeholder"
+msgstr "Selecciona un usuari"
+
+msgid "admin_users_logins_meta"
+msgstr "accessos: {count} últim: {last}"
+
+msgid "admin_users_last_seen_meta"
+msgstr "vist per últim cop: {last} total: {seconds} s"
+
+msgid "admin_users_active_meta"
+msgstr "actiu: {active} inici: {start}"
+
+msgid "admin_yes"
+msgstr "sí"
+
+msgid "admin_no"
+msgstr "no"
+
+msgid "admin_users_edit_title"
+msgstr "Edita l'usuari"
+
+msgid "admin_users_name"
+msgstr "Nom"
+
+msgid "admin_users_email"
+msgstr "Correu electrònic"
+
+msgid "admin_users_phone"
+msgstr "Telèfon"
+
+msgid "admin_users_dob"
+msgstr "Naixement (AAAA-MM-DD)"
+
+msgid "admin_users_country"
+msgstr "País"
+
+msgid "admin_users_province"
+msgstr "Província"
+
+msgid "admin_users_city"
+msgstr "Ciutat"
+
+msgid "admin_users_role"
+msgstr "Rol"
+
+msgid "admin_users_new_password"
+msgstr "Contrasenya nova"
+
+msgid "admin_users_email_verified"
+msgstr "Correu verificat"
+
+msgid "admin_users_resend_button"
+msgstr "Reenvia la verificació"
+
+msgid "admin_users_resend_ok"
+msgstr "Correu de verificació reenviat."
+
+msgid "admin_users_resend_error"
+msgstr "No s'ha pogut reenviar la verificació."
+
+msgid "admin_users_blocked"
+msgstr "Bloquejat"
+
+msgid "admin_users_blocked_until"
+msgstr "Bloquejat fins a (AAAA-MM-DD)"
+
+msgid "admin_users_password_label"
+msgstr "Contrasenya"
+
+msgid "admin_users_dob_short"
+msgstr "Naixement"
+
+msgid "admin_users_missing_fields"
+msgstr "Falten camps: {fields}"
+
+msgid "admin_users_updated"
+msgstr "Usuari actualitzat."
+
+msgid "admin_users_created"
+msgstr "Usuari creat."
+
+msgid "admin_users_save_error"
+msgstr "No s'ha pogut desar l'usuari."
+
+msgid "admin_users_save_button"
+msgstr "Desa"
+
+msgid "admin_users_create_button"
+msgstr "Crea"
+
+msgid "admin_users_delete_confirm"
+msgstr "Vols eliminar aquest usuari? Aquesta acció no es pot desfer."
+
+msgid "admin_users_deleted"
+msgstr "Usuari eliminat."
+
+msgid "admin_users_delete_error"
+msgstr "No s'ha pogut eliminar."
+
+msgid "admin_users_delete_button"
+msgstr "Elimina"
+
+msgid "admin_channels_title"
+msgstr "Canals"
+
+msgid "admin_channels_edit_button"
+msgstr "Edita"
+
+msgid "admin_channels_delete_button"
+msgstr "Elimina"
+
+msgid "admin_channels_form_title"
+msgstr "Afegeix / Edita un canal"
+
+msgid "admin_channels_name_placeholder"
+msgstr "Nom del canal"
+
+msgid "admin_channels_slug_label"
+msgstr "Slug: {slug}"
+
+msgid "admin_channels_name_required"
+msgstr "Cal un nom de canal."
+
+msgid "admin_channels_updated"
+msgstr "Canal actualitzat."
+
+msgid "admin_channels_created"
+msgstr "Canal creat."
+
+msgid "admin_channels_save_error"
+msgstr "No s'ha pogut desar el canal."
+
+msgid "admin_channels_save_button"
+msgstr "Desa"
+
+msgid "unknown_user"
+msgstr "Desconegut"
+
+msgid "email_verify_subject"
+msgstr "Confirma el teu correu de MeetGo"
+
+msgid "email_verify_body"
+msgstr "Prem el botó per confirmar el teu correu i començar a fer servir MeetGo. Si no has creat cap compte, ignora aquest missatge."
+
+msgid "email_reset_subject"
+msgstr "Restableix la teva contrasenya de MeetGo"
+
+msgid "email_reset_body"
+msgstr "Has demanat canviar la contrasenya del teu compte. L'enllaç caduca d'aquí a 2 hores. Si no has estat tu, ignora aquest correu: la teva contrasenya no canvia."
+
+msgid "email_smtp_test_subject"
+msgstr "Prova SMTP de MeetGo"
+
+msgid "email_smtp_test_body"
+msgstr "Correu de prova SMTP des de l'administració de MeetGo."
+
+msgid "err_smtp_sender_not_configured"
+msgstr "Remitent SMTP no configurat"
+
+msgid "err_gmail_not_configured"
+msgstr "SMTP de l'API de Gmail no configurat"
+
+msgid "err_gmail_token_failed"
+msgstr "No s'ha pogut obtenir el token d'accés de Gmail"
+
+msgid "err_smtp_host_not_configured"
+msgstr "Servidor SMTP no configurat"
+
+msgid "err_admin_required"
+msgstr "Cal ser administrador"
+
+msgid "err_email_phone_required"
+msgstr "Calen el correu i el telèfon"
+
+msgid "err_password_too_short"
+msgstr "Contrasenya massa curta"
+
+msgid "err_email_already_used"
+msgstr "El correu ja està en ús"
+
+msgid "err_invalid_phone"
+msgstr "Telèfon no vàlid"
+
+msgid "err_phone_already_used"
+msgstr "El telèfon ja està en ús"
+
+msgid "err_email_required"
+msgstr "Cal el correu"
+
+msgid "err_invalid_credentials"
+msgstr "Credencials no vàlides"
+
+msgid "err_user_banned"
+msgstr "Usuari vetat"
+
+msgid "err_password_required"
+msgstr "Cal la contrasenya"
+
+msgid "err_email_not_verified"
+msgstr "Correu no verificat"
+
+msgid "err_invalid_token"
+msgstr "Token no vàlid"
+
+msgid "err_token_expired"
+msgstr "Token caducat"
+
+msgid "err_missing_to_email"
+msgstr "Falta to_email"
+
+msgid "err_user_not_found"
+msgstr "Usuari no trobat"
+
+msgid "err_user_no_email"
+msgstr "L'usuari no té correu"
+
+msgid "err_cannot_delete_self"
+msgstr "No et pots eliminar a tu mateix"
+
+msgid "err_interest_exists"
+msgstr "L'interès ja existeix"
+
+msgid "err_interest_not_found"
+msgstr "Interès no trobat"
+
+msgid "err_dob_change_used"
+msgstr "El canvi de data de naixement ja s'ha fet servir"
+
+msgid "err_invalid_dob"
+msgstr "Data de naixement no vàlida"
+
+msgid "err_province_required"
+msgstr "Cal la província"
+
+msgid "err_phone_change_limited"
+msgstr "El telèfon només es pot canviar cada 30 dies"
+
+msgid "err_forbidden_diff_province"
+msgstr "Prohibit (província diferent)"
+
+msgid "err_room_not_found"
+msgstr "Sala no trobada"
+
+msgid "err_forbidden"
+msgstr "Prohibit"
+
+msgid "err_rules_not_found"
+msgstr "Normes no trobades"
+
+msgid "err_cannot_dm_self"
+msgstr "No et pots enviar missatges a tu mateix"
+
+msgid "err_user_no_dm"
+msgstr "L'usuari no accepta missatges directes"
+
+msgid "err_dm_daily_limit"
+msgstr "S'ha assolit el límit diari de missatges directes (10)"
+
+msgid "err_dm_request_pending"
+msgstr "Ja hi ha una sol·licitud de missatge directe pendent"
+
+msgid "err_request_not_found"
+msgstr "Sol·licitud no trobada"
+
+msgid "err_already_resolved"
+msgstr "Ja resolta"
+
+msgid "err_conversation_not_found"
+msgstr "Conversa no trobada"
+
+msgid "err_cannot_follow_self"
+msgstr "No et pots seguir a tu mateix"
+
+msgid "err_cannot_friend_self"
+msgstr "No et pots afegir com a amic a tu mateix"
+
+msgid "err_already_friends"
+msgstr "Ja sou amics"
+
+msgid "err_request_pending"
+msgstr "Ja hi ha una sol·licitud pendent"
+
+msgid "err_debug_disabled"
+msgstr "Desactivat"
+
+msgid "err_docker_sdk_missing"
+msgstr "Docker SDK no instal·lat"
+
+msgid "err_docker_unavailable"
+msgstr "Docker no disponible: {error}"
+
+msgid "err_no_compose_containers"
+msgstr "No s'han trobat contenidors de compose"
+
+msgid "err_password_too_long"
+msgstr "Contrasenya massa llarga (el límit de bcrypt és de 72 bytes). Fes servir una contrasenya més curta."
+
+msgid "err_token_missing_sub"
+msgstr "Falta sub"
+
+msgid "log_error_line"
+msgstr "[error de registre] {error}"
+
+msgid "err_password_required"
+msgstr "Cal la contrasenya"
+
+msgid "log_level_info"
+msgstr "INFO"
+
+msgid "log_level_warn"
+msgstr "WARN"
+
+msgid "log_level_warning"
+msgstr "WARNING"
+
+msgid "log_level_error"
+msgstr "ERROR"
+
+msgid "log_level_debug"
+msgstr "DEBUG"
+
+msgid "svc_database"
+msgstr "MeetGo-Database"
+
+msgid "svc_redis"
+msgstr "MeetGo-Redis"
+
+msgid "svc_app"
+msgstr "MeetGo-App"
+
+msgid "svc_web_user"
+msgstr "MeetGo-Web-User"
+
+msgid "svc_web_admin"
+msgstr "MeetGo-Web-Admin"
+
+msgid "svc_js"
+msgstr "MeetGo-JavaScript"
+
+msgid "svc_prefix"
+msgstr "MeetGo-{service}"
+
+msgid "err_interest_in_use"
+msgstr "Aquest canal té sales amb missatges; canvia-li el nom en lloc d'eliminar-lo"
+
+msgid "err_empty_message"
+msgstr "El missatge és buit"
+
+msgid "err_message_too_long"
+msgstr "El missatge és massa llarg"
+
+msgid "err_banned_here"
+msgstr "No pots escriure en aquesta conversa"
+
+msgid "err_display_name"
+msgstr "El nom ha de tenir entre 1 i 64 caràcters"
+
+msgid "err_edit_window"
+msgstr "Només pots editar un missatge durant 48 hores"
+
+msgid "err_file_empty"
+msgstr "El fitxer és buit"
+
+msgid "err_file_not_found"
+msgstr "Fitxer no trobat"
+
+msgid "err_file_too_big"
+msgstr "El fitxer pesa més de 10 MB"
+
+msgid "err_file_type"
+msgstr "Aquest tipus de fitxer no és compatible"
+
+msgid "err_invalid_email"
+msgstr "Correu no vàlid"
+
+msgid "err_invalid_plan"
+msgstr "Pla no vàlid"
+
+msgid "err_invalid_reaction"
+msgstr "Reacció no vàlida"
+
+msgid "err_invite_invalid"
+msgstr "Aquesta invitació ja no és vàlida"
+
+msgid "err_message_deleted"
+msgstr "El missatge s'ha eliminat"
+
+msgid "err_message_not_found"
+msgstr "Missatge no trobat"
+
+msgid "err_no_subscription"
+msgstr "No tens cap subscripció web"
+
+msgid "err_payments_failed"
+msgstr "No s'ha pogut completar el pagament"
+
+msgid "err_payments_not_configured"
+msgstr "Els pagaments encara no estan configurats"
+
+msgid "err_promo_already_used"
+msgstr "Ja has fet servir un codi promocional"
+
+msgid "err_promo_below_used"
+msgstr "El màxim no pot ser inferior a les places ja ocupades"
+
+msgid "err_promo_exhausted"
+msgstr "Aquest codi ja no té places"
+
+msgid "err_promo_invalid"
+msgstr "Codi promocional no vàlid"
+
+msgid "err_purchase_inactive"
+msgstr "Aquesta compra no està activa"
+
+msgid "err_purchase_invalid"
+msgstr "No s'ha pogut verificar la compra amb Google Play"
+
+msgid "err_purchase_other_account"
+msgstr "Aquesta compra pertany a un altre compte"
+
+msgid "err_report_own"
+msgstr "No pots denunciar els teus propis missatges"
+
+msgid "err_service_account"
+msgstr "El compte de servei no és vàlid"
+
+msgid "err_silenced_until"
+msgstr "Estàs silenciat en aquesta conversa fins a {until}"
+
+msgid "err_slow_mode"
+msgstr "Mode lent: espera {seconds} s per tornar a escriure"
+
+msgid "err_subscription_required"
+msgstr "Necessites una subscripció activa per escriure"
+
+msgid "err_too_many_reactions"
+msgstr "Massa reaccions en aquest missatge"
+
+msgid "sys_group_created"
+msgstr "{name} ha creat el grup"
+
+msgid "sys_member_added"
+msgstr "{by} ha afegit {name}"
+
+msgid "sys_member_joined"
+msgstr "{name} s'ha unit amb una invitació"
+
+msgid "sys_member_left"
+msgstr "{name} ha sortit del grup"
+
+msgid "sys_member_removed"
+msgstr "{by} ha tret {name}"
+
+msgid "ui_accept"
+msgstr "Accepta"
+
+msgid "ui_accept_dm"
+msgstr "Accepta missatges directes de qui no és amic meu"
+
+msgid "ui_access_ends"
+msgstr "Pla {plan}: acaba el {date}"
+
+msgid "ui_access_free"
+msgstr "El teu compte té accés gratuït"
+
+msgid "ui_access_grant_life"
+msgstr "Accés gratuït per sempre"
+
+msgid "ui_access_grant_until"
+msgstr "Accés gratuït fins al {date}"
+
+msgid "ui_access_none"
+msgstr "Sense subscripció: el teu compte és de només lectura"
+
+msgid "ui_access_play"
+msgstr "Subscripció de Google Play fins al {date}"
+
+msgid "ui_access_renews"
+msgstr "Pla {plan}: es renova el {date}"
+
+msgid "ui_access_trial"
+msgstr "Prova gratuïta del pla {plan} fins al {date}"
+
+msgid "ui_account_title"
+msgstr "El teu compte"
+
+msgid "ui_activity"
+msgstr "Activitat"
+
+msgid "ui_add"
+msgstr "Afegeix"
+
+msgid "ui_add_friend"
+msgstr "Afegeix amic"
+
+msgid "ui_add_friends"
+msgstr "Afegeix amics"
+
+msgid "ui_added"
+msgstr "Afegit"
+
+msgid "ui_also_send_to"
+msgstr "Envia també a {name}"
+
+msgid "ui_appearance"
+msgstr "Aparença"
+
+msgid "ui_apply"
+msgstr "Aplica"
+
+msgid "ui_attach"
+msgstr "Adjunta"
+
+msgid "ui_attachment"
+msgstr "Adjunt"
+
+msgid "ui_avatar_url"
+msgstr "Foto de perfil (enllaç)"
+
+msgid "ui_back"
+msgstr "Enrere"
+
+msgid "ui_ban"
+msgstr "Veta"
+
+msgid "ui_bio"
+msgstr "Sobre tu"
+
+msgid "ui_cancel"
+msgstr "Cancel·la"
+
+msgid "ui_cancel_plan"
+msgstr "Cancel·la la subscripció"
+
+msgid "ui_change_server"
+msgstr "Canvia de servidor"
+
+msgid "ui_channel_start"
+msgstr "Aquest és l'inici del canal. Aquí parla la gent de {zone} amb els teus interessos."
+
+msgid "ui_check_email_body"
+msgstr "T'hem enviat un enllaç per confirmar el teu correu. Obre'l i després inicia la sessió amb la teva contrasenya."
+
+msgid "ui_check_email_title"
+msgstr "Revisa el correu"
+
+msgid "ui_choose"
+msgstr "Tria…"
+
+msgid "ui_clear"
+msgstr "Neteja"
+
+msgid "ui_close"
+msgstr "Tanca"
+
+msgid "ui_code_applied"
+msgstr "Codi aplicat"
+
+msgid "ui_connected"
+msgstr "Connectat"
+
+msgid "ui_conversation_gone"
+msgstr "Aquesta conversa ja no està disponible"
+
+msgid "ui_copied"
+msgstr "Copiat"
+
+msgid "ui_copy"
+msgstr "Copia"
+
+msgid "ui_country"
+msgstr "País"
+
+msgid "ui_create_account"
+msgstr "Crea un compte"
+
+msgid "ui_create_group"
+msgstr "Crea un grup"
+
+msgid "ui_decline"
+msgstr "Rebutja"
+
+msgid "ui_delete"
+msgstr "Elimina"
+
+msgid "ui_deleted_user"
+msgstr "Usuari eliminat"
+
+msgid "ui_description"
+msgstr "Descripció"
+
+msgid "ui_details_optional"
+msgstr "Detalls (opcional)"
+
+msgid "ui_direct_message"
+msgstr "Missatge directe"
+
+msgid "ui_disable"
+msgstr "Desactiva"
+
+msgid "ui_display_name"
+msgstr "Nom visible"
+
+msgid "ui_dm_request_sent"
+msgstr "Sol·licitud enviada: podreu parlar quan l'accepti"
+
+msgid "ui_dm_requests"
+msgstr "Volen escriure't"
+
+msgid "ui_dm_start"
+msgstr "Aquesta és la teva conversa privada amb {name}."
+
+msgid "ui_dob"
+msgstr "Data de naixement"
+
+msgid "ui_done"
+msgstr "Fet"
+
+msgid "ui_edit"
+msgstr "Edita"
+
+msgid "ui_edit_hint"
+msgstr "Intro per desar · Esc per cancel·lar"
+
+msgid "ui_edit_in_chat"
+msgstr "Edita el missatge des de la conversa"
+
+msgid "ui_edited"
+msgstr "editat"
+
+msgid "ui_email"
+msgstr "Correu electrònic"
+
+msgid "ui_email_verified"
+msgstr "Correu confirmat. Ja pots iniciar la sessió."
+
+msgid "ui_emoji"
+msgstr "Emoji"
+
+msgid "ui_empty_body"
+msgstr "Tria els teus interessos per unir-te als canals de la teva zona, o crea un grup amb els teus amics."
+
+msgid "ui_empty_title"
+msgstr "Encara no tens cap conversa"
+
+msgid "ui_enable"
+msgstr "Activa"
+
+msgid "ui_enter_hint"
+msgstr "Intro per enviar · Maj+Intro per a una línia nova"
+
+msgid "ui_err_generic"
+msgstr "Alguna cosa ha anat malament (error {status}). Torna-ho a provar."
+
+msgid "ui_err_invalid_data"
+msgstr "Revisa els camps del formulari"
+
+msgid "ui_err_network"
+msgstr "No s'ha pogut connectar amb el servidor. Revisa la connexió a internet."
+
+msgid "ui_explore_channels"
+msgstr "Explora canals"
+
+msgid "ui_explore_lead"
+msgstr "Canals de {zone}. Uneix-te als que t'agradin."
+
+msgid "ui_explore_title"
+msgstr "Canals"
+
+msgid "ui_f_all"
+msgstr "Tot"
+
+msgid "ui_f_channels"
+msgstr "Canals"
+
+msgid "ui_f_direct"
+msgstr "Directes"
+
+msgid "ui_f_groups"
+msgstr "Grups"
+
+msgid "ui_f_mentions"
+msgstr "Mencions"
+
+msgid "ui_f_unread"
+msgstr "No llegits"
+
+msgid "ui_feed_empty"
+msgstr "Encara no hi ha publicacions. Segueix gent per veure-hi les seves."
+
+msgid "ui_feed_hint"
+msgstr "Et veuran els teus seguidors"
+
+msgid "ui_feed_placeholder"
+msgstr "Què estàs fent?"
+
+msgid "ui_find_people"
+msgstr "Troba gent"
+
+msgid "ui_follow"
+msgstr "Segueix"
+
+msgid "ui_forgot"
+msgstr "Has oblidat la contrasenya?"
+
+msgid "ui_forgot_sent"
+msgstr "Si hi ha un compte amb aquest correu, li hem enviat un enllaç per canviar la contrasenya."
+
+msgid "ui_forgot_title"
+msgstr "Restableix la contrasenya"
+
+msgid "ui_friend"
+msgstr "Amic"
+
+msgid "ui_friend_request_sent"
+msgstr "Sol·licitud d'amistat enviada"
+
+msgid "ui_friend_requests"
+msgstr "Sol·licituds d'amistat"
+
+msgid "ui_friends"
+msgstr "Amics"
+
+msgid "ui_go_latest"
+msgstr "Ves al més recent"
+
+msgid "ui_go_login"
+msgstr "Torna a l'inici de sessió"
+
+msgid "ui_home_page"
+msgstr "Pàgina d'inici"
+
+msgid "ui_group_members_hint"
+msgstr "Afegeix ara els teus amics, o comparteix l'enllaç d'invitació més tard."
+
+msgid "ui_group_name"
+msgstr "Nom del grup"
+
+msgid "ui_group_name_ph"
+msgstr "Excursió de dissabte"
+
+msgid "ui_group_start"
+msgstr "Aquest és l'inici del grup. Aquí podeu planejar coses junts."
+
+msgid "ui_have_account"
+msgstr "Ja tinc un compte"
+
+msgid "ui_hide_chat"
+msgstr "Amaga la conversa"
+
+msgid "ui_info"
+msgstr "Informació"
+
+msgid "ui_interests"
+msgstr "Interessos"
+
+msgid "ui_interests_lead"
+msgstr "Cada interès t'uneix al seu canal de {zone} per al teu rang d'edat."
+
+msgid "ui_invite_link"
+msgstr "Enllaç d'invitació"
+
+msgid "ui_join"
+msgstr "Uneix-m'hi"
+
+msgid "ui_join_group"
+msgstr "Uneix-te al grup"
+
+msgid "ui_language"
+msgstr "Idioma"
+
+msgid "ui_last_at"
+msgstr "últim cop a les {time}"
+
+msgid "ui_leave_channel"
+msgstr "Surt del canal"
+
+msgid "ui_leave_group"
+msgstr "Surt del grup"
+
+msgid "ui_loading"
+msgstr "Carregant…"
+
+msgid "ui_login_btn"
+msgstr "Inicia la sessió"
+
+msgid "ui_login_title"
+msgstr "Inicia la sessió a MeetGo"
+
+msgid "ui_logout"
+msgstr "Tanca la sessió"
+
+msgid "ui_make_admin"
+msgstr "Fes administrador"
+
+msgid "ui_make_member"
+msgstr "Treu l'administració"
+
+msgid "ui_manage_payment"
+msgstr "Gestiona el pagament i les factures"
+
+msgid "ui_members"
+msgstr "Membres"
+
+msgid "ui_members_n"
+msgstr "{n} membres"
+
+msgid "ui_mentions_lead"
+msgstr "Missatges que et mencionen."
+
+msgid "ui_mentions_title"
+msgstr "Mencions"
+
+msgid "ui_message_actions"
+msgstr "Accions del missatge"
+
+msgid "ui_message_in"
+msgstr "Escriu a {name}"
+
+msgid "ui_message_to"
+msgstr "Escriu a {name}"
+
+msgid "ui_mod_caps"
+msgstr "Eliminat per moderació: massa majúscules"
+
+msgid "ui_mod_flood"
+msgstr "Eliminat per moderació: massa missatges seguits"
+
+msgid "ui_mod_generic"
+msgstr "Eliminat per moderació"
+
+msgid "ui_mod_links"
+msgstr "Eliminat per moderació: en aquest canal no es permeten enllaços"
+
+msgid "ui_mod_phone"
+msgstr "Eliminat per moderació: no comparteixis telèfons al canal"
+
+msgid "ui_mod_removed"
+msgstr "Eliminat per un moderador"
+
+msgid "ui_mod_toxic"
+msgstr "Eliminat per moderació: llenguatge ofensiu"
+
+msgid "ui_moderation"
+msgstr "Moderació"
+
+msgid "ui_monthly"
+msgstr "Mensual"
+
+msgid "ui_more"
+msgstr "Més"
+
+msgid "ui_msg_deleted"
+msgstr "Missatge eliminat"
+
+msgid "ui_mute_1h"
+msgstr "Silencia les notificacions 1 hora"
+
+msgid "ui_mute_week"
+msgstr "Silencia les notificacions 1 setmana"
+
+msgid "ui_nav"
+msgstr "Navegació"
+
+msgid "ui_nav_account"
+msgstr "Compte"
+
+msgid "ui_nav_channels"
+msgstr "Canals"
+
+msgid "ui_nav_chats"
+msgstr "Xats"
+
+msgid "ui_nav_mentions"
+msgstr "Mencions"
+
+msgid "ui_nav_people"
+msgstr "Gent"
+
+msgid "ui_needs_request"
+msgstr "Cal sol·licitud"
+
+msgid "ui_new_chat"
+msgstr "Conversa nova"
+
+msgid "ui_new_group"
+msgstr "Grup nou"
+
+msgid "ui_new_link"
+msgstr "Enllaç nou"
+
+msgid "ui_new_messages"
+msgstr "Missatges nous"
+
+msgid "ui_new_messages_n"
+msgstr "{n} missatges nous"
+
+msgid "ui_no_dms"
+msgstr "No accepta missatges directes"
+
+msgid "ui_no_friends_hint"
+msgstr "Afegeix amics des d'un canal tocant el seu nom, o troba'ls a «Troba gent»."
+
+msgid "ui_no_friends_yet"
+msgstr "Encara no tens amics a MeetGo"
+
+msgid "ui_no_mentions"
+msgstr "Encara no t'ha mencionat ningú"
+
+msgid "ui_no_requests"
+msgstr "No tens cap sol·licitud pendent"
+
+msgid "ui_no_results"
+msgstr "Sense resultats"
+
+msgid "ui_notifications"
+msgstr "Notificacions"
+
+msgid "ui_notifications_hint"
+msgstr "Als grups i als missatges directes se't notifica cada missatge; als canals, només quan et mencionen. Canvia-ho al menú de cada conversa."
+
+msgid "ui_notify_all"
+msgstr "Notifica cada missatge"
+
+msgid "ui_notify_current"
+msgstr "Notificacions: {mode}"
+
+msgid "ui_notify_mentions"
+msgstr "Notifica només les mencions"
+
+msgid "ui_notify_none"
+msgstr "No notifiquis mai"
+
+msgid "ui_off"
+msgstr "Desactivades"
+
+msgid "ui_offline"
+msgstr "Desconnectat"
+
+msgid "ui_offline_n"
+msgstr "Desconnectats · {n}"
+
+msgid "ui_online"
+msgstr "En línia"
+
+msgid "ui_online_n"
+msgstr "En línia · {n}"
+
+msgid "ui_open"
+msgstr "Obre"
+
+msgid "ui_open_notification_settings"
+msgstr "Configuració de notificacions del telèfon"
+
+msgid "ui_password"
+msgstr "Contrasenya"
+
+msgid "ui_password_change"
+msgstr "Contrasenya nova (opcional)"
+
+msgid "ui_password_new"
+msgstr "Contrasenya (almenys 6 caràcters)"
+
+msgid "ui_payments_soon"
+msgstr "Els pagaments encara no estan activats en aquest servidor."
+
+msgid "ui_paywall_lead"
+msgstr "El teu compte pot llegir però no escriure. Subscriu-te per participar als canals, grups i missatges directes."
+
+msgid "ui_paywall_title"
+msgstr "Subscriu-te a MeetGo"
+
+msgid "ui_people_title"
+msgstr "Gent"
+
+msgid "ui_per_month"
+msgstr "al mes"
+
+msgid "ui_per_year"
+msgstr "a l'any"
+
+msgid "ui_phone"
+msgstr "Telèfon (no es mostra mai a ningú)"
+
+msgid "ui_pick_conversation"
+msgstr "Tria una conversa"
+
+msgid "ui_pick_conversation_hint"
+msgstr "O comença'n una de nova amb el botó del llapis."
+
+msgid "ui_pin"
+msgstr "Fixa el missatge"
+
+msgid "ui_pin_chat"
+msgstr "Fixa la conversa"
+
+msgid "ui_pinned"
+msgstr "Fixat"
+
+msgid "ui_plan_active"
+msgstr "Subscripció activa! Gràcies per donar suport a MeetGo."
+
+msgid "ui_profile"
+msgstr "Perfil"
+
+msgid "ui_promo_code"
+msgstr "Codi promocional"
+
+msgid "ui_province"
+msgstr "Província"
+
+msgid "ui_publish"
+msgstr "Publica"
+
+msgid "ui_push_blocked"
+msgstr "Les notificacions estan bloquejades en aquest navegador; permet-les a la seva configuració."
+
+msgid "ui_push_denied"
+msgstr "No s'han activat les notificacions"
+
+msgid "ui_push_disabled_here"
+msgstr "Les notificacions estan desactivades en aquest navegador"
+
+msgid "ui_push_enabled_here"
+msgstr "Les notificacions estan activades en aquest navegador"
+
+msgid "ui_push_off"
+msgstr "Notificacions desactivades"
+
+msgid "ui_push_on"
+msgstr "Notificacions activades"
+
+msgid "ui_push_unsupported"
+msgstr "Aquest navegador no admet notificacions. A l'iPhone, afegeix MeetGo a la pantalla d'inici."
+
+msgid "ui_react"
+msgstr "Reacciona"
+
+msgid "ui_read"
+msgstr "Llegit"
+
+msgid "ui_read_only"
+msgstr "El teu compte és de només lectura fins que et subscriguis."
+
+msgid "ui_reason"
+msgstr "Motiu"
+
+msgid "ui_reason_spam"
+msgstr "Brossa o publicitat"
+
+msgid "ui_reason_harassment"
+msgstr "Assetjament"
+
+msgid "ui_reason_hate"
+msgstr "Odi o discriminació"
+
+msgid "ui_reason_sexual"
+msgstr "Contingut sexual"
+
+msgid "ui_reason_violence"
+msgstr "Violència o amenaces"
+
+msgid "ui_reason_other"
+msgstr "Una altra cosa"
+
+msgid "ui_reconnecting"
+msgstr "Reconnectant…"
+
+msgid "ui_register_lead"
+msgstr "Parlaràs amb gent de la teva província i del teu rang d'edat. El teu telèfon no es mostra mai."
+
+msgid "ui_register_legal"
+msgstr "En crear un compte confirmes que tens 18 anys o més i que acceptes les condicions i la política de privacitat."
+
+msgid "ui_register_title"
+msgstr "Crea el teu compte"
+
+msgid "ui_remove"
+msgstr "Treu"
+
+msgid "ui_remove_member"
+msgstr "Treu del grup"
+
+msgid "ui_replied_in_thread"
+msgstr "ha respost en un fil"
+
+msgid "ui_replies_n"
+msgstr "{n} respostes"
+
+msgid "ui_reply"
+msgstr "Respon"
+
+msgid "ui_reply_in_thread_ph"
+msgstr "Respon al fil"
+
+msgid "ui_reply_thread"
+msgstr "Respon en un fil"
+
+msgid "ui_replying_to"
+msgstr "Responent a"
+
+msgid "ui_report"
+msgstr "Denuncia"
+
+msgid "ui_report_in_chat"
+msgstr "Denuncia el missatge des de la conversa"
+
+msgid "ui_report_title"
+msgstr "Denuncia el missatge"
+
+msgid "ui_reported"
+msgstr "Gràcies. Els moderadors ho revisaran."
+
+msgid "ui_request"
+msgstr "Sol·licitud"
+
+msgid "ui_requests"
+msgstr "Sol·licituds"
+
+msgid "ui_reset_done"
+msgstr "Contrasenya canviada. Ja pots iniciar la sessió."
+
+msgid "ui_reset_title"
+msgstr "Contrasenya nova"
+
+msgid "ui_restore_purchase"
+msgstr "Restaura la compra"
+
+msgid "ui_resume_plan"
+msgstr "Reprèn la subscripció"
+
+msgid "ui_retry"
+msgstr "Torna-ho a provar"
+
+msgid "ui_role_owner"
+msgstr "Propietari"
+
+msgid "ui_role_admin"
+msgstr "Admin"
+
+msgid "ui_role_moderator"
+msgstr "Mod"
+
+msgid "ui_role_member"
+msgstr "Membre"
+
+msgid "ui_rules"
+msgstr "Normes"
+
+msgid "ui_save"
+msgstr "Desa"
+
+msgid "ui_save_17"
+msgstr "Estalvia un 17 %"
+
+msgid "ui_saved"
+msgstr "Desat"
+
+msgid "ui_search_in"
+msgstr "Cerca a {name}"
+
+msgid "ui_search_in_chat"
+msgstr "Cerca a la conversa"
+
+msgid "ui_search_members"
+msgstr "Cerca membres"
+
+msgid "ui_search_people"
+msgstr "Cerca per nom"
+
+msgid "ui_search_people_hint"
+msgstr "Escriu almenys dues lletres. Veuràs els teus amics i la gent de la teva província."
+
+msgid "ui_search_placeholder"
+msgstr "Cerca converses o missatges"
+
+msgid "ui_sec_channels"
+msgstr "Canals"
+
+msgid "ui_sec_channels_zone"
+msgstr "Canals · {zone}"
+
+msgid "ui_sec_direct"
+msgstr "Directes"
+
+msgid "ui_sec_groups"
+msgstr "Grups"
+
+msgid "ui_sec_messages"
+msgstr "Missatges"
+
+msgid "ui_sec_pinned"
+msgstr "Fixats"
+
+msgid "ui_seconds_n"
+msgstr "{n} segons"
+
+msgid "ui_send"
+msgstr "Envia"
+
+msgid "ui_send_link"
+msgstr "Envia l'enllaç"
+
+msgid "ui_send_message"
+msgstr "Envia un missatge"
+
+msgid "ui_sent"
+msgstr "Enviat"
+
+msgid "ui_session"
+msgstr "Sessió"
+
+msgid "ui_share_lead"
+msgstr "Tria on vols compartir-ho ({n} fitxers)."
+
+msgid "ui_share_nothing"
+msgstr "No hi ha res per compartir."
+
+msgid "ui_share_title"
+msgstr "Comparteix a MeetGo"
+
+msgid "ui_side_panel"
+msgstr "Tauler lateral"
+
+msgid "ui_silence_1h"
+msgstr "Impedeix escriure 1 hora"
+
+msgid "ui_silenced_until"
+msgstr "Estàs silenciat en aquesta conversa fins a les {time}."
+
+msgid "ui_slow_mode"
+msgstr "Mode lent: un missatge cada {seconds} s"
+
+msgid "ui_slow_mode_label"
+msgstr "Mode lent"
+
+msgid "ui_staff_n"
+msgstr "Moderadors · {n}"
+
+msgid "ui_subscribe"
+msgstr "Subscriu-te"
+
+msgid "ui_subscribe_card"
+msgstr "Subscriu-te amb targeta"
+
+msgid "ui_subscribe_play"
+msgstr "Subscriu-te amb Google Play"
+
+msgid "ui_subscription"
+msgstr "Subscripció"
+
+msgid "ui_switch_monthly"
+msgstr "Passa a mensual"
+
+msgid "ui_switch_yearly"
+msgstr "Passa a anual (estalvia un 17 %)"
+
+msgid "ui_theme"
+msgstr "Tema"
+
+msgid "ui_theme_dark"
+msgstr "Fosc"
+
+msgid "ui_theme_light"
+msgstr "Clar"
+
+msgid "ui_theme_system"
+msgstr "Segueix el sistema"
+
+msgid "ui_thread"
+msgstr "Fil"
+
+msgid "ui_threads"
+msgstr "Info i normes"
+
+msgid "ui_today"
+msgstr "Avui"
+
+msgid "ui_trial_days"
+msgstr "Els primers {n} dies són gratuïts. Cancel·la quan vulguis."
+
+msgid "ui_typing_many"
+msgstr "{name} i {n} més estan escrivint…"
+
+msgid "ui_typing_one"
+msgstr "{name} està escrivint…"
+
+msgid "ui_typing_short"
+msgstr "escrivint…"
+
+msgid "ui_typing_two"
+msgstr "{a} i {b} estan escrivint…"
+
+msgid "ui_unfollow"
+msgstr "Deixa de seguir"
+
+msgid "ui_unmute"
+msgstr "Reactiva les notificacions"
+
+msgid "ui_unpin"
+msgstr "Deixa de fixar el missatge"
+
+msgid "ui_unpin_chat"
+msgstr "Deixa de fixar la conversa"
+
+msgid "ui_unsilence"
+msgstr "Permet tornar a escriure"
+
+msgid "ui_uploading"
+msgstr "Pujant…"
+
+msgid "ui_wait"
+msgstr "Un moment…"
+
+msgid "ui_wants_friend"
+msgstr "{name} vol ser el teu amic"
+
+msgid "ui_wants_to_write"
+msgstr "{name} vol escriure't"
+
+msgid "ui_write"
+msgstr "Escriu"
+
+msgid "ui_yearly"
+msgstr "Anual"
+
+msgid "ui_yesterday"
+msgstr "Ahir"
+
+msgid "ui_you"
+msgstr "Tu"
+
+msgid "admin_add_calling_code"
+msgstr "Afegeix un prefix"
+
+msgid "admin_add_country"
+msgstr "Afegeix un país"
+
+msgid "admin_add_language"
+msgstr "Afegeix un idioma"
+
+msgid "admin_add_range"
+msgstr "Afegeix un rang"
+
+msgid "admin_age_ranges_title"
+msgstr "Rangs d'edat"
+
+msgid "admin_app_section"
+msgstr "Aplicació"
+
+msgid "admin_base_url"
+msgstr "Adreça web pública"
+
+msgid "admin_base_url_placeholder"
+msgstr "https://meetgo.app"
+
+msgid "admin_calling_code_placeholder"
+msgstr "+34"
+
+msgid "admin_calling_codes_title"
+msgstr "Prefixos telefònics"
+
+msgid "admin_code"
+msgstr "Codi"
+
+msgid "admin_countries_title"
+msgstr "Països"
+
+msgid "admin_delete"
+msgstr "Elimina"
+
+msgid "admin_gmail_client_id"
+msgstr "Gmail: ID de client"
+
+msgid "admin_gmail_client_secret"
+msgstr "Gmail: secret de client"
+
+msgid "admin_gmail_refresh_token"
+msgstr "Gmail: token d'actualització"
+
+msgid "admin_gmail_sender_email"
+msgstr "Gmail: correu del remitent"
+
+msgid "admin_key"
+msgstr "Clau"
+
+msgid "admin_label"
+msgstr "Etiqueta"
+
+msgid "admin_languages_title"
+msgstr "Idiomes"
+
+msgid "admin_loading"
+msgstr "Carregant…"
+
+msgid "admin_login_button"
+msgstr "Inicia la sessió"
+
+msgid "admin_login_password"
+msgstr "Contrasenya"
+
+msgid "admin_login_username"
+msgstr "Correu o nom d'usuari"
+
+msgid "admin_logout"
+msgstr "Tanca la sessió"
+
+msgid "admin_max"
+msgstr "Màx."
+
+msgid "admin_min"
+msgstr "Mín."
+
+msgid "admin_name"
+msgstr "Nom"
+
+msgid "admin_provinces_title"
+msgstr "Províncies"
+
+msgid "admin_settings_error"
+msgstr "No s'ha pogut desar la configuració"
+
+msgid "admin_settings_save"
+msgstr "Desa la configuració"
+
+msgid "admin_settings_saved"
+msgstr "Configuració desada"
+
+msgid "admin_settings_title"
+msgstr "Configuració"
+
+msgid "admin_smtp_encryption"
+msgstr "Xifratge"
+
+msgid "admin_smtp_from_email"
+msgstr "Correu del remitent"
+
+msgid "admin_smtp_host"
+msgstr "Servidor SMTP"
+
+msgid "admin_smtp_mode"
+msgstr "Mode d'enviament"
+
+msgid "admin_smtp_mode_gmail"
+msgstr "API de Gmail"
+
+msgid "admin_smtp_mode_smtp"
+msgstr "SMTP"
+
+msgid "admin_smtp_password"
+msgstr "Contrasenya SMTP"
+
+msgid "admin_smtp_port"
+msgstr "Port"
+
+msgid "admin_smtp_section"
+msgstr "Correu de sortida"
+
+msgid "admin_smtp_ssl"
+msgstr "SSL"
+
+msgid "admin_smtp_starttls"
+msgstr "STARTTLS"
+
+msgid "admin_smtp_test_button"
+msgstr "Envia un correu de prova"
+
+msgid "admin_smtp_test_email"
+msgstr "Envia la prova a"
+
+msgid "admin_smtp_test_error"
+msgstr "No s'ha pogut enviar el correu de prova"
+
+msgid "admin_smtp_test_ok"
+msgstr "Correu de prova enviat"
+
+msgid "admin_smtp_username"
+msgstr "Usuari SMTP"
+
+msgid "admin_tab_channels"
+msgstr "Canals"
+
+msgid "admin_tab_settings"
+msgstr "Configuració"
+
+msgid "admin_tab_users"
+msgstr "Usuaris"
+
+msgid "admin_title"
+msgstr "Administració de MeetGo"
+
+msgid "email_open_app"
+msgstr "Obre MeetGo"
+
+msgid "email_footer_digest"
+msgstr "Reps aquest correu perquè tens missatges sense llegir a MeetGo."
+
+msgid "email_footer_requests"
+msgstr "Reps aquest correu perquè algú vol contactar amb tu a MeetGo."
+
+msgid "email_footer_reports"
+msgstr "Reps aquest correu perquè administres MeetGo."
+
+msgid "email_footer_manage"
+msgstr "Tria quins correus vull rebre"
+
+msgid "email_footer_unsubscribe"
+msgstr "Deixa de rebre aquests correus"
+
+msgid "email_verify_title"
+msgstr "Confirma el teu correu"
+
+msgid "email_verify_button"
+msgstr "Confirma el meu correu"
+
+msgid "email_reset_title"
+msgstr "Tria una contrasenya nova"
+
+msgid "email_reset_button"
+msgstr "Tria una contrasenya"
+
+msgid "email_password_changed_subject"
+msgstr "La teva contrasenya de MeetGo ha canviat"
+
+msgid "email_password_changed_title"
+msgstr "Contrasenya canviada"
+
+msgid "email_password_changed_body"
+msgstr "La contrasenya del teu compte acaba de canviar. Si no has estat tu, recupera-la ara amb \"Has oblidat la contrasenya?\" i respon a aquest correu."
+
+msgid "email_friend_request_subject"
+msgstr "{name} vol ser el teu amic a MeetGo"
+
+msgid "email_friend_request_title"
+msgstr "Sol·licitud d'amistat nova"
+
+msgid "email_friend_request_body"
+msgstr "{name} t'ha enviat una sol·licitud d'amistat. Accepta-la per enviar-vos missatges directes i crear grups junts."
+
+msgid "email_friend_request_button"
+msgstr "Veure la sol·licitud"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name} ha acceptat la teva sol·licitud d'amistat"
+
+msgid "email_friend_accepted_title"
+msgstr "Ara sou amics"
+
+msgid "email_friend_accepted_body"
+msgstr "{name} ha acceptat la teva sol·licitud d'amistat. Ja podeu enviar-vos missatges directes."
+
+msgid "email_dm_request_subject"
+msgstr "{name} vol escriure't a MeetGo"
+
+msgid "email_dm_request_title"
+msgstr "Sol·licitud de missatge directe"
+
+msgid "email_dm_request_body"
+msgstr "{name} vol parlar amb tu per missatge directe. Accepta la sol·licitud per començar la conversa."
+
+msgid "email_dm_request_button"
+msgstr "Veure la sol·licitud"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name} ha acceptat el teu missatge directe"
+
+msgid "email_dm_accepted_title"
+msgstr "Conversa oberta"
+
+msgid "email_dm_accepted_body"
+msgstr "{name} ha acceptat la teva sol·licitud: ja podeu parlar per missatge directe."
+
+msgid "email_dm_accepted_button"
+msgstr "Ves a la conversa"
+
+msgid "email_group_added_subject"
+msgstr "{name} t'ha afegit a \"{group}\""
+
+msgid "email_group_added_title"
+msgstr "Grup nou"
+
+msgid "email_group_added_body"
+msgstr "{name} t'ha afegit al grup de MeetGo \"{group}\"."
+
+msgid "email_group_added_button"
+msgstr "Ves al grup"
+
+msgid "email_mod_silence_subject"
+msgstr "T'han silenciat a {place}"
+
+msgid "email_mod_silence_title"
+msgstr "Silenciat durant un temps"
+
+msgid "email_mod_silence_body"
+msgstr "Els moderadors de {place} t'han silenciat durant {minutes} minuts. Passat aquest temps podràs tornar a escriure."
+
+msgid "email_mod_ban_subject"
+msgstr "Ja no pots escriure a {place}"
+
+msgid "email_mod_ban_title"
+msgstr "Vetat a {place}"
+
+msgid "email_mod_ban_body"
+msgstr "Els moderadors de {place} t'han vetat i ja no hi pots escriure. Si creus que és un error, respon a aquest correu."
+
+msgid "email_mod_remove_subject"
+msgstr "T'han tret de {place}"
+
+msgid "email_mod_remove_title"
+msgstr "Fora de {place}"
+
+msgid "email_mod_remove_body"
+msgstr "Els moderadors t'han tret de {place}. Si creus que és un error, respon a aquest correu."
+
+msgid "email_report_subject"
+msgstr "Denúncia nova a MeetGo"
+
+msgid "email_report_title"
+msgstr "Denúncia nova"
+
+msgid "email_report_body"
+msgstr "Algú ha denunciat un missatge ({reason}). Revisa'l a la cua de moderació de l'administració."
+
+msgid "email_digest_subject"
+msgstr "Tens missatges sense llegir a MeetGo ({n})"
+
+msgid "email_digest_title"
+msgstr "Missatges sense llegir"
+
+msgid "email_digest_body"
+msgstr "Això és el que encara no has llegit:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name} t'ha mencionat a {place}"
+
+msgid "email_digest_mention_title"
+msgstr "T'han mencionat"
+
+msgid "email_digest_mention_body"
+msgstr "{name} t'ha mencionat a {place}. Això és el que encara no has llegit:"
+
+msgid "email_digest_mention_button"
+msgstr "Veure el missatge"
+
+msgid "email_digest_more"
+msgstr "i {n} més…"
+
+msgid "email_digest_attachment"
+msgstr "📎 Adjunt"
+
+msgid "email_access_ending_subject"
+msgstr "El teu accés gratuït a MeetGo acaba el {date}"
+
+msgid "email_access_ending_title"
+msgstr "El teu accés gratuït s'acaba aviat"
+
+msgid "email_access_ending_body"
+msgstr "El teu accés gratuït acaba el {date}. Després podràs seguir llegint, però per escriure necessitaràs una subscripció (2,50 € al mes o 25 € a l'any)."
+
+msgid "email_access_ending_button"
+msgstr "Veure els plans"
+
+msgid "email_access_ended_subject"
+msgstr "El teu accés gratuït a MeetGo ha acabat"
+
+msgid "email_access_ended_title"
+msgstr "El teu accés gratuït ha acabat"
+
+msgid "email_access_ended_body"
+msgstr "El teu accés gratuït va acabar el {date}. El teu compte continua actiu i pots llegir, però per tornar a escriure necessites una subscripció."
+
+msgid "email_access_ended_button"
+msgstr "Subscriu-te"
+
+msgid "email_unsubscribed_title"
+msgstr "Fet"
+
+msgid "email_unsubscribed_digest"
+msgstr "Ja no rebràs correus sobre missatges sense llegir ni mencions."
+
+msgid "email_unsubscribed_requests"
+msgstr "Ja no rebràs correus sobre sol·licituds ni grups."
+
+msgid "email_unsubscribed_reports"
+msgstr "Ja no rebràs correus sobre denúncies."
+
+msgid "ui_emails"
+msgstr "Correus"
+
+msgid "ui_email_mentions"
+msgstr "Mencions i respostes que no has llegit"
+
+msgid "ui_email_messages"
+msgstr "Missatges sense llegir als teus grups i missatges directes"
+
+msgid "ui_email_requests"
+msgstr "Sol·licituds d'amistat i de missatge, i quan t'afegeixen a un grup"
+
+msgid "ui_email_reports"
+msgstr "Denúncies noves (administració)"
+
+msgid "ui_emails_hint"
+msgstr "Només t'escrivim si no ho has vist a l'aplicació: com a màxim un resum cada poques hores. Els correus sobre el teu compte t'arriben sempre."
+
+msgid "ui_emails_unverified"
+msgstr "Confirma el teu correu per rebre avisos."
+
+msgid "ui_resend_verification"
+msgstr "Reenvia el correu de confirmació"
+
+msgid "ui_verification_resent"
+msgstr "Si el compte existeix i no està confirmat, t'hem enviat un correu nou. Mira també la carpeta de correu brossa."
+
+msgid "admin_email_notifications_section"
+msgstr "Correus automàtics"
+
+msgid "admin_email_notifications_enabled"
+msgstr "Envia correus automàtics (mencions i missatges sense llegir, sol·licituds, moderació i avisos del pla)"
+
+msgid "admin_email_notifications_delay"
+msgstr "Avisa per correu dels missatges sense llegir després de (minuts)"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "Mínim entre dos resums a la mateixa persona (hores)"
+
+msgid "admin_email_notifications_hint"
+msgstr "Cada persona tria quins correus rep a Compte → Notificacions. Els correus del compte (confirmació i contrasenya) sempre s'envien."
+
+msgid "ui_dob_once"
+msgstr "Només pots corregir la teva data de naixement una vegada."
+
+msgid "ui_dob_locked"
+msgstr "Ja has corregit la teva data de naixement una vegada."
+
+msgid "ui_zone_hint"
+msgstr "Els teus canals són els de la teva província i rang d'edat. Si canvies de província o de data de naixement, passes als canals de la zona nova."
+
+msgid "landing_a0"
+msgstr "Res. MeetGo és gratis: crea el teu compte i fes-lo servir sense límits, sense targeta."
+
+msgid "landing_a1"
+msgstr "2,50 € al mes o 25 € a l'any, amb 7 dies de prova gratuïta. Les dues opcions inclouen tot."
+
+msgid "landing_a2"
+msgstr "Crea el teu compte amb el codi LANZAMIENTO mentre quedin places. Només és per als 50 primers comptes i no et demanem targeta."
+
+msgid "landing_a3"
+msgstr "El teu compte passa a ser de només lectura fins que et subscriguis: pots llegir les converses però no escriure. No s'esborra res."
+
+msgid "landing_a4"
+msgstr "Ningú. El teu número no surt al perfil, i els missatges que comparteixen números als canals s'eliminen automàticament."
+
+msgid "landing_a5"
+msgstr "Sí, MeetGo és per a majors de 18 anys. Els canals s'agrupen per rang d'edat: 18-30, 31-50 i més de 50."
+
+msgid "landing_a6"
+msgstr "Totes les províncies d'Espanya. Els teus canals són els de la teva província i rang d'edat, un per cada afició que triïs."
+
+msgid "landing_a7"
+msgstr "Des del teu compte de MeetGo si has pagat amb targeta, o des de Google Play si t'has subscrit a l'aplicació. Mantens l'accés fins al final del període pagat."
+
+msgid "landing_a8"
+msgstr "A Android, descarrega l'aplicació. A l'iPhone, obre meetgo.app/app a Safari i afegeix-la a la pantalla d'inici."
+
+msgid "landing_cta_how"
+msgstr "Veure com funciona"
+
+msgid "landing_cta_register"
+msgstr "Crea un compte"
+
+msgid "landing_dl_android_btn"
+msgstr "Descarrega l'APK"
+
+msgid "landing_dl_android_p"
+msgstr "L'aplicació amb notificacions instantànies i resposta ràpida. Descarrega l'APK i instal·la'l."
+
+msgid "landing_dl_build"
+msgstr "Versió {version}"
+
+msgid "landing_dl_k"
+msgstr "Descàrrega"
+
+msgid "landing_dl_play_btn"
+msgstr "Aviat"
+
+msgid "landing_dl_play_p"
+msgstr "Estem preparant la fitxa de la botiga. Amb el teu compte de MeetGo continuaràs allà on ho vas deixar."
+
+msgid "landing_dl_soon"
+msgstr "Molt aviat"
+
+msgid "landing_dl_soon2"
+msgstr "Aviat"
+
+msgid "landing_dl_title"
+msgstr "Amb tu al mòbil i a l'ordinador"
+
+msgid "landing_dl_web_btn"
+msgstr "Obre MeetGo"
+
+msgid "landing_dl_web_p"
+msgstr "Obre MeetGo al navegador. A l'iPhone, toca Comparteix i «Afegeix a la pantalla d'inici» per tenir-lo com una aplicació."
+
+msgid "landing_dl_web_t"
+msgstr "iPhone i web"
+
+msgid "landing_eyebrow"
+msgstr "Xateja per província, edat i interessos"
+
+msgid "landing_f1_k"
+msgstr "Canals locals"
+
+msgid "landing_f1_l1"
+msgstr "Fils amb un resum de respostes i participants"
+
+msgid "landing_f1_l2"
+msgstr "Mencions amb la seva pròpia safata, i avisos només quan algú et nomena"
+
+msgid "landing_f1_l3"
+msgstr "Un separador de missatges nous i un botó per saltar al més recent"
+
+msgid "landing_f1_l4"
+msgstr "Reaccions, respostes amb cita i missatges fixats"
+
+msgid "landing_f1_p"
+msgstr "Cada tema té el seu fil i la conversa principal es manté neta. Posa't al dia del que t'has perdut sense desplaçar-te sense fi."
+
+msgid "landing_f1_t"
+msgstr "Moltes veus alhora, totes llegibles"
+
+msgid "landing_f2_k"
+msgstr "Grups privats"
+
+msgid "landing_f2_l1"
+msgstr "Enllaços d'invitació i rols d'administrador"
+
+msgid "landing_f2_l2"
+msgstr "Fotos i fitxers de fins a 10 MB"
+
+msgid "landing_f2_l3"
+msgstr "Confirmacions de lectura per saber qui ho ha vist"
+
+msgid "landing_f2_l4"
+msgstr "Silencia o fixa qualsevol grup"
+
+msgid "landing_f2_p"
+msgstr "Crea un grup amb els teus amics o comparteix un enllaç d'invitació amb qui s'hagi apuntat al canal."
+
+msgid "landing_f2_t"
+msgstr "De «hi sóc» a pla tancat"
+
+msgid "landing_f3_k"
+msgstr "Missatges directes"
+
+msgid "landing_f3_l1"
+msgstr "Notificacions instantànies, amb resposta ràpida a Android"
+
+msgid "landing_f3_l2"
+msgstr "Veus qui està escrivint i qui està en línia"
+
+msgid "landing_f3_l3"
+msgstr "El teu número de telèfon no es mostra mai"
+
+msgid "landing_f3_p"
+msgstr "Amb els amics xategeu a l'instant. Amb qualsevol altre primer hi ha una sol·licitud, i només si accepta missatges directes."
+
+msgid "landing_f3_t"
+msgstr "En privat, quan tots dos ho voleu"
+
+msgid "landing_f_app"
+msgstr "Obre l'aplicació"
+
+msgid "landing_f_contact"
+msgstr "Contacte:"
+
+msgid "landing_f_privacy"
+msgstr "Privacitat"
+
+msgid "landing_f_terms"
+msgstr "Condicions"
+
+msgid "landing_faq_k"
+msgstr "Preguntes freqüents"
+
+msgid "landing_faq_title"
+msgstr "Què sol preguntar la gent"
+
+msgid "landing_feat_k"
+msgstr "Funcions"
+
+msgid "landing_feat_p"
+msgstr "Els canals grans es mantenen llegibles, els grups són teus i els missatges directes arriben a l'instant."
+
+msgid "landing_feat_title"
+msgstr "Fet per xatejar amb molta gent sense perdre't"
+
+msgid "landing_final_p"
+msgstr "Entra, tria les teves aficions i digues hola."
+
+msgid "landing_final_title"
+msgstr "El teu proper pla <span class=\"go\">ja està parlant</span>"
+
+msgid "landing_hero_lead"
+msgstr "Canals amb gent de la teva província, del teu rang d'edat i de les teves aficions. Quan sorgeix un pla, crea un grup i organitzeu-lo en privat."
+
+msgid "landing_hero_title"
+msgstr "Parla amb gent <span class=\"meet\">de la teva zona.</span> <span class=\"go\">I queda amb ells!</span>"
+
+msgid "landing_how_k"
+msgstr "Com funciona"
+
+msgid "landing_how_title"
+msgstr "Del xat al pla en tres passos"
+
+msgid "landing_more_k"
+msgstr "I també"
+
+msgid "landing_more_title"
+msgstr "Un bon ambient no és casualitat"
+
+msgid "landing_nav_download"
+msgstr "Descàrrega"
+
+msgid "landing_nav_faq"
+msgstr "Preguntes freqüents"
+
+msgid "landing_nav_features"
+msgstr "Funcions"
+
+msgid "landing_nav_how"
+msgstr "Com funciona"
+
+msgid "landing_nav_prices"
+msgstr "Preus"
+
+msgid "landing_pr_btn"
+msgstr "Comença la prova"
+
+msgid "landing_pr_eq"
+msgstr "Equival a 2,08 € al mes"
+
+msgid "landing_pr_k"
+msgstr "Preus"
+
+msgid "landing_pr_l1"
+msgstr "7 dies de prova gratuïta"
+
+msgid "landing_pr_l2"
+msgstr "Canals, grups i missatges directes"
+
+msgid "landing_pr_l3"
+msgstr "Cancel·la quan vulguis"
+
+msgid "landing_pr_m"
+msgstr "Mensual"
+
+msgid "landing_pr_month"
+msgstr "/mes"
+
+msgid "landing_pr_note"
+msgstr "Paga amb targeta (Stripe) al web o amb Google Play a l'aplicació. Els preus inclouen l'IVA."
+
+msgid "landing_pr_p"
+msgstr "Totes les funcions als dos plans. 7 dies de prova gratuïta i cancel·la quan vulguis."
+
+msgid "landing_pr_save"
+msgstr "Estalvia un 17 %"
+
+msgid "landing_pr_title"
+msgstr "Menys que un cafè al mes"
+
+msgid "landing_pr_y"
+msgstr "Anual"
+
+msgid "landing_pr_year"
+msgstr "/any"
+
+msgid "landing_promo_badge"
+msgstr "Campanya de llançament"
+
+msgid "landing_promo_copied"
+msgstr "Copiat!"
+
+msgid "landing_promo_copy"
+msgstr "Copia"
+
+msgid "landing_promo_cta"
+msgstr "Vull el meu any gratis"
+
+msgid "landing_promo_eyebrow"
+msgstr "Llançament · queden {left} places gratuïtes"
+
+msgid "landing_promo_left"
+msgstr "places disponibles"
+
+msgid "landing_promo_of"
+msgstr "de {max}"
+
+msgid "landing_promo_text"
+msgstr "Crea el teu compte amb el codi i no paguis res durant un any sencer. Només per als primers"
+
+msgid "landing_promo_text2"
+msgstr "comptes."
+
+msgid "landing_promo_title"
+msgstr "<span class=\"sunt\">1 any gratis</span> per als primers comptes"
+
+msgid "landing_q0"
+msgstr "Quant costa?"
+
+msgid "landing_q1"
+msgstr "Quant costa?"
+
+msgid "landing_q2"
+msgstr "Com aconsegueixo l'any gratis?"
+
+msgid "landing_q3"
+msgstr "Què passa quan s'acaba l'any gratis?"
+
+msgid "landing_q4"
+msgstr "Qui veu el meu número de telèfon?"
+
+msgid "landing_q5"
+msgstr "Hi ha una edat mínima?"
+
+msgid "landing_q6"
+msgstr "A quines ciutats funciona?"
+
+msgid "landing_q7"
+msgstr "Com el cancel·lo?"
+
+msgid "landing_q8"
+msgstr "Hi ha aplicació per a Android i iPhone?"
+
+msgid "landing_s1_p"
+msgstr "Senderisme, pàdel, cinema, cafè… Cada afició és un canal amb gent de la teva província i rang d'edat."
+
+msgid "landing_s1_t"
+msgstr "Tria les teves aficions"
+
+msgid "landing_s2_p"
+msgstr "Respon en fils per mantenir l'ordre, menciona qui vulguis i reacciona sense inundar el xat."
+
+msgid "landing_s2_t"
+msgstr "Xateja als teus canals"
+
+msgid "landing_s3_p"
+msgstr "Crea un grup privat, convida qui s'hi apunti i organitzeu cotxes, hores i fotos sense soroll."
+
+msgid "landing_s3_t"
+msgstr "Organitza-ho en un grup"
+
+msgid "landing_signin"
+msgstr "Inicia la sessió"
+
+msgid "landing_skip"
+msgstr "Salta al contingut"
+
+msgid "landing_strip_devices"
+msgstr "Web, Android i iPhone"
+
+msgid "landing_strip_mod"
+msgstr "Moderació activa"
+
+msgid "landing_strip_phone"
+msgstr "El teu telèfon es manté ocult"
+
+msgid "landing_strip_zone"
+msgstr "La teva província i rang d'edat"
+
+msgid "landing_t1_p"
+msgstr "Els insults, la brossa i els telèfons publicats en obert s'eliminen sols."
+
+msgid "landing_t1_t"
+msgstr "Moderació automàtica"
+
+msgid "landing_t2_p"
+msgstr "Denuncia un missatge amb dos tocs; els moderadors poden silenciar o treure gent."
+
+msgid "landing_t2_t"
+msgstr "Denúncies i moderadors"
+
+msgid "landing_t3_p"
+msgstr "Quan un canal s'embolica massa, els seus moderadors marquen el ritme."
+
+msgid "landing_t3_t"
+msgstr "Mode lent"
+
+msgid "landing_t4_p"
+msgstr "Tot, només mencions o res, per conversa. Silencia el que no vulguis sentir."
+
+msgid "landing_t4_t"
+msgstr "Avisos a la teva manera"
+
+msgid "landing_t5_p"
+msgstr "Troba aquell missatge amb l'hora de la quedada entre totes les teves converses."
+
+msgid "landing_t5_t"
+msgstr "Cerca"
+
+msgid "landing_t6_p"
+msgstr "Comparteix la foto del cim, el track de la ruta o el PDF de la reserva."
+
+msgid "landing_t6_t"
+msgstr "Fotos i fitxers"
+
+msgid "landing_web_k"
+msgstr "També a l'ordinador"
+
+msgid "landing_web_p"
+msgstr "En una pantalla gran veus alhora la llista, el canal i el fil o els membres."
+
+msgid "landing_web_title"
+msgstr "Totes les teves converses d'un cop d'ull"
+
+msgid "ui_splash_tagline"
+msgstr "Parla amb gent de la teva zona. I queda amb ells!"
+
+msgid "ui_install_title"
+msgstr "Instal·la MeetGo"
+
+msgid "ui_install_ios"
+msgstr "Toca Comparteix i després «Afegeix a la pantalla d'inici»: s'obre a pantalla completa, com una aplicació."
+
+msgid "ui_install_dismiss"
+msgstr "Ara no"
+
+msgid "ui_push_failed"
+msgstr "No s'han pogut activar les notificacions en aquest navegador. Torna-ho a provar o fes servir un altre navegador."
+
+msgid "ui_settings"
+msgstr "Configuració"
+
+msgid "ui_section_about"
+msgstr "Sobre tu"
+
+msgid "ui_section_zone"
+msgstr "La teva zona"
+
+msgid "ui_section_privacy"
+msgstr "Privacitat i seguretat"
+
+msgid "ui_section_push"
+msgstr "Notificacions en aquest dispositiu"

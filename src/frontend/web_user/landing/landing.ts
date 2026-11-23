@@ -1,6 +1,6 @@
 // MeetGo public pages: language switch, launch-campaign counter, Android download state and reveal on scroll.
 
-import { translate } from "@lang";
+import { LANGUAGES, browserLang, translate } from "@lang";
 
 type Promo = { code: string; duration: string; max: number | null; left: number | null; expires_on: string | null };
 
@@ -21,13 +21,13 @@ const API = apiBase();
 
 
 // The page is written in English; every language (English included) comes from lang/<lang>.po as landing_<key>.
-let lang: "es" | "en" = "en";
+let lang = "en";
 
 function tr(key: string, vars: Record<string, string | number> = {}): string {
   return translate(lang, `landing_${key}`, vars);
 }
 
-function applyLang(next: "es" | "en") {
+function applyLang(next: string) {
   lang = next;
   document.documentElement.lang = next;
   document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
@@ -35,7 +35,8 @@ function applyLang(next: "es" | "en") {
     const text = translate(next, `landing_${key}`);
     if (text !== `landing_${key}`) el.innerHTML = text;
   });
-  document.querySelectorAll<HTMLButtonElement>("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
+  const pick = document.getElementById("langPick") as HTMLSelectElement | null;
+  if (pick) pick.value = next;
   try { localStorage.setItem("meetgo.lang", next); } catch { /* private mode */ }
   renderPromo();
   renderApk();
@@ -195,12 +196,14 @@ function setupTopBar() {
 
 function init() {
   setText("year", String(new Date().getFullYear()));
-  document.querySelectorAll<HTMLButtonElement>("[data-lang]").forEach((b) =>
-    b.addEventListener("click", () => applyLang(b.dataset.lang === "en" ? "en" : "es")));
+  const pick = document.getElementById("langPick") as HTMLSelectElement | null;
+  if (pick) {
+    pick.innerHTML = LANGUAGES.map(([code, name]) => `<option value="${code}">${name}</option>`).join("");
+    pick.addEventListener("change", () => applyLang(pick.value));
+  }
   let saved: string | null = null;
   try { saved = localStorage.getItem("meetgo.lang"); } catch { /* private mode */ }
-  const prefersEs = !saved && !!navigator.language && navigator.language.toLowerCase().startsWith("es");
-  applyLang(saved === "es" || prefersEs ? "es" : "en");
+  applyLang(saved && LANGUAGES.some(([code]) => code === saved) ? saved : browserLang());
   setupTopBar();
   setupReveal();
   setupCopy();

@@ -2842,3 +2842,18 @@ msgstr "Not now"
 
 msgid "ui_push_failed"
 msgstr "Notifications could not be turned on in this browser. Try again, or use another browser."
+
+msgid "ui_settings"
+msgstr "Settings"
+
+msgid "ui_section_about"
+msgstr "About you"
+
+msgid "ui_section_zone"
+msgstr "Your area"
+
+msgid "ui_section_privacy"
+msgstr "Privacy and security"
+
+msgid "ui_section_push"
+msgstr "Notifications on this device"

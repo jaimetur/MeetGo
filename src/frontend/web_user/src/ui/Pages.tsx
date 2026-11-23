@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getLang, setLang, t } from "@lang";
+import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api } from "../api";
 import { isNativeApp, native } from "../native";
 import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
@@ -277,6 +277,7 @@ export function AccountPage() {
     }
   });
   const [lang, setLangState] = useState(getLang());
+  const [section, setSection] = useState<"profile" | "interests" | "notifications" | "plan" | "settings">("profile");
 
   useEffect(() => {
     api.interests().then(setInterests).catch(() => undefined);
@@ -340,110 +341,149 @@ export function AccountPage() {
     }
     applyTheme(value);
   }
-  function changeLang(value: "es" | "en") {
+  function changeLang(value: string) {
     setLang(value);
     setLangState(value);
     window.location.reload();
   }
 
+  const ageLabel = (me.age_range || "").replace("_plus", "+").replace("_", "-");
+  const tabs: [typeof section, string][] = [
+    ["profile", t("ui_profile")], ["interests", t("ui_interests")], ["notifications", t("ui_notifications")],
+    ...(showPlans ? [["plan", t("ui_subscription")] as [typeof section, string]] : []), ["settings", t("ui_settings")],
+  ];
+
   return (
     <PageShell title={t("ui_account_title")}>
-      {showPlans ? (<>
-      <h2>{t("ui_subscription")}</h2>
-      <div className="box stack">
-        <div className="row"><Icon name="star" /><b className="grow">{describeBilling(billing)}</b></div>
-        {billing?.stripe ? (
-          <div className="row" style={{ flexWrap: "wrap" }}>
-            <button className="btn sm" onClick={() => api.portal().then((r) => (window.location.href = r.url)).catch((e) => toast(e.message, "error"))}>{t("ui_manage_payment")}</button>
-            <button className="btn sm" onClick={() => api.changePlan(billing.stripe!.plan === "yearly" ? "monthly" : "yearly").then((b) => setState({ billing: b })).catch((e) => toast(e.message, "error"))}>{billing.stripe.plan === "yearly" ? t("ui_switch_monthly") : t("ui_switch_yearly")}</button>
-            {billing.stripe.cancel_at_period_end
-              ? <button className="btn sm" onClick={() => api.resumePlan().then((b) => setState({ billing: b })).catch((e) => toast(e.message, "error"))}>{t("ui_resume_plan")}</button>
-              : <button className="btn sm danger" onClick={() => api.cancelPlan().then((b) => setState({ billing: b })).catch((e) => toast(e.message, "error"))}>{t("ui_cancel_plan")}</button>}
+      {/* who you are, and signing out always in view */}
+      <div className="acchero">
+        <Avatar user={me} size={60} />
+        <div className="grow" style={{ minWidth: 0 }}>
+          <div className="acchero-name">{me.display_name}</div>
+          <div className="acchero-meta">{me.email}</div>
+          <div className="acchero-meta">{me.province}{ageLabel ? ` · ${ageLabel}` : ""}</div>
+        </div>
+        <button className="btn sm danger acchero-out" onClick={signOut}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
+      </div>
+
+      <div className="segtabs" role="tablist">
+        {tabs.map(([key, label]) => (
+          <button key={key} role="tab" aria-selected={section === key} className={section === key ? "on" : ""} onClick={() => setSection(key)}>{label}</button>
+        ))}
+      </div>
+
+      {section === "plan" ? (
+        <div className="box stack">
+          <div className="row"><Icon name="star" /><b className="grow">{describeBilling(billing)}</b></div>
+          {billing?.stripe ? (
+            <div className="row" style={{ flexWrap: "wrap" }}>
+              <button className="btn sm" onClick={() => api.portal().then((r) => (window.location.href = r.url)).catch((e) => toast(e.message, "error"))}>{t("ui_manage_payment")}</button>
+              <button className="btn sm" onClick={() => api.changePlan(billing.stripe!.plan === "yearly" ? "monthly" : "yearly").then((b) => setState({ billing: b })).catch((e) => toast(e.message, "error"))}>{billing.stripe.plan === "yearly" ? t("ui_switch_monthly") : t("ui_switch_yearly")}</button>
+              {billing.stripe.cancel_at_period_end
+                ? <button className="btn sm" onClick={() => api.resumePlan().then((b) => setState({ billing: b })).catch((e) => toast(e.message, "error"))}>{t("ui_resume_plan")}</button>
+                : <button className="btn sm danger" onClick={() => api.cancelPlan().then((b) => setState({ billing: b })).catch((e) => toast(e.message, "error"))}>{t("ui_cancel_plan")}</button>}
+            </div>
+          ) : null}
+          {billing && (billing.source === null || billing.source === "grant") ? <PlanPicker /> : null}
+        </div>
+      ) : null}
+
+      {section === "profile" ? (
+        <div className="stack" style={{ gap: 14 }}>
+          <div className="box stack">
+            <h3 className="boxtitle">{t("ui_section_about")}</h3>
+            <label className="fld">{t("ui_display_name")}<input id="acc-name" className="inp" maxLength={64} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} /></label>
+            <label className="fld">{t("ui_bio")}<textarea id="acc-bio" className="inp" rows={3} maxLength={500} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></label>
+            <label className="fld">{t("ui_avatar_url")}<input id="acc-avatar" className="inp" value={form.avatar_url} onChange={(e) => setForm({ ...form, avatar_url: e.target.value })} placeholder="https://…" /></label>
           </div>
-        ) : null}
-        {billing && (billing.source === null || billing.source === "grant") ? <PlanPicker /> : null}
-      </div>
-      </>) : null}
-
-      <h2>{t("ui_profile")}</h2>
-      <div className="box stack">
-        <div className="row"><Avatar user={me} size={52} /><div><b>{me.display_name}</b><div className="muted" style={{ fontSize: 12.5 }}>{me.email} · {me.province}</div></div></div>
-        <label className="fld">{t("ui_display_name")}<input id="acc-name" className="inp" maxLength={64} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} /></label>
-        <label className="fld">{t("ui_bio")}<textarea id="acc-bio" className="inp" rows={3} maxLength={500} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></label>
-        <label className="fld">{t("ui_avatar_url")}<input id="acc-avatar" className="inp" value={form.avatar_url} onChange={(e) => setForm({ ...form, avatar_url: e.target.value })} placeholder="https://…" /></label>
-        <div className="grid2">
-          <label className="fld">{t("ui_country")}
-            <select id="acc-country" className="inp" value={zone.country} onChange={(e) => setZone({ ...zone, country: e.target.value, province: "" })}>
-              {(geo?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
-            </select>
-          </label>
-          <label className="fld">{t("ui_province")}
-            {(geo?.provinces_by_country?.[zone.country] || []).length ? (
-              <select id="acc-province" className="inp" value={zone.province} onChange={(e) => setZone({ ...zone, province: e.target.value })}>
-                <option value="">{t("ui_choose")}</option>
-                {geo.provinces_by_country[zone.country].map((p: any) => <option key={p.value} value={p.value}>{p.name}</option>)}
-              </select>
-            ) : <input id="acc-province" className="inp" value={zone.province} onChange={(e) => setZone({ ...zone, province: e.target.value })} />}
-          </label>
-        </div>
-        <label className="fld">{t("ui_dob")}
-          <input id="acc-dob" className="inp" type="date" value={zone.dob} disabled={me.dob_change_count >= 1} onChange={(e) => setZone({ ...zone, dob: e.target.value })} />
-          <span className="muted" style={{ fontSize: 12 }}>{me.dob_change_count >= 1 ? t("ui_dob_locked") : t("ui_dob_once")}</span>
-        </label>
-        <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_zone_hint")}</div>
-        <label className="check"><input id="acc-dm" type="checkbox" checked={form.accept_dm} onChange={(e) => setForm({ ...form, accept_dm: e.target.checked })} />{t("ui_accept_dm")}</label>
-        <label className="fld">{t("ui_password_change")}<input id="acc-password" className="inp" type="password" minLength={6} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
-        <div><button className="btn pri" onClick={saveProfile}>{t("ui_save")}</button></div>
-      </div>
-
-      <h2>{t("ui_interests")}</h2>
-      <p className="lead">{t("ui_interests_lead", { zone: me.province })}</p>
-      <div className="chips" style={{ flexWrap: "wrap" }}>
-        {interests.map((i) => <button key={i.slug} className={"chip" + (mine.includes(i.slug) ? " on" : "")} aria-pressed={mine.includes(i.slug)} onClick={() => toggleInterest(i.slug)}>{i.name}</button>)}
-      </div>
-
-      <h2>{t("ui_notifications")}</h2>
-      <div className="box stack">
-        {isNativeApp ? (
-          <button className="btn" onClick={() => native.openNotificationSettings()}>{t("ui_open_notification_settings")}</button>
-        ) : webPushSupported() ? (
-          <div className="row"><span className="grow">{pushState === "on" ? t("ui_push_enabled_here") : pushState === "denied" ? t("ui_push_blocked") : t("ui_push_disabled_here")}</span>
-            <button className="btn sm" disabled={pushState === "denied" || pushState === "busy"} onClick={togglePush}>{pushState === "on" ? t("ui_disable") : t("ui_enable")}</button></div>
-        ) : <div className="muted">{t("ui_push_unsupported")}</div>}
-        <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_notifications_hint")}</div>
-        <div className="stack" style={{ gap: 8, marginTop: 8, borderTop: "1px solid var(--line)", paddingTop: 12 }}>
-          <b>{t("ui_emails")}</b>
-          {!me.email_verified ? <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_unverified")}</div> : null}
-          {["mentions", "messages", "requests", "reports"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
-            <label key={k} className="check">
-              <input id={`acc-email-${k}`} type="checkbox" checked={!!me.email_prefs![k]}
-                onChange={(e) => api.emailPrefs({ [k]: e.target.checked }).then((u) => setState({ me: u })).catch((err) => toast(err.message, "error"))} />
-              {t("ui_email_" + k)}
+          <div className="box stack">
+            <h3 className="boxtitle">{t("ui_section_zone")}</h3>
+            <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_zone_hint")}</div>
+            <div className="grid2">
+              <label className="fld">{t("ui_country")}
+                <select id="acc-country" className="inp" value={zone.country} onChange={(e) => setZone({ ...zone, country: e.target.value, province: "" })}>
+                  {(geo?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
+                </select>
+              </label>
+              <label className="fld">{t("ui_province")}
+                {(geo?.provinces_by_country?.[zone.country] || []).length ? (
+                  <select id="acc-province" className="inp" value={zone.province} onChange={(e) => setZone({ ...zone, province: e.target.value })}>
+                    <option value="">{t("ui_choose")}</option>
+                    {geo.provinces_by_country[zone.country].map((p: any) => <option key={p.value} value={p.value}>{p.name}</option>)}
+                  </select>
+                ) : <input id="acc-province" className="inp" value={zone.province} onChange={(e) => setZone({ ...zone, province: e.target.value })} />}
+              </label>
+            </div>
+            <label className="fld">{t("ui_dob")}
+              <input id="acc-dob" className="inp" type="date" value={zone.dob} disabled={me.dob_change_count >= 1} onChange={(e) => setZone({ ...zone, dob: e.target.value })} />
+              <span className="muted" style={{ fontSize: 12 }}>{me.dob_change_count >= 1 ? t("ui_dob_locked") : t("ui_dob_once")}</span>
             </label>
-          ))}
-          <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_hint")}</div>
+          </div>
+          <div className="box stack">
+            <h3 className="boxtitle">{t("ui_section_privacy")}</h3>
+            <label className="check"><input id="acc-dm" type="checkbox" checked={form.accept_dm} onChange={(e) => setForm({ ...form, accept_dm: e.target.checked })} />{t("ui_accept_dm")}</label>
+            <label className="fld">{t("ui_password_change")}<input id="acc-password" className="inp" type="password" minLength={6} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
+          </div>
+          <button className="btn pri block" onClick={saveProfile}>{t("ui_save")}</button>
         </div>
-      </div>
+      ) : null}
 
-      <h2>{t("ui_appearance")}</h2>
-      <div className="box grid2">
-        <label className="fld">{t("ui_theme")}
-          <select id="acc-theme" className="inp" value={theme} onChange={(e) => changeTheme(e.target.value)}>
-            <option value="system">{t("ui_theme_system")}</option><option value="dark">{t("ui_theme_dark")}</option><option value="light">{t("ui_theme_light")}</option>
-          </select>
-        </label>
-        <label className="fld">{t("ui_language")}
-          <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value as "es" | "en")}>
-            <option value="es">Español</option><option value="en">English</option>
-          </select>
-        </label>
-      </div>
+      {section === "interests" ? (
+        <div className="box stack">
+          <div className="muted">{t("ui_interests_lead", { zone: me.province })}</div>
+          <div className="chips" style={{ flexWrap: "wrap" }}>
+            {interests.map((i) => <button key={i.slug} className={"chip" + (mine.includes(i.slug) ? " on" : "")} aria-pressed={mine.includes(i.slug)} onClick={() => toggleInterest(i.slug)}>{i.name}</button>)}
+          </div>
+        </div>
+      ) : null}
 
-      <h2>{t("ui_session")}</h2>
-      <div className="row" style={{ flexWrap: "wrap" }}>
-        <button className="btn danger" onClick={signOut}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
-        {isNativeApp ? <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button> : null}
-      </div>
+      {section === "notifications" ? (
+        <div className="stack" style={{ gap: 14 }}>
+          <div className="box stack">
+            <h3 className="boxtitle">{t("ui_section_push")}</h3>
+            {isNativeApp ? (
+              <button className="btn" onClick={() => native.openNotificationSettings()}>{t("ui_open_notification_settings")}</button>
+            ) : webPushSupported() ? (
+              <div className="row"><span className="grow">{pushState === "on" ? t("ui_push_enabled_here") : pushState === "denied" ? t("ui_push_blocked") : t("ui_push_disabled_here")}</span>
+                <button className="btn sm" disabled={pushState === "denied" || pushState === "busy"} onClick={togglePush}>{pushState === "on" ? t("ui_disable") : t("ui_enable")}</button></div>
+            ) : <div className="muted">{t("ui_push_unsupported")}</div>}
+            <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_notifications_hint")}</div>
+          </div>
+          <div className="box stack">
+            <h3 className="boxtitle">{t("ui_emails")}</h3>
+            {!me.email_verified ? <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_unverified")}</div> : null}
+            {["mentions", "messages", "requests", "reports"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
+              <label key={k} className="check">
+                <input id={`acc-email-${k}`} type="checkbox" checked={!!me.email_prefs![k]}
+                  onChange={(e) => api.emailPrefs({ [k]: e.target.checked }).then((u) => setState({ me: u })).catch((err) => toast(err.message, "error"))} />
+                {t("ui_email_" + k)}
+              </label>
+            ))}
+            <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_hint")}</div>
+          </div>
+        </div>
+      ) : null}
+
+      {section === "settings" ? (
+        <div className="stack" style={{ gap: 14 }}>
+          <div className="box grid2">
+            <label className="fld">{t("ui_theme")}
+              <select id="acc-theme" className="inp" value={theme} onChange={(e) => changeTheme(e.target.value)}>
+                <option value="system">{t("ui_theme_system")}</option><option value="dark">{t("ui_theme_dark")}</option><option value="light">{t("ui_theme_light")}</option>
+              </select>
+            </label>
+            <label className="fld">{t("ui_language")}
+              <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value)}>
+                {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
+              </select>
+            </label>
+          </div>
+          <div className="row" style={{ flexWrap: "wrap" }}>
+            {isNativeApp ? <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button> : null}
+            <button className="btn danger" onClick={signOut}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
+          </div>
+        </div>
+      ) : null}
     </PageShell>
   );
 }

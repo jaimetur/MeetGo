@@ -7,7 +7,7 @@ translation is shown in English.
 | File | Language |
 |---|---|
 | `en.po` | English: source, edit texts here first |
-| `es.po` | Spanish |
+| `es.po`, `ca.po`, `fr.po`, `it.po`, `de.po`, `pt.po`, `nl.po`, `zh.po`, `ja.po` | translations |
 | `lang.ts` | loads the catalogs in the web sites (`t()`, `translate()`) |
 
 Each entry has a key and its text. Keys never change and are never translated:
@@ -26,7 +26,7 @@ msgstr "Home page"
 1. Copy `en.po` to `<code>.po` (for example `fr.po`) and set `"Language: fr\n"` in its header.
 2. Translate every `msgstr`, leaving the `msgid` lines alone.
 3. Check it: `python3 tools/i18n_check.py` lists missing, extra and broken entries in every language.
-4. Ask for the language to be added to the language picker (`lang.ts` and `app/core/i18n.py`).
+4. That is all: every `lang/<code>.po` shows up in the language pickers (add its own name to `LANGUAGE_NAMES` in `lang.ts`).
 
 ## Changing or adding a text
 

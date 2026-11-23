@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { getLang, setLang, t } from "@lang";
+import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api, setToken } from "../api";
 import { isNativeApp } from "../native";
 import { queryParam } from "../router";
@@ -10,8 +10,7 @@ export function AuthScreen({ onSignedIn }: { onSignedIn: () => Promise<void> }) 
   const resetToken = queryParam("reset_token");
   const [view, setView] = useState<View>(resetToken ? "reset" : queryParam("view") === "register" ? "register" : "login");
   const [lang, setLangState] = useState(getLang());
-  const switchLang = () => {
-    const next = lang === "es" ? "en" : "es";
+  const switchLang = (next: string) => {
     setLang(next);
     setLangState(next);
   };
@@ -26,7 +25,9 @@ export function AuthScreen({ onSignedIn }: { onSignedIn: () => Promise<void> }) 
             ? <div className="logo grow" aria-label="MeetGo">{logo}</div>
             : <a className="logo grow" href="/" aria-label={t("ui_home_page")}>{logo}</a>}
           {isNativeApp ? null : <a className="btn sm home" href="/"><span aria-hidden="true">🏠</span><span className="lbl">{t("ui_home_page")}</span></a>}
-          <button className="btn sm" onClick={switchLang}>{lang === "es" ? "EN" : "ES"}</button>
+          <select className="langpick" value={lang} onChange={(e) => switchLang(e.target.value)} aria-label={t("ui_language")}>
+            {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
+          </select>
         </div>
         <div className="box">
           {view === "login" ? <Login onSignedIn={onSignedIn} setView={setView} /> : null}

@@ -1,0 +1,2859 @@
+# MeetGo translations: Japanese. Translated from en.po, the source language (see lang/README.md).
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "app_name"
+msgstr "MeetGo"
+
+msgid "tagline"
+msgstr "スワイプは少なめ、毎日はもっと楽しく"
+
+msgid "tagline_long"
+msgstr "MeetGo -- スワイプは少なめ、毎日はもっと楽しく"
+
+msgid "logout"
+msgstr "ログアウト"
+
+msgid "login_title"
+msgstr "ログイン"
+
+msgid "login_btn"
+msgstr "ログイン"
+
+msgid "forgot_password_btn"
+msgstr "パスワードを忘れた"
+
+msgid "new_user_btn"
+msgstr "新規登録"
+
+msgid "hide_register_btn"
+msgstr "登録を閉じる"
+
+msgid "forgot_password_prompt"
+msgstr "パスワードを再設定するメールアドレスを入力してください"
+
+msgid "forgot_password_sent"
+msgstr "このメールアドレスが登録されている場合、再設定用のリンクを送信しました。"
+
+msgid "reset_password_title"
+msgstr "パスワードの再設定"
+
+msgid "reset_password_btn"
+msgstr "再設定"
+
+msgid "reset_password_ok"
+msgstr "パスワードを更新しました。"
+
+msgid "verify_email_ok"
+msgstr "メールアドレスを確認しました。"
+
+msgid "verify_email_fail"
+msgstr "メールアドレスの確認に失敗しました。"
+
+msgid "register_verify_email"
+msgstr "メールを確認してアカウントを認証してください。"
+
+msgid "or_register"
+msgstr "または新規登録"
+
+msgid "error_title"
+msgstr "エラー"
+
+msgid "ok_title"
+msgstr "OK"
+
+msgid "cancel"
+msgstr "キャンセル"
+
+msgid "register_ok"
+msgstr "アカウントを作成しました。"
+
+msgid "login_error_generic"
+msgstr "ログインできませんでした。"
+
+msgid "email"
+msgstr "メールアドレス"
+
+msgid "password"
+msgstr "パスワード"
+
+msgid "password_hint"
+msgstr "パスワード（6〜60文字）"
+
+msgid "name"
+msgstr "名前"
+
+msgid "dob_label"
+msgstr "生年月日"
+
+msgid "dob_pick"
+msgstr "日付を選んでください。"
+
+msgid "dob_invalid"
+msgstr "形式が正しくありません。"
+
+msgid "dob_underage"
+msgstr "18歳以上である必要があります。"
+
+msgid "phone_label"
+msgstr "電話番号"
+
+msgid "phone_number"
+msgstr "番号"
+
+msgid "country_label"
+msgstr "国"
+
+msgid "province_label"
+msgstr "都道府県／州"
+
+msgid "city_label"
+msgstr "市区町村"
+
+msgid "not_available"
+msgstr "（利用できません）"
+
+msgid "avatar_url"
+msgstr "アバターURL（任意）"
+
+msgid "bio"
+msgstr "自己紹介（任意）"
+
+msgid "accept_dm"
+msgstr "DMを許可"
+
+msgid "create_account"
+msgstr "アカウント作成"
+
+msgid "hello"
+msgstr "こんにちは、{name}さん"
+
+msgid "rooms"
+msgstr "ルーム"
+
+msgid "feed"
+msgstr "フィード"
+
+msgid "profile"
+msgstr "プロフィール"
+
+msgid "load_my_rooms"
+msgstr "マイルームを読み込む"
+
+msgid "join_room_title"
+msgstr "ルームに参加"
+
+msgid "join_room_desc"
+msgstr "興味のあるものを選んで参加しましょう。まだなければ新しく作られます。"
+
+msgid "join_btn"
+msgstr "参加"
+
+msgid "leave_room_btn"
+msgstr "ルームを退出"
+
+msgid "leave_room_confirm"
+msgstr "ルーム「{room}」を退出しますか？"
+
+msgid "leave_room_ok"
+msgstr "ルームを退出しました。"
+
+msgid "leave_room_error"
+msgstr "ルームを退出できませんでした。"
+
+msgid "no_rooms_title"
+msgstr "まだルームがありません"
+
+msgid "no_rooms_desc"
+msgstr "上の「参加」から作成・参加できます。"
+
+msgid "tip_title"
+msgstr "ヒント"
+
+msgid "tip_body"
+msgstr "アバターを右クリックするとメニューが開きます。"
+
+
+msgid "write_placeholder"
+msgstr "メッセージを入力…"
+
+msgid "send_btn"
+msgstr "送信"
+
+msgid "publish_placeholder"
+msgstr "投稿してみよう…"
+
+msgid "publish_btn"
+msgstr "投稿"
+
+msgid "refresh_btn"
+msgstr "更新"
+
+msgid "profile_updated"
+msgstr "プロフィールを更新しました"
+
+msgid "following_ok"
+msgstr "フォローしました"
+
+msgid "friend_req_ok"
+msgstr "友だちリクエストを送信しました"
+
+msgid "save_profile"
+msgstr "プロフィールを保存"
+
+msgid "save_settings"
+msgstr "設定を保存"
+
+msgid "settings_saved"
+msgstr "設定を保存しました。"
+
+msgid "edit_profile_title"
+msgstr "プロフィールを編集"
+
+msgid "new_password"
+msgstr "新しいパスワード"
+
+msgid "dob_change_note"
+msgstr "生年月日の変更は1回のみで、確認が必要です。"
+
+msgid "warn_province_change"
+msgstr "都道府県／州を変更すると、現在のルームから退出になります。続けますか？"
+
+msgid "warn_country_change"
+msgstr "国を変更するとプロフィールが更新されます。続けますか？"
+
+msgid "warn_dob_change"
+msgstr "生年月日の変更は1回のみで、確認が必要です。続けますか？"
+
+msgid "warn_dob_change_range"
+msgstr "生年月日を変更すると年齢層が変わり、ルームから退出になります。変更は1回のみで、確認が必要です。続けますか？"
+
+msgid "dob_change_limit"
+msgstr "生年月日の変更はすでに申請済みです。"
+
+msgid "yes"
+msgstr "はい"
+
+msgid "no"
+msgstr "いいえ"
+
+msgid "users_online"
+msgstr "ユーザー: {count}"
+
+msgid "users_panel_title"
+msgstr "オンラインのユーザー"
+
+msgid "show_users_panel"
+msgstr "ユーザーを表示"
+
+msgid "hide_users_panel"
+msgstr "ユーザーを非表示"
+
+msgid "close_panel"
+msgstr "閉じる"
+
+msgid "users_none"
+msgstr "接続中のユーザーはいません"
+
+msgid "users_no_room"
+msgstr "ルームを選ぶとユーザーが表示されます。"
+
+msgid "online_summary"
+msgstr "オンラインのユーザー: {users} · アクティブなルーム: {rooms}"
+
+msgid "online_users"
+msgstr "オンラインのユーザー: {users}"
+
+msgid "online_rooms"
+msgstr "アクティブなルーム: {rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "ルームを非表示"
+
+msgid "show_rooms_panel"
+msgstr "ルームを表示"
+
+msgid "settings_title"
+msgstr "設定"
+
+msgid "hide_panel"
+msgstr "パネルを非表示"
+
+msgid "show_panel"
+msgstr "パネルを表示"
+
+msgid "hide_user_panel"
+msgstr "ユーザーパネルを非表示"
+
+msgid "show_user_panel"
+msgstr "ユーザーパネルを表示"
+
+msgid "panel_user"
+msgstr "ユーザーパネル"
+
+msgid "panel_rooms"
+msgstr "ルームパネル"
+
+msgid "no_room_selected"
+msgstr "アクティブなルームはありません"
+
+msgid "language_label"
+msgstr "言語"
+
+msgid "menu_view_profile"
+msgstr "プロフィールを見る"
+
+msgid "menu_friend_request"
+msgstr "友だちリクエストを送る"
+
+msgid "menu_follow_feed"
+msgstr "フィードをフォロー"
+
+msgid "modal_profile_title"
+msgstr "プロフィール"
+
+msgid "modal_close"
+msgstr "閉じる"
+
+msgid "modal_friend"
+msgstr "友だち"
+
+msgid "modal_follow"
+msgstr "フォロー"
+
+msgid "msg_deleted_by_mod"
+msgstr "モデレーションによりメッセージが削除されました"
+
+msgid "no_bio_yet"
+msgstr "自己紹介はまだありません。"
+
+msgid "join_room_error"
+msgstr "ルームに参加できませんでした。"
+
+msgid "loading_interests"
+msgstr "興味を読み込み中…"
+
+msgid "interests_load_error"
+msgstr "興味を読み込めませんでした。"
+
+msgid "retry_btn"
+msgstr "再試行"
+
+msgid "chat_ws_error"
+msgstr "チャット接続エラー（WebSocket）。バックエンドのポートとURLを確認してください。"
+
+msgid "age_display"
+msgstr "年齢: {age}"
+
+msgid "age_display_underage"
+msgstr "年齢: {age}（{note}）"
+
+msgid "register_err_email_missing"
+msgstr "メールアドレスは必須です。"
+
+msgid "register_err_password_short"
+msgstr "パスワードは6文字以上にしてください。"
+
+msgid "register_err_name_missing"
+msgstr "名前は必須です。"
+
+msgid "register_err_dob_invalid"
+msgstr "生年月日が正しくありません。"
+
+msgid "register_err_underage"
+msgstr "18歳以上である必要があります。"
+
+msgid "register_err_country_missing"
+msgstr "国を選んでください。"
+
+msgid "register_err_province_missing"
+msgstr "都道府県／州を選んでください。"
+
+msgid "register_err_province_unavailable"
+msgstr "この国の都道府県／州はまだ設定されていません。"
+
+msgid "register_err_phone_cc_missing"
+msgstr "国際電話の国番号を選んでください。"
+
+msgid "register_err_phone_short"
+msgstr "電話番号が短すぎます。"
+
+msgid "debug_title"
+msgstr "デバッガー"
+
+msgid "debug_subtitle"
+msgstr "直近{count}行"
+
+msgid "debug_clear"
+msgstr "クリア"
+
+msgid "debug_copy"
+msgstr "コピー"
+
+msgid "debug_copy_selection"
+msgstr "選択範囲をコピー"
+
+msgid "debug_copy_selection_empty"
+msgstr "コピーする選択範囲がありません"
+
+msgid "debug_copy_ok"
+msgstr "コピーしました"
+
+msgid "debug_copy_fail"
+msgstr "コピーに失敗しました"
+
+msgid "debug_frontend_tab"
+msgstr "フロントエンド（{count}）"
+
+msgid "debug_services_tab"
+msgstr "サービス（{count}）"
+
+msgid "debug_services_connected"
+msgstr "ストリーミング中"
+
+msgid "debug_services_connecting"
+msgstr "接続中…"
+
+msgid "debug_services_error"
+msgstr "エラー"
+
+msgid "debug_minimize"
+msgstr "最小化"
+
+msgid "debug_restore"
+msgstr "元に戻す"
+
+msgid "debug_close"
+msgstr "閉じる"
+
+msgid "debug_tab_all"
+msgstr "すべて"
+
+msgid "debug_tab_js"
+msgstr "JavaScript"
+
+msgid "debug_auto_refresh"
+msgstr "自動更新"
+
+msgid "debug_maximize"
+msgstr "最大化"
+
+msgid "chat_not_connected"
+msgstr "チャットに接続されていません（ws=null）。先にルームを開いてください。"
+
+msgid "chat_not_connected_state"
+msgstr "チャットに接続されていません（WS readyState={state}）。"
+
+msgid "chat_disconnected"
+msgstr "チャットが切断されました。ルームを開き直すか、再度ログインしてください。"
+
+msgid "chat_reconnecting"
+msgstr "チャットに再接続中…"
+
+msgid "no_session"
+msgstr "セッション（トークン）がありません。再度ログインしてください。"
+
+msgid "country_es_spain"
+msgstr "スペイン"
+
+msgid "country_pt_portugal"
+msgstr "ポルトガル"
+
+msgid "country_fr_france"
+msgstr "フランス"
+
+msgid "country_it_italy"
+msgstr "イタリア"
+
+msgid "country_de_germany"
+msgstr "ドイツ"
+
+msgid "country_gb_uk"
+msgstr "イギリス"
+
+msgid "country_us_usa"
+msgstr "アメリカ"
+
+msgid "country_mx_mexico"
+msgstr "メキシコ"
+
+msgid "country_ar_argentina"
+msgstr "アルゼンチン"
+
+msgid "country_co_colombia"
+msgstr "コロンビア"
+
+msgid "calling_es_spain"
+msgstr "スペイン"
+
+msgid "calling_pt_portugal"
+msgstr "ポルトガル"
+
+msgid "calling_fr_france"
+msgstr "フランス"
+
+msgid "calling_it_italy"
+msgstr "イタリア"
+
+msgid "calling_de_germany"
+msgstr "ドイツ"
+
+msgid "calling_gb_uk"
+msgstr "イギリス"
+
+msgid "calling_us_ca"
+msgstr "アメリカ／カナダ"
+
+msgid "calling_mx_mexico"
+msgstr "メキシコ"
+
+msgid "calling_ar_argentina"
+msgstr "アルゼンチン"
+
+msgid "calling_co_colombia"
+msgstr "コロンビア"
+
+msgid "province_es_alava"
+msgstr "アラバ"
+
+msgid "province_es_albacete"
+msgstr "アルバセテ"
+
+msgid "province_es_alicante"
+msgstr "アリカンテ"
+
+msgid "province_es_almeria"
+msgstr "アルメリア"
+
+msgid "province_es_asturias"
+msgstr "アストゥリアス"
+
+msgid "province_es_avila"
+msgstr "アビラ"
+
+msgid "province_es_badajoz"
+msgstr "バダホス"
+
+msgid "province_es_barcelona"
+msgstr "バルセロナ"
+
+msgid "province_es_burgos"
+msgstr "ブルゴス"
+
+msgid "province_es_caceres"
+msgstr "カセレス"
+
+msgid "province_es_cadiz"
+msgstr "カディス"
+
+msgid "province_es_cantabria"
+msgstr "カンタブリア"
+
+msgid "province_es_castellon"
+msgstr "カステリョン"
+
+msgid "province_es_ciudad_real"
+msgstr "シウダー・レアル"
+
+msgid "province_es_cordoba"
+msgstr "コルドバ"
+
+msgid "province_es_cuenca"
+msgstr "クエンカ"
+
+msgid "province_es_girona"
+msgstr "ジローナ"
+
+msgid "province_es_granada"
+msgstr "グラナダ"
+
+msgid "province_es_guadalajara"
+msgstr "グアダラハラ"
+
+msgid "province_es_gipuzkoa"
+msgstr "ギプスコア"
+
+msgid "province_es_huelva"
+msgstr "ウエルバ"
+
+msgid "province_es_huesca"
+msgstr "ウエスカ"
+
+msgid "province_es_illes_balears"
+msgstr "バレアレス諸島"
+
+msgid "province_es_jaen"
+msgstr "ハエン"
+
+msgid "province_es_a_coruna"
+msgstr "ア・コルーニャ"
+
+msgid "province_es_la_rioja"
+msgstr "ラ・リオハ"
+
+msgid "province_es_las_palmas"
+msgstr "ラス・パルマス"
+
+msgid "province_es_leon"
+msgstr "レオン"
+
+msgid "province_es_lleida"
+msgstr "リェイダ"
+
+msgid "province_es_lugo"
+msgstr "ルゴ"
+
+msgid "province_es_madrid"
+msgstr "マドリード"
+
+msgid "province_es_malaga"
+msgstr "マラガ"
+
+msgid "province_es_murcia"
+msgstr "ムルシア"
+
+msgid "province_es_navarra"
+msgstr "ナバラ"
+
+msgid "province_es_ourense"
+msgstr "オウレンセ"
+
+msgid "province_es_palencia"
+msgstr "パレンシア"
+
+msgid "province_es_pontevedra"
+msgstr "ポンテベドラ"
+
+msgid "province_es_salamanca"
+msgstr "サラマンカ"
+
+msgid "province_es_santa_cruz_de_tenerife"
+msgstr "サンタ・クルス・デ・テネリフェ"
+
+msgid "province_es_segovia"
+msgstr "セゴビア"
+
+msgid "province_es_sevilla"
+msgstr "セビリア"
+
+msgid "province_es_soria"
+msgstr "ソリア"
+
+msgid "province_es_tarragona"
+msgstr "タラゴナ"
+
+msgid "province_es_teruel"
+msgstr "テルエル"
+
+msgid "province_es_toledo"
+msgstr "トレド"
+
+msgid "province_es_valencia"
+msgstr "バレンシア"
+
+msgid "province_es_valladolid"
+msgstr "バリャドリッド"
+
+msgid "province_es_bizkaia"
+msgstr "ビスカヤ"
+
+msgid "province_es_zamora"
+msgstr "サモラ"
+
+msgid "province_es_zaragoza"
+msgstr "サラゴサ"
+
+msgid "province_pt_lisboa"
+msgstr "リスボン"
+
+msgid "province_pt_porto"
+msgstr "ポルト"
+
+msgid "province_pt_braga"
+msgstr "ブラガ"
+
+msgid "province_pt_setubal"
+msgstr "セトゥーバル"
+
+msgid "province_pt_aveiro"
+msgstr "アヴェイロ"
+
+msgid "province_fr_ile_de_france"
+msgstr "イル＝ド＝フランス"
+
+msgid "province_fr_occitanie"
+msgstr "オクシタニー"
+
+msgid "province_fr_nouvelle_aquitaine"
+msgstr "ヌーヴェル＝アキテーヌ"
+
+msgid "province_fr_auvergne_rhone_alpes"
+msgstr "オーヴェルニュ＝ローヌ＝アルプ"
+
+msgid "province_it_lazio"
+msgstr "ラツィオ"
+
+msgid "province_it_lombardia"
+msgstr "ロンバルディア"
+
+msgid "province_it_campania"
+msgstr "カンパニア"
+
+msgid "province_it_sicilia"
+msgstr "シチリア"
+
+msgid "admin_users_title"
+msgstr "ユーザー"
+
+msgid "admin_users_search_placeholder"
+msgstr "検索"
+
+msgid "admin_users_search_button"
+msgstr "検索"
+
+msgid "admin_users_select_placeholder"
+msgstr "ユーザーを選択"
+
+msgid "admin_users_logins_meta"
+msgstr "ログイン回数: {count} 最終: {last}"
+
+msgid "admin_users_last_seen_meta"
+msgstr "最終確認: {last} 合計: {seconds}秒"
+
+msgid "admin_users_active_meta"
+msgstr "アクティブ: {active} 開始: {start}"
+
+msgid "admin_yes"
+msgstr "はい"
+
+msgid "admin_no"
+msgstr "いいえ"
+
+msgid "admin_users_edit_title"
+msgstr "ユーザーを編集"
+
+msgid "admin_users_name"
+msgstr "名前"
+
+msgid "admin_users_email"
+msgstr "メールアドレス"
+
+msgid "admin_users_phone"
+msgstr "電話番号"
+
+msgid "admin_users_dob"
+msgstr "生年月日（YYYY-MM-DD）"
+
+msgid "admin_users_country"
+msgstr "国"
+
+msgid "admin_users_province"
+msgstr "都道府県／州"
+
+msgid "admin_users_city"
+msgstr "市区町村"
+
+msgid "admin_users_role"
+msgstr "ロール"
+
+msgid "admin_users_new_password"
+msgstr "新しいパスワード"
+
+msgid "admin_users_email_verified"
+msgstr "メール確認済み"
+
+msgid "admin_users_resend_button"
+msgstr "確認メールを再送"
+
+msgid "admin_users_resend_ok"
+msgstr "確認メールを再送しました。"
+
+msgid "admin_users_resend_error"
+msgstr "確認メールを再送できませんでした。"
+
+msgid "admin_users_blocked"
+msgstr "ブロック中"
+
+msgid "admin_users_blocked_until"
+msgstr "ブロック期限（YYYY-MM-DD）"
+
+msgid "admin_users_password_label"
+msgstr "パスワード"
+
+msgid "admin_users_dob_short"
+msgstr "生年月日"
+
+msgid "admin_users_missing_fields"
+msgstr "未入力の項目: {fields}"
+
+msgid "admin_users_updated"
+msgstr "ユーザーを更新しました。"
+
+msgid "admin_users_created"
+msgstr "ユーザーを作成しました。"
+
+msgid "admin_users_save_error"
+msgstr "ユーザーを保存できませんでした。"
+
+msgid "admin_users_save_button"
+msgstr "保存"
+
+msgid "admin_users_create_button"
+msgstr "作成"
+
+msgid "admin_users_delete_confirm"
+msgstr "このユーザーを削除しますか？この操作は元に戻せません。"
+
+msgid "admin_users_deleted"
+msgstr "ユーザーを削除しました。"
+
+msgid "admin_users_delete_error"
+msgstr "削除できませんでした。"
+
+msgid "admin_users_delete_button"
+msgstr "削除"
+
+msgid "admin_channels_title"
+msgstr "チャンネル"
+
+msgid "admin_channels_edit_button"
+msgstr "編集"
+
+msgid "admin_channels_delete_button"
+msgstr "削除"
+
+msgid "admin_channels_form_title"
+msgstr "チャンネルを追加／編集"
+
+msgid "admin_channels_name_placeholder"
+msgstr "チャンネル名"
+
+msgid "admin_channels_slug_label"
+msgstr "スラッグ: {slug}"
+
+msgid "admin_channels_name_required"
+msgstr "チャンネル名は必須です。"
+
+msgid "admin_channels_updated"
+msgstr "チャンネルを更新しました。"
+
+msgid "admin_channels_created"
+msgstr "チャンネルを作成しました。"
+
+msgid "admin_channels_save_error"
+msgstr "チャンネルを保存できませんでした。"
+
+msgid "admin_channels_save_button"
+msgstr "保存"
+
+msgid "unknown_user"
+msgstr "不明"
+
+msgid "email_verify_subject"
+msgstr "MeetGoのメールアドレスを確認してください"
+
+msgid "email_verify_body"
+msgstr "ボタンを押してメールアドレスを確認し、MeetGoを始めましょう。アカウントを作成した覚えがない場合は、このメッセージを無視してください。"
+
+msgid "email_reset_subject"
+msgstr "MeetGoのパスワードを再設定してください"
+
+msgid "email_reset_body"
+msgstr "アカウントのパスワード変更のリクエストを受け付けました。リンクの有効期限は2時間です。心当たりがない場合は、このメールを無視してください。パスワードは変更されません。"
+
+msgid "email_smtp_test_subject"
+msgstr "MeetGo SMTPテスト"
+
+msgid "email_smtp_test_body"
+msgstr "MeetGo管理画面からのSMTPテストメールです。"
+
+msgid "err_smtp_sender_not_configured"
+msgstr "SMTPの送信元が設定されていません"
+
+msgid "err_gmail_not_configured"
+msgstr "Gmail API SMTPが設定されていません"
+
+msgid "err_gmail_token_failed"
+msgstr "Gmailのアクセストークンを取得できませんでした"
+
+msgid "err_smtp_host_not_configured"
+msgstr "SMTPホストが設定されていません"
+
+msgid "err_admin_required"
+msgstr "管理者権限が必要です"
+
+msgid "err_email_phone_required"
+msgstr "メールアドレスと電話番号は必須です"
+
+msgid "err_password_too_short"
+msgstr "パスワードが短すぎます"
+
+msgid "err_email_already_used"
+msgstr "このメールアドレスはすでに使われています"
+
+msgid "err_invalid_phone"
+msgstr "電話番号が正しくありません"
+
+msgid "err_phone_already_used"
+msgstr "この電話番号はすでに使われています"
+
+msgid "err_email_required"
+msgstr "メールアドレスは必須です"
+
+msgid "err_invalid_credentials"
+msgstr "認証情報が正しくありません"
+
+msgid "err_user_banned"
+msgstr "このユーザーは利用停止中です"
+
+msgid "err_password_required"
+msgstr "パスワードは必須です"
+
+msgid "err_email_not_verified"
+msgstr "メールアドレスが未確認です"
+
+msgid "err_invalid_token"
+msgstr "トークンが無効です"
+
+msgid "err_token_expired"
+msgstr "トークンの有効期限が切れています"
+
+msgid "err_missing_to_email"
+msgstr "to_emailがありません"
+
+msgid "err_user_not_found"
+msgstr "ユーザーが見つかりません"
+
+msgid "err_user_no_email"
+msgstr "このユーザーにはメールアドレスがありません"
+
+msgid "err_cannot_delete_self"
+msgstr "自分自身は削除できません"
+
+msgid "err_interest_exists"
+msgstr "この興味はすでに存在します"
+
+msgid "err_interest_not_found"
+msgstr "興味が見つかりません"
+
+msgid "err_dob_change_used"
+msgstr "生年月日の変更はすでに使用済みです"
+
+msgid "err_invalid_dob"
+msgstr "生年月日が正しくありません"
+
+msgid "err_province_required"
+msgstr "都道府県／州は必須です"
+
+msgid "err_phone_change_limited"
+msgstr "電話番号の変更は30日に1回までです"
+
+msgid "err_forbidden_diff_province"
+msgstr "許可されていません（別の都道府県／州）"
+
+msgid "err_room_not_found"
+msgstr "ルームが見つかりません"
+
+msgid "err_forbidden"
+msgstr "許可されていません"
+
+msgid "err_rules_not_found"
+msgstr "ルールが見つかりません"
+
+msgid "err_cannot_dm_self"
+msgstr "自分自身にDMは送れません"
+
+msgid "err_user_no_dm"
+msgstr "このユーザーはDMを受け付けていません"
+
+msgid "err_dm_daily_limit"
+msgstr "1日のDM上限に達しました（10件）"
+
+msgid "err_dm_request_pending"
+msgstr "DMリクエストはすでに保留中です"
+
+msgid "err_request_not_found"
+msgstr "リクエストが見つかりません"
+
+msgid "err_already_resolved"
+msgstr "すでに処理済みです"
+
+msgid "err_conversation_not_found"
+msgstr "会話が見つかりません"
+
+msgid "err_cannot_follow_self"
+msgstr "自分自身はフォローできません"
+
+msgid "err_cannot_friend_self"
+msgstr "自分自身を友だちにはできません"
+
+msgid "err_already_friends"
+msgstr "すでに友だちです"
+
+msgid "err_request_pending"
+msgstr "リクエストはすでに保留中です"
+
+msgid "err_debug_disabled"
+msgstr "無効です"
+
+msgid "err_docker_sdk_missing"
+msgstr "Docker SDKがインストールされていません"
+
+msgid "err_docker_unavailable"
+msgstr "Dockerを利用できません: {error}"
+
+msgid "err_no_compose_containers"
+msgstr "composeコンテナが見つかりません"
+
+msgid "err_password_too_long"
+msgstr "パスワードが長すぎます（bcryptの上限は72バイト）。もっと短いパスワードにしてください。"
+
+msgid "err_token_missing_sub"
+msgstr "subがありません"
+
+msgid "log_error_line"
+msgstr "[ログエラー] {error}"
+
+msgid "err_password_required"
+msgstr "パスワードは必須です"
+
+msgid "log_level_info"
+msgstr "INFO"
+
+msgid "log_level_warn"
+msgstr "WARN"
+
+msgid "log_level_warning"
+msgstr "WARNING"
+
+msgid "log_level_error"
+msgstr "ERROR"
+
+msgid "log_level_debug"
+msgstr "DEBUG"
+
+msgid "svc_database"
+msgstr "MeetGo-Database"
+
+msgid "svc_redis"
+msgstr "MeetGo-Redis"
+
+msgid "svc_app"
+msgstr "MeetGo-App"
+
+msgid "svc_web_user"
+msgstr "MeetGo-Web-User"
+
+msgid "svc_web_admin"
+msgstr "MeetGo-Web-Admin"
+
+msgid "svc_js"
+msgstr "MeetGo-JavaScript"
+
+msgid "svc_prefix"
+msgstr "MeetGo-{service}"
+
+msgid "err_interest_in_use"
+msgstr "このチャンネルにはメッセージのあるルームがあります。削除せず、名前を変更してください"
+
+msgid "err_empty_message"
+msgstr "メッセージが空です"
+
+msgid "err_message_too_long"
+msgstr "メッセージが長すぎます"
+
+msgid "err_banned_here"
+msgstr "この会話には書き込めません"
+
+msgid "err_display_name"
+msgstr "名前は1〜64文字にしてください"
+
+msgid "err_edit_window"
+msgstr "メッセージを編集できるのは48時間以内です"
+
+msgid "err_file_empty"
+msgstr "ファイルが空です"
+
+msgid "err_file_not_found"
+msgstr "ファイルが見つかりません"
+
+msgid "err_file_too_big"
+msgstr "ファイルが10 MBを超えています"
+
+msgid "err_file_type"
+msgstr "この種類のファイルには対応していません"
+
+msgid "err_invalid_email"
+msgstr "メールアドレスが正しくありません"
+
+msgid "err_invalid_plan"
+msgstr "プランが正しくありません"
+
+msgid "err_invalid_reaction"
+msgstr "リアクションが正しくありません"
+
+msgid "err_invite_invalid"
+msgstr "この招待は無効になりました"
+
+msgid "err_message_deleted"
+msgstr "メッセージは削除されました"
+
+msgid "err_message_not_found"
+msgstr "メッセージが見つかりません"
+
+msgid "err_no_subscription"
+msgstr "ウェブ版の購読はありません"
+
+msgid "err_payments_failed"
+msgstr "お支払いを完了できませんでした"
+
+msgid "err_payments_not_configured"
+msgstr "お支払いはまだ設定されていません"
+
+msgid "err_promo_already_used"
+msgstr "プロモーションコードはすでに使用済みです"
+
+msgid "err_promo_below_used"
+msgstr "上限は、すでに使われた枠より少なくできません"
+
+msgid "err_promo_exhausted"
+msgstr "このコードの残り枠はありません"
+
+msgid "err_promo_invalid"
+msgstr "プロモーションコードが正しくありません"
+
+msgid "err_purchase_inactive"
+msgstr "この購入は有効ではありません"
+
+msgid "err_purchase_invalid"
+msgstr "Google Playで購入を確認できませんでした"
+
+msgid "err_purchase_other_account"
+msgstr "この購入は別のアカウントのものです"
+
+msgid "err_report_own"
+msgstr "自分のメッセージは報告できません"
+
+msgid "err_service_account"
+msgstr "サービスアカウントが無効です"
+
+msgid "err_silenced_until"
+msgstr "この会話では{until}までミュートされています"
+
+msgid "err_slow_mode"
+msgstr "スローモード: 次の書き込みまで{seconds}秒お待ちください"
+
+msgid "err_subscription_required"
+msgstr "書き込むには有効な購読が必要です"
+
+msgid "err_too_many_reactions"
+msgstr "このメッセージへのリアクションが多すぎます"
+
+msgid "sys_group_created"
+msgstr "{name}さんがグループを作成しました"
+
+msgid "sys_member_added"
+msgstr "{by}さんが{name}さんを追加しました"
+
+msgid "sys_member_joined"
+msgstr "{name}さんが招待で参加しました"
+
+msgid "sys_member_left"
+msgstr "{name}さんがグループを退出しました"
+
+msgid "sys_member_removed"
+msgstr "{by}さんが{name}さんを削除しました"
+
+msgid "ui_accept"
+msgstr "承認"
+
+msgid "ui_accept_dm"
+msgstr "友だち以外からのダイレクトメッセージを受け取る"
+
+msgid "ui_access_ends"
+msgstr "{plan}プラン: {date}に終了"
+
+msgid "ui_access_free"
+msgstr "アカウントは無料で利用できます"
+
+msgid "ui_access_grant_life"
+msgstr "無期限の無料アクセス"
+
+msgid "ui_access_grant_until"
+msgstr "{date}まで無料アクセス"
+
+msgid "ui_access_none"
+msgstr "購読なし: アカウントは閲覧のみです"
+
+msgid "ui_access_play"
+msgstr "Google Playの購読は{date}まで"
+
+msgid "ui_access_renews"
+msgstr "{plan}プラン: {date}に更新"
+
+msgid "ui_access_trial"
+msgstr "{plan}プランの無料トライアルは{date}まで"
+
+msgid "ui_account_title"
+msgstr "アカウント"
+
+msgid "ui_activity"
+msgstr "アクティビティ"
+
+msgid "ui_add"
+msgstr "追加"
+
+msgid "ui_add_friend"
+msgstr "友だちに追加"
+
+msgid "ui_add_friends"
+msgstr "友だちを追加"
+
+msgid "ui_added"
+msgstr "追加済み"
+
+msgid "ui_also_send_to"
+msgstr "{name}さんにも送信"
+
+msgid "ui_appearance"
+msgstr "外観"
+
+msgid "ui_apply"
+msgstr "適用"
+
+msgid "ui_attach"
+msgstr "添付"
+
+msgid "ui_attachment"
+msgstr "添付ファイル"
+
+msgid "ui_avatar_url"
+msgstr "プロフィール画像（リンク）"
+
+msgid "ui_back"
+msgstr "戻る"
+
+msgid "ui_ban"
+msgstr "利用停止"
+
+msgid "ui_bio"
+msgstr "自己紹介"
+
+msgid "ui_cancel"
+msgstr "キャンセル"
+
+msgid "ui_cancel_plan"
+msgstr "購読を解約"
+
+msgid "ui_change_server"
+msgstr "サーバーを変更"
+
+msgid "ui_channel_start"
+msgstr "ここがチャンネルの始まりです。{zone}で同じ興味を持つ人たちがここで話しています。"
+
+msgid "ui_check_email_body"
+msgstr "メールアドレス確認用のリンクを送信しました。リンクを開いてから、パスワードでログインしてください。"
+
+msgid "ui_check_email_title"
+msgstr "メールを確認してください"
+
+msgid "ui_choose"
+msgstr "選択…"
+
+msgid "ui_clear"
+msgstr "クリア"
+
+msgid "ui_close"
+msgstr "閉じる"
+
+msgid "ui_code_applied"
+msgstr "コードを適用しました"
+
+msgid "ui_connected"
+msgstr "接続中"
+
+msgid "ui_conversation_gone"
+msgstr "この会話は利用できなくなりました"
+
+msgid "ui_copied"
+msgstr "コピーしました"
+
+msgid "ui_copy"
+msgstr "コピー"
+
+msgid "ui_country"
+msgstr "国"
+
+msgid "ui_create_account"
+msgstr "アカウント作成"
+
+msgid "ui_create_group"
+msgstr "グループを作成"
+
+msgid "ui_decline"
+msgstr "辞退"
+
+msgid "ui_delete"
+msgstr "削除"
+
+msgid "ui_deleted_user"
+msgstr "削除されたユーザー"
+
+msgid "ui_description"
+msgstr "説明"
+
+msgid "ui_details_optional"
+msgstr "詳細（任意）"
+
+msgid "ui_direct_message"
+msgstr "ダイレクトメッセージ"
+
+msgid "ui_disable"
+msgstr "オフにする"
+
+msgid "ui_display_name"
+msgstr "表示名"
+
+msgid "ui_dm_request_sent"
+msgstr "リクエストを送信しました。承認されると話せるようになります"
+
+msgid "ui_dm_requests"
+msgstr "メッセージを希望している人"
+
+msgid "ui_dm_start"
+msgstr "{name}さんとのプライベートな会話です。"
+
+msgid "ui_dob"
+msgstr "生年月日"
+
+msgid "ui_done"
+msgstr "完了"
+
+msgid "ui_edit"
+msgstr "編集"
+
+msgid "ui_edit_hint"
+msgstr "Enterで保存 · Escでキャンセル"
+
+msgid "ui_edit_in_chat"
+msgstr "会話からメッセージを編集"
+
+msgid "ui_edited"
+msgstr "編集済み"
+
+msgid "ui_email"
+msgstr "メールアドレス"
+
+msgid "ui_email_verified"
+msgstr "メールアドレスを確認しました。ログインできます。"
+
+msgid "ui_emoji"
+msgstr "絵文字"
+
+msgid "ui_empty_body"
+msgstr "興味を選んで地域のチャンネルに参加するか、友だちとグループを作りましょう。"
+
+msgid "ui_empty_title"
+msgstr "まだ会話がありません"
+
+msgid "ui_enable"
+msgstr "オンにする"
+
+msgid "ui_enter_hint"
+msgstr "Enterで送信 · Shift+Enterで改行"
+
+msgid "ui_err_generic"
+msgstr "問題が発生しました（エラー {status}）。もう一度お試しください。"
+
+msgid "ui_err_invalid_data"
+msgstr "入力内容を確認してください"
+
+msgid "ui_err_network"
+msgstr "サーバーに接続できません。インターネット接続を確認してください。"
+
+msgid "ui_explore_channels"
+msgstr "チャンネルを探す"
+
+msgid "ui_explore_lead"
+msgstr "{zone}のチャンネルです。気に入ったものに参加しましょう。"
+
+msgid "ui_explore_title"
+msgstr "チャンネル"
+
+msgid "ui_f_all"
+msgstr "すべて"
+
+msgid "ui_f_channels"
+msgstr "チャンネル"
+
+msgid "ui_f_direct"
+msgstr "ダイレクト"
+
+msgid "ui_f_groups"
+msgstr "グループ"
+
+msgid "ui_f_mentions"
+msgstr "メンション"
+
+msgid "ui_f_unread"
+msgstr "未読"
+
+msgid "ui_feed_empty"
+msgstr "投稿はまだありません。フォローすると、その人の投稿がここに表示されます。"
+
+msgid "ui_feed_hint"
+msgstr "フォロワーに表示されます"
+
+msgid "ui_feed_placeholder"
+msgstr "今なにしてる？"
+
+msgid "ui_find_people"
+msgstr "人を探す"
+
+msgid "ui_follow"
+msgstr "フォロー"
+
+msgid "ui_forgot"
+msgstr "パスワードをお忘れですか？"
+
+msgid "ui_forgot_sent"
+msgstr "そのメールアドレスのアカウントがある場合、パスワード変更用のリンクを送信しました。"
+
+msgid "ui_forgot_title"
+msgstr "パスワードを再設定"
+
+msgid "ui_friend"
+msgstr "友だち"
+
+msgid "ui_friend_request_sent"
+msgstr "友だちリクエストを送信しました"
+
+msgid "ui_friend_requests"
+msgstr "友だちリクエスト"
+
+msgid "ui_friends"
+msgstr "友だち"
+
+msgid "ui_go_latest"
+msgstr "最新へ移動"
+
+msgid "ui_go_login"
+msgstr "ログインに戻る"
+
+msgid "ui_home_page"
+msgstr "ホームページ"
+
+msgid "ui_group_members_hint"
+msgstr "今すぐ友だちを追加するか、あとで招待リンクを共有しましょう。"
+
+msgid "ui_group_name"
+msgstr "グループ名"
+
+msgid "ui_group_name_ph"
+msgstr "土曜のハイキング"
+
+msgid "ui_group_start"
+msgstr "ここがグループの始まりです。みんなで計画を立てましょう。"
+
+msgid "ui_have_account"
+msgstr "すでにアカウントをお持ちの方"
+
+msgid "ui_hide_chat"
+msgstr "会話を非表示"
+
+msgid "ui_info"
+msgstr "情報"
+
+msgid "ui_interests"
+msgstr "興味"
+
+msgid "ui_interests_lead"
+msgstr "興味を選ぶと、{zone}のあなたの年齢層のチャンネルに参加できます。"
+
+msgid "ui_invite_link"
+msgstr "招待リンク"
+
+msgid "ui_join"
+msgstr "参加"
+
+msgid "ui_join_group"
+msgstr "グループに参加"
+
+msgid "ui_language"
+msgstr "言語"
+
+msgid "ui_last_at"
+msgstr "最終: {time}"
+
+msgid "ui_leave_channel"
+msgstr "チャンネルを退出"
+
+msgid "ui_leave_group"
+msgstr "グループを退出"
+
+msgid "ui_loading"
+msgstr "読み込み中…"
+
+msgid "ui_login_btn"
+msgstr "ログイン"
+
+msgid "ui_login_title"
+msgstr "MeetGoにログイン"
+
+msgid "ui_logout"
+msgstr "ログアウト"
+
+msgid "ui_make_admin"
+msgstr "管理者にする"
+
+msgid "ui_make_member"
+msgstr "管理者を解除"
+
+msgid "ui_manage_payment"
+msgstr "お支払いと請求書を管理"
+
+msgid "ui_members"
+msgstr "メンバー"
+
+msgid "ui_members_n"
+msgstr "メンバー{n}人"
+
+msgid "ui_mentions_lead"
+msgstr "あなたへのメンションがあるメッセージです。"
+
+msgid "ui_mentions_title"
+msgstr "メンション"
+
+msgid "ui_message_actions"
+msgstr "メッセージの操作"
+
+msgid "ui_message_in"
+msgstr "{name}にメッセージ"
+
+msgid "ui_message_to"
+msgstr "{name}さんにメッセージ"
+
+msgid "ui_mod_caps"
+msgstr "モデレーションにより削除: 大文字が多すぎます"
+
+msgid "ui_mod_flood"
+msgstr "モデレーションにより削除: 連続投稿が多すぎます"
+
+msgid "ui_mod_generic"
+msgstr "モデレーションにより削除"
+
+msgid "ui_mod_links"
+msgstr "モデレーションにより削除: このチャンネルではリンクは使えません"
+
+msgid "ui_mod_phone"
+msgstr "モデレーションにより削除: チャンネルで電話番号を共有しないでください"
+
+msgid "ui_mod_removed"
+msgstr "モデレーターにより削除"
+
+msgid "ui_mod_toxic"
+msgstr "モデレーションにより削除: 不適切な言葉"
+
+msgid "ui_moderation"
+msgstr "モデレーション"
+
+msgid "ui_monthly"
+msgstr "月額"
+
+msgid "ui_more"
+msgstr "もっと見る"
+
+msgid "ui_msg_deleted"
+msgstr "メッセージは削除されました"
+
+msgid "ui_mute_1h"
+msgstr "1時間ミュート"
+
+msgid "ui_mute_week"
+msgstr "1週間ミュート"
+
+msgid "ui_nav"
+msgstr "ナビゲーション"
+
+msgid "ui_nav_account"
+msgstr "アカウント"
+
+msgid "ui_nav_channels"
+msgstr "チャンネル"
+
+msgid "ui_nav_chats"
+msgstr "チャット"
+
+msgid "ui_nav_mentions"
+msgstr "メンション"
+
+msgid "ui_nav_people"
+msgstr "ユーザー"
+
+msgid "ui_needs_request"
+msgstr "リクエストが必要"
+
+msgid "ui_new_chat"
+msgstr "新しい会話"
+
+msgid "ui_new_group"
+msgstr "新しいグループ"
+
+msgid "ui_new_link"
+msgstr "新しいリンク"
+
+msgid "ui_new_messages"
+msgstr "新着メッセージ"
+
+msgid "ui_new_messages_n"
+msgstr "新着メッセージ{n}件"
+
+msgid "ui_no_dms"
+msgstr "ダイレクトメッセージを受け付けていません"
+
+msgid "ui_no_friends_hint"
+msgstr "チャンネルで名前をタップして友だちを追加するか、「人を探す」から見つけましょう。"
+
+msgid "ui_no_friends_yet"
+msgstr "MeetGoにはまだ友だちがいません"
+
+msgid "ui_no_mentions"
+msgstr "まだ誰からもメンションされていません"
+
+msgid "ui_no_requests"
+msgstr "保留中のリクエストはありません"
+
+msgid "ui_no_results"
+msgstr "結果がありません"
+
+msgid "ui_notifications"
+msgstr "通知"
+
+msgid "ui_notifications_hint"
+msgstr "グループとダイレクトメッセージはすべてのメッセージを通知し、チャンネルはメンションされたときだけ通知します。各会話のメニューで変更できます。"
+
+msgid "ui_notify_all"
+msgstr "すべてのメッセージを通知"
+
+msgid "ui_notify_current"
+msgstr "通知: {mode}"
+
+msgid "ui_notify_mentions"
+msgstr "メンションのみ通知"
+
+msgid "ui_notify_none"
+msgstr "通知しない"
+
+msgid "ui_off"
+msgstr "オフ"
+
+msgid "ui_offline"
+msgstr "オフライン"
+
+msgid "ui_offline_n"
+msgstr "オフライン · {n}"
+
+msgid "ui_online"
+msgstr "オンライン"
+
+msgid "ui_online_n"
+msgstr "オンライン · {n}"
+
+msgid "ui_open"
+msgstr "開く"
+
+msgid "ui_open_notification_settings"
+msgstr "スマートフォンの通知設定"
+
+msgid "ui_password"
+msgstr "パスワード"
+
+msgid "ui_password_change"
+msgstr "新しいパスワード（任意）"
+
+msgid "ui_password_new"
+msgstr "パスワード（6文字以上）"
+
+msgid "ui_payments_soon"
+msgstr "このサーバーではまだお支払いを利用できません。"
+
+msgid "ui_paywall_lead"
+msgstr "このアカウントは閲覧のみで、書き込みはできません。チャンネル、グループ、ダイレクトメッセージに参加するには購読してください。"
+
+msgid "ui_paywall_title"
+msgstr "MeetGoを購読"
+
+msgid "ui_people_title"
+msgstr "ユーザー"
+
+msgid "ui_per_month"
+msgstr "月あたり"
+
+msgid "ui_per_year"
+msgstr "年あたり"
+
+msgid "ui_phone"
+msgstr "電話番号（他の人には表示されません）"
+
+msgid "ui_pick_conversation"
+msgstr "会話を選んでください"
+
+msgid "ui_pick_conversation_hint"
+msgstr "または、鉛筆ボタンで新しい会話を始めましょう。"
+
+msgid "ui_pin"
+msgstr "メッセージをピン留め"
+
+msgid "ui_pin_chat"
+msgstr "会話をピン留め"
+
+msgid "ui_pinned"
+msgstr "ピン留め済み"
+
+msgid "ui_plan_active"
+msgstr "購読が有効になりました！MeetGoを応援してくれてありがとうございます。"
+
+msgid "ui_profile"
+msgstr "プロフィール"
+
+msgid "ui_promo_code"
+msgstr "プロモーションコード"
+
+msgid "ui_province"
+msgstr "都道府県／州"
+
+msgid "ui_publish"
+msgstr "投稿"
+
+msgid "ui_push_blocked"
+msgstr "このブラウザでは通知がブロックされています。ブラウザの設定で許可してください。"
+
+msgid "ui_push_denied"
+msgstr "通知はオンになりませんでした"
+
+msgid "ui_push_disabled_here"
+msgstr "このブラウザの通知はオフです"
+
+msgid "ui_push_enabled_here"
+msgstr "このブラウザの通知はオンです"
+
+msgid "ui_push_off"
+msgstr "通知をオフにしました"
+
+msgid "ui_push_on"
+msgstr "通知をオンにしました"
+
+msgid "ui_push_unsupported"
+msgstr "このブラウザは通知に対応していません。iPhoneではMeetGoをホーム画面に追加してください。"
+
+msgid "ui_react"
+msgstr "リアクション"
+
+msgid "ui_read"
+msgstr "既読"
+
+msgid "ui_read_only"
+msgstr "購読するまで、アカウントは閲覧のみです。"
+
+msgid "ui_reason"
+msgstr "理由"
+
+msgid "ui_reason_spam"
+msgstr "スパムまたは宣伝"
+
+msgid "ui_reason_harassment"
+msgstr "嫌がらせ"
+
+msgid "ui_reason_hate"
+msgstr "ヘイトまたは差別"
+
+msgid "ui_reason_sexual"
+msgstr "性的な内容"
+
+msgid "ui_reason_violence"
+msgstr "暴力または脅迫"
+
+msgid "ui_reason_other"
+msgstr "その他"
+
+msgid "ui_reconnecting"
+msgstr "再接続中…"
+
+msgid "ui_register_lead"
+msgstr "同じ都道府県／州・年齢層の人たちと話せます。電話番号は表示されません。"
+
+msgid "ui_register_legal"
+msgstr "アカウントを作成すると、18歳以上であること、および利用規約とプライバシーポリシーに同意したものとみなされます。"
+
+msgid "ui_register_title"
+msgstr "アカウントを作成"
+
+msgid "ui_remove"
+msgstr "削除"
+
+msgid "ui_remove_member"
+msgstr "グループから削除"
+
+msgid "ui_replied_in_thread"
+msgstr "スレッドで返信しました"
+
+msgid "ui_replies_n"
+msgstr "返信{n}件"
+
+msgid "ui_reply"
+msgstr "返信"
+
+msgid "ui_reply_in_thread_ph"
+msgstr "スレッドに返信"
+
+msgid "ui_reply_thread"
+msgstr "スレッドで返信"
+
+msgid "ui_replying_to"
+msgstr "返信先"
+
+msgid "ui_report"
+msgstr "報告"
+
+msgid "ui_report_in_chat"
+msgstr "会話からメッセージを報告"
+
+msgid "ui_report_title"
+msgstr "メッセージを報告"
+
+msgid "ui_reported"
+msgstr "ありがとうございます。モデレーターが確認します。"
+
+msgid "ui_request"
+msgstr "リクエスト"
+
+msgid "ui_requests"
+msgstr "リクエスト"
+
+msgid "ui_reset_done"
+msgstr "パスワードを変更しました。ログインできます。"
+
+msgid "ui_reset_title"
+msgstr "新しいパスワード"
+
+msgid "ui_restore_purchase"
+msgstr "購入を復元"
+
+msgid "ui_resume_plan"
+msgstr "購読を再開"
+
+msgid "ui_retry"
+msgstr "再試行"
+
+msgid "ui_role_owner"
+msgstr "オーナー"
+
+msgid "ui_role_admin"
+msgstr "管理者"
+
+msgid "ui_role_moderator"
+msgstr "MOD"
+
+msgid "ui_role_member"
+msgstr "メンバー"
+
+msgid "ui_rules"
+msgstr "ルール"
+
+msgid "ui_save"
+msgstr "保存"
+
+msgid "ui_save_17"
+msgstr "17%お得"
+
+msgid "ui_saved"
+msgstr "保存しました"
+
+msgid "ui_search_in"
+msgstr "{name}内を検索"
+
+msgid "ui_search_in_chat"
+msgstr "会話内を検索"
+
+msgid "ui_search_members"
+msgstr "メンバーを検索"
+
+msgid "ui_search_people"
+msgstr "名前で検索"
+
+msgid "ui_search_people_hint"
+msgstr "2文字以上入力してください。友だちと同じ都道府県／州の人が表示されます。"
+
+msgid "ui_search_placeholder"
+msgstr "会話やメッセージを検索"
+
+msgid "ui_sec_channels"
+msgstr "チャンネル"
+
+msgid "ui_sec_channels_zone"
+msgstr "チャンネル · {zone}"
+
+msgid "ui_sec_direct"
+msgstr "ダイレクト"
+
+msgid "ui_sec_groups"
+msgstr "グループ"
+
+msgid "ui_sec_messages"
+msgstr "メッセージ"
+
+msgid "ui_sec_pinned"
+msgstr "ピン留め"
+
+msgid "ui_seconds_n"
+msgstr "{n}秒"
+
+msgid "ui_send"
+msgstr "送信"
+
+msgid "ui_send_link"
+msgstr "リンクを送信"
+
+msgid "ui_send_message"
+msgstr "メッセージを送信"
+
+msgid "ui_sent"
+msgstr "送信しました"
+
+msgid "ui_session"
+msgstr "セッション"
+
+msgid "ui_share_lead"
+msgstr "共有先を選んでください（{n}ファイル）。"
+
+msgid "ui_share_nothing"
+msgstr "共有するものがありません。"
+
+msgid "ui_share_title"
+msgstr "MeetGoに共有"
+
+msgid "ui_side_panel"
+msgstr "サイドパネル"
+
+msgid "ui_silence_1h"
+msgstr "1時間ミュートにする"
+
+msgid "ui_silenced_until"
+msgstr "この会話では{time}までミュートされています。"
+
+msgid "ui_slow_mode"
+msgstr "スローモード: {seconds}秒に1件"
+
+msgid "ui_slow_mode_label"
+msgstr "スローモード"
+
+msgid "ui_staff_n"
+msgstr "モデレーター · {n}"
+
+msgid "ui_subscribe"
+msgstr "購読する"
+
+msgid "ui_subscribe_card"
+msgstr "カードで購読"
+
+msgid "ui_subscribe_play"
+msgstr "Google Playで購読"
+
+msgid "ui_subscription"
+msgstr "購読"
+
+msgid "ui_switch_monthly"
+msgstr "月額に切り替え"
+
+msgid "ui_switch_yearly"
+msgstr "年額に切り替え（17%お得）"
+
+msgid "ui_theme"
+msgstr "テーマ"
+
+msgid "ui_theme_dark"
+msgstr "ダーク"
+
+msgid "ui_theme_light"
+msgstr "ライト"
+
+msgid "ui_theme_system"
+msgstr "システムに合わせる"
+
+msgid "ui_thread"
+msgstr "スレッド"
+
+msgid "ui_threads"
+msgstr "情報とルール"
+
+msgid "ui_today"
+msgstr "今日"
+
+msgid "ui_trial_days"
+msgstr "最初の{n}日間は無料です。いつでも解約できます。"
+
+msgid "ui_typing_many"
+msgstr "{name}さんほか{n}人が入力中…"
+
+msgid "ui_typing_one"
+msgstr "{name}さんが入力中…"
+
+msgid "ui_typing_short"
+msgstr "入力中…"
+
+msgid "ui_typing_two"
+msgstr "{a}さんと{b}さんが入力中…"
+
+msgid "ui_unfollow"
+msgstr "フォロー解除"
+
+msgid "ui_unmute"
+msgstr "ミュート解除"
+
+msgid "ui_unpin"
+msgstr "メッセージのピン留めを解除"
+
+msgid "ui_unpin_chat"
+msgstr "会話のピン留めを解除"
+
+msgid "ui_unsilence"
+msgstr "ミュートを解除"
+
+msgid "ui_uploading"
+msgstr "アップロード中…"
+
+msgid "ui_wait"
+msgstr "少々お待ちください…"
+
+msgid "ui_wants_friend"
+msgstr "{name}さんが友だちになりたがっています"
+
+msgid "ui_wants_to_write"
+msgstr "{name}さんがメッセージを送りたがっています"
+
+msgid "ui_write"
+msgstr "メッセージ"
+
+msgid "ui_yearly"
+msgstr "年額"
+
+msgid "ui_yesterday"
+msgstr "昨日"
+
+msgid "ui_you"
+msgstr "あなた"
+
+msgid "admin_add_calling_code"
+msgstr "国番号を追加"
+
+msgid "admin_add_country"
+msgstr "国を追加"
+
+msgid "admin_add_language"
+msgstr "言語を追加"
+
+msgid "admin_add_range"
+msgstr "範囲を追加"
+
+msgid "admin_age_ranges_title"
+msgstr "年齢層"
+
+msgid "admin_app_section"
+msgstr "アプリケーション"
+
+msgid "admin_base_url"
+msgstr "公開ウェブアドレス"
+
+msgid "admin_base_url_placeholder"
+msgstr "https://meetgo.app"
+
+msgid "admin_calling_code_placeholder"
+msgstr "+34"
+
+msgid "admin_calling_codes_title"
+msgstr "国番号"
+
+msgid "admin_code"
+msgstr "コード"
+
+msgid "admin_countries_title"
+msgstr "国"
+
+msgid "admin_delete"
+msgstr "削除"
+
+msgid "admin_gmail_client_id"
+msgstr "Gmail: クライアントID"
+
+msgid "admin_gmail_client_secret"
+msgstr "Gmail: クライアントシークレット"
+
+msgid "admin_gmail_refresh_token"
+msgstr "Gmail: リフレッシュトークン"
+
+msgid "admin_gmail_sender_email"
+msgstr "Gmail: 送信元メールアドレス"
+
+msgid "admin_key"
+msgstr "キー"
+
+msgid "admin_label"
+msgstr "ラベル"
+
+msgid "admin_languages_title"
+msgstr "言語"
+
+msgid "admin_loading"
+msgstr "読み込み中…"
+
+msgid "admin_login_button"
+msgstr "ログイン"
+
+msgid "admin_login_password"
+msgstr "パスワード"
+
+msgid "admin_login_username"
+msgstr "メールアドレスまたはユーザー名"
+
+msgid "admin_logout"
+msgstr "ログアウト"
+
+msgid "admin_max"
+msgstr "最大"
+
+msgid "admin_min"
+msgstr "最小"
+
+msgid "admin_name"
+msgstr "名前"
+
+msgid "admin_provinces_title"
+msgstr "都道府県／州"
+
+msgid "admin_settings_error"
+msgstr "設定を保存できませんでした"
+
+msgid "admin_settings_save"
+msgstr "設定を保存"
+
+msgid "admin_settings_saved"
+msgstr "設定を保存しました"
+
+msgid "admin_settings_title"
+msgstr "設定"
+
+msgid "admin_smtp_encryption"
+msgstr "暗号化"
+
+msgid "admin_smtp_from_email"
+msgstr "送信元メールアドレス"
+
+msgid "admin_smtp_host"
+msgstr "SMTPサーバー"
+
+msgid "admin_smtp_mode"
+msgstr "送信方式"
+
+msgid "admin_smtp_mode_gmail"
+msgstr "Gmail API"
+
+msgid "admin_smtp_mode_smtp"
+msgstr "SMTP"
+
+msgid "admin_smtp_password"
+msgstr "SMTPパスワード"
+
+msgid "admin_smtp_port"
+msgstr "ポート"
+
+msgid "admin_smtp_section"
+msgstr "送信メール"
+
+msgid "admin_smtp_ssl"
+msgstr "SSL"
+
+msgid "admin_smtp_starttls"
+msgstr "STARTTLS"
+
+msgid "admin_smtp_test_button"
+msgstr "テストメールを送信"
+
+msgid "admin_smtp_test_email"
+msgstr "テストの送信先"
+
+msgid "admin_smtp_test_error"
+msgstr "テストメールを送信できませんでした"
+
+msgid "admin_smtp_test_ok"
+msgstr "テストメールを送信しました"
+
+msgid "admin_smtp_username"
+msgstr "SMTPユーザー名"
+
+msgid "admin_tab_channels"
+msgstr "チャンネル"
+
+msgid "admin_tab_settings"
+msgstr "設定"
+
+msgid "admin_tab_users"
+msgstr "ユーザー"
+
+msgid "admin_title"
+msgstr "MeetGo管理"
+
+msgid "email_open_app"
+msgstr "MeetGoを開く"
+
+msgid "email_footer_digest"
+msgstr "MeetGoに未読メッセージがあるため、このメールをお送りしています。"
+
+msgid "email_footer_requests"
+msgstr "MeetGoであなたに連絡を取りたい人がいるため、このメールをお送りしています。"
+
+msgid "email_footer_reports"
+msgstr "あなたがMeetGoの管理者であるため、このメールをお送りしています。"
+
+msgid "email_footer_manage"
+msgstr "受け取るメールを選ぶ"
+
+msgid "email_footer_unsubscribe"
+msgstr "これらのメールを停止"
+
+msgid "email_verify_title"
+msgstr "メールアドレスを確認してください"
+
+msgid "email_verify_button"
+msgstr "メールアドレスを確認"
+
+msgid "email_reset_title"
+msgstr "新しいパスワードを設定"
+
+msgid "email_reset_button"
+msgstr "パスワードを設定"
+
+msgid "email_password_changed_subject"
+msgstr "MeetGoのパスワードが変更されました"
+
+msgid "email_password_changed_title"
+msgstr "パスワードを変更しました"
+
+msgid "email_password_changed_body"
+msgstr "アカウントのパスワードがたった今変更されました。心当たりがない場合は、「パスワードをお忘れですか？」からすぐに復旧し、このメールに返信してください。"
+
+msgid "email_friend_request_subject"
+msgstr "{name}さんがMeetGoであなたと友だちになりたがっています"
+
+msgid "email_friend_request_title"
+msgstr "新しい友だちリクエスト"
+
+msgid "email_friend_request_body"
+msgstr "{name}さんから友だちリクエストが届きました。承認すると、ダイレクトメッセージを送り合ったり、いっしょにグループを作ったりできます。"
+
+msgid "email_friend_request_button"
+msgstr "リクエストを見る"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name}さんが友だちリクエストを承認しました"
+
+msgid "email_friend_accepted_title"
+msgstr "友だちになりました"
+
+msgid "email_friend_accepted_body"
+msgstr "{name}さんが友だちリクエストを承認しました。ダイレクトメッセージを送り合えます。"
+
+msgid "email_dm_request_subject"
+msgstr "{name}さんがMeetGoであなたにメッセージを送りたがっています"
+
+msgid "email_dm_request_title"
+msgstr "ダイレクトメッセージのリクエスト"
+
+msgid "email_dm_request_body"
+msgstr "{name}さんがダイレクトメッセージで話したがっています。リクエストを承認すると会話を始められます。"
+
+msgid "email_dm_request_button"
+msgstr "リクエストを見る"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name}さんがダイレクトメッセージを承認しました"
+
+msgid "email_dm_accepted_title"
+msgstr "会話が開始されました"
+
+msgid "email_dm_accepted_body"
+msgstr "{name}さんがリクエストを承認しました。ダイレクトメッセージで話せます。"
+
+msgid "email_dm_accepted_button"
+msgstr "会話を開く"
+
+msgid "email_group_added_subject"
+msgstr "{name}さんがあなたを「{group}」に追加しました"
+
+msgid "email_group_added_title"
+msgstr "新しいグループ"
+
+msgid "email_group_added_body"
+msgstr "{name}さんがあなたをMeetGoのグループ「{group}」に追加しました。"
+
+msgid "email_group_added_button"
+msgstr "グループを開く"
+
+msgid "email_mod_silence_subject"
+msgstr "{place}でミュートされました"
+
+msgid "email_mod_silence_title"
+msgstr "一時的にミュートされました"
+
+msgid "email_mod_silence_body"
+msgstr "{place}のモデレーターにより、{minutes}分間ミュートされました。その後は再び書き込めます。"
+
+msgid "email_mod_ban_subject"
+msgstr "{place}には書き込めなくなりました"
+
+msgid "email_mod_ban_title"
+msgstr "{place}から利用停止"
+
+msgid "email_mod_ban_body"
+msgstr "{place}のモデレーターによりあなたは利用停止となり、書き込めなくなりました。間違いだと思われる場合は、このメールに返信してください。"
+
+msgid "email_mod_remove_subject"
+msgstr "{place}から削除されました"
+
+msgid "email_mod_remove_title"
+msgstr "{place}から退出"
+
+msgid "email_mod_remove_body"
+msgstr "モデレーターにより{place}から削除されました。間違いだと思われる場合は、このメールに返信してください。"
+
+msgid "email_report_subject"
+msgstr "MeetGoに新しい報告があります"
+
+msgid "email_report_title"
+msgstr "新しい報告"
+
+msgid "email_report_body"
+msgstr "メッセージが報告されました（{reason}）。管理画面のモデレーションキューで確認してください。"
+
+msgid "email_digest_subject"
+msgstr "MeetGoに未読メッセージがあります（{n}件）"
+
+msgid "email_digest_title"
+msgstr "未読メッセージ"
+
+msgid "email_digest_body"
+msgstr "まだ読んでいないメッセージです:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name}さんが{place}であなたをメンションしました"
+
+msgid "email_digest_mention_title"
+msgstr "メンションされました"
+
+msgid "email_digest_mention_body"
+msgstr "{name}さんが{place}であなたをメンションしました。まだ読んでいない内容です:"
+
+msgid "email_digest_mention_button"
+msgstr "メッセージを見る"
+
+msgid "email_digest_more"
+msgstr "ほか{n}件…"
+
+msgid "email_digest_attachment"
+msgstr "📎 添付ファイル"
+
+msgid "email_access_ending_subject"
+msgstr "MeetGoの無料アクセスは{date}に終了します"
+
+msgid "email_access_ending_title"
+msgstr "無料アクセスがまもなく終了します"
+
+msgid "email_access_ending_body"
+msgstr "無料アクセスは{date}に終了します。その後も閲覧はできますが、書き込むには購読が必要です（月額€2.50または年額€25）。"
+
+msgid "email_access_ending_button"
+msgstr "プランを見る"
+
+msgid "email_access_ended_subject"
+msgstr "MeetGoの無料アクセスが終了しました"
+
+msgid "email_access_ended_title"
+msgstr "無料アクセスが終了しました"
+
+msgid "email_access_ended_body"
+msgstr "無料アクセスは{date}に終了しました。アカウントは引き続き有効で閲覧できますが、再び書き込むには購読が必要です。"
+
+msgid "email_access_ended_button"
+msgstr "購読する"
+
+msgid "email_unsubscribed_title"
+msgstr "完了しました"
+
+msgid "email_unsubscribed_digest"
+msgstr "未読メッセージとメンションのメールは今後送信されません。"
+
+msgid "email_unsubscribed_requests"
+msgstr "リクエストとグループのメールは今後送信されません。"
+
+msgid "email_unsubscribed_reports"
+msgstr "報告のメールは今後送信されません。"
+
+msgid "ui_emails"
+msgstr "メール"
+
+msgid "ui_email_mentions"
+msgstr "未読のメンションと返信"
+
+msgid "ui_email_messages"
+msgstr "グループとダイレクトメッセージの未読メッセージ"
+
+msgid "ui_email_requests"
+msgstr "友だちリクエスト、メッセージのリクエスト、グループへの追加"
+
+msgid "ui_email_reports"
+msgstr "新しい報告（管理者向け）"
+
+msgid "ui_emails_hint"
+msgstr "アプリで確認されていない場合のみ、数時間に1回までまとめてお送りします。アカウントに関するメールは常に届きます。"
+
+msgid "ui_emails_unverified"
+msgstr "通知を受け取るにはメールアドレスを確認してください。"
+
+msgid "ui_resend_verification"
+msgstr "確認メールを再送"
+
+msgid "ui_verification_resent"
+msgstr "アカウントが存在し未確認の場合は、新しいメールを送信しました。迷惑メールフォルダもご確認ください。"
+
+msgid "admin_email_notifications_section"
+msgstr "自動メール"
+
+msgid "admin_email_notifications_enabled"
+msgstr "自動メールを送信する（未読のメンションとメッセージ、リクエスト、モデレーション、プランのお知らせ）"
+
+msgid "admin_email_notifications_delay"
+msgstr "未読メッセージのメールを送るまでの時間（分）"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "同じ人への2回のまとめメールの最小間隔（時間）"
+
+msgid "admin_email_notifications_hint"
+msgstr "受け取るメールは、各自が「アカウント → 通知」で選べます。アカウントのメール（確認とパスワード）は常に送信されます。"
+
+msgid "ui_dob_once"
+msgstr "生年月日を訂正できるのは1回だけです。"
+
+msgid "ui_dob_locked"
+msgstr "生年月日はすでに1回訂正済みです。"
+
+msgid "ui_zone_hint"
+msgstr "チャンネルは、都道府県／州と年齢層に応じたものになります。都道府県／州や生年月日を変更すると、新しい地域のチャンネルに移動します。"
+
+msgid "landing_a0"
+msgstr "無料です。MeetGoはアカウントを作成するだけで、制限なく使えます。カードは不要です。"
+
+msgid "landing_a1"
+msgstr "月額€2.50または年額€25で、7日間の無料トライアルつきです。どちらのプランもすべての機能が使えます。"
+
+msgid "landing_a2"
+msgstr "枠が残っているうちに、コードLANZAMIENTOでアカウントを作成してください。最初の50アカウントのみ対象で、カードは不要です。"
+
+msgid "landing_a3"
+msgstr "購読するまで、アカウントは閲覧のみになります。会話は読めますが、書き込みはできません。削除されるものはありません。"
+
+msgid "landing_a4"
+msgstr "誰にも見えません。電話番号はプロフィールに表示されず、チャンネルで番号を共有したメッセージは自動的に削除されます。"
+
+msgid "landing_a5"
+msgstr "はい、MeetGoは18歳以上の方向けです。チャンネルは年齢層（18〜30歳、31〜50歳、50歳以上）に分かれています。"
+
+msgid "landing_a6"
+msgstr "スペインのすべての県で使えます。チャンネルはお住まいの県と年齢層ごとに、選んだ趣味ごとに1つずつ用意されます。"
+
+msgid "landing_a7"
+msgstr "カードで支払った場合はMeetGoのアカウントから、アプリで購読した場合はGoogle Playから解約できます。支払い済みの期間の終わりまでは利用できます。"
+
+msgid "landing_a8"
+msgstr "Androidではアプリをダウンロードしてください。iPhoneではSafariでmeetgo.app/appを開き、ホーム画面に追加してください。"
+
+msgid "landing_cta_how"
+msgstr "使い方を見る"
+
+msgid "landing_cta_register"
+msgstr "アカウント作成"
+
+msgid "landing_dl_android_btn"
+msgstr "APKをダウンロード"
+
+msgid "landing_dl_android_p"
+msgstr "即時通知とクイック返信に対応したアプリです。APKをダウンロードしてインストールしてください。"
+
+msgid "landing_dl_build"
+msgstr "バージョン {version}"
+
+msgid "landing_dl_k"
+msgstr "ダウンロード"
+
+msgid "landing_dl_play_btn"
+msgstr "近日公開"
+
+msgid "landing_dl_play_p"
+msgstr "ストアの掲載準備中です。MeetGoのアカウントで、続きからそのまま使えます。"
+
+msgid "landing_dl_soon"
+msgstr "まもなく公開"
+
+msgid "landing_dl_soon2"
+msgstr "近日公開"
+
+msgid "landing_dl_title"
+msgstr "スマートフォンでもパソコンでも、いつもいっしょに"
+
+msgid "landing_dl_web_btn"
+msgstr "MeetGoを開く"
+
+msgid "landing_dl_web_p"
+msgstr "ブラウザでMeetGoを開けます。iPhoneでは共有をタップして「ホーム画面に追加」を選ぶと、アプリのように使えます。"
+
+msgid "landing_dl_web_t"
+msgstr "iPhoneとウェブ"
+
+msgid "landing_eyebrow"
+msgstr "地域・年齢・興味でおしゃべり"
+
+msgid "landing_f1_k"
+msgstr "地域のチャンネル"
+
+msgid "landing_f1_l1"
+msgstr "返信や参加者のまとめが見えるスレッド"
+
+msgid "landing_f1_l2"
+msgstr "専用の受信箱でメンションを確認、名前を呼ばれたときだけ通知"
+
+msgid "landing_f1_l3"
+msgstr "新着メッセージの区切り線と、最新へジャンプするボタン"
+
+msgid "landing_f1_l4"
+msgstr "リアクション、引用返信、ピン留めメッセージ"
+
+msgid "landing_f1_p"
+msgstr "話題ごとにスレッドができるので、メインの会話はすっきり。延々とスクロールしなくても、見逃した内容に追いつけます。"
+
+msgid "landing_f1_t"
+msgstr "大勢の声が、全部読みやすい"
+
+msgid "landing_f2_k"
+msgstr "プライベートグループ"
+
+msgid "landing_f2_l1"
+msgstr "招待リンクと管理者ロール"
+
+msgid "landing_f2_l2"
+msgstr "10 MBまでの写真とファイル"
+
+msgid "landing_f2_l3"
+msgstr "誰が見たかわかる既読表示"
+
+msgid "landing_f2_l4"
+msgstr "グループごとにミュートやピン留め"
+
+msgid "landing_f2_p"
+msgstr "友だちとグループを作ったり、チャンネルで知り合った人に招待リンクを共有したりできます。"
+
+msgid "landing_f2_t"
+msgstr "「行きたい！」から「決まり！」まで"
+
+msgid "landing_f3_k"
+msgstr "ダイレクトメッセージ"
+
+msgid "landing_f3_l1"
+msgstr "即時通知。Androidではクイック返信も"
+
+msgid "landing_f3_l2"
+msgstr "入力中の人とオンラインの人がわかる"
+
+msgid "landing_f3_l3"
+msgstr "電話番号は表示されません"
+
+msgid "landing_f3_p"
+msgstr "友だちとはすぐにチャットできます。それ以外の人とはまずリクエストを送り、相手がダイレクトメッセージを受け付けている場合のみ話せます。"
+
+msgid "landing_f3_t"
+msgstr "お互いが望んだときだけ、プライベートに"
+
+msgid "landing_f_app"
+msgstr "アプリを開く"
+
+msgid "landing_f_contact"
+msgstr "お問い合わせ:"
+
+msgid "landing_f_privacy"
+msgstr "プライバシー"
+
+msgid "landing_f_terms"
+msgstr "利用規約"
+
+msgid "landing_faq_k"
+msgstr "FAQ"
+
+msgid "landing_faq_title"
+msgstr "よくあるご質問"
+
+msgid "landing_feat_k"
+msgstr "機能"
+
+msgid "landing_feat_p"
+msgstr "大きなチャンネルも読みやすく、グループは自分たちだけの場所、ダイレクトメッセージはすぐに届きます。"
+
+msgid "landing_feat_title"
+msgstr "大勢とおしゃべりしても迷わないように"
+
+msgid "landing_final_p"
+msgstr "さあ入って、趣味を選んで、あいさつしてみましょう。"
+
+msgid "landing_final_title"
+msgstr "次の予定は、<span class=\"go\">もう話し始めています</span>"
+
+msgid "landing_hero_lead"
+msgstr "同じ地域、同じ年齢層、同じ趣味の人たちとつながるチャンネル。予定が決まりそうになったら、グループを作ってプライベートで相談しましょう。"
+
+msgid "landing_hero_title"
+msgstr "近くの人と<span class=\"meet\">話そう。</span><span class=\"go\">そして会おう。</span>"
+
+msgid "landing_how_k"
+msgstr "使い方"
+
+msgid "landing_how_title"
+msgstr "チャットから予定まで、3ステップ"
+
+msgid "landing_more_k"
+msgstr "その他"
+
+msgid "landing_more_title"
+msgstr "いい雰囲気は、偶然ではありません"
+
+msgid "landing_nav_download"
+msgstr "ダウンロード"
+
+msgid "landing_nav_faq"
+msgstr "FAQ"
+
+msgid "landing_nav_features"
+msgstr "機能"
+
+msgid "landing_nav_how"
+msgstr "使い方"
+
+msgid "landing_nav_prices"
+msgstr "料金"
+
+msgid "landing_pr_btn"
+msgstr "トライアルを始める"
+
+msgid "landing_pr_eq"
+msgstr "月あたり€2.08相当"
+
+msgid "landing_pr_k"
+msgstr "料金"
+
+msgid "landing_pr_l1"
+msgstr "7日間の無料トライアル"
+
+msgid "landing_pr_l2"
+msgstr "チャンネル、グループ、ダイレクトメッセージ"
+
+msgid "landing_pr_l3"
+msgstr "いつでも解約OK"
+
+msgid "landing_pr_m"
+msgstr "月額"
+
+msgid "landing_pr_month"
+msgstr "/月"
+
+msgid "landing_pr_note"
+msgstr "お支払いは、ウェブではカード（Stripe）、アプリではGoogle Playで。料金には税金が含まれます。"
+
+msgid "landing_pr_p"
+msgstr "どちらのプランもすべての機能が使えます。7日間の無料トライアルつきで、いつでも解約できます。"
+
+msgid "landing_pr_save"
+msgstr "17%お得"
+
+msgid "landing_pr_title"
+msgstr "月額はコーヒー1杯以下"
+
+msgid "landing_pr_y"
+msgstr "年額"
+
+msgid "landing_pr_year"
+msgstr "/年"
+
+msgid "landing_promo_badge"
+msgstr "ローンチキャンペーン"
+
+msgid "landing_promo_copied"
+msgstr "コピーしました！"
+
+msgid "landing_promo_copy"
+msgstr "コピー"
+
+msgid "landing_promo_cta"
+msgstr "無料の1年間をもらう"
+
+msgid "landing_promo_eyebrow"
+msgstr "ローンチ · 無料枠 残り{left}"
+
+msgid "landing_promo_left"
+msgstr "残り枠"
+
+msgid "landing_promo_of"
+msgstr "全{max}枠"
+
+msgid "landing_promo_text"
+msgstr "このコードでアカウントを作成すると、丸1年間無料です。対象は最初の"
+
+msgid "landing_promo_text2"
+msgstr "アカウントのみ。"
+
+msgid "landing_promo_title"
+msgstr "最初のアカウントは<span class=\"sunt\">1年間無料</span>"
+
+msgid "landing_q0"
+msgstr "料金はいくらですか？"
+
+msgid "landing_q1"
+msgstr "料金はいくらですか？"
+
+msgid "landing_q2"
+msgstr "無料の1年間はどうすればもらえますか？"
+
+msgid "landing_q3"
+msgstr "無料の1年間が終わるとどうなりますか？"
+
+msgid "landing_q4"
+msgstr "電話番号は誰に見えますか？"
+
+msgid "landing_q5"
+msgstr "年齢制限はありますか？"
+
+msgid "landing_q6"
+msgstr "どの地域で使えますか？"
+
+msgid "landing_q7"
+msgstr "どうすれば解約できますか？"
+
+msgid "landing_q8"
+msgstr "AndroidとiPhoneのアプリはありますか？"
+
+msgid "landing_s1_p"
+msgstr "ハイキング、パデル、映画、カフェ…。趣味ごとに、同じ地域・年齢層の人たちのチャンネルがあります。"
+
+msgid "landing_s1_t"
+msgstr "趣味を選ぼう"
+
+msgid "landing_s2_p"
+msgstr "スレッドで返信すればすっきり。誰かをメンションしたり、チャットをにぎやかにしすぎずにリアクションしたりできます。"
+
+msgid "landing_s2_t"
+msgstr "チャンネルでおしゃべり"
+
+msgid "landing_s3_p"
+msgstr "プライベートグループを作って、参加したい人を招待し、車や時間や写真のことを静かに相談しましょう。"
+
+msgid "landing_s3_t"
+msgstr "グループで計画"
+
+msgid "landing_signin"
+msgstr "ログイン"
+
+msgid "landing_skip"
+msgstr "本文へスキップ"
+
+msgid "landing_strip_devices"
+msgstr "ウェブ、Android、iPhone"
+
+msgid "landing_strip_mod"
+msgstr "しっかりモデレーション"
+
+msgid "landing_strip_phone"
+msgstr "電話番号は非公開"
+
+msgid "landing_strip_zone"
+msgstr "あなたの地域と年齢層"
+
+msgid "landing_t1_p"
+msgstr "暴言、スパム、公開された電話番号は自動的に削除されます。"
+
+msgid "landing_t1_t"
+msgstr "自動モデレーション"
+
+msgid "landing_t2_p"
+msgstr "2タップでメッセージを報告。モデレーターがミュートや削除を行います。"
+
+msgid "landing_t2_t"
+msgstr "報告とモデレーター"
+
+msgid "landing_t3_p"
+msgstr "チャンネルがにぎやかになりすぎたら、モデレーターがペースを調整します。"
+
+msgid "landing_t3_t"
+msgstr "スローモード"
+
+msgid "landing_t4_p"
+msgstr "すべて、メンションのみ、通知なしを会話ごとに選べます。聞きたくないものはミュートしましょう。"
+
+msgid "landing_t4_t"
+msgstr "通知は自分好みに"
+
+msgid "landing_t5_p"
+msgstr "待ち合わせ時間が書かれたメッセージを、すべての会話から探せます。"
+
+msgid "landing_t5_t"
+msgstr "検索"
+
+msgid "landing_t6_p"
+msgstr "山頂の写真、ルートのトラック、予約のPDFを共有できます。"
+
+msgid "landing_t6_t"
+msgstr "写真とファイル"
+
+msgid "landing_web_k"
+msgstr "パソコンでも"
+
+msgid "landing_web_p"
+msgstr "大きな画面なら、リスト、チャンネル、スレッドやメンバーを同時に見渡せます。"
+
+msgid "landing_web_title"
+msgstr "すべての会話をひと目で"
+
+msgid "ui_splash_tagline"
+msgstr "近くの人と話そう。そして会おう。"
+
+msgid "ui_install_title"
+msgstr "MeetGoをインストール"
+
+msgid "ui_install_ios"
+msgstr "共有をタップして「ホーム画面に追加」を選ぶと、アプリのように全画面で開きます。"
+
+msgid "ui_install_dismiss"
+msgstr "今はしない"
+
+msgid "ui_push_failed"
+msgstr "このブラウザで通知をオンにできませんでした。もう一度お試しいただくか、別のブラウザをお使いください。"
+
+msgid "ui_settings"
+msgstr "設定"
+
+msgid "ui_section_about"
+msgstr "自己紹介"
+
+msgid "ui_section_zone"
+msgstr "あなたの地域"
+
+msgid "ui_section_privacy"
+msgstr "プライバシーとセキュリティ"
+
+msgid "ui_section_push"
+msgstr "この端末の通知"

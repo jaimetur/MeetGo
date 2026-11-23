@@ -1,11 +1,17 @@
 // English (en.po) is the source language: every other catalog is a translation of it, and anything
 // missing in a translation falls back to English. See lang/README.md.
-export type Lang = "es" | "en";
+export type Lang = string;
 
 type Dict = Record<string, string>;
 
-import esPo from "./es.po?raw";
-import enPo from "./en.po?raw";
+// Every lang/<code>.po is a language: adding a file is enough (see lang/README.md).
+const FILES = import.meta.glob("./*.po", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+
+/** Names of the languages in their own language, in the order the pickers show them. */
+export const LANGUAGE_NAMES: Record<string, string> = {
+  en: "English", es: "Español", ca: "Català", fr: "Français", it: "Italiano", de: "Deutsch", pt: "Português",
+  nl: "Nederlands", zh: "中文", ja: "日本語",
+};
 
 function unescapePo(s: string) {
   return s
@@ -62,14 +68,33 @@ function parsePo(input: string): Dict {
   return dict;
 }
 
-const DICTS: Record<Lang, Dict> = {
-  es: parsePo(esPo),
-  en: parsePo(enPo),
-};
+const DICTS: Record<Lang, Dict> = Object.fromEntries(
+  Object.entries(FILES).map(([path, text]) => [path.replace(/^.*\//, "").replace(/\.po$/, ""), parsePo(text)]),
+);
+
+/** The languages available, as [code, name], English first. */
+export const LANGUAGES: [Lang, string][] = Object.keys(DICTS)
+  .sort((a, b) => (Object.keys(LANGUAGE_NAMES).indexOf(a) + 1 || 99) - (Object.keys(LANGUAGE_NAMES).indexOf(b) + 1 || 99))
+  .map((code) => [code, LANGUAGE_NAMES[code] || code]);
+
+/** The first of the browser's languages that MeetGo has, or English. */
+export function browserLang(): Lang {
+  const wanted = typeof navigator === "undefined" ? [] : [...(navigator.languages || []), navigator.language];
+  for (const tag of wanted) {
+    const code = (tag || "").toLowerCase().split("-")[0];
+    if (DICTS[code]) return code;
+  }
+  return "en";
+}
 
 export function getLang(): Lang {
-  const v = (localStorage.getItem("lang") || "es") as Lang;
-  return v === "en" ? "en" : "es";
+  let stored = "";
+  try {
+    stored = localStorage.getItem("lang") || "";
+  } catch {
+    /* private mode */
+  }
+  return DICTS[stored] ? stored : browserLang();
 }
 
 export function setLang(l: Lang) {

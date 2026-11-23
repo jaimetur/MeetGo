@@ -277,6 +277,18 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 @media (hover: hover) { .menu button:hover { background: var(--hover); } }
 .menu button.warn { color: var(--red); }
 
+/* ---------- account ---------- */
+.acchero { display: flex; align-items: center; gap: 14px; padding: 16px; margin: 6px 0 14px; border-radius: 18px; border: 1px solid var(--line);
+  background: radial-gradient(120% 140% at 0% 0%, rgba(30, 144, 255, 0.22), transparent 60%), radial-gradient(100% 120% at 100% 100%, rgba(24, 215, 200, 0.18), transparent 60%), var(--panel); }
+.acchero-name { font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.acchero-meta { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.acchero-out { flex: none; }
+.segtabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 0 14px; padding: 4px; border-radius: 14px; background: var(--panel2); }
+.segtabs button { flex: 1 0 auto; padding: 8px 12px; border-radius: 10px; font-weight: 600; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.segtabs button.on { background: var(--grad); color: var(--on-accent); box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3); }
+.boxtitle { margin: 0; font-family: var(--display); font-size: 15px; color: var(--strong); }
+.langpick { background: var(--panel); color: var(--fg); border: 1px solid var(--line2); border-radius: 999px; padding: 6px 10px; font-size: 13px; }
+
 /* ---------- auth ---------- */
 /* auto margins centre the form and still let a tall form scroll from its top */
 .auth { height: 100%; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(20px + env(safe-area-inset-bottom, 0px)); background:

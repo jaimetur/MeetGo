@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Ten languages, translated from English: English, Spanish, Catalan, French, Italian, German, Portuguese, Dutch, Chinese and Japanese. The app, the landing page and the emails follow each person's language, the browser's language picks it the first time, and every `lang/<code>.po` added is a new language.
 - Private groups with invitation links, owners, administrators and moderators; members join, leave and can be removed, and the oldest member inherits a group whose owner leaves.
 - Direct messages open at once between friends; with anybody else they start with a request, if that person accepts direct messages.
 - Threads, replies quoting a message, reactions, editing (48 hours) and deleting messages, mentions with a mentions inbox, unread counts, read receipts in direct messages and groups, and "is typing" in real time.
@@ -31,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Account page reorganised: a card with your photo, name, email and area and the sign-out button always in view, and tabs for profile (about you, your area, privacy and security), interests, notifications and settings.
 - The app opens with a splash screen (icon, logo and tagline), the phone header shows the icon and the MeetGo logo over a glow in the brand colours, the active tab is lit with the brand gradient, and on the iPhone a notice explains how to install it on the home screen. In Safari the strip under the tab bar is painted like the bar.
 - All the branding images (icons, logos and the social sharing image) live in `assets/branding/` at the repository root, as in BodyLens; the web sites keep serving them at the same addresses.
 - While subscriptions are off in the administration, the app is free: the web app, the sign-up form and the landing page hide plans, prices, codes and the launch campaign, and no plan reminders are sent. Switching subscriptions on shows them again.

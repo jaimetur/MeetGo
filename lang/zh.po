@@ -1,0 +1,2859 @@
+# MeetGo translations: Simplified Chinese. Translated from en.po, the source language (see lang/README.md).
+msgid ""
+msgstr ""
+"Language: zh\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "app_name"
+msgstr "MeetGo"
+
+msgid "tagline"
+msgstr "少滑屏，多生活"
+
+msgid "tagline_long"
+msgstr "MeetGo -- 少刷卡,多生活"
+
+msgid "logout"
+msgstr "退出登录"
+
+msgid "login_title"
+msgstr "登录"
+
+msgid "login_btn"
+msgstr "登录"
+
+msgid "forgot_password_btn"
+msgstr "忘记密码"
+
+msgid "new_user_btn"
+msgstr "新用户"
+
+msgid "hide_register_btn"
+msgstr "收起注册"
+
+msgid "forgot_password_prompt"
+msgstr "输入你的邮箱以找回密码"
+
+msgid "forgot_password_sent"
+msgstr "如果该邮箱存在,我们已发送重置链接。"
+
+msgid "reset_password_title"
+msgstr "重置密码"
+
+msgid "reset_password_btn"
+msgstr "重置"
+
+msgid "reset_password_ok"
+msgstr "密码已更新。"
+
+msgid "verify_email_ok"
+msgstr "邮箱已验证。"
+
+msgid "verify_email_fail"
+msgstr "邮箱验证失败。"
+
+msgid "register_verify_email"
+msgstr "请查收邮件以验证你的账号。"
+
+msgid "or_register"
+msgstr "或者注册"
+
+msgid "error_title"
+msgstr "错误"
+
+msgid "ok_title"
+msgstr "确定"
+
+msgid "cancel"
+msgstr "取消"
+
+msgid "register_ok"
+msgstr "账号创建成功。"
+
+msgid "login_error_generic"
+msgstr "无法登录。"
+
+msgid "email"
+msgstr "邮箱"
+
+msgid "password"
+msgstr "密码"
+
+msgid "password_hint"
+msgstr "密码(至少 6 位,最多 60 位)"
+
+msgid "name"
+msgstr "姓名"
+
+msgid "dob_label"
+msgstr "出生日期"
+
+msgid "dob_pick"
+msgstr "请选择日期。"
+
+msgid "dob_invalid"
+msgstr "格式无效。"
+
+msgid "dob_underage"
+msgstr "你必须年满 18 岁。"
+
+msgid "phone_label"
+msgstr "手机"
+
+msgid "phone_number"
+msgstr "号码"
+
+msgid "country_label"
+msgstr "国家"
+
+msgid "province_label"
+msgstr "省/州"
+
+msgid "city_label"
+msgstr "城市"
+
+msgid "not_available"
+msgstr "(暂无)"
+
+msgid "avatar_url"
+msgstr "头像链接(可选)"
+
+msgid "bio"
+msgstr "简介(可选)"
+
+msgid "accept_dm"
+msgstr "允许私信"
+
+msgid "create_account"
+msgstr "创建账号"
+
+msgid "hello"
+msgstr "你好,{name}"
+
+msgid "rooms"
+msgstr "聊天室"
+
+msgid "feed"
+msgstr "动态"
+
+msgid "profile"
+msgstr "个人资料"
+
+msgid "load_my_rooms"
+msgstr "加载我的聊天室"
+
+msgid "join_room_title"
+msgstr "加入聊天室"
+
+msgid "join_room_desc"
+msgstr "选择一个兴趣并加入。如果不存在,将自动创建。"
+
+msgid "join_btn"
+msgstr "加入"
+
+msgid "leave_room_btn"
+msgstr "离开聊天室"
+
+msgid "leave_room_confirm"
+msgstr "离开聊天室 {room}?"
+
+msgid "leave_room_ok"
+msgstr "已离开聊天室。"
+
+msgid "leave_room_error"
+msgstr "无法离开聊天室。"
+
+msgid "no_rooms_title"
+msgstr "你还没有聊天室"
+
+msgid "no_rooms_desc"
+msgstr "点击上方“加入”来创建或加入一个。"
+
+msgid "tip_title"
+msgstr "提示"
+
+msgid "tip_body"
+msgstr "右键点击头像可打开菜单。"
+
+
+msgid "write_placeholder"
+msgstr "输入消息..."
+
+msgid "send_btn"
+msgstr "发送"
+
+msgid "publish_placeholder"
+msgstr "分享点什么..."
+
+msgid "publish_btn"
+msgstr "发布"
+
+msgid "refresh_btn"
+msgstr "刷新"
+
+msgid "profile_updated"
+msgstr "个人资料已更新"
+
+msgid "following_ok"
+msgstr "已关注"
+
+msgid "friend_req_ok"
+msgstr "好友请求已发送"
+
+msgid "save_profile"
+msgstr "保存资料"
+
+msgid "save_settings"
+msgstr "保存设置"
+
+msgid "settings_saved"
+msgstr "设置已保存。"
+
+msgid "edit_profile_title"
+msgstr "编辑资料"
+
+msgid "new_password"
+msgstr "新密码"
+
+msgid "dob_change_note"
+msgstr "出生日期只能修改一次,且需要审核。"
+
+msgid "warn_province_change"
+msgstr "更改省份将使你退出当前的聊天室。是否继续?"
+
+msgid "warn_country_change"
+msgstr "更改国家将更新你的资料。是否继续?"
+
+msgid "warn_dob_change"
+msgstr "出生日期只能修改一次,且需要审核。是否继续?"
+
+msgid "warn_dob_change_range"
+msgstr "更改出生日期会改变你的年龄段,并使你退出所有聊天室。只能修改一次,且需要审核。是否继续?"
+
+msgid "dob_change_limit"
+msgstr "你已经申请过修改出生日期。"
+
+msgid "yes"
+msgstr "是"
+
+msgid "no"
+msgstr "否"
+
+msgid "users_online"
+msgstr "用户:{count}"
+
+msgid "users_panel_title"
+msgstr "在线用户"
+
+msgid "show_users_panel"
+msgstr "显示用户"
+
+msgid "hide_users_panel"
+msgstr "隐藏用户"
+
+msgid "close_panel"
+msgstr "关闭"
+
+msgid "users_none"
+msgstr "没有在线用户"
+
+msgid "users_no_room"
+msgstr "选择一个聊天室以查看用户。"
+
+msgid "online_summary"
+msgstr "在线用户:{users} · 活跃聊天室:{rooms}"
+
+msgid "online_users"
+msgstr "在线用户:{users}"
+
+msgid "online_rooms"
+msgstr "活跃聊天室:{rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "隐藏聊天室"
+
+msgid "show_rooms_panel"
+msgstr "显示聊天室"
+
+msgid "settings_title"
+msgstr "设置"
+
+msgid "hide_panel"
+msgstr "隐藏面板"
+
+msgid "show_panel"
+msgstr "显示面板"
+
+msgid "hide_user_panel"
+msgstr "隐藏用户面板"
+
+msgid "show_user_panel"
+msgstr "显示用户面板"
+
+msgid "panel_user"
+msgstr "用户面板"
+
+msgid "panel_rooms"
+msgstr "聊天室面板"
+
+msgid "no_room_selected"
+msgstr "没有活跃的聊天室"
+
+msgid "language_label"
+msgstr "语言"
+
+msgid "menu_view_profile"
+msgstr "查看资料"
+
+msgid "menu_friend_request"
+msgstr "发送好友请求"
+
+msgid "menu_follow_feed"
+msgstr "关注动态"
+
+msgid "modal_profile_title"
+msgstr "个人资料"
+
+msgid "modal_close"
+msgstr "关闭"
+
+msgid "modal_friend"
+msgstr "好友"
+
+msgid "modal_follow"
+msgstr "关注"
+
+msgid "msg_deleted_by_mod"
+msgstr "消息已被管理员删除"
+
+msgid "no_bio_yet"
+msgstr "还没有简介。"
+
+msgid "join_room_error"
+msgstr "无法加入聊天室。"
+
+msgid "loading_interests"
+msgstr "正在加载兴趣..."
+
+msgid "interests_load_error"
+msgstr "无法加载兴趣。"
+
+msgid "retry_btn"
+msgstr "重试"
+
+msgid "chat_ws_error"
+msgstr "聊天连接错误 (WebSocket)。请检查后端端口/地址。"
+
+msgid "age_display"
+msgstr "年龄:{age}"
+
+msgid "age_display_underage"
+msgstr "年龄:{age}({note})"
+
+msgid "register_err_email_missing"
+msgstr "请填写邮箱。"
+
+msgid "register_err_password_short"
+msgstr "密码至少需要 6 位。"
+
+msgid "register_err_name_missing"
+msgstr "请填写姓名。"
+
+msgid "register_err_dob_invalid"
+msgstr "出生日期无效。"
+
+msgid "register_err_underage"
+msgstr "你必须年满 18 岁。"
+
+msgid "register_err_country_missing"
+msgstr "请选择国家。"
+
+msgid "register_err_province_missing"
+msgstr "请选择省/州。"
+
+msgid "register_err_province_unavailable"
+msgstr "该国家暂未配置省份。"
+
+msgid "register_err_phone_cc_missing"
+msgstr "请选择国际区号。"
+
+msgid "register_err_phone_short"
+msgstr "手机号码太短。"
+
+msgid "debug_title"
+msgstr "调试器"
+
+msgid "debug_subtitle"
+msgstr "最近 {count} 行"
+
+msgid "debug_clear"
+msgstr "清空"
+
+msgid "debug_copy"
+msgstr "复制"
+
+msgid "debug_copy_selection"
+msgstr "复制所选内容"
+
+msgid "debug_copy_selection_empty"
+msgstr "没有可复制的所选内容"
+
+msgid "debug_copy_ok"
+msgstr "已复制"
+
+msgid "debug_copy_fail"
+msgstr "复制失败"
+
+msgid "debug_frontend_tab"
+msgstr "前端 ({count})"
+
+msgid "debug_services_tab"
+msgstr "服务 ({count})"
+
+msgid "debug_services_connected"
+msgstr "推送中"
+
+msgid "debug_services_connecting"
+msgstr "连接中..."
+
+msgid "debug_services_error"
+msgstr "错误"
+
+msgid "debug_minimize"
+msgstr "最小化"
+
+msgid "debug_restore"
+msgstr "还原"
+
+msgid "debug_close"
+msgstr "关闭"
+
+msgid "debug_tab_all"
+msgstr "全部"
+
+msgid "debug_tab_js"
+msgstr "JavaScript"
+
+msgid "debug_auto_refresh"
+msgstr "自动刷新"
+
+msgid "debug_maximize"
+msgstr "最大化"
+
+msgid "chat_not_connected"
+msgstr "聊天未连接 (ws=null)。请先打开一个聊天室。"
+
+msgid "chat_not_connected_state"
+msgstr "聊天未连接 (WS readyState={state})。"
+
+msgid "chat_disconnected"
+msgstr "聊天已断开。请重新打开聊天室(或重新登录)。"
+
+msgid "chat_reconnecting"
+msgstr "正在重新连接聊天..."
+
+msgid "no_session"
+msgstr "没有会话(令牌)。请重新登录。"
+
+msgid "country_es_spain"
+msgstr "西班牙"
+
+msgid "country_pt_portugal"
+msgstr "葡萄牙"
+
+msgid "country_fr_france"
+msgstr "法国"
+
+msgid "country_it_italy"
+msgstr "意大利"
+
+msgid "country_de_germany"
+msgstr "德国"
+
+msgid "country_gb_uk"
+msgstr "英国"
+
+msgid "country_us_usa"
+msgstr "美国"
+
+msgid "country_mx_mexico"
+msgstr "墨西哥"
+
+msgid "country_ar_argentina"
+msgstr "阿根廷"
+
+msgid "country_co_colombia"
+msgstr "哥伦比亚"
+
+msgid "calling_es_spain"
+msgstr "西班牙"
+
+msgid "calling_pt_portugal"
+msgstr "葡萄牙"
+
+msgid "calling_fr_france"
+msgstr "法国"
+
+msgid "calling_it_italy"
+msgstr "意大利"
+
+msgid "calling_de_germany"
+msgstr "德国"
+
+msgid "calling_gb_uk"
+msgstr "英国"
+
+msgid "calling_us_ca"
+msgstr "美国 / 加拿大"
+
+msgid "calling_mx_mexico"
+msgstr "墨西哥"
+
+msgid "calling_ar_argentina"
+msgstr "阿根廷"
+
+msgid "calling_co_colombia"
+msgstr "哥伦比亚"
+
+msgid "province_es_alava"
+msgstr "阿拉瓦"
+
+msgid "province_es_albacete"
+msgstr "阿尔巴塞特"
+
+msgid "province_es_alicante"
+msgstr "阿利坎特"
+
+msgid "province_es_almeria"
+msgstr "阿尔梅里亚"
+
+msgid "province_es_asturias"
+msgstr "阿斯图里亚斯"
+
+msgid "province_es_avila"
+msgstr "阿维拉"
+
+msgid "province_es_badajoz"
+msgstr "巴达霍斯"
+
+msgid "province_es_barcelona"
+msgstr "巴塞罗那"
+
+msgid "province_es_burgos"
+msgstr "布尔戈斯"
+
+msgid "province_es_caceres"
+msgstr "卡塞雷斯"
+
+msgid "province_es_cadiz"
+msgstr "加的斯"
+
+msgid "province_es_cantabria"
+msgstr "坎塔布里亚"
+
+msgid "province_es_castellon"
+msgstr "卡斯特利翁"
+
+msgid "province_es_ciudad_real"
+msgstr "雷阿尔城"
+
+msgid "province_es_cordoba"
+msgstr "科尔多瓦"
+
+msgid "province_es_cuenca"
+msgstr "昆卡"
+
+msgid "province_es_girona"
+msgstr "赫罗纳"
+
+msgid "province_es_granada"
+msgstr "格拉纳达"
+
+msgid "province_es_guadalajara"
+msgstr "瓜达拉哈拉"
+
+msgid "province_es_gipuzkoa"
+msgstr "吉普斯夸"
+
+msgid "province_es_huelva"
+msgstr "韦尔瓦"
+
+msgid "province_es_huesca"
+msgstr "韦斯卡"
+
+msgid "province_es_illes_balears"
+msgstr "巴利阿里群岛"
+
+msgid "province_es_jaen"
+msgstr "哈恩"
+
+msgid "province_es_a_coruna"
+msgstr "拉科鲁尼亚"
+
+msgid "province_es_la_rioja"
+msgstr "拉里奥哈"
+
+msgid "province_es_las_palmas"
+msgstr "拉斯帕尔马斯"
+
+msgid "province_es_leon"
+msgstr "莱昂"
+
+msgid "province_es_lleida"
+msgstr "列伊达"
+
+msgid "province_es_lugo"
+msgstr "卢戈"
+
+msgid "province_es_madrid"
+msgstr "马德里"
+
+msgid "province_es_malaga"
+msgstr "马拉加"
+
+msgid "province_es_murcia"
+msgstr "穆尔西亚"
+
+msgid "province_es_navarra"
+msgstr "纳瓦拉"
+
+msgid "province_es_ourense"
+msgstr "奥伦塞"
+
+msgid "province_es_palencia"
+msgstr "帕伦西亚"
+
+msgid "province_es_pontevedra"
+msgstr "蓬特维德拉"
+
+msgid "province_es_salamanca"
+msgstr "萨拉曼卡"
+
+msgid "province_es_santa_cruz_de_tenerife"
+msgstr "圣克鲁斯-德特内里费"
+
+msgid "province_es_segovia"
+msgstr "塞哥维亚"
+
+msgid "province_es_sevilla"
+msgstr "塞维利亚"
+
+msgid "province_es_soria"
+msgstr "索里亚"
+
+msgid "province_es_tarragona"
+msgstr "塔拉戈纳"
+
+msgid "province_es_teruel"
+msgstr "特鲁埃尔"
+
+msgid "province_es_toledo"
+msgstr "托莱多"
+
+msgid "province_es_valencia"
+msgstr "瓦伦西亚"
+
+msgid "province_es_valladolid"
+msgstr "巴利亚多利德"
+
+msgid "province_es_bizkaia"
+msgstr "比斯开"
+
+msgid "province_es_zamora"
+msgstr "萨莫拉"
+
+msgid "province_es_zaragoza"
+msgstr "萨拉戈萨"
+
+msgid "province_pt_lisboa"
+msgstr "里斯本"
+
+msgid "province_pt_porto"
+msgstr "波尔图"
+
+msgid "province_pt_braga"
+msgstr "布拉加"
+
+msgid "province_pt_setubal"
+msgstr "塞图巴尔"
+
+msgid "province_pt_aveiro"
+msgstr "阿威罗"
+
+msgid "province_fr_ile_de_france"
+msgstr "法兰西岛"
+
+msgid "province_fr_occitanie"
+msgstr "奥克西塔尼"
+
+msgid "province_fr_nouvelle_aquitaine"
+msgstr "新阿基坦"
+
+msgid "province_fr_auvergne_rhone_alpes"
+msgstr "奥弗涅-罗讷-阿尔卑斯"
+
+msgid "province_it_lazio"
+msgstr "拉齐奥"
+
+msgid "province_it_lombardia"
+msgstr "伦巴第"
+
+msgid "province_it_campania"
+msgstr "坎帕尼亚"
+
+msgid "province_it_sicilia"
+msgstr "西西里"
+
+msgid "admin_users_title"
+msgstr "用户"
+
+msgid "admin_users_search_placeholder"
+msgstr "搜索"
+
+msgid "admin_users_search_button"
+msgstr "搜索"
+
+msgid "admin_users_select_placeholder"
+msgstr "选择用户"
+
+msgid "admin_users_logins_meta"
+msgstr "登录次数:{count} 最近:{last}"
+
+msgid "admin_users_last_seen_meta"
+msgstr "最后在线:{last} 总计:{seconds} 秒"
+
+msgid "admin_users_active_meta"
+msgstr "活跃:{active} 开始:{start}"
+
+msgid "admin_yes"
+msgstr "是"
+
+msgid "admin_no"
+msgstr "否"
+
+msgid "admin_users_edit_title"
+msgstr "编辑用户"
+
+msgid "admin_users_name"
+msgstr "姓名"
+
+msgid "admin_users_email"
+msgstr "邮箱"
+
+msgid "admin_users_phone"
+msgstr "手机"
+
+msgid "admin_users_dob"
+msgstr "出生日期 (YYYY-MM-DD)"
+
+msgid "admin_users_country"
+msgstr "国家"
+
+msgid "admin_users_province"
+msgstr "省份"
+
+msgid "admin_users_city"
+msgstr "城市"
+
+msgid "admin_users_role"
+msgstr "角色"
+
+msgid "admin_users_new_password"
+msgstr "新密码"
+
+msgid "admin_users_email_verified"
+msgstr "邮箱已验证"
+
+msgid "admin_users_resend_button"
+msgstr "重新发送验证邮件"
+
+msgid "admin_users_resend_ok"
+msgstr "验证邮件已重新发送。"
+
+msgid "admin_users_resend_error"
+msgstr "重新发送验证邮件失败。"
+
+msgid "admin_users_blocked"
+msgstr "已封禁"
+
+msgid "admin_users_blocked_until"
+msgstr "封禁至 (YYYY-MM-DD)"
+
+msgid "admin_users_password_label"
+msgstr "密码"
+
+msgid "admin_users_dob_short"
+msgstr "出生日期"
+
+msgid "admin_users_missing_fields"
+msgstr "缺少字段:{fields}"
+
+msgid "admin_users_updated"
+msgstr "用户已更新。"
+
+msgid "admin_users_created"
+msgstr "用户已创建。"
+
+msgid "admin_users_save_error"
+msgstr "无法保存用户。"
+
+msgid "admin_users_save_button"
+msgstr "保存"
+
+msgid "admin_users_create_button"
+msgstr "创建"
+
+msgid "admin_users_delete_confirm"
+msgstr "删除此用户?此操作无法撤销。"
+
+msgid "admin_users_deleted"
+msgstr "用户已删除。"
+
+msgid "admin_users_delete_error"
+msgstr "无法删除。"
+
+msgid "admin_users_delete_button"
+msgstr "删除"
+
+msgid "admin_channels_title"
+msgstr "频道"
+
+msgid "admin_channels_edit_button"
+msgstr "编辑"
+
+msgid "admin_channels_delete_button"
+msgstr "删除"
+
+msgid "admin_channels_form_title"
+msgstr "添加 / 编辑频道"
+
+msgid "admin_channels_name_placeholder"
+msgstr "频道名称"
+
+msgid "admin_channels_slug_label"
+msgstr "Slug:{slug}"
+
+msgid "admin_channels_name_required"
+msgstr "请填写频道名称。"
+
+msgid "admin_channels_updated"
+msgstr "频道已更新。"
+
+msgid "admin_channels_created"
+msgstr "频道已创建。"
+
+msgid "admin_channels_save_error"
+msgstr "无法保存频道。"
+
+msgid "admin_channels_save_button"
+msgstr "保存"
+
+msgid "unknown_user"
+msgstr "未知"
+
+msgid "email_verify_subject"
+msgstr "请确认你的 MeetGo 邮箱"
+
+msgid "email_verify_body"
+msgstr "点击按钮确认邮箱,即可开始使用 MeetGo。如果你没有创建过账号,请忽略此邮件。"
+
+msgid "email_reset_subject"
+msgstr "重置你的 MeetGo 密码"
+
+msgid "email_reset_body"
+msgstr "你申请了修改账号密码。链接将在 2 小时后失效。如果不是你本人操作,请忽略此邮件:你的密码不会改变。"
+
+msgid "email_smtp_test_subject"
+msgstr "MeetGo SMTP 测试"
+
+msgid "email_smtp_test_body"
+msgstr "来自 MeetGo 管理后台的 SMTP 测试邮件。"
+
+msgid "err_smtp_sender_not_configured"
+msgstr "未配置 SMTP 发件人"
+
+msgid "err_gmail_not_configured"
+msgstr "未配置 Gmail API SMTP"
+
+msgid "err_gmail_token_failed"
+msgstr "无法获取 Gmail 访问令牌"
+
+msgid "err_smtp_host_not_configured"
+msgstr "未配置 SMTP 服务器"
+
+msgid "err_admin_required"
+msgstr "需要管理员权限"
+
+msgid "err_email_phone_required"
+msgstr "邮箱和手机号为必填项"
+
+msgid "err_password_too_short"
+msgstr "密码太短"
+
+msgid "err_email_already_used"
+msgstr "该邮箱已被使用"
+
+msgid "err_invalid_phone"
+msgstr "手机号无效"
+
+msgid "err_phone_already_used"
+msgstr "该手机号已被使用"
+
+msgid "err_email_required"
+msgstr "请填写邮箱"
+
+msgid "err_invalid_credentials"
+msgstr "凭据无效"
+
+msgid "err_user_banned"
+msgstr "用户已被封禁"
+
+msgid "err_password_required"
+msgstr "请填写密码"
+
+msgid "err_email_not_verified"
+msgstr "邮箱尚未验证"
+
+msgid "err_invalid_token"
+msgstr "令牌无效"
+
+msgid "err_token_expired"
+msgstr "令牌已过期"
+
+msgid "err_missing_to_email"
+msgstr "缺少 to_email"
+
+msgid "err_user_not_found"
+msgstr "未找到用户"
+
+msgid "err_user_no_email"
+msgstr "该用户没有邮箱"
+
+msgid "err_cannot_delete_self"
+msgstr "不能删除自己"
+
+msgid "err_interest_exists"
+msgstr "该兴趣已存在"
+
+msgid "err_interest_not_found"
+msgstr "未找到该兴趣"
+
+msgid "err_dob_change_used"
+msgstr "已使用过出生日期修改机会"
+
+msgid "err_invalid_dob"
+msgstr "出生日期无效"
+
+msgid "err_province_required"
+msgstr "请选择省份"
+
+msgid "err_phone_change_limited"
+msgstr "手机号每 30 天只能修改一次"
+
+msgid "err_forbidden_diff_province"
+msgstr "禁止访问(省份不同)"
+
+msgid "err_room_not_found"
+msgstr "未找到聊天室"
+
+msgid "err_forbidden"
+msgstr "禁止访问"
+
+msgid "err_rules_not_found"
+msgstr "未找到规则"
+
+msgid "err_cannot_dm_self"
+msgstr "不能给自己发私信"
+
+msgid "err_user_no_dm"
+msgstr "该用户不接收私信"
+
+msgid "err_dm_daily_limit"
+msgstr "已达每日私信上限(10 条)"
+
+msgid "err_dm_request_pending"
+msgstr "私信请求正在等待处理"
+
+msgid "err_request_not_found"
+msgstr "未找到请求"
+
+msgid "err_already_resolved"
+msgstr "已处理"
+
+msgid "err_conversation_not_found"
+msgstr "未找到会话"
+
+msgid "err_cannot_follow_self"
+msgstr "不能关注自己"
+
+msgid "err_cannot_friend_self"
+msgstr "不能加自己为好友"
+
+msgid "err_already_friends"
+msgstr "已经是好友"
+
+msgid "err_request_pending"
+msgstr "请求正在等待处理"
+
+msgid "err_debug_disabled"
+msgstr "已停用"
+
+msgid "err_docker_sdk_missing"
+msgstr "未安装 Docker SDK"
+
+msgid "err_docker_unavailable"
+msgstr "Docker 不可用:{error}"
+
+msgid "err_no_compose_containers"
+msgstr "未找到 compose 容器"
+
+msgid "err_password_too_long"
+msgstr "密码太长(bcrypt 限制为 72 字节)。请使用较短的密码。"
+
+msgid "err_token_missing_sub"
+msgstr "缺少 sub"
+
+msgid "log_error_line"
+msgstr "[日志错误] {error}"
+
+msgid "err_password_required"
+msgstr "请填写密码"
+
+msgid "log_level_info"
+msgstr "INFO"
+
+msgid "log_level_warn"
+msgstr "WARN"
+
+msgid "log_level_warning"
+msgstr "WARNING"
+
+msgid "log_level_error"
+msgstr "ERROR"
+
+msgid "log_level_debug"
+msgstr "DEBUG"
+
+msgid "svc_database"
+msgstr "MeetGo-Database"
+
+msgid "svc_redis"
+msgstr "MeetGo-Redis"
+
+msgid "svc_app"
+msgstr "MeetGo-App"
+
+msgid "svc_web_user"
+msgstr "MeetGo-Web-User"
+
+msgid "svc_web_admin"
+msgstr "MeetGo-Web-Admin"
+
+msgid "svc_js"
+msgstr "MeetGo-JavaScript"
+
+msgid "svc_prefix"
+msgstr "MeetGo-{service}"
+
+msgid "err_interest_in_use"
+msgstr "该频道的聊天室中已有消息,请重命名而不是删除"
+
+msgid "err_empty_message"
+msgstr "消息为空"
+
+msgid "err_message_too_long"
+msgstr "消息太长"
+
+msgid "err_banned_here"
+msgstr "你不能在此会话中发言"
+
+msgid "err_display_name"
+msgstr "名称长度必须为 1 到 64 个字符"
+
+msgid "err_edit_window"
+msgstr "消息只能在 48 小时内编辑"
+
+msgid "err_file_empty"
+msgstr "文件为空"
+
+msgid "err_file_not_found"
+msgstr "未找到文件"
+
+msgid "err_file_too_big"
+msgstr "文件超过 10 MB"
+
+msgid "err_file_type"
+msgstr "不支持该类型的文件"
+
+msgid "err_invalid_email"
+msgstr "邮箱无效"
+
+msgid "err_invalid_plan"
+msgstr "套餐无效"
+
+msgid "err_invalid_reaction"
+msgstr "表情回应无效"
+
+msgid "err_invite_invalid"
+msgstr "此邀请已失效"
+
+msgid "err_message_deleted"
+msgstr "消息已被删除"
+
+msgid "err_message_not_found"
+msgstr "未找到消息"
+
+msgid "err_no_subscription"
+msgstr "你没有网页订阅"
+
+msgid "err_payments_failed"
+msgstr "支付未能完成"
+
+msgid "err_payments_not_configured"
+msgstr "支付功能尚未设置"
+
+msgid "err_promo_already_used"
+msgstr "你已使用过优惠码"
+
+msgid "err_promo_below_used"
+msgstr "上限不能低于已使用的名额"
+
+msgid "err_promo_exhausted"
+msgstr "该优惠码已无剩余名额"
+
+msgid "err_promo_invalid"
+msgstr "优惠码无效"
+
+msgid "err_purchase_inactive"
+msgstr "该购买未生效"
+
+msgid "err_purchase_invalid"
+msgstr "无法通过 Google Play 验证该购买"
+
+msgid "err_purchase_other_account"
+msgstr "该购买属于另一个账号"
+
+msgid "err_report_own"
+msgstr "你不能举报自己的消息"
+
+msgid "err_service_account"
+msgstr "服务账号无效"
+
+msgid "err_silenced_until"
+msgstr "你在此会话中被禁言至 {until}"
+
+msgid "err_slow_mode"
+msgstr "慢速模式:请等待 {seconds} 秒后再发言"
+
+msgid "err_subscription_required"
+msgstr "你需要有效订阅才能发言"
+
+msgid "err_too_many_reactions"
+msgstr "这条消息的表情回应太多了"
+
+msgid "sys_group_created"
+msgstr "{name} 创建了群组"
+
+msgid "sys_member_added"
+msgstr "{by} 添加了 {name}"
+
+msgid "sys_member_joined"
+msgstr "{name} 通过邀请加入了群组"
+
+msgid "sys_member_left"
+msgstr "{name} 退出了群组"
+
+msgid "sys_member_removed"
+msgstr "{by} 移除了 {name}"
+
+msgid "ui_accept"
+msgstr "接受"
+
+msgid "ui_accept_dm"
+msgstr "接受非好友的私信"
+
+msgid "ui_access_ends"
+msgstr "{plan}套餐:{date} 到期"
+
+msgid "ui_access_free"
+msgstr "你的账号享有免费使用权"
+
+msgid "ui_access_grant_life"
+msgstr "终身免费使用"
+
+msgid "ui_access_grant_until"
+msgstr "免费使用至 {date}"
+
+msgid "ui_access_none"
+msgstr "未订阅:你的账号为只读"
+
+msgid "ui_access_play"
+msgstr "Google Play 订阅至 {date}"
+
+msgid "ui_access_renews"
+msgstr "{plan}套餐:{date} 续订"
+
+msgid "ui_access_trial"
+msgstr "{plan}套餐免费试用至 {date}"
+
+msgid "ui_account_title"
+msgstr "你的账号"
+
+msgid "ui_activity"
+msgstr "动态"
+
+msgid "ui_add"
+msgstr "添加"
+
+msgid "ui_add_friend"
+msgstr "加好友"
+
+msgid "ui_add_friends"
+msgstr "添加好友"
+
+msgid "ui_added"
+msgstr "已添加"
+
+msgid "ui_also_send_to"
+msgstr "同时发送给 {name}"
+
+msgid "ui_appearance"
+msgstr "外观"
+
+msgid "ui_apply"
+msgstr "应用"
+
+msgid "ui_attach"
+msgstr "附件"
+
+msgid "ui_attachment"
+msgstr "附件"
+
+msgid "ui_avatar_url"
+msgstr "头像(链接)"
+
+msgid "ui_back"
+msgstr "返回"
+
+msgid "ui_ban"
+msgstr "封禁"
+
+msgid "ui_bio"
+msgstr "关于你"
+
+msgid "ui_cancel"
+msgstr "取消"
+
+msgid "ui_cancel_plan"
+msgstr "取消订阅"
+
+msgid "ui_change_server"
+msgstr "更换服务器"
+
+msgid "ui_channel_start"
+msgstr "这里是频道的开头。来自{zone}、与你兴趣相同的人在这里聊天。"
+
+msgid "ui_check_email_body"
+msgstr "我们给你发了一个确认邮箱的链接。打开后,即可用密码登录。"
+
+msgid "ui_check_email_title"
+msgstr "请查收邮件"
+
+msgid "ui_choose"
+msgstr "请选择…"
+
+msgid "ui_clear"
+msgstr "清除"
+
+msgid "ui_close"
+msgstr "关闭"
+
+msgid "ui_code_applied"
+msgstr "优惠码已使用"
+
+msgid "ui_connected"
+msgstr "已连接"
+
+msgid "ui_conversation_gone"
+msgstr "此会话已不可用"
+
+msgid "ui_copied"
+msgstr "已复制"
+
+msgid "ui_copy"
+msgstr "复制"
+
+msgid "ui_country"
+msgstr "国家"
+
+msgid "ui_create_account"
+msgstr "创建账号"
+
+msgid "ui_create_group"
+msgstr "创建群组"
+
+msgid "ui_decline"
+msgstr "拒绝"
+
+msgid "ui_delete"
+msgstr "删除"
+
+msgid "ui_deleted_user"
+msgstr "已删除的用户"
+
+msgid "ui_description"
+msgstr "描述"
+
+msgid "ui_details_optional"
+msgstr "详情(可选)"
+
+msgid "ui_direct_message"
+msgstr "私信"
+
+msgid "ui_disable"
+msgstr "关闭"
+
+msgid "ui_display_name"
+msgstr "显示名称"
+
+msgid "ui_dm_request_sent"
+msgstr "请求已发送:对方接受后即可聊天"
+
+msgid "ui_dm_requests"
+msgstr "想给你发消息"
+
+msgid "ui_dm_start"
+msgstr "这是你和 {name} 的私人对话。"
+
+msgid "ui_dob"
+msgstr "出生日期"
+
+msgid "ui_done"
+msgstr "完成"
+
+msgid "ui_edit"
+msgstr "编辑"
+
+msgid "ui_edit_hint"
+msgstr "按 Enter 保存 · 按 Esc 取消"
+
+msgid "ui_edit_in_chat"
+msgstr "在会话中编辑消息"
+
+msgid "ui_edited"
+msgstr "已编辑"
+
+msgid "ui_email"
+msgstr "邮箱"
+
+msgid "ui_email_verified"
+msgstr "邮箱已确认。现在可以登录了。"
+
+msgid "ui_emoji"
+msgstr "表情"
+
+msgid "ui_empty_body"
+msgstr "选择你的兴趣以加入本地频道,或者和朋友们一起创建群组。"
+
+msgid "ui_empty_title"
+msgstr "你还没有会话"
+
+msgid "ui_enable"
+msgstr "开启"
+
+msgid "ui_enter_hint"
+msgstr "按 Enter 发送 · Shift+Enter 换行"
+
+msgid "ui_err_generic"
+msgstr "出了点问题(错误 {status})。请重试。"
+
+msgid "ui_err_invalid_data"
+msgstr "请检查表单内容"
+
+msgid "ui_err_network"
+msgstr "无法连接服务器。请检查网络连接。"
+
+msgid "ui_explore_channels"
+msgstr "探索频道"
+
+msgid "ui_explore_lead"
+msgstr "{zone}的频道。加入你喜欢的吧。"
+
+msgid "ui_explore_title"
+msgstr "频道"
+
+msgid "ui_f_all"
+msgstr "全部"
+
+msgid "ui_f_channels"
+msgstr "频道"
+
+msgid "ui_f_direct"
+msgstr "私信"
+
+msgid "ui_f_groups"
+msgstr "群组"
+
+msgid "ui_f_mentions"
+msgstr "提及"
+
+msgid "ui_f_unread"
+msgstr "未读"
+
+msgid "ui_feed_empty"
+msgstr "还没有动态。关注一些人,就能在这里看到他们的动态。"
+
+msgid "ui_feed_hint"
+msgstr "你的关注者会看到"
+
+msgid "ui_feed_placeholder"
+msgstr "你在忙什么?"
+
+msgid "ui_find_people"
+msgstr "找人"
+
+msgid "ui_follow"
+msgstr "关注"
+
+msgid "ui_forgot"
+msgstr "忘记密码?"
+
+msgid "ui_forgot_sent"
+msgstr "如果有账号使用该邮箱,我们已向它发送了修改密码的链接。"
+
+msgid "ui_forgot_title"
+msgstr "重置密码"
+
+msgid "ui_friend"
+msgstr "好友"
+
+msgid "ui_friend_request_sent"
+msgstr "好友请求已发送"
+
+msgid "ui_friend_requests"
+msgstr "好友请求"
+
+msgid "ui_friends"
+msgstr "好友"
+
+msgid "ui_go_latest"
+msgstr "回到最新"
+
+msgid "ui_go_login"
+msgstr "返回登录"
+
+msgid "ui_home_page"
+msgstr "首页"
+
+msgid "ui_group_members_hint"
+msgstr "现在就添加你的朋友,或稍后分享邀请链接。"
+
+msgid "ui_group_name"
+msgstr "群组名称"
+
+msgid "ui_group_name_ph"
+msgstr "周六徒步"
+
+msgid "ui_group_start"
+msgstr "这里是群组的开头。在这里一起计划吧。"
+
+msgid "ui_have_account"
+msgstr "我已有账号"
+
+msgid "ui_hide_chat"
+msgstr "隐藏会话"
+
+msgid "ui_info"
+msgstr "信息"
+
+msgid "ui_interests"
+msgstr "兴趣"
+
+msgid "ui_interests_lead"
+msgstr "每个兴趣都会让你加入{zone}中对应你年龄段的频道。"
+
+msgid "ui_invite_link"
+msgstr "邀请链接"
+
+msgid "ui_join"
+msgstr "加入"
+
+msgid "ui_join_group"
+msgstr "加入群组"
+
+msgid "ui_language"
+msgstr "语言"
+
+msgid "ui_last_at"
+msgstr "最后在线 {time}"
+
+msgid "ui_leave_channel"
+msgstr "退出频道"
+
+msgid "ui_leave_group"
+msgstr "退出群组"
+
+msgid "ui_loading"
+msgstr "加载中…"
+
+msgid "ui_login_btn"
+msgstr "登录"
+
+msgid "ui_login_title"
+msgstr "登录 MeetGo"
+
+msgid "ui_logout"
+msgstr "退出登录"
+
+msgid "ui_make_admin"
+msgstr "设为管理员"
+
+msgid "ui_make_member"
+msgstr "取消管理员"
+
+msgid "ui_manage_payment"
+msgstr "管理支付和发票"
+
+msgid "ui_members"
+msgstr "成员"
+
+msgid "ui_members_n"
+msgstr "{n} 位成员"
+
+msgid "ui_mentions_lead"
+msgstr "提到你的消息。"
+
+msgid "ui_mentions_title"
+msgstr "提及"
+
+msgid "ui_message_actions"
+msgstr "消息操作"
+
+msgid "ui_message_in"
+msgstr "给 {name} 发消息"
+
+msgid "ui_message_to"
+msgstr "给 {name} 发消息"
+
+msgid "ui_mod_caps"
+msgstr "已被管理员移除:大写字母过多"
+
+msgid "ui_mod_flood"
+msgstr "已被管理员移除:连续发送消息过多"
+
+msgid "ui_mod_generic"
+msgstr "已被管理员移除"
+
+msgid "ui_mod_links"
+msgstr "已被管理员移除:此频道不允许发链接"
+
+msgid "ui_mod_phone"
+msgstr "已被管理员移除:请勿在频道中分享手机号"
+
+msgid "ui_mod_removed"
+msgstr "已被版主移除"
+
+msgid "ui_mod_toxic"
+msgstr "已被管理员移除:言辞冒犯"
+
+msgid "ui_moderation"
+msgstr "管理"
+
+msgid "ui_monthly"
+msgstr "按月"
+
+msgid "ui_more"
+msgstr "更多"
+
+msgid "ui_msg_deleted"
+msgstr "消息已删除"
+
+msgid "ui_mute_1h"
+msgstr "静音 1 小时"
+
+msgid "ui_mute_week"
+msgstr "静音 1 周"
+
+msgid "ui_nav"
+msgstr "导航"
+
+msgid "ui_nav_account"
+msgstr "账号"
+
+msgid "ui_nav_channels"
+msgstr "频道"
+
+msgid "ui_nav_chats"
+msgstr "聊天"
+
+msgid "ui_nav_mentions"
+msgstr "提及"
+
+msgid "ui_nav_people"
+msgstr "好友"
+
+msgid "ui_needs_request"
+msgstr "需要先发送请求"
+
+msgid "ui_new_chat"
+msgstr "新会话"
+
+msgid "ui_new_group"
+msgstr "新建群组"
+
+msgid "ui_new_link"
+msgstr "新链接"
+
+msgid "ui_new_messages"
+msgstr "新消息"
+
+msgid "ui_new_messages_n"
+msgstr "{n} 条新消息"
+
+msgid "ui_no_dms"
+msgstr "不接收私信"
+
+msgid "ui_no_friends_hint"
+msgstr "在频道中点击对方的名字即可加好友,也可以在“找人”中查找。"
+
+msgid "ui_no_friends_yet"
+msgstr "你在 MeetGo 上还没有好友"
+
+msgid "ui_no_mentions"
+msgstr "还没有人提到你"
+
+msgid "ui_no_requests"
+msgstr "你没有待处理的请求"
+
+msgid "ui_no_results"
+msgstr "没有结果"
+
+msgid "ui_notifications"
+msgstr "通知"
+
+msgid "ui_notifications_hint"
+msgstr "群组和私信的每条消息都会通知你;频道只在有人提到你时通知。可在每个会话的菜单中更改。"
+
+msgid "ui_notify_all"
+msgstr "通知每条消息"
+
+msgid "ui_notify_current"
+msgstr "通知:{mode}"
+
+msgid "ui_notify_mentions"
+msgstr "仅通知提及"
+
+msgid "ui_notify_none"
+msgstr "从不通知"
+
+msgid "ui_off"
+msgstr "关"
+
+msgid "ui_offline"
+msgstr "离线"
+
+msgid "ui_offline_n"
+msgstr "离线 · {n}"
+
+msgid "ui_online"
+msgstr "在线"
+
+msgid "ui_online_n"
+msgstr "在线 · {n}"
+
+msgid "ui_open"
+msgstr "打开"
+
+msgid "ui_open_notification_settings"
+msgstr "手机通知设置"
+
+msgid "ui_password"
+msgstr "密码"
+
+msgid "ui_password_change"
+msgstr "新密码(可选)"
+
+msgid "ui_password_new"
+msgstr "密码(至少 6 位)"
+
+msgid "ui_payments_soon"
+msgstr "此服务器尚未开通支付功能。"
+
+msgid "ui_paywall_lead"
+msgstr "你的账号只能阅读,不能发言。订阅后即可参与频道、群组和私信。"
+
+msgid "ui_paywall_title"
+msgstr "订阅 MeetGo"
+
+msgid "ui_people_title"
+msgstr "好友"
+
+msgid "ui_per_month"
+msgstr "每月"
+
+msgid "ui_per_year"
+msgstr "每年"
+
+msgid "ui_phone"
+msgstr "手机(不会向任何人显示)"
+
+msgid "ui_pick_conversation"
+msgstr "选择一个会话"
+
+msgid "ui_pick_conversation_hint"
+msgstr "或点击铅笔按钮开始新的会话。"
+
+msgid "ui_pin"
+msgstr "置顶消息"
+
+msgid "ui_pin_chat"
+msgstr "置顶会话"
+
+msgid "ui_pinned"
+msgstr "已置顶"
+
+msgid "ui_plan_active"
+msgstr "订阅已生效!感谢你对 MeetGo 的支持。"
+
+msgid "ui_profile"
+msgstr "个人资料"
+
+msgid "ui_promo_code"
+msgstr "优惠码"
+
+msgid "ui_province"
+msgstr "省份"
+
+msgid "ui_publish"
+msgstr "发布"
+
+msgid "ui_push_blocked"
+msgstr "此浏览器已屏蔽通知,请在浏览器设置中允许。"
+
+msgid "ui_push_denied"
+msgstr "通知未开启"
+
+msgid "ui_push_disabled_here"
+msgstr "此浏览器的通知已关闭"
+
+msgid "ui_push_enabled_here"
+msgstr "此浏览器的通知已开启"
+
+msgid "ui_push_off"
+msgstr "通知已关闭"
+
+msgid "ui_push_on"
+msgstr "通知已开启"
+
+msgid "ui_push_unsupported"
+msgstr "此浏览器不支持通知。在 iPhone 上,请先将 MeetGo 添加到主屏幕。"
+
+msgid "ui_react"
+msgstr "回应"
+
+msgid "ui_read"
+msgstr "已读"
+
+msgid "ui_read_only"
+msgstr "订阅之前,你的账号为只读。"
+
+msgid "ui_reason"
+msgstr "原因"
+
+msgid "ui_reason_spam"
+msgstr "垃圾信息或广告"
+
+msgid "ui_reason_harassment"
+msgstr "骚扰"
+
+msgid "ui_reason_hate"
+msgstr "仇恨或歧视"
+
+msgid "ui_reason_sexual"
+msgstr "色情内容"
+
+msgid "ui_reason_violence"
+msgstr "暴力或威胁"
+
+msgid "ui_reason_other"
+msgstr "其他"
+
+msgid "ui_reconnecting"
+msgstr "正在重新连接…"
+
+msgid "ui_register_lead"
+msgstr "你将与同省份、同年龄段的人聊天。你的手机号不会被显示。"
+
+msgid "ui_register_legal"
+msgstr "创建账号即表示你确认已年满 18 岁,并接受服务条款和隐私政策。"
+
+msgid "ui_register_title"
+msgstr "创建你的账号"
+
+msgid "ui_remove"
+msgstr "移除"
+
+msgid "ui_remove_member"
+msgstr "移出群组"
+
+msgid "ui_replied_in_thread"
+msgstr "在话题中回复了"
+
+msgid "ui_replies_n"
+msgstr "{n} 条回复"
+
+msgid "ui_reply"
+msgstr "回复"
+
+msgid "ui_reply_in_thread_ph"
+msgstr "在话题中回复"
+
+msgid "ui_reply_thread"
+msgstr "在话题中回复"
+
+msgid "ui_replying_to"
+msgstr "回复给"
+
+msgid "ui_report"
+msgstr "举报"
+
+msgid "ui_report_in_chat"
+msgstr "在会话中举报该消息"
+
+msgid "ui_report_title"
+msgstr "举报消息"
+
+msgid "ui_reported"
+msgstr "谢谢。管理员会进行审核。"
+
+msgid "ui_request"
+msgstr "请求"
+
+msgid "ui_requests"
+msgstr "请求"
+
+msgid "ui_reset_done"
+msgstr "密码已修改。现在可以登录了。"
+
+msgid "ui_reset_title"
+msgstr "新密码"
+
+msgid "ui_restore_purchase"
+msgstr "恢复购买"
+
+msgid "ui_resume_plan"
+msgstr "恢复订阅"
+
+msgid "ui_retry"
+msgstr "重试"
+
+msgid "ui_role_owner"
+msgstr "所有者"
+
+msgid "ui_role_admin"
+msgstr "管理员"
+
+msgid "ui_role_moderator"
+msgstr "MOD"
+
+msgid "ui_role_member"
+msgstr "成员"
+
+msgid "ui_rules"
+msgstr "规则"
+
+msgid "ui_save"
+msgstr "保存"
+
+msgid "ui_save_17"
+msgstr "省 17%"
+
+msgid "ui_saved"
+msgstr "已保存"
+
+msgid "ui_search_in"
+msgstr "在 {name} 中搜索"
+
+msgid "ui_search_in_chat"
+msgstr "在会话中搜索"
+
+msgid "ui_search_members"
+msgstr "搜索成员"
+
+msgid "ui_search_people"
+msgstr "按姓名搜索"
+
+msgid "ui_search_people_hint"
+msgstr "至少输入两个字母。你会看到你的好友和同省份的人。"
+
+msgid "ui_search_placeholder"
+msgstr "搜索会话或消息"
+
+msgid "ui_sec_channels"
+msgstr "频道"
+
+msgid "ui_sec_channels_zone"
+msgstr "频道 · {zone}"
+
+msgid "ui_sec_direct"
+msgstr "私信"
+
+msgid "ui_sec_groups"
+msgstr "群组"
+
+msgid "ui_sec_messages"
+msgstr "消息"
+
+msgid "ui_sec_pinned"
+msgstr "已置顶"
+
+msgid "ui_seconds_n"
+msgstr "{n} 秒"
+
+msgid "ui_send"
+msgstr "发送"
+
+msgid "ui_send_link"
+msgstr "发送链接"
+
+msgid "ui_send_message"
+msgstr "发消息"
+
+msgid "ui_sent"
+msgstr "已发送"
+
+msgid "ui_session"
+msgstr "会话"
+
+msgid "ui_share_lead"
+msgstr "选择分享到哪里({n} 个文件)。"
+
+msgid "ui_share_nothing"
+msgstr "没有可分享的内容。"
+
+msgid "ui_share_title"
+msgstr "分享到 MeetGo"
+
+msgid "ui_side_panel"
+msgstr "侧边栏"
+
+msgid "ui_silence_1h"
+msgstr "禁言 1 小时"
+
+msgid "ui_silenced_until"
+msgstr "你在此会话中被禁言至 {time}。"
+
+msgid "ui_slow_mode"
+msgstr "慢速模式:每 {seconds} 秒一条消息"
+
+msgid "ui_slow_mode_label"
+msgstr "慢速模式"
+
+msgid "ui_staff_n"
+msgstr "管理员 · {n}"
+
+msgid "ui_subscribe"
+msgstr "订阅"
+
+msgid "ui_subscribe_card"
+msgstr "银行卡订阅"
+
+msgid "ui_subscribe_play"
+msgstr "通过 Google Play 订阅"
+
+msgid "ui_subscription"
+msgstr "订阅"
+
+msgid "ui_switch_monthly"
+msgstr "切换为按月"
+
+msgid "ui_switch_yearly"
+msgstr "切换为按年(省 17%)"
+
+msgid "ui_theme"
+msgstr "主题"
+
+msgid "ui_theme_dark"
+msgstr "深色"
+
+msgid "ui_theme_light"
+msgstr "浅色"
+
+msgid "ui_theme_system"
+msgstr "跟随系统"
+
+msgid "ui_thread"
+msgstr "话题"
+
+msgid "ui_threads"
+msgstr "信息和规则"
+
+msgid "ui_today"
+msgstr "今天"
+
+msgid "ui_trial_days"
+msgstr "前 {n} 天免费。随时可取消。"
+
+msgid "ui_typing_many"
+msgstr "{name} 等 {n} 人正在输入…"
+
+msgid "ui_typing_one"
+msgstr "{name} 正在输入…"
+
+msgid "ui_typing_short"
+msgstr "正在输入…"
+
+msgid "ui_typing_two"
+msgstr "{a} 和 {b} 正在输入…"
+
+msgid "ui_unfollow"
+msgstr "取消关注"
+
+msgid "ui_unmute"
+msgstr "取消静音"
+
+msgid "ui_unpin"
+msgstr "取消置顶消息"
+
+msgid "ui_unpin_chat"
+msgstr "取消置顶会话"
+
+msgid "ui_unsilence"
+msgstr "解除禁言"
+
+msgid "ui_uploading"
+msgstr "上传中…"
+
+msgid "ui_wait"
+msgstr "请稍候…"
+
+msgid "ui_wants_friend"
+msgstr "{name} 想加你为好友"
+
+msgid "ui_wants_to_write"
+msgstr "{name} 想给你发消息"
+
+msgid "ui_write"
+msgstr "发消息"
+
+msgid "ui_yearly"
+msgstr "按年"
+
+msgid "ui_yesterday"
+msgstr "昨天"
+
+msgid "ui_you"
+msgstr "你"
+
+msgid "admin_add_calling_code"
+msgstr "添加国际区号"
+
+msgid "admin_add_country"
+msgstr "添加国家"
+
+msgid "admin_add_language"
+msgstr "添加语言"
+
+msgid "admin_add_range"
+msgstr "添加范围"
+
+msgid "admin_age_ranges_title"
+msgstr "年龄段"
+
+msgid "admin_app_section"
+msgstr "应用"
+
+msgid "admin_base_url"
+msgstr "公开网址"
+
+msgid "admin_base_url_placeholder"
+msgstr "https://meetgo.app"
+
+msgid "admin_calling_code_placeholder"
+msgstr "+34"
+
+msgid "admin_calling_codes_title"
+msgstr "国际区号"
+
+msgid "admin_code"
+msgstr "代码"
+
+msgid "admin_countries_title"
+msgstr "国家"
+
+msgid "admin_delete"
+msgstr "删除"
+
+msgid "admin_gmail_client_id"
+msgstr "Gmail:客户端 ID"
+
+msgid "admin_gmail_client_secret"
+msgstr "Gmail:客户端密钥"
+
+msgid "admin_gmail_refresh_token"
+msgstr "Gmail:刷新令牌"
+
+msgid "admin_gmail_sender_email"
+msgstr "Gmail:发件邮箱"
+
+msgid "admin_key"
+msgstr "键"
+
+msgid "admin_label"
+msgstr "标签"
+
+msgid "admin_languages_title"
+msgstr "语言"
+
+msgid "admin_loading"
+msgstr "加载中…"
+
+msgid "admin_login_button"
+msgstr "登录"
+
+msgid "admin_login_password"
+msgstr "密码"
+
+msgid "admin_login_username"
+msgstr "邮箱或用户名"
+
+msgid "admin_logout"
+msgstr "退出登录"
+
+msgid "admin_max"
+msgstr "最大"
+
+msgid "admin_min"
+msgstr "最小"
+
+msgid "admin_name"
+msgstr "名称"
+
+msgid "admin_provinces_title"
+msgstr "省份"
+
+msgid "admin_settings_error"
+msgstr "无法保存设置"
+
+msgid "admin_settings_save"
+msgstr "保存设置"
+
+msgid "admin_settings_saved"
+msgstr "设置已保存"
+
+msgid "admin_settings_title"
+msgstr "设置"
+
+msgid "admin_smtp_encryption"
+msgstr "加密方式"
+
+msgid "admin_smtp_from_email"
+msgstr "发件邮箱"
+
+msgid "admin_smtp_host"
+msgstr "SMTP 服务器"
+
+msgid "admin_smtp_mode"
+msgstr "发送方式"
+
+msgid "admin_smtp_mode_gmail"
+msgstr "Gmail API"
+
+msgid "admin_smtp_mode_smtp"
+msgstr "SMTP"
+
+msgid "admin_smtp_password"
+msgstr "SMTP 密码"
+
+msgid "admin_smtp_port"
+msgstr "端口"
+
+msgid "admin_smtp_section"
+msgstr "外发邮件"
+
+msgid "admin_smtp_ssl"
+msgstr "SSL"
+
+msgid "admin_smtp_starttls"
+msgstr "STARTTLS"
+
+msgid "admin_smtp_test_button"
+msgstr "发送测试邮件"
+
+msgid "admin_smtp_test_email"
+msgstr "测试邮件发送至"
+
+msgid "admin_smtp_test_error"
+msgstr "无法发送测试邮件"
+
+msgid "admin_smtp_test_ok"
+msgstr "测试邮件已发送"
+
+msgid "admin_smtp_username"
+msgstr "SMTP 用户名"
+
+msgid "admin_tab_channels"
+msgstr "频道"
+
+msgid "admin_tab_settings"
+msgstr "设置"
+
+msgid "admin_tab_users"
+msgstr "用户"
+
+msgid "admin_title"
+msgstr "MeetGo 管理后台"
+
+msgid "email_open_app"
+msgstr "打开 MeetGo"
+
+msgid "email_footer_digest"
+msgstr "你收到这封邮件,是因为你在 MeetGo 上有未读消息。"
+
+msgid "email_footer_requests"
+msgstr "你收到这封邮件,是因为有人想在 MeetGo 上联系你。"
+
+msgid "email_footer_reports"
+msgstr "你收到这封邮件,是因为你是 MeetGo 的管理员。"
+
+msgid "email_footer_manage"
+msgstr "选择我要收到的邮件"
+
+msgid "email_footer_unsubscribe"
+msgstr "不再接收这些邮件"
+
+msgid "email_verify_title"
+msgstr "确认你的邮箱"
+
+msgid "email_verify_button"
+msgstr "确认我的邮箱"
+
+msgid "email_reset_title"
+msgstr "设置新密码"
+
+msgid "email_reset_button"
+msgstr "设置密码"
+
+msgid "email_password_changed_subject"
+msgstr "你的 MeetGo 密码已更改"
+
+msgid "email_password_changed_title"
+msgstr "密码已更改"
+
+msgid "email_password_changed_body"
+msgstr "你的账号密码刚刚被更改。如果不是你本人操作,请立即通过“忘记密码?”找回密码,并回复此邮件。"
+
+msgid "email_friend_request_subject"
+msgstr "{name} 想在 MeetGo 上加你为好友"
+
+msgid "email_friend_request_title"
+msgstr "新的好友请求"
+
+msgid "email_friend_request_body"
+msgstr "{name} 向你发送了好友请求。接受后,你们就可以互发私信并一起创建群组。"
+
+msgid "email_friend_request_button"
+msgstr "查看请求"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name} 已接受你的好友请求"
+
+msgid "email_friend_accepted_title"
+msgstr "你们已成为好友"
+
+msgid "email_friend_accepted_body"
+msgstr "{name} 已接受你的好友请求。现在你们可以互发私信了。"
+
+msgid "email_dm_request_subject"
+msgstr "{name} 想在 MeetGo 上给你发消息"
+
+msgid "email_dm_request_title"
+msgstr "私信请求"
+
+msgid "email_dm_request_body"
+msgstr "{name} 想通过私信和你聊天。接受请求即可开始对话。"
+
+msgid "email_dm_request_button"
+msgstr "查看请求"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name} 已接受你的私信请求"
+
+msgid "email_dm_accepted_title"
+msgstr "会话已开启"
+
+msgid "email_dm_accepted_body"
+msgstr "{name} 已接受你的请求:现在你们可以私信聊天了。"
+
+msgid "email_dm_accepted_button"
+msgstr "前往会话"
+
+msgid "email_group_added_subject"
+msgstr "{name} 已将你加入“{group}”"
+
+msgid "email_group_added_title"
+msgstr "新群组"
+
+msgid "email_group_added_body"
+msgstr "{name} 已将你加入 MeetGo 群组“{group}”。"
+
+msgid "email_group_added_button"
+msgstr "前往群组"
+
+msgid "email_mod_silence_subject"
+msgstr "你在{place}被禁言了"
+
+msgid "email_mod_silence_title"
+msgstr "暂时禁言"
+
+msgid "email_mod_silence_body"
+msgstr "{place}的管理员已将你禁言 {minutes} 分钟。之后你就可以重新发言了。"
+
+msgid "email_mod_ban_subject"
+msgstr "你不能再在{place}发言"
+
+msgid "email_mod_ban_title"
+msgstr "已被{place}封禁"
+
+msgid "email_mod_ban_body"
+msgstr "{place}的管理员已封禁你,你无法再在那里发言。如果你认为这是误会,请回复此邮件。"
+
+msgid "email_mod_remove_subject"
+msgstr "你已被移出{place}"
+
+msgid "email_mod_remove_title"
+msgstr "已离开{place}"
+
+msgid "email_mod_remove_body"
+msgstr "管理员已将你移出{place}。如果你认为这是误会,请回复此邮件。"
+
+msgid "email_report_subject"
+msgstr "MeetGo 上有新的举报"
+
+msgid "email_report_title"
+msgstr "新举报"
+
+msgid "email_report_body"
+msgstr "有人举报了一条消息({reason})。请在管理后台的审核队列中查看。"
+
+msgid "email_digest_subject"
+msgstr "你在 MeetGo 上有未读消息 ({n})"
+
+msgid "email_digest_title"
+msgstr "未读消息"
+
+msgid "email_digest_body"
+msgstr "这些是你还没读的内容:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name} 在{place}提到了你"
+
+msgid "email_digest_mention_title"
+msgstr "有人提到了你"
+
+msgid "email_digest_mention_body"
+msgstr "{name} 在{place}提到了你。这些是你还没读的内容:"
+
+msgid "email_digest_mention_button"
+msgstr "查看消息"
+
+msgid "email_digest_more"
+msgstr "还有 {n} 条…"
+
+msgid "email_digest_attachment"
+msgstr "📎 附件"
+
+msgid "email_access_ending_subject"
+msgstr "你在 MeetGo 的免费使用将于 {date} 结束"
+
+msgid "email_access_ending_title"
+msgstr "你的免费使用即将结束"
+
+msgid "email_access_ending_body"
+msgstr "你的免费使用将于 {date} 结束。之后你仍可阅读,但发言需要订阅(每月 €2.50 或每年 €25)。"
+
+msgid "email_access_ending_button"
+msgstr "查看套餐"
+
+msgid "email_access_ended_subject"
+msgstr "你在 MeetGo 的免费使用已结束"
+
+msgid "email_access_ended_title"
+msgstr "你的免费使用已结束"
+
+msgid "email_access_ended_body"
+msgstr "你的免费使用已于 {date} 结束。你的账号仍然有效,可以阅读,但要再次发言需要订阅。"
+
+msgid "email_access_ended_button"
+msgstr "订阅"
+
+msgid "email_unsubscribed_title"
+msgstr "完成"
+
+msgid "email_unsubscribed_digest"
+msgstr "你将不再收到关于未读消息和提及的邮件。"
+
+msgid "email_unsubscribed_requests"
+msgstr "你将不再收到关于请求和群组的邮件。"
+
+msgid "email_unsubscribed_reports"
+msgstr "你将不再收到关于举报的邮件。"
+
+msgid "ui_emails"
+msgstr "邮件"
+
+msgid "ui_email_mentions"
+msgstr "你未读的提及和回复"
+
+msgid "ui_email_messages"
+msgstr "群组和私信中的未读消息"
+
+msgid "ui_email_requests"
+msgstr "好友请求、消息请求,以及你被加入群组时"
+
+msgid "ui_email_reports"
+msgstr "新举报(管理后台)"
+
+msgid "ui_emails_hint"
+msgstr "只有在你没有在应用中看到时,我们才会发邮件:每隔几小时最多一封摘要。与你账号相关的邮件始终会发送给你。"
+
+msgid "ui_emails_unverified"
+msgstr "请先确认邮箱才能收到通知。"
+
+msgid "ui_resend_verification"
+msgstr "重新发送确认邮件"
+
+msgid "ui_verification_resent"
+msgstr "如果该账号存在且尚未确认,我们已给你发送了新邮件。也请查看垃圾邮件文件夹。"
+
+msgid "admin_email_notifications_section"
+msgstr "自动邮件"
+
+msgid "admin_email_notifications_enabled"
+msgstr "发送自动邮件(未读提及和消息、请求、管理和套餐通知)"
+
+msgid "admin_email_notifications_delay"
+msgstr "未读消息多久后发邮件(分钟)"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "同一个人两封摘要之间的最短间隔(小时)"
+
+msgid "admin_email_notifications_hint"
+msgstr "每个人可在 账号 → 通知 中选择要收到哪些邮件。账号类邮件(确认和密码)始终会发送。"
+
+msgid "ui_dob_once"
+msgstr "出生日期只能更正一次。"
+
+msgid "ui_dob_locked"
+msgstr "你已经更正过一次出生日期了。"
+
+msgid "ui_zone_hint"
+msgstr "你的频道属于你所在的省份和年龄段。如果你更改省份或出生日期,就会转到新区域的频道。"
+
+msgid "landing_a0"
+msgstr "没有费用。MeetGo 是免费的:创建账号即可无限使用,无需绑定银行卡。"
+
+msgid "landing_a1"
+msgstr "每月 €2.50 或每年 €25,含 7 天免费试用。两种方案功能完全相同。"
+
+msgid "landing_a2"
+msgstr "名额有限时,用代码 LANZAMIENTO 创建账号即可。仅限前 50 个账号,且无需银行卡。"
+
+msgid "landing_a3"
+msgstr "在你订阅之前,账号会变为只读:可以阅读会话,但不能发言。不会删除任何内容。"
+
+msgid "landing_a4"
+msgstr "没有人。你的号码不会出现在资料里,在频道中分享号码的消息会被自动删除。"
+
+msgid "landing_a5"
+msgstr "有,MeetGo 仅限 18 岁以上的人使用。频道按年龄段划分:18-30 岁、31-50 岁和 50 岁以上。"
+
+msgid "landing_a6"
+msgstr "西班牙的每个省份。你的频道属于你所在的省份和年龄段,你选的每个爱好对应一个频道。"
+
+msgid "landing_a7"
+msgstr "如果是银行卡支付,在你的 MeetGo 账号中取消;如果是在应用内订阅,则在 Google Play 中取消。付费期结束前你仍可继续使用。"
+
+msgid "landing_a8"
+msgstr "Android 上可下载应用。iPhone 上请在 Safari 中打开 meetgo.app/app,并添加到主屏幕。"
+
+msgid "landing_cta_how"
+msgstr "了解使用方法"
+
+msgid "landing_cta_register"
+msgstr "创建账号"
+
+msgid "landing_dl_android_btn"
+msgstr "下载 APK"
+
+msgid "landing_dl_android_p"
+msgstr "带即时通知和快捷回复的应用。下载 APK 并安装即可。"
+
+msgid "landing_dl_build"
+msgstr "版本 {version}"
+
+msgid "landing_dl_k"
+msgstr "下载"
+
+msgid "landing_dl_play_btn"
+msgstr "即将推出"
+
+msgid "landing_dl_play_p"
+msgstr "我们正在准备应用商店页面。用你的 MeetGo 账号即可接着上次的进度继续。"
+
+msgid "landing_dl_soon"
+msgstr "即将推出"
+
+msgid "landing_dl_soon2"
+msgstr "即将推出"
+
+msgid "landing_dl_title"
+msgstr "手机和电脑上,都有我们陪着你"
+
+msgid "landing_dl_web_btn"
+msgstr "打开 MeetGo"
+
+msgid "landing_dl_web_p"
+msgstr "在浏览器中打开 MeetGo。在 iPhone 上,点击分享并选择“添加到主屏幕”,就能像应用一样使用。"
+
+msgid "landing_dl_web_t"
+msgstr "iPhone 和网页版"
+
+msgid "landing_eyebrow"
+msgstr "按省份、年龄和兴趣聊天"
+
+msgid "landing_f1_k"
+msgstr "本地频道"
+
+msgid "landing_f1_l1"
+msgstr "话题,附带回复和参与者摘要"
+
+msgid "landing_f1_l2"
+msgstr "提及有独立的收件箱,只有被点名时才提醒"
+
+msgid "landing_f1_l3"
+msgstr "新消息分隔线,以及一键跳到最新的按钮"
+
+msgid "landing_f1_l4"
+msgstr "表情回应、引用回复和置顶消息"
+
+msgid "landing_f1_p"
+msgstr "每个主题都有自己的话题,主聊天保持清爽。不用无休止地翻页,就能补上错过的内容。"
+
+msgid "landing_f1_t"
+msgstr "人再多,也清清楚楚"
+
+msgid "landing_f2_k"
+msgstr "私密群组"
+
+msgid "landing_f2_l1"
+msgstr "邀请链接和管理员角色"
+
+msgid "landing_f2_l2"
+msgstr "最大 10 MB 的照片和文件"
+
+msgid "landing_f2_l3"
+msgstr "已读回执,知道谁看过了"
+
+msgid "landing_f2_l4"
+msgstr "可对任何群组静音或置顶"
+
+msgid "landing_f2_p"
+msgstr "和朋友们创建一个群组,或者把邀请链接分享给在频道里报名的人。"
+
+msgid "landing_f2_t"
+msgstr "从“算我一个”到说定就定"
+
+msgid "landing_f3_k"
+msgstr "私信"
+
+msgid "landing_f3_l1"
+msgstr "即时通知,Android 上可快捷回复"
+
+msgid "landing_f3_l2"
+msgstr "看到谁正在输入、谁在线"
+
+msgid "landing_f3_l3"
+msgstr "你的手机号永远不会被显示"
+
+msgid "landing_f3_p"
+msgstr "和好友可以直接聊天。和其他人则要先发请求,而且对方得接受私信才行。"
+
+msgid "landing_f3_t"
+msgstr "私下聊,前提是你们都愿意"
+
+msgid "landing_f_app"
+msgstr "打开应用"
+
+msgid "landing_f_contact"
+msgstr "联系方式:"
+
+msgid "landing_f_privacy"
+msgstr "隐私"
+
+msgid "landing_f_terms"
+msgstr "条款"
+
+msgid "landing_faq_k"
+msgstr "常见问题"
+
+msgid "landing_faq_title"
+msgstr "大家常问的问题"
+
+msgid "landing_feat_k"
+msgstr "功能"
+
+msgid "landing_feat_p"
+msgstr "大频道依然清晰易读,群组由你做主,私信即时送达。"
+
+msgid "landing_feat_title"
+msgstr "专为和很多人聊天而设计,不会迷失其中"
+
+msgid "landing_final_p"
+msgstr "进来吧,选几个爱好,打个招呼。"
+
+msgid "landing_final_title"
+msgstr "你的下一个计划,<span class=\"go\">已经在聊了</span>"
+
+msgid "landing_hero_lead"
+msgstr "和你同省份、同年龄段、同爱好的人组成的频道。有了计划,就建个群,私下商量。"
+
+msgid "landing_hero_title"
+msgstr "和<span class=\"meet\">身边的人聊天。</span><span class=\"go\">然后见面。</span>"
+
+msgid "landing_how_k"
+msgstr "使用方法"
+
+msgid "landing_how_title"
+msgstr "三步,从聊天到行动"
+
+msgid "landing_more_k"
+msgstr "此外"
+
+msgid "landing_more_title"
+msgstr "好氛围不是偶然"
+
+msgid "landing_nav_download"
+msgstr "下载"
+
+msgid "landing_nav_faq"
+msgstr "常见问题"
+
+msgid "landing_nav_features"
+msgstr "功能"
+
+msgid "landing_nav_how"
+msgstr "使用方法"
+
+msgid "landing_nav_prices"
+msgstr "价格"
+
+msgid "landing_pr_btn"
+msgstr "开始试用"
+
+msgid "landing_pr_eq"
+msgstr "相当于每月 €2.08"
+
+msgid "landing_pr_k"
+msgstr "价格"
+
+msgid "landing_pr_l1"
+msgstr "7 天免费试用"
+
+msgid "landing_pr_l2"
+msgstr "频道、群组和私信"
+
+msgid "landing_pr_l3"
+msgstr "随时可取消"
+
+msgid "landing_pr_m"
+msgstr "按月"
+
+msgid "landing_pr_month"
+msgstr "/月"
+
+msgid "landing_pr_note"
+msgstr "网页版可用银行卡 (Stripe) 支付,应用内可用 Google Play 支付。价格含增值税。"
+
+msgid "landing_pr_p"
+msgstr "两种方案功能完全相同。7 天免费试用,随时可取消。"
+
+msgid "landing_pr_save"
+msgstr "省 17%"
+
+msgid "landing_pr_title"
+msgstr "每月不到一杯咖啡的钱"
+
+msgid "landing_pr_y"
+msgstr "按年"
+
+msgid "landing_pr_year"
+msgstr "/年"
+
+msgid "landing_promo_badge"
+msgstr "上线活动"
+
+msgid "landing_promo_copied"
+msgstr "已复制!"
+
+msgid "landing_promo_copy"
+msgstr "复制"
+
+msgid "landing_promo_cta"
+msgstr "领取我的免费一年"
+
+msgid "landing_promo_eyebrow"
+msgstr "上线活动 · 仅剩 {left} 个免费名额"
+
+msgid "landing_promo_left"
+msgstr "个名额剩余"
+
+msgid "landing_promo_of"
+msgstr "共 {max} 个"
+
+msgid "landing_promo_text"
+msgstr "用优惠码创建账号,整整一年不用付费。仅限前"
+
+msgid "landing_promo_text2"
+msgstr "个账号。"
+
+msgid "landing_promo_title"
+msgstr "前几批账号<span class=\"sunt\">免费用 1 年</span>"
+
+msgid "landing_q0"
+msgstr "要花多少钱?"
+
+msgid "landing_q1"
+msgstr "要花多少钱?"
+
+msgid "landing_q2"
+msgstr "怎么获得免费的一年?"
+
+msgid "landing_q3"
+msgstr "免费的一年结束后会怎样?"
+
+msgid "landing_q4"
+msgstr "谁能看到我的手机号?"
+
+msgid "landing_q5"
+msgstr "有最低年龄限制吗?"
+
+msgid "landing_q6"
+msgstr "在哪些城市可用?"
+
+msgid "landing_q7"
+msgstr "怎么取消?"
+
+msgid "landing_q8"
+msgstr "有 Android 和 iPhone 的应用吗?"
+
+msgid "landing_s1_p"
+msgstr "徒步、板式网球、看电影、喝咖啡……每个爱好都是一个频道,里面是同省份、同年龄段的人。"
+
+msgid "landing_s1_t"
+msgstr "选择你的爱好"
+
+msgid "landing_s2_p"
+msgstr "在话题里回复,让聊天井井有条;可以提及任何人,也可以用表情回应而不刷屏。"
+
+msgid "landing_s2_t"
+msgstr "在频道里聊天"
+
+msgid "landing_s3_p"
+msgstr "创建私密群组,邀请愿意参加的人,安安静静地商量用车、时间和照片。"
+
+msgid "landing_s3_t"
+msgstr "在群组里做计划"
+
+msgid "landing_signin"
+msgstr "登录"
+
+msgid "landing_skip"
+msgstr "跳到正文"
+
+msgid "landing_strip_devices"
+msgstr "网页、Android 和 iPhone"
+
+msgid "landing_strip_mod"
+msgstr "积极的管理"
+
+msgid "landing_strip_phone"
+msgstr "你的手机号保持隐藏"
+
+msgid "landing_strip_zone"
+msgstr "你的省份和年龄段"
+
+msgid "landing_t1_p"
+msgstr "公开发布的辱骂、垃圾信息和手机号会被自动删除。"
+
+msgid "landing_t1_t"
+msgstr "自动管理"
+
+msgid "landing_t2_p"
+msgstr "两下点按即可举报消息;管理员可以禁言或移除用户。"
+
+msgid "landing_t2_t"
+msgstr "举报和管理员"
+
+msgid "landing_t3_p"
+msgstr "当频道太热闹时,管理员来控制节奏。"
+
+msgid "landing_t3_t"
+msgstr "慢速模式"
+
+msgid "landing_t4_p"
+msgstr "按会话设置:全部、仅提及或不通知。不想听的就静音。"
+
+msgid "landing_t4_t"
+msgstr "按你的方式提醒"
+
+msgid "landing_t5_p"
+msgstr "在你所有的会话中,找到写着见面时间的那条消息。"
+
+msgid "landing_t5_t"
+msgstr "搜索"
+
+msgid "landing_t6_p"
+msgstr "分享山顶的照片、路线轨迹或预订的 PDF。"
+
+msgid "landing_t6_t"
+msgstr "照片和文件"
+
+msgid "landing_web_k"
+msgstr "电脑上也能用"
+
+msgid "landing_web_p"
+msgstr "在大屏幕上,你可以同时看到列表、频道,以及话题或成员。"
+
+msgid "landing_web_title"
+msgstr "所有会话,一目了然"
+
+msgid "ui_splash_tagline"
+msgstr "和身边的人聊天。然后见面。"
+
+msgid "ui_install_title"
+msgstr "安装 MeetGo"
+
+msgid "ui_install_ios"
+msgstr "点击分享,然后选择“添加到主屏幕”:它会像应用一样全屏打开。"
+
+msgid "ui_install_dismiss"
+msgstr "暂不"
+
+msgid "ui_push_failed"
+msgstr "无法在此浏览器中开启通知。请重试,或换一个浏览器。"
+
+msgid "ui_settings"
+msgstr "设置"
+
+msgid "ui_section_about"
+msgstr "关于你"
+
+msgid "ui_section_zone"
+msgstr "你的地区"
+
+msgid "ui_section_privacy"
+msgstr "隐私与安全"
+
+msgid "ui_section_push"
+msgstr "此设备上的通知"

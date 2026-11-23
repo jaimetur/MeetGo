@@ -1,0 +1,2859 @@
+# MeetGo translations: German. Translated from en.po, the source language (see lang/README.md).
+msgid ""
+msgstr ""
+"Language: de\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "app_name"
+msgstr "MeetGo"
+
+msgid "tagline"
+msgstr "weniger wischen, mehr leben"
+
+msgid "tagline_long"
+msgstr "MeetGo -- weniger wischen, mehr leben"
+
+msgid "logout"
+msgstr "Abmelden"
+
+msgid "login_title"
+msgstr "Zugang"
+
+msgid "login_btn"
+msgstr "Anmelden"
+
+msgid "forgot_password_btn"
+msgstr "Passwort vergessen"
+
+msgid "new_user_btn"
+msgstr "Neu hier"
+
+msgid "hide_register_btn"
+msgstr "Registrierung ausblenden"
+
+msgid "forgot_password_prompt"
+msgstr "Gib deine E-Mail-Adresse ein, um dein Passwort zurückzusetzen"
+
+msgid "forgot_password_sent"
+msgstr "Falls die E-Mail-Adresse existiert, haben wir dir einen Link zum Zurücksetzen geschickt."
+
+msgid "reset_password_title"
+msgstr "Passwort zurücksetzen"
+
+msgid "reset_password_btn"
+msgstr "Zurücksetzen"
+
+msgid "reset_password_ok"
+msgstr "Passwort aktualisiert."
+
+msgid "verify_email_ok"
+msgstr "E-Mail bestätigt."
+
+msgid "verify_email_fail"
+msgstr "Die E-Mail-Bestätigung ist fehlgeschlagen."
+
+msgid "register_verify_email"
+msgstr "Prüfe dein Postfach, um dein Konto zu bestätigen."
+
+msgid "or_register"
+msgstr "Oder registrieren"
+
+msgid "error_title"
+msgstr "Fehler"
+
+msgid "ok_title"
+msgstr "OK"
+
+msgid "cancel"
+msgstr "Abbrechen"
+
+msgid "register_ok"
+msgstr "Konto erfolgreich erstellt."
+
+msgid "login_error_generic"
+msgstr "Anmeldung nicht möglich."
+
+msgid "email"
+msgstr "E-Mail"
+
+msgid "password"
+msgstr "Passwort"
+
+msgid "password_hint"
+msgstr "Passwort (mind. 6, max. 60 Zeichen)"
+
+msgid "name"
+msgstr "Name"
+
+msgid "dob_label"
+msgstr "Geburtsdatum"
+
+msgid "dob_pick"
+msgstr "Wähle dein Datum."
+
+msgid "dob_invalid"
+msgstr "Ungültiges Format."
+
+msgid "dob_underage"
+msgstr "Du musst mindestens 18 sein."
+
+msgid "phone_label"
+msgstr "Telefon"
+
+msgid "phone_number"
+msgstr "Nummer"
+
+msgid "country_label"
+msgstr "Land"
+
+msgid "province_label"
+msgstr "Provinz/Bundesland"
+
+msgid "city_label"
+msgstr "Stadt"
+
+msgid "not_available"
+msgstr "(Nicht verfügbar)"
+
+msgid "avatar_url"
+msgstr "Avatar-URL (optional)"
+
+msgid "bio"
+msgstr "Bio (optional)"
+
+msgid "accept_dm"
+msgstr "DMs erlauben"
+
+msgid "create_account"
+msgstr "Konto erstellen"
+
+msgid "hello"
+msgstr "Hallo, {name}"
+
+msgid "rooms"
+msgstr "Räume"
+
+msgid "feed"
+msgstr "Feed"
+
+msgid "profile"
+msgstr "Profil"
+
+msgid "load_my_rooms"
+msgstr "Meine Räume laden"
+
+msgid "join_room_title"
+msgstr "Einem Raum beitreten"
+
+msgid "join_room_desc"
+msgstr "Wähle ein Interesse und tritt bei. Falls es den Raum noch nicht gibt, wird er erstellt."
+
+msgid "join_btn"
+msgstr "Beitreten"
+
+msgid "leave_room_btn"
+msgstr "Raum verlassen"
+
+msgid "leave_room_confirm"
+msgstr "Raum {room} verlassen?"
+
+msgid "leave_room_ok"
+msgstr "Du hast den Raum verlassen."
+
+msgid "leave_room_error"
+msgstr "Der Raum konnte nicht verlassen werden."
+
+msgid "no_rooms_title"
+msgstr "Du bist noch in keinem Raum"
+
+msgid "no_rooms_desc"
+msgstr "Nutze oben „Beitreten“, um einen Raum zu erstellen oder ihm beizutreten."
+
+msgid "tip_title"
+msgstr "Tipp"
+
+msgid "tip_body"
+msgstr "Klicke mit der rechten Maustaste auf einen Avatar, um das Menü zu öffnen."
+
+
+msgid "write_placeholder"
+msgstr "Schreiben..."
+
+msgid "send_btn"
+msgstr "Senden"
+
+msgid "publish_placeholder"
+msgstr "Schreib etwas..."
+
+msgid "publish_btn"
+msgstr "Posten"
+
+msgid "refresh_btn"
+msgstr "Aktualisieren"
+
+msgid "profile_updated"
+msgstr "Profil aktualisiert"
+
+msgid "following_ok"
+msgstr "Du folgst jetzt"
+
+msgid "friend_req_ok"
+msgstr "Freundschaftsanfrage gesendet"
+
+msgid "save_profile"
+msgstr "Profil speichern"
+
+msgid "save_settings"
+msgstr "Einstellungen speichern"
+
+msgid "settings_saved"
+msgstr "Einstellungen gespeichert."
+
+msgid "edit_profile_title"
+msgstr "Profil bearbeiten"
+
+msgid "new_password"
+msgstr "Neues Passwort"
+
+msgid "dob_change_note"
+msgstr "Das Geburtsdatum kann nur einmal geändert werden und wird geprüft."
+
+msgid "warn_province_change"
+msgstr "Wenn du die Provinz wechselst, wirst du aus deinen aktuellen Räumen entfernt. Fortfahren?"
+
+msgid "warn_country_change"
+msgstr "Wenn du das Land wechselst, wird dein Profil aktualisiert. Fortfahren?"
+
+msgid "warn_dob_change"
+msgstr "Das Geburtsdatum kann nur einmal geändert werden und wird geprüft. Fortfahren?"
+
+msgid "warn_dob_change_range"
+msgstr "Wenn du dein Geburtsdatum änderst, ändert sich deine Altersgruppe und du wirst aus deinen Räumen entfernt. Das ist nur einmal möglich und wird geprüft. Fortfahren?"
+
+msgid "dob_change_limit"
+msgstr "Du hast bereits eine Änderung des Geburtsdatums beantragt."
+
+msgid "yes"
+msgstr "Ja"
+
+msgid "no"
+msgstr "Nein"
+
+msgid "users_online"
+msgstr "Nutzer: {count}"
+
+msgid "users_panel_title"
+msgstr "Nutzer online"
+
+msgid "show_users_panel"
+msgstr "Nutzer anzeigen"
+
+msgid "hide_users_panel"
+msgstr "Nutzer ausblenden"
+
+msgid "close_panel"
+msgstr "Schließen"
+
+msgid "users_none"
+msgstr "Keine Nutzer verbunden"
+
+msgid "users_no_room"
+msgstr "Wähle einen Raum, um die Nutzer zu sehen."
+
+msgid "online_summary"
+msgstr "Nutzer online: {users} · Aktive Räume: {rooms}"
+
+msgid "online_users"
+msgstr "Nutzer online: {users}"
+
+msgid "online_rooms"
+msgstr "Aktive Räume: {rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "Räume ausblenden"
+
+msgid "show_rooms_panel"
+msgstr "Räume anzeigen"
+
+msgid "settings_title"
+msgstr "Einstellungen"
+
+msgid "hide_panel"
+msgstr "Panel ausblenden"
+
+msgid "show_panel"
+msgstr "Panel anzeigen"
+
+msgid "hide_user_panel"
+msgstr "Nutzer-Panel ausblenden"
+
+msgid "show_user_panel"
+msgstr "Nutzer-Panel anzeigen"
+
+msgid "panel_user"
+msgstr "Nutzer-Panel"
+
+msgid "panel_rooms"
+msgstr "Räume-Panel"
+
+msgid "no_room_selected"
+msgstr "Kein aktiver Raum"
+
+msgid "language_label"
+msgstr "Sprache"
+
+msgid "menu_view_profile"
+msgstr "Profil ansehen"
+
+msgid "menu_friend_request"
+msgstr "Freundschaftsanfrage senden"
+
+msgid "menu_follow_feed"
+msgstr "Feed folgen"
+
+msgid "modal_profile_title"
+msgstr "Profil"
+
+msgid "modal_close"
+msgstr "Schließen"
+
+msgid "modal_friend"
+msgstr "Freund"
+
+msgid "modal_follow"
+msgstr "Folgen"
+
+msgid "msg_deleted_by_mod"
+msgstr "Nachricht von der Moderation gelöscht"
+
+msgid "no_bio_yet"
+msgstr "Noch keine Bio."
+
+msgid "join_room_error"
+msgstr "Du konntest dem Raum nicht beitreten."
+
+msgid "loading_interests"
+msgstr "Interessen werden geladen..."
+
+msgid "interests_load_error"
+msgstr "Die Interessen konnten nicht geladen werden."
+
+msgid "retry_btn"
+msgstr "Erneut versuchen"
+
+msgid "chat_ws_error"
+msgstr "Fehler bei der Chat-Verbindung (WebSocket). Prüfe Backend-Port/URL."
+
+msgid "age_display"
+msgstr "Alter: {age}"
+
+msgid "age_display_underage"
+msgstr "Alter: {age} ({note})"
+
+msgid "register_err_email_missing"
+msgstr "E-Mail ist erforderlich."
+
+msgid "register_err_password_short"
+msgstr "Das Passwort muss mindestens 6 Zeichen lang sein."
+
+msgid "register_err_name_missing"
+msgstr "Name ist erforderlich."
+
+msgid "register_err_dob_invalid"
+msgstr "Ungültiges Geburtsdatum."
+
+msgid "register_err_underage"
+msgstr "Du musst mindestens 18 sein."
+
+msgid "register_err_country_missing"
+msgstr "Wähle ein Land."
+
+msgid "register_err_province_missing"
+msgstr "Wähle eine Provinz/ein Bundesland."
+
+msgid "register_err_province_unavailable"
+msgstr "Für dieses Land sind noch keine Provinzen eingerichtet."
+
+msgid "register_err_phone_cc_missing"
+msgstr "Wähle eine internationale Vorwahl."
+
+msgid "register_err_phone_short"
+msgstr "Telefonnummer zu kurz."
+
+msgid "debug_title"
+msgstr "Debugger"
+
+msgid "debug_subtitle"
+msgstr "letzte {count} Zeilen"
+
+msgid "debug_clear"
+msgstr "Leeren"
+
+msgid "debug_copy"
+msgstr "Kopieren"
+
+msgid "debug_copy_selection"
+msgstr "Auswahl kopieren"
+
+msgid "debug_copy_selection_empty"
+msgstr "Keine Auswahl zum Kopieren"
+
+msgid "debug_copy_ok"
+msgstr "Kopiert"
+
+msgid "debug_copy_fail"
+msgstr "Kopieren fehlgeschlagen"
+
+msgid "debug_frontend_tab"
+msgstr "FrontEnd ({count})"
+
+msgid "debug_services_tab"
+msgstr "Dienste ({count})"
+
+msgid "debug_services_connected"
+msgstr "Streaming"
+
+msgid "debug_services_connecting"
+msgstr "verbinde..."
+
+msgid "debug_services_error"
+msgstr "Fehler"
+
+msgid "debug_minimize"
+msgstr "Minimieren"
+
+msgid "debug_restore"
+msgstr "Wiederherstellen"
+
+msgid "debug_close"
+msgstr "Schließen"
+
+msgid "debug_tab_all"
+msgstr "Alle"
+
+msgid "debug_tab_js"
+msgstr "JavaScript"
+
+msgid "debug_auto_refresh"
+msgstr "Automatisch aktualisieren"
+
+msgid "debug_maximize"
+msgstr "Maximieren"
+
+msgid "chat_not_connected"
+msgstr "Chat nicht verbunden (ws=null). Öffne zuerst einen Raum."
+
+msgid "chat_not_connected_state"
+msgstr "Chat nicht verbunden (WS readyState={state})."
+
+msgid "chat_disconnected"
+msgstr "Chat getrennt. Öffne den Raum erneut (oder melde dich neu an)."
+
+msgid "chat_reconnecting"
+msgstr "Verbindung zum Chat wird wiederhergestellt..."
+
+msgid "no_session"
+msgstr "Keine Sitzung (Token). Melde dich neu an."
+
+msgid "country_es_spain"
+msgstr "Spanien"
+
+msgid "country_pt_portugal"
+msgstr "Portugal"
+
+msgid "country_fr_france"
+msgstr "Frankreich"
+
+msgid "country_it_italy"
+msgstr "Italien"
+
+msgid "country_de_germany"
+msgstr "Deutschland"
+
+msgid "country_gb_uk"
+msgstr "Vereinigtes Königreich"
+
+msgid "country_us_usa"
+msgstr "Vereinigte Staaten"
+
+msgid "country_mx_mexico"
+msgstr "Mexiko"
+
+msgid "country_ar_argentina"
+msgstr "Argentinien"
+
+msgid "country_co_colombia"
+msgstr "Kolumbien"
+
+msgid "calling_es_spain"
+msgstr "Spanien"
+
+msgid "calling_pt_portugal"
+msgstr "Portugal"
+
+msgid "calling_fr_france"
+msgstr "Frankreich"
+
+msgid "calling_it_italy"
+msgstr "Italien"
+
+msgid "calling_de_germany"
+msgstr "Deutschland"
+
+msgid "calling_gb_uk"
+msgstr "Vereinigtes Königreich"
+
+msgid "calling_us_ca"
+msgstr "USA / Kanada"
+
+msgid "calling_mx_mexico"
+msgstr "Mexiko"
+
+msgid "calling_ar_argentina"
+msgstr "Argentinien"
+
+msgid "calling_co_colombia"
+msgstr "Kolumbien"
+
+msgid "province_es_alava"
+msgstr "Alava"
+
+msgid "province_es_albacete"
+msgstr "Albacete"
+
+msgid "province_es_alicante"
+msgstr "Alicante"
+
+msgid "province_es_almeria"
+msgstr "Almeria"
+
+msgid "province_es_asturias"
+msgstr "Asturias"
+
+msgid "province_es_avila"
+msgstr "Avila"
+
+msgid "province_es_badajoz"
+msgstr "Badajoz"
+
+msgid "province_es_barcelona"
+msgstr "Barcelona"
+
+msgid "province_es_burgos"
+msgstr "Burgos"
+
+msgid "province_es_caceres"
+msgstr "Caceres"
+
+msgid "province_es_cadiz"
+msgstr "Cadiz"
+
+msgid "province_es_cantabria"
+msgstr "Cantabria"
+
+msgid "province_es_castellon"
+msgstr "Castellon"
+
+msgid "province_es_ciudad_real"
+msgstr "Ciudad Real"
+
+msgid "province_es_cordoba"
+msgstr "Cordoba"
+
+msgid "province_es_cuenca"
+msgstr "Cuenca"
+
+msgid "province_es_girona"
+msgstr "Girona"
+
+msgid "province_es_granada"
+msgstr "Granada"
+
+msgid "province_es_guadalajara"
+msgstr "Guadalajara"
+
+msgid "province_es_gipuzkoa"
+msgstr "Gipuzkoa"
+
+msgid "province_es_huelva"
+msgstr "Huelva"
+
+msgid "province_es_huesca"
+msgstr "Huesca"
+
+msgid "province_es_illes_balears"
+msgstr "Illes Balears"
+
+msgid "province_es_jaen"
+msgstr "Jaen"
+
+msgid "province_es_a_coruna"
+msgstr "A Coruna"
+
+msgid "province_es_la_rioja"
+msgstr "La Rioja"
+
+msgid "province_es_las_palmas"
+msgstr "Las Palmas"
+
+msgid "province_es_leon"
+msgstr "Leon"
+
+msgid "province_es_lleida"
+msgstr "Lleida"
+
+msgid "province_es_lugo"
+msgstr "Lugo"
+
+msgid "province_es_madrid"
+msgstr "Madrid"
+
+msgid "province_es_malaga"
+msgstr "Malaga"
+
+msgid "province_es_murcia"
+msgstr "Murcia"
+
+msgid "province_es_navarra"
+msgstr "Navarra"
+
+msgid "province_es_ourense"
+msgstr "Ourense"
+
+msgid "province_es_palencia"
+msgstr "Palencia"
+
+msgid "province_es_pontevedra"
+msgstr "Pontevedra"
+
+msgid "province_es_salamanca"
+msgstr "Salamanca"
+
+msgid "province_es_santa_cruz_de_tenerife"
+msgstr "Santa Cruz de Tenerife"
+
+msgid "province_es_segovia"
+msgstr "Segovia"
+
+msgid "province_es_sevilla"
+msgstr "Sevilla"
+
+msgid "province_es_soria"
+msgstr "Soria"
+
+msgid "province_es_tarragona"
+msgstr "Tarragona"
+
+msgid "province_es_teruel"
+msgstr "Teruel"
+
+msgid "province_es_toledo"
+msgstr "Toledo"
+
+msgid "province_es_valencia"
+msgstr "Valencia"
+
+msgid "province_es_valladolid"
+msgstr "Valladolid"
+
+msgid "province_es_bizkaia"
+msgstr "Bizkaia"
+
+msgid "province_es_zamora"
+msgstr "Zamora"
+
+msgid "province_es_zaragoza"
+msgstr "Zaragoza"
+
+msgid "province_pt_lisboa"
+msgstr "Lissabon"
+
+msgid "province_pt_porto"
+msgstr "Porto"
+
+msgid "province_pt_braga"
+msgstr "Braga"
+
+msgid "province_pt_setubal"
+msgstr "Setubal"
+
+msgid "province_pt_aveiro"
+msgstr "Aveiro"
+
+msgid "province_fr_ile_de_france"
+msgstr "Ile-de-France"
+
+msgid "province_fr_occitanie"
+msgstr "Occitanie"
+
+msgid "province_fr_nouvelle_aquitaine"
+msgstr "Nouvelle-Aquitaine"
+
+msgid "province_fr_auvergne_rhone_alpes"
+msgstr "Auvergne-Rhone-Alpes"
+
+msgid "province_it_lazio"
+msgstr "Latium"
+
+msgid "province_it_lombardia"
+msgstr "Lombardei"
+
+msgid "province_it_campania"
+msgstr "Kampanien"
+
+msgid "province_it_sicilia"
+msgstr "Sizilien"
+
+msgid "admin_users_title"
+msgstr "Nutzer"
+
+msgid "admin_users_search_placeholder"
+msgstr "Suchen"
+
+msgid "admin_users_search_button"
+msgstr "Suchen"
+
+msgid "admin_users_select_placeholder"
+msgstr "Nutzer auswählen"
+
+msgid "admin_users_logins_meta"
+msgstr "Anmeldungen: {count} zuletzt: {last}"
+
+msgid "admin_users_last_seen_meta"
+msgstr "zuletzt gesehen: {last} gesamt: {seconds} s"
+
+msgid "admin_users_active_meta"
+msgstr "aktiv: {active} Beginn: {start}"
+
+msgid "admin_yes"
+msgstr "ja"
+
+msgid "admin_no"
+msgstr "nein"
+
+msgid "admin_users_edit_title"
+msgstr "Nutzer bearbeiten"
+
+msgid "admin_users_name"
+msgstr "Name"
+
+msgid "admin_users_email"
+msgstr "E-Mail"
+
+msgid "admin_users_phone"
+msgstr "Telefon"
+
+msgid "admin_users_dob"
+msgstr "Geb.-Datum (JJJJ-MM-TT)"
+
+msgid "admin_users_country"
+msgstr "Land"
+
+msgid "admin_users_province"
+msgstr "Provinz"
+
+msgid "admin_users_city"
+msgstr "Stadt"
+
+msgid "admin_users_role"
+msgstr "Rolle"
+
+msgid "admin_users_new_password"
+msgstr "Neues Passwort"
+
+msgid "admin_users_email_verified"
+msgstr "E-Mail bestätigt"
+
+msgid "admin_users_resend_button"
+msgstr "Bestätigung erneut senden"
+
+msgid "admin_users_resend_ok"
+msgstr "Bestätigungs-E-Mail erneut gesendet."
+
+msgid "admin_users_resend_error"
+msgstr "Die Bestätigung konnte nicht erneut gesendet werden."
+
+msgid "admin_users_blocked"
+msgstr "Gesperrt"
+
+msgid "admin_users_blocked_until"
+msgstr "Gesperrt bis (JJJJ-MM-TT)"
+
+msgid "admin_users_password_label"
+msgstr "Passwort"
+
+msgid "admin_users_dob_short"
+msgstr "Geb.-Datum"
+
+msgid "admin_users_missing_fields"
+msgstr "Fehlende Felder: {fields}"
+
+msgid "admin_users_updated"
+msgstr "Nutzer aktualisiert."
+
+msgid "admin_users_created"
+msgstr "Nutzer erstellt."
+
+msgid "admin_users_save_error"
+msgstr "Der Nutzer konnte nicht gespeichert werden."
+
+msgid "admin_users_save_button"
+msgstr "Speichern"
+
+msgid "admin_users_create_button"
+msgstr "Erstellen"
+
+msgid "admin_users_delete_confirm"
+msgstr "Diesen Nutzer löschen? Das kann nicht rückgängig gemacht werden."
+
+msgid "admin_users_deleted"
+msgstr "Nutzer gelöscht."
+
+msgid "admin_users_delete_error"
+msgstr "Löschen nicht möglich."
+
+msgid "admin_users_delete_button"
+msgstr "Löschen"
+
+msgid "admin_channels_title"
+msgstr "Kanäle"
+
+msgid "admin_channels_edit_button"
+msgstr "Bearbeiten"
+
+msgid "admin_channels_delete_button"
+msgstr "Löschen"
+
+msgid "admin_channels_form_title"
+msgstr "Kanal hinzufügen / bearbeiten"
+
+msgid "admin_channels_name_placeholder"
+msgstr "Kanalname"
+
+msgid "admin_channels_slug_label"
+msgstr "Slug: {slug}"
+
+msgid "admin_channels_name_required"
+msgstr "Kanalname erforderlich."
+
+msgid "admin_channels_updated"
+msgstr "Kanal aktualisiert."
+
+msgid "admin_channels_created"
+msgstr "Kanal erstellt."
+
+msgid "admin_channels_save_error"
+msgstr "Der Kanal konnte nicht gespeichert werden."
+
+msgid "admin_channels_save_button"
+msgstr "Speichern"
+
+msgid "unknown_user"
+msgstr "Unbekannt"
+
+msgid "email_verify_subject"
+msgstr "Bestätige deine MeetGo-E-Mail-Adresse"
+
+msgid "email_verify_body"
+msgstr "Tippe auf die Schaltfläche, um deine E-Mail-Adresse zu bestätigen und MeetGo zu nutzen. Falls du kein Konto erstellt hast, ignoriere diese Nachricht."
+
+msgid "email_reset_subject"
+msgstr "Setze dein MeetGo-Passwort zurück"
+
+msgid "email_reset_body"
+msgstr "Du hast darum gebeten, das Passwort deines Kontos zu ändern. Der Link läuft in 2 Stunden ab. Falls du das nicht warst, ignoriere diese E-Mail: Dein Passwort bleibt unverändert."
+
+msgid "email_smtp_test_subject"
+msgstr "MeetGo-SMTP-Test"
+
+msgid "email_smtp_test_body"
+msgstr "SMTP-Test-E-Mail vom MeetGo-Admin."
+
+msgid "err_smtp_sender_not_configured"
+msgstr "SMTP-Absender nicht konfiguriert"
+
+msgid "err_gmail_not_configured"
+msgstr "Gmail-API-SMTP nicht konfiguriert"
+
+msgid "err_gmail_token_failed"
+msgstr "Gmail-Zugriffstoken konnte nicht abgerufen werden"
+
+msgid "err_smtp_host_not_configured"
+msgstr "SMTP-Host nicht konfiguriert"
+
+msgid "err_admin_required"
+msgstr "Admin erforderlich"
+
+msgid "err_email_phone_required"
+msgstr "E-Mail und Telefon erforderlich"
+
+msgid "err_password_too_short"
+msgstr "Passwort zu kurz"
+
+msgid "err_email_already_used"
+msgstr "E-Mail bereits vergeben"
+
+msgid "err_invalid_phone"
+msgstr "Ungültige Telefonnummer"
+
+msgid "err_phone_already_used"
+msgstr "Telefonnummer bereits vergeben"
+
+msgid "err_email_required"
+msgstr "E-Mail erforderlich"
+
+msgid "err_invalid_credentials"
+msgstr "Ungültige Zugangsdaten"
+
+msgid "err_user_banned"
+msgstr "Nutzer gesperrt"
+
+msgid "err_password_required"
+msgstr "Passwort erforderlich"
+
+msgid "err_email_not_verified"
+msgstr "E-Mail nicht bestätigt"
+
+msgid "err_invalid_token"
+msgstr "Ungültiges Token"
+
+msgid "err_token_expired"
+msgstr "Token abgelaufen"
+
+msgid "err_missing_to_email"
+msgstr "to_email fehlt"
+
+msgid "err_user_not_found"
+msgstr "Nutzer nicht gefunden"
+
+msgid "err_user_no_email"
+msgstr "Nutzer hat keine E-Mail-Adresse"
+
+msgid "err_cannot_delete_self"
+msgstr "Du kannst dich nicht selbst löschen"
+
+msgid "err_interest_exists"
+msgstr "Interesse existiert bereits"
+
+msgid "err_interest_not_found"
+msgstr "Interesse nicht gefunden"
+
+msgid "err_dob_change_used"
+msgstr "Änderung des Geburtsdatums bereits genutzt"
+
+msgid "err_invalid_dob"
+msgstr "Ungültiges Geburtsdatum"
+
+msgid "err_province_required"
+msgstr "Provinz erforderlich"
+
+msgid "err_phone_change_limited"
+msgstr "Die Telefonnummer kann nur alle 30 Tage geändert werden"
+
+msgid "err_forbidden_diff_province"
+msgstr "Nicht erlaubt (andere Provinz)"
+
+msgid "err_room_not_found"
+msgstr "Raum nicht gefunden"
+
+msgid "err_forbidden"
+msgstr "Nicht erlaubt"
+
+msgid "err_rules_not_found"
+msgstr "Regeln nicht gefunden"
+
+msgid "err_cannot_dm_self"
+msgstr "Du kannst dir nicht selbst schreiben"
+
+msgid "err_user_no_dm"
+msgstr "Dieser Nutzer akzeptiert keine DMs"
+
+msgid "err_dm_daily_limit"
+msgstr "Tageslimit für DMs erreicht (10)"
+
+msgid "err_dm_request_pending"
+msgstr "DM-Anfrage bereits offen"
+
+msgid "err_request_not_found"
+msgstr "Anfrage nicht gefunden"
+
+msgid "err_already_resolved"
+msgstr "Bereits erledigt"
+
+msgid "err_conversation_not_found"
+msgstr "Unterhaltung nicht gefunden"
+
+msgid "err_cannot_follow_self"
+msgstr "Du kannst dir nicht selbst folgen"
+
+msgid "err_cannot_friend_self"
+msgstr "Du kannst dich nicht mit dir selbst befreunden"
+
+msgid "err_already_friends"
+msgstr "Ihr seid bereits befreundet"
+
+msgid "err_request_pending"
+msgstr "Anfrage bereits offen"
+
+msgid "err_debug_disabled"
+msgstr "Deaktiviert"
+
+msgid "err_docker_sdk_missing"
+msgstr "Docker-SDK nicht installiert"
+
+msgid "err_docker_unavailable"
+msgstr "Docker nicht verfügbar: {error}"
+
+msgid "err_no_compose_containers"
+msgstr "Keine Compose-Container gefunden"
+
+msgid "err_password_too_long"
+msgstr "Passwort zu lang (bcrypt-Limit: 72 Byte). Nutze ein kürzeres Passwort."
+
+msgid "err_token_missing_sub"
+msgstr "sub fehlt"
+
+msgid "log_error_line"
+msgstr "[Log-Fehler] {error}"
+
+msgid "err_password_required"
+msgstr "Passwort erforderlich"
+
+msgid "log_level_info"
+msgstr "INFO"
+
+msgid "log_level_warn"
+msgstr "WARN"
+
+msgid "log_level_warning"
+msgstr "WARNING"
+
+msgid "log_level_error"
+msgstr "ERROR"
+
+msgid "log_level_debug"
+msgstr "DEBUG"
+
+msgid "svc_database"
+msgstr "MeetGo-Datenbank"
+
+msgid "svc_redis"
+msgstr "MeetGo-Redis"
+
+msgid "svc_app"
+msgstr "MeetGo-App"
+
+msgid "svc_web_user"
+msgstr "MeetGo-Web-User"
+
+msgid "svc_web_admin"
+msgstr "MeetGo-Web-Admin"
+
+msgid "svc_js"
+msgstr "MeetGo-JavaScript"
+
+msgid "svc_prefix"
+msgstr "MeetGo-{service}"
+
+msgid "err_interest_in_use"
+msgstr "Dieser Kanal hat Räume mit Nachrichten; benenne ihn um, statt ihn zu löschen"
+
+msgid "err_empty_message"
+msgstr "Die Nachricht ist leer"
+
+msgid "err_message_too_long"
+msgstr "Die Nachricht ist zu lang"
+
+msgid "err_banned_here"
+msgstr "Du kannst in dieser Unterhaltung nicht schreiben"
+
+msgid "err_display_name"
+msgstr "Der Name muss 1 bis 64 Zeichen lang sein"
+
+msgid "err_edit_window"
+msgstr "Du kannst eine Nachricht nur 48 Stunden lang bearbeiten"
+
+msgid "err_file_empty"
+msgstr "Die Datei ist leer"
+
+msgid "err_file_not_found"
+msgstr "Datei nicht gefunden"
+
+msgid "err_file_too_big"
+msgstr "Die Datei ist größer als 10 MB"
+
+msgid "err_file_type"
+msgstr "Dieser Dateityp wird nicht unterstützt"
+
+msgid "err_invalid_email"
+msgstr "Ungültige E-Mail-Adresse"
+
+msgid "err_invalid_plan"
+msgstr "Ungültiger Tarif"
+
+msgid "err_invalid_reaction"
+msgstr "Ungültige Reaktion"
+
+msgid "err_invite_invalid"
+msgstr "Diese Einladung ist nicht mehr gültig"
+
+msgid "err_message_deleted"
+msgstr "Die Nachricht wurde gelöscht"
+
+msgid "err_message_not_found"
+msgstr "Nachricht nicht gefunden"
+
+msgid "err_no_subscription"
+msgstr "Du hast kein Web-Abo"
+
+msgid "err_payments_failed"
+msgstr "Die Zahlung konnte nicht abgeschlossen werden"
+
+msgid "err_payments_not_configured"
+msgstr "Zahlungen sind noch nicht eingerichtet"
+
+msgid "err_promo_already_used"
+msgstr "Du hast bereits einen Aktionscode genutzt"
+
+msgid "err_promo_below_used"
+msgstr "Das Maximum darf nicht unter der Zahl der bereits vergebenen Plätze liegen"
+
+msgid "err_promo_exhausted"
+msgstr "Für diesen Code sind keine Plätze mehr frei"
+
+msgid "err_promo_invalid"
+msgstr "Ungültiger Aktionscode"
+
+msgid "err_purchase_inactive"
+msgstr "Dieser Kauf ist nicht aktiv"
+
+msgid "err_purchase_invalid"
+msgstr "Der Kauf konnte nicht mit Google Play verifiziert werden"
+
+msgid "err_purchase_other_account"
+msgstr "Dieser Kauf gehört zu einem anderen Konto"
+
+msgid "err_report_own"
+msgstr "Du kannst deine eigenen Nachrichten nicht melden"
+
+msgid "err_service_account"
+msgstr "Das Dienstkonto ist ungültig"
+
+msgid "err_silenced_until"
+msgstr "Du bist in dieser Unterhaltung bis {until} stummgeschaltet"
+
+msgid "err_slow_mode"
+msgstr "Langsammodus: Warte {seconds} s, bevor du wieder schreibst"
+
+msgid "err_subscription_required"
+msgstr "Zum Schreiben brauchst du ein aktives Abo"
+
+msgid "err_too_many_reactions"
+msgstr "Zu viele Reaktionen auf diese Nachricht"
+
+msgid "sys_group_created"
+msgstr "{name} hat die Gruppe erstellt"
+
+msgid "sys_member_added"
+msgstr "{by} hat {name} hinzugefügt"
+
+msgid "sys_member_joined"
+msgstr "{name} ist per Einladung beigetreten"
+
+msgid "sys_member_left"
+msgstr "{name} hat die Gruppe verlassen"
+
+msgid "sys_member_removed"
+msgstr "{by} hat {name} entfernt"
+
+msgid "ui_accept"
+msgstr "Annehmen"
+
+msgid "ui_accept_dm"
+msgstr "Direktnachrichten auch von Leuten annehmen, die nicht meine Freunde sind"
+
+msgid "ui_access_ends"
+msgstr "{plan}-Tarif: endet am {date}"
+
+msgid "ui_access_free"
+msgstr "Dein Konto hat kostenlosen Zugang"
+
+msgid "ui_access_grant_life"
+msgstr "Lebenslang kostenloser Zugang"
+
+msgid "ui_access_grant_until"
+msgstr "Kostenloser Zugang bis {date}"
+
+msgid "ui_access_none"
+msgstr "Kein Abo: Dein Konto ist schreibgeschützt"
+
+msgid "ui_access_play"
+msgstr "Google-Play-Abo bis {date}"
+
+msgid "ui_access_renews"
+msgstr "{plan}-Tarif: verlängert sich am {date}"
+
+msgid "ui_access_trial"
+msgstr "Kostenlose Testphase des {plan}-Tarifs bis {date}"
+
+msgid "ui_account_title"
+msgstr "Dein Konto"
+
+msgid "ui_activity"
+msgstr "Aktivität"
+
+msgid "ui_add"
+msgstr "Hinzufügen"
+
+msgid "ui_add_friend"
+msgstr "Freund hinzufügen"
+
+msgid "ui_add_friends"
+msgstr "Freunde hinzufügen"
+
+msgid "ui_added"
+msgstr "Hinzugefügt"
+
+msgid "ui_also_send_to"
+msgstr "Auch an {name} senden"
+
+msgid "ui_appearance"
+msgstr "Darstellung"
+
+msgid "ui_apply"
+msgstr "Anwenden"
+
+msgid "ui_attach"
+msgstr "Anhängen"
+
+msgid "ui_attachment"
+msgstr "Anhang"
+
+msgid "ui_avatar_url"
+msgstr "Profilbild (Link)"
+
+msgid "ui_back"
+msgstr "Zurück"
+
+msgid "ui_ban"
+msgstr "Sperren"
+
+msgid "ui_bio"
+msgstr "Über dich"
+
+msgid "ui_cancel"
+msgstr "Abbrechen"
+
+msgid "ui_cancel_plan"
+msgstr "Abo kündigen"
+
+msgid "ui_change_server"
+msgstr "Server wechseln"
+
+msgid "ui_channel_start"
+msgstr "Das ist der Anfang des Kanals. Hier unterhalten sich Leute aus {zone} mit gleichen Interessen wie du."
+
+msgid "ui_check_email_body"
+msgstr "Wir haben dir einen Link zur Bestätigung deiner E-Mail-Adresse geschickt. Öffne ihn und melde dich dann mit deinem Passwort an."
+
+msgid "ui_check_email_title"
+msgstr "Prüfe dein Postfach"
+
+msgid "ui_choose"
+msgstr "Auswählen…"
+
+msgid "ui_clear"
+msgstr "Leeren"
+
+msgid "ui_close"
+msgstr "Schließen"
+
+msgid "ui_code_applied"
+msgstr "Code angewendet"
+
+msgid "ui_connected"
+msgstr "Verbunden"
+
+msgid "ui_conversation_gone"
+msgstr "Diese Unterhaltung ist nicht mehr verfügbar"
+
+msgid "ui_copied"
+msgstr "Kopiert"
+
+msgid "ui_copy"
+msgstr "Kopieren"
+
+msgid "ui_country"
+msgstr "Land"
+
+msgid "ui_create_account"
+msgstr "Konto erstellen"
+
+msgid "ui_create_group"
+msgstr "Gruppe erstellen"
+
+msgid "ui_decline"
+msgstr "Ablehnen"
+
+msgid "ui_delete"
+msgstr "Löschen"
+
+msgid "ui_deleted_user"
+msgstr "Gelöschter Nutzer"
+
+msgid "ui_description"
+msgstr "Beschreibung"
+
+msgid "ui_details_optional"
+msgstr "Details (optional)"
+
+msgid "ui_direct_message"
+msgstr "Direktnachricht"
+
+msgid "ui_disable"
+msgstr "Ausschalten"
+
+msgid "ui_display_name"
+msgstr "Anzeigename"
+
+msgid "ui_dm_request_sent"
+msgstr "Anfrage gesendet: Ihr könnt schreiben, sobald sie angenommen wird"
+
+msgid "ui_dm_requests"
+msgstr "Wollen dir schreiben"
+
+msgid "ui_dm_start"
+msgstr "Das ist deine private Unterhaltung mit {name}."
+
+msgid "ui_dob"
+msgstr "Geburtsdatum"
+
+msgid "ui_done"
+msgstr "Fertig"
+
+msgid "ui_edit"
+msgstr "Bearbeiten"
+
+msgid "ui_edit_hint"
+msgstr "Enter zum Speichern · Esc zum Abbrechen"
+
+msgid "ui_edit_in_chat"
+msgstr "Bearbeite die Nachricht in der Unterhaltung"
+
+msgid "ui_edited"
+msgstr "bearbeitet"
+
+msgid "ui_email"
+msgstr "E-Mail"
+
+msgid "ui_email_verified"
+msgstr "E-Mail bestätigt. Du kannst dich jetzt anmelden."
+
+msgid "ui_emoji"
+msgstr "Emoji"
+
+msgid "ui_empty_body"
+msgstr "Wähle deine Interessen, um den Kanälen in deiner Gegend beizutreten, oder erstelle eine Gruppe mit deinen Freunden."
+
+msgid "ui_empty_title"
+msgstr "Du hast noch keine Unterhaltungen"
+
+msgid "ui_enable"
+msgstr "Einschalten"
+
+msgid "ui_enter_hint"
+msgstr "Enter zum Senden · Umschalt+Enter für eine neue Zeile"
+
+msgid "ui_err_generic"
+msgstr "Etwas ist schiefgelaufen (Fehler {status}). Versuche es noch einmal."
+
+msgid "ui_err_invalid_data"
+msgstr "Prüfe die Felder des Formulars"
+
+msgid "ui_err_network"
+msgstr "Server nicht erreichbar. Prüfe deine Internetverbindung."
+
+msgid "ui_explore_channels"
+msgstr "Kanäle entdecken"
+
+msgid "ui_explore_lead"
+msgstr "Kanäle in {zone}. Tritt denen bei, die dir gefallen."
+
+msgid "ui_explore_title"
+msgstr "Kanäle"
+
+msgid "ui_f_all"
+msgstr "Alle"
+
+msgid "ui_f_channels"
+msgstr "Kanäle"
+
+msgid "ui_f_direct"
+msgstr "Direkt"
+
+msgid "ui_f_groups"
+msgstr "Gruppen"
+
+msgid "ui_f_mentions"
+msgstr "Erwähnungen"
+
+msgid "ui_f_unread"
+msgstr "Ungelesen"
+
+msgid "ui_feed_empty"
+msgstr "Noch keine Beiträge. Folge Leuten, um ihre hier zu sehen."
+
+msgid "ui_feed_hint"
+msgstr "Deine Follower sehen ihn"
+
+msgid "ui_feed_placeholder"
+msgstr "Was machst du gerade?"
+
+msgid "ui_find_people"
+msgstr "Leute finden"
+
+msgid "ui_follow"
+msgstr "Folgen"
+
+msgid "ui_forgot"
+msgstr "Passwort vergessen?"
+
+msgid "ui_forgot_sent"
+msgstr "Falls ein Konto mit dieser E-Mail-Adresse existiert, haben wir ihr einen Link zum Ändern des Passworts geschickt."
+
+msgid "ui_forgot_title"
+msgstr "Passwort zurücksetzen"
+
+msgid "ui_friend"
+msgstr "Freund"
+
+msgid "ui_friend_request_sent"
+msgstr "Freundschaftsanfrage gesendet"
+
+msgid "ui_friend_requests"
+msgstr "Freundschaftsanfragen"
+
+msgid "ui_friends"
+msgstr "Freunde"
+
+msgid "ui_go_latest"
+msgstr "Zu den neuesten"
+
+msgid "ui_go_login"
+msgstr "Zurück zur Anmeldung"
+
+msgid "ui_home_page"
+msgstr "Startseite"
+
+msgid "ui_group_members_hint"
+msgstr "Füge jetzt deine Freunde hinzu oder teile später den Einladungslink."
+
+msgid "ui_group_name"
+msgstr "Gruppenname"
+
+msgid "ui_group_name_ph"
+msgstr "Wanderung am Samstag"
+
+msgid "ui_group_start"
+msgstr "Das ist der Anfang der Gruppe. Plant hier gemeinsam."
+
+msgid "ui_have_account"
+msgstr "Ich habe schon ein Konto"
+
+msgid "ui_hide_chat"
+msgstr "Unterhaltung ausblenden"
+
+msgid "ui_info"
+msgstr "Info"
+
+msgid "ui_interests"
+msgstr "Interessen"
+
+msgid "ui_interests_lead"
+msgstr "Mit jedem Interesse trittst du dem passenden Kanal in {zone} für deine Altersgruppe bei."
+
+msgid "ui_invite_link"
+msgstr "Einladungslink"
+
+msgid "ui_join"
+msgstr "Beitreten"
+
+msgid "ui_join_group"
+msgstr "Gruppe beitreten"
+
+msgid "ui_language"
+msgstr "Sprache"
+
+msgid "ui_last_at"
+msgstr "zuletzt um {time}"
+
+msgid "ui_leave_channel"
+msgstr "Kanal verlassen"
+
+msgid "ui_leave_group"
+msgstr "Gruppe verlassen"
+
+msgid "ui_loading"
+msgstr "Lädt…"
+
+msgid "ui_login_btn"
+msgstr "Anmelden"
+
+msgid "ui_login_title"
+msgstr "Bei MeetGo anmelden"
+
+msgid "ui_logout"
+msgstr "Abmelden"
+
+msgid "ui_make_admin"
+msgstr "Zum Admin machen"
+
+msgid "ui_make_member"
+msgstr "Admin entfernen"
+
+msgid "ui_manage_payment"
+msgstr "Zahlung und Rechnungen verwalten"
+
+msgid "ui_members"
+msgstr "Mitglieder"
+
+msgid "ui_members_n"
+msgstr "{n} Mitglieder"
+
+msgid "ui_mentions_lead"
+msgstr "Nachrichten, in denen du erwähnt wirst."
+
+msgid "ui_mentions_title"
+msgstr "Erwähnungen"
+
+msgid "ui_message_actions"
+msgstr "Nachrichtenaktionen"
+
+msgid "ui_message_in"
+msgstr "Nachricht an {name}"
+
+msgid "ui_message_to"
+msgstr "Nachricht an {name}"
+
+msgid "ui_mod_caps"
+msgstr "Von der Moderation entfernt: zu viele Großbuchstaben"
+
+msgid "ui_mod_flood"
+msgstr "Von der Moderation entfernt: zu viele Nachrichten hintereinander"
+
+msgid "ui_mod_generic"
+msgstr "Von der Moderation entfernt"
+
+msgid "ui_mod_links"
+msgstr "Von der Moderation entfernt: Links sind in diesem Kanal nicht erlaubt"
+
+msgid "ui_mod_phone"
+msgstr "Von der Moderation entfernt: Teile im Kanal keine Telefonnummern"
+
+msgid "ui_mod_removed"
+msgstr "Von einem Moderator entfernt"
+
+msgid "ui_mod_toxic"
+msgstr "Von der Moderation entfernt: beleidigende Sprache"
+
+msgid "ui_moderation"
+msgstr "Moderation"
+
+msgid "ui_monthly"
+msgstr "Monatlich"
+
+msgid "ui_more"
+msgstr "Mehr"
+
+msgid "ui_msg_deleted"
+msgstr "Nachricht gelöscht"
+
+msgid "ui_mute_1h"
+msgstr "1 Stunde stummschalten"
+
+msgid "ui_mute_week"
+msgstr "1 Woche stummschalten"
+
+msgid "ui_nav"
+msgstr "Navigation"
+
+msgid "ui_nav_account"
+msgstr "Konto"
+
+msgid "ui_nav_channels"
+msgstr "Kanäle"
+
+msgid "ui_nav_chats"
+msgstr "Chats"
+
+msgid "ui_nav_mentions"
+msgstr "Erwähnungen"
+
+msgid "ui_nav_people"
+msgstr "Leute"
+
+msgid "ui_needs_request"
+msgstr "Anfrage nötig"
+
+msgid "ui_new_chat"
+msgstr "Neue Unterhaltung"
+
+msgid "ui_new_group"
+msgstr "Neue Gruppe"
+
+msgid "ui_new_link"
+msgstr "Neuer Link"
+
+msgid "ui_new_messages"
+msgstr "Neue Nachrichten"
+
+msgid "ui_new_messages_n"
+msgstr "{n} neue Nachrichten"
+
+msgid "ui_no_dms"
+msgstr "Nimmt keine Direktnachrichten an"
+
+msgid "ui_no_friends_hint"
+msgstr "Füge Freunde hinzu, indem du in einem Kanal auf ihren Namen tippst, oder finde sie unter „Leute finden“."
+
+msgid "ui_no_friends_yet"
+msgstr "Du hast noch keine Freunde auf MeetGo"
+
+msgid "ui_no_mentions"
+msgstr "Dich hat noch niemand erwähnt"
+
+msgid "ui_no_requests"
+msgstr "Du hast keine offenen Anfragen"
+
+msgid "ui_no_results"
+msgstr "Keine Ergebnisse"
+
+msgid "ui_notifications"
+msgstr "Benachrichtigungen"
+
+msgid "ui_notifications_hint"
+msgstr "Gruppen und Direktnachrichten melden jede Nachricht; Kanäle nur, wenn du erwähnt wirst. Ändere das im Menü der jeweiligen Unterhaltung."
+
+msgid "ui_notify_all"
+msgstr "Bei jeder Nachricht benachrichtigen"
+
+msgid "ui_notify_current"
+msgstr "Benachrichtigungen: {mode}"
+
+msgid "ui_notify_mentions"
+msgstr "Nur bei Erwähnungen benachrichtigen"
+
+msgid "ui_notify_none"
+msgstr "Nie benachrichtigen"
+
+msgid "ui_off"
+msgstr "Aus"
+
+msgid "ui_offline"
+msgstr "Offline"
+
+msgid "ui_offline_n"
+msgstr "Offline · {n}"
+
+msgid "ui_online"
+msgstr "Online"
+
+msgid "ui_online_n"
+msgstr "Online · {n}"
+
+msgid "ui_open"
+msgstr "Öffnen"
+
+msgid "ui_open_notification_settings"
+msgstr "Benachrichtigungseinstellungen des Handys"
+
+msgid "ui_password"
+msgstr "Passwort"
+
+msgid "ui_password_change"
+msgstr "Neues Passwort (optional)"
+
+msgid "ui_password_new"
+msgstr "Passwort (mindestens 6 Zeichen)"
+
+msgid "ui_payments_soon"
+msgstr "Zahlungen sind auf diesem Server noch nicht aktiv."
+
+msgid "ui_paywall_lead"
+msgstr "Dein Konto kann lesen, aber nicht schreiben. Schließe ein Abo ab, um bei Kanälen, Gruppen und Direktnachrichten mitzumachen."
+
+msgid "ui_paywall_title"
+msgstr "MeetGo abonnieren"
+
+msgid "ui_people_title"
+msgstr "Leute"
+
+msgid "ui_per_month"
+msgstr "pro Monat"
+
+msgid "ui_per_year"
+msgstr "pro Jahr"
+
+msgid "ui_phone"
+msgstr "Telefon (wird niemandem angezeigt)"
+
+msgid "ui_pick_conversation"
+msgstr "Wähle eine Unterhaltung"
+
+msgid "ui_pick_conversation_hint"
+msgstr "Oder starte mit dem Stift-Button eine neue."
+
+msgid "ui_pin"
+msgstr "Nachricht anheften"
+
+msgid "ui_pin_chat"
+msgstr "Unterhaltung anheften"
+
+msgid "ui_pinned"
+msgstr "Angeheftet"
+
+msgid "ui_plan_active"
+msgstr "Abo aktiv! Danke, dass du MeetGo unterstützt."
+
+msgid "ui_profile"
+msgstr "Profil"
+
+msgid "ui_promo_code"
+msgstr "Aktionscode"
+
+msgid "ui_province"
+msgstr "Provinz"
+
+msgid "ui_publish"
+msgstr "Posten"
+
+msgid "ui_push_blocked"
+msgstr "Benachrichtigungen sind in diesem Browser blockiert; erlaube sie in den Browser-Einstellungen."
+
+msgid "ui_push_denied"
+msgstr "Benachrichtigungen wurden nicht eingeschaltet"
+
+msgid "ui_push_disabled_here"
+msgstr "Benachrichtigungen sind in diesem Browser aus"
+
+msgid "ui_push_enabled_here"
+msgstr "Benachrichtigungen sind in diesem Browser an"
+
+msgid "ui_push_off"
+msgstr "Benachrichtigungen ausgeschaltet"
+
+msgid "ui_push_on"
+msgstr "Benachrichtigungen eingeschaltet"
+
+msgid "ui_push_unsupported"
+msgstr "Dieser Browser unterstützt keine Benachrichtigungen. Auf dem iPhone füge MeetGo zum Home-Bildschirm hinzu."
+
+msgid "ui_react"
+msgstr "Reagieren"
+
+msgid "ui_read"
+msgstr "Gelesen"
+
+msgid "ui_read_only"
+msgstr "Dein Konto ist schreibgeschützt, bis du ein Abo abschließt."
+
+msgid "ui_reason"
+msgstr "Grund"
+
+msgid "ui_reason_spam"
+msgstr "Spam oder Werbung"
+
+msgid "ui_reason_harassment"
+msgstr "Belästigung"
+
+msgid "ui_reason_hate"
+msgstr "Hass oder Diskriminierung"
+
+msgid "ui_reason_sexual"
+msgstr "Sexuelle Inhalte"
+
+msgid "ui_reason_violence"
+msgstr "Gewalt oder Drohungen"
+
+msgid "ui_reason_other"
+msgstr "Etwas anderes"
+
+msgid "ui_reconnecting"
+msgstr "Verbinde neu…"
+
+msgid "ui_register_lead"
+msgstr "Du unterhältst dich mit Leuten aus deiner Provinz und deiner Altersgruppe. Deine Telefonnummer wird nie angezeigt."
+
+msgid "ui_register_legal"
+msgstr "Mit der Kontoerstellung bestätigst du, dass du mindestens 18 bist, und akzeptierst die Nutzungsbedingungen und die Datenschutzerklärung."
+
+msgid "ui_register_title"
+msgstr "Erstelle dein Konto"
+
+msgid "ui_remove"
+msgstr "Entfernen"
+
+msgid "ui_remove_member"
+msgstr "Aus der Gruppe entfernen"
+
+msgid "ui_replied_in_thread"
+msgstr "hat in einem Thread geantwortet"
+
+msgid "ui_replies_n"
+msgstr "{n} Antworten"
+
+msgid "ui_reply"
+msgstr "Antworten"
+
+msgid "ui_reply_in_thread_ph"
+msgstr "Im Thread antworten"
+
+msgid "ui_reply_thread"
+msgstr "In einem Thread antworten"
+
+msgid "ui_replying_to"
+msgstr "Antwort an"
+
+msgid "ui_report"
+msgstr "Melden"
+
+msgid "ui_report_in_chat"
+msgstr "Melde die Nachricht in der Unterhaltung"
+
+msgid "ui_report_title"
+msgstr "Nachricht melden"
+
+msgid "ui_reported"
+msgstr "Danke. Die Moderation wird sie prüfen."
+
+msgid "ui_request"
+msgstr "Anfrage"
+
+msgid "ui_requests"
+msgstr "Anfragen"
+
+msgid "ui_reset_done"
+msgstr "Passwort geändert. Du kannst dich jetzt anmelden."
+
+msgid "ui_reset_title"
+msgstr "Neues Passwort"
+
+msgid "ui_restore_purchase"
+msgstr "Kauf wiederherstellen"
+
+msgid "ui_resume_plan"
+msgstr "Abo fortsetzen"
+
+msgid "ui_retry"
+msgstr "Erneut versuchen"
+
+msgid "ui_role_owner"
+msgstr "Besitzer"
+
+msgid "ui_role_admin"
+msgstr "Admin"
+
+msgid "ui_role_moderator"
+msgstr "MOD"
+
+msgid "ui_role_member"
+msgstr "Mitglied"
+
+msgid "ui_rules"
+msgstr "Regeln"
+
+msgid "ui_save"
+msgstr "Speichern"
+
+msgid "ui_save_17"
+msgstr "17 % sparen"
+
+msgid "ui_saved"
+msgstr "Gespeichert"
+
+msgid "ui_search_in"
+msgstr "In {name} suchen"
+
+msgid "ui_search_in_chat"
+msgstr "In der Unterhaltung suchen"
+
+msgid "ui_search_members"
+msgstr "Mitglieder suchen"
+
+msgid "ui_search_people"
+msgstr "Nach Namen suchen"
+
+msgid "ui_search_people_hint"
+msgstr "Gib mindestens zwei Buchstaben ein. Du siehst deine Freunde und Leute aus deiner Provinz."
+
+msgid "ui_search_placeholder"
+msgstr "Unterhaltungen oder Nachrichten suchen"
+
+msgid "ui_sec_channels"
+msgstr "Kanäle"
+
+msgid "ui_sec_channels_zone"
+msgstr "Kanäle · {zone}"
+
+msgid "ui_sec_direct"
+msgstr "Direkt"
+
+msgid "ui_sec_groups"
+msgstr "Gruppen"
+
+msgid "ui_sec_messages"
+msgstr "Nachrichten"
+
+msgid "ui_sec_pinned"
+msgstr "Angeheftet"
+
+msgid "ui_seconds_n"
+msgstr "{n} Sekunden"
+
+msgid "ui_send"
+msgstr "Senden"
+
+msgid "ui_send_link"
+msgstr "Link senden"
+
+msgid "ui_send_message"
+msgstr "Nachricht senden"
+
+msgid "ui_sent"
+msgstr "Gesendet"
+
+msgid "ui_session"
+msgstr "Sitzung"
+
+msgid "ui_share_lead"
+msgstr "Wähle, wohin du es teilen willst ({n} Dateien)."
+
+msgid "ui_share_nothing"
+msgstr "Es gibt nichts zu teilen."
+
+msgid "ui_share_title"
+msgstr "Mit MeetGo teilen"
+
+msgid "ui_side_panel"
+msgstr "Seitenleiste"
+
+msgid "ui_silence_1h"
+msgstr "1 Stunde Schreibsperre"
+
+msgid "ui_silenced_until"
+msgstr "Du bist in dieser Unterhaltung bis {time} stummgeschaltet."
+
+msgid "ui_slow_mode"
+msgstr "Langsammodus: eine Nachricht alle {seconds} s"
+
+msgid "ui_slow_mode_label"
+msgstr "Langsammodus"
+
+msgid "ui_staff_n"
+msgstr "Moderatoren · {n}"
+
+msgid "ui_subscribe"
+msgstr "Abonnieren"
+
+msgid "ui_subscribe_card"
+msgstr "Mit Karte abonnieren"
+
+msgid "ui_subscribe_play"
+msgstr "Mit Google Play abonnieren"
+
+msgid "ui_subscription"
+msgstr "Abo"
+
+msgid "ui_switch_monthly"
+msgstr "Auf monatlich wechseln"
+
+msgid "ui_switch_yearly"
+msgstr "Auf jährlich wechseln (17 % sparen)"
+
+msgid "ui_theme"
+msgstr "Design"
+
+msgid "ui_theme_dark"
+msgstr "Dunkel"
+
+msgid "ui_theme_light"
+msgstr "Hell"
+
+msgid "ui_theme_system"
+msgstr "Wie das System"
+
+msgid "ui_thread"
+msgstr "Thread"
+
+msgid "ui_threads"
+msgstr "Infos und Regeln"
+
+msgid "ui_today"
+msgstr "Heute"
+
+msgid "ui_trial_days"
+msgstr "Die ersten {n} Tage sind kostenlos. Jederzeit kündbar."
+
+msgid "ui_typing_many"
+msgstr "{name} und {n} weitere schreiben…"
+
+msgid "ui_typing_one"
+msgstr "{name} schreibt…"
+
+msgid "ui_typing_short"
+msgstr "schreibt…"
+
+msgid "ui_typing_two"
+msgstr "{a} und {b} schreiben…"
+
+msgid "ui_unfollow"
+msgstr "Entfolgen"
+
+msgid "ui_unmute"
+msgstr "Stummschaltung aufheben"
+
+msgid "ui_unpin"
+msgstr "Nachricht lösen"
+
+msgid "ui_unpin_chat"
+msgstr "Unterhaltung lösen"
+
+msgid "ui_unsilence"
+msgstr "Schreibsperre aufheben"
+
+msgid "ui_uploading"
+msgstr "Wird hochgeladen…"
+
+msgid "ui_wait"
+msgstr "Einen Moment…"
+
+msgid "ui_wants_friend"
+msgstr "{name} möchte dein Freund sein"
+
+msgid "ui_wants_to_write"
+msgstr "{name} möchte dir schreiben"
+
+msgid "ui_write"
+msgstr "Schreiben"
+
+msgid "ui_yearly"
+msgstr "Jährlich"
+
+msgid "ui_yesterday"
+msgstr "Gestern"
+
+msgid "ui_you"
+msgstr "Du"
+
+msgid "admin_add_calling_code"
+msgstr "Vorwahl hinzufügen"
+
+msgid "admin_add_country"
+msgstr "Land hinzufügen"
+
+msgid "admin_add_language"
+msgstr "Sprache hinzufügen"
+
+msgid "admin_add_range"
+msgstr "Bereich hinzufügen"
+
+msgid "admin_age_ranges_title"
+msgstr "Altersgruppen"
+
+msgid "admin_app_section"
+msgstr "Anwendung"
+
+msgid "admin_base_url"
+msgstr "Öffentliche Webadresse"
+
+msgid "admin_base_url_placeholder"
+msgstr "https://meetgo.app"
+
+msgid "admin_calling_code_placeholder"
+msgstr "+34"
+
+msgid "admin_calling_codes_title"
+msgstr "Vorwahlen"
+
+msgid "admin_code"
+msgstr "Code"
+
+msgid "admin_countries_title"
+msgstr "Länder"
+
+msgid "admin_delete"
+msgstr "Löschen"
+
+msgid "admin_gmail_client_id"
+msgstr "Gmail: Client-ID"
+
+msgid "admin_gmail_client_secret"
+msgstr "Gmail: Client-Secret"
+
+msgid "admin_gmail_refresh_token"
+msgstr "Gmail: Refresh-Token"
+
+msgid "admin_gmail_sender_email"
+msgstr "Gmail: Absender-E-Mail"
+
+msgid "admin_key"
+msgstr "Schlüssel"
+
+msgid "admin_label"
+msgstr "Bezeichnung"
+
+msgid "admin_languages_title"
+msgstr "Sprachen"
+
+msgid "admin_loading"
+msgstr "Lädt…"
+
+msgid "admin_login_button"
+msgstr "Anmelden"
+
+msgid "admin_login_password"
+msgstr "Passwort"
+
+msgid "admin_login_username"
+msgstr "E-Mail oder Benutzername"
+
+msgid "admin_logout"
+msgstr "Abmelden"
+
+msgid "admin_max"
+msgstr "Max."
+
+msgid "admin_min"
+msgstr "Min."
+
+msgid "admin_name"
+msgstr "Name"
+
+msgid "admin_provinces_title"
+msgstr "Provinzen"
+
+msgid "admin_settings_error"
+msgstr "Die Einstellungen konnten nicht gespeichert werden"
+
+msgid "admin_settings_save"
+msgstr "Einstellungen speichern"
+
+msgid "admin_settings_saved"
+msgstr "Einstellungen gespeichert"
+
+msgid "admin_settings_title"
+msgstr "Einstellungen"
+
+msgid "admin_smtp_encryption"
+msgstr "Verschlüsselung"
+
+msgid "admin_smtp_from_email"
+msgstr "Absender-E-Mail"
+
+msgid "admin_smtp_host"
+msgstr "SMTP-Server"
+
+msgid "admin_smtp_mode"
+msgstr "Versandart"
+
+msgid "admin_smtp_mode_gmail"
+msgstr "Gmail-API"
+
+msgid "admin_smtp_mode_smtp"
+msgstr "SMTP"
+
+msgid "admin_smtp_password"
+msgstr "SMTP-Passwort"
+
+msgid "admin_smtp_port"
+msgstr "Port"
+
+msgid "admin_smtp_section"
+msgstr "Ausgehende E-Mails"
+
+msgid "admin_smtp_ssl"
+msgstr "SSL"
+
+msgid "admin_smtp_starttls"
+msgstr "STARTTLS"
+
+msgid "admin_smtp_test_button"
+msgstr "Test-E-Mail senden"
+
+msgid "admin_smtp_test_email"
+msgstr "Test senden an"
+
+msgid "admin_smtp_test_error"
+msgstr "Die Test-E-Mail konnte nicht gesendet werden"
+
+msgid "admin_smtp_test_ok"
+msgstr "Test-E-Mail gesendet"
+
+msgid "admin_smtp_username"
+msgstr "SMTP-Benutzername"
+
+msgid "admin_tab_channels"
+msgstr "Kanäle"
+
+msgid "admin_tab_settings"
+msgstr "Einstellungen"
+
+msgid "admin_tab_users"
+msgstr "Nutzer"
+
+msgid "admin_title"
+msgstr "MeetGo-Verwaltung"
+
+msgid "email_open_app"
+msgstr "MeetGo öffnen"
+
+msgid "email_footer_digest"
+msgstr "Du bekommst diese E-Mail, weil du ungelesene Nachrichten auf MeetGo hast."
+
+msgid "email_footer_requests"
+msgstr "Du bekommst diese E-Mail, weil dich jemand auf MeetGo erreichen möchte."
+
+msgid "email_footer_reports"
+msgstr "Du bekommst diese E-Mail, weil du MeetGo verwaltest."
+
+msgid "email_footer_manage"
+msgstr "Festlegen, welche E-Mails ich bekomme"
+
+msgid "email_footer_unsubscribe"
+msgstr "Diese E-Mails abbestellen"
+
+msgid "email_verify_title"
+msgstr "Bestätige deine E-Mail-Adresse"
+
+msgid "email_verify_button"
+msgstr "E-Mail-Adresse bestätigen"
+
+msgid "email_reset_title"
+msgstr "Wähle ein neues Passwort"
+
+msgid "email_reset_button"
+msgstr "Passwort wählen"
+
+msgid "email_password_changed_subject"
+msgstr "Dein MeetGo-Passwort wurde geändert"
+
+msgid "email_password_changed_title"
+msgstr "Passwort geändert"
+
+msgid "email_password_changed_body"
+msgstr "Das Passwort deines Kontos wurde gerade geändert. Falls du das nicht warst, setze es jetzt über „Passwort vergessen?“ zurück und antworte auf diese E-Mail."
+
+msgid "email_friend_request_subject"
+msgstr "{name} möchte auf MeetGo dein Freund sein"
+
+msgid "email_friend_request_title"
+msgstr "Neue Freundschaftsanfrage"
+
+msgid "email_friend_request_body"
+msgstr "{name} hat dir eine Freundschaftsanfrage geschickt. Nimm sie an, um euch Direktnachrichten zu schicken und gemeinsam Gruppen zu erstellen."
+
+msgid "email_friend_request_button"
+msgstr "Anfrage ansehen"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name} hat deine Freundschaftsanfrage angenommen"
+
+msgid "email_friend_accepted_title"
+msgstr "Ihr seid jetzt befreundet"
+
+msgid "email_friend_accepted_body"
+msgstr "{name} hat deine Freundschaftsanfrage angenommen. Ihr könnt euch jetzt Direktnachrichten schicken."
+
+msgid "email_dm_request_subject"
+msgstr "{name} möchte dir auf MeetGo schreiben"
+
+msgid "email_dm_request_title"
+msgstr "Anfrage für eine Direktnachricht"
+
+msgid "email_dm_request_body"
+msgstr "{name} möchte dir per Direktnachricht schreiben. Nimm die Anfrage an, um die Unterhaltung zu starten."
+
+msgid "email_dm_request_button"
+msgstr "Anfrage ansehen"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name} hat deine Direktnachricht angenommen"
+
+msgid "email_dm_accepted_title"
+msgstr "Unterhaltung geöffnet"
+
+msgid "email_dm_accepted_body"
+msgstr "{name} hat deine Anfrage angenommen: Ihr könnt euch jetzt per Direktnachricht schreiben."
+
+msgid "email_dm_accepted_button"
+msgstr "Zur Unterhaltung"
+
+msgid "email_group_added_subject"
+msgstr "{name} hat dich zu „{group}“ hinzugefügt"
+
+msgid "email_group_added_title"
+msgstr "Neue Gruppe"
+
+msgid "email_group_added_body"
+msgstr "{name} hat dich zur MeetGo-Gruppe „{group}“ hinzugefügt."
+
+msgid "email_group_added_button"
+msgstr "Zur Gruppe"
+
+msgid "email_mod_silence_subject"
+msgstr "Du wurdest in {place} stummgeschaltet"
+
+msgid "email_mod_silence_title"
+msgstr "Vorübergehend stummgeschaltet"
+
+msgid "email_mod_silence_body"
+msgstr "Die Moderatoren von {place} haben dich für {minutes} Minuten stummgeschaltet. Danach kannst du wieder schreiben."
+
+msgid "email_mod_ban_subject"
+msgstr "Du kannst in {place} nicht mehr schreiben"
+
+msgid "email_mod_ban_title"
+msgstr "Aus {place} gesperrt"
+
+msgid "email_mod_ban_body"
+msgstr "Die Moderatoren von {place} haben dich gesperrt, sodass du dort nicht mehr schreiben kannst. Falls du das für einen Fehler hältst, antworte auf diese E-Mail."
+
+msgid "email_mod_remove_subject"
+msgstr "Du wurdest aus {place} entfernt"
+
+msgid "email_mod_remove_title"
+msgstr "Raus aus {place}"
+
+msgid "email_mod_remove_body"
+msgstr "Die Moderatoren haben dich aus {place} entfernt. Falls du das für einen Fehler hältst, antworte auf diese E-Mail."
+
+msgid "email_report_subject"
+msgstr "Neue Meldung auf MeetGo"
+
+msgid "email_report_title"
+msgstr "Neue Meldung"
+
+msgid "email_report_body"
+msgstr "Jemand hat eine Nachricht gemeldet ({reason}). Prüfe sie in der Moderationswarteschlange der Verwaltung."
+
+msgid "email_digest_subject"
+msgstr "Du hast ungelesene Nachrichten auf MeetGo ({n})"
+
+msgid "email_digest_title"
+msgstr "Ungelesene Nachrichten"
+
+msgid "email_digest_body"
+msgstr "Das hast du noch nicht gelesen:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name} hat dich in {place} erwähnt"
+
+msgid "email_digest_mention_title"
+msgstr "Du wurdest erwähnt"
+
+msgid "email_digest_mention_body"
+msgstr "{name} hat dich in {place} erwähnt. Das hast du noch nicht gelesen:"
+
+msgid "email_digest_mention_button"
+msgstr "Nachricht ansehen"
+
+msgid "email_digest_more"
+msgstr "und {n} weitere…"
+
+msgid "email_digest_attachment"
+msgstr "📎 Anhang"
+
+msgid "email_access_ending_subject"
+msgstr "Dein kostenloser Zugang zu MeetGo endet am {date}"
+
+msgid "email_access_ending_title"
+msgstr "Dein kostenloser Zugang endet bald"
+
+msgid "email_access_ending_body"
+msgstr "Dein kostenloser Zugang endet am {date}. Danach kannst du weiter lesen, aber zum Schreiben brauchst du ein Abo (2,50 € im Monat oder 25 € im Jahr)."
+
+msgid "email_access_ending_button"
+msgstr "Tarife ansehen"
+
+msgid "email_access_ended_subject"
+msgstr "Dein kostenloser Zugang zu MeetGo ist beendet"
+
+msgid "email_access_ended_title"
+msgstr "Dein kostenloser Zugang ist beendet"
+
+msgid "email_access_ended_body"
+msgstr "Dein kostenloser Zugang ist am {date} abgelaufen. Dein Konto ist weiterhin aktiv und du kannst lesen, aber um wieder zu schreiben, brauchst du ein Abo."
+
+msgid "email_access_ended_button"
+msgstr "Abonnieren"
+
+msgid "email_unsubscribed_title"
+msgstr "Erledigt"
+
+msgid "email_unsubscribed_digest"
+msgstr "Du bekommst keine E-Mails mehr über ungelesene Nachrichten und Erwähnungen."
+
+msgid "email_unsubscribed_requests"
+msgstr "Du bekommst keine E-Mails mehr über Anfragen und Gruppen."
+
+msgid "email_unsubscribed_reports"
+msgstr "Du bekommst keine E-Mails mehr über Meldungen."
+
+msgid "ui_emails"
+msgstr "E-Mails"
+
+msgid "ui_email_mentions"
+msgstr "Erwähnungen und Antworten, die du nicht gelesen hast"
+
+msgid "ui_email_messages"
+msgstr "Ungelesene Nachrichten in deinen Gruppen und Direktnachrichten"
+
+msgid "ui_email_requests"
+msgstr "Freundschafts- und Nachrichtenanfragen sowie das Hinzufügen zu einer Gruppe"
+
+msgid "ui_email_reports"
+msgstr "Neue Meldungen (Verwaltung)"
+
+msgid "ui_emails_hint"
+msgstr "Wir schreiben dir nur, wenn du es in der App nicht gesehen hast: höchstens eine Zusammenfassung alle paar Stunden. E-Mails zu deinem Konto bekommst du immer."
+
+msgid "ui_emails_unverified"
+msgstr "Bestätige deine E-Mail-Adresse, um Hinweise zu bekommen."
+
+msgid "ui_resend_verification"
+msgstr "Bestätigungs-E-Mail erneut senden"
+
+msgid "ui_verification_resent"
+msgstr "Falls das Konto existiert und noch nicht bestätigt ist, haben wir dir eine neue E-Mail geschickt. Schau auch im Spam-Ordner nach."
+
+msgid "admin_email_notifications_section"
+msgstr "Automatische E-Mails"
+
+msgid "admin_email_notifications_enabled"
+msgstr "Automatische E-Mails senden (ungelesene Erwähnungen und Nachrichten, Anfragen, Moderations- und Tarifhinweise)"
+
+msgid "admin_email_notifications_delay"
+msgstr "E-Mail über ungelesene Nachrichten nach (Minuten)"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "Mindestabstand zwischen zwei Zusammenfassungen an dieselbe Person (Stunden)"
+
+msgid "admin_email_notifications_hint"
+msgstr "Jede Person wählt unter Konto → Benachrichtigungen, welche E-Mails sie bekommt. Konto-E-Mails (Bestätigung und Passwort) werden immer gesendet."
+
+msgid "ui_dob_once"
+msgstr "Du kannst dein Geburtsdatum nur einmal korrigieren."
+
+msgid "ui_dob_locked"
+msgstr "Du hast dein Geburtsdatum bereits einmal korrigiert."
+
+msgid "ui_zone_hint"
+msgstr "Deine Kanäle sind die deiner Provinz und Altersgruppe. Wenn du deine Provinz oder dein Geburtsdatum änderst, wechselst du in die Kanäle der neuen Zone."
+
+msgid "landing_a0"
+msgstr "Nichts. MeetGo ist kostenlos: Erstelle dein Konto und nutze es ohne Einschränkungen, ganz ohne Karte."
+
+msgid "landing_a1"
+msgstr "2,50 € im Monat oder 25 € im Jahr, mit 7 Tagen kostenloser Testphase. Beide Optionen enthalten alles."
+
+msgid "landing_a2"
+msgstr "Erstelle dein Konto mit dem Code LANZAMIENTO, solange Plätze frei sind. Er gilt nur für die ersten 50 Konten und wir verlangen keine Karte."
+
+msgid "landing_a3"
+msgstr "Dein Konto wird schreibgeschützt, bis du ein Abo abschließt: Du kannst deine Unterhaltungen lesen, aber nicht schreiben. Nichts wird gelöscht."
+
+msgid "landing_a4"
+msgstr "Niemand. Deine Nummer steht nicht in deinem Profil, und Nachrichten mit Telefonnummern in Kanälen werden automatisch entfernt."
+
+msgid "landing_a5"
+msgstr "Ja, MeetGo ist für Leute ab 18. Die Kanäle sind nach Altersgruppen aufgeteilt: 18-30, 31-50 und über 50."
+
+msgid "landing_a6"
+msgstr "Jede Provinz in Spanien. Deine Kanäle sind die deiner Provinz und Altersgruppe, einer für jedes Hobby, das du wählst."
+
+msgid "landing_a7"
+msgstr "In deinem MeetGo-Konto, wenn du mit Karte zahlst, oder bei Google Play, wenn du in der App abonniert hast. Du behältst den Zugang bis zum Ende des bezahlten Zeitraums."
+
+msgid "landing_a8"
+msgstr "Auf Android lädst du die App herunter. Auf dem iPhone öffnest du meetgo.app/app in Safari und fügst sie zum Home-Bildschirm hinzu."
+
+msgid "landing_cta_how"
+msgstr "So funktioniert es"
+
+msgid "landing_cta_register"
+msgstr "Konto erstellen"
+
+msgid "landing_dl_android_btn"
+msgstr "APK herunterladen"
+
+msgid "landing_dl_android_p"
+msgstr "Die App mit sofortigen Benachrichtigungen und Schnellantwort. Lade die APK herunter und installiere sie."
+
+msgid "landing_dl_build"
+msgstr "Version {version}"
+
+msgid "landing_dl_k"
+msgstr "Download"
+
+msgid "landing_dl_play_btn"
+msgstr "Bald verfügbar"
+
+msgid "landing_dl_play_p"
+msgstr "Wir bereiten den Store-Eintrag vor. Mit deinem MeetGo-Konto machst du genau da weiter, wo du aufgehört hast."
+
+msgid "landing_dl_soon"
+msgstr "Gleich verfügbar"
+
+msgid "landing_dl_soon2"
+msgstr "Bald verfügbar"
+
+msgid "landing_dl_title"
+msgstr "Mit dir auf Handy und Computer"
+
+msgid "landing_dl_web_btn"
+msgstr "MeetGo öffnen"
+
+msgid "landing_dl_web_p"
+msgstr "Öffne MeetGo in deinem Browser. Auf dem iPhone tippst du auf „Teilen“ und „Zum Home-Bildschirm“, um es wie eine App zu behalten."
+
+msgid "landing_dl_web_t"
+msgstr "iPhone und Web"
+
+msgid "landing_eyebrow"
+msgstr "Chatte nach Provinz, Alter und Interessen"
+
+msgid "landing_f1_k"
+msgstr "Lokale Kanäle"
+
+msgid "landing_f1_l1"
+msgstr "Threads mit einer Übersicht der Antworten und Teilnehmenden"
+
+msgid "landing_f1_l2"
+msgstr "Erwähnungen mit eigenem Posteingang und Hinweise nur, wenn dich jemand nennt"
+
+msgid "landing_f1_l3"
+msgstr "Eine Trennlinie für neue Nachrichten und ein Button zum Sprung zur neuesten"
+
+msgid "landing_f1_l4"
+msgstr "Reaktionen, zitierte Antworten und angeheftete Nachrichten"
+
+msgid "landing_f1_p"
+msgstr "Jedes Thema bekommt seinen eigenen Thread, und die Hauptunterhaltung bleibt übersichtlich. Hol Verpasstes nach, ohne endlos zu scrollen."
+
+msgid "landing_f1_t"
+msgstr "Viele Stimmen gleichzeitig, alles gut lesbar"
+
+msgid "landing_f2_k"
+msgstr "Private Gruppen"
+
+msgid "landing_f2_l1"
+msgstr "Einladungslinks und Admin-Rollen"
+
+msgid "landing_f2_l2"
+msgstr "Fotos und Dateien bis 10 MB"
+
+msgid "landing_f2_l3"
+msgstr "Lesebestätigungen, damit du weißt, wer es gesehen hat"
+
+msgid "landing_f2_l4"
+msgstr "Jede Gruppe stummschalten oder anheften"
+
+msgid "landing_f2_p"
+msgstr "Erstelle eine Gruppe mit deinen Freunden oder teile einen Einladungslink mit jedem, der sich im Kanal angemeldet hat."
+
+msgid "landing_f2_t"
+msgstr "Von „Ich bin dabei“ bis zur festen Sache"
+
+msgid "landing_f3_k"
+msgstr "Direktnachrichten"
+
+msgid "landing_f3_l1"
+msgstr "Sofortige Benachrichtigungen, mit Schnellantwort auf Android"
+
+msgid "landing_f3_l2"
+msgstr "Sieh, wer gerade schreibt und wer online ist"
+
+msgid "landing_f3_l3"
+msgstr "Deine Telefonnummer wird nie angezeigt"
+
+msgid "landing_f3_p"
+msgstr "Mit Freunden chattest du sofort. Bei allen anderen kommt zuerst eine Anfrage, und nur wenn sie Direktnachrichten annehmen."
+
+msgid "landing_f3_t"
+msgstr "Privat, wenn ihr beide wollt"
+
+msgid "landing_f_app"
+msgstr "App öffnen"
+
+msgid "landing_f_contact"
+msgstr "Kontakt:"
+
+msgid "landing_f_privacy"
+msgstr "Datenschutz"
+
+msgid "landing_f_terms"
+msgstr "Nutzungsbedingungen"
+
+msgid "landing_faq_k"
+msgstr "FAQ"
+
+msgid "landing_faq_title"
+msgstr "Was Leute oft fragen"
+
+msgid "landing_feat_k"
+msgstr "Funktionen"
+
+msgid "landing_feat_p"
+msgstr "Große Kanäle bleiben lesbar, Gruppen gehören dir und Direktnachrichten kommen sofort an."
+
+msgid "landing_feat_title"
+msgstr "Gemacht, um mit vielen Leuten zu chatten, ohne den Überblick zu verlieren"
+
+msgid "landing_final_p"
+msgstr "Komm rein, such dir deine Hobbys aus und sag Hallo."
+
+msgid "landing_final_title"
+msgstr "Dein nächster Plan <span class=\"go\">redet schon</span>"
+
+msgid "landing_hero_lead"
+msgstr "Kanäle mit Leuten aus deiner Provinz, deiner Altersgruppe und mit deinen Hobbys. Wenn sich ein Plan ergibt, gründe eine Gruppe und klärt alles privat."
+
+msgid "landing_hero_title"
+msgstr "Sprich mit Leuten <span class=\"meet\">in deiner Nähe.</span> <span class=\"go\">Und triff dich mit ihnen.</span>"
+
+msgid "landing_how_k"
+msgstr "So funktioniert es"
+
+msgid "landing_how_title"
+msgstr "Vom Chat zum Plan in drei Schritten"
+
+msgid "landing_more_k"
+msgstr "Und außerdem"
+
+msgid "landing_more_title"
+msgstr "Gute Stimmung kommt nicht von allein"
+
+msgid "landing_nav_download"
+msgstr "Download"
+
+msgid "landing_nav_faq"
+msgstr "FAQ"
+
+msgid "landing_nav_features"
+msgstr "Funktionen"
+
+msgid "landing_nav_how"
+msgstr "So funktioniert es"
+
+msgid "landing_nav_prices"
+msgstr "Preise"
+
+msgid "landing_pr_btn"
+msgstr "Testphase starten"
+
+msgid "landing_pr_eq"
+msgstr "Das sind 2,08 € im Monat"
+
+msgid "landing_pr_k"
+msgstr "Preise"
+
+msgid "landing_pr_l1"
+msgstr "7 Tage kostenlos testen"
+
+msgid "landing_pr_l2"
+msgstr "Kanäle, Gruppen und Direktnachrichten"
+
+msgid "landing_pr_l3"
+msgstr "Jederzeit kündbar"
+
+msgid "landing_pr_m"
+msgstr "Monatlich"
+
+msgid "landing_pr_month"
+msgstr "/Monat"
+
+msgid "landing_pr_note"
+msgstr "Zahle per Karte (Stripe) im Web oder mit Google Play in der App. Preise inkl. MwSt."
+
+msgid "landing_pr_p"
+msgstr "Alle Funktionen in beiden Tarifen. 7 Tage kostenlos testen, jederzeit kündbar."
+
+msgid "landing_pr_save"
+msgstr "17 % sparen"
+
+msgid "landing_pr_title"
+msgstr "Weniger als ein Kaffee im Monat"
+
+msgid "landing_pr_y"
+msgstr "Jährlich"
+
+msgid "landing_pr_year"
+msgstr "/Jahr"
+
+msgid "landing_promo_badge"
+msgstr "Startaktion"
+
+msgid "landing_promo_copied"
+msgstr "Kopiert!"
+
+msgid "landing_promo_copy"
+msgstr "Kopieren"
+
+msgid "landing_promo_cta"
+msgstr "Mein Gratisjahr sichern"
+
+msgid "landing_promo_eyebrow"
+msgstr "Start · noch {left} Plätze frei"
+
+msgid "landing_promo_left"
+msgstr "Plätze frei"
+
+msgid "landing_promo_of"
+msgstr "von {max}"
+
+msgid "landing_promo_text"
+msgstr "Erstelle dein Konto mit dem Code und zahle ein ganzes Jahr lang nichts. Nur für die ersten"
+
+msgid "landing_promo_text2"
+msgstr "Konten."
+
+msgid "landing_promo_title"
+msgstr "<span class=\"sunt\">1 Jahr gratis</span> für die ersten Konten"
+
+msgid "landing_q0"
+msgstr "Was kostet es?"
+
+msgid "landing_q1"
+msgstr "Was kostet es?"
+
+msgid "landing_q2"
+msgstr "Wie bekomme ich das Gratisjahr?"
+
+msgid "landing_q3"
+msgstr "Was passiert, wenn das Gratisjahr endet?"
+
+msgid "landing_q4"
+msgstr "Wer sieht meine Telefonnummer?"
+
+msgid "landing_q5"
+msgstr "Gibt es ein Mindestalter?"
+
+msgid "landing_q6"
+msgstr "In welchen Städten funktioniert es?"
+
+msgid "landing_q7"
+msgstr "Wie kündige ich?"
+
+msgid "landing_q8"
+msgstr "Gibt es eine App für Android und iPhone?"
+
+msgid "landing_s1_p"
+msgstr "Wandern, Padel, Kino, Kaffee… Jedes Hobby ist ein Kanal mit Leuten aus deiner Provinz und Altersgruppe."
+
+msgid "landing_s1_t"
+msgstr "Such dir deine Hobbys aus"
+
+msgid "landing_s2_p"
+msgstr "Antworte in Threads, damit es aufgeräumt bleibt, erwähne wen du willst und reagiere, ohne den Chat zu fluten."
+
+msgid "landing_s2_t"
+msgstr "Chatte in deinen Kanälen"
+
+msgid "landing_s3_p"
+msgstr "Erstelle eine private Gruppe, lade ein, wer dabei ist, und klärt Autos, Uhrzeiten und Fotos ohne den Lärm."
+
+msgid "landing_s3_t"
+msgstr "Plant in einer Gruppe"
+
+msgid "landing_signin"
+msgstr "Anmelden"
+
+msgid "landing_skip"
+msgstr "Zum Inhalt springen"
+
+msgid "landing_strip_devices"
+msgstr "Web, Android und iPhone"
+
+msgid "landing_strip_mod"
+msgstr "Aktive Moderation"
+
+msgid "landing_strip_phone"
+msgstr "Deine Telefonnummer bleibt verborgen"
+
+msgid "landing_strip_zone"
+msgstr "Deine Provinz und Altersgruppe"
+
+msgid "landing_t1_p"
+msgstr "Beleidigungen, Spam und öffentlich gepostete Telefonnummern werden automatisch entfernt."
+
+msgid "landing_t1_t"
+msgstr "Automatische Moderation"
+
+msgid "landing_t2_p"
+msgstr "Melde eine Nachricht mit zwei Taps; Moderatoren können Leute stummschalten oder entfernen."
+
+msgid "landing_t2_t"
+msgstr "Meldungen und Moderatoren"
+
+msgid "landing_t3_p"
+msgstr "Wenn ein Kanal zu voll wird, bestimmen seine Moderatoren das Tempo."
+
+msgid "landing_t3_t"
+msgstr "Langsammodus"
+
+msgid "landing_t4_p"
+msgstr "Alles, nur Erwähnungen oder nichts, pro Unterhaltung. Schalte stumm, was du nicht hören willst."
+
+msgid "landing_t4_t"
+msgstr "Benachrichtigungen nach deinem Geschmack"
+
+msgid "landing_t5_p"
+msgstr "Finde die Nachricht mit der Treffzeit in all deinen Unterhaltungen."
+
+msgid "landing_t5_t"
+msgstr "Suche"
+
+msgid "landing_t6_p"
+msgstr "Teile das Gipfelfoto, den Routen-Track oder das Buchungs-PDF."
+
+msgid "landing_t6_t"
+msgstr "Fotos und Dateien"
+
+msgid "landing_web_k"
+msgstr "Auch auf dem Computer"
+
+msgid "landing_web_p"
+msgstr "Auf einem großen Bildschirm siehst du die Liste, den Kanal und den Thread oder die Mitglieder gleichzeitig."
+
+msgid "landing_web_title"
+msgstr "Alle deine Unterhaltungen auf einen Blick"
+
+msgid "ui_splash_tagline"
+msgstr "Sprich mit Leuten in deiner Nähe. Und triff dich mit ihnen."
+
+msgid "ui_install_title"
+msgstr "MeetGo installieren"
+
+msgid "ui_install_ios"
+msgstr "Tippe auf „Teilen“ und dann auf „Zum Home-Bildschirm“: So öffnet es sich im Vollbild wie eine App."
+
+msgid "ui_install_dismiss"
+msgstr "Jetzt nicht"
+
+msgid "ui_push_failed"
+msgstr "Benachrichtigungen konnten in diesem Browser nicht eingeschaltet werden. Versuche es noch einmal oder nutze einen anderen Browser."
+
+msgid "ui_settings"
+msgstr "Einstellungen"
+
+msgid "ui_section_about"
+msgstr "Über dich"
+
+msgid "ui_section_zone"
+msgstr "Deine Gegend"
+
+msgid "ui_section_privacy"
+msgstr "Datenschutz und Sicherheit"
+
+msgid "ui_section_push"
+msgstr "Benachrichtigungen auf diesem Gerät"

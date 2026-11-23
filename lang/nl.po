@@ -1,0 +1,2859 @@
+# MeetGo translations: Dutch. Translated from en.po, the source language (see lang/README.md).
+msgid ""
+msgstr ""
+"Language: nl\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "app_name"
+msgstr "MeetGo"
+
+msgid "tagline"
+msgstr "minder swipen, meer leven"
+
+msgid "tagline_long"
+msgstr "MeetGo -- minder swipen, meer leven"
+
+msgid "logout"
+msgstr "Uitloggen"
+
+msgid "login_title"
+msgstr "Toegang"
+
+msgid "login_btn"
+msgstr "Inloggen"
+
+msgid "forgot_password_btn"
+msgstr "Wachtwoord vergeten"
+
+msgid "new_user_btn"
+msgstr "Nieuwe gebruiker"
+
+msgid "hide_register_btn"
+msgstr "Registratie verbergen"
+
+msgid "forgot_password_prompt"
+msgstr "Vul je e-mailadres in om je wachtwoord te herstellen"
+
+msgid "forgot_password_sent"
+msgstr "Als dit e-mailadres bestaat, hebben we een link voor een nieuw wachtwoord gestuurd."
+
+msgid "reset_password_title"
+msgstr "Wachtwoord opnieuw instellen"
+
+msgid "reset_password_btn"
+msgstr "Opnieuw instellen"
+
+msgid "reset_password_ok"
+msgstr "Wachtwoord bijgewerkt."
+
+msgid "verify_email_ok"
+msgstr "E-mailadres bevestigd."
+
+msgid "verify_email_fail"
+msgstr "Het e-mailadres kon niet worden bevestigd."
+
+msgid "register_verify_email"
+msgstr "Check je e-mail om je account te bevestigen."
+
+msgid "or_register"
+msgstr "Of registreer"
+
+msgid "error_title"
+msgstr "Fout"
+
+msgid "ok_title"
+msgstr "OK"
+
+msgid "cancel"
+msgstr "Annuleren"
+
+msgid "register_ok"
+msgstr "Account aangemaakt."
+
+msgid "login_error_generic"
+msgstr "Inloggen is mislukt."
+
+msgid "email"
+msgstr "E-mail"
+
+msgid "password"
+msgstr "Wachtwoord"
+
+msgid "password_hint"
+msgstr "Wachtwoord (min. 6, max. 60)"
+
+msgid "name"
+msgstr "Naam"
+
+msgid "dob_label"
+msgstr "Geboortedatum"
+
+msgid "dob_pick"
+msgstr "Kies je datum."
+
+msgid "dob_invalid"
+msgstr "Ongeldig formaat."
+
+msgid "dob_underage"
+msgstr "Je moet 18+ zijn."
+
+msgid "phone_label"
+msgstr "Telefoon"
+
+msgid "phone_number"
+msgstr "Nummer"
+
+msgid "country_label"
+msgstr "Land"
+
+msgid "province_label"
+msgstr "Provincie/staat"
+
+msgid "city_label"
+msgstr "Stad"
+
+msgid "not_available"
+msgstr "(Niet beschikbaar)"
+
+msgid "avatar_url"
+msgstr "Avatar-URL (optioneel)"
+
+msgid "bio"
+msgstr "Bio (optioneel)"
+
+msgid "accept_dm"
+msgstr "DM's toestaan"
+
+msgid "create_account"
+msgstr "Account aanmaken"
+
+msgid "hello"
+msgstr "Hoi, {name}"
+
+msgid "rooms"
+msgstr "Kamers"
+
+msgid "feed"
+msgstr "Feed"
+
+msgid "profile"
+msgstr "Profiel"
+
+msgid "load_my_rooms"
+msgstr "Mijn kamers laden"
+
+msgid "join_room_title"
+msgstr "Neem deel aan een kamer"
+
+msgid "join_room_desc"
+msgstr "Kies een interesse en doe mee. Bestaat die nog niet, dan wordt hij aangemaakt."
+
+msgid "join_btn"
+msgstr "Meedoen"
+
+msgid "leave_room_btn"
+msgstr "Kamer verlaten"
+
+msgid "leave_room_confirm"
+msgstr "Kamer {room} verlaten?"
+
+msgid "leave_room_ok"
+msgstr "Je hebt de kamer verlaten."
+
+msgid "leave_room_error"
+msgstr "Je kon de kamer niet verlaten."
+
+msgid "no_rooms_title"
+msgstr "Je hebt nog geen kamers"
+
+msgid "no_rooms_desc"
+msgstr "Gebruik 'Meedoen' hierboven om er een aan te maken of eraan deel te nemen."
+
+msgid "tip_title"
+msgstr "Tip"
+
+msgid "tip_body"
+msgstr "Klik met rechts op een avatar om het menu te openen."
+
+
+msgid "write_placeholder"
+msgstr "Typ..."
+
+msgid "send_btn"
+msgstr "Verstuur"
+
+msgid "publish_placeholder"
+msgstr "Plaats iets..."
+
+msgid "publish_btn"
+msgstr "Plaatsen"
+
+msgid "refresh_btn"
+msgstr "Vernieuwen"
+
+msgid "profile_updated"
+msgstr "Profiel bijgewerkt"
+
+msgid "following_ok"
+msgstr "Je volgt nu"
+
+msgid "friend_req_ok"
+msgstr "Vriendschapsverzoek verstuurd"
+
+msgid "save_profile"
+msgstr "Profiel opslaan"
+
+msgid "save_settings"
+msgstr "Instellingen opslaan"
+
+msgid "settings_saved"
+msgstr "Instellingen opgeslagen."
+
+msgid "edit_profile_title"
+msgstr "Profiel bewerken"
+
+msgid "new_password"
+msgstr "Nieuw wachtwoord"
+
+msgid "dob_change_note"
+msgstr "De geboortedatum kan maar één keer worden gewijzigd en wordt eerst beoordeeld."
+
+msgid "warn_province_change"
+msgstr "Als je van provincie verandert, word je uit je huidige kamers verwijderd. Doorgaan?"
+
+msgid "warn_country_change"
+msgstr "Als je van land verandert, wordt je profiel bijgewerkt. Doorgaan?"
+
+msgid "warn_dob_change"
+msgstr "De geboortedatum mag maar één keer worden gewijzigd en wordt eerst beoordeeld. Doorgaan?"
+
+msgid "warn_dob_change_range"
+msgstr "Als je je geboortedatum wijzigt, verandert je leeftijdsgroep en word je uit je kamers verwijderd. Dit mag maar één keer en wordt eerst beoordeeld. Doorgaan?"
+
+msgid "dob_change_limit"
+msgstr "Je hebt al een wijziging van je geboortedatum aangevraagd."
+
+msgid "yes"
+msgstr "Ja"
+
+msgid "no"
+msgstr "Nee"
+
+msgid "users_online"
+msgstr "Gebruikers: {count}"
+
+msgid "users_panel_title"
+msgstr "Gebruikers online"
+
+msgid "show_users_panel"
+msgstr "Gebruikers tonen"
+
+msgid "hide_users_panel"
+msgstr "Gebruikers verbergen"
+
+msgid "close_panel"
+msgstr "Sluiten"
+
+msgid "users_none"
+msgstr "Geen verbonden gebruikers"
+
+msgid "users_no_room"
+msgstr "Kies een kamer om de gebruikers te zien."
+
+msgid "online_summary"
+msgstr "Gebruikers online: {users} · Actieve kamers: {rooms}"
+
+msgid "online_users"
+msgstr "Gebruikers online: {users}"
+
+msgid "online_rooms"
+msgstr "Actieve kamers: {rooms}"
+
+msgid "hide_rooms_panel"
+msgstr "Kamers verbergen"
+
+msgid "show_rooms_panel"
+msgstr "Kamers tonen"
+
+msgid "settings_title"
+msgstr "Instellingen"
+
+msgid "hide_panel"
+msgstr "Paneel verbergen"
+
+msgid "show_panel"
+msgstr "Paneel tonen"
+
+msgid "hide_user_panel"
+msgstr "Gebruikerspaneel verbergen"
+
+msgid "show_user_panel"
+msgstr "Gebruikerspaneel tonen"
+
+msgid "panel_user"
+msgstr "Gebruikerspaneel"
+
+msgid "panel_rooms"
+msgstr "Kamerpaneel"
+
+msgid "no_room_selected"
+msgstr "Geen actieve kamer"
+
+msgid "language_label"
+msgstr "Taal"
+
+msgid "menu_view_profile"
+msgstr "Profiel bekijken"
+
+msgid "menu_friend_request"
+msgstr "Vriendschapsverzoek sturen"
+
+msgid "menu_follow_feed"
+msgstr "Feed volgen"
+
+msgid "modal_profile_title"
+msgstr "Profiel"
+
+msgid "modal_close"
+msgstr "Sluiten"
+
+msgid "modal_friend"
+msgstr "Vriend"
+
+msgid "modal_follow"
+msgstr "Volgen"
+
+msgid "msg_deleted_by_mod"
+msgstr "Bericht verwijderd door moderatie"
+
+msgid "no_bio_yet"
+msgstr "Nog geen bio."
+
+msgid "join_room_error"
+msgstr "Je kon niet deelnemen aan de kamer."
+
+msgid "loading_interests"
+msgstr "Interesses laden..."
+
+msgid "interests_load_error"
+msgstr "De interesses konden niet worden geladen."
+
+msgid "retry_btn"
+msgstr "Opnieuw proberen"
+
+msgid "chat_ws_error"
+msgstr "Fout in de chatverbinding (WebSocket). Controleer de backendpoort/-URL."
+
+msgid "age_display"
+msgstr "Leeftijd: {age}"
+
+msgid "age_display_underage"
+msgstr "Leeftijd: {age} ({note})"
+
+msgid "register_err_email_missing"
+msgstr "E-mail is verplicht."
+
+msgid "register_err_password_short"
+msgstr "Het wachtwoord moet minstens 6 tekens hebben."
+
+msgid "register_err_name_missing"
+msgstr "Naam is verplicht."
+
+msgid "register_err_dob_invalid"
+msgstr "Ongeldige geboortedatum."
+
+msgid "register_err_underage"
+msgstr "Je moet 18+ zijn."
+
+msgid "register_err_country_missing"
+msgstr "Kies een land."
+
+msgid "register_err_province_missing"
+msgstr "Kies een provincie/staat."
+
+msgid "register_err_province_unavailable"
+msgstr "Voor dat land zijn nog geen provincies ingesteld."
+
+msgid "register_err_phone_cc_missing"
+msgstr "Kies een internationale landcode."
+
+msgid "register_err_phone_short"
+msgstr "Telefoonnummer is te kort."
+
+msgid "debug_title"
+msgstr "Debugger"
+
+msgid "debug_subtitle"
+msgstr "laatste {count} regels"
+
+msgid "debug_clear"
+msgstr "Wissen"
+
+msgid "debug_copy"
+msgstr "Kopiëren"
+
+msgid "debug_copy_selection"
+msgstr "Selectie kopiëren"
+
+msgid "debug_copy_selection_empty"
+msgstr "Geen selectie om te kopiëren"
+
+msgid "debug_copy_ok"
+msgstr "Gekopieerd"
+
+msgid "debug_copy_fail"
+msgstr "Kopiëren mislukt"
+
+msgid "debug_frontend_tab"
+msgstr "FrontEnd ({count})"
+
+msgid "debug_services_tab"
+msgstr "Services ({count})"
+
+msgid "debug_services_connected"
+msgstr "streaming"
+
+msgid "debug_services_connecting"
+msgstr "verbinden..."
+
+msgid "debug_services_error"
+msgstr "fout"
+
+msgid "debug_minimize"
+msgstr "Minimaliseren"
+
+msgid "debug_restore"
+msgstr "Herstellen"
+
+msgid "debug_close"
+msgstr "Sluiten"
+
+msgid "debug_tab_all"
+msgstr "Alles"
+
+msgid "debug_tab_js"
+msgstr "JavaScript"
+
+msgid "debug_auto_refresh"
+msgstr "Automatisch vernieuwen"
+
+msgid "debug_maximize"
+msgstr "Maximaliseren"
+
+msgid "chat_not_connected"
+msgstr "Chat niet verbonden (ws=null). Open eerst een kamer."
+
+msgid "chat_not_connected_state"
+msgstr "Chat niet verbonden (WS readyState={state})."
+
+msgid "chat_disconnected"
+msgstr "Chat verbroken. Open de kamer opnieuw (of log opnieuw in)."
+
+msgid "chat_reconnecting"
+msgstr "Opnieuw verbinden met de chat..."
+
+msgid "no_session"
+msgstr "Geen sessie (token). Log opnieuw in."
+
+msgid "country_es_spain"
+msgstr "Spanje"
+
+msgid "country_pt_portugal"
+msgstr "Portugal"
+
+msgid "country_fr_france"
+msgstr "Frankrijk"
+
+msgid "country_it_italy"
+msgstr "Italië"
+
+msgid "country_de_germany"
+msgstr "Duitsland"
+
+msgid "country_gb_uk"
+msgstr "Verenigd Koninkrijk"
+
+msgid "country_us_usa"
+msgstr "Verenigde Staten"
+
+msgid "country_mx_mexico"
+msgstr "Mexico"
+
+msgid "country_ar_argentina"
+msgstr "Argentinië"
+
+msgid "country_co_colombia"
+msgstr "Colombia"
+
+msgid "calling_es_spain"
+msgstr "Spanje"
+
+msgid "calling_pt_portugal"
+msgstr "Portugal"
+
+msgid "calling_fr_france"
+msgstr "Frankrijk"
+
+msgid "calling_it_italy"
+msgstr "Italië"
+
+msgid "calling_de_germany"
+msgstr "Duitsland"
+
+msgid "calling_gb_uk"
+msgstr "Verenigd Koninkrijk"
+
+msgid "calling_us_ca"
+msgstr "VS / Canada"
+
+msgid "calling_mx_mexico"
+msgstr "Mexico"
+
+msgid "calling_ar_argentina"
+msgstr "Argentinië"
+
+msgid "calling_co_colombia"
+msgstr "Colombia"
+
+msgid "province_es_alava"
+msgstr "Alava"
+
+msgid "province_es_albacete"
+msgstr "Albacete"
+
+msgid "province_es_alicante"
+msgstr "Alicante"
+
+msgid "province_es_almeria"
+msgstr "Almeria"
+
+msgid "province_es_asturias"
+msgstr "Asturias"
+
+msgid "province_es_avila"
+msgstr "Avila"
+
+msgid "province_es_badajoz"
+msgstr "Badajoz"
+
+msgid "province_es_barcelona"
+msgstr "Barcelona"
+
+msgid "province_es_burgos"
+msgstr "Burgos"
+
+msgid "province_es_caceres"
+msgstr "Caceres"
+
+msgid "province_es_cadiz"
+msgstr "Cadiz"
+
+msgid "province_es_cantabria"
+msgstr "Cantabria"
+
+msgid "province_es_castellon"
+msgstr "Castellon"
+
+msgid "province_es_ciudad_real"
+msgstr "Ciudad Real"
+
+msgid "province_es_cordoba"
+msgstr "Cordoba"
+
+msgid "province_es_cuenca"
+msgstr "Cuenca"
+
+msgid "province_es_girona"
+msgstr "Girona"
+
+msgid "province_es_granada"
+msgstr "Granada"
+
+msgid "province_es_guadalajara"
+msgstr "Guadalajara"
+
+msgid "province_es_gipuzkoa"
+msgstr "Gipuzkoa"
+
+msgid "province_es_huelva"
+msgstr "Huelva"
+
+msgid "province_es_huesca"
+msgstr "Huesca"
+
+msgid "province_es_illes_balears"
+msgstr "Illes Balears"
+
+msgid "province_es_jaen"
+msgstr "Jaen"
+
+msgid "province_es_a_coruna"
+msgstr "A Coruna"
+
+msgid "province_es_la_rioja"
+msgstr "La Rioja"
+
+msgid "province_es_las_palmas"
+msgstr "Las Palmas"
+
+msgid "province_es_leon"
+msgstr "Leon"
+
+msgid "province_es_lleida"
+msgstr "Lleida"
+
+msgid "province_es_lugo"
+msgstr "Lugo"
+
+msgid "province_es_madrid"
+msgstr "Madrid"
+
+msgid "province_es_malaga"
+msgstr "Malaga"
+
+msgid "province_es_murcia"
+msgstr "Murcia"
+
+msgid "province_es_navarra"
+msgstr "Navarra"
+
+msgid "province_es_ourense"
+msgstr "Ourense"
+
+msgid "province_es_palencia"
+msgstr "Palencia"
+
+msgid "province_es_pontevedra"
+msgstr "Pontevedra"
+
+msgid "province_es_salamanca"
+msgstr "Salamanca"
+
+msgid "province_es_santa_cruz_de_tenerife"
+msgstr "Santa Cruz de Tenerife"
+
+msgid "province_es_segovia"
+msgstr "Segovia"
+
+msgid "province_es_sevilla"
+msgstr "Sevilla"
+
+msgid "province_es_soria"
+msgstr "Soria"
+
+msgid "province_es_tarragona"
+msgstr "Tarragona"
+
+msgid "province_es_teruel"
+msgstr "Teruel"
+
+msgid "province_es_toledo"
+msgstr "Toledo"
+
+msgid "province_es_valencia"
+msgstr "Valencia"
+
+msgid "province_es_valladolid"
+msgstr "Valladolid"
+
+msgid "province_es_bizkaia"
+msgstr "Bizkaia"
+
+msgid "province_es_zamora"
+msgstr "Zamora"
+
+msgid "province_es_zaragoza"
+msgstr "Zaragoza"
+
+msgid "province_pt_lisboa"
+msgstr "Lisboa"
+
+msgid "province_pt_porto"
+msgstr "Porto"
+
+msgid "province_pt_braga"
+msgstr "Braga"
+
+msgid "province_pt_setubal"
+msgstr "Setubal"
+
+msgid "province_pt_aveiro"
+msgstr "Aveiro"
+
+msgid "province_fr_ile_de_france"
+msgstr "Ile-de-France"
+
+msgid "province_fr_occitanie"
+msgstr "Occitanie"
+
+msgid "province_fr_nouvelle_aquitaine"
+msgstr "Nouvelle-Aquitaine"
+
+msgid "province_fr_auvergne_rhone_alpes"
+msgstr "Auvergne-Rhone-Alpes"
+
+msgid "province_it_lazio"
+msgstr "Lazio"
+
+msgid "province_it_lombardia"
+msgstr "Lombardia"
+
+msgid "province_it_campania"
+msgstr "Campania"
+
+msgid "province_it_sicilia"
+msgstr "Sicilia"
+
+msgid "admin_users_title"
+msgstr "Gebruikers"
+
+msgid "admin_users_search_placeholder"
+msgstr "Zoeken"
+
+msgid "admin_users_search_button"
+msgstr "Zoeken"
+
+msgid "admin_users_select_placeholder"
+msgstr "Kies gebruiker"
+
+msgid "admin_users_logins_meta"
+msgstr "logins: {count} laatste: {last}"
+
+msgid "admin_users_last_seen_meta"
+msgstr "laatst gezien: {last} totaal: {seconds}s"
+
+msgid "admin_users_active_meta"
+msgstr "actief: {active} start: {start}"
+
+msgid "admin_yes"
+msgstr "ja"
+
+msgid "admin_no"
+msgstr "nee"
+
+msgid "admin_users_edit_title"
+msgstr "Gebruiker bewerken"
+
+msgid "admin_users_name"
+msgstr "Naam"
+
+msgid "admin_users_email"
+msgstr "E-mail"
+
+msgid "admin_users_phone"
+msgstr "Telefoon"
+
+msgid "admin_users_dob"
+msgstr "Geb.datum (JJJJ-MM-DD)"
+
+msgid "admin_users_country"
+msgstr "Land"
+
+msgid "admin_users_province"
+msgstr "Provincie"
+
+msgid "admin_users_city"
+msgstr "Stad"
+
+msgid "admin_users_role"
+msgstr "Rol"
+
+msgid "admin_users_new_password"
+msgstr "Nieuw wachtwoord"
+
+msgid "admin_users_email_verified"
+msgstr "E-mail bevestigd"
+
+msgid "admin_users_resend_button"
+msgstr "Bevestiging opnieuw sturen"
+
+msgid "admin_users_resend_ok"
+msgstr "Bevestigingsmail opnieuw verstuurd."
+
+msgid "admin_users_resend_error"
+msgstr "Bevestiging opnieuw sturen is mislukt."
+
+msgid "admin_users_blocked"
+msgstr "Geblokkeerd"
+
+msgid "admin_users_blocked_until"
+msgstr "Geblokkeerd tot (JJJJ-MM-DD)"
+
+msgid "admin_users_password_label"
+msgstr "Wachtwoord"
+
+msgid "admin_users_dob_short"
+msgstr "Geb.datum"
+
+msgid "admin_users_missing_fields"
+msgstr "Ontbrekende velden: {fields}"
+
+msgid "admin_users_updated"
+msgstr "Gebruiker bijgewerkt."
+
+msgid "admin_users_created"
+msgstr "Gebruiker aangemaakt."
+
+msgid "admin_users_save_error"
+msgstr "De gebruiker kon niet worden opgeslagen."
+
+msgid "admin_users_save_button"
+msgstr "Opslaan"
+
+msgid "admin_users_create_button"
+msgstr "Aanmaken"
+
+msgid "admin_users_delete_confirm"
+msgstr "Deze gebruiker verwijderen? Dit kan niet ongedaan worden gemaakt."
+
+msgid "admin_users_deleted"
+msgstr "Gebruiker verwijderd."
+
+msgid "admin_users_delete_error"
+msgstr "Verwijderen is mislukt."
+
+msgid "admin_users_delete_button"
+msgstr "Verwijderen"
+
+msgid "admin_channels_title"
+msgstr "Kanalen"
+
+msgid "admin_channels_edit_button"
+msgstr "Bewerken"
+
+msgid "admin_channels_delete_button"
+msgstr "Verwijderen"
+
+msgid "admin_channels_form_title"
+msgstr "Kanaal toevoegen / bewerken"
+
+msgid "admin_channels_name_placeholder"
+msgstr "Kanaalnaam"
+
+msgid "admin_channels_slug_label"
+msgstr "Slug: {slug}"
+
+msgid "admin_channels_name_required"
+msgstr "Kanaalnaam is verplicht."
+
+msgid "admin_channels_updated"
+msgstr "Kanaal bijgewerkt."
+
+msgid "admin_channels_created"
+msgstr "Kanaal aangemaakt."
+
+msgid "admin_channels_save_error"
+msgstr "Het kanaal kon niet worden opgeslagen."
+
+msgid "admin_channels_save_button"
+msgstr "Opslaan"
+
+msgid "unknown_user"
+msgstr "Onbekend"
+
+msgid "email_verify_subject"
+msgstr "Bevestig je MeetGo-e-mailadres"
+
+msgid "email_verify_body"
+msgstr "Druk op de knop om je e-mailadres te bevestigen en MeetGo te gebruiken. Heb je geen account aangemaakt, negeer dit bericht dan."
+
+msgid "email_reset_subject"
+msgstr "Stel je MeetGo-wachtwoord opnieuw in"
+
+msgid "email_reset_body"
+msgstr "Je hebt gevraagd om het wachtwoord van je account te wijzigen. De link verloopt over 2 uur. Was jij het niet, negeer deze e-mail dan: je wachtwoord verandert niet."
+
+msgid "email_smtp_test_subject"
+msgstr "MeetGo SMTP-test"
+
+msgid "email_smtp_test_body"
+msgstr "SMTP-testmail van de MeetGo-beheerder."
+
+msgid "err_smtp_sender_not_configured"
+msgstr "SMTP-afzender niet ingesteld"
+
+msgid "err_gmail_not_configured"
+msgstr "Gmail API SMTP niet ingesteld"
+
+msgid "err_gmail_token_failed"
+msgstr "Gmail-toegangstoken ophalen is mislukt"
+
+msgid "err_smtp_host_not_configured"
+msgstr "SMTP-host niet ingesteld"
+
+msgid "err_admin_required"
+msgstr "Beheerder vereist"
+
+msgid "err_email_phone_required"
+msgstr "E-mail en telefoon zijn verplicht"
+
+msgid "err_password_too_short"
+msgstr "Wachtwoord te kort"
+
+msgid "err_email_already_used"
+msgstr "E-mailadres is al in gebruik"
+
+msgid "err_invalid_phone"
+msgstr "Ongeldig telefoonnummer"
+
+msgid "err_phone_already_used"
+msgstr "Telefoonnummer is al in gebruik"
+
+msgid "err_email_required"
+msgstr "E-mail is verplicht"
+
+msgid "err_invalid_credentials"
+msgstr "Ongeldige inloggegevens"
+
+msgid "err_user_banned"
+msgstr "Gebruiker verbannen"
+
+msgid "err_password_required"
+msgstr "Wachtwoord is verplicht"
+
+msgid "err_email_not_verified"
+msgstr "E-mailadres niet bevestigd"
+
+msgid "err_invalid_token"
+msgstr "Ongeldig token"
+
+msgid "err_token_expired"
+msgstr "Token verlopen"
+
+msgid "err_missing_to_email"
+msgstr "to_email ontbreekt"
+
+msgid "err_user_not_found"
+msgstr "Gebruiker niet gevonden"
+
+msgid "err_user_no_email"
+msgstr "Gebruiker heeft geen e-mailadres"
+
+msgid "err_cannot_delete_self"
+msgstr "Je kunt jezelf niet verwijderen"
+
+msgid "err_interest_exists"
+msgstr "Interesse bestaat al"
+
+msgid "err_interest_not_found"
+msgstr "Interesse niet gevonden"
+
+msgid "err_dob_change_used"
+msgstr "Wijziging van geboortedatum al gebruikt"
+
+msgid "err_invalid_dob"
+msgstr "Ongeldige geboortedatum"
+
+msgid "err_province_required"
+msgstr "Provincie is verplicht"
+
+msgid "err_phone_change_limited"
+msgstr "Telefoonnummer wijzigen kan maar eens per 30 dagen"
+
+msgid "err_forbidden_diff_province"
+msgstr "Niet toegestaan (andere provincie)"
+
+msgid "err_room_not_found"
+msgstr "Kamer niet gevonden"
+
+msgid "err_forbidden"
+msgstr "Niet toegestaan"
+
+msgid "err_rules_not_found"
+msgstr "Regels niet gevonden"
+
+msgid "err_cannot_dm_self"
+msgstr "Je kunt jezelf geen DM sturen"
+
+msgid "err_user_no_dm"
+msgstr "Gebruiker accepteert geen DM's"
+
+msgid "err_dm_daily_limit"
+msgstr "Dagelijkse DM-limiet bereikt (10)"
+
+msgid "err_dm_request_pending"
+msgstr "DM-verzoek staat al open"
+
+msgid "err_request_not_found"
+msgstr "Verzoek niet gevonden"
+
+msgid "err_already_resolved"
+msgstr "Al afgehandeld"
+
+msgid "err_conversation_not_found"
+msgstr "Gesprek niet gevonden"
+
+msgid "err_cannot_follow_self"
+msgstr "Je kunt jezelf niet volgen"
+
+msgid "err_cannot_friend_self"
+msgstr "Je kunt jezelf niet als vriend toevoegen"
+
+msgid "err_already_friends"
+msgstr "Jullie zijn al vrienden"
+
+msgid "err_request_pending"
+msgstr "Verzoek staat al open"
+
+msgid "err_debug_disabled"
+msgstr "Uitgeschakeld"
+
+msgid "err_docker_sdk_missing"
+msgstr "Docker SDK niet geïnstalleerd"
+
+msgid "err_docker_unavailable"
+msgstr "Docker niet beschikbaar: {error}"
+
+msgid "err_no_compose_containers"
+msgstr "Geen compose-containers gevonden"
+
+msgid "err_password_too_long"
+msgstr "Wachtwoord te lang (bcrypt-limiet is 72 bytes). Gebruik een korter wachtwoord."
+
+msgid "err_token_missing_sub"
+msgstr "sub ontbreekt"
+
+msgid "log_error_line"
+msgstr "[logfout] {error}"
+
+msgid "err_password_required"
+msgstr "Wachtwoord is verplicht"
+
+msgid "log_level_info"
+msgstr "INFO"
+
+msgid "log_level_warn"
+msgstr "WARN"
+
+msgid "log_level_warning"
+msgstr "WARNING"
+
+msgid "log_level_error"
+msgstr "ERROR"
+
+msgid "log_level_debug"
+msgstr "DEBUG"
+
+msgid "svc_database"
+msgstr "MeetGo-Database"
+
+msgid "svc_redis"
+msgstr "MeetGo-Redis"
+
+msgid "svc_app"
+msgstr "MeetGo-App"
+
+msgid "svc_web_user"
+msgstr "MeetGo-Web-User"
+
+msgid "svc_web_admin"
+msgstr "MeetGo-Web-Admin"
+
+msgid "svc_js"
+msgstr "MeetGo-JavaScript"
+
+msgid "svc_prefix"
+msgstr "MeetGo-{service}"
+
+msgid "err_interest_in_use"
+msgstr "Dit kanaal heeft kamers met berichten; geef het een nieuwe naam in plaats van het te verwijderen"
+
+msgid "err_empty_message"
+msgstr "Het bericht is leeg"
+
+msgid "err_message_too_long"
+msgstr "Het bericht is te lang"
+
+msgid "err_banned_here"
+msgstr "Je kunt niet schrijven in dit gesprek"
+
+msgid "err_display_name"
+msgstr "De naam moet 1 tot 64 tekens lang zijn"
+
+msgid "err_edit_window"
+msgstr "Je kunt een bericht maar 48 uur lang bewerken"
+
+msgid "err_file_empty"
+msgstr "Het bestand is leeg"
+
+msgid "err_file_not_found"
+msgstr "Bestand niet gevonden"
+
+msgid "err_file_too_big"
+msgstr "Het bestand is groter dan 10 MB"
+
+msgid "err_file_type"
+msgstr "Dit bestandstype wordt niet ondersteund"
+
+msgid "err_invalid_email"
+msgstr "Ongeldig e-mailadres"
+
+msgid "err_invalid_plan"
+msgstr "Ongeldig abonnement"
+
+msgid "err_invalid_reaction"
+msgstr "Ongeldige reactie"
+
+msgid "err_invite_invalid"
+msgstr "Deze uitnodiging is niet meer geldig"
+
+msgid "err_message_deleted"
+msgstr "Het bericht is verwijderd"
+
+msgid "err_message_not_found"
+msgstr "Bericht niet gevonden"
+
+msgid "err_no_subscription"
+msgstr "Je hebt geen webabonnement"
+
+msgid "err_payments_failed"
+msgstr "De betaling kon niet worden voltooid"
+
+msgid "err_payments_not_configured"
+msgstr "Betalingen zijn nog niet ingesteld"
+
+msgid "err_promo_already_used"
+msgstr "Je hebt al een actiecode gebruikt"
+
+msgid "err_promo_below_used"
+msgstr "Het maximum kan niet lager zijn dan het aantal plekken dat al is gebruikt"
+
+msgid "err_promo_exhausted"
+msgstr "Voor deze code zijn geen plekken meer over"
+
+msgid "err_promo_invalid"
+msgstr "Ongeldige actiecode"
+
+msgid "err_purchase_inactive"
+msgstr "Die aankoop is niet actief"
+
+msgid "err_purchase_invalid"
+msgstr "De aankoop kon niet worden geverifieerd bij Google Play"
+
+msgid "err_purchase_other_account"
+msgstr "Die aankoop hoort bij een ander account"
+
+msgid "err_report_own"
+msgstr "Je kunt je eigen berichten niet melden"
+
+msgid "err_service_account"
+msgstr "Het serviceaccount is niet geldig"
+
+msgid "err_silenced_until"
+msgstr "Je mag in dit gesprek niet schrijven tot {until}"
+
+msgid "err_slow_mode"
+msgstr "Langzame modus: wacht {seconds} s om weer te schrijven"
+
+msgid "err_subscription_required"
+msgstr "Je hebt een actief abonnement nodig om te schrijven"
+
+msgid "err_too_many_reactions"
+msgstr "Te veel reacties op dit bericht"
+
+msgid "sys_group_created"
+msgstr "{name} heeft de groep aangemaakt"
+
+msgid "sys_member_added"
+msgstr "{by} heeft {name} toegevoegd"
+
+msgid "sys_member_joined"
+msgstr "{name} is lid geworden via een uitnodiging"
+
+msgid "sys_member_left"
+msgstr "{name} heeft de groep verlaten"
+
+msgid "sys_member_removed"
+msgstr "{by} heeft {name} verwijderd"
+
+msgid "ui_accept"
+msgstr "Accepteren"
+
+msgid "ui_accept_dm"
+msgstr "Accepteer directe berichten van mensen die geen vrienden zijn"
+
+msgid "ui_access_ends"
+msgstr "Abonnement {plan}: loopt af op {date}"
+
+msgid "ui_access_free"
+msgstr "Je account heeft gratis toegang"
+
+msgid "ui_access_grant_life"
+msgstr "Levenslang gratis toegang"
+
+msgid "ui_access_grant_until"
+msgstr "Gratis toegang tot {date}"
+
+msgid "ui_access_none"
+msgstr "Geen abonnement: je account is alleen-lezen"
+
+msgid "ui_access_play"
+msgstr "Google Play-abonnement tot {date}"
+
+msgid "ui_access_renews"
+msgstr "Abonnement {plan}: wordt verlengd op {date}"
+
+msgid "ui_access_trial"
+msgstr "Gratis proefperiode van het abonnement {plan} tot {date}"
+
+msgid "ui_account_title"
+msgstr "Je account"
+
+msgid "ui_activity"
+msgstr "Activiteit"
+
+msgid "ui_add"
+msgstr "Toevoegen"
+
+msgid "ui_add_friend"
+msgstr "Vriend toevoegen"
+
+msgid "ui_add_friends"
+msgstr "Vrienden toevoegen"
+
+msgid "ui_added"
+msgstr "Toegevoegd"
+
+msgid "ui_also_send_to"
+msgstr "Ook sturen naar {name}"
+
+msgid "ui_appearance"
+msgstr "Weergave"
+
+msgid "ui_apply"
+msgstr "Toepassen"
+
+msgid "ui_attach"
+msgstr "Bijvoegen"
+
+msgid "ui_attachment"
+msgstr "Bijlage"
+
+msgid "ui_avatar_url"
+msgstr "Profielfoto (link)"
+
+msgid "ui_back"
+msgstr "Terug"
+
+msgid "ui_ban"
+msgstr "Verbannen"
+
+msgid "ui_bio"
+msgstr "Over jou"
+
+msgid "ui_cancel"
+msgstr "Annuleren"
+
+msgid "ui_cancel_plan"
+msgstr "Abonnement opzeggen"
+
+msgid "ui_change_server"
+msgstr "Server wijzigen"
+
+msgid "ui_channel_start"
+msgstr "Dit is het begin van het kanaal. Hier praten mensen uit {zone} met dezelfde interesses als jij."
+
+msgid "ui_check_email_body"
+msgstr "We hebben je een link gestuurd om je e-mailadres te bevestigen. Open hem en log dan in met je wachtwoord."
+
+msgid "ui_check_email_title"
+msgstr "Check je e-mail"
+
+msgid "ui_choose"
+msgstr "Kies…"
+
+msgid "ui_clear"
+msgstr "Wissen"
+
+msgid "ui_close"
+msgstr "Sluiten"
+
+msgid "ui_code_applied"
+msgstr "Code toegepast"
+
+msgid "ui_connected"
+msgstr "Verbonden"
+
+msgid "ui_conversation_gone"
+msgstr "Dit gesprek is niet meer beschikbaar"
+
+msgid "ui_copied"
+msgstr "Gekopieerd"
+
+msgid "ui_copy"
+msgstr "Kopiëren"
+
+msgid "ui_country"
+msgstr "Land"
+
+msgid "ui_create_account"
+msgstr "Account aanmaken"
+
+msgid "ui_create_group"
+msgstr "Groep aanmaken"
+
+msgid "ui_decline"
+msgstr "Weigeren"
+
+msgid "ui_delete"
+msgstr "Verwijderen"
+
+msgid "ui_deleted_user"
+msgstr "Verwijderde gebruiker"
+
+msgid "ui_description"
+msgstr "Beschrijving"
+
+msgid "ui_details_optional"
+msgstr "Details (optioneel)"
+
+msgid "ui_direct_message"
+msgstr "Direct bericht"
+
+msgid "ui_disable"
+msgstr "Uitzetten"
+
+msgid "ui_display_name"
+msgstr "Weergavenaam"
+
+msgid "ui_dm_request_sent"
+msgstr "Verzoek verstuurd: je kunt praten zodra het is geaccepteerd"
+
+msgid "ui_dm_requests"
+msgstr "Willen je een bericht sturen"
+
+msgid "ui_dm_start"
+msgstr "Dit is je privégesprek met {name}."
+
+msgid "ui_dob"
+msgstr "Geboortedatum"
+
+msgid "ui_done"
+msgstr "Klaar"
+
+msgid "ui_edit"
+msgstr "Bewerken"
+
+msgid "ui_edit_hint"
+msgstr "Enter om op te slaan · Esc om te annuleren"
+
+msgid "ui_edit_in_chat"
+msgstr "Bewerk het bericht vanuit het gesprek"
+
+msgid "ui_edited"
+msgstr "bewerkt"
+
+msgid "ui_email"
+msgstr "E-mail"
+
+msgid "ui_email_verified"
+msgstr "E-mailadres bevestigd. Je kunt nu inloggen."
+
+msgid "ui_emoji"
+msgstr "Emoji"
+
+msgid "ui_empty_body"
+msgstr "Kies je interesses om je aan te sluiten bij de kanalen in jouw buurt, of maak een groep met je vrienden."
+
+msgid "ui_empty_title"
+msgstr "Je hebt nog geen gesprekken"
+
+msgid "ui_enable"
+msgstr "Aanzetten"
+
+msgid "ui_enter_hint"
+msgstr "Enter om te versturen · Shift+Enter voor een nieuwe regel"
+
+msgid "ui_err_generic"
+msgstr "Er ging iets mis (fout {status}). Probeer het opnieuw."
+
+msgid "ui_err_invalid_data"
+msgstr "Controleer de velden van het formulier"
+
+msgid "ui_err_network"
+msgstr "Kan de server niet bereiken. Controleer je internetverbinding."
+
+msgid "ui_explore_channels"
+msgstr "Kanalen ontdekken"
+
+msgid "ui_explore_lead"
+msgstr "Kanalen in {zone}. Sluit je aan bij de kanalen die je leuk vindt."
+
+msgid "ui_explore_title"
+msgstr "Kanalen"
+
+msgid "ui_f_all"
+msgstr "Alles"
+
+msgid "ui_f_channels"
+msgstr "Kanalen"
+
+msgid "ui_f_direct"
+msgstr "Direct"
+
+msgid "ui_f_groups"
+msgstr "Groepen"
+
+msgid "ui_f_mentions"
+msgstr "Vermeldingen"
+
+msgid "ui_f_unread"
+msgstr "Ongelezen"
+
+msgid "ui_feed_empty"
+msgstr "Nog geen berichten. Volg mensen om hun berichten hier te zien."
+
+msgid "ui_feed_hint"
+msgstr "Je volgers zien het"
+
+msgid "ui_feed_placeholder"
+msgstr "Wat ben je aan het doen?"
+
+msgid "ui_find_people"
+msgstr "Mensen zoeken"
+
+msgid "ui_follow"
+msgstr "Volgen"
+
+msgid "ui_forgot"
+msgstr "Wachtwoord vergeten?"
+
+msgid "ui_forgot_sent"
+msgstr "Als er een account met dat e-mailadres bestaat, hebben we een link gestuurd om het wachtwoord te wijzigen."
+
+msgid "ui_forgot_title"
+msgstr "Wachtwoord opnieuw instellen"
+
+msgid "ui_friend"
+msgstr "Vriend"
+
+msgid "ui_friend_request_sent"
+msgstr "Vriendschapsverzoek verstuurd"
+
+msgid "ui_friend_requests"
+msgstr "Vriendschapsverzoeken"
+
+msgid "ui_friends"
+msgstr "Vrienden"
+
+msgid "ui_go_latest"
+msgstr "Naar het laatste bericht"
+
+msgid "ui_go_login"
+msgstr "Terug naar inloggen"
+
+msgid "ui_home_page"
+msgstr "Startpagina"
+
+msgid "ui_group_members_hint"
+msgstr "Voeg nu je vrienden toe, of deel later de uitnodigingslink."
+
+msgid "ui_group_name"
+msgstr "Groepsnaam"
+
+msgid "ui_group_name_ph"
+msgstr "Zaterdagwandeling"
+
+msgid "ui_group_start"
+msgstr "Dit is het begin van de groep. Plan hier samen dingen."
+
+msgid "ui_have_account"
+msgstr "Ik heb al een account"
+
+msgid "ui_hide_chat"
+msgstr "Gesprek verbergen"
+
+msgid "ui_info"
+msgstr "Info"
+
+msgid "ui_interests"
+msgstr "Interesses"
+
+msgid "ui_interests_lead"
+msgstr "Elke interesse brengt je naar het bijbehorende kanaal in {zone} voor jouw leeftijdsgroep."
+
+msgid "ui_invite_link"
+msgstr "Uitnodigingslink"
+
+msgid "ui_join"
+msgstr "Meedoen"
+
+msgid "ui_join_group"
+msgstr "Lid worden van groep"
+
+msgid "ui_language"
+msgstr "Taal"
+
+msgid "ui_last_at"
+msgstr "laatst om {time}"
+
+msgid "ui_leave_channel"
+msgstr "Kanaal verlaten"
+
+msgid "ui_leave_group"
+msgstr "Groep verlaten"
+
+msgid "ui_loading"
+msgstr "Laden…"
+
+msgid "ui_login_btn"
+msgstr "Inloggen"
+
+msgid "ui_login_title"
+msgstr "Inloggen bij MeetGo"
+
+msgid "ui_logout"
+msgstr "Uitloggen"
+
+msgid "ui_make_admin"
+msgstr "Admin maken"
+
+msgid "ui_make_member"
+msgstr "Admin intrekken"
+
+msgid "ui_manage_payment"
+msgstr "Betaling en facturen beheren"
+
+msgid "ui_members"
+msgstr "Leden"
+
+msgid "ui_members_n"
+msgstr "{n} leden"
+
+msgid "ui_mentions_lead"
+msgstr "Berichten waarin je wordt vermeld."
+
+msgid "ui_mentions_title"
+msgstr "Vermeldingen"
+
+msgid "ui_message_actions"
+msgstr "Berichtacties"
+
+msgid "ui_message_in"
+msgstr "Bericht aan {name}"
+
+msgid "ui_message_to"
+msgstr "Bericht aan {name}"
+
+msgid "ui_mod_caps"
+msgstr "Verwijderd door moderatie: te veel hoofdletters"
+
+msgid "ui_mod_flood"
+msgstr "Verwijderd door moderatie: te veel berichten achter elkaar"
+
+msgid "ui_mod_generic"
+msgstr "Verwijderd door moderatie"
+
+msgid "ui_mod_links"
+msgstr "Verwijderd door moderatie: links zijn niet toegestaan in dit kanaal"
+
+msgid "ui_mod_phone"
+msgstr "Verwijderd door moderatie: deel geen telefoonnummers in het kanaal"
+
+msgid "ui_mod_removed"
+msgstr "Verwijderd door een moderator"
+
+msgid "ui_mod_toxic"
+msgstr "Verwijderd door moderatie: beledigend taalgebruik"
+
+msgid "ui_moderation"
+msgstr "Moderatie"
+
+msgid "ui_monthly"
+msgstr "Maandelijks"
+
+msgid "ui_more"
+msgstr "Meer"
+
+msgid "ui_msg_deleted"
+msgstr "Bericht verwijderd"
+
+msgid "ui_mute_1h"
+msgstr "1 uur dempen"
+
+msgid "ui_mute_week"
+msgstr "1 week dempen"
+
+msgid "ui_nav"
+msgstr "Navigatie"
+
+msgid "ui_nav_account"
+msgstr "Account"
+
+msgid "ui_nav_channels"
+msgstr "Kanalen"
+
+msgid "ui_nav_chats"
+msgstr "Chats"
+
+msgid "ui_nav_mentions"
+msgstr "Vermeldingen"
+
+msgid "ui_nav_people"
+msgstr "Mensen"
+
+msgid "ui_needs_request"
+msgstr "Verzoek nodig"
+
+msgid "ui_new_chat"
+msgstr "Nieuw gesprek"
+
+msgid "ui_new_group"
+msgstr "Nieuwe groep"
+
+msgid "ui_new_link"
+msgstr "Nieuwe link"
+
+msgid "ui_new_messages"
+msgstr "Nieuwe berichten"
+
+msgid "ui_new_messages_n"
+msgstr "{n} nieuwe berichten"
+
+msgid "ui_no_dms"
+msgstr "Accepteert geen directe berichten"
+
+msgid "ui_no_friends_hint"
+msgstr "Voeg vrienden toe vanuit een kanaal door op hun naam te tikken, of vind ze via «Mensen zoeken»."
+
+msgid "ui_no_friends_yet"
+msgstr "Je hebt nog geen vrienden op MeetGo"
+
+msgid "ui_no_mentions"
+msgstr "Niemand heeft je nog vermeld"
+
+msgid "ui_no_requests"
+msgstr "Je hebt geen openstaande verzoeken"
+
+msgid "ui_no_results"
+msgstr "Geen resultaten"
+
+msgid "ui_notifications"
+msgstr "Meldingen"
+
+msgid "ui_notifications_hint"
+msgstr "Groepen en directe berichten melden elk bericht; kanalen alleen als je wordt vermeld. Pas het aan in het menu van elk gesprek."
+
+msgid "ui_notify_all"
+msgstr "Elk bericht melden"
+
+msgid "ui_notify_current"
+msgstr "Meldingen: {mode}"
+
+msgid "ui_notify_mentions"
+msgstr "Alleen vermeldingen melden"
+
+msgid "ui_notify_none"
+msgstr "Nooit melden"
+
+msgid "ui_off"
+msgstr "Uit"
+
+msgid "ui_offline"
+msgstr "Offline"
+
+msgid "ui_offline_n"
+msgstr "Offline · {n}"
+
+msgid "ui_online"
+msgstr "Online"
+
+msgid "ui_online_n"
+msgstr "Online · {n}"
+
+msgid "ui_open"
+msgstr "Openen"
+
+msgid "ui_open_notification_settings"
+msgstr "Meldingsinstellingen van je telefoon"
+
+msgid "ui_password"
+msgstr "Wachtwoord"
+
+msgid "ui_password_change"
+msgstr "Nieuw wachtwoord (optioneel)"
+
+msgid "ui_password_new"
+msgstr "Wachtwoord (minstens 6 tekens)"
+
+msgid "ui_payments_soon"
+msgstr "Betalingen zijn op deze server nog niet actief."
+
+msgid "ui_paywall_lead"
+msgstr "Met je account kun je lezen maar niet schrijven. Neem een abonnement om mee te doen in kanalen, groepen en directe berichten."
+
+msgid "ui_paywall_title"
+msgstr "Abonneer je op MeetGo"
+
+msgid "ui_people_title"
+msgstr "Mensen"
+
+msgid "ui_per_month"
+msgstr "per maand"
+
+msgid "ui_per_year"
+msgstr "per jaar"
+
+msgid "ui_phone"
+msgstr "Telefoon (wordt aan niemand getoond)"
+
+msgid "ui_pick_conversation"
+msgstr "Kies een gesprek"
+
+msgid "ui_pick_conversation_hint"
+msgstr "Of begin een nieuw gesprek met de potloodknop."
+
+msgid "ui_pin"
+msgstr "Bericht vastmaken"
+
+msgid "ui_pin_chat"
+msgstr "Gesprek vastmaken"
+
+msgid "ui_pinned"
+msgstr "Vastgemaakt"
+
+msgid "ui_plan_active"
+msgstr "Abonnement actief! Bedankt voor je steun aan MeetGo."
+
+msgid "ui_profile"
+msgstr "Profiel"
+
+msgid "ui_promo_code"
+msgstr "Actiecode"
+
+msgid "ui_province"
+msgstr "Provincie"
+
+msgid "ui_publish"
+msgstr "Plaatsen"
+
+msgid "ui_push_blocked"
+msgstr "Meldingen zijn geblokkeerd in deze browser; sta ze toe in de instellingen ervan."
+
+msgid "ui_push_denied"
+msgstr "Meldingen zijn niet aangezet"
+
+msgid "ui_push_disabled_here"
+msgstr "Meldingen staan uit in deze browser"
+
+msgid "ui_push_enabled_here"
+msgstr "Meldingen staan aan in deze browser"
+
+msgid "ui_push_off"
+msgstr "Meldingen uitgezet"
+
+msgid "ui_push_on"
+msgstr "Meldingen aangezet"
+
+msgid "ui_push_unsupported"
+msgstr "Deze browser ondersteunt geen meldingen. Voeg MeetGo op iPhone toe aan het beginscherm."
+
+msgid "ui_react"
+msgstr "Reageren"
+
+msgid "ui_read"
+msgstr "Gelezen"
+
+msgid "ui_read_only"
+msgstr "Je account is alleen-lezen totdat je een abonnement neemt."
+
+msgid "ui_reason"
+msgstr "Reden"
+
+msgid "ui_reason_spam"
+msgstr "Spam of reclame"
+
+msgid "ui_reason_harassment"
+msgstr "Intimidatie"
+
+msgid "ui_reason_hate"
+msgstr "Haat of discriminatie"
+
+msgid "ui_reason_sexual"
+msgstr "Seksuele inhoud"
+
+msgid "ui_reason_violence"
+msgstr "Geweld of bedreigingen"
+
+msgid "ui_reason_other"
+msgstr "Iets anders"
+
+msgid "ui_reconnecting"
+msgstr "Opnieuw verbinden…"
+
+msgid "ui_register_lead"
+msgstr "Je praat met mensen uit jouw provincie en leeftijdsgroep. Je telefoonnummer wordt nooit getoond."
+
+msgid "ui_register_legal"
+msgstr "Door een account aan te maken bevestig je dat je 18 jaar of ouder bent en ga je akkoord met de voorwaarden en het privacybeleid."
+
+msgid "ui_register_title"
+msgstr "Maak je account aan"
+
+msgid "ui_remove"
+msgstr "Verwijderen"
+
+msgid "ui_remove_member"
+msgstr "Uit groep verwijderen"
+
+msgid "ui_replied_in_thread"
+msgstr "reageerde in een thread"
+
+msgid "ui_replies_n"
+msgstr "{n} reacties"
+
+msgid "ui_reply"
+msgstr "Beantwoorden"
+
+msgid "ui_reply_in_thread_ph"
+msgstr "Reageer in de thread"
+
+msgid "ui_reply_thread"
+msgstr "Reageer in een thread"
+
+msgid "ui_replying_to"
+msgstr "Antwoord aan"
+
+msgid "ui_report"
+msgstr "Melden"
+
+msgid "ui_report_in_chat"
+msgstr "Meld het bericht vanuit het gesprek"
+
+msgid "ui_report_title"
+msgstr "Bericht melden"
+
+msgid "ui_reported"
+msgstr "Bedankt. Moderators bekijken het."
+
+msgid "ui_request"
+msgstr "Verzoek"
+
+msgid "ui_requests"
+msgstr "Verzoeken"
+
+msgid "ui_reset_done"
+msgstr "Wachtwoord gewijzigd. Je kunt nu inloggen."
+
+msgid "ui_reset_title"
+msgstr "Nieuw wachtwoord"
+
+msgid "ui_restore_purchase"
+msgstr "Aankoop herstellen"
+
+msgid "ui_resume_plan"
+msgstr "Abonnement hervatten"
+
+msgid "ui_retry"
+msgstr "Opnieuw"
+
+msgid "ui_role_owner"
+msgstr "Eigenaar"
+
+msgid "ui_role_admin"
+msgstr "Admin"
+
+msgid "ui_role_moderator"
+msgstr "Mod"
+
+msgid "ui_role_member"
+msgstr "Lid"
+
+msgid "ui_rules"
+msgstr "Regels"
+
+msgid "ui_save"
+msgstr "Opslaan"
+
+msgid "ui_save_17"
+msgstr "Bespaar 17%"
+
+msgid "ui_saved"
+msgstr "Opgeslagen"
+
+msgid "ui_search_in"
+msgstr "Zoeken in {name}"
+
+msgid "ui_search_in_chat"
+msgstr "Zoeken in gesprek"
+
+msgid "ui_search_members"
+msgstr "Leden zoeken"
+
+msgid "ui_search_people"
+msgstr "Zoeken op naam"
+
+msgid "ui_search_people_hint"
+msgstr "Typ minstens twee letters. Je ziet je vrienden en mensen uit je provincie."
+
+msgid "ui_search_placeholder"
+msgstr "Zoek gesprekken of berichten"
+
+msgid "ui_sec_channels"
+msgstr "Kanalen"
+
+msgid "ui_sec_channels_zone"
+msgstr "Kanalen · {zone}"
+
+msgid "ui_sec_direct"
+msgstr "Direct"
+
+msgid "ui_sec_groups"
+msgstr "Groepen"
+
+msgid "ui_sec_messages"
+msgstr "Berichten"
+
+msgid "ui_sec_pinned"
+msgstr "Vastgemaakt"
+
+msgid "ui_seconds_n"
+msgstr "{n} seconden"
+
+msgid "ui_send"
+msgstr "Versturen"
+
+msgid "ui_send_link"
+msgstr "Link versturen"
+
+msgid "ui_send_message"
+msgstr "Bericht versturen"
+
+msgid "ui_sent"
+msgstr "Verstuurd"
+
+msgid "ui_session"
+msgstr "Sessie"
+
+msgid "ui_share_lead"
+msgstr "Kies waar je het wilt delen ({n} bestanden)."
+
+msgid "ui_share_nothing"
+msgstr "Er is niets om te delen."
+
+msgid "ui_share_title"
+msgstr "Delen met MeetGo"
+
+msgid "ui_side_panel"
+msgstr "Zijpaneel"
+
+msgid "ui_silence_1h"
+msgstr "1 uur het zwijgen opleggen"
+
+msgid "ui_silenced_until"
+msgstr "Je mag in dit gesprek niet schrijven tot {time}."
+
+msgid "ui_slow_mode"
+msgstr "Langzame modus: één bericht per {seconds} s"
+
+msgid "ui_slow_mode_label"
+msgstr "Langzame modus"
+
+msgid "ui_staff_n"
+msgstr "Moderators · {n}"
+
+msgid "ui_subscribe"
+msgstr "Abonneren"
+
+msgid "ui_subscribe_card"
+msgstr "Abonneren met kaart"
+
+msgid "ui_subscribe_play"
+msgstr "Abonneren met Google Play"
+
+msgid "ui_subscription"
+msgstr "Abonnement"
+
+msgid "ui_switch_monthly"
+msgstr "Overstappen op maandelijks"
+
+msgid "ui_switch_yearly"
+msgstr "Overstappen op jaarlijks (bespaar 17%)"
+
+msgid "ui_theme"
+msgstr "Thema"
+
+msgid "ui_theme_dark"
+msgstr "Donker"
+
+msgid "ui_theme_light"
+msgstr "Licht"
+
+msgid "ui_theme_system"
+msgstr "Volg systeem"
+
+msgid "ui_thread"
+msgstr "Thread"
+
+msgid "ui_threads"
+msgstr "Info en regels"
+
+msgid "ui_today"
+msgstr "Vandaag"
+
+msgid "ui_trial_days"
+msgstr "De eerste {n} dagen zijn gratis. Altijd opzegbaar."
+
+msgid "ui_typing_many"
+msgstr "{name} en {n} anderen zijn aan het typen…"
+
+msgid "ui_typing_one"
+msgstr "{name} is aan het typen…"
+
+msgid "ui_typing_short"
+msgstr "typt…"
+
+msgid "ui_typing_two"
+msgstr "{a} en {b} zijn aan het typen…"
+
+msgid "ui_unfollow"
+msgstr "Ontvolgen"
+
+msgid "ui_unmute"
+msgstr "Dempen opheffen"
+
+msgid "ui_unpin"
+msgstr "Bericht losmaken"
+
+msgid "ui_unpin_chat"
+msgstr "Gesprek losmaken"
+
+msgid "ui_unsilence"
+msgstr "Zwijgen opheffen"
+
+msgid "ui_uploading"
+msgstr "Uploaden…"
+
+msgid "ui_wait"
+msgstr "Een momentje…"
+
+msgid "ui_wants_friend"
+msgstr "{name} wil je vriend zijn"
+
+msgid "ui_wants_to_write"
+msgstr "{name} wil je een bericht sturen"
+
+msgid "ui_write"
+msgstr "Bericht"
+
+msgid "ui_yearly"
+msgstr "Jaarlijks"
+
+msgid "ui_yesterday"
+msgstr "Gisteren"
+
+msgid "ui_you"
+msgstr "Jij"
+
+msgid "admin_add_calling_code"
+msgstr "Landcode toevoegen"
+
+msgid "admin_add_country"
+msgstr "Land toevoegen"
+
+msgid "admin_add_language"
+msgstr "Taal toevoegen"
+
+msgid "admin_add_range"
+msgstr "Groep toevoegen"
+
+msgid "admin_age_ranges_title"
+msgstr "Leeftijdsgroepen"
+
+msgid "admin_app_section"
+msgstr "Applicatie"
+
+msgid "admin_base_url"
+msgstr "Publiek webadres"
+
+msgid "admin_base_url_placeholder"
+msgstr "https://meetgo.app"
+
+msgid "admin_calling_code_placeholder"
+msgstr "+34"
+
+msgid "admin_calling_codes_title"
+msgstr "Landcodes"
+
+msgid "admin_code"
+msgstr "Code"
+
+msgid "admin_countries_title"
+msgstr "Landen"
+
+msgid "admin_delete"
+msgstr "Verwijderen"
+
+msgid "admin_gmail_client_id"
+msgstr "Gmail: client-ID"
+
+msgid "admin_gmail_client_secret"
+msgstr "Gmail: client secret"
+
+msgid "admin_gmail_refresh_token"
+msgstr "Gmail: refresh token"
+
+msgid "admin_gmail_sender_email"
+msgstr "Gmail: e-mailadres afzender"
+
+msgid "admin_key"
+msgstr "Sleutel"
+
+msgid "admin_label"
+msgstr "Label"
+
+msgid "admin_languages_title"
+msgstr "Talen"
+
+msgid "admin_loading"
+msgstr "Laden…"
+
+msgid "admin_login_button"
+msgstr "Inloggen"
+
+msgid "admin_login_password"
+msgstr "Wachtwoord"
+
+msgid "admin_login_username"
+msgstr "E-mail of gebruikersnaam"
+
+msgid "admin_logout"
+msgstr "Uitloggen"
+
+msgid "admin_max"
+msgstr "Max"
+
+msgid "admin_min"
+msgstr "Min"
+
+msgid "admin_name"
+msgstr "Naam"
+
+msgid "admin_provinces_title"
+msgstr "Provincies"
+
+msgid "admin_settings_error"
+msgstr "De instellingen konden niet worden opgeslagen"
+
+msgid "admin_settings_save"
+msgstr "Instellingen opslaan"
+
+msgid "admin_settings_saved"
+msgstr "Instellingen opgeslagen"
+
+msgid "admin_settings_title"
+msgstr "Instellingen"
+
+msgid "admin_smtp_encryption"
+msgstr "Versleuteling"
+
+msgid "admin_smtp_from_email"
+msgstr "E-mailadres afzender"
+
+msgid "admin_smtp_host"
+msgstr "SMTP-server"
+
+msgid "admin_smtp_mode"
+msgstr "Verzendmodus"
+
+msgid "admin_smtp_mode_gmail"
+msgstr "Gmail API"
+
+msgid "admin_smtp_mode_smtp"
+msgstr "SMTP"
+
+msgid "admin_smtp_password"
+msgstr "SMTP-wachtwoord"
+
+msgid "admin_smtp_port"
+msgstr "Poort"
+
+msgid "admin_smtp_section"
+msgstr "Uitgaande e-mail"
+
+msgid "admin_smtp_ssl"
+msgstr "SSL"
+
+msgid "admin_smtp_starttls"
+msgstr "STARTTLS"
+
+msgid "admin_smtp_test_button"
+msgstr "Testmail versturen"
+
+msgid "admin_smtp_test_email"
+msgstr "Test versturen naar"
+
+msgid "admin_smtp_test_error"
+msgstr "De testmail kon niet worden verstuurd"
+
+msgid "admin_smtp_test_ok"
+msgstr "Testmail verstuurd"
+
+msgid "admin_smtp_username"
+msgstr "SMTP-gebruikersnaam"
+
+msgid "admin_tab_channels"
+msgstr "Kanalen"
+
+msgid "admin_tab_settings"
+msgstr "Instellingen"
+
+msgid "admin_tab_users"
+msgstr "Gebruikers"
+
+msgid "admin_title"
+msgstr "MeetGo-beheer"
+
+msgid "email_open_app"
+msgstr "MeetGo openen"
+
+msgid "email_footer_digest"
+msgstr "Je krijgt deze e-mail omdat je ongelezen berichten hebt op MeetGo."
+
+msgid "email_footer_requests"
+msgstr "Je krijgt deze e-mail omdat iemand contact met je wil opnemen op MeetGo."
+
+msgid "email_footer_reports"
+msgstr "Je krijgt deze e-mail omdat je MeetGo beheert."
+
+msgid "email_footer_manage"
+msgstr "Kies welke e-mails ik krijg"
+
+msgid "email_footer_unsubscribe"
+msgstr "Stop deze e-mails"
+
+msgid "email_verify_title"
+msgstr "Bevestig je e-mailadres"
+
+msgid "email_verify_button"
+msgstr "Mijn e-mailadres bevestigen"
+
+msgid "email_reset_title"
+msgstr "Kies een nieuw wachtwoord"
+
+msgid "email_reset_button"
+msgstr "Wachtwoord kiezen"
+
+msgid "email_password_changed_subject"
+msgstr "Je MeetGo-wachtwoord is gewijzigd"
+
+msgid "email_password_changed_title"
+msgstr "Wachtwoord gewijzigd"
+
+msgid "email_password_changed_body"
+msgstr "Het wachtwoord van je account is zojuist gewijzigd. Was jij het niet, herstel het dan nu met \"Wachtwoord vergeten?\" en antwoord op deze e-mail."
+
+msgid "email_friend_request_subject"
+msgstr "{name} wil je vriend zijn op MeetGo"
+
+msgid "email_friend_request_title"
+msgstr "Nieuw vriendschapsverzoek"
+
+msgid "email_friend_request_body"
+msgstr "{name} heeft je een vriendschapsverzoek gestuurd. Accepteer het om elkaar directe berichten te sturen en samen groepen te maken."
+
+msgid "email_friend_request_button"
+msgstr "Verzoek bekijken"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name} heeft je vriendschapsverzoek geaccepteerd"
+
+msgid "email_friend_accepted_title"
+msgstr "Jullie zijn nu vrienden"
+
+msgid "email_friend_accepted_body"
+msgstr "{name} heeft je vriendschapsverzoek geaccepteerd. Jullie kunnen elkaar nu directe berichten sturen."
+
+msgid "email_dm_request_subject"
+msgstr "{name} wil je een bericht sturen op MeetGo"
+
+msgid "email_dm_request_title"
+msgstr "Verzoek voor direct bericht"
+
+msgid "email_dm_request_body"
+msgstr "{name} wil je een direct bericht sturen. Accepteer het verzoek om het gesprek te starten."
+
+msgid "email_dm_request_button"
+msgstr "Verzoek bekijken"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name} heeft je directe bericht geaccepteerd"
+
+msgid "email_dm_accepted_title"
+msgstr "Gesprek geopend"
+
+msgid "email_dm_accepted_body"
+msgstr "{name} heeft je verzoek geaccepteerd: jullie kunnen nu via directe berichten praten."
+
+msgid "email_dm_accepted_button"
+msgstr "Naar het gesprek"
+
+msgid "email_group_added_subject"
+msgstr "{name} heeft je toegevoegd aan \"{group}\""
+
+msgid "email_group_added_title"
+msgstr "Nieuwe groep"
+
+msgid "email_group_added_body"
+msgstr "{name} heeft je toegevoegd aan de MeetGo-groep \"{group}\"."
+
+msgid "email_group_added_button"
+msgstr "Naar de groep"
+
+msgid "email_mod_silence_subject"
+msgstr "Je bent gedempt in {place}"
+
+msgid "email_mod_silence_title"
+msgstr "Tijdelijk het zwijgen opgelegd"
+
+msgid "email_mod_silence_body"
+msgstr "De moderators van {place} hebben je {minutes} minuten het zwijgen opgelegd. Daarna kun je weer schrijven."
+
+msgid "email_mod_ban_subject"
+msgstr "Je kunt niet meer schrijven in {place}"
+
+msgid "email_mod_ban_title"
+msgstr "Verbannen uit {place}"
+
+msgid "email_mod_ban_body"
+msgstr "De moderators van {place} hebben je verbannen en je kunt daar niet meer schrijven. Denk je dat het een vergissing is, antwoord dan op deze e-mail."
+
+msgid "email_mod_remove_subject"
+msgstr "Je bent verwijderd uit {place}"
+
+msgid "email_mod_remove_title"
+msgstr "Uit {place}"
+
+msgid "email_mod_remove_body"
+msgstr "De moderators hebben je verwijderd uit {place}. Denk je dat het een vergissing is, antwoord dan op deze e-mail."
+
+msgid "email_report_subject"
+msgstr "Nieuwe melding op MeetGo"
+
+msgid "email_report_title"
+msgstr "Nieuwe melding"
+
+msgid "email_report_body"
+msgstr "Iemand heeft een bericht gemeld ({reason}). Bekijk het in de moderatiewachtrij van het beheer."
+
+msgid "email_digest_subject"
+msgstr "Je hebt ongelezen berichten op MeetGo ({n})"
+
+msgid "email_digest_title"
+msgstr "Ongelezen berichten"
+
+msgid "email_digest_body"
+msgstr "Dit heb je nog niet gelezen:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name} heeft je vermeld in {place}"
+
+msgid "email_digest_mention_title"
+msgstr "Je bent vermeld"
+
+msgid "email_digest_mention_body"
+msgstr "{name} heeft je vermeld in {place}. Dit heb je nog niet gelezen:"
+
+msgid "email_digest_mention_button"
+msgstr "Bericht bekijken"
+
+msgid "email_digest_more"
+msgstr "en nog {n}…"
+
+msgid "email_digest_attachment"
+msgstr "📎 Bijlage"
+
+msgid "email_access_ending_subject"
+msgstr "Je gratis toegang tot MeetGo loopt af op {date}"
+
+msgid "email_access_ending_title"
+msgstr "Je gratis toegang loopt bijna af"
+
+msgid "email_access_ending_body"
+msgstr "Je gratis toegang loopt af op {date}. Daarna kun je blijven lezen, maar om te schrijven heb je een abonnement nodig (€ 2,50 per maand of € 25 per jaar)."
+
+msgid "email_access_ending_button"
+msgstr "Abonnementen bekijken"
+
+msgid "email_access_ended_subject"
+msgstr "Je gratis toegang tot MeetGo is afgelopen"
+
+msgid "email_access_ended_title"
+msgstr "Je gratis toegang is afgelopen"
+
+msgid "email_access_ended_body"
+msgstr "Je gratis toegang is afgelopen op {date}. Je account is nog actief en je kunt lezen, maar om weer te schrijven heb je een abonnement nodig."
+
+msgid "email_access_ended_button"
+msgstr "Abonneren"
+
+msgid "email_unsubscribed_title"
+msgstr "Klaar"
+
+msgid "email_unsubscribed_digest"
+msgstr "Je krijgt geen e-mails meer over ongelezen berichten en vermeldingen."
+
+msgid "email_unsubscribed_requests"
+msgstr "Je krijgt geen e-mails meer over verzoeken en groepen."
+
+msgid "email_unsubscribed_reports"
+msgstr "Je krijgt geen e-mails meer over meldingen."
+
+msgid "ui_emails"
+msgstr "E-mails"
+
+msgid "ui_email_mentions"
+msgstr "Vermeldingen en antwoorden die je nog niet hebt gelezen"
+
+msgid "ui_email_messages"
+msgstr "Ongelezen berichten in je groepen en directe berichten"
+
+msgid "ui_email_requests"
+msgstr "Vriendschaps- en berichtverzoeken, en wanneer je aan een groep wordt toegevoegd"
+
+msgid "ui_email_reports"
+msgstr "Nieuwe meldingen (beheer)"
+
+msgid "ui_emails_hint"
+msgstr "We mailen alleen als je het niet in de app hebt gezien: hooguit één overzicht om de paar uur. E-mails over je account krijg je altijd."
+
+msgid "ui_emails_unverified"
+msgstr "Bevestig je e-mailadres om berichten te ontvangen."
+
+msgid "ui_resend_verification"
+msgstr "Bevestigingsmail opnieuw sturen"
+
+msgid "ui_verification_resent"
+msgstr "Als het account bestaat en nog niet is bevestigd, hebben we je een nieuwe e-mail gestuurd. Kijk ook in je spamfolder."
+
+msgid "admin_email_notifications_section"
+msgstr "Automatische e-mails"
+
+msgid "admin_email_notifications_enabled"
+msgstr "Automatische e-mails versturen (ongelezen vermeldingen en berichten, verzoeken, moderatie en abonnementsberichten)"
+
+msgid "admin_email_notifications_delay"
+msgstr "E-mail over ongelezen berichten na (minuten)"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "Minimale tijd tussen twee overzichten aan dezelfde persoon (uren)"
+
+msgid "admin_email_notifications_hint"
+msgstr "Iedereen kiest zelf welke e-mails hij of zij krijgt via Account → Meldingen. E-mails over het account (bevestiging en wachtwoord) worden altijd verstuurd."
+
+msgid "ui_dob_once"
+msgstr "Je kunt je geboortedatum maar één keer corrigeren."
+
+msgid "ui_dob_locked"
+msgstr "Je hebt je geboortedatum al één keer gecorrigeerd."
+
+msgid "ui_zone_hint"
+msgstr "Je kanalen zijn die van je provincie en leeftijdsgroep. Als je van provincie of geboortedatum verandert, ga je naar de kanalen van de nieuwe zone."
+
+msgid "landing_a0"
+msgstr "Niets. MeetGo is gratis: maak je account aan en gebruik het zonder beperkingen, geen kaart nodig."
+
+msgid "landing_a1"
+msgstr "€ 2,50 per maand of € 25 per jaar, met 7 dagen gratis proberen. Beide opties bevatten alles."
+
+msgid "landing_a2"
+msgstr "Maak je account aan met de code LANZAMIENTO zolang er plekken zijn. Alleen voor de eerste 50 accounts en we vragen niet om een kaart."
+
+msgid "landing_a3"
+msgstr "Je account wordt alleen-lezen totdat je een abonnement neemt: je kunt je gesprekken lezen maar niet schrijven. Er wordt niets verwijderd."
+
+msgid "landing_a4"
+msgstr "Niemand. Je nummer staat niet op je profiel en berichten waarin nummers worden gedeeld in kanalen worden automatisch verwijderd."
+
+msgid "landing_a5"
+msgstr "Ja, MeetGo is voor mensen boven de 18. Kanalen zijn ingedeeld per leeftijdsgroep: 18-30, 31-50 en ouder dan 50."
+
+msgid "landing_a6"
+msgstr "Elke provincie in Spanje. Je kanalen zijn die van je provincie en leeftijdsgroep, één voor elke hobby die je kiest."
+
+msgid "landing_a7"
+msgstr "Vanuit je MeetGo-account als je met kaart betaalt, of via Google Play als je je in de app hebt geabonneerd. Je houdt toegang tot het einde van de betaalde periode."
+
+msgid "landing_a8"
+msgstr "Op Android download je de app. Op iPhone open je meetgo.app/app in Safari en zet je hem op je beginscherm."
+
+msgid "landing_cta_how"
+msgstr "Bekijk hoe het werkt"
+
+msgid "landing_cta_register"
+msgstr "Account aanmaken"
+
+msgid "landing_dl_android_btn"
+msgstr "APK downloaden"
+
+msgid "landing_dl_android_p"
+msgstr "De app met directe meldingen en snel antwoorden. Download de APK en installeer hem."
+
+msgid "landing_dl_build"
+msgstr "Versie {version}"
+
+msgid "landing_dl_k"
+msgstr "Downloaden"
+
+msgid "landing_dl_play_btn"
+msgstr "Binnenkort"
+
+msgid "landing_dl_play_p"
+msgstr "We bereiden de winkelpagina voor. Met je MeetGo-account ga je verder waar je gebleven was."
+
+msgid "landing_dl_soon"
+msgstr "Heel binnenkort beschikbaar"
+
+msgid "landing_dl_soon2"
+msgstr "Binnenkort"
+
+msgid "landing_dl_title"
+msgstr "Bij je op je telefoon en je computer"
+
+msgid "landing_dl_web_btn"
+msgstr "MeetGo openen"
+
+msgid "landing_dl_web_p"
+msgstr "Open MeetGo in je browser. Tik op iPhone op Delen en “Zet op beginscherm” om het als een app te bewaren."
+
+msgid "landing_dl_web_t"
+msgstr "iPhone en web"
+
+msgid "landing_eyebrow"
+msgstr "Chat per provincie, leeftijd en interesses"
+
+msgid "landing_f1_k"
+msgstr "Lokale kanalen"
+
+msgid "landing_f1_l1"
+msgstr "Threads met een overzicht van reacties en deelnemers"
+
+msgid "landing_f1_l2"
+msgstr "Vermeldingen met een eigen inbox, en meldingen alleen als iemand jou noemt"
+
+msgid "landing_f1_l3"
+msgstr "Een scheidingslijn voor nieuwe berichten en een knop om naar het laatste te springen"
+
+msgid "landing_f1_l4"
+msgstr "Reacties, geciteerde antwoorden en vastgemaakte berichten"
+
+msgid "landing_f1_p"
+msgstr "Elk onderwerp krijgt zijn eigen thread en het hoofdgesprek blijft overzichtelijk. Haal in wat je hebt gemist zonder eindeloos scrollen."
+
+msgid "landing_f1_t"
+msgstr "Veel stemmen tegelijk, allemaal leesbaar"
+
+msgid "landing_f2_k"
+msgstr "Privégroepen"
+
+msgid "landing_f2_l1"
+msgstr "Uitnodigingslinks en adminrollen"
+
+msgid "landing_f2_l2"
+msgstr "Foto's en bestanden tot 10 MB"
+
+msgid "landing_f2_l3"
+msgstr "Leesbevestigingen om te zien wie het heeft gezien"
+
+msgid "landing_f2_l4"
+msgstr "Demp of maak elke groep vast"
+
+msgid "landing_f2_p"
+msgstr "Maak een groep met je vrienden of deel een uitnodigingslink met wie zich in het kanaal heeft aangemeld."
+
+msgid "landing_f2_t"
+msgstr "Van “ik doe mee” tot afgesproken"
+
+msgid "landing_f3_k"
+msgstr "Directe berichten"
+
+msgid "landing_f3_l1"
+msgstr "Directe meldingen, met snel antwoorden op Android"
+
+msgid "landing_f3_l2"
+msgstr "Zie wie er typt en wie online is"
+
+msgid "landing_f3_l3"
+msgstr "Je telefoonnummer wordt nooit getoond"
+
+msgid "landing_f3_p"
+msgstr "Met vrienden chat je meteen. Met anderen komt eerst een verzoek, en alleen als ze directe berichten accepteren."
+
+msgid "landing_f3_t"
+msgstr "Privé, als jullie het allebei willen"
+
+msgid "landing_f_app"
+msgstr "De app openen"
+
+msgid "landing_f_contact"
+msgstr "Contact:"
+
+msgid "landing_f_privacy"
+msgstr "Privacy"
+
+msgid "landing_f_terms"
+msgstr "Voorwaarden"
+
+msgid "landing_faq_k"
+msgstr "FAQ"
+
+msgid "landing_faq_title"
+msgstr "Wat mensen vaak vragen"
+
+msgid "landing_feat_k"
+msgstr "Functies"
+
+msgid "landing_feat_p"
+msgstr "Grote kanalen blijven leesbaar, groepen zijn van jou en directe berichten komen meteen aan."
+
+msgid "landing_feat_title"
+msgstr "Gemaakt om met veel mensen te chatten zonder de weg kwijt te raken"
+
+msgid "landing_final_p"
+msgstr "Kom binnen, kies je hobby's en zeg hoi."
+
+msgid "landing_final_title"
+msgstr "Je volgende plan <span class=\"go\">is al aan het praten</span>"
+
+msgid "landing_hero_lead"
+msgstr "Kanalen met mensen uit je provincie, je leeftijdsgroep en je hobby's. Als er een plan komt, start je een groep en regel je het privé."
+
+msgid "landing_hero_title"
+msgstr "Praat met mensen <span class=\"meet\">bij jou in de buurt.</span> <span class=\"go\">En spreek dan af.</span>"
+
+msgid "landing_how_k"
+msgstr "Hoe het werkt"
+
+msgid "landing_how_title"
+msgstr "Van chat naar plan in drie stappen"
+
+msgid "landing_more_k"
+msgstr "En ook"
+
+msgid "landing_more_title"
+msgstr "Een goede sfeer komt niet vanzelf"
+
+msgid "landing_nav_download"
+msgstr "Downloaden"
+
+msgid "landing_nav_faq"
+msgstr "FAQ"
+
+msgid "landing_nav_features"
+msgstr "Functies"
+
+msgid "landing_nav_how"
+msgstr "Hoe het werkt"
+
+msgid "landing_nav_prices"
+msgstr "Prijzen"
+
+msgid "landing_pr_btn"
+msgstr "Start de proefperiode"
+
+msgid "landing_pr_eq"
+msgstr "Komt neer op € 2,08 per maand"
+
+msgid "landing_pr_k"
+msgstr "Prijzen"
+
+msgid "landing_pr_l1"
+msgstr "7 dagen gratis proberen"
+
+msgid "landing_pr_l2"
+msgstr "Kanalen, groepen en directe berichten"
+
+msgid "landing_pr_l3"
+msgstr "Altijd opzegbaar"
+
+msgid "landing_pr_m"
+msgstr "Maandelijks"
+
+msgid "landing_pr_month"
+msgstr "/maand"
+
+msgid "landing_pr_note"
+msgstr "Betaal met kaart (Stripe) op het web of met Google Play in de app. Prijzen zijn inclusief btw."
+
+msgid "landing_pr_p"
+msgstr "Alle functies in beide abonnementen. 7 dagen gratis proberen en altijd opzegbaar."
+
+msgid "landing_pr_save"
+msgstr "Bespaar 17%"
+
+msgid "landing_pr_title"
+msgstr "Minder dan een koffie per maand"
+
+msgid "landing_pr_y"
+msgstr "Jaarlijks"
+
+msgid "landing_pr_year"
+msgstr "/jaar"
+
+msgid "landing_promo_badge"
+msgstr "Lanceringsactie"
+
+msgid "landing_promo_copied"
+msgstr "Gekopieerd!"
+
+msgid "landing_promo_copy"
+msgstr "Kopiëren"
+
+msgid "landing_promo_cta"
+msgstr "Mijn gratis jaar krijgen"
+
+msgid "landing_promo_eyebrow"
+msgstr "Lancering · nog {left} gratis plekken"
+
+msgid "landing_promo_left"
+msgstr "plekken over"
+
+msgid "landing_promo_of"
+msgstr "van {max}"
+
+msgid "landing_promo_text"
+msgstr "Maak je account aan met de code en betaal een heel jaar niets. Alleen voor de eerste"
+
+msgid "landing_promo_text2"
+msgstr "accounts."
+
+msgid "landing_promo_title"
+msgstr "<span class=\"sunt\">1 jaar gratis</span> voor de eerste accounts"
+
+msgid "landing_q0"
+msgstr "Wat kost het?"
+
+msgid "landing_q1"
+msgstr "Wat kost het?"
+
+msgid "landing_q2"
+msgstr "Hoe krijg ik het gratis jaar?"
+
+msgid "landing_q3"
+msgstr "Wat gebeurt er als het gratis jaar afloopt?"
+
+msgid "landing_q4"
+msgstr "Wie ziet mijn telefoonnummer?"
+
+msgid "landing_q5"
+msgstr "Is er een minimumleeftijd?"
+
+msgid "landing_q6"
+msgstr "In welke steden werkt het?"
+
+msgid "landing_q7"
+msgstr "Hoe zeg ik op?"
+
+msgid "landing_q8"
+msgstr "Is er een app voor Android en iPhone?"
+
+msgid "landing_s1_p"
+msgstr "Wandelen, padel, bioscoop, koffie… Elke hobby is een kanaal met mensen uit je provincie en leeftijdsgroep."
+
+msgid "landing_s1_t"
+msgstr "Kies je hobby's"
+
+msgid "landing_s2_p"
+msgstr "Reageer in threads om het netjes te houden, vermeld wie je wilt en reageer met emoji zonder de chat te overspoelen."
+
+msgid "landing_s2_t"
+msgstr "Chat in je kanalen"
+
+msgid "landing_s3_p"
+msgstr "Maak een privégroep, nodig uit wie meedoet en regel auto's, tijden en foto's zonder ruis."
+
+msgid "landing_s3_t"
+msgstr "Plan het in een groep"
+
+msgid "landing_signin"
+msgstr "Inloggen"
+
+msgid "landing_skip"
+msgstr "Naar de inhoud"
+
+msgid "landing_strip_devices"
+msgstr "Web, Android en iPhone"
+
+msgid "landing_strip_mod"
+msgstr "Actieve moderatie"
+
+msgid "landing_strip_phone"
+msgstr "Je telefoonnummer blijft verborgen"
+
+msgid "landing_strip_zone"
+msgstr "Je provincie en leeftijdsgroep"
+
+msgid "landing_t1_p"
+msgstr "Beledigingen, spam en openbaar geplaatste telefoonnummers worden vanzelf verwijderd."
+
+msgid "landing_t1_t"
+msgstr "Automatische moderatie"
+
+msgid "landing_t2_p"
+msgstr "Meld een bericht met twee tikken; moderators kunnen mensen dempen of verwijderen."
+
+msgid "landing_t2_t"
+msgstr "Meldingen en moderators"
+
+msgid "landing_t3_p"
+msgstr "Als een kanaal te druk wordt, bepalen de moderators het tempo."
+
+msgid "landing_t3_t"
+msgstr "Langzame modus"
+
+msgid "landing_t4_p"
+msgstr "Alles, alleen vermeldingen of niets, per gesprek. Demp wat je niet wilt horen."
+
+msgid "landing_t4_t"
+msgstr "Meldingen op jouw manier"
+
+msgid "landing_t5_p"
+msgstr "Vind dat bericht met het tijdstip van de afspraak in al je gesprekken."
+
+msgid "landing_t5_t"
+msgstr "Zoeken"
+
+msgid "landing_t6_p"
+msgstr "Deel de topfoto, de routetrack of de pdf van de boeking."
+
+msgid "landing_t6_t"
+msgstr "Foto's en bestanden"
+
+msgid "landing_web_k"
+msgstr "Ook op je computer"
+
+msgid "landing_web_p"
+msgstr "Op een groot scherm zie je tegelijk de lijst, het kanaal en de thread of de leden."
+
+msgid "landing_web_title"
+msgstr "Al je gesprekken in één oogopslag"
+
+msgid "ui_splash_tagline"
+msgstr "Praat met mensen bij jou in de buurt. En spreek dan af."
+
+msgid "ui_install_title"
+msgstr "MeetGo installeren"
+
+msgid "ui_install_ios"
+msgstr "Tik op Delen en dan op «Zet op beginscherm»: hij opent op volledig scherm, als een app."
+
+msgid "ui_install_dismiss"
+msgstr "Niet nu"
+
+msgid "ui_push_failed"
+msgstr "Meldingen konden niet worden aangezet in deze browser. Probeer het opnieuw of gebruik een andere browser."
+
+msgid "ui_settings"
+msgstr "Instellingen"
+
+msgid "ui_section_about"
+msgstr "Over jou"
+
+msgid "ui_section_zone"
+msgstr "Jouw regio"
+
+msgid "ui_section_privacy"
+msgstr "Privacy en beveiliging"
+
+msgid "ui_section_push"
+msgstr "Meldingen op dit apparaat"
