@@ -56,10 +56,21 @@ export function viewportDiagnostics() {
   const probe = document.createElement("div");
   probe.style.cssText = "position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)";
   const box = document.createElement("pre");
-  box.style.cssText = "position:fixed;z-index:9999;left:8px;right:8px;top:40%;margin:0;padding:10px;border-radius:12px;background:rgba(0,0,0,.85);color:#7CFC9A;font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap;pointer-events:none";
+  box.style.cssText = "position:fixed;z-index:9999;left:8px;right:8px;top:40%;margin:0;padding:10px;border-radius:12px;background:rgba(0,0,0,.85);color:#7CFC9A;font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap;cursor:pointer";
   const line = document.createElement("div");
   line.style.cssText = "position:fixed;z-index:9998;left:0;right:0;height:0;border-top:2px dashed #ff3b6b;pointer-events:none";
   document.body.append(probe, box, line);
+  // shown once: the address loses ?vp=1, and a tap on the box closes it
+  const url = new URL(window.location.href);
+  url.searchParams.delete("vp");
+  window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
+  let timer = 0;
+  box.addEventListener("click", () => {
+    window.clearInterval(timer);
+    probe.remove();
+    box.remove();
+    line.remove();
+  });
   const show = () => {
     const cs = getComputedStyle(probe);
     const vv = window.visualViewport;
@@ -75,11 +86,12 @@ export function viewportDiagnostics() {
       `body: ${Math.round(document.body.getBoundingClientRect().height)} · #root bottom: ${Math.round(root?.bottom ?? 0)} (red line)`,
       `tab bar: ${nav ? `${Math.round(nav.top)}–${Math.round(nav.bottom)}` : "hidden"}`,
       `--app-height: ${getComputedStyle(document.documentElement).getPropertyValue("--app-height") || "(none)"}`,
+      "✕",
     ].join("\n");
   };
   show();
   window.visualViewport?.addEventListener("resize", show);
   window.addEventListener("resize", show);
-  window.setInterval(show, 1000);
+  timer = window.setInterval(show, 1000);
 }
 
