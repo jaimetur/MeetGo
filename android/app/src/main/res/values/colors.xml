@@ -3,4 +3,6 @@
     <!-- MeetGo brand: night background, blue (#1e90ff → #00c2ff) and green (#43d854 → #18d7c8) -->
     <color name="meetgo_background">#0B1220</color>
     <color name="meetgo_blue">#1E90FF</color>
+    <!-- background of the app icon (assets/branding/apple-touch-icon.png) -->
+    <color name="meetgo_icon_background">#102436</color>
 </resources>

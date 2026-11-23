@@ -5,10 +5,11 @@
         <item name="android:windowBackground">@color/meetgo_background</item>
     </style>
 
-    <!-- start screen: the MeetGo arrow on the night background while the web app loads -->
+    <!-- start screen: the MeetGo icon on the night background while the web app loads -->
     <style name="Theme.MeetGo.Start" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/meetgo_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/meetgo_icon_background</item>
         <item name="postSplashScreenTheme">@style/Theme.MeetGo</item>
     </style>
 </resources>
