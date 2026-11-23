@@ -2619,7 +2619,7 @@ msgid "landing_hero_lead"
 msgstr "Canales con personas de tu provincia, tu edad y tus aficiones. Cuando surge el plan, creáis un grupo y lo cerráis por privado."
 
 msgid "landing_hero_title"
-msgstr "Habla con gente <span class=\"meet\">de tu zona</span>. Y <span class=\"go\">quedad</span>."
+msgstr "Habla con gente <span class=\"meet\">de tu zona</span>. ¡Y <span class=\"go\">queda con ellos</span>!"
 
 msgid "landing_how_k"
 msgstr "Cómo funciona"
@@ -2829,7 +2829,7 @@ msgid "landing_web_title"
 msgstr "Todas tus conversaciones de un vistazo"
 
 msgid "ui_splash_tagline"
-msgstr "Habla con gente de tu zona. Y quedad."
+msgstr "Habla con gente de tu zona. ¡Y queda con ellos!"
 
 msgid "ui_install_title"
 msgstr "Instala MeetGo"
