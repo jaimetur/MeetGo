@@ -851,16 +851,16 @@ msgid "unknown_user"
 msgstr "Desconocido"
 
 msgid "email_verify_subject"
-msgstr "Verifica tu email"
+msgstr "Confirma tu email de MeetGo"
 
 msgid "email_verify_body"
-msgstr "Pulsa para verificar: {link}"
+msgstr "Pulsa el botón para confirmar tu email y empezar a usar MeetGo. Si no has creado una cuenta, ignora este mensaje."
 
 msgid "email_reset_subject"
-msgstr "Restablece tu clave"
+msgstr "Restablece tu contraseña de MeetGo"
 
 msgid "email_reset_body"
-msgstr "Enlace de restablecer: {link}"
+msgstr "Has pedido cambiar la contraseña de tu cuenta. El enlace caduca en 2 horas. Si no lo has pedido tú, ignora este email: tu contraseña no cambia."
 
 msgid "email_smtp_test_subject"
 msgstr "MeetGo SMTP test"
@@ -2202,3 +2202,249 @@ msgstr "Usuarios"
 
 msgid "admin_title"
 msgstr "Administración de MeetGo"
+
+msgid "email_open_app"
+msgstr "Abrir MeetGo"
+
+msgid "email_footer_digest"
+msgstr "Recibes este email porque tienes mensajes sin leer en MeetGo."
+
+msgid "email_footer_requests"
+msgstr "Recibes este email porque alguien quiere contactar contigo en MeetGo."
+
+msgid "email_footer_reports"
+msgstr "Recibes este email porque administras MeetGo."
+
+msgid "email_footer_manage"
+msgstr "Elegir qué emails recibo"
+
+msgid "email_footer_unsubscribe"
+msgstr "No recibir más estos emails"
+
+msgid "email_verify_title"
+msgstr "Confirma tu email"
+
+msgid "email_verify_button"
+msgstr "Confirmar mi email"
+
+msgid "email_reset_title"
+msgstr "Elige una contraseña nueva"
+
+msgid "email_reset_button"
+msgstr "Elegir contraseña"
+
+msgid "email_password_changed_subject"
+msgstr "Tu contraseña de MeetGo ha cambiado"
+
+msgid "email_password_changed_title"
+msgstr "Contraseña cambiada"
+
+msgid "email_password_changed_body"
+msgstr "La contraseña de tu cuenta se acaba de cambiar. Si no has sido tú, recupérala ahora con «¿Has olvidado la contraseña?» y responde a este email."
+
+msgid "email_friend_request_subject"
+msgstr "{name} quiere ser tu amigo en MeetGo"
+
+msgid "email_friend_request_title"
+msgstr "Nueva solicitud de amistad"
+
+msgid "email_friend_request_body"
+msgstr "{name} te ha enviado una solicitud de amistad. Acéptala para escribiros por mensaje directo y crear grupos juntos."
+
+msgid "email_friend_request_button"
+msgstr "Ver la solicitud"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name} ha aceptado tu solicitud de amistad"
+
+msgid "email_friend_accepted_title"
+msgstr "Ya sois amigos"
+
+msgid "email_friend_accepted_body"
+msgstr "{name} ha aceptado tu solicitud de amistad. Ya podéis escribiros por mensaje directo."
+
+msgid "email_dm_request_subject"
+msgstr "{name} quiere escribirte en MeetGo"
+
+msgid "email_dm_request_title"
+msgstr "Solicitud de mensaje directo"
+
+msgid "email_dm_request_body"
+msgstr "{name} quiere hablar contigo por mensaje directo. Acepta la solicitud para empezar la conversación."
+
+msgid "email_dm_request_button"
+msgstr "Ver la solicitud"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name} ha aceptado tu mensaje directo"
+
+msgid "email_dm_accepted_title"
+msgstr "Conversación abierta"
+
+msgid "email_dm_accepted_body"
+msgstr "{name} ha aceptado tu solicitud: ya podéis hablar por mensaje directo."
+
+msgid "email_dm_accepted_button"
+msgstr "Ir a la conversación"
+
+msgid "email_group_added_subject"
+msgstr "{name} te ha añadido a «{group}»"
+
+msgid "email_group_added_title"
+msgstr "Nuevo grupo"
+
+msgid "email_group_added_body"
+msgstr "{name} te ha añadido al grupo «{group}» de MeetGo."
+
+msgid "email_group_added_button"
+msgstr "Ir al grupo"
+
+msgid "email_mod_silence_subject"
+msgstr "Te han silenciado en {place}"
+
+msgid "email_mod_silence_title"
+msgstr "Silenciado durante un tiempo"
+
+msgid "email_mod_silence_body"
+msgstr "Los moderadores de {place} te han silenciado durante {minutes} minutos. Cuando pase ese tiempo podrás volver a escribir."
+
+msgid "email_mod_ban_subject"
+msgstr "Ya no puedes escribir en {place}"
+
+msgid "email_mod_ban_title"
+msgstr "Expulsado de {place}"
+
+msgid "email_mod_ban_body"
+msgstr "Los moderadores de {place} te han expulsado y ya no puedes escribir ahí. Si crees que es un error, responde a este email."
+
+msgid "email_mod_remove_subject"
+msgstr "Te han sacado de {place}"
+
+msgid "email_mod_remove_title"
+msgstr "Fuera de {place}"
+
+msgid "email_mod_remove_body"
+msgstr "Los moderadores te han sacado de {place}. Si crees que es un error, responde a este email."
+
+msgid "email_report_subject"
+msgstr "Nueva denuncia en MeetGo"
+
+msgid "email_report_title"
+msgstr "Nueva denuncia"
+
+msgid "email_report_body"
+msgstr "Alguien ha denunciado un mensaje ({reason}). Revísalo en la cola de moderación de la administración."
+
+msgid "email_digest_subject"
+msgstr "Tienes mensajes sin leer en MeetGo ({n})"
+
+msgid "email_digest_title"
+msgstr "Mensajes sin leer"
+
+msgid "email_digest_body"
+msgstr "Esto es lo que aún no has leído:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name} te ha mencionado en {place}"
+
+msgid "email_digest_mention_title"
+msgstr "Te han mencionado"
+
+msgid "email_digest_mention_body"
+msgstr "{name} te ha mencionado en {place}. Esto es lo que aún no has leído:"
+
+msgid "email_digest_mention_button"
+msgstr "Ver el mensaje"
+
+msgid "email_digest_more"
+msgstr "y {n} más…"
+
+msgid "email_digest_attachment"
+msgstr "📎 Archivo adjunto"
+
+msgid "email_access_ending_subject"
+msgstr "Tu acceso gratuito a MeetGo termina el {date}"
+
+msgid "email_access_ending_title"
+msgstr "Tu acceso gratuito termina pronto"
+
+msgid "email_access_ending_body"
+msgstr "Tu acceso gratuito termina el {date}. Después podrás seguir leyendo, pero para escribir necesitarás una suscripción (2,50 € al mes o 25 € al año)."
+
+msgid "email_access_ending_button"
+msgstr "Ver los planes"
+
+msgid "email_access_ended_subject"
+msgstr "Tu acceso gratuito a MeetGo ha terminado"
+
+msgid "email_access_ended_title"
+msgstr "Tu acceso gratuito ha terminado"
+
+msgid "email_access_ended_body"
+msgstr "Tu acceso gratuito terminó el {date}. Tu cuenta sigue activa y puedes leer, pero para volver a escribir necesitas una suscripción."
+
+msgid "email_access_ended_button"
+msgstr "Suscribirme"
+
+msgid "email_unsubscribed_title"
+msgstr "Hecho"
+
+msgid "email_unsubscribed_digest"
+msgstr "Ya no recibirás emails de mensajes y menciones sin leer."
+
+msgid "email_unsubscribed_requests"
+msgstr "Ya no recibirás emails de solicitudes ni de grupos."
+
+msgid "email_unsubscribed_reports"
+msgstr "Ya no recibirás emails de denuncias."
+
+msgid "ui_emails"
+msgstr "Emails"
+
+msgid "ui_email_mentions"
+msgstr "Menciones y respuestas que no has leído"
+
+msgid "ui_email_messages"
+msgstr "Mensajes sin leer de tus grupos y mensajes directos"
+
+msgid "ui_email_requests"
+msgstr "Solicitudes de amistad y de mensaje, y cuando te añaden a un grupo"
+
+msgid "ui_email_reports"
+msgstr "Denuncias nuevas (administración)"
+
+msgid "ui_emails_hint"
+msgstr "Solo te escribimos si no lo has visto en la app: como mucho un resumen cada pocas horas. Los avisos de tu cuenta te llegan siempre."
+
+msgid "ui_emails_unverified"
+msgstr "Confirma tu email para recibir avisos."
+
+msgid "ui_resend_verification"
+msgstr "Reenviar el email de confirmación"
+
+msgid "ui_verification_resent"
+msgstr "Si la cuenta existe y no está confirmada, te hemos enviado un email nuevo. Mira también en spam."
+
+msgid "admin_email_notifications_section"
+msgstr "Emails automáticos"
+
+msgid "admin_email_notifications_enabled"
+msgstr "Enviar emails automáticos (menciones y mensajes sin leer, solicitudes, moderación y avisos del plan)"
+
+msgid "admin_email_notifications_delay"
+msgstr "Avisar de mensajes sin leer tras (minutos)"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "Mínimo entre dos resúmenes a la misma persona (horas)"
+
+msgid "admin_email_notifications_hint"
+msgstr "Cada persona elige qué emails recibe en Cuenta → Notificaciones. Los emails de la cuenta (confirmación y contraseña) se envían siempre."
+
+msgid "ui_dob_once"
+msgstr "Puedes corregir tu fecha de nacimiento una sola vez."
+
+msgid "ui_dob_locked"
+msgstr "Ya has corregido tu fecha de nacimiento una vez."
+
+msgid "ui_zone_hint"
+msgstr "Tus canales son los de tu provincia y tu franja de edad. Si cambias la provincia o la fecha de nacimiento, pasas a los canales de la nueva zona."

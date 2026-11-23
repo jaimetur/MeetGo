@@ -34,6 +34,7 @@ All notable changes to this project will be documented in this file.
 - Removed the prefilled `admin`/`admin` credentials from the administration sign-in form and added the administration texts that were missing from the translations.
 - The web app behaves like a native app on the iPhone and other phones: no zoom, no bounce at the start or end of lists and pages, 16 px fields, the screen fitted to the visible area with the keyboard open, room for the notch and the home bar in panels, sheets and dialogs, larger touch targets and the bottom tab bar on every main screen.
 - New phone look: a floating, frosted bottom tab bar with the current tab lit, conversations as bubbles (yours on the right), date pills, a one-line composer with round buttons, a large title, and the brand colour on the new-chat button, the active filter and each channel.
+- Account: change your province and correct your date of birth (once); your channels move to the new province and age range. On phones, swipe between the main tabs; the tab bar sits at the bottom edge.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:

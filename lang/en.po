@@ -851,16 +851,16 @@ msgid "unknown_user"
 msgstr "Unknown"
 
 msgid "email_verify_subject"
-msgstr "Verify your email"
+msgstr "Confirm your MeetGo email"
 
 msgid "email_verify_body"
-msgstr "Click to verify: {link}"
+msgstr "Press the button to confirm your email and start using MeetGo. If you did not create an account, ignore this message."
 
 msgid "email_reset_subject"
-msgstr "Reset your password"
+msgstr "Reset your MeetGo password"
 
 msgid "email_reset_body"
-msgstr "Reset link: {link}"
+msgstr "You asked to change the password of your account. The link expires in 2 hours. If it was not you, ignore this email: your password does not change."
 
 msgid "email_smtp_test_subject"
 msgstr "MeetGo SMTP test"
@@ -2202,3 +2202,249 @@ msgstr "Users"
 
 msgid "admin_title"
 msgstr "MeetGo administration"
+
+msgid "email_open_app"
+msgstr "Open MeetGo"
+
+msgid "email_footer_digest"
+msgstr "You get this email because you have unread messages on MeetGo."
+
+msgid "email_footer_requests"
+msgstr "You get this email because someone wants to reach you on MeetGo."
+
+msgid "email_footer_reports"
+msgstr "You get this email because you administer MeetGo."
+
+msgid "email_footer_manage"
+msgstr "Choose which emails I get"
+
+msgid "email_footer_unsubscribe"
+msgstr "Stop these emails"
+
+msgid "email_verify_title"
+msgstr "Confirm your email"
+
+msgid "email_verify_button"
+msgstr "Confirm my email"
+
+msgid "email_reset_title"
+msgstr "Choose a new password"
+
+msgid "email_reset_button"
+msgstr "Choose a password"
+
+msgid "email_password_changed_subject"
+msgstr "Your MeetGo password has changed"
+
+msgid "email_password_changed_title"
+msgstr "Password changed"
+
+msgid "email_password_changed_body"
+msgstr "The password of your account has just changed. If it was not you, recover it now with \"Forgot your password?\" and reply to this email."
+
+msgid "email_friend_request_subject"
+msgstr "{name} wants to be your friend on MeetGo"
+
+msgid "email_friend_request_title"
+msgstr "New friend request"
+
+msgid "email_friend_request_body"
+msgstr "{name} has sent you a friend request. Accept it to send each other direct messages and create groups together."
+
+msgid "email_friend_request_button"
+msgstr "See the request"
+
+msgid "email_friend_accepted_subject"
+msgstr "{name} has accepted your friend request"
+
+msgid "email_friend_accepted_title"
+msgstr "You are friends now"
+
+msgid "email_friend_accepted_body"
+msgstr "{name} has accepted your friend request. You can now send each other direct messages."
+
+msgid "email_dm_request_subject"
+msgstr "{name} wants to message you on MeetGo"
+
+msgid "email_dm_request_title"
+msgstr "Direct message request"
+
+msgid "email_dm_request_body"
+msgstr "{name} wants to talk to you by direct message. Accept the request to start the conversation."
+
+msgid "email_dm_request_button"
+msgstr "See the request"
+
+msgid "email_dm_accepted_subject"
+msgstr "{name} has accepted your direct message"
+
+msgid "email_dm_accepted_title"
+msgstr "Conversation open"
+
+msgid "email_dm_accepted_body"
+msgstr "{name} has accepted your request: you can now talk by direct message."
+
+msgid "email_dm_accepted_button"
+msgstr "Go to the conversation"
+
+msgid "email_group_added_subject"
+msgstr "{name} has added you to \"{group}\""
+
+msgid "email_group_added_title"
+msgstr "New group"
+
+msgid "email_group_added_body"
+msgstr "{name} has added you to the MeetGo group \"{group}\"."
+
+msgid "email_group_added_button"
+msgstr "Go to the group"
+
+msgid "email_mod_silence_subject"
+msgstr "You have been silenced in {place}"
+
+msgid "email_mod_silence_title"
+msgstr "Silenced for a while"
+
+msgid "email_mod_silence_body"
+msgstr "The moderators of {place} have silenced you for {minutes} minutes. After that you can write again."
+
+msgid "email_mod_ban_subject"
+msgstr "You can no longer write in {place}"
+
+msgid "email_mod_ban_title"
+msgstr "Banned from {place}"
+
+msgid "email_mod_ban_body"
+msgstr "The moderators of {place} have banned you and you can no longer write there. If you think it is a mistake, reply to this email."
+
+msgid "email_mod_remove_subject"
+msgstr "You have been removed from {place}"
+
+msgid "email_mod_remove_title"
+msgstr "Out of {place}"
+
+msgid "email_mod_remove_body"
+msgstr "The moderators have removed you from {place}. If you think it is a mistake, reply to this email."
+
+msgid "email_report_subject"
+msgstr "New report on MeetGo"
+
+msgid "email_report_title"
+msgstr "New report"
+
+msgid "email_report_body"
+msgstr "Someone has reported a message ({reason}). Review it in the moderation queue of the administration."
+
+msgid "email_digest_subject"
+msgstr "You have unread messages on MeetGo ({n})"
+
+msgid "email_digest_title"
+msgstr "Unread messages"
+
+msgid "email_digest_body"
+msgstr "This is what you have not read yet:"
+
+msgid "email_digest_mention_subject"
+msgstr "{name} mentioned you in {place}"
+
+msgid "email_digest_mention_title"
+msgstr "You were mentioned"
+
+msgid "email_digest_mention_body"
+msgstr "{name} mentioned you in {place}. This is what you have not read yet:"
+
+msgid "email_digest_mention_button"
+msgstr "See the message"
+
+msgid "email_digest_more"
+msgstr "and {n} more…"
+
+msgid "email_digest_attachment"
+msgstr "📎 Attachment"
+
+msgid "email_access_ending_subject"
+msgstr "Your free access to MeetGo ends on {date}"
+
+msgid "email_access_ending_title"
+msgstr "Your free access ends soon"
+
+msgid "email_access_ending_body"
+msgstr "Your free access ends on {date}. After that you can keep reading, but to write you will need a subscription (€2.50 a month or €25 a year)."
+
+msgid "email_access_ending_button"
+msgstr "See the plans"
+
+msgid "email_access_ended_subject"
+msgstr "Your free access to MeetGo has ended"
+
+msgid "email_access_ended_title"
+msgstr "Your free access has ended"
+
+msgid "email_access_ended_body"
+msgstr "Your free access ended on {date}. Your account is still active and you can read, but to write again you need a subscription."
+
+msgid "email_access_ended_button"
+msgstr "Subscribe"
+
+msgid "email_unsubscribed_title"
+msgstr "Done"
+
+msgid "email_unsubscribed_digest"
+msgstr "You will no longer get emails about unread messages and mentions."
+
+msgid "email_unsubscribed_requests"
+msgstr "You will no longer get emails about requests and groups."
+
+msgid "email_unsubscribed_reports"
+msgstr "You will no longer get emails about reports."
+
+msgid "ui_emails"
+msgstr "Emails"
+
+msgid "ui_email_mentions"
+msgstr "Mentions and replies you have not read"
+
+msgid "ui_email_messages"
+msgstr "Unread messages in your groups and direct messages"
+
+msgid "ui_email_requests"
+msgstr "Friend and message requests, and when you are added to a group"
+
+msgid "ui_email_reports"
+msgstr "New reports (administration)"
+
+msgid "ui_emails_hint"
+msgstr "We only write if you have not seen it in the app: at most one summary every few hours. Emails about your account always reach you."
+
+msgid "ui_emails_unverified"
+msgstr "Confirm your email to get notices."
+
+msgid "ui_resend_verification"
+msgstr "Send the confirmation email again"
+
+msgid "ui_verification_resent"
+msgstr "If the account exists and is not confirmed, we have sent you a new email. Check your spam folder too."
+
+msgid "admin_email_notifications_section"
+msgstr "Automatic emails"
+
+msgid "admin_email_notifications_enabled"
+msgstr "Send automatic emails (unread mentions and messages, requests, moderation and plan notices)"
+
+msgid "admin_email_notifications_delay"
+msgstr "Email about unread messages after (minutes)"
+
+msgid "admin_email_notifications_cooldown"
+msgstr "Minimum between two summaries to the same person (hours)"
+
+msgid "admin_email_notifications_hint"
+msgstr "Each person chooses which emails they get in Account → Notifications. Account emails (confirmation and password) are always sent."
+
+msgid "ui_dob_once"
+msgstr "You can correct your date of birth only once."
+
+msgid "ui_dob_locked"
+msgstr "You have already corrected your date of birth once."
+
+msgid "ui_zone_hint"
+msgstr "Your channels are those of your province and age range. If you change your province or date of birth, you move to the channels of the new zone."

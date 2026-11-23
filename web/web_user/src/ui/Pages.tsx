@@ -255,6 +255,9 @@ export function AccountPage() {
   const me = useStore((s) => s.me)!;
   const billing = useStore((s) => s.billing);
   const [form, setForm] = useState({ display_name: me.display_name, bio: me.bio || "", accept_dm: me.accept_dm, avatar_url: me.avatar_url || "" });
+  // Zone: province (any time) and date of birth (once); together they decide your channels.
+  const [zone, setZone] = useState({ country: me.country || "ES", province: me.province, dob: me.dob });
+  const [geo, setGeo] = useState<any>(null);
   const [password, setPassword] = useState("");
   const [interests, setInterests] = useState<Interest[]>([]);
   const [mine, setMine] = useState<string[]>([]);
@@ -271,14 +274,21 @@ export function AccountPage() {
   useEffect(() => {
     api.interests().then(setInterests).catch(() => undefined);
     api.myInterests().then(setMine).catch(() => undefined);
+    api.publicSettings().then(setGeo).catch(() => setGeo({}));
     refreshBilling();
   }, []);
 
   async function saveProfile() {
     try {
-      const updated = await api.updateProfile({ ...form, ...(password ? { password } : {}) });
+      const zoneChanged = zone.province !== me.province || (zone.country || "ES") !== (me.country || "ES");
+      const dobChanged = zone.dob !== me.dob;
+      const updated = await api.updateProfile({
+        ...form, ...(password ? { password } : {}),
+        ...(zoneChanged ? { country: zone.country, province: zone.province } : {}), ...(dobChanged ? { dob: zone.dob } : {}),
+      });
       setState({ me: updated });
       setPassword("");
+      if (zoneChanged || dobChanged) await loadConversations();
       toast(t("ui_saved"));
     } catch (e: any) {
       toast(e.message, "error");
@@ -342,6 +352,26 @@ export function AccountPage() {
         <label className="fld">{t("ui_display_name")}<input id="acc-name" className="inp" maxLength={64} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} /></label>
         <label className="fld">{t("ui_bio")}<textarea id="acc-bio" className="inp" rows={3} maxLength={500} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></label>
         <label className="fld">{t("ui_avatar_url")}<input id="acc-avatar" className="inp" value={form.avatar_url} onChange={(e) => setForm({ ...form, avatar_url: e.target.value })} placeholder="https://…" /></label>
+        <div className="grid2">
+          <label className="fld">{t("ui_country")}
+            <select id="acc-country" className="inp" value={zone.country} onChange={(e) => setZone({ ...zone, country: e.target.value, province: "" })}>
+              {(geo?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
+            </select>
+          </label>
+          <label className="fld">{t("ui_province")}
+            {(geo?.provinces_by_country?.[zone.country] || []).length ? (
+              <select id="acc-province" className="inp" value={zone.province} onChange={(e) => setZone({ ...zone, province: e.target.value })}>
+                <option value="">{t("ui_choose")}</option>
+                {geo.provinces_by_country[zone.country].map((p: any) => <option key={p.value} value={p.value}>{p.name}</option>)}
+              </select>
+            ) : <input id="acc-province" className="inp" value={zone.province} onChange={(e) => setZone({ ...zone, province: e.target.value })} />}
+          </label>
+        </div>
+        <label className="fld">{t("ui_dob")}
+          <input id="acc-dob" className="inp" type="date" value={zone.dob} disabled={me.dob_change_count >= 1} onChange={(e) => setZone({ ...zone, dob: e.target.value })} />
+          <span className="muted" style={{ fontSize: 12 }}>{me.dob_change_count >= 1 ? t("ui_dob_locked") : t("ui_dob_once")}</span>
+        </label>
+        <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_zone_hint")}</div>
         <label className="check"><input id="acc-dm" type="checkbox" checked={form.accept_dm} onChange={(e) => setForm({ ...form, accept_dm: e.target.checked })} />{t("ui_accept_dm")}</label>
         <label className="fld">{t("ui_password_change")}<input id="acc-password" className="inp" type="password" minLength={6} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
         <div><button className="btn pri" onClick={saveProfile}>{t("ui_save")}</button></div>
