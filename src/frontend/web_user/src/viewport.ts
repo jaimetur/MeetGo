@@ -5,24 +5,31 @@
  * - pinch zoom is blocked (iOS ignores user-scalable=no);
  * - the class "kb" on <html> says the on-screen keyboard is open.
  */
-const standalone = () =>
-  (navigator as any).standalone === true || window.matchMedia("(display-mode: standalone)").matches;
+// Installed on the iPhone's home screen (iOS only: an app installed on Android resizes itself with the keyboard).
+const iosStandalone = () => (navigator as any).standalone === true;
 
 export function setupViewport() {
   const root = document.documentElement;
   const vv = window.visualViewport;
+  const coarse = window.matchMedia("(pointer: coarse)");
+  // The tallest visible area seen with nothing focused: on Android the whole page shrinks with the keyboard, so the
+  // keyboard shows as the visible area being much shorter than that.
+  let tallest = 0;
 
   const update = () => {
     const height = vv ? vv.height : window.innerHeight;
     const el = document.activeElement;
     const typing = !!el && ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName);
-    const keyboard = typing && window.innerHeight - height > 120;
+    if (!typing) tallest = Math.max(tallest, height);
+    const keyboard = typing && (window.innerHeight - height > 120 || tallest - height > 120);
     root.classList.toggle("kb", keyboard);
+    // Writing on a phone: the tab bar steps aside at once, before the keyboard has finished opening.
+    root.classList.toggle("typing", typing && coarse.matches);
     if (keyboard) {
       // Only with the keyboard open: fit the app above it, so the header and the composer stay visible.
       root.style.setProperty("--app-height", `${Math.round(height)}px`);
       root.style.setProperty("--app-top", `${Math.round(vv ? vv.offsetTop : 0)}px`);
-    } else if (standalone()) {
+    } else if (iosStandalone()) {
       // Installed on the iPhone, iOS reports a viewport shorter than the screen (it takes the status bar off) while
       // the app is drawn from the top of the screen: size it to the whole screen, edge to edge.
       const portrait = window.innerHeight >= window.innerWidth;
@@ -41,8 +48,8 @@ export function setupViewport() {
   vv?.addEventListener("resize", update);
   vv?.addEventListener("scroll", update);
   window.addEventListener("resize", update);
-  document.addEventListener("focusin", () => window.setTimeout(update, 300));
-  window.addEventListener("orientationchange", () => window.setTimeout(update, 300));
+  document.addEventListener("focusin", () => { update(); window.setTimeout(update, 300); });
+  window.addEventListener("orientationchange", () => { tallest = 0; window.setTimeout(update, 300); });
 
   // iOS Safari zooms with two fingers even with user-scalable=no.
   const block = (e: Event) => e.preventDefault();

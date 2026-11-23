@@ -809,7 +809,8 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
           <label className="check" style={{ fontSize: 11.5, marginLeft: 6 }}><input type="checkbox" checked={alsoInChannel} onChange={(e) => setAlsoInChannel(e.target.checked)} />{t("ui_also_send_to", { name: convTitle(conv) })}</label>
         ) : null}
         <span className="hint">{compact ? "" : t("ui_enter_hint")}</span>
-        <button className="sendb" onClick={submit} title={t("ui_send")} aria-label={t("ui_send")} disabled={atts.some((a) => a.uploading)}><Icon name="send" size="sm" /></button>
+        {/* keeps the focus (and the phone's keyboard) in the text after sending, as chat apps do */}
+        <button className="sendb" onMouseDown={(e) => e.preventDefault()} onClick={submit} title={t("ui_send")} aria-label={t("ui_send")} disabled={atts.some((a) => a.uploading)}><Icon name="send" size="sm" /></button>
       </div>
     </div>
   );

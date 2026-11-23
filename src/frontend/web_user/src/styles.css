@@ -335,7 +335,8 @@ a.logo { text-decoration: none; }
   .dnav { display: none; }
   .shell.chat-open .list { display: none; }
   .shell:not(.chat-open) > .chat { display: none; }
-  .kb .mnav { display: none; }
+  .kb .mnav, .typing .mnav, .typing .mfab { display: none; }
+  .typing .shell.conv .chat { padding-bottom: 0; }
   /* conversations keep the tab bar too: the chat ends just above it */
   .shell { --mnavh: 70px; }
   .shell.conv .chat { padding-bottom: var(--mnavh); }
@@ -472,7 +473,9 @@ a.logo { text-decoration: none; }
   .composer .ctools { display: contents; }
   .composer .ctools .iconbtn { order: 1; width: 38px; height: 38px; border-radius: 50%; }
   .composer textarea { order: 2; flex: 1 1 0; min-width: 0; width: auto; padding: 8px 6px; min-height: 38px; }
-  .composer .sendb { order: 3; width: 38px; height: 38px; border-radius: 50%; }
+  /* a big send button right next to the text, where the thumb is */
+  .composer .sendb { order: 3; width: 44px; height: 44px; border-radius: 50%; align-self: flex-end; color: #fff; background: linear-gradient(135deg, var(--blue), #00c2ff); box-shadow: 0 4px 12px rgba(30, 144, 255, 0.35); }
+  .composer .sendb .ic { width: 22px; height: 22px; }
   .composer .ctools .hint { display: none; }
   .composer .ctools .check { order: 4; flex-basis: 100%; padding: 2px 10px 4px; }
   .readonly { margin: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px)); border-radius: 18px; }
