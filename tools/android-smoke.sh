@@ -8,6 +8,8 @@ mkdir -p smoke
 adb install -r "$APK" > smoke/install.txt 2>&1
 adb logcat -c
 adb shell am start -W -n app.meetgo.android/.MainActivity > smoke/start.txt 2>&1
+PID=$(adb shell pidof app.meetgo.android | tr -d '\r')
+echo "== pid at start: $PID"
 sleep 25
 if adb shell pidof app.meetgo.android > /dev/null 2>&1; then echo "running" > smoke/result.txt; else echo "NOT RUNNING" > smoke/result.txt; fi
 adb logcat -d -b crash > smoke/crash.txt 2>&1
@@ -18,5 +20,7 @@ adb exec-out screencap -p > smoke/screen.png 2>/dev/null
 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 && adb shell cat /sdcard/ui.xml > smoke/ui.xml 2>/dev/null
 echo "== on screen:"; grep -o 'text="[^"]\+"\|content-desc="[^"]\+"' smoke/ui.xml | head -40
 echo "== result: $(cat smoke/result.txt)"; cat smoke/start.txt; echo "== crash"; cat smoke/crash.txt
+echo "== crash reports"; adb shell dumpsys dropbox --print data_app_crash 2>/dev/null | tail -80; adb shell dumpsys dropbox --print data_app_native_crash 2>/dev/null | tail -60; adb shell dumpsys dropbox --print data_app_anr 2>/dev/null | tail -30
+[ -n "$PID" ] && { echo "== app log"; adb logcat -d --pid="$PID" | tail -120; }
 echo "== log"; grep -iE "AndroidRuntime|ActivityManager|ActivityTaskManager|libc|DEBUG|crash|died|killed|renderer|app\.meetgo|cr_|WebView" smoke/full-log.txt | tail -150
 exit 0
