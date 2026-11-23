@@ -3766,3 +3766,24 @@ msgstr "Encara no hi ha res escrit."
 
 msgid "ui_rt_help"
 msgstr "# títol · - llista · > destacat · **negreta** · *cursiva* · {green}color{/} · emojis 🎉"
+
+msgid "ui_community_manage"
+msgstr "Gestiona"
+
+msgid "ui_community_remove_member"
+msgstr "Treu de la comunitat"
+
+msgid "ui_community_remove_hint"
+msgstr "Podrà tornar a unir-s’hi més endavant."
+
+msgid "ui_community_ban_member"
+msgstr "Expulsa de la comunitat"
+
+msgid "ui_community_ban_hint"
+msgstr "En surt i no s’hi podrà tornar a unir."
+
+msgid "ui_community_member_banned"
+msgstr "{name} ha estat expulsat de la comunitat"
+
+msgid "ui_community_more"
+msgstr "Més"

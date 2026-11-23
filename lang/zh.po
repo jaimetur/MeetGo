@@ -3766,3 +3766,24 @@ msgstr "还没有内容。"
 
 msgid "ui_rt_help"
 msgstr "# 标题 · - 列表 · > 提示 · **粗体** · *斜体* · {green}颜色{/} · 表情 🎉"
+
+msgid "ui_community_manage"
+msgstr "管理"
+
+msgid "ui_community_remove_member"
+msgstr "移出社区"
+
+msgid "ui_community_remove_hint"
+msgstr "对方以后可以重新加入。"
+
+msgid "ui_community_ban_member"
+msgstr "驱逐出社区"
+
+msgid "ui_community_ban_hint"
+msgstr "对方会被移出且不能再加入。"
+
+msgid "ui_community_member_banned"
+msgstr "{name} 已被驱逐"
+
+msgid "ui_community_more"
+msgstr "更多"

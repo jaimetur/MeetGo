@@ -3767,3 +3767,24 @@ msgstr "Nothing written yet."
 
 msgid "ui_rt_help"
 msgstr "# heading · - list · > highlight · **bold** · *italic* · {green}colour{/} · emojis 🎉"
+
+msgid "ui_community_manage"
+msgstr "Manage"
+
+msgid "ui_community_remove_member"
+msgstr "Remove from the community"
+
+msgid "ui_community_remove_hint"
+msgstr "They can join again later."
+
+msgid "ui_community_ban_member"
+msgstr "Expel from the community"
+
+msgid "ui_community_ban_hint"
+msgstr "They leave and cannot join again."
+
+msgid "ui_community_member_banned"
+msgstr "{name} has been expelled"
+
+msgid "ui_community_more"
+msgstr "More"

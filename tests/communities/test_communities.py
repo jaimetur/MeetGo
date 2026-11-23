@@ -169,3 +169,20 @@ async def test_explore_follows_communities(client, db_session):
     community = (await client.get(f"/communities/{cid}", headers=ana[0])).json()
     assert community["kind"] == "interest" and community["joined"] is True
     assert community["title"] == first["interest"]["name"] and community["slug"] == first["interest"]["slug"]
+
+
+async def test_remove_lets_rejoin_but_expel_does_not(client, db_session):
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    bea = await make_user(client, db_session, "bea@example.com", "Bea")
+    com = await _create(client, ana[0])
+    cid, bea_id = com["id"], bea[1]["id"]
+    await client.post(f"/communities/{cid}/join", headers=bea[0])
+
+    assert (await client.delete(f"/communities/{cid}/members/{bea_id}", headers=ana[0])).status_code == 200
+    assert (await client.post(f"/communities/{cid}/join", headers=bea[0])).json() == {"status": "joined"}
+
+    assert (await client.delete(f"/communities/{cid}/members/{bea_id}", params={"ban": 1}, headers=ana[0])).status_code == 200
+    assert (await client.post(f"/communities/{cid}/join", headers=bea[0])).status_code == 403
+    assert not any(c["id"] == cid for c in (await client.get("/conversations", headers=bea[0])).json())
+    members = (await client.get(f"/communities/{cid}/members", headers=ana[0])).json()
+    assert [m["display_name"] for m in members] == ["Ana"]

@@ -3766,3 +3766,24 @@ msgstr "Nog niets geschreven."
 
 msgid "ui_rt_help"
 msgstr "# kop · - lijst · > uitgelicht · **vet** · *cursief* · {green}kleur{/} · emoji’s 🎉"
+
+msgid "ui_community_manage"
+msgstr "Beheren"
+
+msgid "ui_community_remove_member"
+msgstr "Uit de community verwijderen"
+
+msgid "ui_community_remove_hint"
+msgstr "Diegene kan later opnieuw lid worden."
+
+msgid "ui_community_ban_member"
+msgstr "Uit de community zetten"
+
+msgid "ui_community_ban_hint"
+msgstr "Diegene vertrekt en kan niet meer lid worden."
+
+msgid "ui_community_member_banned"
+msgstr "{name} is uit de community gezet"
+
+msgid "ui_community_more"
+msgstr "Meer"

@@ -3767,3 +3767,24 @@ msgstr "Todavía no hay nada escrito."
 
 msgid "ui_rt_help"
 msgstr "# título · - lista · > destacado · **negrita** · *cursiva* · {green}color{/} · emojis 🎉"
+
+msgid "ui_community_manage"
+msgstr "Gestionar"
+
+msgid "ui_community_remove_member"
+msgstr "Sacar de la comunidad"
+
+msgid "ui_community_remove_hint"
+msgstr "Podrá volver a unirse más adelante."
+
+msgid "ui_community_ban_member"
+msgstr "Expulsar de la comunidad"
+
+msgid "ui_community_ban_hint"
+msgstr "Sale y no podrá volver a unirse."
+
+msgid "ui_community_member_banned"
+msgstr "{name} ha sido expulsado de la comunidad"
+
+msgid "ui_community_more"
+msgstr "Más"

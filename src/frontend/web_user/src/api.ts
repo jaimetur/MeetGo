@@ -183,7 +183,7 @@ export const api = {
   resolveCommunityRequest: (id: number, userId: number, accept: boolean) => req(`/communities/${id}/requests/${userId}/resolve`, { method: "POST", json: { accept } }),
   communityMembers: (id: number, q = "") => req<CommunityMember[]>(`/communities/${id}/members${qs({ q })}`),
   setCommunityRole: (id: number, userId: number, role: string) => req(`/communities/${id}/members/${userId}/role`, { method: "PUT", json: { role } }),
-  removeCommunityMember: (id: number, userId: number) => req(`/communities/${id}/members/${userId}`, { method: "DELETE" }),
+  removeCommunityMember: (id: number, userId: number, ban = false) => req(`/communities/${id}/members/${userId}${ban ? "?ban=1" : ""}`, { method: "DELETE" }),
 
   // board and plans
   boardFeed: (f: FeedFilter = {}) => req<PostPage>(`/board/feed${qs(f)}`),

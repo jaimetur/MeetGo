@@ -46,3 +46,40 @@ export function setupViewport() {
     update();
   }, 100));
 }
+
+/**
+ * Diagnostic: open the app with ?vp=1 to see, on the phone itself, what the browser reports about the screen
+ * (sizes, safe areas, installed or not) and where the app and its tab bar end. Nothing shows otherwise.
+ */
+export function viewportDiagnostics() {
+  if (!/[?&]vp=1\b/.test(window.location.search)) return;
+  const probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)";
+  const box = document.createElement("pre");
+  box.style.cssText = "position:fixed;z-index:9999;left:8px;right:8px;top:40%;margin:0;padding:10px;border-radius:12px;background:rgba(0,0,0,.85);color:#7CFC9A;font:12px/1.4 ui-monospace,monospace;white-space:pre-wrap;pointer-events:none";
+  const line = document.createElement("div");
+  line.style.cssText = "position:fixed;z-index:9998;left:0;right:0;height:0;border-top:2px dashed #ff3b6b;pointer-events:none";
+  document.body.append(probe, box, line);
+  const show = () => {
+    const cs = getComputedStyle(probe);
+    const vv = window.visualViewport;
+    const root = document.getElementById("root")?.getBoundingClientRect();
+    const nav = document.querySelector(".mnav")?.getBoundingClientRect();
+    line.style.top = `${Math.round(root?.bottom ?? 0)}px`;
+    box.textContent = [
+      `standalone: ${(navigator as any).standalone ?? "?"} · display-mode: ${matchMedia("(display-mode: standalone)").matches ? "standalone" : "browser"}`,
+      `screen: ${screen.width}×${screen.height} · dpr ${devicePixelRatio}`,
+      `inner: ${innerWidth}×${innerHeight} · docEl: ${document.documentElement.clientHeight}`,
+      `visualViewport: ${vv ? `${Math.round(vv.width)}×${Math.round(vv.height)} top ${Math.round(vv.offsetTop)}` : "-"}`,
+      `safe-area: top ${cs.paddingTop} bottom ${cs.paddingBottom} left ${cs.paddingLeft} right ${cs.paddingRight}`,
+      `body: ${Math.round(document.body.getBoundingClientRect().height)} · #root bottom: ${Math.round(root?.bottom ?? 0)} (red line)`,
+      `tab bar: ${nav ? `${Math.round(nav.top)}–${Math.round(nav.bottom)}` : "hidden"}`,
+      `--app-height: ${getComputedStyle(document.documentElement).getPropertyValue("--app-height") || "(none)"}`,
+    ].join("\n");
+  };
+  show();
+  window.visualViewport?.addEventListener("resize", show);
+  window.addEventListener("resize", show);
+  window.setInterval(show, 1000);
+}
+

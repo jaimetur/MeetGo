@@ -14,6 +14,9 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - Communities: themed areas of each zone with a board and a chat room. Anyone can create one, open to all, by request (an admin approves) or by invitation link; owners name admins and admins name moderators; the board can be open to members or read-only with only admins publishing. Changing province or age range leaves the old zone's communities and brings them back, as they were, on return.
+- Community staff, and the administrators of MeetGo, manage each member from the members list: change their role, take them out (they can join again) or expel them (they cannot come back).
+- Home shows a strip with your communities for quick access, and the title of a community chat opens its community page.
+- On phones the tab bar stays visible inside conversations too, with the message box just above it; opening the app with `?vp=1` shows what the phone reports about its screen, to adjust the layout.
 - Board of meetups, events, notices and threads: places and waiting list, sign-up open or with approval, comments for everyone, only for people going or off, a plan chat that people going join automatically, pin and close, reports to the moderation queue, and a reminder the day before.
 - Full redesign of the web and phone app: Home board with filters (today, weekend, this week, meetups, events, notices), Plans (going, organising, past, with repeat), Publish, Chats and Profile; communities with board, chat and members; three columns on the desktop. Translated into the ten languages.
 - Ten languages, translated from English: English, Spanish, Catalan, French, Italian, German, Portuguese, Dutch, Chinese and Japanese. The app, the landing page and the emails follow each person's language, the browser's language picks it the first time, and every `lang/<code>.po` added is a new language.

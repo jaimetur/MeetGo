@@ -255,8 +255,9 @@ async def set_role(community_id: int, user_id: int, payload: MemberRoleIn, db: A
 
 
 @router.delete("/communities/{community_id}/members/{user_id}", response_model=dict)
-async def remove_member(community_id: int, user_id: int, db: AsyncSession = Depends(get_db),
+async def remove_member(community_id: int, user_id: int, ban: bool = False, db: AsyncSession = Depends(get_db),
                         user: User = Depends(get_current_user)):
+    """Remove someone (they may join again), or with ?ban=1 expel them: they cannot join again."""
     conv, member = await get_community(db, community_id, user)
     _require_staff(member, user)
     target = await get_membership(db, conv.id, user_id)
@@ -264,7 +265,13 @@ async def remove_member(community_id: int, user_id: int, db: AsyncSession = Depe
         raise HTTPException(404, t("err_user_not_found"))
     if target.role == "owner" or (user.role != "admin" and ROLE_RANK[member.role] >= ROLE_RANK.get(target.role, 9)):
         raise HTTPException(403, t("err_forbidden"))
-    await db.delete(target)
+    if ban:
+        # kept (so they cannot join again) but out of their lists
+        target.banned = True
+        target.role = "member"
+        target.hidden = True
+    else:
+        await db.delete(target)
     await db.commit()
     await _changed(db, conv.id, extra=[user_id])
     await realtime.publish([user_id], {"type": "membership.removed", "conversation_id": conv.id})

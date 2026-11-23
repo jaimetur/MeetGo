@@ -233,8 +233,9 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
   }
   if (!c) return <main className="screen"><div className="chero shimmer" /><div className="swrap"><span className="sk w60 h18" /></div></main>;
 
-  const staff = !!c.role && STAFF_ROLES.includes(c.role);
-  const manager = c.role === "owner" || c.role === "admin";
+  const globalAdmin = getState().me?.role === "admin";
+  const staff = globalAdmin || (!!c.role && STAFF_ROLES.includes(c.role));
+  const manager = globalAdmin || c.role === "owner" || c.role === "admin";
   const tabs: ["board" | "chat" | "members", string][] = [["board", t("ui_community_tab_board")], ["chat", t("ui_community_tab_chat")], ["members", t("ui_community_tab_members")]];
 
   async function doLeave() {
@@ -368,9 +369,11 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
   const [list, setList] = useState<CommunityMember[] | null>(null);
   const [requests, setRequests] = useState<{ user: UserSummary; created_at: string }[]>([]);
   const [invite, setInvite] = useState<string | null>(c.invite_code ? `${window.location.origin}/app/join/${c.invite_code}` : null);
-  const [removeFor, setRemoveFor] = useState<CommunityMember | null>(null);
-  const staff = !!c.role && STAFF_ROLES.includes(c.role);
-  const myRank = RANK[c.role || "member"] ?? 0;
+  const [manage, setManage] = useState<CommunityMember | null>(null);
+  // MeetGo's administrators manage every community as if they were its owner.
+  const globalAdmin = me?.role === "admin";
+  const staff = globalAdmin || (!!c.role && STAFF_ROLES.includes(c.role));
+  const myRank = me?.role === "admin" ? 4 : RANK[c.role || "member"] ?? 0;
 
   const load = useCallback(() => {
     api.communityMembers(c.id, q.trim()).then(setList).catch(() => setList([]));
@@ -415,10 +418,10 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
       toast(e.message, "error");
     }
   }
-  async function remove(m: CommunityMember) {
+  async function remove(m: CommunityMember, ban = false) {
     try {
-      await api.removeCommunityMember(c.id, m.id);
-      toast(t("ui_community_member_removed", { name: m.display_name }));
+      await api.removeCommunityMember(c.id, m.id, ban);
+      toast(t(ban ? "ui_community_member_banned" : "ui_community_member_removed", { name: m.display_name }));
       load();
       onChange();
     } catch (e: any) {
@@ -428,7 +431,7 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 
   const sorted = useMemo(() => [...(list || [])].sort((a, b) => (RANK[b.role] ?? 0) - (RANK[a.role] ?? 0) || Number(b.online) - Number(a.online) || a.display_name.localeCompare(b.display_name)), [list]);
   // Owner names admins; owner and admins name moderators; only above someone's rank can you change or remove them.
-  const roleOptions = (m: CommunityMember) => (c.role === "owner" ? ["admin", "moderator", "member"] : c.role === "admin" ? ["moderator", "member"] : []).filter(() => m.id !== me?.id && (RANK[m.role] ?? 0) < myRank);
+  const roleOptions = (m: CommunityMember) => (globalAdmin || c.role === "owner" ? ["admin", "moderator", "member"] : c.role === "admin" ? ["moderator", "member"] : []).filter(() => m.id !== me?.id && (RANK[m.role] ?? 0) < myRank);
 
   return (
     <div className="swrap stack" style={{ gap: 14 }}>
@@ -481,22 +484,60 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
                   </div>
                   <div className="muted" style={{ fontSize: 12 }}>{m.online ? t("ui_online") : t("ui_offline")}</div>
                 </div>
-                {opts.length ? (
-                  <select className="inp rolesel" aria-label={t("ui_community_change_role")} value={m.role} onChange={(e) => setRole(m, e.target.value)}>
-                    {!opts.includes(m.role) ? <option value={m.role}>{t(ROLE_KEYS[m.role])}</option> : null}
-                    {opts.map((r) => <option key={r} value={r}>{t(ROLE_KEYS[r])}</option>)}
-                  </select>
-                ) : null}
-                {canRemove ? <button className="iconbtn" aria-label={t("ui_remove")} title={t("ui_remove")} onClick={() => setRemoveFor(m)}><Icon name="x" size="sm" /></button> : null}
+                {opts.length || canRemove ? <button className="btn sm" onClick={() => setManage(m)}><Icon name="sliders" size="sm" />{t("ui_community_manage")}</button> : null}
               </div>
             );
           })}
         </div>
       </section>
-      {removeFor ? (
-        <ConfirmModal title={t("ui_remove")} body={t("ui_community_remove_body", { name: removeFor.display_name })} confirm={t("ui_remove")} danger
-          onConfirm={() => remove(removeFor)} onClose={() => setRemoveFor(null)} />
+      {manage ? (
+        <Modal title={manage.display_name} onClose={() => setManage(null)}>
+          <div className="row" style={{ gap: 12 }}><Avatar user={manage} size={48} /><div className="muted">{t(ROLE_KEYS[manage.role])}</div></div>
+          {roleOptions(manage).length ? (
+            <label className="fld">{t("ui_community_change_role")}
+              <select id="cm-manage-role" className="inp" value={manage.role} onChange={(e) => { setRole(manage, e.target.value); setManage({ ...manage, role: e.target.value as CommunityMember["role"] }); }}>
+                {!roleOptions(manage).includes(manage.role) ? <option value={manage.role}>{t(ROLE_KEYS[manage.role])}</option> : null}
+                {roleOptions(manage).map((r) => <option key={r} value={r}>{t(ROLE_KEYS[r])}</option>)}
+              </select>
+            </label>
+          ) : null}
+          {manage.id !== me?.id && (RANK[manage.role] ?? 0) < myRank ? (
+            <div className="stack" style={{ gap: 8 }}>
+              <button className="btn block" onClick={() => { remove(manage); setManage(null); }}><Icon name="door" size="sm" />{t("ui_community_remove_member")}</button>
+              <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_community_remove_hint")}</div>
+              <button className="btn danger block" onClick={() => { remove(manage, true); setManage(null); }}><Icon name="shield" size="sm" />{t("ui_community_ban_member")}</button>
+              <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_community_ban_hint")}</div>
+            </div>
+          ) : null}
+        </Modal>
       ) : null}
     </div>
   );
 }
+
+/** Home: the communities I belong to, one tap away (board, chat and members). */
+export function MyCommunitiesStrip() {
+  const mine = useStore((s) => s.myCommunities);
+  useEffect(() => {
+    if (mine === null) loadMyCommunities();
+  }, [mine]);
+  if (!mine || !mine.length) return null;
+  return (
+    <nav className="mystrip" aria-label={t("ui_community_yours")}>
+      {mine.map((c) => (
+        <button key={c.id} className="mystrip-item" onClick={() => navigate(communityPath(c.id))}>
+          <span className="mystrip-badge" style={{ background: coverGradient("c" + c.id) }}>
+            <Icon name={hobbyIcon(c.slug, c.title)} />
+            {c.upcoming_count ? <span className="bdg">{c.upcoming_count}</span> : null}
+          </span>
+          <span className="mystrip-name">{c.title}</span>
+        </button>
+      ))}
+      <button className="mystrip-item" onClick={() => navigate("/communities")}>
+        <span className="mystrip-badge more"><Icon name="plus" /></span>
+        <span className="mystrip-name">{t("ui_community_more")}</span>
+      </button>
+    </nav>
+  );
+}
+
