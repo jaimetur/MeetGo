@@ -5,6 +5,8 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Icons and logos live in assets/branding at the repository root (like BodyLens); the Docker build copies them next to web/.
+const brandingDir = [path.join(__dirname, "branding"), path.join(__dirname, "..", "assets", "branding")].find((d) => fs.existsSync(d)) || "";
 const langDir = fs.existsSync(path.join(__dirname, "lang", "lang.ts"))
   ? path.join(__dirname, "lang")
   : path.join(__dirname, "..", "lang");
@@ -46,11 +48,31 @@ function appRoutes(): Plugin {
   };
 }
 
+/** The branding files are served and published at the site root (/icon-192.png, /og-image.png...). */
+function branding(): Plugin {
+  const files = brandingDir ? fs.readdirSync(brandingDir).filter((f) => !f.startsWith(".")) : [];
+  const types: Record<string, string> = { ".png": "image/png", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".webp": "image/webp" };
+  return {
+    name: "meetgo-branding",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const name = decodeURIComponent((req.url || "").split("?")[0].slice(1));
+        if (!files.includes(name)) return next();
+        res.setHeader("Content-Type", types[path.extname(name)] || "application/octet-stream");
+        fs.createReadStream(path.join(brandingDir, name)).pipe(res);
+      });
+    },
+    generateBundle() {
+      for (const name of files) this.emitFile({ type: "asset", fileName: name, source: fs.readFileSync(path.join(brandingDir, name)) });
+    },
+  };
+}
+
 export default defineConfig({
   root,
   appType: "mpa",
   publicDir: path.join(__dirname, "assets"),
-  plugins: [react(), ...(site === "web_user" ? [appRoutes()] : [])],
+  plugins: [react(), branding(), ...(site === "web_user" ? [appRoutes()] : [])],
   resolve: {
     alias: {
       "../lang/lang": path.join(langDir, "lang.ts"),
