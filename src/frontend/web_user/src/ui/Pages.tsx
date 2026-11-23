@@ -225,6 +225,7 @@ export function AccountPage() {
   const [zone, setZone] = useState({ country: me.country || "ES", province: me.province, dob: me.dob });
   const [geo, setGeo] = useState<any>(null);
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [interests, setInterests] = useState<Interest[]>([]);
   const [mine, setMine] = useState<string[]>([]);
   // "on" only when this browser has a real subscription; "denied" when the browser blocks notifications.
@@ -254,13 +255,25 @@ export function AccountPage() {
       const zoneChanged = zone.province !== me.province || (zone.country || "ES") !== (me.country || "ES");
       const dobChanged = zone.dob !== me.dob;
       const updated = await api.updateProfile({
-        ...form, ...(password ? { password } : {}),
+        ...form,
         ...(zoneChanged ? { country: zone.country, province: zone.province } : {}), ...(dobChanged ? { dob: zone.dob } : {}),
       });
       setState({ me: updated });
-      setPassword("");
       if (zoneChanged || dobChanged) await loadConversations();
       toast(t("ui_saved"));
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
+  async function changePassword() {
+    if (password.length < 6) return toast(t("ui_password_new"), "error");
+    if (password !== password2) return toast(t("ui_password_mismatch"), "error");
+    try {
+      const updated = await api.updateProfile({ password });
+      setState({ me: updated });
+      setPassword("");
+      setPassword2("");
+      toast(t("ui_password_changed"));
     } catch (e: any) {
       toast(e.message, "error");
     }
@@ -385,9 +398,14 @@ export function AccountPage() {
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_section_privacy")}</h3>
             <label className="check"><input id="acc-dm" type="checkbox" checked={form.accept_dm} onChange={(e) => setForm({ ...form, accept_dm: e.target.checked })} />{t("ui_accept_dm")}</label>
-            <label className="fld">{t("ui_password_change")}<input id="acc-password" className="inp" type="password" minLength={6} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
           </div>
           <button className="btn pri block" onClick={saveProfile}>{t("ui_save")}</button>
+          <div className="box stack">
+            <h3 className="boxtitle">{t("ui_password")}</h3>
+            <label className="fld">{t("ui_password_new")}<input id="acc-password" className="inp" type="password" minLength={6} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
+            <label className="fld">{t("ui_password_repeat")}<input id="acc-password2" className="inp" type="password" minLength={6} autoComplete="new-password" value={password2} onChange={(e) => setPassword2(e.target.value)} /></label>
+            <button className="btn block" disabled={!password} onClick={changePassword}>{t("ui_password_save")}</button>
+          </div>
         </div>
       ) : null}
 

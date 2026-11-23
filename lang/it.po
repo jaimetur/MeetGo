@@ -1676,6 +1676,18 @@ msgstr "Nuova password (facoltativa)"
 msgid "ui_password_new"
 msgstr "Password (almeno 6 caratteri)"
 
+msgid "ui_password_repeat"
+msgstr "Ripeti la nuova password"
+
+msgid "ui_password_mismatch"
+msgstr "Le password non coincidono"
+
+msgid "ui_password_save"
+msgstr "Cambia password"
+
+msgid "ui_password_changed"
+msgstr "Password cambiata"
+
 msgid "ui_payments_soon"
 msgstr "I pagamenti non sono ancora attivi su questo server."
 

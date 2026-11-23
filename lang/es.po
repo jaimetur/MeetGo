@@ -1676,6 +1676,18 @@ msgstr "Nueva contraseña (opcional)"
 msgid "ui_password_new"
 msgstr "Contraseña (mínimo 6 caracteres)"
 
+msgid "ui_password_repeat"
+msgstr "Repite la nueva contraseña"
+
+msgid "ui_password_mismatch"
+msgstr "Las contraseñas no coinciden"
+
+msgid "ui_password_save"
+msgstr "Cambiar contraseña"
+
+msgid "ui_password_changed"
+msgstr "Contraseña cambiada"
+
 msgid "ui_payments_soon"
 msgstr "Los pagos aún no están activos en este servidor."
 

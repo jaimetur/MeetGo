@@ -1676,6 +1676,18 @@ msgstr "Contrasenya nova (opcional)"
 msgid "ui_password_new"
 msgstr "Contrasenya (almenys 6 caràcters)"
 
+msgid "ui_password_repeat"
+msgstr "Repeteix la nova contrasenya"
+
+msgid "ui_password_mismatch"
+msgstr "Les contrasenyes no coincideixen"
+
+msgid "ui_password_save"
+msgstr "Canvia la contrasenya"
+
+msgid "ui_password_changed"
+msgstr "Contrasenya canviada"
+
 msgid "ui_payments_soon"
 msgstr "Els pagaments encara no estan activats en aquest servidor."
 

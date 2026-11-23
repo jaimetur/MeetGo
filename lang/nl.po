@@ -1676,6 +1676,18 @@ msgstr "Nieuw wachtwoord (optioneel)"
 msgid "ui_password_new"
 msgstr "Wachtwoord (minstens 6 tekens)"
 
+msgid "ui_password_repeat"
+msgstr "Herhaal het nieuwe wachtwoord"
+
+msgid "ui_password_mismatch"
+msgstr "De wachtwoorden komen niet overeen"
+
+msgid "ui_password_save"
+msgstr "Wachtwoord wijzigen"
+
+msgid "ui_password_changed"
+msgstr "Wachtwoord gewijzigd"
+
 msgid "ui_payments_soon"
 msgstr "Betalingen zijn op deze server nog niet actief."
 

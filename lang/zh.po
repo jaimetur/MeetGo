@@ -1676,6 +1676,18 @@ msgstr "新密码(可选)"
 msgid "ui_password_new"
 msgstr "密码(至少 6 位)"
 
+msgid "ui_password_repeat"
+msgstr "再次输入新密码"
+
+msgid "ui_password_mismatch"
+msgstr "两次输入的密码不一致"
+
+msgid "ui_password_save"
+msgstr "更改密码"
+
+msgid "ui_password_changed"
+msgstr "密码已更改"
+
 msgid "ui_payments_soon"
 msgstr "此服务器尚未开通支付功能。"
 

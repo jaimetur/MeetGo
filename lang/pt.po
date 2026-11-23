@@ -1675,6 +1675,18 @@ msgstr "Nova palavra-passe (opcional)"
 msgid "ui_password_new"
 msgstr "Palavra-passe (pelo menos 6 caracteres)"
 
+msgid "ui_password_repeat"
+msgstr "Repete a nova palavra-passe"
+
+msgid "ui_password_mismatch"
+msgstr "As palavras-passe não coincidem"
+
+msgid "ui_password_save"
+msgstr "Alterar palavra-passe"
+
+msgid "ui_password_changed"
+msgstr "Palavra-passe alterada"
+
 msgid "ui_payments_soon"
 msgstr "Os pagamentos ainda não estão ativos neste servidor."
 

@@ -1676,6 +1676,18 @@ msgstr "新しいパスワード（任意）"
 msgid "ui_password_new"
 msgstr "パスワード（6文字以上）"
 
+msgid "ui_password_repeat"
+msgstr "新しいパスワードをもう一度入力"
+
+msgid "ui_password_mismatch"
+msgstr "パスワードが一致しません"
+
+msgid "ui_password_save"
+msgstr "パスワードを変更"
+
+msgid "ui_password_changed"
+msgstr "パスワードを変更しました"
+
 msgid "ui_payments_soon"
 msgstr "このサーバーではまだお支払いを利用できません。"
 

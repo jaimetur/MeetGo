@@ -1676,6 +1676,18 @@ msgstr "Neues Passwort (optional)"
 msgid "ui_password_new"
 msgstr "Passwort (mindestens 6 Zeichen)"
 
+msgid "ui_password_repeat"
+msgstr "Neues Passwort wiederholen"
+
+msgid "ui_password_mismatch"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "ui_password_save"
+msgstr "Passwort ändern"
+
+msgid "ui_password_changed"
+msgstr "Passwort geändert"
+
 msgid "ui_payments_soon"
 msgstr "Zahlungen sind auf diesem Server noch nicht aktiv."
 
