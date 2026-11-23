@@ -159,7 +159,7 @@ function Register({ setView }: { setView: (v: View) => void }) {
         </div>
       </label>
       <label className="check"><input id="reg-dm" type="checkbox" checked={form.accept_dm} onChange={(e) => set("accept_dm", e.target.checked)} />{t("ui_accept_dm")}</label>
-      <label className="fld">{t("ui_promo_code")}<input id="reg-code" className="inp" value={form.promo_code} onChange={(e) => set("promo_code", e.target.value)} placeholder="LANZAMIENTO" /></label>
+      {settings?.subscriptions ? <label className="fld">{t("ui_promo_code")}<input id="reg-code" className="inp" value={form.promo_code} onChange={(e) => set("promo_code", e.target.value)} placeholder="LANZAMIENTO" /></label> : null}
       <p className="muted" style={{ margin: 0, fontSize: 12 }}>{t("ui_register_legal")}</p>
       {error ? <div className="err" role="alert">{error}</div> : null}
       <button className="btn pri block" disabled={busy}>{busy ? t("ui_wait") : t("ui_create_account")}</button>

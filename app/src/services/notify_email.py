@@ -271,6 +271,8 @@ async def _send_digest(db: AsyncSession, user: User, wanted: list) -> None:
 
 async def reminders_once(db: AsyncSession) -> int:
     """Remind people whose free access ends in 7 days, in 1 day, and when it has ended. Each reminder goes out once."""
+    if not (await get_section(db, "billing") or {}).get("enabled"):
+        return 0  # the app is free: free access never ends
     now = utcnow()
     grants = (await db.execute(select(AccessGrant).where(
         AccessGrant.until.isnot(None), AccessGrant.until > now - timedelta(days=2), AccessGrant.until <= now + timedelta(days=7),

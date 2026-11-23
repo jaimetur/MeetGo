@@ -26,8 +26,10 @@ async def plans(db: AsyncSession = Depends(get_db)):
 
 @router.get("/billing/promos", response_model=dict)
 async def promos(db: AsyncSession = Depends(get_db)):
-    """Public campaigns for the landing page, with the places left."""
-    return {"promos": await billing.public_promos(db)}
+    """Public campaigns for the landing page, with the places left. While subscriptions are off the app is free:
+    no campaigns, and the landing page hides prices."""
+    enabled = (await billing.billing_config(db))["enabled"]
+    return {"subscriptions": enabled, "promos": await billing.public_promos(db) if enabled else []}
 
 
 @router.get("/billing/status", response_model=dict)

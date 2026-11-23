@@ -254,6 +254,9 @@ export function MentionsPage() {
 export function AccountPage() {
   const me = useStore((s) => s.me)!;
   const billing = useStore((s) => s.billing);
+  const subscriptions = useStore((s) => s.subscriptions);
+  // Plans only show while subscriptions are on, or for someone who already pays.
+  const showPlans = subscriptions || !!billing?.stripe || !!billing?.play;
   const [form, setForm] = useState({ display_name: me.display_name, bio: me.bio || "", accept_dm: me.accept_dm, avatar_url: me.avatar_url || "" });
   // Zone: province (any time) and date of birth (once); together they decide your channels.
   const [zone, setZone] = useState({ country: me.country || "ES", province: me.province, dob: me.dob });
@@ -331,6 +334,7 @@ export function AccountPage() {
 
   return (
     <PageShell title={t("ui_account_title")}>
+      {showPlans ? (<>
       <h2>{t("ui_subscription")}</h2>
       <div className="box stack">
         <div className="row"><Icon name="star" /><b className="grow">{describeBilling(billing)}</b></div>
@@ -345,6 +349,7 @@ export function AccountPage() {
         ) : null}
         {billing && (billing.source === null || billing.source === "grant") ? <PlanPicker /> : null}
       </div>
+      </>) : null}
 
       <h2>{t("ui_profile")}</h2>
       <div className="box stack">

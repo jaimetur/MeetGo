@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MeetGo · Chatea y queda con gente de tu zona</title>
-<meta name="description" content="Canales de chat con gente de tu provincia, tu edad y tus aficiones, grupos para organizar planes y mensajes directos. En la web y en Android. 1 año gratis para las 50 primeras cuentas.">
+<meta name="description" content="Canales de chat con gente de tu provincia, tu edad y tus aficiones, grupos para organizar planes y mensajes directos. En la web y en Android. Gratis.">
 <meta name="theme-color" content="#0b1220">
 <link rel="canonical" href="https://meetgo.app/">
 <link rel="icon" type="image/png" href="/apple-touch-icon.png">
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="MeetGo">
 <meta property="og:url" content="https://meetgo.app/">
 <meta property="og:title" content="MeetGo · Chatea y queda con gente de tu zona">
-<meta property="og:description" content="Canales por provincia, edad e intereses, grupos para quedar y mensajes directos. 1 año gratis para las 50 primeras cuentas.">
+<meta property="og:description" content="Canales por provincia, edad e intereses, grupos para quedar y mensajes directos. Gratis.">
 <meta property="og:image" content="https://meetgo.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -36,10 +36,7 @@
   "operatingSystem": "Web, Android",
   "description": "Canales de chat con gente de tu provincia, tu edad y tus aficiones, grupos privados para organizar planes y mensajes directos.",
   "inLanguage": ["es", "en"],
-  "offers": [
-    {"@type": "Offer", "name": "Mensual", "price": "2.50", "priceCurrency": "EUR", "category": "subscription"},
-    {"@type": "Offer", "name": "Anual", "price": "25.00", "priceCurrency": "EUR", "category": "subscription"}
-  ]
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}
 }
 </script>
 </head>
@@ -84,7 +81,7 @@
     <nav aria-label="Secciones">
       <a href="#como" data-i18n="nav_how">Cómo funciona</a>
       <a href="#funciones" data-i18n="nav_features">Funciones</a>
-      <a href="#precios" data-i18n="nav_prices">Precios</a>
+      <a class="paid" href="#precios" data-i18n="nav_prices">Precios</a>
       <a href="#descarga" data-i18n="nav_download">Descarga</a>
       <a href="#preguntas" data-i18n="nav_faq">Preguntas</a>
     </nav>
@@ -383,7 +380,7 @@
   </div>
 </section>
 
-<section class="sec" id="precios" aria-labelledby="price-title" style="padding-top:0">
+<section class="sec paid" id="precios" aria-labelledby="price-title" style="padding-top:0">
   <div class="wrap">
     <div class="sh rv"><span class="k" data-i18n="pr_k">Precios</span><h2 id="price-title" data-i18n="pr_title">Menos que un café al mes</h2>
       <p data-i18n="pr_p">Todas las funciones en los dos planes. 7 días de prueba gratis y cancelas cuando quieras.</p></div>
@@ -411,13 +408,14 @@
   <div class="wrap">
     <div class="sh rv"><span class="k" data-i18n="faq_k">Preguntas</span><h2 id="faq-title" data-i18n="faq_title">Lo que suele preguntarse</h2></div>
     <div class="faq">
-      <details class="rv"><summary data-i18n="q1">¿Cuánto cuesta?</summary><p data-i18n="a1">2,50 € al mes o 25 € al año, con 7 días de prueba gratis. Las dos opciones incluyen todo.</p></details>
-      <details class="rv"><summary data-i18n="q2">¿Cómo consigo el año gratis?</summary><p data-i18n="a2">Crea tu cuenta con el código LANZAMIENTO mientras queden plazas. Es solo para las 50 primeras cuentas y no te pedimos tarjeta.</p></details>
-      <details class="rv"><summary data-i18n="q3">¿Qué pasa cuando acaba el año gratis?</summary><p data-i18n="a3">Tu cuenta pasa a modo lectura hasta que te suscribas: puedes leer tus conversaciones, pero no escribir. No se borra nada.</p></details>
+      <details class="rv free"><summary data-i18n="q0">¿Cuánto cuesta?</summary><p data-i18n="a0">Nada. MeetGo es gratis: crea tu cuenta y úsala sin límites, sin tarjeta.</p></details>
+      <details class="rv paid"><summary data-i18n="q1">¿Cuánto cuesta?</summary><p data-i18n="a1">2,50 € al mes o 25 € al año, con 7 días de prueba gratis. Las dos opciones incluyen todo.</p></details>
+      <details class="rv paid"><summary data-i18n="q2">¿Cómo consigo el año gratis?</summary><p data-i18n="a2">Crea tu cuenta con el código LANZAMIENTO mientras queden plazas. Es solo para las 50 primeras cuentas y no te pedimos tarjeta.</p></details>
+      <details class="rv paid"><summary data-i18n="q3">¿Qué pasa cuando acaba el año gratis?</summary><p data-i18n="a3">Tu cuenta pasa a modo lectura hasta que te suscribas: puedes leer tus conversaciones, pero no escribir. No se borra nada.</p></details>
       <details class="rv"><summary data-i18n="q4">¿Quién ve mi teléfono?</summary><p data-i18n="a4">Nadie. Tu teléfono no aparece en tu perfil y los mensajes que comparten números en los canales se retiran automáticamente.</p></details>
       <details class="rv"><summary data-i18n="q5">¿Hay edad mínima?</summary><p data-i18n="a5">Sí, MeetGo es para mayores de 18 años. Los canales se agrupan por rango de edad: 18-30, 31-50 y más de 50.</p></details>
       <details class="rv"><summary data-i18n="q6">¿En qué ciudades funciona?</summary><p data-i18n="a6">En todas las provincias de España. Tus canales son los de tu provincia y tu rango de edad, uno por cada afición que elijas.</p></details>
-      <details class="rv"><summary data-i18n="q7">¿Cómo cancelo?</summary><p data-i18n="a7">Desde tu cuenta en MeetGo si pagas con tarjeta, o desde Google Play si te suscribiste en la app. Sigues teniendo acceso hasta el final del periodo pagado.</p></details>
+      <details class="rv paid"><summary data-i18n="q7">¿Cómo cancelo?</summary><p data-i18n="a7">Desde tu cuenta en MeetGo si pagas con tarjeta, o desde Google Play si te suscribiste en la app. Sigues teniendo acceso hasta el final del periodo pagado.</p></details>
       <details class="rv"><summary data-i18n="q8">¿Hay app para Android y para iPhone?</summary><p data-i18n="a8">En Android, descarga la app. En iPhone, abre meetgo.app/app en Safari y añádela a la pantalla de inicio.</p></details>
     </div>
   </div>

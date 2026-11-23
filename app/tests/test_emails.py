@@ -178,9 +178,23 @@ async def test_free_access_reminders_go_out_once(client, db_session, outbox):
         await db.execute(update(User).where(User.id == ana[1]["id"]).values(access_required=True))
         db.add(AccessGrant(user_id=ana[1]["id"], source="code:LANZAMIENTO", until=utcnow() + timedelta(days=5)))
         await db.commit()
+    async with db_session() as db:
+        assert await notify_email.reminders_once(db) == 0  # subscriptions off: the app is free, nothing ends
+        await set_section(db, "billing", {"enabled": True})
+        await db.commit()
     outbox.clear()
     async with db_session() as db:
         assert await notify_email.reminders_once(db) == 1
         assert await notify_email.reminders_once(db) == 0
     [mail] = to(outbox, "ana@example.com")
     assert "/app/account" in mail["text"]
+
+
+async def test_subscriptions_off_hides_campaigns(client, db_session):
+    assert (await client.get("/billing/promos")).json() == {"subscriptions": False, "promos": []}
+    assert (await client.get("/settings/public")).json()["subscriptions"] is False
+    async with db_session() as db:
+        await set_section(db, "billing", {"enabled": True})
+        await db.commit()
+    data = (await client.get("/billing/promos")).json()
+    assert data["subscriptions"] is True and data["promos"][0]["code"] == "LANZAMIENTO"

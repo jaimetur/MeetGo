@@ -38,7 +38,8 @@ export async function refreshRequests() {
 
 export async function refreshBilling() {
   try {
-    setState({ billing: await api.billing() });
+    const [billing, settings] = await Promise.all([api.billing(), api.publicSettings()]);
+    setState({ billing, subscriptions: !!settings?.subscriptions });
   } catch {
     /* not critical */
   }

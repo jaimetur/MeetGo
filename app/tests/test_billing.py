@@ -65,6 +65,7 @@ async def test_launch_code_gives_a_year_to_the_first_places_only(client, db_sess
 
 
 async def test_seeded_campaign_is_public_with_fifty_places(client):
+    await _enable(client)
     promos = (await client.get("/billing/promos")).json()["promos"]
     assert promos == [{"code": "LANZAMIENTO", "duration": "1y", "max": 50, "left": 50, "expires_on": None}]
     plans = (await client.get("/billing/plans")).json()

@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- While subscriptions are off in the administration, the app is free: the web app, the sign-up form and the landing page hide plans, prices, codes and the launch campaign, and no plan reminders are sent. Switching subscriptions on shows them again.
 - Split the backend into routers and services, with one shared Redis connection, real-time events fanned out through Redis for several processes, and presence kept in Redis.
 - The web sites are built with Vite and served by nginx in production instead of the Vite development server.
 - Removed the prefilled `admin`/`admin` credentials from the administration sign-in form and added the administration texts that were missing from the translations.

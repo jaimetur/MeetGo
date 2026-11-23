@@ -20,6 +20,8 @@ export type State = {
   activeConversation: number | null;
   toasts: Toast[];
   paywall: boolean;
+  // Subscriptions switched on in the administration; while off, nothing about plans is shown.
+  subscriptions: boolean;
 };
 
 const initial: State = {
@@ -36,6 +38,7 @@ const initial: State = {
   activeConversation: null,
   toasts: [],
   paywall: false,
+  subscriptions: false,
 };
 
 let state: State = initial;

@@ -72,6 +72,7 @@ const EN: Record<string, string> = {
   pr_l1: "7-day free trial", pr_l2: "Channels, groups and direct messages", pr_l3: "Cancel any time", pr_btn: "Start the trial",
   pr_note: "Pay by card (Stripe) on the web or with Google Play in the app. Prices include VAT.",
   faq_k: "FAQ", faq_title: "What people usually ask",
+  q0: "How much does it cost?", a0: "Nothing. MeetGo is free: create your account and use it without limits, no card needed.",
   q1: "How much does it cost?", a1: "€2.50 a month or €25 a year, with a 7-day free trial. Both options include everything.",
   q2: "How do I get the free year?", a2: "Create your account with the code LANZAMIENTO while places last. It is only for the first 50 accounts and we don't ask for a card.",
   q3: "What happens when the free year ends?", a3: "Your account becomes read-only until you subscribe: you can read your conversations but not write. Nothing is deleted.",
@@ -168,6 +169,7 @@ async function loadPromo() {
     const res = await fetch(`${API}/billing/promos`, { headers: { Accept: "application/json" } });
     if (!res.ok) throw new Error(String(res.status));
     const data = await res.json();
+    if (data.subscriptions) document.documentElement.classList.add("paid-on");
     promo = (data.promos as Promo[] | undefined)?.find((p) => p.max != null && (p.left ?? 0) > 0) ?? null;
   } catch {
     promo = null;

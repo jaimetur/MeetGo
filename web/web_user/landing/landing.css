@@ -318,3 +318,5 @@ footer .mail{user-select:all;color:var(--muted)}
   .rvjs .rv{opacity:1;transform:none;transition:none}
   .blob,.float,.pbox::before,.pbox::after,.pbadge i,.eyebrow.hot i,.dots i{animation:none}
 }
+/* prices and campaigns only while subscriptions are on (landing.ts adds .paid-on) */
+.paid{display:none!important}.paid-on .paid{display:revert!important}.paid-on .free{display:none!important}

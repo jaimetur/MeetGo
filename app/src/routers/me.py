@@ -30,8 +30,11 @@ async def me(user: User = Depends(get_current_user)):
 @router.get("/settings/public", response_model=dict)
 async def public_settings(db: AsyncSession = Depends(get_db)):
     data = (await get_settings_row(db)).data or {}
-    return {key: data.get(key) or ([] if key not in ("provinces_by_country", "cities_by_country") else {})
-            for key in ("languages", "age_ranges", "countries", "calling_codes", "provinces_by_country", "cities_by_country")}
+    out = {key: data.get(key) or ([] if key not in ("provinces_by_country", "cities_by_country") else {})
+           for key in ("languages", "age_ranges", "countries", "calling_codes", "provinces_by_country", "cities_by_country")}
+    # While subscriptions are off, the apps hide everything about plans and codes.
+    out["subscriptions"] = bool((data.get("billing") or {}).get("enabled"))
+    return out
 
 
 @router.patch("/me/profile", response_model=MeOut)
