@@ -36,6 +36,19 @@ const PATHS: Record<string, string> = {
   logout: "M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10",
   star: "m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.5 2.9 1-6.1L3.2 9.5l6.1-.9z",
   sliders: "M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1",
+  home: "M4 11 12 4l8 7M6 9.5V20h12V9.5M10 20v-5h4v5",
+  calendar: "M5 6h14v14H5zM5 10h14M9 3v4M15 3v4",
+  clock: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2",
+  place: "M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21zM12 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
+  link: "M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1",
+  lock: "M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3",
+  repeat: "M4 12V9a3 3 0 0 1 3-3h12l-3-3M20 12v3a3 3 0 0 1-3 3H5l3 3",
+  image: "M4 5h16v14H4zM4 16l5-5 4 4 2-2 5 5M15.5 9.5h.01",
+  megaphone: "M4 10v4h3l7 4V6L7 10zM17 9a4 4 0 0 1 0 6",
+  ticket: "M4 8a2 2 0 0 0 0 4v0a2 2 0 0 0 0 4v2h16v-2a2 2 0 0 1 0-4 2 2 0 0 1 0-4V6H4zM14 6v12",
+  right: "m9 5 7 7-7 7",
+  door: "M14 4H6v16h8M10 12h10M17 9l3 3-3 3",
+  layers: "M12 3 3 8l9 5 9-5zM3 13l9 5 9-5",
 };
 
 export function Icon({ name, size, className }: { name: string; size?: "sm"; className?: string }) {

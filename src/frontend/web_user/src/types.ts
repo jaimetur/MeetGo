@@ -117,3 +117,72 @@ export type Plans = {
 };
 
 export type Interest = { id: number; slug: string; name: string };
+
+// ---- communities, board and plans (docs/COMMUNITIES.md) ----
+export type AccessMode = "open" | "request" | "invite";
+export type BoardMode = "open" | "admins";
+export type CommunityRole = "owner" | "admin" | "moderator" | "member";
+
+export type Community = {
+  id: number;
+  kind: "interest" | "custom";
+  title: string;
+  slug: string | null;
+  description: string | null;
+  avatar_url: string | null;
+  province: string;
+  age_range: string;
+  access_mode: AccessMode;
+  board_mode: BoardMode;
+  member_count: number;
+  online_count: number;
+  joined: boolean;
+  role: CommunityRole | null;
+  request_pending: boolean;
+  upcoming_count: number;
+  conversation_id: number;
+  rules?: string | null;
+  invite_code?: string | null;
+  created_at: string;
+};
+
+export type CommunityMember = UserSummary & { role: CommunityRole; online: boolean };
+
+export type PostKind = "thread" | "meetup" | "event" | "notice";
+export type CommentsMode = "all" | "attendees" | "off";
+export type AttendStatus = "going" | "waitlist" | "pending";
+
+export type Post = {
+  id: number;
+  community: { id: number; title: string; slug: string | null };
+  kind: PostKind;
+  author: UserSummary;
+  title: string;
+  body: string | null;
+  starts_at: string | null;
+  ends_at: string | null;
+  place: string | null;
+  place_url: string | null;
+  capacity: number | null;
+  going_count: number;
+  waitlist_count: number;
+  link_url: string | null;
+  cover_url: string | null;
+  comments_mode: CommentsMode;
+  join_mode: "open" | "approval";
+  comment_count: number;
+  pinned: boolean;
+  closed: boolean;
+  my_status: AttendStatus | null;
+  can_comment: boolean;
+  can_edit: boolean;
+  chat_conversation_id: number | null;
+  attendees?: UserSummary[];
+  created_at: string;
+  updated_at: string;
+};
+
+export type PostPage = { posts: Post[]; has_more: boolean };
+export type Attendee = UserSummary & { status: AttendStatus };
+export type Comment = { id: number; post_id: number; author: UserSummary; body: string; created_at: string; can_delete: boolean };
+export type FeedFilter = { kind?: PostKind; when?: "all" | "today" | "weekend" | "week" | "upcoming" | "past"; community_id?: number; before_id?: number; limit?: number };

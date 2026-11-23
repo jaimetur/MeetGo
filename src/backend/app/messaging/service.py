@@ -29,12 +29,15 @@ def _background(coro) -> None:
 
 async def recipients(db: AsyncSession, conversation_id: int) -> list[int]:
     res = await db.execute(select(ConversationMember.user_id).where(
-        ConversationMember.conversation_id == conversation_id, ConversationMember.banned.is_(False)))
+        ConversationMember.conversation_id == conversation_id, ConversationMember.banned.is_(False),
+        ConversationMember.away.is_(False)))
     return list(res.scalars().all())
 
 
 def check_can_write(conv: Conversation, member: ConversationMember) -> None:
-    if member.banned:
+    if (conv.policy_json or {}).get("read_only"):  # the plan chat of a deleted board post
+        raise HTTPException(403, t("err_read_only_chat"))
+    if member.banned or member.away:
         raise HTTPException(403, t("err_banned_here"))
     if member.silenced_until and member.silenced_until > utcnow():
         raise HTTPException(403, t("err_silenced_until", {"until": member.silenced_until.strftime("%H:%M")}))
@@ -88,7 +91,8 @@ async def send_message(
     mentions: list[int] = []
     if mention_ids and conv.kind != "dm":
         res = await db.execute(select(ConversationMember.user_id).where(
-            ConversationMember.conversation_id == conv.id, ConversationMember.user_id.in_(set(mention_ids))))
+            ConversationMember.conversation_id == conv.id, ConversationMember.user_id.in_(set(mention_ids)),
+            ConversationMember.away.is_(False)))
         mentions = sorted(set(res.scalars().all()) - {user.id})
 
     now = utcnow()

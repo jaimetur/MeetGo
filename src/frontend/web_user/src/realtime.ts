@@ -1,7 +1,8 @@
 import { api, WS_BASE } from "./api";
+import { emitBoardEvent } from "./board";
 import {
   addMessage, catchUp, getState, loadConversations, patchConversation, refreshConversation, removeConversation,
-  replaceMessage, setReactions, setState, updateMessage,
+  refreshMyPlansSoon, replaceMessage, setReactions, setState, updateMessage,
 } from "./store";
 import type { Message } from "./types";
 
@@ -158,6 +159,15 @@ function handle(ev: any) {
       break;
     case "requests.changed":
       onRequests?.();
+      break;
+    // Board: the screens listen through onBoardEvent; my plans change with sign-ups and edits.
+    case "post.created":
+    case "post.updated":
+    case "post.deleted":
+    case "comment.created":
+    case "attendance.changed":
+      emitBoardEvent(ev);
+      if (ev.type !== "comment.created") refreshMyPlansSoon();
       break;
   }
 }

@@ -69,6 +69,7 @@ class EmailPrefsIn(BaseModel):
     messages: bool | None = None
     requests: bool | None = None
     reports: bool | None = None
+    plans: bool | None = None
 
 class UserSummary(BaseModel):
     id: int
@@ -331,3 +332,61 @@ class PromoCodeIn(BaseModel):
 class ReportResolveIn(BaseModel):
     status: str = Field(pattern="^(dismissed|actioned)$")
     delete_message: bool = False
+
+
+# ---------------- Communities and board ----------------
+
+class CommunityCreateIn(BaseModel):
+    title: str = Field(min_length=1, max_length=120)
+    description: str | None = Field(default=None, max_length=1000)
+    avatar_url: str | None = Field(default=None, max_length=512)
+    access_mode: str = Field(default="open", pattern="^(open|request|invite)$")
+    board_mode: str = Field(default="open", pattern="^(open|admins)$")
+
+
+class CommunityUpdateIn(BaseModel):
+    title: str | None = Field(default=None, min_length=1, max_length=120)
+    description: str | None = Field(default=None, max_length=1000)
+    avatar_url: str | None = Field(default=None, max_length=512)
+    access_mode: str | None = Field(default=None, pattern="^(open|request|invite)$")
+    board_mode: str | None = Field(default=None, pattern="^(open|admins)$")
+    rules: str | None = Field(default=None, max_length=4000)
+
+
+class ResolveIn(BaseModel):
+    accept: bool
+
+
+class BoardPostIn(BaseModel):
+    kind: str = Field(pattern="^(thread|meetup|event|notice)$")
+    title: str = Field(min_length=1, max_length=160)
+    body: str | None = Field(default=None, max_length=8000)
+    starts_at: datetime | None = None
+    ends_at: datetime | None = None
+    place: str | None = Field(default=None, max_length=200)
+    place_url: str | None = Field(default=None, max_length=512)
+    capacity: int | None = Field(default=None, ge=1, le=10000)
+    link_url: str | None = Field(default=None, max_length=512)
+    cover_attachment_id: int | None = None
+    comments_mode: str | None = Field(default=None, pattern="^(all|attendees|off)$")
+    join_mode: str | None = Field(default=None, pattern="^(open|approval)$")
+
+
+class BoardPostUpdateIn(BaseModel):
+    title: str | None = Field(default=None, min_length=1, max_length=160)
+    body: str | None = Field(default=None, max_length=8000)
+    starts_at: datetime | None = None
+    ends_at: datetime | None = None
+    place: str | None = Field(default=None, max_length=200)
+    place_url: str | None = Field(default=None, max_length=512)
+    capacity: int | None = Field(default=None, ge=0, le=10000)  # 0: no limit
+    link_url: str | None = Field(default=None, max_length=512)
+    cover_attachment_id: int | None = None  # 0: no cover
+    comments_mode: str | None = Field(default=None, pattern="^(all|attendees|off)$")
+    join_mode: str | None = Field(default=None, pattern="^(open|approval)$")
+    pinned: bool | None = None
+    closed: bool | None = None
+
+
+class CommentIn(BaseModel):
+    body: str = Field(min_length=1, max_length=4000)

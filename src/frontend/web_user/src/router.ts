@@ -3,7 +3,12 @@ import { useSyncExternalStore } from "react";
 export type Route =
   | { name: "home" }
   | { name: "chat"; id: number; thread: number | null; panel: "members" | "info" | null; around: number | null }
-  | { name: "explore" }
+  | { name: "chats" }
+  | { name: "plans" }
+  | { name: "publish"; community: number | null; repeat: number | null; edit: number | null }
+  | { name: "post"; id: number }
+  | { name: "communities" }
+  | { name: "community"; id: number; tab: "board" | "chat" | "members" }
   | { name: "people" }
   | { name: "mentions" }
   | { name: "account" }
@@ -29,10 +34,22 @@ function parse(): Route {
       around: q.get("around") ? Number(q.get("around")) : null,
     };
   }
+  const p = rest.match(/^\/p\/(\d+)$/);
+  if (p) return { name: "post", id: Number(p[1]) };
+  const cm = rest.match(/^\/communities\/(\d+)$/);
+  if (cm) {
+    const tab = q.get("tab");
+    return { name: "community", id: Number(cm[1]), tab: tab === "chat" || tab === "members" ? tab : "board" };
+  }
+  const num = (k: string) => (q.get(k) ? Number(q.get(k)) || null : null);
   const j = rest.match(/^\/join\/([\w-]+)$/);
   if (j) return { name: "join", code: j[1] };
   switch (rest) {
-    case "/explore": return { name: "explore" };
+    // "/explore" was the list of channels: they are communities now.
+    case "/explore": case "/communities": return { name: "communities" };
+    case "/chats": return { name: "chats" };
+    case "/plans": return { name: "plans" };
+    case "/publish": return { name: "publish", community: num("community"), repeat: num("repeat"), edit: num("edit") };
     case "/people": return { name: "people" };
     case "/mentions": return { name: "mentions" };
     case "/account": return { name: "account" };
@@ -51,9 +68,24 @@ window.addEventListener("popstate", emit);
 export function navigate(path: string, replace = false) {
   const url = path.startsWith("/") ? BASE + (path === "/" ? "/" : path) : path;
   if (url === window.location.pathname + window.location.search) return;
-  if (replace) window.history.replaceState(null, "", url);
-  else window.history.pushState(null, "", url);
+  // The marker tells goBack() that the previous entry belongs to the app.
+  if (replace) window.history.replaceState(window.history.state, "", url);
+  else window.history.pushState({ mg: 1 }, "", url);
   emit();
+}
+
+/** Back to the previous screen of the app, or to `fallback` when the app was opened right here. */
+export function goBack(fallback = "/") {
+  if (window.history.state?.mg) window.history.back();
+  else navigate(fallback, true);
+}
+
+export function postPath(id: number) {
+  return `/p/${id}`;
+}
+
+export function communityPath(id: number, tab?: "board" | "chat" | "members") {
+  return `/communities/${id}${tab && tab !== "board" ? "?tab=" + tab : ""}`;
 }
 
 export function chatPath(id: number, opts: { thread?: number | null; panel?: string | null; around?: number | null } = {}) {

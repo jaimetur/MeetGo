@@ -2857,3 +2857,870 @@ msgstr "Privacy e sicurezza"
 
 msgid "ui_section_push"
 msgstr "Notifiche su questo dispositivo"
+
+msgid "err_community_not_found"
+msgstr "Comunità non trovata"
+
+msgid "err_community_other_zone"
+msgstr "Questa comunità appartiene a un'altra zona: possono entrare solo le persone della sua provincia e fascia d'età"
+
+msgid "err_community_invite_only"
+msgstr "Questa comunità è solo su invito"
+
+msgid "err_community_closed"
+msgstr "Questa comunità richiede approvazione o un invito: aprila per chiedere di entrare"
+
+msgid "err_join_community_first"
+msgstr "Entra prima nella comunità"
+
+msgid "err_board_admins_only"
+msgstr "Solo il proprietario, gli admin e i moderatori pubblicano in questa bacheca"
+
+msgid "err_post_not_found"
+msgstr "Post non trovato"
+
+msgid "err_post_starts_at_required"
+msgstr "Gli incontri e gli eventi richiedono una data di inizio"
+
+msgid "err_post_dates"
+msgstr "La fine non può essere prima dell'inizio"
+
+msgid "err_post_closed"
+msgstr "Questo post è chiuso"
+
+msgid "err_post_past"
+msgstr "Questo piano è già passato"
+
+msgid "err_not_a_plan"
+msgstr "Solo gli incontri e gli eventi hanno partecipanti"
+
+msgid "err_comments_off"
+msgstr "I commenti sono disattivati per questo post"
+
+msgid "err_comments_attendees_only"
+msgstr "Solo chi partecipa può commentare"
+
+msgid "err_comment_not_found"
+msgstr "Commento non trovato"
+
+msgid "err_organiser_cannot_leave"
+msgstr "L'organizzatore non può lasciare il proprio piano: annullalo"
+
+msgid "err_attendee_not_found"
+msgstr "Non c'è nessuna richiesta in sospeso di questa persona"
+
+msgid "err_invalid_filter"
+msgstr "Filtro non valido"
+
+msgid "err_read_only_chat"
+msgstr "Questo piano è stato annullato: la sua chat è in sola lettura"
+
+msgid "sys_plan_cancelled"
+msgstr "Il piano “{plan}” è stato annullato"
+
+msgid "email_footer_plans"
+msgstr "Ricevi questa email perché partecipi o organizzi piani su MeetGo."
+
+msgid "email_plan_joined_subject"
+msgstr "{name} partecipa a “{plan}”"
+
+msgid "email_plan_joined_title"
+msgstr "Nuova iscrizione"
+
+msgid "email_plan_joined_body"
+msgstr "{name} si è iscritto/a al tuo piano “{plan}” ({date})."
+
+msgid "email_plan_joined_button"
+msgstr "Vedi il piano"
+
+msgid "email_plan_request_subject"
+msgstr "{name} chiede di partecipare a “{plan}”"
+
+msgid "email_plan_request_title"
+msgstr "Richiesta di partecipazione al tuo piano"
+
+msgid "email_plan_request_body"
+msgstr "{name} vuole partecipare al tuo piano “{plan}” ({date}). Accetta o rifiuta la richiesta dalla pagina del piano."
+
+msgid "email_plan_request_button"
+msgstr "Vedi la richiesta"
+
+msgid "email_plan_accepted_subject"
+msgstr "Ci sei: “{plan}”"
+
+msgid "email_plan_accepted_title"
+msgstr "Richiesta accettata"
+
+msgid "email_plan_accepted_body"
+msgstr "La tua richiesta di partecipare a “{plan}” ({date}) è stata accettata."
+
+msgid "email_plan_accepted_button"
+msgstr "Vedi il piano"
+
+msgid "email_plan_promoted_subject"
+msgstr "Si è liberato un posto: “{plan}”"
+
+msgid "email_plan_promoted_title"
+msgstr "Ci sei"
+
+msgid "email_plan_promoted_body"
+msgstr "Qualcuno ha lasciato “{plan}” ({date}) e sei passato/a dalla lista d'attesa: ci sei."
+
+msgid "email_plan_promoted_button"
+msgstr "Vedi il piano"
+
+msgid "email_plan_changed_subject"
+msgstr "“{plan}” è cambiato"
+
+msgid "email_plan_changed_title"
+msgstr "Piano aggiornato"
+
+msgid "email_plan_changed_body"
+msgstr "Il piano “{plan}” ha nuovi dettagli: {date}, {place}."
+
+msgid "email_plan_changed_button"
+msgstr "Vedi il piano"
+
+msgid "email_plan_cancelled_subject"
+msgstr "“{plan}” è stato annullato"
+
+msgid "email_plan_cancelled_title"
+msgstr "Piano annullato"
+
+msgid "email_plan_cancelled_body"
+msgstr "Il piano “{plan}” ({date}) è stato annullato."
+
+msgid "email_plan_reminder_subject"
+msgstr "Domani: “{plan}”"
+
+msgid "email_plan_reminder_title"
+msgstr "Il tuo piano si avvicina"
+
+msgid "email_plan_reminder_body"
+msgstr "Ricorda: “{plan}” è il {date}, {place}."
+
+msgid "email_plan_reminder_button"
+msgstr "Vedi il piano"
+
+msgid "email_community_request_subject"
+msgstr "{name} chiede di entrare in {community}"
+
+msgid "email_community_request_title"
+msgstr "Richiesta di ingresso"
+
+msgid "email_community_request_body"
+msgstr "{name} vuole entrare nella comunità {community}. Accetta o rifiuta la richiesta dalla pagina della comunità."
+
+msgid "email_community_request_button"
+msgstr "Vedi le richieste"
+
+msgid "email_community_accepted_subject"
+msgstr "Benvenuto/a in {community}"
+
+msgid "email_community_accepted_title"
+msgstr "Richiesta accettata"
+
+msgid "email_community_accepted_body"
+msgstr "La tua richiesta di entrare nella comunità {community} è stata accettata."
+
+msgid "email_community_accepted_button"
+msgstr "Apri la comunità"
+
+msgid "ui_nav_home"
+msgstr "Home"
+
+msgid "ui_nav_plans"
+msgstr "Piani"
+
+msgid "ui_nav_publish"
+msgstr "Pubblica"
+
+msgid "ui_nav_communities"
+msgstr "Comunità"
+
+msgid "ui_nav_profile"
+msgstr "Profilo"
+
+msgid "ui_f_communities"
+msgstr "Comunità"
+
+msgid "ui_f_plans"
+msgstr "Piani"
+
+msgid "ui_sec_communities"
+msgstr "Comunità"
+
+msgid "ui_sec_communities_zone"
+msgstr "Comunità · {zone}"
+
+msgid "ui_sec_plans"
+msgstr "Chat dei piani"
+
+msgid "ui_chats_empty_body"
+msgstr "Entra nelle comunità della tua zona per chattare con loro, o iscriviti a un piano per entrare nella sua chat."
+
+msgid "ui_email_plans"
+msgstr "I miei piani: iscrizioni, modifiche e un promemoria il giorno prima"
+
+msgid "ui_board_title"
+msgstr "La tua bacheca"
+
+msgid "ui_board_lead"
+msgstr "Piani e novità delle tue comunità a {zone}"
+
+msgid "ui_board_f_all"
+msgstr "Tutto"
+
+msgid "ui_board_f_today"
+msgstr "Oggi"
+
+msgid "ui_board_f_weekend"
+msgstr "Weekend"
+
+msgid "ui_board_f_week"
+msgstr "Questa settimana"
+
+msgid "ui_board_f_meetups"
+msgstr "Incontri"
+
+msgid "ui_board_f_events"
+msgstr "Eventi"
+
+msgid "ui_board_f_notices"
+msgstr "Avvisi"
+
+msgid "ui_board_new_posts"
+msgstr "Nuovi post"
+
+msgid "ui_board_load_more"
+msgstr "Carica altri"
+
+msgid "ui_board_error"
+msgstr "Impossibile caricare"
+
+msgid "ui_board_retry"
+msgstr "Riprova"
+
+msgid "ui_board_empty_title"
+msgstr "La bacheca è tranquilla"
+
+msgid "ui_board_empty_body"
+msgstr "Nessuno ha ancora pubblicato nelle tue comunità. Sii il primo: proponi un piano e vedi chi si unisce."
+
+msgid "ui_board_empty_join_title"
+msgstr "Entra in una comunità per iniziare"
+
+msgid "ui_board_empty_join_body"
+msgstr "La tua bacheca mostra i piani, gli eventi e gli avvisi delle comunità di cui fai parte."
+
+msgid "ui_board_empty_filter_title"
+msgstr "Per ora non c'è niente"
+
+msgid "ui_board_empty_filter_body"
+msgstr "Nessun post corrisponde a questo filtro. Provane un altro o proponi tu un piano."
+
+msgid "ui_board_publish_plan"
+msgstr "Proponi un piano"
+
+msgid "ui_board_find_communities"
+msgstr "Trova comunità"
+
+msgid "ui_board_see_all"
+msgstr "Vedi tutto"
+
+msgid "ui_board_back_home"
+msgstr "Torna alla bacheca"
+
+msgid "ui_post_kind_meetup"
+msgstr "Incontro"
+
+msgid "ui_post_kind_event"
+msgstr "Evento"
+
+msgid "ui_post_kind_notice"
+msgstr "Avviso"
+
+msgid "ui_post_kind_thread"
+msgstr "Discussione"
+
+msgid "ui_post_pinned"
+msgstr "In evidenza"
+
+msgid "ui_post_finished"
+msgstr "Terminato"
+
+msgid "ui_post_closed"
+msgstr "Chiuso"
+
+msgid "ui_post_places_of"
+msgstr "{n} posti su {total}"
+
+msgid "ui_post_full"
+msgstr "Al completo"
+
+msgid "ui_post_going_n"
+msgstr "{n} partecipano"
+
+msgid "ui_post_free_n"
+msgstr "{n} liberi"
+
+msgid "ui_post_waitlist_n"
+msgstr "{n} in attesa"
+
+msgid "ui_post_sign_up"
+msgstr "Iscriviti"
+
+msgid "ui_post_ask_join"
+msgstr "Chiedi di partecipare"
+
+msgid "ui_post_join_waitlist"
+msgstr "Entra in lista d'attesa"
+
+msgid "ui_post_going"
+msgstr "Ci vado"
+
+msgid "ui_post_on_waitlist"
+msgstr "In lista d'attesa"
+
+msgid "ui_post_waitlist"
+msgstr "Lista d'attesa"
+
+msgid "ui_post_request_sent"
+msgstr "Richiesta inviata"
+
+msgid "ui_post_you_organise"
+msgstr "Organizzi tu"
+
+msgid "ui_post_organiser"
+msgstr "Organizzatore"
+
+msgid "ui_post_joined_toast"
+msgstr "Ci sei! Ora sei nella chat del piano."
+
+msgid "ui_post_waitlist_toast"
+msgstr "È al completo: sei in lista d'attesa e avanzerai se qualcuno rinuncia."
+
+msgid "ui_post_pending_toast"
+msgstr "Richiesta inviata. L'organizzatore confermerà il tuo posto."
+
+msgid "ui_post_left_toast"
+msgstr "Non partecipi più"
+
+msgid "ui_post_request_cancelled"
+msgstr "Richiesta annullata"
+
+msgid "ui_post_leave"
+msgstr "Non posso andare"
+
+msgid "ui_post_leave_waitlist"
+msgstr "Esci dalla lista d'attesa"
+
+msgid "ui_post_cancel_request"
+msgstr "Annulla richiesta"
+
+msgid "ui_post_open_chat"
+msgstr "Apri la chat del piano"
+
+msgid "ui_post_repeat"
+msgstr "Ripeti"
+
+msgid "ui_post_edit"
+msgstr "Modifica"
+
+msgid "ui_post_delete"
+msgstr "Elimina post"
+
+msgid "ui_post_delete_body"
+msgstr "Il post e i suoi commenti spariranno dalla bacheca."
+
+msgid "ui_post_delete_plan_body"
+msgstr "Il piano verrà annullato e chi partecipa sarà avvisato. La sua chat resta, in sola lettura."
+
+msgid "ui_post_deleted_toast"
+msgstr "Questo post è stato eliminato"
+
+msgid "ui_post_copy_link"
+msgstr "Copia link"
+
+msgid "ui_post_pin"
+msgstr "Fissa in bacheca"
+
+msgid "ui_post_unpin"
+msgstr "Non fissare più"
+
+msgid "ui_post_pinned_toast"
+msgstr "Fissato in bacheca"
+
+msgid "ui_post_unpinned_toast"
+msgstr "Non più fissato"
+
+msgid "ui_post_close"
+msgstr "Chiudi iscrizioni e commenti"
+
+msgid "ui_post_reopen"
+msgstr "Riapri"
+
+msgid "ui_post_closed_toast"
+msgstr "Chiuso"
+
+msgid "ui_post_reopened_toast"
+msgstr "Riaperto"
+
+msgid "ui_post_not_found"
+msgstr "Questo post non esiste o non è visibile per te"
+
+msgid "ui_post_see_map"
+msgstr "vedi mappa"
+
+msgid "ui_post_organised_by"
+msgstr "Organizzato da {name}"
+
+msgid "ui_post_posted_by"
+msgstr "Pubblicato da {name}"
+
+msgid "ui_post_tickets"
+msgstr "Biglietti e altre informazioni"
+
+msgid "ui_post_approval_note"
+msgstr "L'organizzatore accetta chi partecipa"
+
+msgid "ui_post_people_going"
+msgstr "Chi partecipa"
+
+msgid "ui_post_see_all"
+msgstr "Vedi tutti"
+
+msgid "ui_post_nobody_yet"
+msgstr "Ancora nessuno. Sii il primo!"
+
+msgid "ui_post_waitlist_note"
+msgstr "Avrai un posto automaticamente se qualcuno rinuncia."
+
+msgid "ui_post_pending_note"
+msgstr "In attesa che l'organizzatore ti accetti."
+
+msgid "ui_post_pending_requests"
+msgstr "In attesa di approvazione"
+
+msgid "ui_post_accepted_toast"
+msgstr "Accettato"
+
+msgid "ui_post_rejected_toast"
+msgstr "Rifiutato"
+
+msgid "ui_post_comments"
+msgstr "Commenti"
+
+msgid "ui_post_comments_off"
+msgstr "I commenti sono disattivati per questo post"
+
+msgid "ui_post_comments_attendees"
+msgstr "Solo chi partecipa può commentare"
+
+msgid "ui_post_comments_cant"
+msgstr "Non puoi commentare questo post"
+
+msgid "ui_post_closed_note"
+msgstr "Chiuso: niente più commenti né iscrizioni"
+
+msgid "ui_post_older_comments"
+msgstr "Commenti precedenti"
+
+msgid "ui_post_no_comments"
+msgstr "Ancora nessun commento. Chiedi qualcosa o saluta."
+
+msgid "ui_post_comment_ph"
+msgstr "Scrivi un commento…"
+
+msgid "ui_post_report_title"
+msgstr "Segnala post"
+
+msgid "ui_post_report_details"
+msgstr "Dettagli (facoltativo)"
+
+msgid "ui_publish_title"
+msgstr "Nuovo post"
+
+msgid "ui_publish_edit_title"
+msgstr "Modifica post"
+
+msgid "ui_publish_repeat_title"
+msgstr "Ripeti piano"
+
+msgid "ui_publish_button"
+msgstr "Pubblica"
+
+msgid "ui_publish_kind"
+msgstr "Tipo di post"
+
+msgid "ui_publish_hint_meetup"
+msgstr "Un piano con una data, un luogo e, se vuoi, un limite di posti."
+
+msgid "ui_publish_hint_event"
+msgstr "Qualcosa di più grande: con una copertina, un orario di fine e un link per i biglietti."
+
+msgid "ui_publish_hint_notice"
+msgstr "Una domanda, un consiglio o un annuncio, senza data."
+
+msgid "ui_publish_hint_thread"
+msgstr "Avvia una conversazione su un argomento con la tua comunità."
+
+msgid "ui_publish_where"
+msgstr "Comunità"
+
+msgid "ui_publish_choose_community"
+msgstr "Scegli una comunità"
+
+msgid "ui_publish_f_title"
+msgstr "Titolo"
+
+msgid "ui_publish_title_ph_meetup"
+msgstr "es. Passeggiata al lago sabato"
+
+msgid "ui_publish_title_ph_event"
+msgstr "es. Torneo amichevole di padel"
+
+msgid "ui_publish_title_ph_notice"
+msgstr "es. Qualcuno per una partita a tennis il martedì?"
+
+msgid "ui_publish_title_ph_thread"
+msgstr "es. I tuoi posti preferiti per cenare in gruppo"
+
+msgid "ui_publish_f_body"
+msgstr "Descrizione"
+
+msgid "ui_publish_body_ph"
+msgstr "Racconta di cosa si tratta, cosa portare, il livello…"
+
+msgid "ui_publish_f_date"
+msgstr "Giorno"
+
+msgid "ui_publish_f_time"
+msgstr "Ora"
+
+msgid "ui_publish_f_end_date"
+msgstr "Fine (giorno)"
+
+msgid "ui_publish_f_end_time"
+msgstr "Fine (ora)"
+
+msgid "ui_publish_f_place"
+msgstr "Luogo"
+
+msgid "ui_publish_place_ph"
+msgstr "Dove vi incontrate"
+
+msgid "ui_publish_f_place_url"
+msgstr "Link alla mappa (facoltativo)"
+
+msgid "ui_publish_f_link"
+msgstr "Link a biglietti o informazioni (facoltativo)"
+
+msgid "ui_publish_f_cover"
+msgstr "Copertina"
+
+msgid "ui_publish_cover_add"
+msgstr "Aggiungi una foto"
+
+msgid "ui_publish_cover_change"
+msgstr "Cambia foto"
+
+msgid "ui_publish_rules"
+msgstr "Decidi tu"
+
+msgid "ui_publish_who_comments"
+msgstr "Chi può commentare"
+
+msgid "ui_publish_comments_all"
+msgstr "Tutti"
+
+msgid "ui_publish_comments_attendees"
+msgstr "Chi partecipa"
+
+msgid "ui_publish_comments_off"
+msgstr "Nessuno"
+
+msgid "ui_publish_approval"
+msgstr "Approva chi partecipa"
+
+msgid "ui_publish_approval_hint"
+msgstr "Le persone chiedono un posto e tu le accetti"
+
+msgid "ui_publish_limit"
+msgstr "Limita i posti"
+
+msgid "ui_publish_limit_hint"
+msgstr "Quando è al completo, si apre una lista d'attesa"
+
+msgid "ui_publish_places"
+msgstr "Posti"
+
+msgid "ui_publish_need_title"
+msgstr "Dagli un titolo"
+
+msgid "ui_publish_need_community"
+msgstr "Scegli la comunità in cui lo pubblicherai"
+
+msgid "ui_publish_need_date"
+msgstr "Gli incontri e gli eventi richiedono un giorno e un'ora"
+
+msgid "ui_publish_date_past"
+msgstr "La data è già passata"
+
+msgid "ui_publish_end_before"
+msgstr "Finisce prima di iniziare"
+
+msgid "ui_publish_done_toast"
+msgstr "Pubblicato! La tua comunità ora lo vede."
+
+msgid "ui_publish_saved_toast"
+msgstr "Modifiche salvate"
+
+msgid "ui_publish_no_communities_title"
+msgstr "Entra in una comunità per pubblicare"
+
+msgid "ui_publish_no_communities_body"
+msgstr "I post appartengono a una comunità. Entra in una della tua zona o creane una tua."
+
+msgid "ui_plans_title"
+msgstr "I tuoi piani"
+
+msgid "ui_plans_lead"
+msgstr "Incontri ed eventi a cui partecipi o che organizzi, ognuno con la sua chat"
+
+msgid "ui_plans_going"
+msgstr "Partecipo"
+
+msgid "ui_plans_organising"
+msgstr "Organizzo"
+
+msgid "ui_plans_past"
+msgstr "Passati"
+
+msgid "ui_plans_this_week"
+msgstr "Questa settimana"
+
+msgid "ui_plans_later"
+msgstr "Più avanti"
+
+msgid "ui_plans_next"
+msgstr "I tuoi prossimi piani"
+
+msgid "ui_plans_next_empty"
+msgstr "Non ti sei ancora iscritto/a a nulla."
+
+msgid "ui_plans_browse_board"
+msgstr "Sfoglia la bacheca"
+
+msgid "ui_plans_empty_going_title"
+msgstr "Ancora nessun piano"
+
+msgid "ui_plans_empty_going_body"
+msgstr "Iscriviti a un incontro o a un evento in bacheca e apparirà qui, con la sua chat."
+
+msgid "ui_plans_empty_org_title"
+msgstr "Non stai organizzando niente"
+
+msgid "ui_plans_empty_org_body"
+msgstr "Proponi un piano alla tua comunità: una passeggiata, una cena, una partita…"
+
+msgid "ui_plans_empty_past_title"
+msgstr "Nessun piano passato"
+
+msgid "ui_plans_empty_past_body"
+msgstr "I piani a cui hai partecipato resteranno qui, pronti da ripetere."
+
+msgid "ui_community_title"
+msgstr "Comunità"
+
+msgid "ui_community_lead"
+msgstr "Persone di {zone} con i tuoi stessi interessi"
+
+msgid "ui_community_yours"
+msgstr "Le tue comunità"
+
+msgid "ui_community_discover"
+msgstr "Scopri"
+
+msgid "ui_community_search_ph"
+msgstr "Cerca comunità"
+
+msgid "ui_community_no_match"
+msgstr "Nessuna comunità corrisponde. Puoi crearla tu."
+
+msgid "ui_community_empty_title"
+msgstr "Ancora nessuna comunità nella tua zona"
+
+msgid "ui_community_empty_body"
+msgstr "Crea la prima e invita persone con i tuoi stessi interessi."
+
+msgid "ui_community_none_yet"
+msgstr "Non sei ancora entrato/a in nessuna comunità."
+
+msgid "ui_community_create"
+msgstr "Crea comunità"
+
+msgid "ui_community_create_button"
+msgstr "Crea"
+
+msgid "ui_community_create_lead"
+msgstr "Sarà per le persone della tua zona e fascia d'età. Ne sarai il proprietario."
+
+msgid "ui_community_created_toast"
+msgstr "Comunità creata! Invita le persone a entrare."
+
+msgid "ui_community_f_title"
+msgstr "Nome"
+
+msgid "ui_community_title_ph"
+msgstr "es. Runner del sabato"
+
+msgid "ui_community_desc_ph"
+msgstr "Di cosa si tratta e a chi è rivolta"
+
+msgid "ui_community_f_rules"
+msgstr "Regole"
+
+msgid "ui_community_f_access"
+msgstr "Chi può entrare"
+
+msgid "ui_community_access_open"
+msgstr "Aperta"
+
+msgid "ui_community_access_request"
+msgstr "Su richiesta"
+
+msgid "ui_community_access_invite"
+msgstr "Solo su invito"
+
+msgid "ui_community_access_open_hint"
+msgstr "Chiunque nella tua zona può entrare."
+
+msgid "ui_community_access_request_hint"
+msgstr "Le persone chiedono di entrare e un admin o un moderatore le accetta."
+
+msgid "ui_community_access_invite_hint"
+msgstr "Solo con il link d'invito. Non compare agli altri."
+
+msgid "ui_community_f_board"
+msgstr "Chi pubblica in bacheca"
+
+msgid "ui_community_board_open"
+msgstr "Membri"
+
+msgid "ui_community_board_admins"
+msgstr "Solo admin"
+
+msgid "ui_community_board_open_hint"
+msgstr "Qualsiasi membro può proporre piani e pubblicare."
+
+msgid "ui_community_board_admins_hint"
+msgstr "Pubblicano solo il proprietario, gli admin e i moderatori; i membri si iscrivono e commentano."
+
+msgid "ui_community_board_readonly"
+msgstr "Solo gli admin di questa comunità pubblicano nella sua bacheca"
+
+msgid "ui_community_ask_join"
+msgstr "Chiedi di entrare"
+
+msgid "ui_community_requested"
+msgstr "Richiesta inviata"
+
+msgid "ui_community_requested_toast"
+msgstr "Richiesta inviata. Ti avviseremo quando ti accetteranno."
+
+msgid "ui_community_joined_toast"
+msgstr "Benvenuto/a in {name}!"
+
+msgid "ui_community_joined_link_toast"
+msgstr "Sei entrato/a nella comunità"
+
+msgid "ui_community_not_found"
+msgstr "Questa comunità non esiste o non è nella tua zona"
+
+msgid "ui_community_online_n"
+msgstr "{n} online"
+
+msgid "ui_community_plans_n"
+msgstr "{n} piani"
+
+msgid "ui_community_tab_board"
+msgstr "Bacheca"
+
+msgid "ui_community_tab_chat"
+msgstr "Chat"
+
+msgid "ui_community_tab_members"
+msgstr "Membri"
+
+msgid "ui_community_settings"
+msgstr "Impostazioni della comunità"
+
+msgid "ui_community_rules"
+msgstr "Regole"
+
+msgid "ui_community_leave"
+msgstr "Esci dalla comunità"
+
+msgid "ui_community_leave_body"
+msgstr "Non vedrai più la bacheca e la chat di {name}."
+
+msgid "ui_community_leave_owner_body"
+msgstr "Sei il proprietario: la proprietà passa all'admin più anziano o al membro più anziano."
+
+msgid "ui_community_left_toast"
+msgstr "Sei uscito/a dalla comunità"
+
+msgid "ui_community_publish_prompt"
+msgstr "Proponi un piano a {name}…"
+
+msgid "ui_community_board_empty"
+msgstr "Ancora niente in questa bacheca"
+
+msgid "ui_community_board_empty_body"
+msgstr "Proponi il primo piano e metti in moto le persone."
+
+msgid "ui_community_join_to_see"
+msgstr "Entra nella comunità per partecipare ai suoi piani."
+
+msgid "ui_community_chat_join_title"
+msgstr "La chat è per i membri"
+
+msgid "ui_community_chat_join_body"
+msgstr "Entra nella comunità per parlare con le sue persone in tempo reale."
+
+msgid "ui_community_requests_n"
+msgstr "Richieste di ingresso ({n})"
+
+msgid "ui_community_request_accepted"
+msgstr "Accettato: ora è un membro"
+
+msgid "ui_community_request_rejected"
+msgstr "Richiesta rifiutata"
+
+msgid "ui_community_invite_hint"
+msgstr "Chiunque nella tua zona con questo link entra direttamente. Crearne uno nuovo disattiva il vecchio."
+
+msgid "ui_community_invite_create"
+msgstr "Crea link d'invito"
+
+msgid "ui_community_invite_new"
+msgstr "Nuovo link"
+
+msgid "ui_community_invite_new_toast"
+msgstr "Nuovo link d'invito pronto"
+
+msgid "ui_community_change_role"
+msgstr "Cambia ruolo"
+
+msgid "ui_community_role_changed"
+msgstr "Il ruolo di {name} è cambiato"
+
+msgid "ui_community_member_removed"
+msgstr "{name} non è più un membro"
+
+msgid "ui_community_remove_body"
+msgstr "{name} uscirà dalla comunità e dalla sua chat."
+
+msgid "ui_community_no_members"
+msgstr "Ancora nessun membro"

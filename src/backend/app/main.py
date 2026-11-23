@@ -12,6 +12,8 @@ from app.core.redis_conn import close_redis
 from app.admin import routes as admin
 from app.auth import routes as auth
 from app.billing import routes as billing
+from app.board import routes as board
+from app.communities import routes as communities
 from app.conversations import routes as conversations
 from app.push import routes as devices
 from app.accounts import routes as me
@@ -46,7 +48,7 @@ async def i18n_middleware(request: Request, call_next):
     return await call_next(request)
 
 
-for module in (public, auth, me, conversations, messages, realtime, devices, social, billing, admin):
+for module in (public, auth, me, conversations, messages, realtime, devices, social, billing, admin, communities, board):
     app.include_router(module.router)
 
 

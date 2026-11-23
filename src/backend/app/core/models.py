@@ -200,6 +200,9 @@ class Conversation(Base):
     pinned_message_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     legacy_room_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)
     legacy_dm_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)
+    # Communities (channels): who joins (open | request | invite) and who publishes on the board (open | admins).
+    access_mode: Mapped[str] = mapped_column(String(16), default="open", server_default="open")
+    board_mode: Mapped[str] = mapped_column(String(16), default="open", server_default="open")
     __table_args__ = (UniqueConstraint("province", "age_range", "interest_id", name="uq_channel_key"),)
 
 
@@ -221,6 +224,8 @@ class ConversationMember(Base):
     banned: Mapped[bool] = mapped_column(Boolean, default=False)
     # Newest message already covered by an email, so a digest never repeats a message.
     email_notified_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
+    # Channel of a zone the person has left: kept (with its role) but hidden, silent and read-only until they return.
+    away: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
 
 class Message(Base):
@@ -283,9 +288,11 @@ class Device(Base):
 
 
 class Report(Base):
+    """A reported message or, with post_id, a reported board post."""
     __tablename__ = "reports"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    message_id: Mapped[int] = mapped_column(ForeignKey("messages.id", ondelete="CASCADE"), index=True)
+    message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id", ondelete="CASCADE"), index=True, nullable=True)
+    post_id: Mapped[int | None] = mapped_column(ForeignKey("board_posts.id", ondelete="CASCADE"), index=True, nullable=True)
     reporter_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     reason: Mapped[str] = mapped_column(String(64))
     details: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -293,7 +300,64 @@ class Report(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     resolved_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
-    __table_args__ = (UniqueConstraint("message_id", "reporter_id", name="uq_report_once"),)
+    __table_args__ = (UniqueConstraint("message_id", "reporter_id", name="uq_report_once"),
+                      UniqueConstraint("post_id", "reporter_id", name="uq_report_post_once"))
+
+
+# ---------------- Communities and board ----------------
+
+class CommunityRequest(Base):
+    """Someone asking to join a community in "request" mode."""
+    __tablename__ = "community_requests"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    status: Mapped[str] = mapped_column(String(16), default="pending", index=True)  # pending | accepted | rejected
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    resolved_by: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+
+
+class BoardPost(Base):
+    __tablename__ = "board_posts"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id", ondelete="CASCADE"), index=True)
+    author_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+    kind: Mapped[str] = mapped_column(String(16), index=True)  # thread | meetup | event | notice
+    title: Mapped[str] = mapped_column(String(160))
+    body: Mapped[str] = mapped_column(Text, default="")
+    starts_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True, index=True)
+    ends_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    place: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    place_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
+    capacity: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    link_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
+    cover_attachment_id: Mapped[int | None] = mapped_column(ForeignKey("attachments.id", ondelete="SET NULL"), nullable=True)
+    comments_mode: Mapped[str] = mapped_column(String(16), default="all")  # all | attendees | off
+    join_mode: Mapped[str] = mapped_column(String(16), default="open")  # open | approval
+    pinned: Mapped[bool] = mapped_column(Boolean, default=False)
+    closed: Mapped[bool] = mapped_column(Boolean, default=False)
+    chat_conversation_id: Mapped[int | None] = mapped_column(ForeignKey("conversations.id", ondelete="SET NULL"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class BoardAttendee(Base):
+    __tablename__ = "board_attendees"
+    post_id: Mapped[int] = mapped_column(ForeignKey("board_posts.id", ondelete="CASCADE"), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, index=True)
+    status: Mapped[str] = mapped_column(String(16))  # going | waitlist | pending
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class BoardComment(Base):
+    __tablename__ = "board_comments"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("board_posts.id", ondelete="CASCADE"), index=True)
+    author_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    body: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
 # ---------------- Subscriptions ----------------

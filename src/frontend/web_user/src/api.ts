@@ -1,5 +1,8 @@
 import { getLang, t } from "@lang";
-import type { BillingStatus, Conversation, Interest, Me, Member, Message, Plans, UserSummary } from "./types";
+import type {
+  Attendee, BillingStatus, Comment, Community, CommunityMember, Conversation, FeedFilter, Interest, Me, Member, Message, Plans, Post,
+  PostPage, UserSummary,
+} from "./types";
 
 function computeApiBase(): string {
   const envBase = import.meta.env.VITE_API_BASE as string | undefined;
@@ -93,6 +96,11 @@ export type MessagePage = {
   thread_root: Message | null;
 };
 
+function qs(params: Record<string, string | number | undefined | null>): string {
+  const q = Object.entries(params).filter(([, v]) => v != null && v !== "").map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join("&");
+  return q ? "?" + q : "";
+}
+
 export const api = {
   // auth
   login: (email: string, password: string) => req<{ access_token: string; password_temp: boolean }>("/auth/login", { method: "POST", json: { email, password } }),
@@ -161,6 +169,38 @@ export const api = {
   following: () => req<number[]>("/following"),
   feed: () => req<any[]>("/feed?limit=50"),
   post: (content: string) => req("/posts", { method: "POST", json: { content } }),
+
+  // communities
+  communities: (params: { q?: string; mine?: boolean } = {}) => req<Community[]>(`/communities${qs({ q: params.q, mine: params.mine ? 1 : undefined })}`),
+  community: (id: number) => req<Community>(`/communities/${id}`),
+  createCommunity: (payload: { title: string; description?: string; avatar_url?: string; access_mode: string; board_mode: string }) => req<Community>("/communities", { method: "POST", json: payload }),
+  updateCommunity: (id: number, payload: Record<string, unknown>) => req<Community>(`/communities/${id}`, { method: "PATCH", json: payload }),
+  joinCommunity: (id: number) => req<{ status: "joined" | "requested" }>(`/communities/${id}/join`, { method: "POST" }),
+  joinCommunityCode: (code: string) => req<{ status: "joined"; community_id: number }>(`/communities/join/${encodeURIComponent(code)}`, { method: "POST" }),
+  communityInvite: (id: number) => req<{ code: string; url: string }>(`/communities/${id}/invite`, { method: "POST" }),
+  leaveCommunity: (id: number) => req(`/communities/${id}/membership`, { method: "DELETE" }),
+  communityRequests: (id: number) => req<{ user: UserSummary; created_at: string }[]>(`/communities/${id}/requests`),
+  resolveCommunityRequest: (id: number, userId: number, accept: boolean) => req(`/communities/${id}/requests/${userId}/resolve`, { method: "POST", json: { accept } }),
+  communityMembers: (id: number, q = "") => req<CommunityMember[]>(`/communities/${id}/members${qs({ q })}`),
+  setCommunityRole: (id: number, userId: number, role: string) => req(`/communities/${id}/members/${userId}/role`, { method: "PUT", json: { role } }),
+  removeCommunityMember: (id: number, userId: number) => req(`/communities/${id}/members/${userId}`, { method: "DELETE" }),
+
+  // board and plans
+  boardFeed: (f: FeedFilter = {}) => req<PostPage>(`/board/feed${qs(f)}`),
+  communityPosts: (id: number, f: FeedFilter = {}) => req<PostPage>(`/communities/${id}/posts${qs({ ...f, community_id: undefined })}`),
+  createPost: (communityId: number, payload: Record<string, unknown>) => req<Post>(`/communities/${communityId}/posts`, { method: "POST", json: payload }),
+  boardPost: (id: number) => req<Post>(`/posts/${id}`),
+  updatePost: (id: number, payload: Record<string, unknown>) => req<Post>(`/posts/${id}`, { method: "PATCH", json: payload }),
+  deletePost: (id: number) => req(`/posts/${id}`, { method: "DELETE" }),
+  attend: (id: number) => req<{ status: "going" | "waitlist" | "pending" }>(`/posts/${id}/attend`, { method: "POST" }),
+  unattend: (id: number) => req(`/posts/${id}/attend`, { method: "DELETE" }),
+  attendees: (id: number) => req<Attendee[]>(`/posts/${id}/attendees`),
+  resolveAttendee: (id: number, userId: number, accept: boolean) => req(`/posts/${id}/attendees/${userId}/resolve`, { method: "POST", json: { accept } }),
+  comments: (id: number, beforeId?: number) => req<{ comments: Comment[]; has_more: boolean }>(`/posts/${id}/comments${qs({ before_id: beforeId })}`),
+  addComment: (id: number, body: string) => req<Comment>(`/posts/${id}/comments`, { method: "POST", json: { body } }),
+  deleteComment: (id: number) => req(`/comments/${id}`, { method: "DELETE" }),
+  reportPost: (id: number, reason: string, details?: string) => req(`/posts/${id}/report`, { method: "POST", json: { reason, details } }),
+  myPlans: (when: "upcoming" | "past" | "organizing") => req<Post[]>(`/me/plans?when=${when}`),
 
   // push
   pushConfig: () => req<{ webpush_public_key: string | null; fcm_enabled: boolean }>("/push/config"),

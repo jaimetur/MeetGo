@@ -3,7 +3,8 @@
 - Account emails (verification, password reset, password changed) always go out when mail is configured.
 - Notification emails follow the administration switch ("email_notifications" settings) and each person's choices
   (`users.email_prefs`): mentions and replies, unread messages, requests (friends, direct messages, groups) and, for
-  administrators, new reports. Moderation and plan reminders follow the switch only.
+  administrators, new reports; board plans (sign-ups, changes, the day-before reminder). Moderation and subscription
+  reminders follow the switch only.
 - Unread mentions and messages are not emailed one by one: every few minutes `digest_once` sends one email per person
   with what they have not read after `delay_minutes`, at most once every `cooldown_hours`, and never while they are
   connected. `conversation_members.email_notified_message_id` remembers what was already covered.
@@ -38,10 +39,11 @@ from app.billing.service import access_status
 
 logger = logging.getLogger("meetgo.email")
 
-KINDS = ("mentions", "messages", "requests", "reports")
-DEFAULT_PREFS = {"mentions": True, "messages": True, "requests": True, "reports": True}
+KINDS = ("mentions", "messages", "requests", "reports", "plans")
+DEFAULT_PREFS = {"mentions": True, "messages": True, "requests": True, "reports": True, "plans": True}
 # What a "stop these emails" link turns off.
-UNSUBSCRIBE_GROUPS = {"digest": ("mentions", "messages"), "requests": ("requests",), "reports": ("reports",)}
+UNSUBSCRIBE_GROUPS = {"digest": ("mentions", "messages"), "requests": ("requests",), "reports": ("reports",),
+                      "plans": ("plans",)}
 DEFAULT_CONFIG = {"enabled": True, "delay_minutes": 15, "cooldown_hours": 3}
 DIGEST_EVERY = 300  # seconds
 REMINDERS_EVERY = 6 * 3600
@@ -190,7 +192,7 @@ async def digest_once(db: AsyncSession) -> int:
             Message.sender_id.isnot(None), Message.sender_id != M.user_id,
             Message.deleted_at.is_(None), Message.kind != "system",
             Message.created_at <= now - delay, Message.created_at >= now - DIGEST_LOOKBACK,
-            M.banned.is_(False), M.notify != "none", or_(M.muted_until.is_(None), M.muted_until < now),
+            M.banned.is_(False), M.away.is_(False), M.notify != "none", or_(M.muted_until.is_(None), M.muted_until < now),
             User.email.isnot(None), User.email_verified.is_(True), User.is_banned.is_(False),
             or_(User.last_digest_email_at.is_(None), User.last_digest_email_at <= now - cooldown),
             or_(
@@ -299,6 +301,24 @@ async def reminders_once(db: AsyncSession) -> int:
     return sent
 
 
+# ---------- board plans: reminder the day before ----------
+
+async def plans_reminders_once(db: AsyncSession) -> int:
+    """Remind (push and email) the people going to a meetup or event that starts within the next 24 hours. Once per
+    plan, start time and person (EmailNotice), so a new date gets a new reminder. Returns how many were reminded."""
+    from app.board.service import plan_reminders_due, push_plan
+    sent = 0
+    for user, post, key, params in await plan_reminders_due(db):
+        if await db.get(EmailNotice, (user.id, key)):
+            continue
+        db.add(EmailNotice(user_id=user.id, key=key))  # recorded first: a failing mail server never repeats it
+        await db.commit()
+        push_plan([user], post, "email_plan_reminder", params)
+        await notify(db, user, "plans", "email_plan_reminder", params, f"/app/p/{post.id}")
+        sent += 1
+    return sent
+
+
 # ---------- background loop ----------
 
 _task: asyncio.Task | None = None
@@ -314,6 +334,7 @@ async def _loop() -> None:
                 continue
             async with SessionLocal() as db:
                 await digest_once(db)
+                await plans_reminders_once(db)
                 loop_time = asyncio.get_running_loop().time()
                 if loop_time - last_reminders >= REMINDERS_EVERY or last_reminders == 0.0:
                     last_reminders = loop_time

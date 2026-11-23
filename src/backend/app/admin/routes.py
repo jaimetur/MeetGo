@@ -14,7 +14,7 @@ from app.core.config import settings
 from app.core.deps import get_db, require_admin
 from app.core.i18n import t
 from app.core.models import (
-    AccessGrant, Conversation, DMRequest, Follow, FriendRequest, Friendship, Interest, Message, Post, PromoCode, Report,
+    AccessGrant, BoardPost, Conversation, DMRequest, Follow, FriendRequest, Friendship, Interest, Message, Post, PromoCode, Report,
     StripeSubscription, PlaySubscription, User, UserInterest, utcnow,
 )
 from app.core.schemas import (
@@ -30,6 +30,7 @@ from app.core.crypto import encrypt
 from app.mail.email import send_email
 from app.core.app_settings import app_base_url
 from app.messaging.service import delete_message
+from app.board.service import delete_post_data
 from app.accounts.common import me_out, normalize_phone, parse_dob
 
 try:
@@ -255,17 +256,33 @@ async def delete_interest(interest_id: int, db: AsyncSession = Depends(get_db), 
 @router.get("/reports", response_model=list[dict])
 async def list_reports(status: str = "open", db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     rows = (await db.execute(select(Report).where(Report.status == status).order_by(Report.id.desc()).limit(200))).scalars().all()
-    msgs = {m.id: m for m in (await db.execute(select(Message).where(Message.id.in_([r.message_id for r in rows])))).scalars().all()}
-    users = {u.id: u for u in (await db.execute(select(User).where(User.id.in_({r.reporter_id for r in rows})))).scalars().all()}
+    msgs = {m.id: m for m in (await db.execute(select(Message).where(Message.id.in_([r.message_id for r in rows if r.message_id])))).scalars().all()}
+    posts = {p.id: p for p in (await db.execute(select(BoardPost).where(BoardPost.id.in_([r.post_id for r in rows if r.post_id])))).scalars().all()}
+    user_ids = {r.reporter_id for r in rows} | {p.author_id for p in posts.values() if p.author_id}
+    users = {u.id: u for u in (await db.execute(select(User).where(User.id.in_(user_ids)))).scalars().all()}
     out = []
     for r in rows:
-        m = msgs.get(r.message_id)
-        shown = (await messages_out(db, [m], admin.id))[0] if m else None
-        if shown and m.deleted_at:
-            shown["original_body"] = m.body  # moderators see what was removed
-        out.append({"id": r.id, "reason": r.reason, "details": r.details, "status": r.status,
-                    "created_at": r.created_at.isoformat(), "reporter": user_summary(users.get(r.reporter_id)),
-                    "message": shown})
+        item = {"id": r.id, "kind": "post" if r.post_id else "message", "reason": r.reason, "details": r.details,
+                "status": r.status, "created_at": r.created_at.isoformat(), "reporter": user_summary(users.get(r.reporter_id)),
+                "message": None, "post": None}
+        if r.post_id:
+            p = posts.get(r.post_id)
+            if p:
+                item["post"] = {"id": p.id, "community_id": p.conversation_id, "kind": p.kind, "title": p.title,
+                                "body": p.body, "author": user_summary(users.get(p.author_id)),
+                                "created_at": p.created_at.isoformat(), "deleted": bool(p.deleted_at)}
+                # The same shape as a message, so the moderation queue shows it as it is.
+                item["message"] = {"id": p.id, "conversation_id": p.conversation_id, "sender": item["post"]["author"],
+                                   "body": f"{p.title}\n\n{p.body or ''}".strip(), "created_at": item["post"]["created_at"],
+                                   "deleted": bool(p.deleted_at), "original_body": p.body if p.deleted_at else None,
+                                   "attachments": []}
+        else:
+            m = msgs.get(r.message_id)
+            shown = (await messages_out(db, [m], admin.id))[0] if m else None
+            if shown and m.deleted_at:
+                shown["original_body"] = m.body  # moderators see what was removed
+            item["message"] = shown
+        out.append(item)
     return out
 
 
@@ -275,11 +292,18 @@ async def resolve_report(report_id: int, payload: ReportResolveIn, db: AsyncSess
     report = await db.get(Report, report_id)
     if not report:
         raise HTTPException(404, t("err_request_not_found"))
-    if payload.delete_message:
-        msg = await db.get(Message, report.message_id)
-        if msg:
-            await delete_message(db, msg, admin, None)
-    await db.execute(update(Report).where(Report.message_id == report.message_id, Report.status == "open").values(
+    if report.post_id:
+        post = await db.get(BoardPost, report.post_id)
+        if payload.delete_message and post and not post.deleted_at:
+            await delete_post_data(db, post)
+        same = Report.post_id == report.post_id
+    else:
+        if payload.delete_message:
+            msg = await db.get(Message, report.message_id)
+            if msg:
+                await delete_message(db, msg, admin, None)
+        same = Report.message_id == report.message_id
+    await db.execute(update(Report).where(same, Report.status == "open").values(
         status=payload.status, resolved_by_id=admin.id, resolved_at=utcnow()))
     await db.commit()
     return {"ok": True}

@@ -7,7 +7,7 @@ import type { Conversation, Message, UserSummary } from "../types";
 import { shortWhen } from "../util";
 import { Avatar, ConvIcon, Icon, Modal, Wordmark, convTitle } from "./common";
 
-type Filter = "all" | "unread" | "mentions" | "channel" | "group" | "dm";
+type Filter = "all" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
 
 export function Sidebar({ activeId }: { activeId: number | null }) {
   const conversations = useStore((s) => s.conversations);
@@ -18,6 +18,10 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
   const [q, setQ] = useState("");
   const [found, setFound] = useState<Message[] | null>(null);
   const [newChat, setNewChat] = useState(false);
+  // Plan chats are groups: the ones of my plans are listed apart.
+  const myPlans = useStore((s) => s.myPlans);
+  const planChats = useMemo(() => new Set((myPlans || []).map((p) => p.chat_conversation_id).filter((x): x is number => !!x)), [myPlans]);
+  const kindOf = (c: Conversation): Filter => (c.kind === "group" && planChats.has(c.id) ? "plan" : c.kind);
 
   useEffect(() => {
     setFound(null);
@@ -30,19 +34,20 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     if (q && !convTitle(c).toLowerCase().includes(q.toLowerCase())) return false;
     if (filter === "unread") return c.unread_count > 0;
     if (filter === "mentions") return c.mention_count > 0;
-    if (filter !== "all") return c.kind === filter;
+    if (filter !== "all") return kindOf(c) === filter;
     return true;
   });
   const zone = all.find((c) => c.kind === "channel")?.subtitle;
   const sections: [string, Conversation[]][] = [
     [t("ui_sec_pinned"), visible.filter((c) => c.pinned)],
-    [zone ? t("ui_sec_channels_zone", { zone }) : t("ui_sec_channels"), visible.filter((c) => !c.pinned && c.kind === "channel")],
-    [t("ui_sec_groups"), visible.filter((c) => !c.pinned && c.kind === "group")],
+    [zone ? t("ui_sec_communities_zone", { zone }) : t("ui_sec_communities"), visible.filter((c) => !c.pinned && c.kind === "channel")],
+    [t("ui_sec_plans"), visible.filter((c) => !c.pinned && kindOf(c) === "plan")],
+    [t("ui_sec_groups"), visible.filter((c) => !c.pinned && kindOf(c) === "group")],
     [t("ui_sec_direct"), visible.filter((c) => !c.pinned && c.kind === "dm")],
   ];
   const filters: [Filter, string][] = [
     ["all", t("ui_f_all")], ["unread", t("ui_f_unread")], ["mentions", t("ui_f_mentions")],
-    ["channel", t("ui_f_channels")], ["group", t("ui_f_groups")], ["dm", t("ui_f_direct")],
+    ["channel", t("ui_f_communities")], ["plan", t("ui_f_plans")], ["group", t("ui_f_groups")], ["dm", t("ui_f_direct")],
   ];
 
   return (
@@ -81,8 +86,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
             {all.length ? t("ui_no_results") : (
               <>
                 <h3>{t("ui_empty_title")}</h3>
-                <p>{t("ui_empty_body")}</p>
-                <button className="btn pri" onClick={() => navigate("/explore")}>{t("ui_explore_channels")}</button>
+                <p>{t("ui_chats_empty_body")}</p>
+                <button className="btn pri" onClick={() => navigate("/communities")}>{t("ui_board_find_communities")}</button>
               </>
             )}
           </div>

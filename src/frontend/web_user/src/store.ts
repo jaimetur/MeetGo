@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { api } from "./api";
-import type { BillingStatus, Conversation, Me, Message, Reaction } from "./types";
+import type { BillingStatus, Community, Conversation, Me, Message, Post, Reaction } from "./types";
 
 export type MessageList = { items: Message[]; hasMoreBefore: boolean; loaded: boolean; loading: boolean };
 export type Thread = { root: Message | null; items: Message[]; loaded: boolean };
@@ -22,6 +22,9 @@ export type State = {
   paywall: boolean;
   // Subscriptions switched on in the administration; while off, nothing about plans is shown.
   subscriptions: boolean;
+  // Board: my upcoming plans and my communities (right column, Chats filters, Publish). null until loaded.
+  myPlans: Post[] | null;
+  myCommunities: Community[] | null;
 };
 
 const initial: State = {
@@ -39,6 +42,8 @@ const initial: State = {
   toasts: [],
   paywall: false,
   subscriptions: false,
+  myPlans: null,
+  myCommunities: null,
 };
 
 let state: State = initial;
@@ -250,4 +255,37 @@ export function removeLocal(conversationId: number, clientId: string) {
     if (!list) return {};
     return { messages: { ...s.messages, [conversationId]: { ...list, items: list.items.filter((x) => x.client_id !== clientId) } } };
   });
+}
+
+// ---------- board: my plans and my communities ----------
+/** Upcoming plans I go to or organise (both lists, without repeats, by date). Empty if the API is not there. */
+export async function loadMyPlans() {
+  try {
+    const [going, organizing] = await Promise.all([api.myPlans("upcoming"), api.myPlans("organizing").catch(() => [] as Post[])]);
+    const byId = new Map<number, Post>();
+    [...going, ...organizing].forEach((p) => byId.set(p.id, p));
+    const list = [...byId.values()].filter((p) => !p.starts_at || new Date(p.ends_at || p.starts_at) >= new Date(Date.now() - 3 * 3600000));
+    list.sort((a, b) => (a.starts_at || "").localeCompare(b.starts_at || ""));
+    setState({ myPlans: list });
+  } catch {
+    setState((s) => ({ myPlans: s.myPlans || [] }));
+  }
+}
+
+export async function loadMyCommunities() {
+  try {
+    setState({ myCommunities: await api.communities({ mine: true }) });
+  } catch {
+    setState((s) => ({ myCommunities: s.myCommunities || [] }));
+  }
+}
+
+let planTimer: number | null = null;
+/** Several changes in a row reload the plans once. */
+export function refreshMyPlansSoon() {
+  if (planTimer) window.clearTimeout(planTimer);
+  planTimer = window.setTimeout(() => {
+    planTimer = null;
+    loadMyPlans();
+  }, 600);
 }

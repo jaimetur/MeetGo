@@ -2857,3 +2857,870 @@ msgstr "Datenschutz und Sicherheit"
 
 msgid "ui_section_push"
 msgstr "Benachrichtigungen auf diesem Gerät"
+
+msgid "email_community_accepted_body"
+msgstr "Deine Anfrage, der Community {community} beizutreten, wurde angenommen."
+
+msgid "email_community_accepted_button"
+msgstr "Community öffnen"
+
+msgid "email_community_accepted_subject"
+msgstr "Willkommen bei {community}"
+
+msgid "email_community_accepted_title"
+msgstr "Anfrage angenommen"
+
+msgid "email_community_request_body"
+msgstr "{name} möchte der Community {community} beitreten. Nimm die Anfrage auf der Community-Seite an oder lehne sie ab."
+
+msgid "email_community_request_button"
+msgstr "Anfragen ansehen"
+
+msgid "email_community_request_subject"
+msgstr "{name} möchte {community} beitreten"
+
+msgid "email_community_request_title"
+msgstr "Beitrittsanfrage"
+
+msgid "email_footer_plans"
+msgstr "Du erhältst diese E-Mail, weil du bei MeetGo an Plänen teilnimmst oder welche organisierst."
+
+msgid "email_plan_accepted_body"
+msgstr "Deine Anfrage, bei „{plan}“ ({date}) dabei zu sein, wurde angenommen."
+
+msgid "email_plan_accepted_button"
+msgstr "Plan ansehen"
+
+msgid "email_plan_accepted_subject"
+msgstr "Du bist dabei: „{plan}“"
+
+msgid "email_plan_accepted_title"
+msgstr "Anfrage angenommen"
+
+msgid "email_plan_cancelled_body"
+msgstr "Der Plan „{plan}“ ({date}) wurde abgesagt."
+
+msgid "email_plan_cancelled_subject"
+msgstr "„{plan}“ wurde abgesagt"
+
+msgid "email_plan_cancelled_title"
+msgstr "Plan abgesagt"
+
+msgid "email_plan_changed_body"
+msgstr "Der Plan „{plan}“ hat neue Details: {date}, {place}."
+
+msgid "email_plan_changed_button"
+msgstr "Plan ansehen"
+
+msgid "email_plan_changed_subject"
+msgstr "„{plan}“ hat sich geändert"
+
+msgid "email_plan_changed_title"
+msgstr "Plan aktualisiert"
+
+msgid "email_plan_joined_body"
+msgstr "{name} hat sich für deinen Plan „{plan}“ ({date}) angemeldet."
+
+msgid "email_plan_joined_button"
+msgstr "Plan ansehen"
+
+msgid "email_plan_joined_subject"
+msgstr "{name} kommt zu „{plan}“"
+
+msgid "email_plan_joined_title"
+msgstr "Neue Anmeldung"
+
+msgid "email_plan_promoted_body"
+msgstr "Jemand hat „{plan}“ ({date}) verlassen und du bist von der Warteliste nachgerückt: Du bist dabei."
+
+msgid "email_plan_promoted_button"
+msgstr "Plan ansehen"
+
+msgid "email_plan_promoted_subject"
+msgstr "Ein Platz ist frei geworden: „{plan}“"
+
+msgid "email_plan_promoted_title"
+msgstr "Du bist dabei"
+
+msgid "email_plan_reminder_body"
+msgstr "Denk dran: „{plan}“ findet am {date} statt, {place}."
+
+msgid "email_plan_reminder_button"
+msgstr "Plan ansehen"
+
+msgid "email_plan_reminder_subject"
+msgstr "Morgen: „{plan}“"
+
+msgid "email_plan_reminder_title"
+msgstr "Dein Plan steht bald an"
+
+msgid "email_plan_request_body"
+msgstr "{name} möchte bei deinem Plan „{plan}“ ({date}) dabei sein. Nimm die Anfrage auf der Plan-Seite an oder lehne sie ab."
+
+msgid "email_plan_request_button"
+msgstr "Anfrage ansehen"
+
+msgid "email_plan_request_subject"
+msgstr "{name} möchte bei „{plan}“ dabei sein"
+
+msgid "email_plan_request_title"
+msgstr "Anfrage für deinen Plan"
+
+msgid "err_attendee_not_found"
+msgstr "Von dieser Person liegt keine offene Anfrage vor"
+
+msgid "err_board_admins_only"
+msgstr "Nur der Besitzer, Admins und Moderatoren veröffentlichen auf dieser Pinnwand"
+
+msgid "err_comment_not_found"
+msgstr "Kommentar nicht gefunden"
+
+msgid "err_comments_attendees_only"
+msgstr "Nur die Teilnehmenden können kommentieren"
+
+msgid "err_comments_off"
+msgstr "Kommentare sind für diesen Beitrag deaktiviert"
+
+msgid "err_community_closed"
+msgstr "Diese Community erfordert eine Genehmigung oder Einladung: Öffne sie, um den Beitritt anzufragen"
+
+msgid "err_community_invite_only"
+msgstr "Diese Community ist nur mit Einladung zugänglich"
+
+msgid "err_community_not_found"
+msgstr "Community nicht gefunden"
+
+msgid "err_community_other_zone"
+msgstr "Diese Community gehört zu einer anderen Gegend: Nur Leute aus ihrer Provinz und Altersgruppe können beitreten"
+
+msgid "err_invalid_filter"
+msgstr "Ungültiger Filter"
+
+msgid "err_join_community_first"
+msgstr "Tritt zuerst der Community bei"
+
+msgid "err_not_a_plan"
+msgstr "Nur Treffen und Events haben Teilnehmende"
+
+msgid "err_organiser_cannot_leave"
+msgstr "Die organisierende Person kann den eigenen Plan nicht verlassen: Sag ihn stattdessen ab"
+
+msgid "err_post_closed"
+msgstr "Dieser Beitrag ist geschlossen"
+
+msgid "err_post_dates"
+msgstr "Das Ende kann nicht vor dem Beginn liegen"
+
+msgid "err_post_not_found"
+msgstr "Beitrag nicht gefunden"
+
+msgid "err_post_past"
+msgstr "Dieser Plan hat bereits stattgefunden"
+
+msgid "err_post_starts_at_required"
+msgstr "Treffen und Events brauchen ein Startdatum"
+
+msgid "err_read_only_chat"
+msgstr "Dieser Plan wurde abgesagt: Sein Chat ist schreibgeschützt"
+
+msgid "sys_plan_cancelled"
+msgstr "Der Plan „{plan}“ wurde abgesagt"
+
+msgid "ui_board_back_home"
+msgstr "Zurück zur Pinnwand"
+
+msgid "ui_board_empty_body"
+msgstr "In deinen Communities hat noch niemand etwas gepostet. Sei der Erste: Schlag einen Plan vor und schau, wer mitmacht."
+
+msgid "ui_board_empty_filter_body"
+msgstr "Kein Beitrag passt zu diesem Filter. Probiere einen anderen oder schlag selbst einen Plan vor."
+
+msgid "ui_board_empty_filter_title"
+msgstr "Hier ist gerade nichts"
+
+msgid "ui_board_empty_join_body"
+msgstr "Deine Pinnwand zeigt die Pläne, Events und Ankündigungen der Communities, denen du angehörst."
+
+msgid "ui_board_empty_join_title"
+msgstr "Tritt einer Community bei, um loszulegen"
+
+msgid "ui_board_empty_title"
+msgstr "Auf der Pinnwand ist es ruhig"
+
+msgid "ui_board_error"
+msgstr "Das konnte nicht geladen werden"
+
+msgid "ui_board_f_all"
+msgstr "Alle"
+
+msgid "ui_board_f_events"
+msgstr "Events"
+
+msgid "ui_board_f_meetups"
+msgstr "Treffen"
+
+msgid "ui_board_f_notices"
+msgstr "Ankündigungen"
+
+msgid "ui_board_f_today"
+msgstr "Heute"
+
+msgid "ui_board_f_week"
+msgstr "Diese Woche"
+
+msgid "ui_board_f_weekend"
+msgstr "Wochenende"
+
+msgid "ui_board_find_communities"
+msgstr "Communities finden"
+
+msgid "ui_board_lead"
+msgstr "Pläne und Neuigkeiten aus deinen Communities in {zone}"
+
+msgid "ui_board_load_more"
+msgstr "Mehr laden"
+
+msgid "ui_board_new_posts"
+msgstr "Neue Beiträge"
+
+msgid "ui_board_publish_plan"
+msgstr "Plan vorschlagen"
+
+msgid "ui_board_retry"
+msgstr "Erneut versuchen"
+
+msgid "ui_board_see_all"
+msgstr "Alles ansehen"
+
+msgid "ui_board_title"
+msgstr "Deine Pinnwand"
+
+msgid "ui_chats_empty_body"
+msgstr "Tritt Communities in deiner Gegend bei, um mit ihnen zu chatten, oder melde dich für einen Plan an, um seinem Chat beizutreten."
+
+msgid "ui_community_access_invite"
+msgstr "Nur mit Einladung"
+
+msgid "ui_community_access_invite_hint"
+msgstr "Nur mit dem Einladungslink. Für andere wird sie nicht aufgelistet."
+
+msgid "ui_community_access_open"
+msgstr "Offen"
+
+msgid "ui_community_access_open_hint"
+msgstr "Alle in deiner Gegend können beitreten."
+
+msgid "ui_community_access_request"
+msgstr "Auf Anfrage"
+
+msgid "ui_community_access_request_hint"
+msgstr "Leute fragen den Beitritt an und ein Admin oder Moderator nimmt sie an."
+
+msgid "ui_community_ask_join"
+msgstr "Beitritt anfragen"
+
+msgid "ui_community_board_admins"
+msgstr "Nur Admins"
+
+msgid "ui_community_board_admins_hint"
+msgstr "Nur der Besitzer, Admins und Moderatoren veröffentlichen; Mitglieder melden sich an und kommentieren."
+
+msgid "ui_community_board_empty"
+msgstr "Auf dieser Pinnwand ist noch nichts"
+
+msgid "ui_community_board_empty_body"
+msgstr "Schlag den ersten Plan vor und bring die Leute in Bewegung."
+
+msgid "ui_community_board_open"
+msgstr "Mitglieder"
+
+msgid "ui_community_board_open_hint"
+msgstr "Jedes Mitglied kann Pläne vorschlagen und Beiträge posten."
+
+msgid "ui_community_board_readonly"
+msgstr "Nur die Admins dieser Community veröffentlichen auf ihrer Pinnwand"
+
+msgid "ui_community_change_role"
+msgstr "Rolle ändern"
+
+msgid "ui_community_chat_join_body"
+msgstr "Tritt der Community bei, um in Echtzeit mit ihren Leuten zu chatten."
+
+msgid "ui_community_chat_join_title"
+msgstr "Der Chat ist für Mitglieder"
+
+msgid "ui_community_create"
+msgstr "Community erstellen"
+
+msgid "ui_community_create_button"
+msgstr "Erstellen"
+
+msgid "ui_community_create_lead"
+msgstr "Sie ist für Leute aus deiner Gegend und Altersgruppe. Du wirst ihr Besitzer."
+
+msgid "ui_community_created_toast"
+msgstr "Community erstellt! Lade Leute ein, beizutreten."
+
+msgid "ui_community_desc_ph"
+msgstr "Worum es geht und für wen sie ist"
+
+msgid "ui_community_discover"
+msgstr "Entdecken"
+
+msgid "ui_community_empty_body"
+msgstr "Erstelle die erste und lade Leute ein, die deine Interessen teilen."
+
+msgid "ui_community_empty_title"
+msgstr "Noch keine Communities in deiner Gegend"
+
+msgid "ui_community_f_access"
+msgstr "Wer beitreten kann"
+
+msgid "ui_community_f_board"
+msgstr "Wer auf der Pinnwand veröffentlicht"
+
+msgid "ui_community_f_rules"
+msgstr "Regeln"
+
+msgid "ui_community_f_title"
+msgstr "Name"
+
+msgid "ui_community_invite_create"
+msgstr "Einladungslink erstellen"
+
+msgid "ui_community_invite_hint"
+msgstr "Alle in deiner Gegend mit diesem Link treten direkt bei. Ein neuer Link macht den alten ungültig."
+
+msgid "ui_community_invite_new"
+msgstr "Neuer Link"
+
+msgid "ui_community_invite_new_toast"
+msgstr "Neuer Einladungslink bereit"
+
+msgid "ui_community_join_to_see"
+msgstr "Tritt der Community bei, um bei ihren Plänen mitzumachen."
+
+msgid "ui_community_joined_link_toast"
+msgstr "Du bist der Community beigetreten"
+
+msgid "ui_community_joined_toast"
+msgstr "Willkommen bei {name}!"
+
+msgid "ui_community_lead"
+msgstr "Leute aus {zone}, die mögen, was du magst"
+
+msgid "ui_community_leave"
+msgstr "Community verlassen"
+
+msgid "ui_community_leave_body"
+msgstr "Du siehst die Pinnwand und den Chat von {name} nicht mehr."
+
+msgid "ui_community_leave_owner_body"
+msgstr "Du bist der Besitzer: Die Besitzerrolle geht an den dienstältesten Admin oder, falls es keinen gibt, an das dienstälteste Mitglied."
+
+msgid "ui_community_left_toast"
+msgstr "Du hast die Community verlassen"
+
+msgid "ui_community_member_removed"
+msgstr "{name} ist kein Mitglied mehr"
+
+msgid "ui_community_no_match"
+msgstr "Keine Community passt. Du kannst sie erstellen."
+
+msgid "ui_community_no_members"
+msgstr "Noch keine Mitglieder"
+
+msgid "ui_community_none_yet"
+msgstr "Du bist noch keiner Community beigetreten."
+
+msgid "ui_community_not_found"
+msgstr "Diese Community existiert nicht oder liegt nicht in deiner Gegend"
+
+msgid "ui_community_online_n"
+msgstr "{n} online"
+
+msgid "ui_community_plans_n"
+msgstr "{n} Pläne"
+
+msgid "ui_community_publish_prompt"
+msgstr "Schlag {name} einen Plan vor…"
+
+msgid "ui_community_remove_body"
+msgstr "{name} verlässt die Community und ihren Chat."
+
+msgid "ui_community_request_accepted"
+msgstr "Angenommen: Die Person ist jetzt Mitglied"
+
+msgid "ui_community_request_rejected"
+msgstr "Anfrage abgelehnt"
+
+msgid "ui_community_requested"
+msgstr "Anfrage gesendet"
+
+msgid "ui_community_requested_toast"
+msgstr "Anfrage gesendet. Du wirst benachrichtigt, wenn du angenommen wirst."
+
+msgid "ui_community_requests_n"
+msgstr "Beitrittsanfragen ({n})"
+
+msgid "ui_community_role_changed"
+msgstr "Die Rolle von {name} wurde geändert"
+
+msgid "ui_community_rules"
+msgstr "Regeln"
+
+msgid "ui_community_search_ph"
+msgstr "Communities suchen"
+
+msgid "ui_community_settings"
+msgstr "Community-Einstellungen"
+
+msgid "ui_community_tab_board"
+msgstr "Pinnwand"
+
+msgid "ui_community_tab_chat"
+msgstr "Chat"
+
+msgid "ui_community_tab_members"
+msgstr "Mitglieder"
+
+msgid "ui_community_title"
+msgstr "Communities"
+
+msgid "ui_community_title_ph"
+msgstr "z. B. Samstagsläufer"
+
+msgid "ui_community_yours"
+msgstr "Deine Communities"
+
+msgid "ui_email_plans"
+msgstr "Meine Pläne: Anmeldungen, Änderungen und eine Erinnerung am Vortag"
+
+msgid "ui_f_communities"
+msgstr "Communities"
+
+msgid "ui_f_plans"
+msgstr "Pläne"
+
+msgid "ui_nav_communities"
+msgstr "Communities"
+
+msgid "ui_nav_home"
+msgstr "Start"
+
+msgid "ui_nav_plans"
+msgstr "Pläne"
+
+msgid "ui_nav_profile"
+msgstr "Profil"
+
+msgid "ui_nav_publish"
+msgstr "Posten"
+
+msgid "ui_plans_browse_board"
+msgstr "Pinnwand durchstöbern"
+
+msgid "ui_plans_empty_going_body"
+msgstr "Melde dich auf der Pinnwand für ein Treffen oder Event an und es erscheint hier, mit seinem Chat."
+
+msgid "ui_plans_empty_going_title"
+msgstr "Noch keine Pläne"
+
+msgid "ui_plans_empty_org_body"
+msgstr "Schlag deiner Community einen Plan vor: einen Spaziergang, ein Abendessen, ein Spiel…"
+
+msgid "ui_plans_empty_org_title"
+msgstr "Du organisierst nichts"
+
+msgid "ui_plans_empty_past_body"
+msgstr "Die Pläne, bei denen du warst, bleiben hier, bereit zum Wiederholen."
+
+msgid "ui_plans_empty_past_title"
+msgstr "Keine vergangenen Pläne"
+
+msgid "ui_plans_going"
+msgstr "Dabei"
+
+msgid "ui_plans_later"
+msgstr "Später"
+
+msgid "ui_plans_lead"
+msgstr "Treffen und Events, bei denen du dabei bist oder die du organisierst, jeweils mit eigenem Chat"
+
+msgid "ui_plans_next"
+msgstr "Deine nächsten Pläne"
+
+msgid "ui_plans_next_empty"
+msgstr "Du hast dich noch für nichts angemeldet."
+
+msgid "ui_plans_organising"
+msgstr "Organisiert"
+
+msgid "ui_plans_past"
+msgstr "Vergangen"
+
+msgid "ui_plans_this_week"
+msgstr "Diese Woche"
+
+msgid "ui_plans_title"
+msgstr "Deine Pläne"
+
+msgid "ui_post_accepted_toast"
+msgstr "Angenommen"
+
+msgid "ui_post_approval_note"
+msgstr "Die organisierende Person nimmt Teilnehmende an"
+
+msgid "ui_post_ask_join"
+msgstr "Beitritt anfragen"
+
+msgid "ui_post_cancel_request"
+msgstr "Anfrage zurückziehen"
+
+msgid "ui_post_close"
+msgstr "Anmeldungen und Kommentare schließen"
+
+msgid "ui_post_closed"
+msgstr "Geschlossen"
+
+msgid "ui_post_closed_note"
+msgstr "Geschlossen: keine Kommentare oder Anmeldungen mehr"
+
+msgid "ui_post_closed_toast"
+msgstr "Geschlossen"
+
+msgid "ui_post_comment_ph"
+msgstr "Schreibe einen Kommentar…"
+
+msgid "ui_post_comments"
+msgstr "Kommentare"
+
+msgid "ui_post_comments_attendees"
+msgstr "Nur Teilnehmende können kommentieren"
+
+msgid "ui_post_comments_cant"
+msgstr "Du kannst diesen Beitrag nicht kommentieren"
+
+msgid "ui_post_comments_off"
+msgstr "Kommentare sind für diesen Beitrag deaktiviert"
+
+msgid "ui_post_copy_link"
+msgstr "Link kopieren"
+
+msgid "ui_post_delete"
+msgstr "Beitrag löschen"
+
+msgid "ui_post_delete_body"
+msgstr "Der Beitrag und seine Kommentare verschwinden von der Pinnwand."
+
+msgid "ui_post_delete_plan_body"
+msgstr "Der Plan wird abgesagt und alle Teilnehmenden werden benachrichtigt. Sein Chat bleibt bestehen, schreibgeschützt."
+
+msgid "ui_post_deleted_toast"
+msgstr "Dieser Beitrag wurde gelöscht"
+
+msgid "ui_post_edit"
+msgstr "Bearbeiten"
+
+msgid "ui_post_finished"
+msgstr "Beendet"
+
+msgid "ui_post_free_n"
+msgstr "{n} frei"
+
+msgid "ui_post_full"
+msgstr "Voll"
+
+msgid "ui_post_going"
+msgstr "Dabei"
+
+msgid "ui_post_going_n"
+msgstr "{n} dabei"
+
+msgid "ui_post_join_waitlist"
+msgstr "Auf die Warteliste"
+
+msgid "ui_post_joined_toast"
+msgstr "Du bist dabei! Du bist jetzt im Plan-Chat."
+
+msgid "ui_post_kind_event"
+msgstr "Event"
+
+msgid "ui_post_kind_meetup"
+msgstr "Treffen"
+
+msgid "ui_post_kind_notice"
+msgstr "Ankündigung"
+
+msgid "ui_post_kind_thread"
+msgstr "Diskussion"
+
+msgid "ui_post_leave"
+msgstr "Ich kann nicht"
+
+msgid "ui_post_leave_waitlist"
+msgstr "Warteliste verlassen"
+
+msgid "ui_post_left_toast"
+msgstr "Du bist nicht mehr dabei"
+
+msgid "ui_post_no_comments"
+msgstr "Noch keine Kommentare. Stell eine Frage oder sag Hallo."
+
+msgid "ui_post_nobody_yet"
+msgstr "Noch niemand. Sei der Erste!"
+
+msgid "ui_post_not_found"
+msgstr "Dieser Beitrag existiert nicht oder ist für dich nicht sichtbar"
+
+msgid "ui_post_older_comments"
+msgstr "Frühere Kommentare"
+
+msgid "ui_post_on_waitlist"
+msgstr "Auf der Warteliste"
+
+msgid "ui_post_open_chat"
+msgstr "Plan-Chat öffnen"
+
+msgid "ui_post_organised_by"
+msgstr "Organisiert von {name}"
+
+msgid "ui_post_organiser"
+msgstr "Organisation"
+
+msgid "ui_post_pending_note"
+msgstr "Warte auf die Annahme durch die organisierende Person."
+
+msgid "ui_post_pending_requests"
+msgstr "Warten auf Genehmigung"
+
+msgid "ui_post_pending_toast"
+msgstr "Anfrage gesendet. Die organisierende Person bestätigt deinen Platz."
+
+msgid "ui_post_people_going"
+msgstr "Teilnehmende"
+
+msgid "ui_post_pin"
+msgstr "An die Pinnwand heften"
+
+msgid "ui_post_pinned"
+msgstr "Angeheftet"
+
+msgid "ui_post_pinned_toast"
+msgstr "An die Pinnwand geheftet"
+
+msgid "ui_post_places_of"
+msgstr "{n} von {total} Plätzen"
+
+msgid "ui_post_posted_by"
+msgstr "Gepostet von {name}"
+
+msgid "ui_post_rejected_toast"
+msgstr "Abgelehnt"
+
+msgid "ui_post_reopen"
+msgstr "Wieder öffnen"
+
+msgid "ui_post_reopened_toast"
+msgstr "Wieder geöffnet"
+
+msgid "ui_post_repeat"
+msgstr "Wiederholen"
+
+msgid "ui_post_report_details"
+msgstr "Details (optional)"
+
+msgid "ui_post_report_title"
+msgstr "Beitrag melden"
+
+msgid "ui_post_request_cancelled"
+msgstr "Anfrage zurückgezogen"
+
+msgid "ui_post_request_sent"
+msgstr "Anfrage gesendet"
+
+msgid "ui_post_see_all"
+msgstr "Alle ansehen"
+
+msgid "ui_post_see_map"
+msgstr "Karte ansehen"
+
+msgid "ui_post_sign_up"
+msgstr "Anmelden"
+
+msgid "ui_post_tickets"
+msgstr "Tickets und weitere Infos"
+
+msgid "ui_post_unpin"
+msgstr "Lösen"
+
+msgid "ui_post_unpinned_toast"
+msgstr "Gelöst"
+
+msgid "ui_post_waitlist"
+msgstr "Warteliste"
+
+msgid "ui_post_waitlist_n"
+msgstr "{n} warten"
+
+msgid "ui_post_waitlist_note"
+msgstr "Du bekommst automatisch einen Platz, wenn jemand absagt."
+
+msgid "ui_post_waitlist_toast"
+msgstr "Es ist voll: Du stehst auf der Warteliste und rückst nach, wenn jemand absagt."
+
+msgid "ui_post_you_organise"
+msgstr "Du organisierst"
+
+msgid "ui_publish_approval"
+msgstr "Teilnehmende genehmigen"
+
+msgid "ui_publish_approval_hint"
+msgstr "Leute fragen einen Platz an und du nimmst sie an"
+
+msgid "ui_publish_body_ph"
+msgstr "Erzähl, worum es geht, was man mitbringen soll, welches Niveau…"
+
+msgid "ui_publish_button"
+msgstr "Veröffentlichen"
+
+msgid "ui_publish_choose_community"
+msgstr "Community wählen"
+
+msgid "ui_publish_comments_all"
+msgstr "Alle"
+
+msgid "ui_publish_comments_attendees"
+msgstr "Teilnehmende"
+
+msgid "ui_publish_comments_off"
+msgstr "Niemand"
+
+msgid "ui_publish_cover_add"
+msgstr "Foto hinzufügen"
+
+msgid "ui_publish_cover_change"
+msgstr "Foto ändern"
+
+msgid "ui_publish_date_past"
+msgstr "Das Datum liegt schon in der Vergangenheit"
+
+msgid "ui_publish_done_toast"
+msgstr "Veröffentlicht! Deine Community kann es jetzt sehen."
+
+msgid "ui_publish_edit_title"
+msgstr "Beitrag bearbeiten"
+
+msgid "ui_publish_end_before"
+msgstr "Es endet, bevor es beginnt"
+
+msgid "ui_publish_f_body"
+msgstr "Beschreibung"
+
+msgid "ui_publish_f_cover"
+msgstr "Titelbild"
+
+msgid "ui_publish_f_date"
+msgstr "Tag"
+
+msgid "ui_publish_f_end_date"
+msgstr "Ende (Tag)"
+
+msgid "ui_publish_f_end_time"
+msgstr "Ende (Uhrzeit)"
+
+msgid "ui_publish_f_link"
+msgstr "Link zu Tickets oder Infos (optional)"
+
+msgid "ui_publish_f_place"
+msgstr "Ort"
+
+msgid "ui_publish_f_place_url"
+msgstr "Kartenlink (optional)"
+
+msgid "ui_publish_f_time"
+msgstr "Uhrzeit"
+
+msgid "ui_publish_f_title"
+msgstr "Titel"
+
+msgid "ui_publish_hint_event"
+msgstr "Etwas Größeres: mit Titelbild, Endzeit und einem Link für Tickets."
+
+msgid "ui_publish_hint_meetup"
+msgstr "Ein Plan mit Datum, Ort und, wenn du willst, begrenzter Platzzahl."
+
+msgid "ui_publish_hint_notice"
+msgstr "Eine Frage, eine Empfehlung oder eine Ankündigung, ohne Datum."
+
+msgid "ui_publish_hint_thread"
+msgstr "Starte mit deiner Community ein Gespräch zu einem Thema."
+
+msgid "ui_publish_kind"
+msgstr "Beitragsart"
+
+msgid "ui_publish_limit"
+msgstr "Plätze begrenzen"
+
+msgid "ui_publish_limit_hint"
+msgstr "Wenn es voll ist, öffnet sich eine Warteliste"
+
+msgid "ui_publish_need_community"
+msgstr "Wähle die Community, in der du es veröffentlichst"
+
+msgid "ui_publish_need_date"
+msgstr "Treffen und Events brauchen Tag und Uhrzeit"
+
+msgid "ui_publish_need_title"
+msgstr "Gib einen Titel ein"
+
+msgid "ui_publish_no_communities_body"
+msgstr "Beiträge gehören zu einer Community. Tritt einer aus deiner Gegend bei oder erstelle deine eigene."
+
+msgid "ui_publish_no_communities_title"
+msgstr "Tritt einer Community bei, um zu posten"
+
+msgid "ui_publish_place_ph"
+msgstr "Wo ihr euch trefft"
+
+msgid "ui_publish_places"
+msgstr "Plätze"
+
+msgid "ui_publish_repeat_title"
+msgstr "Plan wiederholen"
+
+msgid "ui_publish_rules"
+msgstr "Du entscheidest"
+
+msgid "ui_publish_saved_toast"
+msgstr "Änderungen gespeichert"
+
+msgid "ui_publish_title"
+msgstr "Neuer Beitrag"
+
+msgid "ui_publish_title_ph_event"
+msgstr "z. B. Freundschafts-Padel-Turnier"
+
+msgid "ui_publish_title_ph_meetup"
+msgstr "z. B. Spaziergang zum See am Samstag"
+
+msgid "ui_publish_title_ph_notice"
+msgstr "z. B. Hat jemand Lust auf Tennis dienstags?"
+
+msgid "ui_publish_title_ph_thread"
+msgstr "z. B. Eure Lieblingsorte fürs Abendessen in der Gruppe"
+
+msgid "ui_publish_where"
+msgstr "Community"
+
+msgid "ui_publish_who_comments"
+msgstr "Wer kommentieren kann"
+
+msgid "ui_sec_communities"
+msgstr "Communities"
+
+msgid "ui_sec_communities_zone"
+msgstr "Communities · {zone}"
+
+msgid "ui_sec_plans"
+msgstr "Plan-Chats"

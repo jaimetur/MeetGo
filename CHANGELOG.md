@@ -13,6 +13,9 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Communities: themed areas of each zone with a board and a chat room. Anyone can create one, open to all, by request (an admin approves) or by invitation link; owners name admins and admins name moderators; the board can be open to members or read-only with only admins publishing. Changing province or age range leaves the old zone's communities and brings them back, as they were, on return.
+- Board of meetups, events, notices and threads: places and waiting list, sign-up open or with approval, comments for everyone, only for people going or off, a plan chat that people going join automatically, pin and close, reports to the moderation queue, and a reminder the day before.
+- Full redesign of the web and phone app: Home board with filters (today, weekend, this week, meetups, events, notices), Plans (going, organising, past, with repeat), Publish, Chats and Profile; communities with board, chat and members; three columns on the desktop. Translated into the ten languages.
 - Ten languages, translated from English: English, Spanish, Catalan, French, Italian, German, Portuguese, Dutch, Chinese and Japanese. The app, the landing page and the emails follow each person's language, the browser's language picks it the first time, and every `lang/<code>.po` added is a new language.
 - Private groups with invitation links, owners, administrators and moderators; members join, leave and can be removed, and the oldest member inherits a group whose owner leaves.
 - Direct messages open at once between friends; with anybody else they start with a request, if that person accepts direct messages.

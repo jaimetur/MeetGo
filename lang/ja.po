@@ -2857,3 +2857,870 @@ msgstr "プライバシーとセキュリティ"
 
 msgid "ui_section_push"
 msgstr "この端末の通知"
+
+msgid "err_community_not_found"
+msgstr "コミュニティが見つかりません"
+
+msgid "err_community_other_zone"
+msgstr "このコミュニティは別の地域のものです。対象の県と年齢層の人だけが参加できます"
+
+msgid "err_community_invite_only"
+msgstr "このコミュニティは招待制です"
+
+msgid "err_community_closed"
+msgstr "このコミュニティは承認か招待が必要です。ページを開いて参加をリクエストしてください"
+
+msgid "err_join_community_first"
+msgstr "先にコミュニティに参加してください"
+
+msgid "err_board_admins_only"
+msgstr "このボードに投稿できるのはオーナー、管理者、モデレーターだけです"
+
+msgid "err_post_not_found"
+msgstr "投稿が見つかりません"
+
+msgid "err_post_starts_at_required"
+msgstr "ミートアップとイベントには開始日が必要です"
+
+msgid "err_post_dates"
+msgstr "終了は開始より前にできません"
+
+msgid "err_post_closed"
+msgstr "この投稿は受付を終了しました"
+
+msgid "err_post_past"
+msgstr "この予定はすでに終わっています"
+
+msgid "err_not_a_plan"
+msgstr "参加者がいるのはミートアップとイベントだけです"
+
+msgid "err_comments_off"
+msgstr "この投稿ではコメントがオフになっています"
+
+msgid "err_comments_attendees_only"
+msgstr "コメントできるのは参加する人だけです"
+
+msgid "err_comment_not_found"
+msgstr "コメントが見つかりません"
+
+msgid "err_organiser_cannot_leave"
+msgstr "主催者は自分の予定から抜けられません。代わりに予定をキャンセルしてください"
+
+msgid "err_attendee_not_found"
+msgstr "この人からの保留中のリクエストはありません"
+
+msgid "err_invalid_filter"
+msgstr "無効なフィルターです"
+
+msgid "err_read_only_chat"
+msgstr "この予定はキャンセルされました。チャットは閲覧のみです"
+
+msgid "sys_plan_cancelled"
+msgstr "予定「{plan}」はキャンセルされました"
+
+msgid "email_footer_plans"
+msgstr "MeetGoで予定に参加または主催しているため、このメールをお送りしています。"
+
+msgid "email_plan_joined_subject"
+msgstr "{name}さんが「{plan}」に参加します"
+
+msgid "email_plan_joined_title"
+msgstr "新しい参加登録"
+
+msgid "email_plan_joined_body"
+msgstr "{name}さんがあなたの予定「{plan}」({date})に参加登録しました。"
+
+msgid "email_plan_joined_button"
+msgstr "予定を見る"
+
+msgid "email_plan_request_subject"
+msgstr "{name}さんが「{plan}」への参加をリクエストしました"
+
+msgid "email_plan_request_title"
+msgstr "あなたの予定への参加リクエスト"
+
+msgid "email_plan_request_body"
+msgstr "{name}さんがあなたの予定「{plan}」({date})への参加を希望しています。予定のページでリクエストを承認または辞退してください。"
+
+msgid "email_plan_request_button"
+msgstr "リクエストを見る"
+
+msgid "email_plan_accepted_subject"
+msgstr "参加が決まりました:「{plan}」"
+
+msgid "email_plan_accepted_title"
+msgstr "リクエストが承認されました"
+
+msgid "email_plan_accepted_body"
+msgstr "「{plan}」({date})への参加リクエストが承認されました。"
+
+msgid "email_plan_accepted_button"
+msgstr "予定を見る"
+
+msgid "email_plan_promoted_subject"
+msgstr "空きが出ました:「{plan}」"
+
+msgid "email_plan_promoted_title"
+msgstr "参加できます"
+
+msgid "email_plan_promoted_body"
+msgstr "「{plan}」({date})から誰かが抜けたため、キャンセル待ちから繰り上がりました。参加できます。"
+
+msgid "email_plan_promoted_button"
+msgstr "予定を見る"
+
+msgid "email_plan_changed_subject"
+msgstr "「{plan}」が変更されました"
+
+msgid "email_plan_changed_title"
+msgstr "予定が更新されました"
+
+msgid "email_plan_changed_body"
+msgstr "予定「{plan}」の詳細が変わりました:{date}、{place}。"
+
+msgid "email_plan_changed_button"
+msgstr "予定を見る"
+
+msgid "email_plan_cancelled_subject"
+msgstr "「{plan}」はキャンセルされました"
+
+msgid "email_plan_cancelled_title"
+msgstr "予定がキャンセルされました"
+
+msgid "email_plan_cancelled_body"
+msgstr "予定「{plan}」({date})はキャンセルされました。"
+
+msgid "email_plan_reminder_subject"
+msgstr "明日:「{plan}」"
+
+msgid "email_plan_reminder_title"
+msgstr "予定が近づいています"
+
+msgid "email_plan_reminder_body"
+msgstr "お知らせ:「{plan}」は{date}、{place}で開催されます。"
+
+msgid "email_plan_reminder_button"
+msgstr "予定を見る"
+
+msgid "email_community_request_subject"
+msgstr "{name}さんが{community}への参加をリクエストしました"
+
+msgid "email_community_request_title"
+msgstr "参加リクエスト"
+
+msgid "email_community_request_body"
+msgstr "{name}さんがコミュニティ{community}への参加を希望しています。コミュニティのページでリクエストを承認または辞退してください。"
+
+msgid "email_community_request_button"
+msgstr "リクエストを見る"
+
+msgid "email_community_accepted_subject"
+msgstr "{community}へようこそ"
+
+msgid "email_community_accepted_title"
+msgstr "リクエストが承認されました"
+
+msgid "email_community_accepted_body"
+msgstr "コミュニティ{community}への参加リクエストが承認されました。"
+
+msgid "email_community_accepted_button"
+msgstr "コミュニティを開く"
+
+msgid "ui_nav_home"
+msgstr "ホーム"
+
+msgid "ui_nav_plans"
+msgstr "予定"
+
+msgid "ui_nav_publish"
+msgstr "投稿"
+
+msgid "ui_nav_communities"
+msgstr "コミュニティ"
+
+msgid "ui_nav_profile"
+msgstr "プロフィール"
+
+msgid "ui_f_communities"
+msgstr "コミュニティ"
+
+msgid "ui_f_plans"
+msgstr "予定"
+
+msgid "ui_sec_communities"
+msgstr "コミュニティ"
+
+msgid "ui_sec_communities_zone"
+msgstr "コミュニティ · {zone}"
+
+msgid "ui_sec_plans"
+msgstr "予定のチャット"
+
+msgid "ui_chats_empty_body"
+msgstr "地域のコミュニティに参加してみんなとチャットしたり、予定に参加登録してそのチャットに入ったりしましょう。"
+
+msgid "ui_email_plans"
+msgstr "自分の予定:参加登録、変更、前日のリマインダー"
+
+msgid "ui_board_title"
+msgstr "あなたのボード"
+
+msgid "ui_board_lead"
+msgstr "{zone}のコミュニティの予定とお知らせ"
+
+msgid "ui_board_f_all"
+msgstr "すべて"
+
+msgid "ui_board_f_today"
+msgstr "今日"
+
+msgid "ui_board_f_weekend"
+msgstr "週末"
+
+msgid "ui_board_f_week"
+msgstr "今週"
+
+msgid "ui_board_f_meetups"
+msgstr "ミートアップ"
+
+msgid "ui_board_f_events"
+msgstr "イベント"
+
+msgid "ui_board_f_notices"
+msgstr "お知らせ"
+
+msgid "ui_board_new_posts"
+msgstr "新しい投稿"
+
+msgid "ui_board_load_more"
+msgstr "もっと見る"
+
+msgid "ui_board_error"
+msgstr "読み込めませんでした"
+
+msgid "ui_board_retry"
+msgstr "再試行"
+
+msgid "ui_board_empty_title"
+msgstr "ボードは静かです"
+
+msgid "ui_board_empty_body"
+msgstr "コミュニティにはまだ誰も投稿していません。最初の一人になりましょう。予定を提案して、誰が参加するか見てみましょう。"
+
+msgid "ui_board_empty_join_title"
+msgstr "コミュニティに参加してはじめよう"
+
+msgid "ui_board_empty_join_body"
+msgstr "ボードには、参加しているコミュニティの予定、イベント、お知らせが表示されます。"
+
+msgid "ui_board_empty_filter_title"
+msgstr "今は何もありません"
+
+msgid "ui_board_empty_filter_body"
+msgstr "このフィルターに合う投稿はありません。別のフィルターを試すか、自分で予定を提案してみましょう。"
+
+msgid "ui_board_publish_plan"
+msgstr "予定を提案"
+
+msgid "ui_board_find_communities"
+msgstr "コミュニティを探す"
+
+msgid "ui_board_see_all"
+msgstr "すべて見る"
+
+msgid "ui_board_back_home"
+msgstr "ボードに戻る"
+
+msgid "ui_post_kind_meetup"
+msgstr "ミートアップ"
+
+msgid "ui_post_kind_event"
+msgstr "イベント"
+
+msgid "ui_post_kind_notice"
+msgstr "お知らせ"
+
+msgid "ui_post_kind_thread"
+msgstr "ディスカッション"
+
+msgid "ui_post_pinned"
+msgstr "固定"
+
+msgid "ui_post_finished"
+msgstr "終了"
+
+msgid "ui_post_closed"
+msgstr "受付終了"
+
+msgid "ui_post_places_of"
+msgstr "{total}人中{n}人"
+
+msgid "ui_post_full"
+msgstr "満員"
+
+msgid "ui_post_going_n"
+msgstr "{n}人が参加"
+
+msgid "ui_post_free_n"
+msgstr "空き{n}"
+
+msgid "ui_post_waitlist_n"
+msgstr "{n}人がキャンセル待ち"
+
+msgid "ui_post_sign_up"
+msgstr "参加登録"
+
+msgid "ui_post_ask_join"
+msgstr "参加をリクエスト"
+
+msgid "ui_post_join_waitlist"
+msgstr "キャンセル待ちに登録"
+
+msgid "ui_post_going"
+msgstr "参加予定"
+
+msgid "ui_post_on_waitlist"
+msgstr "キャンセル待ち中"
+
+msgid "ui_post_waitlist"
+msgstr "キャンセル待ち"
+
+msgid "ui_post_request_sent"
+msgstr "リクエスト送信済み"
+
+msgid "ui_post_you_organise"
+msgstr "あなたが主催"
+
+msgid "ui_post_organiser"
+msgstr "主催者"
+
+msgid "ui_post_joined_toast"
+msgstr "参加登録しました!予定のチャットに入りました。"
+
+msgid "ui_post_waitlist_toast"
+msgstr "満員です。キャンセル待ちに登録しました。誰かが抜けると繰り上がります。"
+
+msgid "ui_post_pending_toast"
+msgstr "リクエストを送信しました。主催者が参加を確認します。"
+
+msgid "ui_post_left_toast"
+msgstr "参加を取りやめました"
+
+msgid "ui_post_request_cancelled"
+msgstr "リクエストを取り消しました"
+
+msgid "ui_post_leave"
+msgstr "参加できなくなった"
+
+msgid "ui_post_leave_waitlist"
+msgstr "キャンセル待ちをやめる"
+
+msgid "ui_post_cancel_request"
+msgstr "リクエストを取り消す"
+
+msgid "ui_post_open_chat"
+msgstr "予定のチャットを開く"
+
+msgid "ui_post_repeat"
+msgstr "もう一度開催"
+
+msgid "ui_post_edit"
+msgstr "編集"
+
+msgid "ui_post_delete"
+msgstr "投稿を削除"
+
+msgid "ui_post_delete_body"
+msgstr "この投稿とコメントはボードから消えます。"
+
+msgid "ui_post_delete_plan_body"
+msgstr "この予定はキャンセルされ、参加者全員に通知されます。チャットは閲覧のみで残ります。"
+
+msgid "ui_post_deleted_toast"
+msgstr "この投稿を削除しました"
+
+msgid "ui_post_copy_link"
+msgstr "リンクをコピー"
+
+msgid "ui_post_pin"
+msgstr "ボードに固定"
+
+msgid "ui_post_unpin"
+msgstr "固定を解除"
+
+msgid "ui_post_pinned_toast"
+msgstr "ボードに固定しました"
+
+msgid "ui_post_unpinned_toast"
+msgstr "固定を解除しました"
+
+msgid "ui_post_close"
+msgstr "参加登録とコメントを締め切る"
+
+msgid "ui_post_reopen"
+msgstr "再開"
+
+msgid "ui_post_closed_toast"
+msgstr "締め切りました"
+
+msgid "ui_post_reopened_toast"
+msgstr "再開しました"
+
+msgid "ui_post_not_found"
+msgstr "この投稿は存在しないか、表示できません"
+
+msgid "ui_post_see_map"
+msgstr "地図を見る"
+
+msgid "ui_post_organised_by"
+msgstr "主催:{name}さん"
+
+msgid "ui_post_posted_by"
+msgstr "投稿:{name}さん"
+
+msgid "ui_post_tickets"
+msgstr "チケットと詳細情報"
+
+msgid "ui_post_approval_note"
+msgstr "参加者は主催者が承認します"
+
+msgid "ui_post_people_going"
+msgstr "参加する人"
+
+msgid "ui_post_see_all"
+msgstr "すべて見る"
+
+msgid "ui_post_nobody_yet"
+msgstr "まだ誰もいません。最初の一人になりましょう!"
+
+msgid "ui_post_waitlist_note"
+msgstr "誰かが抜けると、自動的に参加できます。"
+
+msgid "ui_post_pending_note"
+msgstr "主催者の承認を待っています。"
+
+msgid "ui_post_pending_requests"
+msgstr "承認待ち"
+
+msgid "ui_post_accepted_toast"
+msgstr "承認しました"
+
+msgid "ui_post_rejected_toast"
+msgstr "辞退しました"
+
+msgid "ui_post_comments"
+msgstr "コメント"
+
+msgid "ui_post_comments_off"
+msgstr "この投稿ではコメントがオフです"
+
+msgid "ui_post_comments_attendees"
+msgstr "コメントできるのは参加する人だけです"
+
+msgid "ui_post_comments_cant"
+msgstr "この投稿にはコメントできません"
+
+msgid "ui_post_closed_note"
+msgstr "終了しました。コメントも参加登録もできません"
+
+msgid "ui_post_older_comments"
+msgstr "以前のコメント"
+
+msgid "ui_post_no_comments"
+msgstr "まだコメントはありません。質問したり、あいさつしたりしてみましょう。"
+
+msgid "ui_post_comment_ph"
+msgstr "コメントを書く…"
+
+msgid "ui_post_report_title"
+msgstr "投稿を報告"
+
+msgid "ui_post_report_details"
+msgstr "詳細(任意)"
+
+msgid "ui_publish_title"
+msgstr "新しい投稿"
+
+msgid "ui_publish_edit_title"
+msgstr "投稿を編集"
+
+msgid "ui_publish_repeat_title"
+msgstr "予定をもう一度開催"
+
+msgid "ui_publish_button"
+msgstr "投稿する"
+
+msgid "ui_publish_kind"
+msgstr "投稿の種類"
+
+msgid "ui_publish_hint_meetup"
+msgstr "日時と場所のある予定。必要なら人数の上限も決められます。"
+
+msgid "ui_publish_hint_event"
+msgstr "もっと大きな集まり。カバー写真、終了時刻、チケットのリンクを付けられます。"
+
+msgid "ui_publish_hint_notice"
+msgstr "質問、おすすめ、お知らせなど。日付は不要です。"
+
+msgid "ui_publish_hint_thread"
+msgstr "コミュニティのみんなとトピックについて話しましょう。"
+
+msgid "ui_publish_where"
+msgstr "コミュニティ"
+
+msgid "ui_publish_choose_community"
+msgstr "コミュニティを選ぶ"
+
+msgid "ui_publish_f_title"
+msgstr "タイトル"
+
+msgid "ui_publish_title_ph_meetup"
+msgstr "例:土曜日に湖まで散歩"
+
+msgid "ui_publish_title_ph_event"
+msgstr "例:気軽なパデル大会"
+
+msgid "ui_publish_title_ph_notice"
+msgstr "例:火曜にテニスしたい人いますか?"
+
+msgid "ui_publish_title_ph_thread"
+msgstr "例:みんなで食事するのにおすすめの場所"
+
+msgid "ui_publish_f_body"
+msgstr "説明"
+
+msgid "ui_publish_body_ph"
+msgstr "内容、持ち物、レベルなどを書きましょう…"
+
+msgid "ui_publish_f_date"
+msgstr "日付"
+
+msgid "ui_publish_f_time"
+msgstr "時刻"
+
+msgid "ui_publish_f_end_date"
+msgstr "終了(日付)"
+
+msgid "ui_publish_f_end_time"
+msgstr "終了(時刻)"
+
+msgid "ui_publish_f_place"
+msgstr "場所"
+
+msgid "ui_publish_place_ph"
+msgstr "待ち合わせ場所"
+
+msgid "ui_publish_f_place_url"
+msgstr "地図のリンク(任意)"
+
+msgid "ui_publish_f_link"
+msgstr "チケットや情報のリンク(任意)"
+
+msgid "ui_publish_f_cover"
+msgstr "カバー"
+
+msgid "ui_publish_cover_add"
+msgstr "写真を追加"
+
+msgid "ui_publish_cover_change"
+msgstr "写真を変更"
+
+msgid "ui_publish_rules"
+msgstr "あなたが決める"
+
+msgid "ui_publish_who_comments"
+msgstr "コメントできる人"
+
+msgid "ui_publish_comments_all"
+msgstr "全員"
+
+msgid "ui_publish_comments_attendees"
+msgstr "参加する人"
+
+msgid "ui_publish_comments_off"
+msgstr "なし"
+
+msgid "ui_publish_approval"
+msgstr "参加を承認制にする"
+
+msgid "ui_publish_approval_hint"
+msgstr "参加希望者がリクエストし、あなたが承認します"
+
+msgid "ui_publish_limit"
+msgstr "人数を制限"
+
+msgid "ui_publish_limit_hint"
+msgstr "満員になるとキャンセル待ちが始まります"
+
+msgid "ui_publish_places"
+msgstr "定員"
+
+msgid "ui_publish_need_title"
+msgstr "タイトルを入力してください"
+
+msgid "ui_publish_need_community"
+msgstr "投稿先のコミュニティを選んでください"
+
+msgid "ui_publish_need_date"
+msgstr "ミートアップとイベントには日付と時刻が必要です"
+
+msgid "ui_publish_date_past"
+msgstr "この日付はすでに過ぎています"
+
+msgid "ui_publish_end_before"
+msgstr "終了が開始より前になっています"
+
+msgid "ui_publish_done_toast"
+msgstr "投稿しました!コミュニティのみんなに見えています。"
+
+msgid "ui_publish_saved_toast"
+msgstr "変更を保存しました"
+
+msgid "ui_publish_no_communities_title"
+msgstr "投稿するにはコミュニティに参加しましょう"
+
+msgid "ui_publish_no_communities_body"
+msgstr "投稿はコミュニティに属します。地域のコミュニティに参加するか、自分で作りましょう。"
+
+msgid "ui_plans_title"
+msgstr "あなたの予定"
+
+msgid "ui_plans_lead"
+msgstr "参加または主催しているミートアップとイベント。それぞれチャット付きです"
+
+msgid "ui_plans_going"
+msgstr "参加"
+
+msgid "ui_plans_organising"
+msgstr "主催"
+
+msgid "ui_plans_past"
+msgstr "過去"
+
+msgid "ui_plans_this_week"
+msgstr "今週"
+
+msgid "ui_plans_later"
+msgstr "これから"
+
+msgid "ui_plans_next"
+msgstr "次の予定"
+
+msgid "ui_plans_next_empty"
+msgstr "まだ何にも参加登録していません。"
+
+msgid "ui_plans_browse_board"
+msgstr "ボードを見る"
+
+msgid "ui_plans_empty_going_title"
+msgstr "予定はまだありません"
+
+msgid "ui_plans_empty_going_body"
+msgstr "ボードでミートアップやイベントに参加登録すると、チャットと一緒にここに表示されます。"
+
+msgid "ui_plans_empty_org_title"
+msgstr "主催している予定はありません"
+
+msgid "ui_plans_empty_org_body"
+msgstr "コミュニティに予定を提案してみましょう。散歩、食事、試合など。"
+
+msgid "ui_plans_empty_past_title"
+msgstr "過去の予定はありません"
+
+msgid "ui_plans_empty_past_body"
+msgstr "参加した予定はここに残り、いつでももう一度開催できます。"
+
+msgid "ui_community_title"
+msgstr "コミュニティ"
+
+msgid "ui_community_lead"
+msgstr "{zone}で同じ趣味を持つ人たち"
+
+msgid "ui_community_yours"
+msgstr "あなたのコミュニティ"
+
+msgid "ui_community_discover"
+msgstr "見つける"
+
+msgid "ui_community_search_ph"
+msgstr "コミュニティを検索"
+
+msgid "ui_community_no_match"
+msgstr "一致するコミュニティはありません。自分で作ることもできます。"
+
+msgid "ui_community_empty_title"
+msgstr "地域にはまだコミュニティがありません"
+
+msgid "ui_community_empty_body"
+msgstr "最初のコミュニティを作って、同じ趣味の人を招待しましょう。"
+
+msgid "ui_community_none_yet"
+msgstr "まだどのコミュニティにも参加していません。"
+
+msgid "ui_community_create"
+msgstr "コミュニティを作る"
+
+msgid "ui_community_create_button"
+msgstr "作成"
+
+msgid "ui_community_create_lead"
+msgstr "あなたの地域と年齢層の人向けになります。あなたがオーナーになります。"
+
+msgid "ui_community_created_toast"
+msgstr "コミュニティを作成しました!みんなを招待しましょう。"
+
+msgid "ui_community_f_title"
+msgstr "名前"
+
+msgid "ui_community_title_ph"
+msgstr "例:土曜ランナーズ"
+
+msgid "ui_community_desc_ph"
+msgstr "どんなコミュニティで、誰のためのものか"
+
+msgid "ui_community_f_rules"
+msgstr "ルール"
+
+msgid "ui_community_f_access"
+msgstr "参加できる人"
+
+msgid "ui_community_access_open"
+msgstr "公開"
+
+msgid "ui_community_access_request"
+msgstr "リクエスト制"
+
+msgid "ui_community_access_invite"
+msgstr "招待のみ"
+
+msgid "ui_community_access_open_hint"
+msgstr "地域の誰でも参加できます。"
+
+msgid "ui_community_access_request_hint"
+msgstr "参加希望者がリクエストし、管理者かモデレーターが承認します。"
+
+msgid "ui_community_access_invite_hint"
+msgstr "招待リンクからのみ参加できます。他の人には表示されません。"
+
+msgid "ui_community_f_board"
+msgstr "ボードに投稿できる人"
+
+msgid "ui_community_board_open"
+msgstr "メンバー"
+
+msgid "ui_community_board_admins"
+msgstr "管理者のみ"
+
+msgid "ui_community_board_open_hint"
+msgstr "どのメンバーも予定を提案したり投稿したりできます。"
+
+msgid "ui_community_board_admins_hint"
+msgstr "投稿できるのはオーナー、管理者、モデレーターだけ。メンバーは参加登録とコメントができます。"
+
+msgid "ui_community_board_readonly"
+msgstr "このコミュニティのボードに投稿できるのは管理者だけです"
+
+msgid "ui_community_ask_join"
+msgstr "参加をリクエスト"
+
+msgid "ui_community_requested"
+msgstr "リクエスト送信済み"
+
+msgid "ui_community_requested_toast"
+msgstr "リクエストを送信しました。承認されたらお知らせします。"
+
+msgid "ui_community_joined_toast"
+msgstr "{name}へようこそ!"
+
+msgid "ui_community_joined_link_toast"
+msgstr "コミュニティに参加しました"
+
+msgid "ui_community_not_found"
+msgstr "このコミュニティは存在しないか、あなたの地域にありません"
+
+msgid "ui_community_online_n"
+msgstr "{n}人がオンライン"
+
+msgid "ui_community_plans_n"
+msgstr "予定{n}件"
+
+msgid "ui_community_tab_board"
+msgstr "ボード"
+
+msgid "ui_community_tab_chat"
+msgstr "チャット"
+
+msgid "ui_community_tab_members"
+msgstr "メンバー"
+
+msgid "ui_community_settings"
+msgstr "コミュニティの設定"
+
+msgid "ui_community_rules"
+msgstr "ルール"
+
+msgid "ui_community_leave"
+msgstr "コミュニティを抜ける"
+
+msgid "ui_community_leave_body"
+msgstr "{name}のボードとチャットが見えなくなります。"
+
+msgid "ui_community_leave_owner_body"
+msgstr "あなたはオーナーです。オーナー権限は最も古い管理者、または最も古いメンバーに引き継がれます。"
+
+msgid "ui_community_left_toast"
+msgstr "コミュニティを抜けました"
+
+msgid "ui_community_publish_prompt"
+msgstr "{name}に予定を提案…"
+
+msgid "ui_community_board_empty"
+msgstr "このボードにはまだ何もありません"
+
+msgid "ui_community_board_empty_body"
+msgstr "最初の予定を提案して、みんなを動かしましょう。"
+
+msgid "ui_community_join_to_see"
+msgstr "コミュニティに参加すると、その予定に加われます。"
+
+msgid "ui_community_chat_join_title"
+msgstr "チャットはメンバー限定です"
+
+msgid "ui_community_chat_join_body"
+msgstr "コミュニティに参加して、みんなとリアルタイムで話しましょう。"
+
+msgid "ui_community_requests_n"
+msgstr "参加リクエスト({n})"
+
+msgid "ui_community_request_accepted"
+msgstr "承認しました。メンバーになりました"
+
+msgid "ui_community_request_rejected"
+msgstr "リクエストを辞退しました"
+
+msgid "ui_community_invite_hint"
+msgstr "このリンクを使った地域の人は、すぐに参加できます。新しく作ると古いリンクは使えなくなります。"
+
+msgid "ui_community_invite_create"
+msgstr "招待リンクを作成"
+
+msgid "ui_community_invite_new"
+msgstr "新しいリンク"
+
+msgid "ui_community_invite_new_toast"
+msgstr "新しい招待リンクができました"
+
+msgid "ui_community_change_role"
+msgstr "役割を変更"
+
+msgid "ui_community_role_changed"
+msgstr "{name}さんの役割を変更しました"
+
+msgid "ui_community_member_removed"
+msgstr "{name}さんはメンバーではなくなりました"
+
+msgid "ui_community_remove_body"
+msgstr "{name}さんはコミュニティとそのチャットから外れます。"
+
+msgid "ui_community_no_members"
+msgstr "メンバーはまだいません"

@@ -165,7 +165,8 @@ async def member_ids(conversation_id: int) -> list[int]:
     async with SessionLocal() as db:
         res = await db.execute(
             select(ConversationMember.user_id).where(
-                ConversationMember.conversation_id == conversation_id, ConversationMember.banned.is_(False)
+                ConversationMember.conversation_id == conversation_id, ConversationMember.banned.is_(False),
+                ConversationMember.away.is_(False),
             )
         )
         ids = list(res.scalars().all())

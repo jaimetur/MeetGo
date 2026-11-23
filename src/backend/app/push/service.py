@@ -57,7 +57,7 @@ async def public_config(db: AsyncSession) -> dict:
 
 def _wants(conv: Conversation, member: ConversationMember, msg: Message, root_author: int | None,
            reply_author: int | None) -> bool:
-    if member.user_id == msg.sender_id or member.banned or member.notify == "none":
+    if member.user_id == msg.sender_id or member.banned or member.away or member.notify == "none":
         return False
     if member.muted_until and member.muted_until > utcnow():
         return False
@@ -128,6 +128,36 @@ async def _notify(db: AsyncSession, conversation_id: int, message_id: int) -> No
         "sent_at": str(int(time.time())),
     }
     await send_to_devices(db, devices, data)
+
+
+async def notify_users(user_ids, data: dict) -> None:
+    """A notification that is not a chat message (board plans, community requests) to every device of these people.
+    `data` carries at least type, title, body and url. Runs with its own session, usually in the background."""
+    ids = sorted({int(u) for u in user_ids if u})
+    if not ids:
+        return
+    try:
+        async with SessionLocal() as db:
+            devices = (await db.execute(select(Device).where(Device.user_id.in_(ids)))).scalars().all()
+            if devices:
+                await send_to_devices(db, devices, {**data, "sent_at": str(int(time.time()))})
+    except Exception:
+        logger.exception("Push %s failed", data.get("type"))
+
+
+def push_notice(users, kind: str, key: str, params: dict | None, url: str | None) -> None:
+    """Queue a push for each person in their language: the email texts `key`_subject (title) and `key`_body."""
+    from app.core.i18n import t, use_lang
+    from app.messaging.service import _background
+    by_lang: dict[str, list[int]] = {}
+    for u in users:
+        if u and not u.is_banned:
+            by_lang.setdefault(u.lang or "es", []).append(u.id)
+    for lang, ids in by_lang.items():
+        with use_lang(lang):
+            data = {"type": kind, "title": t(f"{key}_subject", params), "body": t(f"{key}_body", params)[:400],
+                    "url": url or "/app/"}
+        _background(notify_users(ids, data))
 
 
 async def send_to_devices(db: AsyncSession, devices, data: dict) -> None:

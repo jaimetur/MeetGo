@@ -60,7 +60,7 @@ async def get_membership(db: AsyncSession, conversation_id: int, user_id: int) -
 async def require_member(db: AsyncSession, conversation_id: int, user: User) -> tuple[Conversation, ConversationMember]:
     conv = await db.get(Conversation, conversation_id)
     member = await get_membership(db, conversation_id, user.id) if conv else None
-    if not conv or not member:
+    if not conv or not member or member.away:  # away: a channel of a zone the person has left
         raise HTTPException(404, t("err_conversation_not_found"))
     return conv, member
 
@@ -97,6 +97,8 @@ async def join(db: AsyncSession, conv: Conversation, user_id: int, role: str = "
     if member:
         if member.hidden:
             member.hidden = False
+        if member.away:  # back in that zone: the membership returns as it was
+            member.away = False
         return member
     member = ConversationMember(
         conversation_id=conv.id, user_id=user_id, role=role,
@@ -110,7 +112,9 @@ async def join(db: AsyncSession, conv: Conversation, user_id: int, role: str = "
 
 async def join_interest_channel(db: AsyncSession, user: User, interest_id: int) -> Conversation:
     conv = await channel_for(db, user.province, user_age_key(user), interest_id)
-    await join(db, conv, user.id)
+    # Communities that need approval or an invitation are not joined just by choosing the interest.
+    if conv.access_mode == "open" or await get_membership(db, conv.id, user.id):
+        await join(db, conv, user.id)
     return conv
 
 
@@ -126,16 +130,14 @@ async def leave_interest_channel(db: AsyncSession, user: User, interest_id: int,
 
 
 async def move_channels_to_zone(db: AsyncSession, user: User, old_province: str, old_age: str) -> None:
-    """After a change of province or age range: leave the old zone's channels and join the new ones."""
-    res = await db.execute(select(ConversationMember).join(Conversation, Conversation.id == ConversationMember.conversation_id).where(
-        ConversationMember.user_id == user.id, Conversation.kind == "channel",
-        Conversation.province == old_province, Conversation.age_range == old_age))
-    for member in res.scalars().all():
-        if not member.banned:
-            await db.delete(member)
-    res = await db.execute(select(UserInterest.interest_id).where(UserInterest.user_id == user.id))
-    for interest_id in res.scalars().all():
-        await join_interest_channel(db, user, interest_id)
+    """After a change of province or age range: channels of other zones become away (kept, with their role) and those of
+    the new zone come back. Nothing new is joined."""
+    age = user_age_key(user)
+    res = await db.execute(select(ConversationMember, Conversation).join(
+        Conversation, Conversation.id == ConversationMember.conversation_id).where(
+        ConversationMember.user_id == user.id, Conversation.kind == "channel"))
+    for member, conv in res.all():
+        member.away = not (conv.province == user.province and conv.age_range == age)
 
 
 # ---------- direct messages ----------
@@ -164,7 +166,7 @@ async def dm_between(db: AsyncSession, a: int, b: int, create: bool = True) -> C
 
 async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | None = None) -> list[dict]:
     q = select(ConversationMember, Conversation).join(Conversation, Conversation.id == ConversationMember.conversation_id).where(
-        ConversationMember.user_id == user.id, ConversationMember.hidden.is_(False))
+        ConversationMember.user_id == user.id, ConversationMember.hidden.is_(False), ConversationMember.away.is_(False))
     if only_ids is not None:
         q = q.where(Conversation.id.in_(only_ids))
     rows = (await db.execute(q)).all()
@@ -174,7 +176,8 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
 
     counts = dict((await db.execute(
         select(ConversationMember.conversation_id, func.count()).where(
-            ConversationMember.conversation_id.in_(ids), ConversationMember.banned.is_(False))
+            ConversationMember.conversation_id.in_(ids), ConversationMember.banned.is_(False),
+            ConversationMember.away.is_(False))
         .group_by(ConversationMember.conversation_id))).all())
 
     main_stream = or_(Message.thread_root_id.is_(None), Message.also_in_channel.is_(True))

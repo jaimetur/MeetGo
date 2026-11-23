@@ -11,8 +11,8 @@ from app.core.models import Conversation, ConversationMember, Friendship, Intere
 from app.core.schemas import EmailPrefsIn, InterestOut, MeOut, SetInterestsIn, UpdateProfileIn, UserOut
 from app.core.app_settings import get_settings_row
 from app.conversations.service import (
-    AGE_LABELS, can_join_channel, join, join_interest_channel, leave_interest_channel, move_channels_to_zone,
-    user_age_key,
+    AGE_LABELS, can_join_channel, channel_for, get_membership, join, join_interest_channel, leave_interest_channel,
+    move_channels_to_zone, user_age_key,
 )
 from app.mail.notify_email import account_email
 from app.realtime.service import online_ids
@@ -101,7 +101,7 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
         user.bio = payload.bio[:500]
     user.last_active_at = datetime.utcnow()
     if (user.province, user_age_key(user)) != (old_province, old_age):
-        # A new zone means the channels of the new province or age range.
+        # A new zone: communities of other zones become away, those of this zone come back.
         await move_channels_to_zone(db, user, old_province, old_age)
     await db.commit()
     await db.refresh(user)
@@ -192,23 +192,27 @@ async def set_my_interests(payload: SetInterestsIn, db: AsyncSession = Depends(g
 
 @router.get("/channels/explore", response_model=list[dict])
 async def explore_channels(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    """Every interest's channel in your zone, with how many people are in it and whether you are."""
+    """Every interest's channel (community) in your zone, with how many people are in it and whether you are.
+    Away memberships (other zones) do not count; invitation-only communities show only to their members."""
     age = user_age_key(user)
     interests = (await db.execute(select(Interest).order_by(Interest.name))).scalars().all()
     res = await db.execute(
-        select(Conversation.interest_id, Conversation.id, func.count(ConversationMember.user_id))
+        select(Conversation.interest_id, Conversation.id, Conversation.access_mode, func.count(ConversationMember.user_id))
         .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
-                                            ConversationMember.banned.is_(False)))
-        .where(Conversation.kind == "channel", Conversation.province == user.province, Conversation.age_range == age)
-        .group_by(Conversation.interest_id, Conversation.id))
-    by_interest = {iid: (cid, n) for iid, cid, n in res.all()}
+                                            ConversationMember.banned.is_(False), ConversationMember.away.is_(False)))
+        .where(Conversation.kind == "channel", Conversation.province == user.province, Conversation.age_range == age,
+               Conversation.interest_id.isnot(None))
+        .group_by(Conversation.interest_id, Conversation.id, Conversation.access_mode))
+    by_interest = {iid: (cid, mode, n) for iid, cid, mode, n in res.all()}
     mine = set((await db.execute(select(ConversationMember.conversation_id).where(
-        ConversationMember.user_id == user.id))).scalars().all())
+        ConversationMember.user_id == user.id, ConversationMember.away.is_(False)))).scalars().all())
     out = []
     for i in interests:
-        cid, n = by_interest.get(i.id, (None, 0))
+        cid, mode, n = by_interest.get(i.id, (None, "open", 0))
+        if mode == "invite" and cid not in mine:
+            continue
         out.append({"interest": {"id": i.id, "slug": i.slug, "name": i.name}, "conversation_id": cid,
-                    "member_count": n, "joined": bool(cid and cid in mine),
+                    "member_count": n, "joined": bool(cid and cid in mine), "access_mode": mode,
                     "zone": f"{user.province} · {AGE_LABELS.get(age, age)}"})
     out.sort(key=lambda c: (-c["member_count"], c["interest"]["name"]))
     return out
@@ -219,7 +223,13 @@ async def join_channel(interest_id: int, db: AsyncSession = Depends(get_db), use
     interest = await db.get(Interest, interest_id)
     if not interest:
         raise HTTPException(404, t("err_interest_not_found"))
-    conv = await join_interest_channel(db, user, interest_id)
+    conv = await channel_for(db, user.province, user_age_key(user), interest_id)
+    existing = await get_membership(db, conv.id, user.id)
+    if existing and existing.banned:
+        raise HTTPException(403, t("err_banned_here"))
+    if not existing and conv.access_mode != "open":  # ask or use the invitation from the community page
+        raise HTTPException(403, t("err_community_closed"))
+    await join(db, conv, user.id)
     if not await db.get(UserInterest, (user.id, interest_id)):
         db.add(UserInterest(user_id=user.id, interest_id=interest_id))
     member = (await db.execute(select(ConversationMember).where(

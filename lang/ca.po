@@ -2857,3 +2857,870 @@ msgstr "Privacitat i seguretat"
 
 msgid "ui_section_push"
 msgstr "Notificacions en aquest dispositiu"
+
+msgid "err_community_not_found"
+msgstr "No s'ha trobat la comunitat"
+
+msgid "err_community_other_zone"
+msgstr "Aquesta comunitat és d'una altra zona: només hi poden entrar persones de la seva província i franja d'edat"
+
+msgid "err_community_invite_only"
+msgstr "Aquesta comunitat és només per invitació"
+
+msgid "err_community_closed"
+msgstr "Aquesta comunitat necessita aprovació o una invitació: obre-la per demanar d'unir-t'hi"
+
+msgid "err_join_community_first"
+msgstr "Primer uneix-te a la comunitat"
+
+msgid "err_board_admins_only"
+msgstr "Només el propietari, els administradors i els moderadors publiquen en aquest tauler"
+
+msgid "err_post_not_found"
+msgstr "No s'ha trobat la publicació"
+
+msgid "err_post_starts_at_required"
+msgstr "Les quedades i els esdeveniments necessiten una data d'inici"
+
+msgid "err_post_dates"
+msgstr "El final no pot ser abans de l'inici"
+
+msgid "err_post_closed"
+msgstr "Aquesta publicació està tancada"
+
+msgid "err_post_past"
+msgstr "Aquest pla ja ha passat"
+
+msgid "err_not_a_plan"
+msgstr "Només les quedades i els esdeveniments tenen assistents"
+
+msgid "err_comments_off"
+msgstr "Els comentaris d'aquesta publicació estan desactivats"
+
+msgid "err_comments_attendees_only"
+msgstr "Només hi poden comentar les persones que hi van"
+
+msgid "err_comment_not_found"
+msgstr "No s'ha trobat el comentari"
+
+msgid "err_organiser_cannot_leave"
+msgstr "L'organitzador no pot abandonar el seu propi pla: cancel·la'l"
+
+msgid "err_attendee_not_found"
+msgstr "Aquesta persona no té cap sol·licitud pendent"
+
+msgid "err_invalid_filter"
+msgstr "Filtre no vàlid"
+
+msgid "err_read_only_chat"
+msgstr "Aquest pla s'ha cancel·lat: el seu xat és només de lectura"
+
+msgid "sys_plan_cancelled"
+msgstr "S'ha cancel·lat el pla «{plan}»"
+
+msgid "email_footer_plans"
+msgstr "Reps aquest correu perquè vas a plans o n'organitzes a MeetGo."
+
+msgid "email_plan_joined_subject"
+msgstr "{name} ve a «{plan}»"
+
+msgid "email_plan_joined_title"
+msgstr "Nova inscripció"
+
+msgid "email_plan_joined_body"
+msgstr "{name} s'ha apuntat al teu pla «{plan}» ({date})."
+
+msgid "email_plan_joined_button"
+msgstr "Veure el pla"
+
+msgid "email_plan_request_subject"
+msgstr "{name} demana unir-se a «{plan}»"
+
+msgid "email_plan_request_title"
+msgstr "Sol·licitud per unir-se al teu pla"
+
+msgid "email_plan_request_body"
+msgstr "{name} vol unir-se al teu pla «{plan}» ({date}). Accepta o rebutja la sol·licitud des de la pàgina del pla."
+
+msgid "email_plan_request_button"
+msgstr "Veure la sol·licitud"
+
+msgid "email_plan_accepted_subject"
+msgstr "Ja ets dins: «{plan}»"
+
+msgid "email_plan_accepted_title"
+msgstr "Sol·licitud acceptada"
+
+msgid "email_plan_accepted_body"
+msgstr "S'ha acceptat la teva sol·licitud per unir-te a «{plan}» ({date})."
+
+msgid "email_plan_accepted_button"
+msgstr "Veure el pla"
+
+msgid "email_plan_promoted_subject"
+msgstr "S'ha alliberat una plaça: «{plan}»"
+
+msgid "email_plan_promoted_title"
+msgstr "Hi vas"
+
+msgid "email_plan_promoted_body"
+msgstr "Algú ha deixat «{plan}» ({date}) i has passat de la llista d'espera: hi vas."
+
+msgid "email_plan_promoted_button"
+msgstr "Veure el pla"
+
+msgid "email_plan_changed_subject"
+msgstr "«{plan}» ha canviat"
+
+msgid "email_plan_changed_title"
+msgstr "Pla actualitzat"
+
+msgid "email_plan_changed_body"
+msgstr "El pla «{plan}» té nous detalls: {date}, {place}."
+
+msgid "email_plan_changed_button"
+msgstr "Veure el pla"
+
+msgid "email_plan_cancelled_subject"
+msgstr "S'ha cancel·lat «{plan}»"
+
+msgid "email_plan_cancelled_title"
+msgstr "Pla cancel·lat"
+
+msgid "email_plan_cancelled_body"
+msgstr "S'ha cancel·lat el pla «{plan}» ({date})."
+
+msgid "email_plan_reminder_subject"
+msgstr "Demà: «{plan}»"
+
+msgid "email_plan_reminder_title"
+msgstr "El teu pla s'acosta"
+
+msgid "email_plan_reminder_body"
+msgstr "Recorda: «{plan}» és el {date}, {place}."
+
+msgid "email_plan_reminder_button"
+msgstr "Veure el pla"
+
+msgid "email_community_request_subject"
+msgstr "{name} demana unir-se a {community}"
+
+msgid "email_community_request_title"
+msgstr "Sol·licitud per unir-se"
+
+msgid "email_community_request_body"
+msgstr "{name} vol unir-se a la comunitat {community}. Accepta o rebutja la sol·licitud des de la pàgina de la comunitat."
+
+msgid "email_community_request_button"
+msgstr "Veure les sol·licituds"
+
+msgid "email_community_accepted_subject"
+msgstr "Et donem la benvinguda a {community}"
+
+msgid "email_community_accepted_title"
+msgstr "Sol·licitud acceptada"
+
+msgid "email_community_accepted_body"
+msgstr "S'ha acceptat la teva sol·licitud per unir-te a la comunitat {community}."
+
+msgid "email_community_accepted_button"
+msgstr "Obrir la comunitat"
+
+msgid "ui_nav_home"
+msgstr "Inici"
+
+msgid "ui_nav_plans"
+msgstr "Plans"
+
+msgid "ui_nav_publish"
+msgstr "Publica"
+
+msgid "ui_nav_communities"
+msgstr "Comunitats"
+
+msgid "ui_nav_profile"
+msgstr "Perfil"
+
+msgid "ui_f_communities"
+msgstr "Comunitats"
+
+msgid "ui_f_plans"
+msgstr "Plans"
+
+msgid "ui_sec_communities"
+msgstr "Comunitats"
+
+msgid "ui_sec_communities_zone"
+msgstr "Comunitats · {zone}"
+
+msgid "ui_sec_plans"
+msgstr "Xats de plans"
+
+msgid "ui_chats_empty_body"
+msgstr "Uneix-te a comunitats de la teva zona per xatejar-hi, o apunta't a un pla per entrar al seu xat."
+
+msgid "ui_email_plans"
+msgstr "Els meus plans: inscripcions, canvis i un recordatori el dia abans"
+
+msgid "ui_board_title"
+msgstr "El teu tauler"
+
+msgid "ui_board_lead"
+msgstr "Plans i novetats de les teves comunitats a {zone}"
+
+msgid "ui_board_f_all"
+msgstr "Tot"
+
+msgid "ui_board_f_today"
+msgstr "Avui"
+
+msgid "ui_board_f_weekend"
+msgstr "Cap de setmana"
+
+msgid "ui_board_f_week"
+msgstr "Aquesta setmana"
+
+msgid "ui_board_f_meetups"
+msgstr "Quedades"
+
+msgid "ui_board_f_events"
+msgstr "Esdeveniments"
+
+msgid "ui_board_f_notices"
+msgstr "Avisos"
+
+msgid "ui_board_new_posts"
+msgstr "Publicacions noves"
+
+msgid "ui_board_load_more"
+msgstr "Carrega'n més"
+
+msgid "ui_board_error"
+msgstr "No s'ha pogut carregar"
+
+msgid "ui_board_retry"
+msgstr "Torna-ho a provar"
+
+msgid "ui_board_empty_title"
+msgstr "El tauler està tranquil"
+
+msgid "ui_board_empty_body"
+msgstr "Ningú ha publicat encara a les teves comunitats. Sigues el primer: proposa un pla i mira qui s'hi apunta."
+
+msgid "ui_board_empty_join_title"
+msgstr "Uneix-te a una comunitat per començar"
+
+msgid "ui_board_empty_join_body"
+msgstr "El teu tauler mostra els plans, esdeveniments i avisos de les comunitats de què formes part."
+
+msgid "ui_board_empty_filter_title"
+msgstr "De moment no hi ha res"
+
+msgid "ui_board_empty_filter_body"
+msgstr "Cap publicació coincideix amb aquest filtre. Prova'n un altre o proposa tu un pla."
+
+msgid "ui_board_publish_plan"
+msgstr "Proposa un pla"
+
+msgid "ui_board_find_communities"
+msgstr "Troba comunitats"
+
+msgid "ui_board_see_all"
+msgstr "Veure-ho tot"
+
+msgid "ui_board_back_home"
+msgstr "Torna al tauler"
+
+msgid "ui_post_kind_meetup"
+msgstr "Quedada"
+
+msgid "ui_post_kind_event"
+msgstr "Esdeveniment"
+
+msgid "ui_post_kind_notice"
+msgstr "Avís"
+
+msgid "ui_post_kind_thread"
+msgstr "Debat"
+
+msgid "ui_post_pinned"
+msgstr "Fixat"
+
+msgid "ui_post_finished"
+msgstr "Acabat"
+
+msgid "ui_post_closed"
+msgstr "Tancat"
+
+msgid "ui_post_places_of"
+msgstr "{n} de {total} places"
+
+msgid "ui_post_full"
+msgstr "Complet"
+
+msgid "ui_post_going_n"
+msgstr "{n} hi van"
+
+msgid "ui_post_free_n"
+msgstr "{n} lliures"
+
+msgid "ui_post_waitlist_n"
+msgstr "{n} en espera"
+
+msgid "ui_post_sign_up"
+msgstr "Apunta-m'hi"
+
+msgid "ui_post_ask_join"
+msgstr "Demana unir-t'hi"
+
+msgid "ui_post_join_waitlist"
+msgstr "Apunta't a la llista d'espera"
+
+msgid "ui_post_going"
+msgstr "Hi vas"
+
+msgid "ui_post_on_waitlist"
+msgstr "A la llista d'espera"
+
+msgid "ui_post_waitlist"
+msgstr "Llista d'espera"
+
+msgid "ui_post_request_sent"
+msgstr "Sol·licitud enviada"
+
+msgid "ui_post_you_organise"
+msgstr "Tu organitzes"
+
+msgid "ui_post_organiser"
+msgstr "Organitzador"
+
+msgid "ui_post_joined_toast"
+msgstr "Hi vas! Ja ets al al xat del pla."
+
+msgid "ui_post_waitlist_toast"
+msgstr "Està complet: ets a la llista d'espera i avançaràs si algú se'n va."
+
+msgid "ui_post_pending_toast"
+msgstr "Sol·licitud enviada. L'organitzador et confirmarà la plaça."
+
+msgid "ui_post_left_toast"
+msgstr "Ja no hi vas"
+
+msgid "ui_post_request_cancelled"
+msgstr "Sol·licitud cancel·lada"
+
+msgid "ui_post_leave"
+msgstr "No puc anar-hi"
+
+msgid "ui_post_leave_waitlist"
+msgstr "Surt de la llista d'espera"
+
+msgid "ui_post_cancel_request"
+msgstr "Cancel·la la sol·licitud"
+
+msgid "ui_post_open_chat"
+msgstr "Obre el xat del pla"
+
+msgid "ui_post_repeat"
+msgstr "Repeteix"
+
+msgid "ui_post_edit"
+msgstr "Edita"
+
+msgid "ui_post_delete"
+msgstr "Elimina la publicació"
+
+msgid "ui_post_delete_body"
+msgstr "La publicació i els seus comentaris desapareixeran del tauler."
+
+msgid "ui_post_delete_plan_body"
+msgstr "El pla es cancel·larà i s'avisarà tothom qui hi va. El seu xat es manté, només de lectura."
+
+msgid "ui_post_deleted_toast"
+msgstr "S'ha eliminat aquesta publicació"
+
+msgid "ui_post_copy_link"
+msgstr "Copia l'enllaç"
+
+msgid "ui_post_pin"
+msgstr "Fixa al tauler"
+
+msgid "ui_post_unpin"
+msgstr "Deixa de fixar"
+
+msgid "ui_post_pinned_toast"
+msgstr "Fixat al tauler"
+
+msgid "ui_post_unpinned_toast"
+msgstr "Ja no està fixat"
+
+msgid "ui_post_close"
+msgstr "Tanca inscripcions i comentaris"
+
+msgid "ui_post_reopen"
+msgstr "Reobre"
+
+msgid "ui_post_closed_toast"
+msgstr "Tancat"
+
+msgid "ui_post_reopened_toast"
+msgstr "Reobert"
+
+msgid "ui_post_not_found"
+msgstr "Aquesta publicació no existeix o no la pots veure"
+
+msgid "ui_post_see_map"
+msgstr "veure mapa"
+
+msgid "ui_post_organised_by"
+msgstr "Organitza {name}"
+
+msgid "ui_post_posted_by"
+msgstr "Publicat per {name}"
+
+msgid "ui_post_tickets"
+msgstr "Entrades i més informació"
+
+msgid "ui_post_approval_note"
+msgstr "L'organitzador accepta qui s'hi uneix"
+
+msgid "ui_post_people_going"
+msgstr "Gent que hi va"
+
+msgid "ui_post_see_all"
+msgstr "Veure-ho tot"
+
+msgid "ui_post_nobody_yet"
+msgstr "Encara ningú. Sigues el primer!"
+
+msgid "ui_post_waitlist_note"
+msgstr "Tindràs una plaça automàticament si algú se'n va."
+
+msgid "ui_post_pending_note"
+msgstr "Esperant que l'organitzador t'accepti."
+
+msgid "ui_post_pending_requests"
+msgstr "Esperant aprovació"
+
+msgid "ui_post_accepted_toast"
+msgstr "Acceptat"
+
+msgid "ui_post_rejected_toast"
+msgstr "Rebutjat"
+
+msgid "ui_post_comments"
+msgstr "Comentaris"
+
+msgid "ui_post_comments_off"
+msgstr "Els comentaris estan desactivats en aquesta publicació"
+
+msgid "ui_post_comments_attendees"
+msgstr "Només hi poden comentar les persones que hi van"
+
+msgid "ui_post_comments_cant"
+msgstr "No pots comentar aquesta publicació"
+
+msgid "ui_post_closed_note"
+msgstr "Tancat: no s'admeten més comentaris ni inscripcions"
+
+msgid "ui_post_older_comments"
+msgstr "Comentaris anteriors"
+
+msgid "ui_post_no_comments"
+msgstr "Encara no hi ha comentaris. Pregunta alguna cosa o saluda."
+
+msgid "ui_post_comment_ph"
+msgstr "Escriu un comentari…"
+
+msgid "ui_post_report_title"
+msgstr "Denuncia la publicació"
+
+msgid "ui_post_report_details"
+msgstr "Detalls (opcional)"
+
+msgid "ui_publish_title"
+msgstr "Nova publicació"
+
+msgid "ui_publish_edit_title"
+msgstr "Edita la publicació"
+
+msgid "ui_publish_repeat_title"
+msgstr "Repeteix el pla"
+
+msgid "ui_publish_button"
+msgstr "Publica"
+
+msgid "ui_publish_kind"
+msgstr "Tipus de publicació"
+
+msgid "ui_publish_hint_meetup"
+msgstr "Un pla amb data, lloc i, si vols, un límit de places."
+
+msgid "ui_publish_hint_event"
+msgstr "Alguna cosa més gran: amb portada, hora de final i un enllaç per a entrades."
+
+msgid "ui_publish_hint_notice"
+msgstr "Una pregunta, una recomanació o un anunci, sense data."
+
+msgid "ui_publish_hint_thread"
+msgstr "Comença una conversa sobre un tema amb la teva comunitat."
+
+msgid "ui_publish_where"
+msgstr "Comunitat"
+
+msgid "ui_publish_choose_community"
+msgstr "Tria una comunitat"
+
+msgid "ui_publish_f_title"
+msgstr "Títol"
+
+msgid "ui_publish_title_ph_meetup"
+msgstr "p. ex. Caminada fins al llac dissabte"
+
+msgid "ui_publish_title_ph_event"
+msgstr "p. ex. Torneig amistós de pàdel"
+
+msgid "ui_publish_title_ph_notice"
+msgstr "p. ex. Algú per jugar a tennis els dimarts?"
+
+msgid "ui_publish_title_ph_thread"
+msgstr "p. ex. Els teus llocs preferits per sopar en grup"
+
+msgid "ui_publish_f_body"
+msgstr "Descripció"
+
+msgid "ui_publish_body_ph"
+msgstr "Explica de què va, què cal portar, el nivell…"
+
+msgid "ui_publish_f_date"
+msgstr "Dia"
+
+msgid "ui_publish_f_time"
+msgstr "Hora"
+
+msgid "ui_publish_f_end_date"
+msgstr "Acaba (dia)"
+
+msgid "ui_publish_f_end_time"
+msgstr "Acaba (hora)"
+
+msgid "ui_publish_f_place"
+msgstr "Lloc"
+
+msgid "ui_publish_place_ph"
+msgstr "On quedareu"
+
+msgid "ui_publish_f_place_url"
+msgstr "Enllaç del mapa (opcional)"
+
+msgid "ui_publish_f_link"
+msgstr "Enllaç d'entrades o informació (opcional)"
+
+msgid "ui_publish_f_cover"
+msgstr "Portada"
+
+msgid "ui_publish_cover_add"
+msgstr "Afegeix una foto"
+
+msgid "ui_publish_cover_change"
+msgstr "Canvia la foto"
+
+msgid "ui_publish_rules"
+msgstr "Tu decideixes"
+
+msgid "ui_publish_who_comments"
+msgstr "Qui pot comentar"
+
+msgid "ui_publish_comments_all"
+msgstr "Tothom"
+
+msgid "ui_publish_comments_attendees"
+msgstr "Gent que hi va"
+
+msgid "ui_publish_comments_off"
+msgstr "Ningú"
+
+msgid "ui_publish_approval"
+msgstr "Aprova qui s'hi uneix"
+
+msgid "ui_publish_approval_hint"
+msgstr "La gent demana plaça i tu l'acceptes"
+
+msgid "ui_publish_limit"
+msgstr "Limita les places"
+
+msgid "ui_publish_limit_hint"
+msgstr "Quan s'ompli, s'obre una llista d'espera"
+
+msgid "ui_publish_places"
+msgstr "Places"
+
+msgid "ui_publish_need_title"
+msgstr "Posa-hi un títol"
+
+msgid "ui_publish_need_community"
+msgstr "Tria la comunitat on el publicaràs"
+
+msgid "ui_publish_need_date"
+msgstr "Les quedades i els esdeveniments necessiten un dia i una hora"
+
+msgid "ui_publish_date_past"
+msgstr "La data ja ha passat"
+
+msgid "ui_publish_end_before"
+msgstr "Acaba abans de començar"
+
+msgid "ui_publish_done_toast"
+msgstr "Publicat! La teva comunitat ja ho pot veure."
+
+msgid "ui_publish_saved_toast"
+msgstr "Canvis desats"
+
+msgid "ui_publish_no_communities_title"
+msgstr "Uneix-te a una comunitat per publicar"
+
+msgid "ui_publish_no_communities_body"
+msgstr "Les publicacions pertanyen a una comunitat. Uneix-te a una de la teva zona o crea'n una de pròpia."
+
+msgid "ui_plans_title"
+msgstr "Els teus plans"
+
+msgid "ui_plans_lead"
+msgstr "Quedades i esdeveniments als quals vas o que organitzes, cadascun amb el seu xat"
+
+msgid "ui_plans_going"
+msgstr "Hi vas"
+
+msgid "ui_plans_organising"
+msgstr "Organitzo"
+
+msgid "ui_plans_past"
+msgstr "Passats"
+
+msgid "ui_plans_this_week"
+msgstr "Aquesta setmana"
+
+msgid "ui_plans_later"
+msgstr "Més endavant"
+
+msgid "ui_plans_next"
+msgstr "Els teus propers plans"
+
+msgid "ui_plans_next_empty"
+msgstr "Encara no t'has apuntat a res."
+
+msgid "ui_plans_browse_board"
+msgstr "Mira el tauler"
+
+msgid "ui_plans_empty_going_title"
+msgstr "Encara no hi ha plans"
+
+msgid "ui_plans_empty_going_body"
+msgstr "Apunta't a una quedada o a un esdeveniment del tauler i apareixerà aquí, amb el seu xat."
+
+msgid "ui_plans_empty_org_title"
+msgstr "No organitzes res"
+
+msgid "ui_plans_empty_org_body"
+msgstr "Proposa un pla a la teva comunitat: una caminada, un sopar, un partit…"
+
+msgid "ui_plans_empty_past_title"
+msgstr "Cap pla passat"
+
+msgid "ui_plans_empty_past_body"
+msgstr "Els plans als quals has anat es quedaran aquí, a punt per repetir-los."
+
+msgid "ui_community_title"
+msgstr "Comunitats"
+
+msgid "ui_community_lead"
+msgstr "Gent de {zone} que comparteix el que t'agrada"
+
+msgid "ui_community_yours"
+msgstr "Les teves comunitats"
+
+msgid "ui_community_discover"
+msgstr "Descobreix"
+
+msgid "ui_community_search_ph"
+msgstr "Cerca comunitats"
+
+msgid "ui_community_no_match"
+msgstr "Cap comunitat coincideix. Pots crear-la."
+
+msgid "ui_community_empty_title"
+msgstr "Encara no hi ha comunitats a la teva zona"
+
+msgid "ui_community_empty_body"
+msgstr "Crea la primera i convida gent que comparteixi els teus interessos."
+
+msgid "ui_community_none_yet"
+msgstr "Encara no t'has unit a cap comunitat."
+
+msgid "ui_community_create"
+msgstr "Crea una comunitat"
+
+msgid "ui_community_create_button"
+msgstr "Crea"
+
+msgid "ui_community_create_lead"
+msgstr "Serà per a gent de la teva zona i franja d'edat. En seràs el propietari."
+
+msgid "ui_community_created_toast"
+msgstr "Comunitat creada! Convida gent a unir-s'hi."
+
+msgid "ui_community_f_title"
+msgstr "Nom"
+
+msgid "ui_community_title_ph"
+msgstr "p. ex. Corredors de dissabte"
+
+msgid "ui_community_desc_ph"
+msgstr "De què va i per a qui és"
+
+msgid "ui_community_f_rules"
+msgstr "Normes"
+
+msgid "ui_community_f_access"
+msgstr "Qui s'hi pot unir"
+
+msgid "ui_community_access_open"
+msgstr "Oberta"
+
+msgid "ui_community_access_request"
+msgstr "Amb sol·licitud"
+
+msgid "ui_community_access_invite"
+msgstr "Només amb invitació"
+
+msgid "ui_community_access_open_hint"
+msgstr "Qualsevol persona de la teva zona s'hi pot unir."
+
+msgid "ui_community_access_request_hint"
+msgstr "La gent demana unir-s'hi i un administrador o moderador l'accepta."
+
+msgid "ui_community_access_invite_hint"
+msgstr "Només amb l'enllaç d'invitació. No apareix als altres."
+
+msgid "ui_community_f_board"
+msgstr "Qui publica al tauler"
+
+msgid "ui_community_board_open"
+msgstr "Membres"
+
+msgid "ui_community_board_admins"
+msgstr "Només administradors"
+
+msgid "ui_community_board_open_hint"
+msgstr "Qualsevol membre pot proposar plans i publicar."
+
+msgid "ui_community_board_admins_hint"
+msgstr "Només el propietari, els administradors i els moderadors publiquen; els membres s'apunten i comenten."
+
+msgid "ui_community_board_readonly"
+msgstr "Només els administradors d'aquesta comunitat publiquen al seu tauler"
+
+msgid "ui_community_ask_join"
+msgstr "Demana unir-t'hi"
+
+msgid "ui_community_requested"
+msgstr "Sol·licitud enviada"
+
+msgid "ui_community_requested_toast"
+msgstr "Sol·licitud enviada. T'avisaran quan t'acceptin."
+
+msgid "ui_community_joined_toast"
+msgstr "Et donem la benvinguda a {name}!"
+
+msgid "ui_community_joined_link_toast"
+msgstr "T'has unit a la comunitat"
+
+msgid "ui_community_not_found"
+msgstr "Aquesta comunitat no existeix o no és a la teva zona"
+
+msgid "ui_community_online_n"
+msgstr "{n} en línia"
+
+msgid "ui_community_plans_n"
+msgstr "{n} plans"
+
+msgid "ui_community_tab_board"
+msgstr "Tauler"
+
+msgid "ui_community_tab_chat"
+msgstr "Xat"
+
+msgid "ui_community_tab_members"
+msgstr "Membres"
+
+msgid "ui_community_settings"
+msgstr "Configuració de la comunitat"
+
+msgid "ui_community_rules"
+msgstr "Normes"
+
+msgid "ui_community_leave"
+msgstr "Surt de la comunitat"
+
+msgid "ui_community_leave_body"
+msgstr "Deixaràs de veure el tauler i el xat de {name}."
+
+msgid "ui_community_leave_owner_body"
+msgstr "Ets el propietari: la propietat passa a l'administrador més antic o, si no n'hi ha, al membre més antic."
+
+msgid "ui_community_left_toast"
+msgstr "Has sortit de la comunitat"
+
+msgid "ui_community_publish_prompt"
+msgstr "Proposa un pla a {name}…"
+
+msgid "ui_community_board_empty"
+msgstr "Encara no hi ha res en aquest tauler"
+
+msgid "ui_community_board_empty_body"
+msgstr "Proposa el primer pla i posa la gent en marxa."
+
+msgid "ui_community_join_to_see"
+msgstr "Uneix-te a la comunitat per participar en els seus plans."
+
+msgid "ui_community_chat_join_title"
+msgstr "El xat és per als membres"
+
+msgid "ui_community_chat_join_body"
+msgstr "Uneix-te a la comunitat per parlar amb la seva gent en temps real."
+
+msgid "ui_community_requests_n"
+msgstr "Sol·licituds per unir-s'hi ({n})"
+
+msgid "ui_community_request_accepted"
+msgstr "Acceptada: ja és membre"
+
+msgid "ui_community_request_rejected"
+msgstr "Sol·licitud rebutjada"
+
+msgid "ui_community_invite_hint"
+msgstr "Qualsevol persona de la teva zona amb aquest enllaç s'hi uneix directament. Si en crees un de nou, l'anterior deixa de funcionar."
+
+msgid "ui_community_invite_create"
+msgstr "Crea un enllaç d'invitació"
+
+msgid "ui_community_invite_new"
+msgstr "Enllaç nou"
+
+msgid "ui_community_invite_new_toast"
+msgstr "Enllaç d'invitació nou a punt"
+
+msgid "ui_community_change_role"
+msgstr "Canvia el rol"
+
+msgid "ui_community_role_changed"
+msgstr "S'ha canviat el rol de {name}"
+
+msgid "ui_community_member_removed"
+msgstr "{name} ja no és membre"
+
+msgid "ui_community_remove_body"
+msgstr "{name} sortirà de la comunitat i del seu xat."
+
+msgid "ui_community_no_members"
+msgstr "Encara no hi ha membres"

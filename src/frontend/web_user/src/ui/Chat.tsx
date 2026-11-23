@@ -18,7 +18,8 @@ function isStaff(conv: Conversation | undefined, role?: string) {
   return !!conv && (["owner", "admin", "moderator"].includes(conv.role) || role === "admin");
 }
 
-export function ChatView({ conversationId, around }: { conversationId: number; around: number | null }) {
+/** A conversation. `embedded`: inside another screen (a community's Chat tab), without the back button. */
+export function ChatView({ conversationId, around, embedded }: { conversationId: number; around: number | null; embedded?: boolean }) {
   const conv = useStore((s) => s.conversations[conversationId]);
   const list = useStore((s) => s.messages[conversationId]);
   const me = useStore((s) => s.me);
@@ -45,7 +46,7 @@ export function ChatView({ conversationId, around }: { conversationId: number; a
       refreshConversation(conversationId).then(() => {
         if (!cancelled && !getState().conversations[conversationId]) {
           toast(t("ui_conversation_gone"), "error");
-          navigate("/", true);
+          navigate("/chats", true);
         }
       });
     } else {
@@ -163,7 +164,7 @@ export function ChatView({ conversationId, around }: { conversationId: number; a
   };
 
   return (
-    <main className="chat" aria-label={convTitle(conv)}>
+    <main className={"chat" + (embedded ? " embedded" : "")} aria-label={convTitle(conv)}>
       <ChatHeader conv={conv} />
       {conv.pinned_message ? (
         <button className="banner" onClick={() => jumpTo(conv.pinned_message!.id)}>
@@ -314,7 +315,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
     try {
       await api.removeMember(conv.id, getState().me!.id);
       removeConversation(conv.id);
-      navigate("/");
+      navigate("/chats");
       if (conv.kind !== "dm") loadConversations();
     } catch (e: any) {
       toast(e.message, "error");
@@ -327,7 +328,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
 
   return (
     <header className="chead">
-      <button className="iconbtn back" onClick={() => navigate("/")} aria-label={t("ui_back")}><Icon name="back" /></button>
+      <button className="iconbtn back" onClick={() => navigate("/chats")} aria-label={t("ui_back")}><Icon name="back" /></button>
       <button className="row" style={{ minWidth: 0, textAlign: "left" }} onClick={() => navigate(chatPath(conv.id, { panel: conv.kind === "dm" ? "info" : "members" }))}>
         <ConvIcon conv={conv} size={36} />
         <div style={{ minWidth: 0 }}>

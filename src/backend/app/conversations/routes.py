@@ -120,7 +120,8 @@ async def list_members(conv_id: int, q: str = "", limit: int = 200, db: AsyncSes
                        user: User = Depends(get_current_user)):
     await require_member(db, conv_id, user)
     query = select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
-        ConversationMember.conversation_id == conv_id, ConversationMember.banned.is_(False))
+        ConversationMember.conversation_id == conv_id, ConversationMember.banned.is_(False),
+        ConversationMember.away.is_(False))
     if q.strip():
         query = query.where(User.display_name.ilike(f"%{q.strip()}%"))
     rows = (await db.execute(query.limit(max(1, min(limit, 500))))).all()
@@ -377,7 +378,8 @@ async def search_messages(q: str, conversation_id: int | None = None, limit: int
     if len(q) < 2:
         return []
     mine = select(ConversationMember.conversation_id).where(ConversationMember.user_id == user.id,
-                                                            ConversationMember.banned.is_(False))
+                                                            ConversationMember.banned.is_(False),
+                                                            ConversationMember.away.is_(False))
     ts_query = func.plainto_tsquery("simple", q)
     query = select(Message).where(
         Message.conversation_id.in_(mine), Message.deleted_at.is_(None), Message.kind == "text",
@@ -391,7 +393,8 @@ async def search_messages(q: str, conversation_id: int | None = None, limit: int
 
 @router.get("/mentions", response_model=list[dict])
 async def my_mentions(limit: int = 50, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    mine = select(ConversationMember.conversation_id).where(ConversationMember.user_id == user.id)
+    mine = select(ConversationMember.conversation_id).where(ConversationMember.user_id == user.id,
+                                                            ConversationMember.away.is_(False))
     res = await db.execute(select(Message).where(
         Message.conversation_id.in_(mine), Message.deleted_at.is_(None), Message.mentions.contains([user.id]),
     ).order_by(Message.id.desc()).limit(max(1, min(limit, 100))))

@@ -2857,3 +2857,870 @@ msgstr "隐私与安全"
 
 msgid "ui_section_push"
 msgstr "此设备上的通知"
+
+msgid "err_community_not_found"
+msgstr "未找到该社区"
+
+msgid "err_community_other_zone"
+msgstr "该社区属于其他地区:只有其所在省份和年龄段的人才能加入"
+
+msgid "err_community_invite_only"
+msgstr "该社区仅限受邀加入"
+
+msgid "err_community_closed"
+msgstr "该社区需要审批或邀请:打开社区页面申请加入"
+
+msgid "err_join_community_first"
+msgstr "请先加入社区"
+
+msgid "err_board_admins_only"
+msgstr "只有所有者、管理员和版主可以在此公告板发布"
+
+msgid "err_post_not_found"
+msgstr "未找到该帖子"
+
+msgid "err_post_starts_at_required"
+msgstr "聚会和活动需要开始日期"
+
+msgid "err_post_dates"
+msgstr "结束时间不能早于开始时间"
+
+msgid "err_post_closed"
+msgstr "该帖子已关闭"
+
+msgid "err_post_past"
+msgstr "该计划已经结束"
+
+msgid "err_not_a_plan"
+msgstr "只有聚会和活动才有参加者"
+
+msgid "err_comments_off"
+msgstr "该帖子已关闭评论"
+
+msgid "err_comments_attendees_only"
+msgstr "只有参加的人可以评论"
+
+msgid "err_comment_not_found"
+msgstr "未找到该评论"
+
+msgid "err_organiser_cannot_leave"
+msgstr "组织者不能退出自己的计划:请改为取消计划"
+
+msgid "err_attendee_not_found"
+msgstr "此人没有待处理的申请"
+
+msgid "err_invalid_filter"
+msgstr "无效的筛选条件"
+
+msgid "err_read_only_chat"
+msgstr "该计划已取消:聊天为只读"
+
+msgid "sys_plan_cancelled"
+msgstr "计划“{plan}”已取消"
+
+msgid "email_footer_plans"
+msgstr "你收到这封邮件,是因为你参加或组织了 MeetGo 上的计划。"
+
+msgid "email_plan_joined_subject"
+msgstr "{name} 将参加“{plan}”"
+
+msgid "email_plan_joined_title"
+msgstr "新的报名"
+
+msgid "email_plan_joined_body"
+msgstr "{name} 已报名参加你的计划“{plan}”({date})。"
+
+msgid "email_plan_joined_button"
+msgstr "查看计划"
+
+msgid "email_plan_request_subject"
+msgstr "{name} 申请加入“{plan}”"
+
+msgid "email_plan_request_title"
+msgstr "加入你的计划的申请"
+
+msgid "email_plan_request_body"
+msgstr "{name} 想加入你的计划“{plan}”({date})。请在计划页面接受或拒绝该申请。"
+
+msgid "email_plan_request_button"
+msgstr "查看申请"
+
+msgid "email_plan_accepted_subject"
+msgstr "你已加入:“{plan}”"
+
+msgid "email_plan_accepted_title"
+msgstr "申请已通过"
+
+msgid "email_plan_accepted_body"
+msgstr "你加入“{plan}”({date})的申请已通过。"
+
+msgid "email_plan_accepted_button"
+msgstr "查看计划"
+
+msgid "email_plan_promoted_subject"
+msgstr "有空位了:“{plan}”"
+
+msgid "email_plan_promoted_title"
+msgstr "你可以参加了"
+
+msgid "email_plan_promoted_body"
+msgstr "有人退出了“{plan}”({date}),你已从候补名单转为正式参加:你可以去了。"
+
+msgid "email_plan_promoted_button"
+msgstr "查看计划"
+
+msgid "email_plan_changed_subject"
+msgstr "“{plan}”有变更"
+
+msgid "email_plan_changed_title"
+msgstr "计划已更新"
+
+msgid "email_plan_changed_body"
+msgstr "计划“{plan}”有了新的详情:{date},{place}。"
+
+msgid "email_plan_changed_button"
+msgstr "查看计划"
+
+msgid "email_plan_cancelled_subject"
+msgstr "“{plan}”已取消"
+
+msgid "email_plan_cancelled_title"
+msgstr "计划已取消"
+
+msgid "email_plan_cancelled_body"
+msgstr "计划“{plan}”({date})已取消。"
+
+msgid "email_plan_reminder_subject"
+msgstr "明天:“{plan}”"
+
+msgid "email_plan_reminder_title"
+msgstr "你的计划快到了"
+
+msgid "email_plan_reminder_body"
+msgstr "提醒:“{plan}”将于 {date} 在 {place} 举行。"
+
+msgid "email_plan_reminder_button"
+msgstr "查看计划"
+
+msgid "email_community_request_subject"
+msgstr "{name} 申请加入 {community}"
+
+msgid "email_community_request_title"
+msgstr "加入申请"
+
+msgid "email_community_request_body"
+msgstr "{name} 想加入社区 {community}。请在社区页面接受或拒绝该申请。"
+
+msgid "email_community_request_button"
+msgstr "查看申请"
+
+msgid "email_community_accepted_subject"
+msgstr "欢迎加入 {community}"
+
+msgid "email_community_accepted_title"
+msgstr "申请已通过"
+
+msgid "email_community_accepted_body"
+msgstr "你加入社区 {community} 的申请已通过。"
+
+msgid "email_community_accepted_button"
+msgstr "打开社区"
+
+msgid "ui_nav_home"
+msgstr "首页"
+
+msgid "ui_nav_plans"
+msgstr "计划"
+
+msgid "ui_nav_publish"
+msgstr "发布"
+
+msgid "ui_nav_communities"
+msgstr "社区"
+
+msgid "ui_nav_profile"
+msgstr "我的"
+
+msgid "ui_f_communities"
+msgstr "社区"
+
+msgid "ui_f_plans"
+msgstr "计划"
+
+msgid "ui_sec_communities"
+msgstr "社区"
+
+msgid "ui_sec_communities_zone"
+msgstr "社区 · {zone}"
+
+msgid "ui_sec_plans"
+msgstr "计划聊天"
+
+msgid "ui_chats_empty_body"
+msgstr "加入你所在地区的社区即可与大家聊天,或报名参加计划以加入其聊天。"
+
+msgid "ui_email_plans"
+msgstr "我的计划:报名、变更,以及前一天的提醒"
+
+msgid "ui_board_title"
+msgstr "你的公告板"
+
+msgid "ui_board_lead"
+msgstr "{zone}各社区的计划和动态"
+
+msgid "ui_board_f_all"
+msgstr "全部"
+
+msgid "ui_board_f_today"
+msgstr "今天"
+
+msgid "ui_board_f_weekend"
+msgstr "周末"
+
+msgid "ui_board_f_week"
+msgstr "本周"
+
+msgid "ui_board_f_meetups"
+msgstr "聚会"
+
+msgid "ui_board_f_events"
+msgstr "活动"
+
+msgid "ui_board_f_notices"
+msgstr "通知"
+
+msgid "ui_board_new_posts"
+msgstr "新帖子"
+
+msgid "ui_board_load_more"
+msgstr "加载更多"
+
+msgid "ui_board_error"
+msgstr "无法加载"
+
+msgid "ui_board_retry"
+msgstr "重试"
+
+msgid "ui_board_empty_title"
+msgstr "公告板很安静"
+
+msgid "ui_board_empty_body"
+msgstr "你的社区里还没有人发过帖。来做第一个吧:提出一个计划,看看谁会加入。"
+
+msgid "ui_board_empty_join_title"
+msgstr "加入一个社区,开始吧"
+
+msgid "ui_board_empty_join_body"
+msgstr "你的公告板会显示你所在社区的计划、活动和通知。"
+
+msgid "ui_board_empty_filter_title"
+msgstr "暂时没有内容"
+
+msgid "ui_board_empty_filter_body"
+msgstr "没有符合此筛选条件的帖子。试试其他筛选,或自己提出一个计划。"
+
+msgid "ui_board_publish_plan"
+msgstr "提出计划"
+
+msgid "ui_board_find_communities"
+msgstr "发现社区"
+
+msgid "ui_board_see_all"
+msgstr "查看全部"
+
+msgid "ui_board_back_home"
+msgstr "返回公告板"
+
+msgid "ui_post_kind_meetup"
+msgstr "聚会"
+
+msgid "ui_post_kind_event"
+msgstr "活动"
+
+msgid "ui_post_kind_notice"
+msgstr "通知"
+
+msgid "ui_post_kind_thread"
+msgstr "讨论"
+
+msgid "ui_post_pinned"
+msgstr "已置顶"
+
+msgid "ui_post_finished"
+msgstr "已结束"
+
+msgid "ui_post_closed"
+msgstr "已关闭"
+
+msgid "ui_post_places_of"
+msgstr "{total} 个名额中的 {n} 个"
+
+msgid "ui_post_full"
+msgstr "已满"
+
+msgid "ui_post_going_n"
+msgstr "{n} 人参加"
+
+msgid "ui_post_free_n"
+msgstr "剩余 {n} 个名额"
+
+msgid "ui_post_waitlist_n"
+msgstr "{n} 人候补"
+
+msgid "ui_post_sign_up"
+msgstr "报名"
+
+msgid "ui_post_ask_join"
+msgstr "申请加入"
+
+msgid "ui_post_join_waitlist"
+msgstr "加入候补名单"
+
+msgid "ui_post_going"
+msgstr "已参加"
+
+msgid "ui_post_on_waitlist"
+msgstr "在候补名单中"
+
+msgid "ui_post_waitlist"
+msgstr "候补名单"
+
+msgid "ui_post_request_sent"
+msgstr "申请已发送"
+
+msgid "ui_post_you_organise"
+msgstr "由你组织"
+
+msgid "ui_post_organiser"
+msgstr "组织者"
+
+msgid "ui_post_joined_toast"
+msgstr "你已参加!你现在在计划聊天中了。"
+
+msgid "ui_post_waitlist_toast"
+msgstr "名额已满:你在候补名单中,有人退出时会自动补上。"
+
+msgid "ui_post_pending_toast"
+msgstr "申请已发送。组织者会确认你的名额。"
+
+msgid "ui_post_left_toast"
+msgstr "你不再参加了"
+
+msgid "ui_post_request_cancelled"
+msgstr "申请已取消"
+
+msgid "ui_post_leave"
+msgstr "我去不了了"
+
+msgid "ui_post_leave_waitlist"
+msgstr "退出候补名单"
+
+msgid "ui_post_cancel_request"
+msgstr "取消申请"
+
+msgid "ui_post_open_chat"
+msgstr "打开计划聊天"
+
+msgid "ui_post_repeat"
+msgstr "重复"
+
+msgid "ui_post_edit"
+msgstr "编辑"
+
+msgid "ui_post_delete"
+msgstr "删除帖子"
+
+msgid "ui_post_delete_body"
+msgstr "该帖子及其评论将从公告板上消失。"
+
+msgid "ui_post_delete_plan_body"
+msgstr "该计划将被取消,并通知所有参加的人。其聊天会保留,但为只读。"
+
+msgid "ui_post_deleted_toast"
+msgstr "该帖子已删除"
+
+msgid "ui_post_copy_link"
+msgstr "复制链接"
+
+msgid "ui_post_pin"
+msgstr "置顶到公告板"
+
+msgid "ui_post_unpin"
+msgstr "取消置顶"
+
+msgid "ui_post_pinned_toast"
+msgstr "已置顶到公告板"
+
+msgid "ui_post_unpinned_toast"
+msgstr "已取消置顶"
+
+msgid "ui_post_close"
+msgstr "关闭报名和评论"
+
+msgid "ui_post_reopen"
+msgstr "重新开放"
+
+msgid "ui_post_closed_toast"
+msgstr "已关闭"
+
+msgid "ui_post_reopened_toast"
+msgstr "已重新开放"
+
+msgid "ui_post_not_found"
+msgstr "该帖子不存在,或你无法查看"
+
+msgid "ui_post_see_map"
+msgstr "查看地图"
+
+msgid "ui_post_organised_by"
+msgstr "组织者:{name}"
+
+msgid "ui_post_posted_by"
+msgstr "发布者:{name}"
+
+msgid "ui_post_tickets"
+msgstr "门票及更多信息"
+
+msgid "ui_post_approval_note"
+msgstr "参加者由组织者审批"
+
+msgid "ui_post_people_going"
+msgstr "参加的人"
+
+msgid "ui_post_see_all"
+msgstr "查看全部"
+
+msgid "ui_post_nobody_yet"
+msgstr "还没有人。来做第一个吧!"
+
+msgid "ui_post_waitlist_note"
+msgstr "有人退出时,你会自动获得名额。"
+
+msgid "ui_post_pending_note"
+msgstr "等待组织者接受你。"
+
+msgid "ui_post_pending_requests"
+msgstr "等待审批"
+
+msgid "ui_post_accepted_toast"
+msgstr "已接受"
+
+msgid "ui_post_rejected_toast"
+msgstr "已拒绝"
+
+msgid "ui_post_comments"
+msgstr "评论"
+
+msgid "ui_post_comments_off"
+msgstr "该帖子已关闭评论"
+
+msgid "ui_post_comments_attendees"
+msgstr "只有参加的人可以评论"
+
+msgid "ui_post_comments_cant"
+msgstr "你无法评论该帖子"
+
+msgid "ui_post_closed_note"
+msgstr "已关闭:不再接受评论或报名"
+
+msgid "ui_post_older_comments"
+msgstr "更早的评论"
+
+msgid "ui_post_no_comments"
+msgstr "还没有评论。问点什么或打个招呼吧。"
+
+msgid "ui_post_comment_ph"
+msgstr "写评论…"
+
+msgid "ui_post_report_title"
+msgstr "举报帖子"
+
+msgid "ui_post_report_details"
+msgstr "详情(可选)"
+
+msgid "ui_publish_title"
+msgstr "新帖子"
+
+msgid "ui_publish_edit_title"
+msgstr "编辑帖子"
+
+msgid "ui_publish_repeat_title"
+msgstr "重复计划"
+
+msgid "ui_publish_button"
+msgstr "发布"
+
+msgid "ui_publish_kind"
+msgstr "帖子类型"
+
+msgid "ui_publish_hint_meetup"
+msgstr "有日期、地点的计划,还可以按需限制名额。"
+
+msgid "ui_publish_hint_event"
+msgstr "更大型的活动:有封面、结束时间和购票链接。"
+
+msgid "ui_publish_hint_notice"
+msgstr "一个问题、一条推荐或一则公告,无需日期。"
+
+msgid "ui_publish_hint_thread"
+msgstr "与你的社区围绕某个话题展开交流。"
+
+msgid "ui_publish_where"
+msgstr "社区"
+
+msgid "ui_publish_choose_community"
+msgstr "选择社区"
+
+msgid "ui_publish_f_title"
+msgstr "标题"
+
+msgid "ui_publish_title_ph_meetup"
+msgstr "例如:周六去湖边散步"
+
+msgid "ui_publish_title_ph_event"
+msgstr "例如:友谊帕德尔球赛"
+
+msgid "ui_publish_title_ph_notice"
+msgstr "例如:周二有人想打网球吗?"
+
+msgid "ui_publish_title_ph_thread"
+msgstr "例如:适合多人聚餐的好去处"
+
+msgid "ui_publish_f_body"
+msgstr "描述"
+
+msgid "ui_publish_body_ph"
+msgstr "告诉大家内容是什么、需要带什么、适合什么水平…"
+
+msgid "ui_publish_f_date"
+msgstr "日期"
+
+msgid "ui_publish_f_time"
+msgstr "时间"
+
+msgid "ui_publish_f_end_date"
+msgstr "结束(日期)"
+
+msgid "ui_publish_f_end_time"
+msgstr "结束(时间)"
+
+msgid "ui_publish_f_place"
+msgstr "地点"
+
+msgid "ui_publish_place_ph"
+msgstr "集合地点"
+
+msgid "ui_publish_f_place_url"
+msgstr "地图链接(可选)"
+
+msgid "ui_publish_f_link"
+msgstr "门票或信息链接(可选)"
+
+msgid "ui_publish_f_cover"
+msgstr "封面"
+
+msgid "ui_publish_cover_add"
+msgstr "添加照片"
+
+msgid "ui_publish_cover_change"
+msgstr "更换照片"
+
+msgid "ui_publish_rules"
+msgstr "由你决定"
+
+msgid "ui_publish_who_comments"
+msgstr "谁可以评论"
+
+msgid "ui_publish_comments_all"
+msgstr "所有人"
+
+msgid "ui_publish_comments_attendees"
+msgstr "参加的人"
+
+msgid "ui_publish_comments_off"
+msgstr "无人"
+
+msgid "ui_publish_approval"
+msgstr "审批加入者"
+
+msgid "ui_publish_approval_hint"
+msgstr "大家申请名额,由你来接受"
+
+msgid "ui_publish_limit"
+msgstr "限制名额"
+
+msgid "ui_publish_limit_hint"
+msgstr "满员后会开放候补名单"
+
+msgid "ui_publish_places"
+msgstr "名额"
+
+msgid "ui_publish_need_title"
+msgstr "请填写标题"
+
+msgid "ui_publish_need_community"
+msgstr "请选择要发布到的社区"
+
+msgid "ui_publish_need_date"
+msgstr "聚会和活动需要日期和时间"
+
+msgid "ui_publish_date_past"
+msgstr "该日期已经过去"
+
+msgid "ui_publish_end_before"
+msgstr "结束时间早于开始时间"
+
+msgid "ui_publish_done_toast"
+msgstr "已发布!你的社区现在可以看到了。"
+
+msgid "ui_publish_saved_toast"
+msgstr "更改已保存"
+
+msgid "ui_publish_no_communities_title"
+msgstr "加入社区后才能发布"
+
+msgid "ui_publish_no_communities_body"
+msgstr "帖子属于某个社区。加入你所在地区的社区,或创建你自己的。"
+
+msgid "ui_plans_title"
+msgstr "你的计划"
+
+msgid "ui_plans_lead"
+msgstr "你参加或组织的聚会和活动,各自附带聊天"
+
+msgid "ui_plans_going"
+msgstr "参加"
+
+msgid "ui_plans_organising"
+msgstr "组织"
+
+msgid "ui_plans_past"
+msgstr "已结束"
+
+msgid "ui_plans_this_week"
+msgstr "本周"
+
+msgid "ui_plans_later"
+msgstr "之后"
+
+msgid "ui_plans_next"
+msgstr "你接下来的计划"
+
+msgid "ui_plans_next_empty"
+msgstr "你还没有报名任何计划。"
+
+msgid "ui_plans_browse_board"
+msgstr "浏览公告板"
+
+msgid "ui_plans_empty_going_title"
+msgstr "还没有计划"
+
+msgid "ui_plans_empty_going_body"
+msgstr "在公告板上报名参加聚会或活动,它就会连同聊天一起显示在这里。"
+
+msgid "ui_plans_empty_org_title"
+msgstr "你没有在组织任何计划"
+
+msgid "ui_plans_empty_org_body"
+msgstr "向你的社区提出一个计划吧:散步、聚餐、比赛…"
+
+msgid "ui_plans_empty_past_title"
+msgstr "没有已结束的计划"
+
+msgid "ui_plans_empty_past_body"
+msgstr "你参加过的计划会保留在这里,随时可以再办一次。"
+
+msgid "ui_community_title"
+msgstr "社区"
+
+msgid "ui_community_lead"
+msgstr "{zone}与你兴趣相投的人"
+
+msgid "ui_community_yours"
+msgstr "你的社区"
+
+msgid "ui_community_discover"
+msgstr "发现"
+
+msgid "ui_community_search_ph"
+msgstr "搜索社区"
+
+msgid "ui_community_no_match"
+msgstr "没有匹配的社区。你可以创建一个。"
+
+msgid "ui_community_empty_title"
+msgstr "你所在地区还没有社区"
+
+msgid "ui_community_empty_body"
+msgstr "创建第一个社区,邀请和你兴趣相投的人。"
+
+msgid "ui_community_none_yet"
+msgstr "你还没有加入任何社区。"
+
+msgid "ui_community_create"
+msgstr "创建社区"
+
+msgid "ui_community_create_button"
+msgstr "创建"
+
+msgid "ui_community_create_lead"
+msgstr "它面向你所在地区和年龄段的人。你将成为它的所有者。"
+
+msgid "ui_community_created_toast"
+msgstr "社区已创建!邀请大家加入吧。"
+
+msgid "ui_community_f_title"
+msgstr "名称"
+
+msgid "ui_community_title_ph"
+msgstr "例如:周六跑步团"
+
+msgid "ui_community_desc_ph"
+msgstr "它是做什么的,面向哪些人"
+
+msgid "ui_community_f_rules"
+msgstr "规则"
+
+msgid "ui_community_f_access"
+msgstr "谁可以加入"
+
+msgid "ui_community_access_open"
+msgstr "公开"
+
+msgid "ui_community_access_request"
+msgstr "需申请"
+
+msgid "ui_community_access_invite"
+msgstr "仅限邀请"
+
+msgid "ui_community_access_open_hint"
+msgstr "你所在地区的任何人都可以加入。"
+
+msgid "ui_community_access_request_hint"
+msgstr "大家申请加入,由管理员或版主接受。"
+
+msgid "ui_community_access_invite_hint"
+msgstr "只能通过邀请链接加入,不会向其他人展示。"
+
+msgid "ui_community_f_board"
+msgstr "谁可以在公告板发布"
+
+msgid "ui_community_board_open"
+msgstr "成员"
+
+msgid "ui_community_board_admins"
+msgstr "仅管理员"
+
+msgid "ui_community_board_open_hint"
+msgstr "任何成员都可以提出计划和发帖。"
+
+msgid "ui_community_board_admins_hint"
+msgstr "只有所有者、管理员和版主可以发布;成员可以报名和评论。"
+
+msgid "ui_community_board_readonly"
+msgstr "只有该社区的管理员可以在其公告板发布"
+
+msgid "ui_community_ask_join"
+msgstr "申请加入"
+
+msgid "ui_community_requested"
+msgstr "申请已发送"
+
+msgid "ui_community_requested_toast"
+msgstr "申请已发送。通过后会通知你。"
+
+msgid "ui_community_joined_toast"
+msgstr "欢迎加入 {name}!"
+
+msgid "ui_community_joined_link_toast"
+msgstr "你已加入该社区"
+
+msgid "ui_community_not_found"
+msgstr "该社区不存在,或不在你所在的地区"
+
+msgid "ui_community_online_n"
+msgstr "{n} 人在线"
+
+msgid "ui_community_plans_n"
+msgstr "{n} 个计划"
+
+msgid "ui_community_tab_board"
+msgstr "公告板"
+
+msgid "ui_community_tab_chat"
+msgstr "聊天"
+
+msgid "ui_community_tab_members"
+msgstr "成员"
+
+msgid "ui_community_settings"
+msgstr "社区设置"
+
+msgid "ui_community_rules"
+msgstr "规则"
+
+msgid "ui_community_leave"
+msgstr "退出社区"
+
+msgid "ui_community_leave_body"
+msgstr "你将不再看到 {name} 的公告板和聊天。"
+
+msgid "ui_community_leave_owner_body"
+msgstr "你是所有者:所有权将转给资历最久的管理员,或资历最久的成员。"
+
+msgid "ui_community_left_toast"
+msgstr "你已退出社区"
+
+msgid "ui_community_publish_prompt"
+msgstr "向 {name} 提出一个计划…"
+
+msgid "ui_community_board_empty"
+msgstr "此公告板上还没有内容"
+
+msgid "ui_community_board_empty_body"
+msgstr "提出第一个计划,让大家动起来。"
+
+msgid "ui_community_join_to_see"
+msgstr "加入社区即可参与其计划。"
+
+msgid "ui_community_chat_join_title"
+msgstr "聊天仅限成员"
+
+msgid "ui_community_chat_join_body"
+msgstr "加入社区,即可与大家实时交流。"
+
+msgid "ui_community_requests_n"
+msgstr "加入申请({n})"
+
+msgid "ui_community_request_accepted"
+msgstr "已接受:对方现在是成员了"
+
+msgid "ui_community_request_rejected"
+msgstr "申请已拒绝"
+
+msgid "ui_community_invite_hint"
+msgstr "你所在地区的任何人通过此链接都可直接加入。生成新链接后,旧链接将失效。"
+
+msgid "ui_community_invite_create"
+msgstr "创建邀请链接"
+
+msgid "ui_community_invite_new"
+msgstr "新链接"
+
+msgid "ui_community_invite_new_toast"
+msgstr "新的邀请链接已就绪"
+
+msgid "ui_community_change_role"
+msgstr "更改角色"
+
+msgid "ui_community_role_changed"
+msgstr "{name} 的角色已更改"
+
+msgid "ui_community_member_removed"
+msgstr "{name} 已不再是成员"
+
+msgid "ui_community_remove_body"
+msgstr "{name} 将退出该社区及其聊天。"
+
+msgid "ui_community_no_members"
+msgstr "还没有成员"

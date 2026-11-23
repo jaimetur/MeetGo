@@ -69,7 +69,7 @@ async def test_friend_requests_email_unless_turned_off(client, db_session, outbo
     assert "/email/unsubscribe?" in mail["text"] and mail["headers"]["List-Unsubscribe-Post"] == "List-Unsubscribe=One-Click"
 
     me = (await client.patch("/me/email-prefs", json={"requests": False, "reports": True}, headers=bea[0])).json()
-    assert me["email_prefs"] == {"mentions": True, "messages": True, "requests": False}  # reports: administrators only
+    assert me["email_prefs"] == {"mentions": True, "messages": True, "requests": False, "plans": True}  # reports: administrators only
     await client.post("/friends/requests", json={"to_user_id": bea[1]["id"]}, headers=cris[0])
     assert len(to(outbox, "bea@example.com")) == 1
 

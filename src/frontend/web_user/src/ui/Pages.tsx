@@ -3,8 +3,8 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api } from "../api";
 import { isNativeApp, native } from "../native";
 import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
-import { chatPath, navigate } from "../router";
-import { loadConversations, setState, toast, useStore } from "../store";
+import { chatPath, communityPath, navigate } from "../router";
+import { loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { Interest, Message } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
@@ -24,43 +24,6 @@ function PageShell({ title, lead, children }: { title: string; lead?: string; ch
         {children}
       </div>
     </main>
-  );
-}
-
-export function ExplorePage() {
-  const [items, setItems] = useState<Awaited<ReturnType<typeof api.explore>> | null>(null);
-  const load = () => api.explore().then(setItems).catch((e) => toast(e.message, "error"));
-  useEffect(() => {
-    load();
-  }, []);
-  async function join(interestId: number) {
-    try {
-      const { conversation_id } = await api.joinChannel(interestId);
-      await loadConversations();
-      navigate(chatPath(conversation_id));
-    } catch (e: any) {
-      toast(e.message, "error");
-    }
-  }
-  const zone = items?.[0]?.zone;
-  return (
-    <PageShell title={t("ui_explore_title")} lead={zone ? t("ui_explore_lead", { zone }) : undefined}>
-      <div className="grid2">
-        {items?.map((c) => (
-          <div key={c.interest.id} className="box row" style={{ gap: 12 }}>
-            <div className="chan" style={{ width: 42, height: 42, fontSize: 19 }}>#</div>
-            <div className="grow" style={{ minWidth: 0 }}>
-              <div style={{ fontWeight: 650 }}>{c.interest.name}</div>
-              <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_members_n", { n: c.member_count })}</div>
-            </div>
-            {c.joined && c.conversation_id
-              ? <button className="btn sm" onClick={() => navigate(chatPath(c.conversation_id!))}>{t("ui_open")}</button>
-              : <button className="btn pri sm" onClick={() => join(c.interest.id)}>{t("ui_join")}</button>}
-          </div>
-        ))}
-      </div>
-      {!items ? <div className="empty">{t("ui_loading")}</div> : null}
-    </PageShell>
   );
 }
 
@@ -452,7 +415,7 @@ export function AccountPage() {
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_emails")}</h3>
             {!me.email_verified ? <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_unverified")}</div> : null}
-            {["mentions", "messages", "requests", "reports"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
+            {["mentions", "messages", "requests", "plans", "reports"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
               <label key={k} className="check">
                 <input id={`acc-email-${k}`} type="checkbox" checked={!!me.email_prefs![k]}
                   onChange={(e) => api.emailPrefs({ [k]: e.target.checked }).then((u) => setState({ me: u })).catch((err) => toast(err.message, "error"))} />
@@ -529,10 +492,19 @@ export function SharePage() {
 export function JoinPage({ code }: { code: string }) {
   const [error, setError] = useState("");
   useEffect(() => {
-    api.joinInvite(code).then(async (res) => {
-      await loadConversations();
-      navigate(chatPath(res.conversation_id), true);
-    }).catch((e) => setError(e.message));
+    // Invitation links are communities' first; a link that is not one may still be a group's.
+    api.joinCommunityCode(code).then(async (res) => {
+      toast(t("ui_community_joined_link_toast"));
+      await loadConversations().catch(() => undefined);
+      loadMyCommunities();
+      navigate(communityPath(res.community_id), true);
+    }).catch((e) => {
+      if (e.status !== 404) return setError(e.message);
+      api.joinInvite(code).then(async (res) => {
+        await loadConversations();
+        navigate(chatPath(res.conversation_id), true);
+      }).catch((err) => setError(err.message));
+    });
   }, [code]);
   return <PageShell title={t("ui_join_group")}>{error ? <div className="err">{error}</div> : <div className="empty">{t("ui_loading")}</div>}</PageShell>;
 }

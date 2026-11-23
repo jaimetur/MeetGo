@@ -21,6 +21,14 @@ def _unescape_po(value: str) -> str:
     )
 
 
+def _unquote(value: str) -> str:
+    """Drop exactly the outer quotes of a PO string (an escaped quote at the end stays)."""
+    value = value.strip()
+    if len(value) >= 2 and value[0] == '"' and value[-1] == '"':
+        return value[1:-1]
+    return value
+
+
 def _parse_po(text: str) -> dict[str, str]:
     out: dict[str, str] = {}
     msgid: str | None = None
@@ -45,14 +53,14 @@ def _parse_po(text: str) -> dict[str, str]:
         if line.startswith("msgid "):
             commit()
             mode = "id"
-            msgid = _unescape_po(line[6:].strip().strip('"'))
+            msgid = _unescape_po(_unquote(line[6:]))
             continue
         if line.startswith("msgstr "):
             mode = "str"
-            msgstr = _unescape_po(line[7:].strip().strip('"'))
+            msgstr = _unescape_po(_unquote(line[7:]))
             continue
         if line.startswith('"'):
-            val = _unescape_po(line.strip().strip('"'))
+            val = _unescape_po(_unquote(line))
             if mode == "id":
                 msgid = (msgid or "") + val
             elif mode == "str":

@@ -4,13 +4,16 @@ import { API_BASE, api, getToken, setApiHandlers, setToken } from "../api";
 import { native, setNativeHandlers } from "../native";
 import { announceActiveConversation, registerServiceWorker, setupNativePush, subscribeExisting } from "../push";
 import { startRealtime, stopRealtime, setRealtimeHooks } from "../realtime";
-import { chatPath, dropQueryParams, navigate, queryParam, useRoute } from "../router";
-import { getState, loadConversations, resetState, setState, toast, useStore } from "../store";
+import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } from "../router";
+import { getState, loadConversations, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen } from "./Auth";
 import { ChatView } from "./Chat";
-import { Icon, InstallHint, Splash } from "./common";
+import { HomePage, PostPage, PublishPage } from "./Board";
+import { Icon, InstallHint, Splash, Wordmark } from "./common";
+import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
-import { AccountPage, ExplorePage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
+import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
+import { PlansPage, RightColumn } from "./Plans";
 import { Paywall } from "./Paywall";
 import { Sidebar } from "./Sidebar";
 
@@ -142,14 +145,28 @@ function Shell() {
     native.setBadge(unread);
   }, [unread]);
 
+  // My plans and communities feed the right column, the Chats filters and Publish; joining or leaving a
+  // community changes my chat rooms, so the list follows them.
+  const roomCount = Object.values(conversations).filter((c) => c.kind === "channel").length;
+  useEffect(() => {
+    loadMyPlans();
+  }, []);
+  useEffect(() => {
+    loadMyCommunities();
+  }, [roomCount]);
+
   const back = useCallback(() => {
     const r = route;
     if (r.name === "chat" && (r.thread || r.panel)) {
       navigate(chatPath(r.id));
       return true;
     }
+    if (r.name === "chat") {
+      navigate("/chats");
+      return true;
+    }
     if (r.name !== "home" && window.matchMedia("(max-width: 820px)").matches) {
-      navigate("/");
+      goBack("/");
       return true;
     }
     return false;
@@ -158,32 +175,50 @@ function Shell() {
   useEffect(() => {
     setNativeHandlers({ back });
     setRealtimeHooks({
-      removed: (id) => getState().activeConversation === id && navigate("/"),
+      removed: (id) => getState().activeConversation === id && navigate("/chats"),
       requests: refreshRequests,
     });
   }, [back]);
 
+  const chatsMode = route.name === "chats" || route.name === "chat";
   const panelOpen = route.name === "chat" && (!!route.thread || !!route.panel);
-  const isPage = ["explore", "people", "mentions", "account", "share", "join"].includes(route.name);
-  // "conv": inside a conversation the phone hides the bottom tab bar; the other screens keep it.
-  const shellClass = ["shell", panelOpen ? "with-panel" : "", isPage ? "is-page" : "", route.name !== "home" ? "chat-open" : "", route.name === "chat" ? "conv" : ""].join(" ");
+  // Detail screens (a post, publishing) hide the phone tab bar, like a conversation.
+  const detail = route.name === "post" || route.name === "publish";
+  const withRight = ["home", "plans", "communities", "post"].includes(route.name) || (route.name === "community" && route.tab !== "chat");
+  const shellClass = [
+    "shell", chatsMode ? "chats" : "pages", panelOpen ? "with-panel" : "", withRight ? "has-right" : "",
+    route.name === "chat" ? "chat-open conv" : "", detail ? "conv detail" : "",
+  ].join(" ");
   const requestsTotal = requests.friends + requests.dms;
 
-  const nav = [
-    { name: "home", icon: "chat", label: t("ui_nav_chats"), badge: unread },
-    { name: "explore", icon: "compass", label: t("ui_nav_channels"), badge: 0 },
+  // Which tab is lit for the current screen.
+  const current = ({ chat: "chats", post: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;
+  const go = (name: string) => navigate(name === "home" ? "/" : "/" + name);
+
+  const menu = [
+    { name: "home", icon: "home", label: t("ui_nav_home"), badge: 0 },
+    { name: "plans", icon: "calendar", label: t("ui_nav_plans"), badge: 0 },
+    { name: "chats", icon: "chat", label: t("ui_nav_chats"), badge: unread },
+    { name: "communities", icon: "compass", label: t("ui_nav_communities"), badge: 0 },
     { name: "people", icon: "users", label: t("ui_nav_people"), badge: requestsTotal },
     { name: "mentions", icon: "at", label: t("ui_nav_mentions"), badge: mentions, at: true },
-    { name: "account", icon: "user", label: t("ui_nav_account"), badge: 0 },
+    { name: "account", icon: "user", label: t("ui_nav_profile"), badge: 0 },
   ];
-  const current = route.name === "chat" ? "home" : route.name;
+  // Phones: Home · Plans · ＋ · Chats · Profile. Swiping moves between the four tabs.
+  const tabs = [
+    { name: "home", icon: "home", label: t("ui_nav_home"), badge: 0 },
+    { name: "plans", icon: "calendar", label: t("ui_nav_plans"), badge: 0 },
+    { name: "publish", icon: "plus", label: t("ui_nav_publish"), badge: 0 },
+    { name: "chats", icon: "chat", label: t("ui_nav_chats"), badge: unread },
+    { name: "account", icon: "user", label: t("ui_nav_profile"), badge: 0 },
+  ];
+  const swipeOrder = ["home", "plans", "chats", "account"];
 
-  // Phones: swipe left or right on a main screen to go to the next or previous tab.
   const swipe = React.useRef<{ x: number; y: number; t: number } | null>(null);
-  const tabIndex = nav.findIndex((n) => n.name === route.name);
+  const tabIndex = swipeOrder.indexOf(route.name);
   const onTouchStart = (e: React.TouchEvent) => {
     const el = e.target as HTMLElement;
-    swipe.current = tabIndex < 0 || e.touches.length > 1 || el.closest(".chips, input, textarea, select, .modal-bg, .sheet-bg")
+    swipe.current = tabIndex < 0 || e.touches.length > 1 || el.closest(".chips, .segtabs, input, textarea, select, .modal-bg, .sheet-bg")
       ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() };
   };
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -193,28 +228,35 @@ function Shell() {
     const dx = e.changedTouches[0].clientX - start.x;
     const dy = e.changedTouches[0].clientY - start.y;
     if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2 || Date.now() - start.t > 700) return;
-    const next = nav[tabIndex + (dx < 0 ? 1 : -1)];
-    if (next) navigate(next.name === "home" ? "/" : "/" + next.name);
+    const next = swipeOrder[tabIndex + (dx < 0 ? 1 : -1)];
+    if (next) go(next);
   };
 
   return (
     <div className={shellClass} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <nav className="rail" aria-label={t("ui_nav")}>
-        <div className="mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M7 5 19 12 7 19z" fill="#fff" /></svg></div>
-        {nav.map((n) => (
-          <button key={n.name} className={"rb" + (current === n.name ? " on" : "")} title={n.label} aria-label={n.label} onClick={() => navigate(n.name === "home" ? "/" : "/" + n.name)}>
+      <nav className="dnav" aria-label={t("ui_nav")}>
+        <button className="dlogo" onClick={() => go("home")} aria-label="MeetGo">
+          <img className="appicon" src="/apple-touch-icon.png" alt="" />
+          <Wordmark size={24} />
+        </button>
+        {menu.map((n) => (
+          <button key={n.name} className={"di" + (current === n.name ? " on" : "")} title={n.label} aria-label={n.label} aria-current={current === n.name ? "page" : undefined} onClick={() => go(n.name)}>
             <Icon name={n.icon} />
+            <span className="dl">{n.label}</span>
             {n.badge ? <span className={"bdg" + (n.at ? " at" : "")}>{n.badge > 99 ? "99+" : n.badge}</span> : null}
           </button>
         ))}
+        <button className="btn go dpub" onClick={() => go("publish")} title={t("ui_nav_publish")} aria-label={t("ui_nav_publish")}>
+          <Icon name="plus" /><span className="dl">{t("ui_nav_publish")}</span>
+        </button>
         <div className="grow" />
         <span className={"conn" + (connected ? " on" : "")} title={connected ? t("ui_connected") : t("ui_reconnecting")} />
       </nav>
 
-      {!isPage ? <Sidebar activeId={activeId} /> : null}
+      {chatsMode ? <Sidebar activeId={activeId} /> : null}
 
       {route.name === "chat" ? <ChatView key={route.id} conversationId={route.id} around={route.around} /> : null}
-      {route.name === "home" ? (
+      {route.name === "chats" ? (
         <main className="chat">
           <div className="empty" style={{ margin: "auto" }}>
             <h3>{t("ui_pick_conversation")}</h3>
@@ -222,26 +264,34 @@ function Shell() {
           </div>
         </main>
       ) : null}
-      {route.name === "explore" ? <ExplorePage /> : null}
+      {route.name === "home" ? <HomePage /> : null}
+      {route.name === "plans" ? <PlansPage /> : null}
+      {route.name === "publish" ? <PublishPage key={`${route.community}:${route.repeat}:${route.edit}`} community={route.community} repeat={route.repeat} edit={route.edit} /> : null}
+      {route.name === "post" ? <PostPage key={route.id} id={route.id} /> : null}
+      {route.name === "communities" ? <CommunitiesPage /> : null}
+      {route.name === "community" ? <CommunityPage key={route.id} id={route.id} tab={route.tab} /> : null}
       {route.name === "people" ? <PeoplePage /> : null}
       {route.name === "mentions" ? <MentionsPage /> : null}
       {route.name === "account" ? <AccountPage /> : null}
       {route.name === "share" ? <SharePage /> : null}
       {route.name === "join" ? <JoinPage code={route.code} /> : null}
 
+      {withRight ? <RightColumn /> : null}
       {route.name === "chat" && panelOpen ? <SidePanel conversationId={route.id} thread={route.thread} panel={route.panel} /> : null}
 
       <nav className="mnav" aria-label={t("ui_nav")}>
-        {nav.map((n) => (
-          <button key={n.name} className={current === n.name ? "on" : ""} onClick={() => navigate(n.name === "home" ? "/" : "/" + n.name)}>
+        {tabs.map((n) => n.name === "publish" ? (
+          <button key={n.name} className="plus" aria-label={n.label} title={n.label} onClick={() => go("publish")}><Icon name="plus" /></button>
+        ) : (
+          <button key={n.name} className={current === n.name ? "on" : ""} aria-current={current === n.name ? "page" : undefined} onClick={() => go(n.name)}>
             <Icon name={n.icon} />
             {n.label}
-            {n.badge ? <span className={"bdg" + (n.at ? " at" : "")}>{n.badge > 99 ? "99+" : n.badge}</span> : null}
+            {n.badge ? <span className="bdg">{n.badge > 99 ? "99+" : n.badge}</span> : null}
           </button>
         ))}
       </nav>
 
-      {route.name !== "chat" ? <InstallHint /> : null}
+      {route.name !== "chat" && !detail ? <InstallHint /> : null}
       {paywall ? <Paywall onClose={() => setState({ paywall: false })} /> : null}
       <Toasts />
     </div>

@@ -2857,3 +2857,870 @@ msgstr "Privacy en beveiliging"
 
 msgid "ui_section_push"
 msgstr "Meldingen op dit apparaat"
+
+msgid "err_community_not_found"
+msgstr "Community niet gevonden"
+
+msgid "err_community_other_zone"
+msgstr "Deze community hoort bij een andere regio: alleen mensen uit de provincie en leeftijdsgroep kunnen meedoen"
+
+msgid "err_community_invite_only"
+msgstr "Deze community is alleen op uitnodiging"
+
+msgid "err_community_closed"
+msgstr "Voor deze community is goedkeuring of een uitnodiging nodig: open hem om te vragen of je mee mag doen"
+
+msgid "err_join_community_first"
+msgstr "Word eerst lid van de community"
+
+msgid "err_board_admins_only"
+msgstr "Alleen de eigenaar, admins en moderators plaatsen op dit prikbord"
+
+msgid "err_post_not_found"
+msgstr "Bericht niet gevonden"
+
+msgid "err_post_starts_at_required"
+msgstr "Meetups en evenementen hebben een startdatum nodig"
+
+msgid "err_post_dates"
+msgstr "Het einde kan niet voor het begin liggen"
+
+msgid "err_post_closed"
+msgstr "Dit bericht is gesloten"
+
+msgid "err_post_past"
+msgstr "Dit plan is al geweest"
+
+msgid "err_not_a_plan"
+msgstr "Alleen meetups en evenementen hebben deelnemers"
+
+msgid "err_comments_off"
+msgstr "Reacties zijn uitgeschakeld voor dit bericht"
+
+msgid "err_comments_attendees_only"
+msgstr "Alleen mensen die meegaan kunnen reageren"
+
+msgid "err_comment_not_found"
+msgstr "Reactie niet gevonden"
+
+msgid "err_organiser_cannot_leave"
+msgstr "De organisator kan zijn eigen plan niet verlaten: annuleer het"
+
+msgid "err_attendee_not_found"
+msgstr "Deze persoon heeft geen openstaand verzoek"
+
+msgid "err_invalid_filter"
+msgstr "Ongeldig filter"
+
+msgid "err_read_only_chat"
+msgstr "Dit plan is geannuleerd: de chat is alleen-lezen"
+
+msgid "sys_plan_cancelled"
+msgstr "Het plan “{plan}” is geannuleerd"
+
+msgid "email_footer_plans"
+msgstr "Je krijgt deze e-mail omdat je naar plannen gaat of ze organiseert op MeetGo."
+
+msgid "email_plan_joined_subject"
+msgstr "{name} gaat naar “{plan}”"
+
+msgid "email_plan_joined_title"
+msgstr "Nieuwe aanmelding"
+
+msgid "email_plan_joined_body"
+msgstr "{name} heeft zich aangemeld voor je plan “{plan}” ({date})."
+
+msgid "email_plan_joined_button"
+msgstr "Bekijk het plan"
+
+msgid "email_plan_request_subject"
+msgstr "{name} vraagt om mee te doen aan “{plan}”"
+
+msgid "email_plan_request_title"
+msgstr "Verzoek om mee te doen aan je plan"
+
+msgid "email_plan_request_body"
+msgstr "{name} wil meedoen aan je plan “{plan}” ({date}). Accepteer of weiger het verzoek op de pagina van het plan."
+
+msgid "email_plan_request_button"
+msgstr "Bekijk het verzoek"
+
+msgid "email_plan_accepted_subject"
+msgstr "Je bent erbij: “{plan}”"
+
+msgid "email_plan_accepted_title"
+msgstr "Verzoek geaccepteerd"
+
+msgid "email_plan_accepted_body"
+msgstr "Je verzoek om mee te doen aan “{plan}” ({date}) is geaccepteerd."
+
+msgid "email_plan_accepted_button"
+msgstr "Bekijk het plan"
+
+msgid "email_plan_promoted_subject"
+msgstr "Er is een plek vrijgekomen: “{plan}”"
+
+msgid "email_plan_promoted_title"
+msgstr "Je gaat mee"
+
+msgid "email_plan_promoted_body"
+msgstr "Iemand heeft “{plan}” ({date}) verlaten en je bent van de wachtlijst doorgeschoven: je gaat mee."
+
+msgid "email_plan_promoted_button"
+msgstr "Bekijk het plan"
+
+msgid "email_plan_changed_subject"
+msgstr "“{plan}” is gewijzigd"
+
+msgid "email_plan_changed_title"
+msgstr "Plan bijgewerkt"
+
+msgid "email_plan_changed_body"
+msgstr "Het plan “{plan}” heeft nieuwe gegevens: {date}, {place}."
+
+msgid "email_plan_changed_button"
+msgstr "Bekijk het plan"
+
+msgid "email_plan_cancelled_subject"
+msgstr "“{plan}” is geannuleerd"
+
+msgid "email_plan_cancelled_title"
+msgstr "Plan geannuleerd"
+
+msgid "email_plan_cancelled_body"
+msgstr "Het plan “{plan}” ({date}) is geannuleerd."
+
+msgid "email_plan_reminder_subject"
+msgstr "Morgen: “{plan}”"
+
+msgid "email_plan_reminder_title"
+msgstr "Je plan komt eraan"
+
+msgid "email_plan_reminder_body"
+msgstr "Denk eraan: “{plan}” is op {date}, {place}."
+
+msgid "email_plan_reminder_button"
+msgstr "Bekijk het plan"
+
+msgid "email_community_request_subject"
+msgstr "{name} vraagt om lid te worden van {community}"
+
+msgid "email_community_request_title"
+msgstr "Verzoek om lid te worden"
+
+msgid "email_community_request_body"
+msgstr "{name} wil lid worden van de community {community}. Accepteer of weiger het verzoek op de pagina van de community."
+
+msgid "email_community_request_button"
+msgstr "Bekijk de verzoeken"
+
+msgid "email_community_accepted_subject"
+msgstr "Welkom bij {community}"
+
+msgid "email_community_accepted_title"
+msgstr "Verzoek geaccepteerd"
+
+msgid "email_community_accepted_body"
+msgstr "Je verzoek om lid te worden van de community {community} is geaccepteerd."
+
+msgid "email_community_accepted_button"
+msgstr "Open de community"
+
+msgid "ui_nav_home"
+msgstr "Home"
+
+msgid "ui_nav_plans"
+msgstr "Plannen"
+
+msgid "ui_nav_publish"
+msgstr "Plaatsen"
+
+msgid "ui_nav_communities"
+msgstr "Communities"
+
+msgid "ui_nav_profile"
+msgstr "Profiel"
+
+msgid "ui_f_communities"
+msgstr "Communities"
+
+msgid "ui_f_plans"
+msgstr "Plannen"
+
+msgid "ui_sec_communities"
+msgstr "Communities"
+
+msgid "ui_sec_communities_zone"
+msgstr "Communities · {zone}"
+
+msgid "ui_sec_plans"
+msgstr "Plan-chats"
+
+msgid "ui_chats_empty_body"
+msgstr "Word lid van communities in je regio om met ze te chatten, of meld je aan voor een plan om in de chat te komen."
+
+msgid "ui_email_plans"
+msgstr "Mijn plannen: aanmeldingen, wijzigingen en een herinnering de dag ervoor"
+
+msgid "ui_board_title"
+msgstr "Jouw prikbord"
+
+msgid "ui_board_lead"
+msgstr "Plannen en nieuws uit je communities in {zone}"
+
+msgid "ui_board_f_all"
+msgstr "Alles"
+
+msgid "ui_board_f_today"
+msgstr "Vandaag"
+
+msgid "ui_board_f_weekend"
+msgstr "Weekend"
+
+msgid "ui_board_f_week"
+msgstr "Deze week"
+
+msgid "ui_board_f_meetups"
+msgstr "Meetups"
+
+msgid "ui_board_f_events"
+msgstr "Evenementen"
+
+msgid "ui_board_f_notices"
+msgstr "Mededelingen"
+
+msgid "ui_board_new_posts"
+msgstr "Nieuwe berichten"
+
+msgid "ui_board_load_more"
+msgstr "Meer laden"
+
+msgid "ui_board_error"
+msgstr "Kon dit niet laden"
+
+msgid "ui_board_retry"
+msgstr "Opnieuw proberen"
+
+msgid "ui_board_empty_title"
+msgstr "Het prikbord is rustig"
+
+msgid "ui_board_empty_body"
+msgstr "Nog niemand heeft iets geplaatst in je communities. Wees de eerste: stel een plan voor en kijk wie meedoet."
+
+msgid "ui_board_empty_join_title"
+msgstr "Word lid van een community om te beginnen"
+
+msgid "ui_board_empty_join_body"
+msgstr "Je prikbord toont de plannen, evenementen en mededelingen van de communities waar je bij hoort."
+
+msgid "ui_board_empty_filter_title"
+msgstr "Voorlopig niets"
+
+msgid "ui_board_empty_filter_body"
+msgstr "Geen berichten die bij dit filter passen. Probeer een ander filter of stel zelf een plan voor."
+
+msgid "ui_board_publish_plan"
+msgstr "Stel een plan voor"
+
+msgid "ui_board_find_communities"
+msgstr "Vind communities"
+
+msgid "ui_board_see_all"
+msgstr "Alles bekijken"
+
+msgid "ui_board_back_home"
+msgstr "Terug naar het prikbord"
+
+msgid "ui_post_kind_meetup"
+msgstr "Meetup"
+
+msgid "ui_post_kind_event"
+msgstr "Evenement"
+
+msgid "ui_post_kind_notice"
+msgstr "Mededeling"
+
+msgid "ui_post_kind_thread"
+msgstr "Discussie"
+
+msgid "ui_post_pinned"
+msgstr "Vastgepind"
+
+msgid "ui_post_finished"
+msgstr "Afgelopen"
+
+msgid "ui_post_closed"
+msgstr "Gesloten"
+
+msgid "ui_post_places_of"
+msgstr "{n} van {total} plekken"
+
+msgid "ui_post_full"
+msgstr "Vol"
+
+msgid "ui_post_going_n"
+msgstr "{n} gaan mee"
+
+msgid "ui_post_free_n"
+msgstr "{n} vrij"
+
+msgid "ui_post_waitlist_n"
+msgstr "{n} wachtend"
+
+msgid "ui_post_sign_up"
+msgstr "Aanmelden"
+
+msgid "ui_post_ask_join"
+msgstr "Vraag om mee te doen"
+
+msgid "ui_post_join_waitlist"
+msgstr "Zet me op de wachtlijst"
+
+msgid "ui_post_going"
+msgstr "Je gaat mee"
+
+msgid "ui_post_on_waitlist"
+msgstr "Op de wachtlijst"
+
+msgid "ui_post_waitlist"
+msgstr "Wachtlijst"
+
+msgid "ui_post_request_sent"
+msgstr "Verzoek verstuurd"
+
+msgid "ui_post_you_organise"
+msgstr "Jij organiseert"
+
+msgid "ui_post_organiser"
+msgstr "Organisator"
+
+msgid "ui_post_joined_toast"
+msgstr "Je gaat mee! Je zit nu in de plan-chat."
+
+msgid "ui_post_waitlist_toast"
+msgstr "Het is vol: je staat op de wachtlijst en schuift op als iemand afhaakt."
+
+msgid "ui_post_pending_toast"
+msgstr "Verzoek verstuurd. De organisator bevestigt je plek."
+
+msgid "ui_post_left_toast"
+msgstr "Je gaat niet meer mee"
+
+msgid "ui_post_request_cancelled"
+msgstr "Verzoek geannuleerd"
+
+msgid "ui_post_leave"
+msgstr "Ik kan niet"
+
+msgid "ui_post_leave_waitlist"
+msgstr "Verlaat de wachtlijst"
+
+msgid "ui_post_cancel_request"
+msgstr "Verzoek annuleren"
+
+msgid "ui_post_open_chat"
+msgstr "Open de plan-chat"
+
+msgid "ui_post_repeat"
+msgstr "Herhalen"
+
+msgid "ui_post_edit"
+msgstr "Bewerken"
+
+msgid "ui_post_delete"
+msgstr "Bericht verwijderen"
+
+msgid "ui_post_delete_body"
+msgstr "Het bericht en de reacties verdwijnen van het prikbord."
+
+msgid "ui_post_delete_plan_body"
+msgstr "Het plan wordt geannuleerd en iedereen die meegaat krijgt bericht. De chat blijft bestaan, alleen-lezen."
+
+msgid "ui_post_deleted_toast"
+msgstr "Dit bericht is verwijderd"
+
+msgid "ui_post_copy_link"
+msgstr "Link kopiëren"
+
+msgid "ui_post_pin"
+msgstr "Vastpinnen op het prikbord"
+
+msgid "ui_post_unpin"
+msgstr "Losmaken"
+
+msgid "ui_post_pinned_toast"
+msgstr "Vastgepind op het prikbord"
+
+msgid "ui_post_unpinned_toast"
+msgstr "Losgemaakt"
+
+msgid "ui_post_close"
+msgstr "Aanmeldingen en reacties sluiten"
+
+msgid "ui_post_reopen"
+msgstr "Heropenen"
+
+msgid "ui_post_closed_toast"
+msgstr "Gesloten"
+
+msgid "ui_post_reopened_toast"
+msgstr "Heropend"
+
+msgid "ui_post_not_found"
+msgstr "Dit bericht bestaat niet of is niet zichtbaar voor jou"
+
+msgid "ui_post_see_map"
+msgstr "bekijk kaart"
+
+msgid "ui_post_organised_by"
+msgstr "Georganiseerd door {name}"
+
+msgid "ui_post_posted_by"
+msgstr "Geplaatst door {name}"
+
+msgid "ui_post_tickets"
+msgstr "Tickets en meer informatie"
+
+msgid "ui_post_approval_note"
+msgstr "De organisator accepteert wie meedoet"
+
+msgid "ui_post_people_going"
+msgstr "Mensen die meegaan"
+
+msgid "ui_post_see_all"
+msgstr "Alles bekijken"
+
+msgid "ui_post_nobody_yet"
+msgstr "Nog niemand. Wees de eerste!"
+
+msgid "ui_post_waitlist_note"
+msgstr "Je krijgt automatisch een plek als iemand afhaakt."
+
+msgid "ui_post_pending_note"
+msgstr "Wachten tot de organisator je accepteert."
+
+msgid "ui_post_pending_requests"
+msgstr "Wacht op goedkeuring"
+
+msgid "ui_post_accepted_toast"
+msgstr "Geaccepteerd"
+
+msgid "ui_post_rejected_toast"
+msgstr "Geweigerd"
+
+msgid "ui_post_comments"
+msgstr "Reacties"
+
+msgid "ui_post_comments_off"
+msgstr "Reacties staan uit voor dit bericht"
+
+msgid "ui_post_comments_attendees"
+msgstr "Alleen mensen die meegaan kunnen reageren"
+
+msgid "ui_post_comments_cant"
+msgstr "Je kunt op dit bericht niet reageren"
+
+msgid "ui_post_closed_note"
+msgstr "Gesloten: geen reacties of aanmeldingen meer"
+
+msgid "ui_post_older_comments"
+msgstr "Eerdere reacties"
+
+msgid "ui_post_no_comments"
+msgstr "Nog geen reacties. Stel een vraag of zeg hoi."
+
+msgid "ui_post_comment_ph"
+msgstr "Schrijf een reactie…"
+
+msgid "ui_post_report_title"
+msgstr "Bericht melden"
+
+msgid "ui_post_report_details"
+msgstr "Details (optioneel)"
+
+msgid "ui_publish_title"
+msgstr "Nieuw bericht"
+
+msgid "ui_publish_edit_title"
+msgstr "Bericht bewerken"
+
+msgid "ui_publish_repeat_title"
+msgstr "Plan herhalen"
+
+msgid "ui_publish_button"
+msgstr "Plaatsen"
+
+msgid "ui_publish_kind"
+msgstr "Soort bericht"
+
+msgid "ui_publish_hint_meetup"
+msgstr "Een plan met een datum, een plek en, als je wilt, een maximum aantal plekken."
+
+msgid "ui_publish_hint_event"
+msgstr "Iets groters: met een omslag, een eindtijd en een link voor tickets."
+
+msgid "ui_publish_hint_notice"
+msgstr "Een vraag, een tip of een aankondiging, zonder datum."
+
+msgid "ui_publish_hint_thread"
+msgstr "Start een gesprek over een onderwerp met je community."
+
+msgid "ui_publish_where"
+msgstr "Community"
+
+msgid "ui_publish_choose_community"
+msgstr "Kies een community"
+
+msgid "ui_publish_f_title"
+msgstr "Titel"
+
+msgid "ui_publish_title_ph_meetup"
+msgstr "bijv. Wandeling naar het meer op zaterdag"
+
+msgid "ui_publish_title_ph_event"
+msgstr "bijv. Vriendschappelijk padeltoernooi"
+
+msgid "ui_publish_title_ph_notice"
+msgstr "bijv. Zin in tennis op dinsdag?"
+
+msgid "ui_publish_title_ph_thread"
+msgstr "bijv. Jouw favoriete plekken om in een groep te eten"
+
+msgid "ui_publish_f_body"
+msgstr "Beschrijving"
+
+msgid "ui_publish_body_ph"
+msgstr "Vertel waar het over gaat, wat je moet meenemen, het niveau…"
+
+msgid "ui_publish_f_date"
+msgstr "Dag"
+
+msgid "ui_publish_f_time"
+msgstr "Tijd"
+
+msgid "ui_publish_f_end_date"
+msgstr "Eindigt (dag)"
+
+msgid "ui_publish_f_end_time"
+msgstr "Eindigt (tijd)"
+
+msgid "ui_publish_f_place"
+msgstr "Plek"
+
+msgid "ui_publish_place_ph"
+msgstr "Waar jullie afspreken"
+
+msgid "ui_publish_f_place_url"
+msgstr "Link naar de kaart (optioneel)"
+
+msgid "ui_publish_f_link"
+msgstr "Link naar tickets of informatie (optioneel)"
+
+msgid "ui_publish_f_cover"
+msgstr "Omslag"
+
+msgid "ui_publish_cover_add"
+msgstr "Foto toevoegen"
+
+msgid "ui_publish_cover_change"
+msgstr "Foto wijzigen"
+
+msgid "ui_publish_rules"
+msgstr "Jij beslist"
+
+msgid "ui_publish_who_comments"
+msgstr "Wie kan reageren"
+
+msgid "ui_publish_comments_all"
+msgstr "Iedereen"
+
+msgid "ui_publish_comments_attendees"
+msgstr "Mensen die meegaan"
+
+msgid "ui_publish_comments_off"
+msgstr "Niemand"
+
+msgid "ui_publish_approval"
+msgstr "Keur goed wie meedoet"
+
+msgid "ui_publish_approval_hint"
+msgstr "Mensen vragen om een plek en jij accepteert ze"
+
+msgid "ui_publish_limit"
+msgstr "Beperk de plekken"
+
+msgid "ui_publish_limit_hint"
+msgstr "Als het vol is, gaat er een wachtlijst open"
+
+msgid "ui_publish_places"
+msgstr "Plekken"
+
+msgid "ui_publish_need_title"
+msgstr "Geef het een titel"
+
+msgid "ui_publish_need_community"
+msgstr "Kies de community waarin je het plaatst"
+
+msgid "ui_publish_need_date"
+msgstr "Meetups en evenementen hebben een dag en een tijd nodig"
+
+msgid "ui_publish_date_past"
+msgstr "De datum is al voorbij"
+
+msgid "ui_publish_end_before"
+msgstr "Het eindigt voordat het begint"
+
+msgid "ui_publish_done_toast"
+msgstr "Geplaatst! Je community kan het nu zien."
+
+msgid "ui_publish_saved_toast"
+msgstr "Wijzigingen opgeslagen"
+
+msgid "ui_publish_no_communities_title"
+msgstr "Word lid van een community om te plaatsen"
+
+msgid "ui_publish_no_communities_body"
+msgstr "Berichten horen bij een community. Word lid van een community in je regio of maak er zelf een."
+
+msgid "ui_plans_title"
+msgstr "Jouw plannen"
+
+msgid "ui_plans_lead"
+msgstr "Meetups en evenementen waar je naartoe gaat of die je organiseert, elk met een eigen chat"
+
+msgid "ui_plans_going"
+msgstr "Ik ga mee"
+
+msgid "ui_plans_organising"
+msgstr "Ik organiseer"
+
+msgid "ui_plans_past"
+msgstr "Verleden"
+
+msgid "ui_plans_this_week"
+msgstr "Deze week"
+
+msgid "ui_plans_later"
+msgstr "Later"
+
+msgid "ui_plans_next"
+msgstr "Je volgende plannen"
+
+msgid "ui_plans_next_empty"
+msgstr "Je hebt je nog nergens voor aangemeld."
+
+msgid "ui_plans_browse_board"
+msgstr "Bekijk het prikbord"
+
+msgid "ui_plans_empty_going_title"
+msgstr "Nog geen plannen"
+
+msgid "ui_plans_empty_going_body"
+msgstr "Meld je aan voor een meetup of evenement op het prikbord en het verschijnt hier, met de chat erbij."
+
+msgid "ui_plans_empty_org_title"
+msgstr "Je organiseert niets"
+
+msgid "ui_plans_empty_org_body"
+msgstr "Stel een plan voor aan je community: een wandeling, een etentje, een wedstrijd…"
+
+msgid "ui_plans_empty_past_title"
+msgstr "Geen eerdere plannen"
+
+msgid "ui_plans_empty_past_body"
+msgstr "De plannen waar je bent geweest blijven hier staan, klaar om te herhalen."
+
+msgid "ui_community_title"
+msgstr "Communities"
+
+msgid "ui_community_lead"
+msgstr "Mensen uit {zone} die delen wat jij leuk vindt"
+
+msgid "ui_community_yours"
+msgstr "Jouw communities"
+
+msgid "ui_community_discover"
+msgstr "Ontdekken"
+
+msgid "ui_community_search_ph"
+msgstr "Zoek communities"
+
+msgid "ui_community_no_match"
+msgstr "Geen community gevonden. Je kunt hem zelf maken."
+
+msgid "ui_community_empty_title"
+msgstr "Nog geen communities in je regio"
+
+msgid "ui_community_empty_body"
+msgstr "Maak de eerste en nodig mensen uit die je interesses delen."
+
+msgid "ui_community_none_yet"
+msgstr "Je bent nog geen lid van een community."
+
+msgid "ui_community_create"
+msgstr "Community maken"
+
+msgid "ui_community_create_button"
+msgstr "Maak"
+
+msgid "ui_community_create_lead"
+msgstr "Hij is voor mensen uit je regio en leeftijdsgroep. Jij wordt de eigenaar."
+
+msgid "ui_community_created_toast"
+msgstr "Community gemaakt! Nodig mensen uit om mee te doen."
+
+msgid "ui_community_f_title"
+msgstr "Naam"
+
+msgid "ui_community_title_ph"
+msgstr "bijv. Zaterdagse hardlopers"
+
+msgid "ui_community_desc_ph"
+msgstr "Waar het over gaat en voor wie het is"
+
+msgid "ui_community_f_rules"
+msgstr "Regels"
+
+msgid "ui_community_f_access"
+msgstr "Wie kan meedoen"
+
+msgid "ui_community_access_open"
+msgstr "Open"
+
+msgid "ui_community_access_request"
+msgstr "Op verzoek"
+
+msgid "ui_community_access_invite"
+msgstr "Alleen op uitnodiging"
+
+msgid "ui_community_access_open_hint"
+msgstr "Iedereen in je regio kan meedoen."
+
+msgid "ui_community_access_request_hint"
+msgstr "Mensen vragen om mee te doen en een admin of moderator accepteert ze."
+
+msgid "ui_community_access_invite_hint"
+msgstr "Alleen met de uitnodigingslink. Hij is niet zichtbaar voor anderen."
+
+msgid "ui_community_f_board"
+msgstr "Wie plaatst op het prikbord"
+
+msgid "ui_community_board_open"
+msgstr "Leden"
+
+msgid "ui_community_board_admins"
+msgstr "Alleen admins"
+
+msgid "ui_community_board_open_hint"
+msgstr "Elk lid kan plannen voorstellen en berichten plaatsen."
+
+msgid "ui_community_board_admins_hint"
+msgstr "Alleen de eigenaar, admins en moderators plaatsen; leden melden zich aan en reageren."
+
+msgid "ui_community_board_readonly"
+msgstr "Alleen de admins van deze community plaatsen op het prikbord"
+
+msgid "ui_community_ask_join"
+msgstr "Vraag om mee te doen"
+
+msgid "ui_community_requested"
+msgstr "Verzoek verstuurd"
+
+msgid "ui_community_requested_toast"
+msgstr "Verzoek verstuurd. Je hoort het als je geaccepteerd wordt."
+
+msgid "ui_community_joined_toast"
+msgstr "Welkom bij {name}!"
+
+msgid "ui_community_joined_link_toast"
+msgstr "Je bent lid geworden van de community"
+
+msgid "ui_community_not_found"
+msgstr "Deze community bestaat niet of is niet in je regio"
+
+msgid "ui_community_online_n"
+msgstr "{n} online"
+
+msgid "ui_community_plans_n"
+msgstr "{n} plannen"
+
+msgid "ui_community_tab_board"
+msgstr "Prikbord"
+
+msgid "ui_community_tab_chat"
+msgstr "Chat"
+
+msgid "ui_community_tab_members"
+msgstr "Leden"
+
+msgid "ui_community_settings"
+msgstr "Communityinstellingen"
+
+msgid "ui_community_rules"
+msgstr "Regels"
+
+msgid "ui_community_leave"
+msgstr "Community verlaten"
+
+msgid "ui_community_leave_body"
+msgstr "Je ziet het prikbord en de chat van {name} niet meer."
+
+msgid "ui_community_leave_owner_body"
+msgstr "Jij bent de eigenaar: het eigendom gaat naar de langst zittende admin of anders naar het langst zittende lid."
+
+msgid "ui_community_left_toast"
+msgstr "Je hebt de community verlaten"
+
+msgid "ui_community_publish_prompt"
+msgstr "Stel een plan voor aan {name}…"
+
+msgid "ui_community_board_empty"
+msgstr "Nog niets op dit prikbord"
+
+msgid "ui_community_board_empty_body"
+msgstr "Stel het eerste plan voor en breng mensen in beweging."
+
+msgid "ui_community_join_to_see"
+msgstr "Word lid van de community om aan de plannen mee te doen."
+
+msgid "ui_community_chat_join_title"
+msgstr "De chat is voor leden"
+
+msgid "ui_community_chat_join_body"
+msgstr "Word lid van de community om in realtime met de mensen te praten."
+
+msgid "ui_community_requests_n"
+msgstr "Verzoeken om mee te doen ({n})"
+
+msgid "ui_community_request_accepted"
+msgstr "Geaccepteerd: diegene is nu lid"
+
+msgid "ui_community_request_rejected"
+msgstr "Verzoek geweigerd"
+
+msgid "ui_community_invite_hint"
+msgstr "Iedereen in je regio met deze link doet direct mee. Een nieuwe link maken zet de oude buiten werking."
+
+msgid "ui_community_invite_create"
+msgstr "Uitnodigingslink maken"
+
+msgid "ui_community_invite_new"
+msgstr "Nieuwe link"
+
+msgid "ui_community_invite_new_toast"
+msgstr "Nieuwe uitnodigingslink klaar"
+
+msgid "ui_community_change_role"
+msgstr "Rol wijzigen"
+
+msgid "ui_community_role_changed"
+msgstr "De rol van {name} is gewijzigd"
+
+msgid "ui_community_member_removed"
+msgstr "{name} is geen lid meer"
+
+msgid "ui_community_remove_body"
+msgstr "{name} verlaat de community en de chat."
+
+msgid "ui_community_no_members"
+msgstr "Nog geen leden"
