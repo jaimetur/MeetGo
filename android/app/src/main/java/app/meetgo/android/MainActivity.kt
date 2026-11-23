@@ -120,7 +120,9 @@ class MainActivity : ComponentActivity() {
         Notifications.ensureChannels(this)
         Push.onToken = { t -> js("window.mgNativePushToken&&window.mgNativePushToken(${JSONObject.quote(t)})") }
         Push.refresh(this)
-        if (prefs.server.isEmpty()) page.value = Page.SETUP
+        // MeetGo's own server straight away (the server screen stays for "change server" on the offline screen);
+        // an address saved without "www" goes to www.meetgo.app, where meetgo.app redirects anyway.
+        if (prefs.server.isEmpty() || prefs.server == "https://meetgo.app") prefs.server = DEFAULT_SERVER
         // the start screen stays until the page has loaded (or failed, or the server has to be set)
         val t0 = System.currentTimeMillis()
         splash.setKeepOnScreenCondition { page.value == Page.LOADING && System.currentTimeMillis() - t0 < 8000 }
@@ -181,7 +183,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun sameServer(u: Uri): Boolean = prefs.server.isNotEmpty() && Uri.parse(prefs.server).host == u.host
+    /** The server's host, with or without "www." (meetgo.app redirects to www.meetgo.app: following that redirect
+     *  inside the app must not count as leaving it, or the app would bounce between both addresses forever). */
+    private fun sameServer(u: Uri): Boolean {
+        if (prefs.server.isEmpty()) return false
+        val bare = { h: String? -> (h ?: "").lowercase().removePrefix("www.") }
+        return bare(Uri.parse(prefs.server).host) == bare(u.host)
+    }
 
     /** A MeetGo address on the server the app uses: the same host, or meetgo.app ↔ www.meetgo.app (null otherwise). */
     private fun resolve(u: Uri): String? {
@@ -484,7 +492,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         /** Suggested server for a new installation (it can be changed). */
-        const val DEFAULT_SERVER = "https://meetgo.app"
+        const val DEFAULT_SERVER = "https://www.meetgo.app"
         private const val MAX_SHARED_FILES = 10
         private const val MAX_SHARED_BYTES = 10L * 1024 * 1024
 
