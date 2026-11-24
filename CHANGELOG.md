@@ -103,6 +103,8 @@ All notable changes to this project will be documented in this file.
 - iPhone: a long press on a message opened its menu but iOS then selected the menu's text and swallowed every tap; text can no longer be selected outside fields on touch screens (Copy is in the menu).
 - Phones: replying to a message can be cancelled again; a long quoted message pushed the cancel button off the screen, and tapping it moved the composer away from the finger.
 - The slogan "Meet People, Go Places!" is back on the sign-in screen, and Settings has an About MeetGo window with the icon, logo, slogan, app version, copyright and links to the website, terms and privacy.
+- About MeetGo also opens from the avatar menu, from the app icon of the phone header (tap, long press or right click) and with a right click on the logo on computers.
+- Phones: the People tab has its colour (rose) again; selected, it no longer turned white on white.
 - Fixed translations whose text ends in quotes losing the last quote.
 - Fixed the empty band under the phone tab bar in Safari: the app fills the whole screen and only fits the visible area while the keyboard is open.
 - Sign-up now checks that the email is a real address (name@domain.tld).

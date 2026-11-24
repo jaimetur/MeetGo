@@ -9,7 +9,7 @@ import { getState, loadBlocks, loadConversations, loadMyCommunities, loadMyPlans
 import { AuthScreen } from "./Auth";
 import { ChatView } from "./Chat";
 import { HomePage, PostPage, PublishPage } from "./Board";
-import { Icon, InstallHint, Splash, Wordmark } from "./common";
+import { AboutModal, Icon, InstallHint, Splash, Wordmark } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
 import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
@@ -255,6 +255,7 @@ function Shell() {
   const showFab = ["home", "plans", "communities"].includes(route.name) || (route.name === "community" && route.tab !== "chat");
   const publish = () => navigate(route.name === "community" ? `/publish?community=${route.id}` : "/publish");
   const [newChat, setNewChat] = useState(false);
+  const [about, setAbout] = useState(false);
 
   const swipe = React.useRef<{ x: number; y: number; t: number } | null>(null);
   const tabIndex = swipeOrder.indexOf(route.name);
@@ -277,7 +278,8 @@ function Shell() {
   return (
     <div className={shellClass} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <nav className="dnav" aria-label={t("ui_nav")}>
-        <button className="dlogo" onClick={() => go("home")} aria-label="MeetGo">
+        {/* a right click on the logo opens About MeetGo */}
+        <button className="dlogo" onClick={() => go("home")} onContextMenu={(e) => { e.preventDefault(); setAbout(true); }} aria-label="MeetGo">
           <img className="appicon" src="/apple-touch-icon.png" alt="" />
           <Wordmark size={24} />
         </button>
@@ -297,6 +299,7 @@ function Shell() {
       </nav>
 
       {chatsMode ? <Sidebar activeId={activeId} /> : null}
+      {about ? <AboutModal onClose={() => setAbout(false)} /> : null}
 
       {route.name === "chat" ? <ChatView key={route.id} conversationId={route.id} around={route.around} /> : null}
       {route.name === "chats" ? (

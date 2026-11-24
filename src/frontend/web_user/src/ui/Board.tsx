@@ -11,7 +11,7 @@ import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
-import { Avatar, Icon, Modal, Wordmark, useClickOutside, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, Modal, Wordmark, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -371,9 +371,14 @@ function matchesFilter(p: Post, f: FeedFilter) {
 export function PhoneTop({ title }: { title?: string }) {
   const conversations = useStore((s) => s.conversations);
   const mentions = Object.values(conversations).reduce((n, c) => n + c.mention_count, 0);
+  const [about, setAbout] = useState(false);
   return (
     <div className="phonetop">
-      <img className="appicon" src="/apple-touch-icon.png" alt="" />
+      {/* the icon opens About MeetGo (a tap, a long press or a right click) */}
+      <button className="appiconbtn" aria-label={t("ui_about_title")} title={t("ui_about_title")} onClick={() => setAbout(true)} onContextMenu={(e) => { e.preventDefault(); setAbout(true); }}>
+        <img className="appicon" src="/apple-touch-icon.png" alt="" />
+      </button>
+      {about ? <AboutModal onClose={() => setAbout(false)} /> : null}
       <div className="ptitle">
         {title ? <span className="phonetitle">{title}</span> : <Wordmark size={24} />}
         <ZoneTag />
@@ -391,6 +396,7 @@ export function PhoneTop({ title }: { title?: string }) {
 export function AvatarMenu() {
   const me = useStore((s) => s.me);
   const [open, setOpen] = useState(false);
+  const [about, setAbout] = useState(false);
   if (!me) return null;
   const go = (path: string) => { setOpen(false); navigate(path); };
   return (
@@ -406,10 +412,12 @@ export function AvatarMenu() {
             <button role="menuitem" onClick={() => go("/account")}><Icon name="user" size="sm" />{t("ui_avatar_profile")}</button>
             <button role="menuitem" onClick={() => go("/account?section=settings")}><Icon name="sliders" size="sm" />{t("ui_avatar_settings")}</button>
             {me.role === "admin" ? <button role="menuitem" onClick={() => go("/admin")}><Icon name="shield" size="sm" />{t("ui_nav_admin")}</button> : null}
+            <button role="menuitem" onClick={() => { setOpen(false); setAbout(true); }}><Icon name="info" size="sm" />{t("ui_about_title")}</button>
             <button role="menuitem" className="danger" onClick={() => { setOpen(false); signOut(); }}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
           </div>
         </>
       ) : null}
+      {about ? <AboutModal onClose={() => setAbout(false)} /> : null}
     </div>
   );
 }

@@ -442,7 +442,7 @@ a.logo { text-decoration: none; }
   .mnav .t-plans { --tc: #ff8a3d; --tc2: #ffc23d; }
   .mnav .t-communities { --tc: #22c55e; --tc2: #18d7c8; }
   .mnav .t-chats { --tc: #a855f7; --tc2: #ec4899; }
-  .mnav .t-account { --tc: #f43f5e; --tc2: #fb7185; }
+  .mnav .t-account, .mnav .t-people { --tc: #f43f5e; --tc2: #fb7185; }
   .mnav button { height: 56px; font-size: 11px; gap: 4px; }
   .mnav button .ic { width: 27px; height: 27px; stroke-width: 2.2; color: var(--tc); fill: var(--tc); fill-opacity: 0.18; }
   .mnav button.on, :root:not([data-theme="light"]) .mnav button.on { color: #fff; background: linear-gradient(135deg, var(--tc), var(--tc2)); box-shadow: 0 6px 16px color-mix(in srgb, var(--tc) 40%, transparent); }
@@ -1104,3 +1104,4 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .about-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 14px; }
 .about-copy { font-size: 12px; }
 .aboutbtn { align-self: flex-start; }
+.appiconbtn { flex: none; display: grid; padding: 0; border: 0; background: none; border-radius: 11px; cursor: pointer; }
