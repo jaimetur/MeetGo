@@ -1,12 +1,14 @@
-:root{
+/* The administration, inside the app (Administración) as well as on its own: every rule applies only within
+   .adminpanel, so it never touches the rest of the app. */
+.adminpanel {
+&{
   color-scheme: dark;
   font-family: "Segoe UI", Arial, sans-serif;
   background: #0e1016;
   color: #e6e6e6;
 }
-*{ box-sizing: border-box; }
-body{ margin: 0; }
-.wrap{
+& *{ box-sizing: border-box; }
+&.wrap{
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -169,3 +171,7 @@ body{ margin: 0; }
 @media (max-width: 980px){
   .grid{ grid-template-columns: 1fr; }
 }
+
+}
+/* on its own (admin.meetgo.app during development) */
+body:has(> #root > .adminpanel) { margin: 0; background: #0e1016; }

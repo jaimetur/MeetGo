@@ -164,7 +164,9 @@ type ServiceLogEntry = {
   line: string;
 };
 
-export default function App() {
+/** `embedded`: inside the app's Administración, with the app's session (no login screen, no sign-out, no debug panel). */
+export default function App({ embedded = false }: { embedded?: boolean } = {}) {
+  const showLog = SHOW_FRONTEND_LOG && !embedded;
   const [token, setTokenState] = useState(getToken());
   const [tab, setTab] = useState<"users" | "settings" | "interests" | "moderation" | "billing" | "codes">("users");
   const [login, setLogin] = useState({ username: "", password: "" });
@@ -227,7 +229,7 @@ export default function App() {
   const dragSelectRef = useRef<string>("");
 
   useEffect(() => {
-    if (!SHOW_FRONTEND_LOG) return;
+    if (!showLog) return;
 
     setFrontendLogListener((e) => {
       setFrontLogs((prev) => {
@@ -260,7 +262,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!SHOW_FRONTEND_LOG || !token) return;
+    if (!showLog || !token) return;
 
     const es = new EventSource(api.composeLogsUrl());
     let stopped = false;
@@ -302,7 +304,7 @@ export default function App() {
   }, [token]);
 
   useEffect(() => {
-    if (!SHOW_FRONTEND_LOG || !debugAutoRefresh) return;
+    if (!showLog || !debugAutoRefresh) return;
     const id = window.setInterval(() => {
       const el = debugLogsRef.current;
       if (!el) return;
@@ -312,7 +314,7 @@ export default function App() {
   }, [debugAutoRefresh]);
 
   useEffect(() => {
-    if (debugReady || !SHOW_FRONTEND_LOG) return;
+    if (debugReady || !showLog) return;
     const w = debugSize.w;
     const h = debugSize.h;
     const x = Math.max(12, window.innerWidth - w - 12);
@@ -418,7 +420,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    if (!SHOW_FRONTEND_LOG) return;
+    if (!showLog) return;
 
     const onMove = (e: MouseEvent) => {
       if (resizeRef.current) {
@@ -570,7 +572,7 @@ export default function App() {
 
   if (!token) {
     return (
-      <div className="wrap">
+      <div className="wrap adminpanel">
         <div className="card">
           <h2>{t("admin_title")}</h2>
           <input
@@ -602,9 +604,9 @@ export default function App() {
   }
 
   return (
-    <div className="wrap">
+    <div className={"wrap adminpanel" + (embedded ? " embedded" : "")}>
       <div className="header">
-        <h2>{t("admin_title")}</h2>
+        {embedded ? null : <h2>{t("admin_title")}</h2>}
         <div className="tabs">
           <button className={tab === "users" ? "tab active" : "tab"} onClick={() => setTab("users")}>{t("admin_tab_users")}</button>
           <button className={tab === "settings" ? "tab active" : "tab"} onClick={() => setTab("settings")}>{t("admin_tab_settings")}</button>
@@ -612,15 +614,17 @@ export default function App() {
           <button className={tab === "moderation" ? "tab active" : "tab"} onClick={() => setTab("moderation")}>{t2("tab_moderation")}</button>
           <button className={tab === "billing" ? "tab active" : "tab"} onClick={() => setTab("billing")}>{t2("tab_billing")}</button>
           <button className={tab === "codes" ? "tab active" : "tab"} onClick={() => setTab("codes")}>{t2("tab_codes")}</button>
-          <button
-            className="tab"
-            onClick={() => {
-              clearToken();
-              setTokenState("");
-            }}
-          >
-            {t("admin_logout")}
-          </button>
+          {embedded ? null : (
+            <button
+              className="tab"
+              onClick={() => {
+                clearToken();
+                setTokenState("");
+              }}
+            >
+              {t("admin_logout")}
+            </button>
+          )}
         </div>
       </div>
 
@@ -1162,7 +1166,7 @@ export default function App() {
       {tab === "codes" ? <PromoCodesTab /> : null}
 
       {/* ---- DEBUG PANEL ---- */}
-      {SHOW_FRONTEND_LOG && debugVisible ? (
+      {showLog && debugVisible ? (
         <div
           ref={debugPanelRef}
           style={{
@@ -1423,7 +1427,7 @@ export default function App() {
         </div>
       ) : null}
 
-      {SHOW_FRONTEND_LOG && !debugVisible ? (
+      {showLog && !debugVisible ? (
         <div
           style={{
             position: "fixed",

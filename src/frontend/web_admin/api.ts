@@ -6,6 +6,8 @@ function computeApiBase() {
   const { protocol, host, hostname, port } = window.location;
   const isDev = port === "5173" || port === "5172";
   if (isDev) return `${protocol}//${hostname}:18000`;
+  // inside the MeetGo app (www.meetgo.app/app/admin): the same API as the app
+  if (hostname === "meetgo.app" || (hostname.endsWith(".meetgo.app") && hostname !== "admin.meetgo.app")) return "https://api.meetgo.app";
   return `${protocol}//${host}/api`;
 }
 
@@ -57,7 +59,8 @@ export function frontError(msg: string, data?: any) {
 export type Token = { access_token: string; password_temp?: boolean };
 
 export function getToken(): string {
-  return localStorage.getItem("admin_token") || "";
+  // inside the app, the administrator's own session (an administrator of MeetGo signs in to the app as usual)
+  return localStorage.getItem("admin_token") || localStorage.getItem("token") || "";
 }
 export function setToken(t: string) {
   localStorage.setItem("admin_token", t);

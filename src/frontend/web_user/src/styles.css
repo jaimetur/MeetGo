@@ -864,3 +864,6 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   .typing .screen.withchat .chead2, .kb .screen.withchat .chead2 { display: none; }
   .typing .screen.withchat, .kb .screen.withchat { padding-bottom: 0; }
 }
+/* the administration panel inside the app: full width of the page, its own dark look */
+.adminpage .adminpanel.embedded { max-width: none; padding: 0; margin: 0; }
+.adminpage .adminpanel.embedded .header { margin-bottom: 10px; }
