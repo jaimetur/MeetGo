@@ -180,7 +180,7 @@ export function CommunitiesPage() {
   return (
     <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
       <PhoneTop title={t("ui_nav_communities")} />
-      <div className="swrap">
+      <div className="swrap wide">
         <header className="shead">
           <div className="grow">
             <h1 className="deskonly">{t("ui_community_title")}</h1>

@@ -3869,6 +3869,21 @@ msgstr "非表示"
 msgid "ui_community_show_others"
 msgstr "表示（{n}）"
 
+msgid "ui_friend_request_pending"
+msgstr "申請済み"
+
+msgid "ui_friend_request_sent_to"
+msgstr "{name} さんに友達申請を送りました"
+
+msgid "ui_dm_request_pending"
+msgstr "チャットを申請済み"
+
+msgid "ui_ask_dm"
+msgstr "チャットを申請"
+
+msgid "ui_ask_dm_hint"
+msgstr "個別チャットを申請：相手が承認すると話せます"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

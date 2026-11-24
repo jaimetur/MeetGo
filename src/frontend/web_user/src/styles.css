@@ -937,3 +937,15 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .dangerbox { border-color: color-mix(in srgb, var(--red) 40%, var(--line)); }
 .csec-head { align-items: center; gap: 10px; margin-top: 22px; }
 .csec-head .csec-discover { margin: 0; }
+
+/* ---- computers: use the room. Everything but the chat a little bigger, and a wider list of communities ---- */
+@media (min-width: 821px) {
+  .shell { --menuw: 250px; }
+  .shell.has-right { grid-template-columns: var(--menuw) minmax(0, 1fr) 340px; }
+  .dnav, .screen, .page, .rcol { zoom: 1.12; }
+  .swrap.wide { max-width: 1180px; }
+  .swrap.wide .cgrid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+}
+@media (min-width: 1600px) {
+  .dnav, .screen, .page, .rcol { zoom: 1.2; }
+}

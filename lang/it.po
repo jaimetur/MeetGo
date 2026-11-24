@@ -3869,6 +3869,21 @@ msgstr "Nascondi"
 msgid "ui_community_show_others"
 msgstr "Mostra ({n})"
 
+msgid "ui_friend_request_pending"
+msgstr "Richiesta inviata"
+
+msgid "ui_friend_request_sent_to"
+msgstr "Richiesta di amicizia inviata a {name}"
+
+msgid "ui_dm_request_pending"
+msgstr "Chat richiesta"
+
+msgid "ui_ask_dm"
+msgstr "Chiedi una chat"
+
+msgid "ui_ask_dm_hint"
+msgstr "Chiedi una chat privata: potrete parlare quando la accetta"
+
 msgid "ui_community_tab_members"
 msgstr "Membri"
 

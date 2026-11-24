@@ -3869,6 +3869,21 @@ msgstr "隐藏"
 msgid "ui_community_show_others"
 msgstr "显示（{n}）"
 
+msgid "ui_friend_request_pending"
+msgstr "请求已发送"
+
+msgid "ui_friend_request_sent_to"
+msgstr "已向 {name} 发送好友请求"
+
+msgid "ui_dm_request_pending"
+msgstr "已请求聊天"
+
+msgid "ui_ask_dm"
+msgstr "请求聊天"
+
+msgid "ui_ask_dm_hint"
+msgstr "请求私聊：对方接受后即可聊天"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

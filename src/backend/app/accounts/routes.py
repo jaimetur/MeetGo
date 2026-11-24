@@ -7,7 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
-from app.core.models import Conversation, ConversationMember, Friendship, Interest, User, UserInterest
+from app.core.models import (
+    Conversation, ConversationMember, DMRequest, DMStatus, FriendRequest, FriendRequestStatus, Friendship, Interest, User,
+    UserInterest,
+)
 from app.core.schemas import EmailPrefsIn, InterestOut, MeOut, SetInterestsIn, UpdateProfileIn, UserOut
 from app.core.app_settings import get_settings_row
 from app.conversations.service import (
@@ -137,8 +140,17 @@ async def search_users(q: str = "", db: AsyncSession = Depends(get_db), user: Us
     users = res.scalars().all()
     friends = set((await db.execute(friend_ids)).scalars().all())
     online = await online_ids([u.id for u in users])
+    ids = [u.id for u in users]
+    # what I already asked them for, so the buttons say so
+    friend_asked = set((await db.execute(select(FriendRequest.to_user_id).where(
+        FriendRequest.from_user_id == user.id, FriendRequest.to_user_id.in_(ids),
+        FriendRequest.status == FriendRequestStatus.PENDING))).scalars().all()) if ids else set()
+    dm_asked = set((await db.execute(select(DMRequest.to_user_id).where(
+        DMRequest.from_user_id == user.id, DMRequest.to_user_id.in_(ids),
+        DMRequest.status == DMStatus.PENDING))).scalars().all()) if ids else set()
     return [{"id": u.id, "display_name": u.display_name, "avatar_url": u.avatar_url, "province": u.province,
-             "friend": u.id in friends, "accept_dm": u.accept_dm, "online": u.id in online} for u in users]
+             "friend": u.id in friends, "accept_dm": u.accept_dm, "online": u.id in online,
+             "friend_requested": u.id in friend_asked, "dm_requested": u.id in dm_asked} for u in users]
 
 
 @router.get("/users/{user_id}", response_model=dict)

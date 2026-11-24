@@ -3500,6 +3500,21 @@ msgstr "Ausblenden"
 msgid "ui_community_show_others"
 msgstr "Anzeigen ({n})"
 
+msgid "ui_friend_request_pending"
+msgstr "Anfrage gesendet"
+
+msgid "ui_friend_request_sent_to"
+msgstr "Freundschaftsanfrage an {name} gesendet"
+
+msgid "ui_dm_request_pending"
+msgstr "Chat angefragt"
+
+msgid "ui_ask_dm"
+msgstr "Chat anfragen"
+
+msgid "ui_ask_dm_hint"
+msgstr "Frag nach einem privaten Chat: Ihr könnt schreiben, sobald die Person annimmt"
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 

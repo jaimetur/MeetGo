@@ -48,15 +48,20 @@ export function PeoplePage() {
   );
 }
 
-async function openDm(userId: number) {
+/** Opens our chat, or asks for one; true when it was asked (not opened). */
+async function openDm(userId: number): Promise<boolean> {
   try {
     const res = await api.openDm(userId);
     if (res.conversation_id) {
       await loadConversations();
       navigate(chatPath(res.conversation_id));
-    } else toast(t("ui_dm_request_sent"));
+      return false;
+    }
+    toast(t("ui_dm_request_sent"));
+    return true;
   } catch (e: any) {
     toast(e.message, "error");
+    return false;
   }
 }
 
@@ -146,8 +151,20 @@ function FindPeople() {
           <div key={p.id} className="item">
             <Avatar user={p} size={36} online={p.online} />
             <div className="grow">{p.display_name}<div className="muted" style={{ fontSize: 12 }}>{p.province}</div></div>
-            {!p.friend ? <button className="btn sm" onClick={() => api.friendRequest(p.id).then(() => toast(t("ui_friend_request_sent"))).catch((e) => toast(e.message, "error"))}>{t("ui_add_friend")}</button> : null}
-            <button className="btn sm pri" disabled={!p.friend && !p.accept_dm} onClick={() => openDm(p.id)}>{p.friend ? t("ui_write") : t("ui_request")}</button>
+            {/* friendship, and a private chat: with friends at once; with others only if they accept private messages */}
+            {!p.friend ? (
+              p.friend_requested
+                ? <button className="btn sm" disabled>{t("ui_friend_request_pending")} ✓</button>
+                : <button className="btn sm" onClick={() => api.friendRequest(p.id).then(() => {
+                  toast(t("ui_friend_request_sent_to", { name: p.display_name }));
+                  setRes((xs) => xs.map((x) => (x.id === p.id ? { ...x, friend_requested: true } : x)));
+                }).catch((e) => toast(e.message, "error"))}>{t("ui_add_friend")}</button>
+            ) : null}
+            {p.friend ? <button className="btn sm pri" onClick={() => openDm(p.id)}>{t("ui_write")}</button>
+              : p.dm_requested ? <button className="btn sm" disabled>{t("ui_dm_request_pending")} ✓</button>
+              : p.accept_dm ? <button className="btn sm pri" title={t("ui_ask_dm_hint")} onClick={() => openDm(p.id).then((asked) => {
+                if (asked) setRes((xs) => xs.map((x) => (x.id === p.id ? { ...x, dm_requested: true } : x)));
+              })}>{t("ui_ask_dm")}</button> : null}
           </div>
         ))}
         {!res.length ? <div className="muted" style={{ padding: 8 }}>{t("ui_search_people_hint")}</div> : null}

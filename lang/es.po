@@ -3870,6 +3870,21 @@ msgstr "Ocultar"
 msgid "ui_community_show_others"
 msgstr "Mostrar ({n})"
 
+msgid "ui_friend_request_pending"
+msgstr "Solicitud enviada"
+
+msgid "ui_friend_request_sent_to"
+msgstr "Solicitud de amistad enviada a {name}"
+
+msgid "ui_dm_request_pending"
+msgstr "Chat pedido"
+
+msgid "ui_ask_dm"
+msgstr "Pedir chat"
+
+msgid "ui_ask_dm_hint"
+msgstr "Pídele un chat privado: podréis hablar cuando lo acepte"
+
 msgid "ui_community_tab_members"
 msgstr "Miembros"
 

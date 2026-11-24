@@ -3869,6 +3869,21 @@ msgstr "Verbergen"
 msgid "ui_community_show_others"
 msgstr "Tonen ({n})"
 
+msgid "ui_friend_request_pending"
+msgstr "Verzoek verstuurd"
+
+msgid "ui_friend_request_sent_to"
+msgstr "Vriendschapsverzoek verstuurd naar {name}"
+
+msgid "ui_dm_request_pending"
+msgstr "Chat gevraagd"
+
+msgid "ui_ask_dm"
+msgstr "Chat vragen"
+
+msgid "ui_ask_dm_hint"
+msgstr "Vraag om een privéchat: jullie kunnen praten zodra die wordt geaccepteerd"
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

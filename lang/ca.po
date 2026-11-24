@@ -3869,6 +3869,21 @@ msgstr "Amaga"
 msgid "ui_community_show_others"
 msgstr "Mostra ({n})"
 
+msgid "ui_friend_request_pending"
+msgstr "Sol·licitud enviada"
+
+msgid "ui_friend_request_sent_to"
+msgstr "Sol·licitud d'amistat enviada a {name}"
+
+msgid "ui_dm_request_pending"
+msgstr "Xat demanat"
+
+msgid "ui_ask_dm"
+msgstr "Demana xat"
+
+msgid "ui_ask_dm_hint"
+msgstr "Demana-li un xat privat: podreu parlar quan l'accepti"
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

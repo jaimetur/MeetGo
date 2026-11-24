@@ -3870,6 +3870,21 @@ msgstr "Hide"
 msgid "ui_community_show_others"
 msgstr "Show ({n})"
 
+msgid "ui_friend_request_pending"
+msgstr "Request sent"
+
+msgid "ui_friend_request_sent_to"
+msgstr "Friend request sent to {name}"
+
+msgid "ui_dm_request_pending"
+msgstr "Chat requested"
+
+msgid "ui_ask_dm"
+msgstr "Ask to chat"
+
+msgid "ui_ask_dm_hint"
+msgstr "Ask for a private chat: you can talk once they accept"
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 
