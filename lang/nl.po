@@ -3851,6 +3851,24 @@ msgstr "1 vrij"
 msgid "ui_community_plans_n_one"
 msgstr "1 plan"
 
+msgid "ui_clear_chat"
+msgstr "Chatgeschiedenis wissen"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Alle berichten in de chat van deze community voor iedereen verwijderen? Dit kan niet ongedaan worden gemaakt."
+
+msgid "ui_clear_chat_done"
+msgstr "De chatgeschiedenis is gewist"
+
+msgid "sys_chat_cleared"
+msgstr "{name} heeft de chatgeschiedenis gewist"
+
+msgid "ui_community_hide_others"
+msgstr "Verbergen"
+
+msgid "ui_community_show_others"
+msgstr "Tonen ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

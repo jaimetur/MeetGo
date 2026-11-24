@@ -5,8 +5,10 @@
  * - pinch zoom is blocked (iOS ignores user-scalable=no);
  * - the class "kb" on <html> says the on-screen keyboard is open.
  */
-// Installed on the iPhone's home screen (iOS only: an app installed on Android resizes itself with the keyboard).
-const iosStandalone = () => (navigator as any).standalone === true;
+// Installed on the iPhone's or iPad's home screen (an app installed on Android resizes itself with the keyboard).
+// A web app added to the Mac's Dock also says `standalone`, but its window is not the whole screen: a Mac has no
+// touch screen, an iPhone or iPad does.
+const iosStandalone = () => (navigator as any).standalone === true && navigator.maxTouchPoints > 0;
 
 export function setupViewport() {
   const root = document.documentElement;
@@ -24,7 +26,7 @@ export function setupViewport() {
     const keyboard = typing && (window.innerHeight - height > 120 || tallest - height > 120);
     root.classList.toggle("kb", keyboard);
     // Writing on a phone: the tab bar steps aside at once, before the keyboard has finished opening.
-    root.classList.toggle("typing", typing && coarse.matches);
+    root.classList.toggle("writing", typing && coarse.matches);
     if (keyboard) {
       // Only with the keyboard open: fit the app above it, so the header and the composer stay visible.
       root.style.setProperty("--app-height", `${Math.round(height)}px`);

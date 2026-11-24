@@ -326,6 +326,17 @@ function ChatHeader({ conv }: { conv: Conversation }) {
     }
   }
 
+  async function clearChat() {
+    setMenu(false);
+    if (!window.confirm(t("ui_clear_chat_confirm"))) return;
+    try {
+      await api.clearCommunityChat(conv.id);
+      toast(t("ui_clear_chat_done"));
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
+
   async function leave() {
     setMenu(false);
     try {
@@ -369,6 +380,8 @@ function ChatHeader({ conv }: { conv: Conversation }) {
                   <button onClick={() => settings({ mute_minutes: 60 * 24 * 7 })}><Icon name="belloff" size="sm" />{t("ui_mute_week")}</button>
                 </>}
             <button onClick={() => settings({ pinned: !conv.pinned })}><Icon name="pin" size="sm" />{conv.pinned ? t("ui_unpin_chat") : t("ui_pin_chat")}</button>
+            {conv.kind === "channel" && (conv.role === "owner" || conv.role === "admin" || getState().me?.role === "admin")
+              ? <button className="warn" onClick={clearChat}><Icon name="trash" size="sm" />{t("ui_clear_chat")}</button> : null}
             <button className="warn" onClick={leave}><Icon name="logout" size="sm" />{conv.kind === "dm" ? t("ui_hide_chat") : conv.kind === "channel" ? t("ui_leave_channel") : t("ui_leave_group")}</button>
           </div>
         ) : null}

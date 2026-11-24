@@ -141,7 +141,7 @@ export function RightColumn() {
       <section>
         <div className="row"><h3 className="grow">{t("ui_community_yours")}</h3><button className="linkbtn" onClick={() => navigate("/communities")}>{t("ui_post_see_all")}</button></div>
         {communities === null ? <div className="mini skel"><span className="sk w60" /></div> : null}
-        {communities?.slice(0, 6).map((c) => (
+        {[...(communities || [])].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" })).map((c) => (
           <button key={c.id} className="mini" onClick={() => navigate(communityPath(c.id))}>
             <span className="minitile round" style={{ background: coverGradient("c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
             <span className="grow" style={{ minWidth: 0 }}>

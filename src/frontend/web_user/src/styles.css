@@ -335,8 +335,8 @@ a.logo { text-decoration: none; }
   .dnav { display: none; }
   .shell.chat-open .list { display: none; }
   .shell:not(.chat-open) > .chat { display: none; }
-  .kb .mnav, .typing .mnav, .typing .mfab { display: none; }
-  .typing .shell.conv .chat { padding-bottom: 0; }
+  .kb .mnav, .writing .mnav, .writing .mfab { display: none; }
+  .writing .shell.conv .chat { padding-bottom: 0; }
   /* conversations keep the tab bar too: the chat ends just above it */
   .shell { --mnavh: 70px; }
   .shell.conv .chat { padding-bottom: var(--mnavh); }
@@ -935,3 +935,5 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 /* blocked people and deleting my account */
 .sysmsg.blockedmsg span { font-style: italic; opacity: 0.75; }
 .dangerbox { border-color: color-mix(in srgb, var(--red) 40%, var(--line)); }
+.csec-head { align-items: center; gap: 10px; margin-top: 22px; }
+.csec-head .csec-discover { margin: 0; }

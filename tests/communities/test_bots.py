@@ -150,3 +150,18 @@ async def test_admins_open_a_session_as_a_bot(client, db_session):
     com = await _create(client, ana[0])
     mine = (await client.get("/communities", params={"mine": 1}, headers={"Authorization": f"Bearer {token}"})).json()
     assert com["id"] in [c["id"] for c in mine]
+
+
+async def test_admins_empty_the_community_chat(client, db_session):
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    bea = await make_user(client, db_session, "bea@example.com", "Bea")
+    com = await _create(client, ana[0])
+    cid = com["id"]
+    await client.post(f"/communities/{cid}/join", headers=bea[0])
+    for body in ("uno", "dos"):
+        await _say(client, bea[0], cid, body)
+    assert (await client.post(f"/communities/{cid}/clear-chat", headers=bea[0])).status_code == 403
+    assert (await client.post(f"/communities/{cid}/clear-chat", headers=ana[0])).json() == {"ok": True}
+    page = (await client.get(f"/conversations/{cid}/messages", headers=bea[0])).json()
+    msgs = page["messages"] if isinstance(page, dict) else page
+    assert [m["kind"] for m in msgs] == ["system"] and "Ana" in msgs[0]["body"]

@@ -3850,6 +3850,24 @@ msgstr "1 livre"
 msgid "ui_community_plans_n_one"
 msgstr "1 plano"
 
+msgid "ui_clear_chat"
+msgstr "Esvaziar o histórico do chat"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Apagar todas as mensagens do chat desta comunidade para todos? Não se pode desfazer."
+
+msgid "ui_clear_chat_done"
+msgstr "O histórico do chat foi esvaziado"
+
+msgid "sys_chat_cleared"
+msgstr "{name} esvaziou o histórico do chat"
+
+msgid "ui_community_hide_others"
+msgstr "Ocultar"
+
+msgid "ui_community_show_others"
+msgstr "Mostrar ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Membros"
 

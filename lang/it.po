@@ -3851,6 +3851,24 @@ msgstr "1 libero"
 msgid "ui_community_plans_n_one"
 msgstr "1 piano"
 
+msgid "ui_clear_chat"
+msgstr "Svuota la cronologia della chat"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Eliminare tutti i messaggi della chat di questa community per tutti? Non si può annullare."
+
+msgid "ui_clear_chat_done"
+msgstr "La cronologia della chat è stata svuotata"
+
+msgid "sys_chat_cleared"
+msgstr "{name} ha svuotato la cronologia della chat"
+
+msgid "ui_community_hide_others"
+msgstr "Nascondi"
+
+msgid "ui_community_show_others"
+msgstr "Mostra ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Membri"
 

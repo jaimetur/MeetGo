@@ -3851,6 +3851,24 @@ msgstr "空き 1"
 msgid "ui_community_plans_n_one"
 msgstr "プラン 1 件"
 
+msgid "ui_clear_chat"
+msgstr "チャット履歴を消去"
+
+msgid "ui_clear_chat_confirm"
+msgstr "このコミュニティのチャットのメッセージをすべて全員から削除しますか？元に戻せません。"
+
+msgid "ui_clear_chat_done"
+msgstr "チャット履歴を消去しました"
+
+msgid "sys_chat_cleared"
+msgstr "{name} さんがチャット履歴を消去しました"
+
+msgid "ui_community_hide_others"
+msgstr "非表示"
+
+msgid "ui_community_show_others"
+msgstr "表示（{n}）"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

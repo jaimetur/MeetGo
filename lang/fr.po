@@ -3481,6 +3481,24 @@ msgstr "1 libre"
 msgid "ui_community_plans_n_one"
 msgstr "1 plan"
 
+msgid "ui_clear_chat"
+msgstr "Vider l'historique du chat"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Supprimer tous les messages du chat de cette communauté pour tout le monde ? C'est irréversible."
+
+msgid "ui_clear_chat_done"
+msgstr "L'historique du chat a été vidé"
+
+msgid "sys_chat_cleared"
+msgstr "{name} a vidé l'historique du chat"
+
+msgid "ui_community_hide_others"
+msgstr "Masquer"
+
+msgid "ui_community_show_others"
+msgstr "Afficher ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

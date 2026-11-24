@@ -3,7 +3,7 @@
 import secrets
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.app_settings import app_base_url
@@ -332,3 +332,23 @@ async def list_bans(community_id: int, db: AsyncSession = Depends(get_db), user:
     return [{"user": user_summary(u), "forever": m.banned,
              "until": None if m.banned or not m.ban_until else m.ban_until.isoformat().replace("+00:00", "Z"),
              "strikes": m.strikes or 0} for m, u in rows]
+
+
+@router.post("/communities/{community_id}/clear-chat", response_model=dict)
+async def clear_chat(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """Owner and admins empty the community's chat: every message goes (with its reactions, attachments and reports),
+    and a note says who did it."""
+    from app.board.service import _system
+    from app.core.models import Message
+    conv, member = await get_community(db, community_id, user)
+    _require_admin(member, user)
+    await db.execute(delete(Message).where(Message.conversation_id == conv.id))
+    conv.pinned_message_id = None
+    conv.last_message_id = None
+    await _system(db, conv, t("sys_chat_cleared", {"name": user.display_name}))
+    await db.execute(update(ConversationMember).where(ConversationMember.conversation_id == conv.id).values(
+        last_read_message_id=conv.last_message_id, email_notified_message_id=conv.last_message_id))
+    await db.commit()
+    await realtime.publish(await recipients(db, conv.id), {"type": "conversation.cleared", "conversation_id": conv.id})
+    await _changed(db, conv.id)
+    return {"ok": True}

@@ -3482,6 +3482,24 @@ msgstr "1 frei"
 msgid "ui_community_plans_n_one"
 msgstr "1 Plan"
 
+msgid "ui_clear_chat"
+msgstr "Chatverlauf leeren"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Alle Nachrichten im Chat dieser Community für alle löschen? Das lässt sich nicht rückgängig machen."
+
+msgid "ui_clear_chat_done"
+msgstr "Der Chatverlauf wurde geleert"
+
+msgid "sys_chat_cleared"
+msgstr "{name} hat den Chatverlauf geleert"
+
+msgid "ui_community_hide_others"
+msgstr "Ausblenden"
+
+msgid "ui_community_show_others"
+msgstr "Anzeigen ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 

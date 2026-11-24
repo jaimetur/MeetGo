@@ -1,7 +1,7 @@
 import { api, WS_BASE } from "./api";
 import { emitBoardEvent } from "./board";
 import {
-  addMessage, catchUp, getState, loadConversations, patchConversation, refreshConversation, removeConversation,
+  addMessage, catchUp, getState, loadConversations, loadMessages, patchConversation, refreshConversation, removeConversation,
   refreshMyPlansSoon, replaceMessage, setReactions, setState, updateMessage,
 } from "./store";
 import type { Message } from "./types";
@@ -149,6 +149,15 @@ function handle(ev: any) {
         }
         return { conversations };
       });
+      break;
+    case "conversation.cleared": // an admin emptied a community's chat: load it again from scratch
+      setState((s) => {
+        const messages = { ...s.messages };
+        delete messages[ev.conversation_id];
+        return { messages };
+      });
+      if (getState().activeConversation === ev.conversation_id) loadMessages(ev.conversation_id).catch(() => undefined);
+      refreshConversation(ev.conversation_id).catch(() => undefined);
       break;
     case "conversation.changed":
       refreshConversation(ev.conversation_id);

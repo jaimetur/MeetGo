@@ -3851,6 +3851,24 @@ msgstr "1 lliure"
 msgid "ui_community_plans_n_one"
 msgstr "1 pla"
 
+msgid "ui_clear_chat"
+msgstr "Buida l'historial del xat"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Vols esborrar tots els missatges del xat d'aquesta comunitat per a tothom? No es pot desfer."
+
+msgid "ui_clear_chat_done"
+msgstr "S'ha buidat l'historial del xat"
+
+msgid "sys_chat_cleared"
+msgstr "{name} ha buidat l'historial del xat"
+
+msgid "ui_community_hide_others"
+msgstr "Amaga"
+
+msgid "ui_community_show_others"
+msgstr "Mostra ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

@@ -3851,6 +3851,24 @@ msgstr "1 个空位"
 msgid "ui_community_plans_n_one"
 msgstr "1 个计划"
 
+msgid "ui_clear_chat"
+msgstr "清空聊天记录"
+
+msgid "ui_clear_chat_confirm"
+msgstr "要为所有人删除此社区聊天中的全部消息吗？此操作无法撤销。"
+
+msgid "ui_clear_chat_done"
+msgstr "聊天记录已清空"
+
+msgid "sys_chat_cleared"
+msgstr "{name} 清空了聊天记录"
+
+msgid "ui_community_hide_others"
+msgstr "隐藏"
+
+msgid "ui_community_show_others"
+msgstr "显示（{n}）"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

@@ -3852,6 +3852,24 @@ msgstr "1 free"
 msgid "ui_community_plans_n_one"
 msgstr "1 plan"
 
+msgid "ui_clear_chat"
+msgstr "Empty the chat history"
+
+msgid "ui_clear_chat_confirm"
+msgstr "Delete every message of this community's chat for everyone? This cannot be undone."
+
+msgid "ui_clear_chat_done"
+msgstr "The chat history has been emptied"
+
+msgid "sys_chat_cleared"
+msgstr "{name} emptied the chat history"
+
+msgid "ui_community_hide_others"
+msgstr "Hide"
+
+msgid "ui_community_show_others"
+msgstr "Show ({n})"
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 

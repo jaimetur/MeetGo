@@ -157,8 +157,25 @@ export function CommunitiesPage() {
   }, [q, load]);
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
-  const mine = (list || []).filter((c) => c.joined).sort(byTitle);
+  const mine = byCategory((list || []).filter((c) => c.joined));
   const others = byCategory((list || []).filter((c) => !c.joined));
+  // Show or hide the communities I do not follow (remembered on this device); a search always shows them.
+  const [showOthers, setShowOthers] = useState(() => {
+    try {
+      return localStorage.getItem("communities.showOthers") !== "0";
+    } catch {
+      return true;
+    }
+  });
+  const toggleOthers = () => setShowOthers((v) => {
+    try {
+      localStorage.setItem("communities.showOthers", v ? "0" : "1");
+    } catch {
+      /* per device */
+    }
+    return !v;
+  });
+  const othersVisible = showOthers || !!q.trim();
 
   return (
     <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
@@ -186,9 +203,20 @@ export function CommunitiesPage() {
             : <EmptyState icon="compass" title={t("ui_community_empty_title")} body={t("ui_community_empty_body")} action={t("ui_community_create")} onAction={() => setCreate(true)} />
         ) : (
           <>
-            {mine.length ? <><div className="lsec">{t("ui_community_yours")}</div><div className="cgrid">{mine.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div></> : null}
-            {others.length ? <h2 className="lsec csec-discover">{t("ui_community_discover")}</h2> : null}
-            {others.map(([cat, items]) => (
+            {mine.length ? <h2 className="lsec csec-discover">{t("ui_community_yours")}</h2> : null}
+            {mine.map(([cat, items]) => (
+              <section key={"m" + cat} className="ccat">
+                <div className="lsec ccat-title">{t(cat)} <span className="muted">· {items.length}</span></div>
+                <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
+              </section>
+            ))}
+            {others.length ? (
+              <div className="row csec-head">
+                <h2 className="lsec csec-discover grow">{t("ui_community_discover")}</h2>
+                {!q.trim() ? <button className="btn sm" onClick={toggleOthers} aria-expanded={showOthers}><Icon name={showOthers ? "x" : "plus"} size="sm" />{showOthers ? t("ui_community_hide_others") : t("ui_community_show_others", { n: others.reduce((n, [, items]) => n + items.length, 0) })}</button> : null}
+              </div>
+            ) : null}
+            {othersVisible && others.map(([cat, items]) => (
               <section key={cat} className="ccat">
                 <div className="lsec ccat-title">{t(cat)} <span className="muted">· {items.length}</span></div>
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>

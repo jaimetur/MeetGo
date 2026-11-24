@@ -223,6 +223,7 @@ export const api = {
   setCommunityRole: (id: number, userId: number, role: string) => req(`/communities/${id}/members/${userId}/role`, { method: "PUT", json: { role } }),
   banCommunityMember: (id: number, userId: number, hours: number | null) => req(`/communities/${id}/members/${userId}/ban`, { method: "POST", json: { hours } }),
   unbanCommunityMember: (id: number, userId: number) => req(`/communities/${id}/members/${userId}/unban`, { method: "POST" }),
+  clearCommunityChat: (id: number) => req(`/communities/${id}/clear-chat`, { method: "POST" }),
   communityBans: (id: number) => req<{ user: UserSummary; forever: boolean; until: string | null; strikes: number }[]>(`/communities/${id}/bans`),
   // MeetGo administration (administrators only)
   adminBots: () => req<(UserSummary & { bot_role: string })[]>("/admin/bots"),
