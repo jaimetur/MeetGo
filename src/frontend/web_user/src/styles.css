@@ -1041,3 +1041,26 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .sizepick .sz-small .aa { font-size: 15px; } .sizepick .sz-normal .aa { font-size: 18px; } .sizepick .sz-large .aa { font-size: 22px; }
 .sizeprev { margin-top: 8px; padding: 8px 12px; border-radius: 14px; background: var(--bubble); border: 1px solid var(--line); color: var(--fg); }
 .sizeprev[data-size="small"] { font-size: 14px; } .sizeprev[data-size="normal"] { font-size: 15.5px; } .sizeprev[data-size="large"] { font-size: 17.5px; }
+
+/* computers: my own messages on the right, in a blue bubble (as on phones); the others stay as they are */
+@media (min-width: 821px) {
+  .msg.mine { grid-template-columns: minmax(0, 1fr); padding-left: 64px; }
+  .msg.mine .avcol { display: none; }
+  .msg.mine .mbody { justify-self: end; display: flex; flex-direction: column; max-width: min(72%, 680px); background: linear-gradient(135deg, var(--blue), #2f9bff);
+    border-radius: 18px 18px 6px 18px; padding: 7px 13px 8px; color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+  .msg.mine.cont .mbody { border-top-right-radius: 6px; margin-top: 2px; }
+  .msg.mine .mbody > .tsum, .msg.mine .mbody > .quote, .msg.mine .mbody > .atts, .msg.mine .mbody > .linkbtn { align-self: flex-start; }
+  .msg.mine .mh { order: 10; justify-content: flex-end; margin-top: 1px; }
+  .msg.mine .who { display: none; }
+  .msg.mine .when, .msg.mine .edited, .msg.mine .ticks, .msg.mine .tsum .lt { color: rgba(255, 255, 255, 0.78); }
+  .msg.mine .mt, .msg.mine .tsum, .msg.mine .quote b { color: #fff; }
+  .msg.mine .mt a { color: #fff; text-decoration: underline; }
+  .msg.mine .mt .at { color: #fff; background: rgba(255, 255, 255, 0.22); }
+  .msg.mine .mt.del, .msg.mine .modnote { color: rgba(255, 255, 255, 0.85); }
+  .msg.mine .quote { background: rgba(255, 255, 255, 0.16); border-left-color: rgba(255, 255, 255, 0.85); color: rgba(255, 255, 255, 0.88); }
+  .msg.mine .react { background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.32); color: #fff; }
+  .msg.mine .react.me { background: rgba(255, 255, 255, 0.32); }
+  .msg.mine .mbody:has(> .mt.big) { background: none; box-shadow: none; padding: 0 2px; }
+  .msg.mine .mbody:has(> .mt.big) .mt, .msg.mine .mbody:has(> .mt.big) .when { color: inherit; }
+  .msg.mine.mention { background: none; box-shadow: none; }
+}

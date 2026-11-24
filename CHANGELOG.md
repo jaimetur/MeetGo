@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- On computers your own messages show on the right in a blue bubble, as on phones.
 - Chat text a little bigger, and a chat text size in Settings: Small (the earlier size), Normal or Large, per device.
 - Right-click a chat in the list for its menu (notifications, mute, pin, leave...) and the new "Delete chat": just for you, your history is emptied and it leaves your list until someone writes again.
 - Communities: the switch is now All / My communities / New (the ones you are not in), with counts.
