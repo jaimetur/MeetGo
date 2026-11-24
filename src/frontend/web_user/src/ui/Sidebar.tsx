@@ -38,10 +38,9 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     if (filter !== "all") return kindOf(c) === filter;
     return true;
   });
-  const zone = all.find((c) => c.kind === "channel")?.subtitle;
   const sections: [string, Conversation[]][] = [
     [t("ui_sec_pinned"), visible.filter((c) => c.pinned)],
-    [zone ? t("ui_sec_communities_zone", { zone }) : t("ui_sec_communities"), visible.filter((c) => !c.pinned && c.kind === "channel")],
+    [t("ui_sec_communities"), visible.filter((c) => !c.pinned && c.kind === "channel")],
     [t("ui_sec_plans"), visible.filter((c) => !c.pinned && kindOf(c) === "plan")],
     [t("ui_sec_groups"), visible.filter((c) => !c.pinned && kindOf(c) === "group")],
     [t("ui_sec_direct"), visible.filter((c) => !c.pinned && c.kind === "dm")],
@@ -119,7 +118,7 @@ function ConvRow({ c, active, typing }: { c: Conversation; active: boolean; typi
       <ConvIcon conv={c} />
       <div style={{ minWidth: 0 }}>
         <div className="cname">{convTitle(c)}{muted ? <Icon name="belloff" size="sm" /> : null}{c.pinned ? <Icon name="pin" size="sm" /> : null}</div>
-        <div className="cprev">{typing ? <span className="typ">{t("ui_typing_short")}</span> : preview || <span>{c.subtitle || ""}</span>}</div>
+        <div className="cprev">{typing ? <span className="typ">{t("ui_typing_short")}</span> : preview || <span>{c.kind === "channel" ? "" : c.subtitle || ""}</span>}</div>
       </div>
       <div className="cmeta">
         {shortWhen(last?.created_at || c.last_message_at)}

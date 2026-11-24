@@ -965,3 +965,15 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .cswitch input:checked + .cswitch-track { background: var(--grad); border-color: transparent; }
 .cswitch input:checked + .cswitch-track i { transform: translateX(18px); background: #fff; }
 .cswitch input:focus-visible + .cswitch-track { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* zone tag: my zone (or the one I am looking at), always in view */
+.zonetag { display: inline-flex; align-items: center; gap: 5px; max-width: 46vw; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--text); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.zonetag span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zonetag:hover { border-color: var(--accent); }
+.zonetag.other { border-color: var(--accent); color: var(--accent); }
+.dzone { padding: 2px 12px 10px; }
+.dzone .zonetag { max-width: 100%; }
+.zonebar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; margin-bottom: 12px; border-radius: 12px;
+  border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--panel)); font-size: 13.5px; }
+.ccard.otherzone { cursor: default; }

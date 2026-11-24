@@ -1100,6 +1100,9 @@ msgstr "コミュニティのルール（{rule}）に再度違反したため、
 msgid "err_avatar_not_image"
 msgstr "読み込める写真ではありません（JPG、PNG、WebP を使ってください）。"
 
+msgid "err_invalid_zone"
+msgstr "そのゾーンは存在しません。"
+
 msgid "err_banned_here"
 msgstr "この会話には書き込めません"
 
@@ -3097,6 +3100,33 @@ msgstr "コミュニティ"
 
 msgid "ui_f_plans"
 msgstr "予定"
+
+msgid "ui_zone_change"
+msgstr "エリアを変えてコミュニティを探す"
+
+msgid "ui_zone_title"
+msgstr "別のエリアを見る"
+
+msgid "ui_zone_lead"
+msgstr "あなたのエリアは {zone} です。別の国・県・年齢を選ぶとそのコミュニティが見られます。参加できるのは自分のエリアのものだけです。"
+
+msgid "ui_zone_age"
+msgstr "年齢"
+
+msgid "ui_zone_look"
+msgstr "コミュニティを見る"
+
+msgid "ui_zone_back_mine"
+msgstr "自分のエリアに戻る"
+
+msgid "ui_zone_move"
+msgstr "引っ越しましたか?プロフィールで県を変更してください"
+
+msgid "ui_zone_browsing"
+msgstr "{zone} のコミュニティを表示中です。参加できるのは自分のエリアのものだけです。"
+
+msgid "ui_zone_other"
+msgstr "別のエリア"
 
 msgid "ui_sec_communities"
 msgstr "コミュニティ"

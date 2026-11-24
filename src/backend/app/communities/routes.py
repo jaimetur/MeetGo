@@ -13,7 +13,7 @@ from app.core.models import CommunityRequest, Conversation, ConversationMember, 
 from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, MemberRoleIn, ResolveIn
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
-    hand_over_ownership, in_zone, lift_ban, list_communities, pending_request, rank_of, staff_ids, staff_of,
+    hand_over_ownership, in_zone, lift_ban, list_communities, pending_request, rank_of, staff_ids, staff_of, valid_zone,
 )
 from app.conversations.service import get_membership, join, user_age_key, user_summary
 from app.mail import notify_email
@@ -65,8 +65,13 @@ async def _join_member(db: AsyncSession, conv: Conversation, user: User) -> None
 
 
 @router.get("/communities", response_model=list[dict])
-async def communities(q: str = "", mine: int = 0, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    return await list_communities(db, user, q, bool(mine))
+async def communities(q: str = "", mine: int = 0, province: str | None = None, age_range: str | None = None,
+                      db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """My zone's communities, or with province and age_range those of another zone, to discover them."""
+    zone = await valid_zone(db, province, age_range)
+    if (province or age_range) and not zone:
+        raise HTTPException(400, t("err_invalid_zone"))
+    return await list_communities(db, user, q, bool(mine), zone)
 
 
 @router.post("/communities", response_model=dict)

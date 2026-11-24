@@ -108,13 +108,13 @@ async def get_community(db: AsyncSession, community_id: int, user: User) -> tupl
     return conv, member
 
 
-async def ensure_interest_channels(db: AsyncSession, user: User) -> None:
-    """Every interest has its community in each zone: create the missing ones of my zone."""
+async def ensure_interest_channels(db: AsyncSession, user: User, zone: tuple[str, str] | None = None) -> None:
+    """Every interest has its community in each zone: create the missing ones of my zone (or of `zone`)."""
     ids = (await db.execute(select(Interest.id))).scalars().all()
     if not ids:
         return
-    age = user_age_key(user)
-    rows = [dict(kind="channel", province=user.province, age_range=age, interest_id=i, created_at=utcnow(),
+    province, age = zone or (user.province, user_age_key(user))
+    rows = [dict(kind="channel", province=province, age_range=age, interest_id=i, created_at=utcnow(),
                  slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, policy_json={}, access_mode="open", board_mode="open")
             for i in ids]
     await db.execute(pg_insert(Conversation).values(rows).on_conflict_do_nothing(constraint="uq_channel_key"))
@@ -167,6 +167,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "avatar_url": c.avatar_url,
             "province": c.province,
             "age_range": c.age_range,
+            "my_zone": in_zone(user, c),
             "access_mode": c.access_mode,
             "board_mode": c.board_mode,
             "member_count": len(members.get(c.id, [])),
@@ -184,7 +185,35 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
     return out
 
 
-async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool = False) -> list[dict]:
+AGE_KEYS = ("18_30", "31_50", "51_plus")
+
+
+async def valid_zone(db: AsyncSession, province: str | None, age_range: str | None) -> tuple[str, str] | None:
+    """A zone to look at (a province of the configured countries and an age range), or None."""
+    from app.core.app_settings import get_settings_row
+    if not province or age_range not in AGE_KEYS:
+        return None
+    data = (await get_settings_row(db)).data or {}
+    provinces = {p.get("value") for ps in (data.get("provinces_by_country") or {}).values() for p in ps}
+    return (province, age_range) if province in provinces else None
+
+
+async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool = False,
+                           zone: tuple[str, str] | None = None) -> list[dict]:
+    """My zone's communities; with `zone`, another zone's, to discover them (only my zone's can be joined)."""
+    if zone and zone == (user.province, user_age_key(user)):
+        zone = None
+    if zone:
+        await ensure_interest_channels(db, user, zone)
+        query = select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(
+            Conversation.kind == "channel", Conversation.province == zone[0], Conversation.age_range == zone[1],
+            Conversation.access_mode != "invite")
+        if q.strip():
+            like = f"%{q.strip()}%"
+            query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), Conversation.description.ilike(like)))
+        out = await communities_out(db, user, list((await db.execute(query)).scalars().all()))
+        out.sort(key=lambda c: c["title"].lower())
+        return out
     if not user.bot_role:
         await ensure_interest_channels(db, user)
     my_ids = select(ConversationMember.conversation_id).where(

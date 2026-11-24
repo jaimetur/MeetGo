@@ -145,6 +145,7 @@ export type Community = {
   rules?: string | null;
   invite_code?: string | null;
   ban_until?: string | null;
+  my_zone?: boolean;
   created_at: string;
 };
 

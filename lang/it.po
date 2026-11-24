@@ -1100,6 +1100,9 @@ msgstr "Hai violato di nuovo le regole della community ({rule}) e sei stato bann
 msgid "err_avatar_not_image"
 msgstr "Questo file non è una foto leggibile (usa JPG, PNG o WebP)."
 
+msgid "err_invalid_zone"
+msgstr "Questa zona non esiste."
+
 msgid "err_banned_here"
 msgstr "Non puoi scrivere in questa conversazione"
 
@@ -3097,6 +3100,33 @@ msgstr "Comunità"
 
 msgid "ui_f_plans"
 msgstr "Piani"
+
+msgid "ui_zone_change"
+msgstr "Cambia zona per scoprire community"
+
+msgid "ui_zone_title"
+msgstr "Scopri un'altra zona"
+
+msgid "ui_zone_lead"
+msgstr "La tua zona è {zone}. Scegli un altro paese, provincia o età per vederne le community. Puoi entrare solo in quelle della tua zona."
+
+msgid "ui_zone_age"
+msgstr "Età"
+
+msgid "ui_zone_look"
+msgstr "Vedi le sue community"
+
+msgid "ui_zone_back_mine"
+msgstr "Torna alla mia zona"
+
+msgid "ui_zone_move"
+msgstr "Ti sei trasferito? Cambia la tua provincia nel profilo"
+
+msgid "ui_zone_browsing"
+msgstr "Stai guardando le community di {zone}. Puoi entrare solo in quelle della tua zona."
+
+msgid "ui_zone_other"
+msgstr "Altra zona"
 
 msgid "ui_sec_communities"
 msgstr "Comunità"

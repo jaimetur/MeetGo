@@ -14,10 +14,6 @@ const ACCESS_KEYS: Record<AccessMode, string> = { open: "ui_community_access_ope
 const ROLE_KEYS: Record<string, string> = { owner: "ui_role_owner", admin: "ui_role_admin", moderator: "ui_role_moderator", member: "ui_role_member" };
 const RANK: Record<string, number> = { owner: 3, admin: 2, moderator: 1, member: 0 };
 
-function zoneLabel(c: Community) {
-  return `${c.province} · ${(c.age_range || "").replace("_plus", "+").replace("_", "-")}`;
-}
-
 function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
   if (c.avatar_url) return <img className="cbadge" src={fileUrl(c.avatar_url)} alt="" style={{ width: size, height: size }} />;
   return (
@@ -49,6 +45,7 @@ function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Communit
   const [busy, setBusy] = useState(false);
   const cls = "btn " + (big ? "" : "sm ");
   if (c.joined) return <button className={cls + "pri"} onClick={(e) => { e.stopPropagation(); navigate(communityPath(c.id)); }}>{t("ui_open")}</button>;
+  if (c.my_zone === false) return <span className="spill"><Icon name="place" size="sm" />{t("ui_zone_other")}</span>;
   if (c.request_pending) return <span className="spill wait">{t("ui_community_requested")}</span>;
   if (c.access_mode === "invite") return <span className="spill"><Icon name="lock" size="sm" />{t("ui_community_access_invite")}</span>;
   return (
@@ -64,7 +61,8 @@ function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Communit
 
 function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community) => void }) {
   return (
-    <article className="ccard" role="link" tabIndex={0} onClick={() => navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && navigate(communityPath(c.id))}>
+    <article className={"ccard" + (c.my_zone === false ? " otherzone" : "")} role="link" tabIndex={0}
+      onClick={() => c.my_zone !== false && navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && c.my_zone !== false && navigate(communityPath(c.id))}>
       {/* the hobby's silhouette as a soft watermark, tinted with the community's colours */}
       <span className="cwm" style={{ background: coverGradient("c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
       <div className="cbody">
@@ -144,13 +142,14 @@ export function CommunitiesPage() {
   const [error, setError] = useState<string | null>(null);
   const [create, setCreate] = useState(false);
 
+  const browse = useStore((s) => s.browseZone);
   const load = useCallback((query: string) => {
     setError(null);
-    api.communities({ q: query || undefined }).then(setList).catch((e) => {
+    api.communities({ q: query || undefined, ...(browse || {}) }).then(setList).catch((e) => {
       setList([]);
       if (e?.status !== 404) setError(e.message);
     });
-  }, []);
+  }, [browse]);
   useEffect(() => {
     const id = window.setTimeout(() => load(q.trim()), q ? 300 : 0);
     return () => window.clearTimeout(id);
@@ -175,7 +174,7 @@ export function CommunitiesPage() {
     return !v;
   });
   // one list by category: mine (Open, blue) and the rest (Join, green); the switch keeps only mine
-  const groups = byCategory((list || []).filter((c) => c.joined || showOthers || !!q.trim()));
+  const groups = byCategory((list || []).filter((c) => c.joined || showOthers || !!q.trim() || !!browse));
 
   return (
     <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
@@ -184,7 +183,7 @@ export function CommunitiesPage() {
         <header className="shead">
           <div className="grow">
             <h1 className="deskonly">{t("ui_community_title")}</h1>
-            <p className="muted">{me ? t("ui_community_lead", { zone: me.province }) : null}</p>
+            <p className="muted">{me ? t("ui_community_lead", { zone: browse?.province || me.province }) : null}</p>
           </div>
           <button className="btn go" onClick={() => setCreate(true)}><Icon name="plus" size="sm" />{t("ui_community_create")}</button>
         </header>
@@ -193,7 +192,14 @@ export function CommunitiesPage() {
           <input id="community-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_community_search_ph")} aria-label={t("ui_community_search_ph")} />
           {q ? <button className="iconbtn" style={{ width: 26, height: 26 }} onClick={() => setQ("")} aria-label={t("ui_clear")}><Icon name="x" size="sm" /></button> : null}
         </div>
-        {list && notMine ? (
+        {browse ? (
+          <div className="zonebar">
+            <Icon name="place" size="sm" />
+            <span className="grow">{t("ui_zone_browsing", { zone: `${browse.province} · ${browse.age_range.replace("_plus", "+").replace("_", "-")}` })}</span>
+            <button className="btn sm" onClick={() => setState({ browseZone: null })}>{t("ui_zone_back_mine")}</button>
+          </div>
+        ) : null}
+        {list && notMine && !browse ? (
           <label className="cswitch">
             <input id="communities-only-mine" type="checkbox" checked={!showOthers} onChange={toggleOthers} />
             <span className="cswitch-track" aria-hidden="true"><i /></span>
@@ -345,7 +351,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           <div className="grow" style={{ minWidth: 0, paddingBottom: 4 }}>
             <h1 className="dtitle" style={{ margin: 0 }}>{c.title}</h1>
             <div className="muted cmetaline">
-              {zoneLabel(c)} · {t("ui_members_n", { n: c.member_count })}
+              {t("ui_members_n", { n: c.member_count })}
               {c.online_count ? <> · <span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</> : null}
             </div>
           </div>

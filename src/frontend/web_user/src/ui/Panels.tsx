@@ -240,7 +240,7 @@ function InfoPanel({ conv }: { conv: Conversation }) {
     <div className="sbody infopanel" style={{ padding: 16, display: "flex", flexDirection: "column", gap: 16 }}>
       <div>
         <div className="info-title">{convTitle(conv)}</div>
-        <div className="muted info-meta">{conv.kind === "channel" ? `${conv.subtitle} · ` : ""}{conv.kind !== "dm" ? t("ui_members_n", { n: conv.member_count }) : ""}</div>
+        <div className="muted info-meta">{conv.kind !== "dm" ? t("ui_members_n", { n: conv.member_count }) : ""}</div>
         {conv.description && !(staff && conv.kind === "group") ? <p style={{ fontSize: 13 }}>{conv.description}</p> : null}
       </div>
       {conv.rules_markdown && !staff ? (

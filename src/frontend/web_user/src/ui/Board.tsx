@@ -7,7 +7,7 @@ import {
   timeRange, toLocalParts,
 } from "../board";
 import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
-import { loadConversations, loadMyCommunities, refreshMyPlansSoon, toast, useStore } from "../store";
+import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
 import { Avatar, Icon, Modal, Wordmark, useClickOutside } from "./common";
@@ -375,6 +375,7 @@ export function PhoneTop({ title }: { title?: string }) {
       <img className="appicon" src="/apple-touch-icon.png" alt="" />
       {title ? <span className="phonetitle">{title}</span> : <Wordmark size={24} />}
       <span className="grow" />
+      <ZoneTag />
       <button className="iconbtn glass" aria-label={t("ui_nav_mentions")} title={t("ui_nav_mentions")} onClick={() => navigate("/mentions")}>
         <Icon name="at" />{mentions ? <span className="bdg at dotbdg">{mentions > 9 ? "9+" : mentions}</span> : null}
       </button>
@@ -1025,5 +1026,72 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
         <button className="btn go" disabled={busy || loading || uploading} onClick={submit}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
       </div>
     </main>
+  );
+}
+
+export const ageText = (a?: string | null) => (a || "").replace("_plus", "+").replace("_", "-");
+
+/** My zone (or the one I am looking at) always in view; tapping it lets me look at another zone's communities. */
+export function ZoneTag() {
+  const me = useStore((s) => s.me);
+  const browse = useStore((s) => s.browseZone);
+  const [open, setOpen] = useState(false);
+  if (!me) return null;
+  const zone = browse || { province: me.province, age_range: me.age_range };
+  return (
+    <>
+      <button className={"zonetag" + (browse ? " other" : "")} onClick={() => setOpen(true)} title={t("ui_zone_change")} aria-label={t("ui_zone_change")}>
+        <Icon name="place" size="sm" /><span>{zone.province} · {ageText(zone.age_range)}</span>
+      </button>
+      {open ? <ZoneModal onClose={() => setOpen(false)} /> : null}
+    </>
+  );
+}
+
+function ZoneModal({ onClose }: { onClose: () => void }) {
+  const me = useStore((s) => s.me)!;
+  const browse = useStore((s) => s.browseZone);
+  const [geo, setGeo] = useState<any>(null);
+  const start = browse || { province: me.province, age_range: me.age_range };
+  const [country, setCountry] = useState(me.country || "ES");
+  const [province, setProvince] = useState(start.province);
+  const [age, setAge] = useState(start.age_range);
+  useEffect(() => {
+    api.publicSettings().then(setGeo).catch(() => setGeo({}));
+  }, []);
+  const provinces: { value: string; name: string }[] = geo?.provinces_by_country?.[country] || [];
+  const mine = (p: string, a: string) => p === me.province && a === me.age_range;
+  function look() {
+    setState({ browseZone: mine(province, age) ? null : { province, age_range: age } });
+    onClose();
+    navigate("/communities");
+  }
+  return (
+    <Modal title={t("ui_zone_title")} onClose={onClose}>
+      <p className="muted" style={{ marginTop: 0 }}>{t("ui_zone_lead", { zone: `${me.province} · ${ageText(me.age_range)}` })}</p>
+      <div className="grid2">
+        <label className="fld">{t("ui_country")}
+          <select id="zone-country" className="inp" value={country} onChange={(e) => { setCountry(e.target.value); setProvince(""); }}>
+            {(geo?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
+          </select>
+        </label>
+        <label className="fld">{t("ui_province")}
+          <select id="zone-province" className="inp" value={province} onChange={(e) => setProvince(e.target.value)}>
+            <option value="">{t("ui_choose")}</option>
+            {provinces.map((p) => <option key={p.value} value={p.value}>{p.name}</option>)}
+          </select>
+        </label>
+      </div>
+      <label className="fld">{t("ui_zone_age")}
+        <select id="zone-age" className="inp" value={age} onChange={(e) => setAge(e.target.value)}>
+          {["18_30", "31_50", "51_plus"].map((a) => <option key={a} value={a}>{ageText(a)}</option>)}
+        </select>
+      </label>
+      <div className="stack" style={{ gap: 8, marginTop: 6 }}>
+        <button className="btn pri block" disabled={!province} onClick={look}><Icon name="compass" size="sm" />{t("ui_zone_look")}</button>
+        {browse ? <button className="btn block" onClick={() => { setState({ browseZone: null }); onClose(); navigate("/communities"); }}>{t("ui_zone_back_mine")}</button> : null}
+        <button className="linkbtn" onClick={() => { onClose(); navigate("/account"); }}>{t("ui_zone_move")}</button>
+      </div>
+    </Modal>
   );
 }

@@ -186,3 +186,16 @@ async def test_remove_lets_rejoin_but_expel_does_not(client, db_session):
     assert not any(c["id"] == cid for c in (await client.get("/conversations", headers=bea[0])).json())
     members = (await client.get(f"/communities/{cid}/members", headers=ana[0])).json()
     assert [m["display_name"] for m in members if not m["bot"]] == ["Ana"]
+
+
+async def test_discovering_another_zone(client, db_session):
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")  # Madrid, 31_50
+    res = await client.get("/communities", params={"province": "Barcelona", "age_range": "18_30"}, headers=ana[0])
+    assert res.status_code == 200, res.text
+    other = res.json()
+    assert other and all(c["province"] == "Barcelona" and c["age_range"] == "18_30" and c["my_zone"] is False for c in other)
+    # only my zone's can be joined
+    assert (await client.post(f"/communities/{other[0]['id']}/join", headers=ana[0])).status_code == 403
+    assert (await client.get("/communities", params={"province": "Atlantis", "age_range": "18_30"}, headers=ana[0])).status_code == 400
+    mine = (await client.get("/communities", headers=ana[0])).json()
+    assert all(c["my_zone"] for c in mine)

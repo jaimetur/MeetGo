@@ -1100,6 +1100,9 @@ msgstr "You broke the community rules again ({rule}) and you have been banned fo
 msgid "err_avatar_not_image"
 msgstr "That file is not a photo we can read (use JPG, PNG or WebP)."
 
+msgid "err_invalid_zone"
+msgstr "That zone does not exist."
+
 msgid "err_banned_here"
 msgstr "You can't write in this conversation"
 
@@ -3098,6 +3101,33 @@ msgstr "Communities"
 
 msgid "ui_f_plans"
 msgstr "Plans"
+
+msgid "ui_zone_change"
+msgstr "Change zone to discover communities"
+
+msgid "ui_zone_title"
+msgstr "Discover another zone"
+
+msgid "ui_zone_lead"
+msgstr "Your zone is {zone}. Pick another country, province or age to see its communities. You can only join the ones in your zone."
+
+msgid "ui_zone_age"
+msgstr "Age"
+
+msgid "ui_zone_look"
+msgstr "See its communities"
+
+msgid "ui_zone_back_mine"
+msgstr "Back to my zone"
+
+msgid "ui_zone_move"
+msgstr "Moved? Change your province in your profile"
+
+msgid "ui_zone_browsing"
+msgstr "You are looking at the communities of {zone}. You can only join the ones in your zone."
+
+msgid "ui_zone_other"
+msgstr "Other zone"
 
 msgid "ui_sec_communities"
 msgstr "Communities"

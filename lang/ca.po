@@ -1100,6 +1100,9 @@ msgstr "Has tornat a incomplir les normes de la comunitat ({rule}) i t'han bande
 msgid "err_avatar_not_image"
 msgstr "Aquest fitxer no és una foto que puguem llegir (fes servir JPG, PNG o WebP)."
 
+msgid "err_invalid_zone"
+msgstr "Aquesta zona no existeix."
+
 msgid "err_banned_here"
 msgstr "No pots escriure en aquesta conversa"
 
@@ -3097,6 +3100,33 @@ msgstr "Comunitats"
 
 msgid "ui_f_plans"
 msgstr "Plans"
+
+msgid "ui_zone_change"
+msgstr "Canvia de zona per descobrir comunitats"
+
+msgid "ui_zone_title"
+msgstr "Descobreix una altra zona"
+
+msgid "ui_zone_lead"
+msgstr "La teva zona és {zone}. Tria un altre país, província o edat per veure'n les comunitats. Només pots entrar a les de la teva zona."
+
+msgid "ui_zone_age"
+msgstr "Edat"
+
+msgid "ui_zone_look"
+msgstr "Veure'n les comunitats"
+
+msgid "ui_zone_back_mine"
+msgstr "Torna a la meva zona"
+
+msgid "ui_zone_move"
+msgstr "T'has mudat? Canvia la teva província al perfil"
+
+msgid "ui_zone_browsing"
+msgstr "Estàs veient les comunitats de {zone}. Només pots entrar a les de la teva zona."
+
+msgid "ui_zone_other"
+msgstr "Una altra zona"
 
 msgid "ui_sec_communities"
 msgstr "Comunitats"

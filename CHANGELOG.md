@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Your zone (province and age range) always in view as a tag at the top; tapping it lets you look at the communities of another country, province or age range (only your own zone can be joined), go back to your zone or change your province in your profile. Channels, chats and community pages no longer repeat the zone.
 - Communities: themed areas of each zone with a board and a chat room. Anyone can create one, open to all, by request (an admin approves) or by invitation link; owners name admins and admins name moderators; the board can be open to members or read-only with only admins publishing. Changing province or age range leaves the old zone's communities and brings them back, as they were, on return.
 - Community staff, and the administrators of MeetGo, expel someone with the Expel button next to each member, or by tapping their name in the community chat (take out: they can join again; expel: they cannot come back); the settings button next to each member also changes their role.
 - The title of a community chat opens its community page.

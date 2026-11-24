@@ -15,6 +15,7 @@ import { SidePanel } from "./Panels";
 import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
 import { PlansPage, RightColumn } from "./Plans";
 import { ActingAsBar, AdminPage } from "./Admin";
+import { ZoneTag } from "./Board";
 import { Paywall } from "./Paywall";
 import { Sidebar } from "./Sidebar";
 
@@ -264,6 +265,7 @@ function Shell() {
           <img className="appicon" src="/apple-touch-icon.png" alt="" />
           <Wordmark size={24} />
         </button>
+        <div className="dzone"><ZoneTag /></div>
         {menu.map((n) => (
           <button key={n.name} className={"di" + (current === n.name ? " on" : "")} title={n.label} aria-label={n.label} aria-current={current === n.name ? "page" : undefined} onClick={() => go(n.name)}>
             <Icon name={n.icon} />

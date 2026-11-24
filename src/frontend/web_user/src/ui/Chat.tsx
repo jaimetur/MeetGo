@@ -351,7 +351,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
 
   let sub: React.ReactNode = conv.subtitle;
   if (conv.kind === "dm") sub = conv.other_user?.online ? <span className="on">{t("ui_online")}</span> : t("ui_offline");
-  else sub = <>{conv.kind === "channel" ? conv.subtitle + " · " : ""}{t("ui_members_n", { n: conv.member_count })}</>;
+  else sub = t("ui_members_n", { n: conv.member_count });
 
   return (
     <header className="chead">

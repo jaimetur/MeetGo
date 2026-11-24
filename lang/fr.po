@@ -1099,6 +1099,9 @@ msgstr "Vous avez de nouveau enfreint les règles de la communauté ({rule}) et 
 msgid "err_avatar_not_image"
 msgstr "Ce fichier n'est pas une photo lisible (utilisez JPG, PNG ou WebP)."
 
+msgid "err_invalid_zone"
+msgstr "Cette zone n'existe pas."
+
 msgid "err_banned_here"
 msgstr "Tu ne peux pas écrire dans cette conversation"
 
@@ -3951,6 +3954,33 @@ msgstr "Communauté"
 
 msgid "ui_publish_who_comments"
 msgstr "Qui peut commenter"
+
+msgid "ui_zone_change"
+msgstr "Changer de zone pour découvrir des communautés"
+
+msgid "ui_zone_title"
+msgstr "Découvrir une autre zone"
+
+msgid "ui_zone_lead"
+msgstr "Ta zone est {zone}. Choisis un autre pays, une autre province ou un autre âge pour voir ses communautés. Tu ne peux rejoindre que celles de ta zone."
+
+msgid "ui_zone_age"
+msgstr "Âge"
+
+msgid "ui_zone_look"
+msgstr "Voir ses communautés"
+
+msgid "ui_zone_back_mine"
+msgstr "Revenir à ma zone"
+
+msgid "ui_zone_move"
+msgstr "Tu as déménagé ? Change ta province dans ton profil"
+
+msgid "ui_zone_browsing"
+msgstr "Tu regardes les communautés de {zone}. Tu ne peux rejoindre que celles de ta zone."
+
+msgid "ui_zone_other"
+msgstr "Autre zone"
 
 msgid "ui_sec_communities"
 msgstr "Communautés"

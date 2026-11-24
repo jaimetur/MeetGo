@@ -1100,6 +1100,9 @@ msgstr "Has vuelto a incumplir las normas de la comunidad ({rule}) y te han bane
 msgid "err_avatar_not_image"
 msgstr "Ese archivo no es una foto que podamos leer (usa JPG, PNG o WebP)."
 
+msgid "err_invalid_zone"
+msgstr "Esa zona no existe."
+
 msgid "err_banned_here"
 msgstr "No puedes escribir en esta conversación"
 
@@ -3098,6 +3101,33 @@ msgstr "Comunidades"
 
 msgid "ui_f_plans"
 msgstr "Planes"
+
+msgid "ui_zone_change"
+msgstr "Cambiar de zona para descubrir comunidades"
+
+msgid "ui_zone_title"
+msgstr "Descubrir otra zona"
+
+msgid "ui_zone_lead"
+msgstr "Tu zona es {zone}. Elige otro país, provincia o edad para ver sus comunidades. Solo puedes entrar en las de tu zona."
+
+msgid "ui_zone_age"
+msgstr "Edad"
+
+msgid "ui_zone_look"
+msgstr "Ver sus comunidades"
+
+msgid "ui_zone_back_mine"
+msgstr "Volver a mi zona"
+
+msgid "ui_zone_move"
+msgstr "¿Te has mudado? Cambia tu provincia en tu perfil"
+
+msgid "ui_zone_browsing"
+msgstr "Estás viendo las comunidades de {zone}. Solo puedes entrar en las de tu zona."
+
+msgid "ui_zone_other"
+msgstr "Otra zona"
 
 msgid "ui_sec_communities"
 msgstr "Comunidades"

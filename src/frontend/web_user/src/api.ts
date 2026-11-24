@@ -209,7 +209,8 @@ export const api = {
   post: (content: string) => req("/posts", { method: "POST", json: { content } }),
 
   // communities
-  communities: (params: { q?: string; mine?: boolean } = {}) => req<Community[]>(`/communities${qs({ q: params.q, mine: params.mine ? 1 : undefined })}`),
+  communities: (params: { q?: string; mine?: boolean; province?: string; age_range?: string } = {}) =>
+    req<Community[]>(`/communities${qs({ q: params.q, mine: params.mine ? 1 : undefined, province: params.province, age_range: params.age_range })}`),
   community: (id: number) => req<Community>(`/communities/${id}`),
   createCommunity: (payload: { title: string; description?: string; avatar_url?: string; access_mode: string; board_mode: string }) => req<Community>("/communities", { method: "POST", json: payload }),
   updateCommunity: (id: number, payload: Record<string, unknown>) => req<Community>(`/communities/${id}`, { method: "PATCH", json: payload }),

@@ -27,6 +27,8 @@ export type State = {
   myCommunities: Community[] | null;
   // people I blocked: their messages are hidden from me
   blocked: number[];
+  // another zone whose communities I am looking at (Communities), or null for mine
+  browseZone: { province: string; age_range: string } | null;
 };
 
 const initial: State = {
@@ -47,6 +49,7 @@ const initial: State = {
   myPlans: null,
   myCommunities: null,
   blocked: [],
+  browseZone: null,
 };
 
 let state: State = initial;

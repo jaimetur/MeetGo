@@ -1100,6 +1100,9 @@ msgstr "你再次违反了社区规则（{rule}），已被永久封禁。只有
 msgid "err_avatar_not_image"
 msgstr "无法读取该照片（请使用 JPG、PNG 或 WebP）。"
 
+msgid "err_invalid_zone"
+msgstr "该区域不存在。"
+
 msgid "err_banned_here"
 msgstr "你不能在此会话中发言"
 
@@ -3097,6 +3100,33 @@ msgstr "社区"
 
 msgid "ui_f_plans"
 msgstr "计划"
+
+msgid "ui_zone_change"
+msgstr "切换区域以发现社区"
+
+msgid "ui_zone_title"
+msgstr "发现其他区域"
+
+msgid "ui_zone_lead"
+msgstr "你的区域是 {zone}。选择其他国家、省份或年龄即可查看那里的社区。你只能加入自己区域的社区。"
+
+msgid "ui_zone_age"
+msgstr "年龄"
+
+msgid "ui_zone_look"
+msgstr "查看其社区"
+
+msgid "ui_zone_back_mine"
+msgstr "返回我的区域"
+
+msgid "ui_zone_move"
+msgstr "搬家了?在个人资料中修改你的省份"
+
+msgid "ui_zone_browsing"
+msgstr "你正在查看 {zone} 的社区。你只能加入自己区域的社区。"
+
+msgid "ui_zone_other"
+msgstr "其他区域"
 
 msgid "ui_sec_communities"
 msgstr "社区"

@@ -1100,6 +1100,9 @@ msgstr "Je hebt de regels van de community opnieuw overtreden ({rule}) en bent d
 msgid "err_avatar_not_image"
 msgstr "Dat bestand is geen leesbare foto (gebruik JPG, PNG of WebP)."
 
+msgid "err_invalid_zone"
+msgstr "Die zone bestaat niet."
+
 msgid "err_banned_here"
 msgstr "Je kunt niet schrijven in dit gesprek"
 
@@ -3097,6 +3100,33 @@ msgstr "Communities"
 
 msgid "ui_f_plans"
 msgstr "Plannen"
+
+msgid "ui_zone_change"
+msgstr "Wissel van zone om communities te ontdekken"
+
+msgid "ui_zone_title"
+msgstr "Een andere zone ontdekken"
+
+msgid "ui_zone_lead"
+msgstr "Jouw zone is {zone}. Kies een ander land, een andere provincie of leeftijd om de communities te zien. Je kunt alleen lid worden van die in jouw zone."
+
+msgid "ui_zone_age"
+msgstr "Leeftijd"
+
+msgid "ui_zone_look"
+msgstr "Bekijk de communities"
+
+msgid "ui_zone_back_mine"
+msgstr "Terug naar mijn zone"
+
+msgid "ui_zone_move"
+msgstr "Verhuisd? Wijzig je provincie in je profiel"
+
+msgid "ui_zone_browsing"
+msgstr "Je bekijkt de communities van {zone}. Je kunt alleen lid worden van die in jouw zone."
+
+msgid "ui_zone_other"
+msgstr "Andere zone"
 
 msgid "ui_sec_communities"
 msgstr "Communities"
