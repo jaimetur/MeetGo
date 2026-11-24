@@ -77,6 +77,26 @@ export const LANGUAGES: [Lang, string][] = Object.keys(DICTS)
   .sort((a, b) => (Object.keys(LANGUAGE_NAMES).indexOf(a) + 1 || 99) - (Object.keys(LANGUAGE_NAMES).indexOf(b) + 1 || 99))
   .map((code) => [code, LANGUAGE_NAMES[code] || code]);
 
+/**
+ * What the administration decided: languages switched off leave the pickers, and languages added there (translated by
+ * Claude) join them with their texts. Called once, before the app is drawn.
+ */
+export function configureLanguages(disabled: string[], added: { code: string; name: string; texts?: Dict }[]) {
+  for (const { code, name, texts } of added) {
+    if (texts) DICTS[code] = texts;
+    LANGUAGE_NAMES[code] = name;
+    if (!LANGUAGES.some(([c]) => c === code)) LANGUAGES.push([code, name]);
+  }
+  for (let i = LANGUAGES.length - 1; i >= 0; i--) {
+    if (disabled.includes(LANGUAGES[i][0]) && LANGUAGES[i][0] !== "en") LANGUAGES.splice(i, 1);
+  }
+}
+
+/** A language added from the administration whose texts are not loaded yet. */
+export function needsTexts(code: string): boolean {
+  return !!code && !DICTS[code];
+}
+
 /** The first of the browser's languages that MeetGo has, or English. */
 export function browserLang(): Lang {
   const wanted = typeof navigator === "undefined" ? [] : [...(navigator.languages || []), navigator.language];
@@ -87,18 +107,23 @@ export function browserLang(): Lang {
   return "en";
 }
 
-export function getLang(): Lang {
-  let stored = "";
+export function storedLang(): string {
   try {
-    stored = localStorage.getItem("lang") || "";
+    return localStorage.getItem("lang") || "";
   } catch {
-    /* private mode */
+    return ""; /* private mode */
   }
+}
+
+export function getLang(): Lang {
+  const stored = storedLang();
   return DICTS[stored] ? stored : browserLang();
 }
 
 export function setLang(l: Lang) {
   localStorage.setItem("lang", l);
+  // a language added from the administration brings its texts when the app starts: start it again
+  if (!DICTS[l] && typeof window !== "undefined") window.location.reload();
 }
 
 export function t(key: string, vars?: Record<string, string | number>) {

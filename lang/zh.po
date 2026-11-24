@@ -932,6 +932,30 @@ msgstr "该用户没有邮箱"
 msgid "err_cannot_ban_self"
 msgstr "不能封禁自己的账号"
 
+msgid "err_ai_key_format"
+msgstr "Claude API 密钥以 sk-ant- 开头"
+
+msgid "err_ai_model"
+msgstr "该模型不可用"
+
+msgid "err_ai_no_key"
+msgstr "尚未设置 Claude API 密钥"
+
+msgid "err_invalid_color"
+msgstr "颜色无效（请使用 #1e90ff 格式）"
+
+msgid "err_language_code"
+msgstr "请填写语言代码（如 ro 或 pt-br）和名称"
+
+msgid "err_language_exists"
+msgstr "该语言已存在"
+
+msgid "err_language_not_found"
+msgstr "未找到该语言"
+
+msgid "err_language_english"
+msgstr "英语是源语言，不能关闭"
+
 msgid "err_cannot_delete_self"
 msgstr "不能删除自己"
 

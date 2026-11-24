@@ -258,7 +258,7 @@ def _build() -> tuple[list[dict], list[dict], dict[str, list[dict]]]:
     countries, calling, regions = [], [], {}
     for code, name, cc, items in COUNTRIES:
         countries.append({"code": code, "name": name})
-        calling.append({"cc": cc, "name": name})
+        calling.append({"cc": cc, "name": name, "code": code})
         out = []
         for item in items:
             value, label = item if isinstance(item, tuple) else (item, item)
@@ -273,23 +273,45 @@ def _build() -> tuple[list[dict], list[dict], dict[str, list[dict]]]:
 GEO_COUNTRIES, GEO_CALLING_CODES, GEO_REGIONS = _build()
 
 
+GEO_KEYS = ("countries", "calling_codes", "provinces_by_country", "region_kinds", "group_kinds", "region_groups")
+
+
 def merge_geography(data: dict) -> bool:
-    """Adds the countries and regions above to the settings, keeping anything an administrator added. True if changed."""
-    before = repr((data.get("countries"), data.get("calling_codes"), data.get("provinces_by_country")))
+    """Brings the countries and regions above into the settings. True if anything changed.
+
+    A country the administrator edited (listed in `geo_edited`) is kept exactly as they left it, and one they deleted
+    (`geo_removed`) does not come back; the others follow the lists above, plus any region an administrator added.
+    """
+    before = repr([data.get(k) for k in GEO_KEYS])
+    edited = set(data.get("geo_edited") or [])
+    removed = set(data.get("geo_removed") or [])
     known = {c["code"] for c in GEO_COUNTRIES}
-    data["countries"] = GEO_COUNTRIES + [c for c in data.get("countries") or [] if c.get("code") not in known]
+    old_countries = {c.get("code"): c for c in data.get("countries") or []}
+    data["countries"] = [old_countries.get(c["code"], c) if c["code"] in edited else c for c in GEO_COUNTRIES if c["code"] not in removed] \
+        + [c for c in data.get("countries") or [] if c.get("code") not in known]
+
+    old_ccs = data.get("calling_codes") or []
+    by_code = {c.get("code"): c for c in old_ccs if c.get("code")}
     ccs = {(c["cc"], c["name"]) for c in GEO_CALLING_CODES}
     old_names = {_key(c["name"]) for c in GEO_CALLING_CODES} | {"espana", "mexico", "canada", "japon", "peru", "panama"}
-    data["calling_codes"] = GEO_CALLING_CODES + [c for c in data.get("calling_codes") or []
-                                                 if (c.get("cc"), c.get("name")) not in ccs and _key(c.get("name") or "") not in old_names]
+    data["calling_codes"] = [by_code.get(c["code"], c) if c["code"] in edited else c for c in GEO_CALLING_CODES if c["code"] not in removed] \
+        + [c for c in old_ccs if (c.get("code") and c["code"] not in known)
+           or (not c.get("code") and (c.get("cc"), c.get("name")) not in ccs and _key(c.get("name") or "") not in old_names)]
+
     provinces = dict(data.get("provinces_by_country") or {})
     for code, regions in GEO_REGIONS.items():
-        values = {r["value"] for r in regions}
-        provinces[code] = regions + [r for r in provinces.get(code) or [] if r.get("value") not in values]
+        if code in removed:
+            provinces.pop(code, None)
+        elif code in edited and code in provinces:
+            continue
+        else:
+            values = {r["value"] for r in regions}
+            provinces[code] = regions + [r for r in provinces.get(code) or [] if r.get("value") not in values]
     data["provinces_by_country"] = provinces
-    changed = repr((data.get("countries"), data.get("calling_codes"), data.get("provinces_by_country"))) != before
-    for key, value in (("region_kinds", REGION_KINDS), ("group_kinds", GROUP_KINDS), ("region_groups", GEO_GROUPS)):
-        if data.get(key) != value:
-            data[key] = value
-            changed = True
-    return changed
+
+    for key, builtin in (("region_kinds", REGION_KINDS), ("group_kinds", GROUP_KINDS), ("region_groups", GEO_GROUPS)):
+        old = dict(data.get(key) or {})
+        merged = {k: v for k, v in builtin.items() if k not in removed and k not in edited}
+        merged.update({k: v for k, v in old.items() if k in edited or (k not in known)})
+        data[key] = merged
+    return repr([data.get(k) for k in GEO_KEYS]) != before

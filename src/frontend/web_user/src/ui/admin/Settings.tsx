@@ -3,42 +3,20 @@ import React, { useEffect, useMemo, useState } from "react";
 import { t } from "@lang";
 import { api } from "../../../../web_admin/api";
 import { toast } from "../../store";
-import { Icon, countryOptions } from "../common";
+import { Icon } from "../common";
+import { ClaudeSettings } from "./Claude";
+import { AgeRanges, Countries } from "./Geography";
+import { Languages } from "./Languages";
 import { SectionHead } from "./AdminPage";
 import { a } from "./i18n";
 import { Field, Fold, Switch } from "./kit";
 
 type Row = Record<string, any>;
 
-/** Editable rows (languages, age ranges, countries, calling codes): one line per item with its fields. */
-function Rows({ rows, fields, onChange, add }: {
-  rows: Row[]; fields: ([string, string] | [string, string, "number"])[]; onChange: (rows: Row[]) => void; add: Row;
-}) {
-  return (
-    <div className="adm-rows">
-      {rows.map((r, i) => (
-        <div key={i} className="adm-rowedit" style={{ gridTemplateColumns: `repeat(${fields.length}, minmax(0, 1fr)) auto` }}>
-          {fields.map(([k, label, type]) => (
-            <input key={k} className="inp" aria-label={label} placeholder={label} type={type || "text"} value={r[k] ?? ""}
-              onChange={(e) => {
-                const next = [...rows];
-                const v = e.target.value;
-                next[i] = { ...next[i], [k]: type === "number" ? (v === "" ? null : Number(v)) : v };
-                onChange(next);
-              }} />
-          ))}
-          <button className="iconbtn" aria-label={t("admin_delete")} onClick={() => onChange(rows.filter((_, j) => j !== i))}><Icon name="trash" size="sm" /></button>
-        </div>
-      ))}
-      <button className="btn sm" onClick={() => onChange([...rows, { ...add }])}><Icon name="plus" size="sm" />{a("add")}</button>
-    </div>
-  );
-}
-
 export function Settings() {
   const [saved, setSaved] = useState<Row | null>(null);
   const [s, setS] = useState<Row | null>(null);
-  const [provCountry, setProvCountry] = useState("ES");
+  const [aiReady, setAiReady] = useState(false);
   const [testTo, setTestTo] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -56,8 +34,7 @@ export function Settings() {
   });
   const smtp = s.smtp || {};
   const mail = s.email_notifications || {};
-  const provinces: { value: string; name: string }[] = s.provinces_by_country?.[provCountry] || [];
-  const provText = provinces.map((p) => (p.value && p.value !== p.name ? `${p.value} = ${p.name}` : p.name || p.value)).join("\n");
+  const patch = (p: Row) => setS((prev) => ({ ...(prev || {}), ...p }));
 
   async function save() {
     setBusy(true);
@@ -79,6 +56,10 @@ export function Settings() {
 
       <Fold icon="home" title={a("se_general")} summary={s.app_base_url || "—"}>
         <Field label={t("admin_base_url")}><input className="inp" placeholder={t("admin_base_url_placeholder")} value={s.app_base_url || ""} onChange={(e) => put("app_base_url", e.target.value)} /></Field>
+      </Fold>
+
+      <Fold icon="star" title={a("se_claude")} summary={a(aiReady ? "ai_on" : "ai_off")}>
+        <ClaudeSettings onChange={(r) => setAiReady(r.configured)} />
       </Fold>
 
       <Fold icon="bell" title={a("se_emails")} summary={(mail.enabled ?? true) ? a("bi_on") : a("bi_off")}>
@@ -126,43 +107,16 @@ export function Settings() {
         </div>
       </Fold>
 
-      <Fold icon="chat" title={a("se_languages")} summary={a("se_items", { n: (s.languages || []).length })}>
-        <Rows rows={s.languages || []} add={{ code: "", name: "" }} fields={[["code", t("admin_code")], ["name", t("admin_name")]]} onChange={(r) => put("languages", r)} />
+      <Fold icon="chat" title={a("se_languages")} summary={a("la_summary")}>
+        <Languages aiReady={aiReady} />
+      </Fold>
+
+      <Fold icon="place" title={a("se_countries")} summary={a("ge_summary", { n: (s.countries || []).length })}>
+        <Countries s={s} patch={patch} />
       </Fold>
 
       <Fold icon="calendar" title={a("se_ages")} summary={(s.age_ranges || []).map((r: Row) => r.label || r.key).join(" · ")}>
-        <Rows rows={s.age_ranges || []} add={{ key: "", label: "", min: 18, max: null }}
-          fields={[["key", t("admin_key")], ["label", t("admin_label")], ["min", t("admin_min"), "number"], ["max", t("admin_max"), "number"]]}
-          onChange={(r) => put("age_ranges", r)} />
-      </Fold>
-
-      <Fold icon="place" title={a("se_countries")} summary={a("se_items", { n: (s.countries || []).length })}>
-        <div className="adm-two">
-          <div>
-            <h4>{t("admin_countries_title")}</h4>
-            <Rows rows={s.countries || []} add={{ code: "", name: "" }} fields={[["code", t("admin_code")], ["name", t("admin_name")]]} onChange={(r) => put("countries", r)} />
-          </div>
-          <div>
-            <h4>{t("admin_calling_codes_title")}</h4>
-            <Rows rows={s.calling_codes || []} add={{ cc: "", name: "" }} fields={[["cc", t("admin_calling_code_placeholder")], ["name", t("admin_name")]]} onChange={(r) => put("calling_codes", r)} />
-          </div>
-        </div>
-      </Fold>
-
-      <Fold icon="compass" title={a("se_provinces")} summary={`${provCountry} · ${a("se_items", { n: provinces.length })}`}>
-        <Field label={t("ui_country")}>
-          <select className="inp" value={provCountry} onChange={(e) => setProvCountry(e.target.value)}>
-            {countryOptions(s.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
-          </select>
-        </Field>
-        <textarea className="inp mono" rows={10} value={provText} onChange={(e) => {
-          const lines = e.target.value.split("\n").map((l) => l.trim()).filter(Boolean);
-          const list = lines.map((l) => {
-            const [value, name] = l.includes(" = ") ? l.split(" = ", 2).map((x) => x.trim()) : [l, l];
-            return { value, name };
-          });
-          put("provinces_by_country", { ...(s.provinces_by_country || {}), [provCountry]: list });
-        }} />
+        <AgeRanges s={s} />
       </Fold>
 
       {dirty ? (

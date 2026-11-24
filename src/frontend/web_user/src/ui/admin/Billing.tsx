@@ -6,7 +6,7 @@ import { toast } from "../../store";
 import { Icon } from "../common";
 import { SectionHead } from "./AdminPage";
 import { a } from "./i18n";
-import { Field, Fold, Switch } from "./kit";
+import { Field, Fold, Steps, Switch } from "./kit";
 
 const validJson = (text: string) => {
   try {
@@ -113,6 +113,10 @@ export function Billing() {
       </Fold>
 
       <Fold icon="bell" title={t2("bill_fcm")} summary={info.fcm?.project_id ? t2("bill_fcm_project", { id: info.fcm.project_id }) : t2("bill_fcm_hint")}>
+        <Steps title={a("pu_how")} link={{ href: "https://console.firebase.google.com/", text: "console.firebase.google.com" }} steps={[
+          a("pu_step1"), a("pu_step2", { pkg: info.play?.package || "app.meetgo.android" }), a("pu_step3"), a("pu_step4"), a("pu_step5"),
+        ]} />
+        <p className="muted adm-note">{a("pu_web")}</p>
         <Field label={`${t2("bill_service_account")} · ${info.fcm?.configured ? t2("configured") : t2("not_configured")}`}>
           <textarea className="inp mono" rows={4} spellCheck={false} placeholder={t2("bill_sa_placeholder")} value={fcm} onChange={(e) => setFcm(e.target.value)} />
         </Field>

@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.core import ai
 from app.core.config import settings
 from app.core.db import SessionLocal, engine
 from app.core.i18n import select_lang, set_lang
@@ -58,6 +59,7 @@ async def startup():
     async with SessionLocal() as db:
         await seed(db)
         await ensure_vapid_keys(db)
+        await ai.refresh(db)
 
 
 @app.on_event("startup")

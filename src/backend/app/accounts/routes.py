@@ -12,6 +12,7 @@ from app.core.models import (
     UserInterest,
 )
 from app.core.schemas import EmailPrefsIn, InterestOut, MeOut, SetInterestsIn, UpdateProfileIn, UserOut
+from app.communities.service import interest_allows
 from app.core.app_settings import get_settings_row
 from app.conversations.service import (
     AGE_LABELS, can_join_channel, channel_for, get_membership, join, join_interest_channel, leave_interest_channel,
@@ -172,10 +173,16 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_db), me_user: Us
     return out
 
 
+def interest_out(i: Interest) -> InterestOut:
+    return InterestOut(id=i.id, slug=i.slug, name=i.name, category=i.category, icon=i.icon, color=i.color,
+                       age_ranges=list(i.age_ranges or []), active=i.active is not False)
+
+
 @router.get("/interests", response_model=list[InterestOut])
 async def list_interests(db: AsyncSession = Depends(get_db)):
+    """Every interest with its look and restrictions (the app offers the active ones open to your age range)."""
     res = await db.execute(select(Interest).order_by(Interest.name))
-    return [InterestOut(id=i.id, slug=i.slug, name=i.name) for i in res.scalars().all()]
+    return [interest_out(i) for i in res.scalars().all()]
 
 
 @router.get("/me/interests", response_model=list[str])
@@ -188,10 +195,11 @@ async def my_interests(db: AsyncSession = Depends(get_db), user: User = Depends(
 @router.post("/me/interests", response_model=dict)
 async def set_my_interests(payload: SetInterestsIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     """Choosing an interest joins its channel in your zone; dropping it leaves that channel."""
-    res = await db.execute(select(Interest).where(Interest.slug.in_(payload.interest_slugs or [])))
-    wanted = {i.id for i in res.scalars().all()}
-    current = set((await db.execute(select(UserInterest.interest_id).where(UserInterest.user_id == user.id))).scalars().all())
     age = user_age_key(user)
+    res = await db.execute(select(Interest).where(Interest.slug.in_(payload.interest_slugs or [])))
+    current = set((await db.execute(select(UserInterest.interest_id).where(UserInterest.user_id == user.id))).scalars().all())
+    # a restricted interest cannot be chosen now, but one chosen before is kept
+    wanted = {i.id for i in res.scalars().all() if interest_allows(i, age) or i.id in current}
     for interest_id in current - wanted:
         await db.execute(delete(UserInterest).where(UserInterest.user_id == user.id, UserInterest.interest_id == interest_id))
         await leave_interest_channel(db, user, interest_id, user.province, age)
@@ -207,7 +215,7 @@ async def explore_channels(db: AsyncSession = Depends(get_db), user: User = Depe
     """Every interest's channel (community) in your zone, with how many people are in it and whether you are.
     Away memberships (other zones) do not count; invitation-only communities show only to their members."""
     age = user_age_key(user)
-    interests = (await db.execute(select(Interest).order_by(Interest.name))).scalars().all()
+    interests = [i for i in (await db.execute(select(Interest).order_by(Interest.name))).scalars().all() if interest_allows(i, age)]
     res = await db.execute(
         select(Conversation.interest_id, Conversation.id, Conversation.access_mode, func.count(ConversationMember.user_id))
         .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
@@ -233,7 +241,7 @@ async def explore_channels(db: AsyncSession = Depends(get_db), user: User = Depe
 @router.post("/channels/{interest_id}/join", response_model=dict)
 async def join_channel(interest_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(require_write_access)):
     interest = await db.get(Interest, interest_id)
-    if not interest:
+    if not interest_allows(interest, user_age_key(user)):
         raise HTTPException(404, t("err_interest_not_found"))
     conv = await channel_for(db, user.province, user_age_key(user), interest_id)
     existing = await get_membership(db, conv.id, user.id)

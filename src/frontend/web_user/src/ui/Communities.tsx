@@ -6,7 +6,7 @@ import { coverGradient } from "../board";
 import { chatPath, communityPath, goBack, navigate } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, Post, UserSummary } from "../types";
-import { Avatar, Icon, Modal, hobbyIcon } from "./common";
+import { Avatar, Icon, Modal, communityCover, hobbyIcon, interestLook } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, usePostFeed } from "./Board";
 
@@ -17,7 +17,7 @@ const RANK: Record<string, number> = { owner: 3, admin: 2, moderator: 1, member:
 function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
   if (c.avatar_url) return <img className="cbadge" src={fileUrl(c.avatar_url)} alt="" style={{ width: size, height: size }} />;
   return (
-    <span className="cbadge" style={{ width: size, height: size, background: coverGradient("c" + c.id) }} aria-hidden="true">
+    <span className="cbadge" style={{ width: size, height: size, background: communityCover(c.slug, "c" + c.id) }} aria-hidden="true">
       <Icon name={hobbyIcon(c.slug, c.title)} className="cbadge-ic" />
     </span>
   );
@@ -66,7 +66,7 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
     <article className={"ccard" + (c.my_zone === false ? " otherzone" : "")} role="link" tabIndex={0}
       onClick={() => c.my_zone !== false && navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && c.my_zone !== false && navigate(communityPath(c.id))}>
       {/* the hobby's silhouette as a soft watermark, tinted with the community's colours */}
-      <span className="cwm" style={{ background: coverGradient("c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+      <span className="cwm" style={{ background: communityCover(c.slug, "c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
       <div className="cbody">
         <div className="ctop">
           <CommunityBadge c={c} />
@@ -102,8 +102,18 @@ const CATEGORIES: [string, RegExp][] = [
   ["ui_cat_motor", /coche|car\b|auto|moto/],
 ];
 
+/** The category keys, in the order the lists show them. */
+export const CATEGORY_KEYS = [...CATEGORIES.map(([k]) => k), "ui_cat_other"];
+
 export function communityCategory(c: Community): string {
-  const text = `${c.slug || ""} ${c.title || ""}`.toLowerCase();
+  const own = (c as Community & { category?: string | null }).category || interestLook(c.slug).category;
+  if (own && CATEGORY_KEYS.includes(own)) return own;
+  return guessCategory(c.slug, c.title);
+}
+
+/** The category that fits the name, whatever was chosen in the administration. */
+export function guessCategory(slug?: string | null, title?: string | null): string {
+  const text = `${slug || ""} ${title || ""}`.toLowerCase();
   return CATEGORIES.find(([, re]) => re.test(text))?.[0] || "ui_cat_other";
 }
 
@@ -350,7 +360,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
 
   return (
     <main className="screen community">
-      <div className="chero" style={{ background: coverGradient("c" + c.id, 120) }}>
+      <div className="chero" style={{ background: communityCover(c.slug, "c" + c.id, 120) }}>
         <HeroArt c={c} />
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
@@ -412,7 +422,7 @@ function CommunityBoard({ c, staff }: { c: Community; staff: boolean }) {
     <div className="swrap">
       {canPublish ? (
         <button className="composebar" onClick={() => navigate(`/publish?community=${c.id}`)}>
-          <span className="cbadge sm" style={{ background: coverGradient("c" + c.id) }}><Icon name="plus" size="sm" /></span>
+          <span className="cbadge sm" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name="plus" size="sm" /></span>
           <span className="grow">{t("ui_community_publish_prompt", { name: c.title })}</span>
           <span className="btn go sm">{t("ui_nav_publish")}</span>
         </button>

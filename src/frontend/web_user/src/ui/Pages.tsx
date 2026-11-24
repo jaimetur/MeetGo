@@ -452,7 +452,7 @@ export function AccountPage() {
         <div className="box stack">
           <div className="muted">{t("ui_interests_lead", { zone: me.province })}</div>
           <div className="chips" style={{ flexWrap: "wrap" }}>
-            {interests.map((i) => <button key={i.slug} className={"chip" + (mine.includes(i.slug) ? " on" : "")} aria-pressed={mine.includes(i.slug)} onClick={() => toggleInterest(i.slug)}>{i.name}</button>)}
+            {interests.filter((i) => mine.includes(i.slug) || (i.active !== false && (!i.age_ranges?.length || i.age_ranges.includes(me.age_range)))).map((i) => <button key={i.slug} className={"chip" + (mine.includes(i.slug) ? " on" : "")} aria-pressed={mine.includes(i.slug)} onClick={() => toggleInterest(i.slug)}>{i.name}</button>)}
           </div>
         </div>
       ) : null}

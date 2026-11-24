@@ -11,6 +11,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy import delete, func, or_, select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import ai, languages
 from app.core.config import settings
 from app.core.deps import get_db, require_admin
 from app.core.i18n import t
@@ -34,6 +35,7 @@ from app.messaging.service import delete_message
 from app.board.service import delete_post_data
 from app.accounts.common import me_out, normalize_phone, parse_dob
 from app.accounts.deletion import delete_account
+from app.communities.service import AGE_KEYS
 from app.realtime.service import online_ids
 
 try:
@@ -324,26 +326,59 @@ async def delete_user(user_id: int, db: AsyncSession = Depends(get_db), admin: U
 
 # ---------- channels (interests) ----------
 
+def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
+    """Look and restrictions: an empty category, icon or colour goes back to automatic."""
+    import re
+    for field in ("category", "icon"):
+        value = getattr(payload, field)
+        if value is not None:
+            setattr(it, field, value.strip()[:32] or None)
+    if payload.color is not None:
+        color = payload.color.strip()
+        if color and not re.fullmatch(r"#[0-9a-fA-F]{6}", color):
+            raise HTTPException(400, t("err_invalid_color"))
+        it.color = color or None
+    if payload.age_ranges is not None:
+        it.age_ranges = [a for a in AGE_KEYS if a in payload.age_ranges]
+    if payload.active is not None:
+        it.active = payload.active
+
+
+@router.get("/interests", response_model=list[dict])
+async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """Every interest with how many zones have its community and how many people are in them."""
+    from app.accounts.routes import interest_out
+    channels = dict((await db.execute(select(Conversation.interest_id, func.count()).where(
+        Conversation.kind == "channel", Conversation.interest_id.is_not(None)).group_by(Conversation.interest_id))).all())
+    people = dict((await db.execute(select(UserInterest.interest_id, func.count()).group_by(UserInterest.interest_id))).all())
+    interests = (await db.execute(select(Interest).order_by(Interest.name))).scalars().all()
+    return [{**interest_out(i).model_dump(), "zones": int(channels.get(i.id, 0)), "people": int(people.get(i.id, 0))} for i in interests]
+
+
 @router.post("/interests", response_model=InterestOut)
 async def create_interest(payload: AdminInterestIn, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    from app.accounts.routes import interest_out
     if (await db.execute(select(Interest.id).where(Interest.slug == payload.slug))).first():
         raise HTTPException(409, t("err_interest_exists"))
-    it = Interest(slug=payload.slug, name=payload.name)
+    it = Interest(slug=payload.slug, name=payload.name, age_ranges=[], active=True)
+    _apply_interest(it, payload)
     db.add(it)
     await db.commit()
     await db.refresh(it)
-    return InterestOut(id=it.id, slug=it.slug, name=it.name)
+    return interest_out(it)
 
 
 @router.patch("/interests/{interest_id}", response_model=InterestOut)
 async def update_interest(interest_id: int, payload: AdminInterestIn, db: AsyncSession = Depends(get_db),
                           admin: User = Depends(require_admin)):
+    from app.accounts.routes import interest_out
     it = await db.get(Interest, interest_id)
     if not it:
         raise HTTPException(404, t("err_interest_not_found"))
     it.slug, it.name = payload.slug, payload.name
+    _apply_interest(it, payload)
     await db.commit()
-    return InterestOut(id=it.id, slug=it.slug, name=it.name)
+    return interest_out(it)
 
 
 @router.delete("/interests/{interest_id}", response_model=dict)
@@ -358,6 +393,95 @@ async def delete_interest(interest_id: int, db: AsyncSession = Depends(get_db), 
     return {"ok": True}
 
 
+# ---------- languages ----------
+
+async def _languages_out(db: AsyncSession) -> list[dict]:
+    cfg = await languages.settings_of(db)
+    out = []
+    for code in languages.builtin_codes():
+        done, total = languages.counts(code)
+        out.append({"code": code, "name": languages.BUILTIN_NAMES.get(code, code), "builtin": True,
+                    "enabled": code not in cfg["disabled"], "translated": done, "total": total, "job": None})
+    for code, name in cfg["custom"].items():
+        done, total = languages.counts(code) if languages.custom_path(code).exists() else (0, len(languages._load_lang("en")))
+        out.append({"code": code, "name": name, "builtin": False, "enabled": code not in cfg["disabled"],
+                    "translated": done, "total": total, "job": languages.jobs.get(code)})
+    return out
+
+
+@router.get("/languages", response_model=list[dict])
+async def list_languages(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    return await _languages_out(db)
+
+
+@router.post("/languages", response_model=list[dict])
+async def add_language(payload: dict, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """{"code": "ro", "name": "Română"}: adds the language and translates MeetGo into it with Claude (in the background)."""
+    code = (payload.get("code") or "").strip().lower()
+    name = (payload.get("name") or "").strip()[:40]
+    cfg = await languages.settings_of(db)
+    if not languages.valid_code(code) or not name:
+        raise HTTPException(400, t("err_language_code"))
+    if code in languages.builtin_codes() or code in cfg["custom"]:
+        raise HTTPException(409, t("err_language_exists"))
+    await ai.refresh(db)
+    if not ai.api_key():
+        raise HTTPException(400, t("err_ai_no_key"))
+    cfg["custom"][code] = name
+    if code not in cfg["disabled"]:
+        cfg["disabled"].append(code)  # shown to people once it is translated and switched on
+    await languages.save_settings(db, cfg)
+    languages.jobs[code] = {"done": 0, "total": languages.counts("en")[1], "state": "running", "error": ""}
+    asyncio.create_task(languages.translate(code, name))
+    return await _languages_out(db)
+
+
+@router.post("/languages/{code}/translate", response_model=list[dict])
+async def complete_language(code: str, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """Translates what is missing of an added language (after an error, or new texts of MeetGo)."""
+    cfg = await languages.settings_of(db)
+    if code not in cfg["custom"]:
+        raise HTTPException(404, t("err_language_not_found"))
+    if (languages.jobs.get(code) or {}).get("state") != "running":
+        await ai.refresh(db)
+        if not ai.api_key():
+            raise HTTPException(400, t("err_ai_no_key"))
+        languages.jobs[code] = {"done": languages.counts(code)[0], "total": languages.counts("en")[1], "state": "running", "error": ""}
+        asyncio.create_task(languages.translate(code, cfg["custom"][code]))
+    return await _languages_out(db)
+
+
+@router.patch("/languages/{code}", response_model=list[dict])
+async def edit_language(code: str, payload: dict, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """{"enabled": bool} shows or hides a language in the pickers; {"name": "…"} renames an added one."""
+    cfg = await languages.settings_of(db)
+    if code not in languages.builtin_codes() and code not in cfg["custom"]:
+        raise HTTPException(404, t("err_language_not_found"))
+    if "enabled" in payload:
+        if code == "en" and not payload["enabled"]:
+            raise HTTPException(400, t("err_language_english"))
+        cfg["disabled"] = [c for c in cfg["disabled"] if c != code] + ([] if payload["enabled"] else [code])
+    if payload.get("name") and code in cfg["custom"]:
+        cfg["custom"][code] = str(payload["name"]).strip()[:40]
+    await languages.save_settings(db, cfg)
+    return await _languages_out(db)
+
+
+@router.delete("/languages/{code}", response_model=list[dict])
+async def delete_language(code: str, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    cfg = await languages.settings_of(db)
+    if code not in cfg["custom"]:
+        raise HTTPException(404, t("err_language_not_found"))
+    cfg["custom"].pop(code)
+    cfg["disabled"] = [c for c in cfg["disabled"] if c != code]
+    await languages.save_settings(db, cfg)
+    languages.custom_path(code).unlink(missing_ok=True)
+    languages.jobs.pop(code, None)
+    from app.core.i18n import reload
+    reload(code)
+    return await _languages_out(db)
+
+
 # ---------- community bots ----------
 
 @router.get("/bots", response_model=list[dict])
@@ -367,9 +491,48 @@ async def list_bots(db: AsyncSession = Depends(get_db), admin: User = Depends(re
 
 
 @router.get("/automod", response_model=dict)
-async def automod_status(admin: User = Depends(require_admin)):
-    """Whether the moderation bot checks the communities' rules (it needs ANTHROPIC_API_KEY)."""
-    return {"enabled": bool(settings.ANTHROPIC_API_KEY), "model": settings.MODERATION_MODEL}
+async def automod_status(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """Whether the moderation bot checks the communities' rules (it needs a Claude API key)."""
+    await ai.refresh(db)
+    return {"enabled": bool(ai.api_key()), "model": ai.model()}
+
+
+# ---------- Claude (moderation bot, translations) ----------
+
+def _ai_out() -> dict:
+    return {"configured": bool(ai.api_key()), "source": ai.source(), "hint": ai.hint(), "model": ai.model(), "models": list(ai.MODELS)}
+
+
+@router.get("/ai", response_model=dict)
+async def ai_status(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    await ai.refresh(db)
+    return _ai_out()
+
+
+@router.put("/ai", response_model=dict)
+async def ai_save(payload: dict, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """{"api_key": "sk-ant-…"} to store a key, {"clear": true} to forget it, {"model": "…"} to pick the model."""
+    key = (payload.get("api_key") or "").strip()
+    model_name = payload.get("model") or None
+    if key and not key.startswith("sk-ant-"):
+        raise HTTPException(400, t("err_ai_key_format"))
+    if model_name and model_name not in ai.MODELS:
+        raise HTTPException(400, t("err_ai_model"))
+    await ai.save(db, key or None, model_name, clear=bool(payload.get("clear")))
+    return _ai_out()
+
+
+@router.post("/ai/test", response_model=dict)
+async def ai_test(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """One tiny request with the key in use: {"ok": true} or {"ok": false, "error": "…"}."""
+    await ai.refresh(db)
+    if not ai.api_key():
+        return {"ok": False, "error": t("err_ai_no_key")}
+    try:
+        await ai.client().messages.create(model=ai.model(), max_tokens=16, messages=[{"role": "user", "content": "Reply with OK."}])
+    except Exception as e:  # the message of the API (invalid key, no credit…) is what the administrator needs
+        return {"ok": False, "error": getattr(e, "message", None) or str(e)}
+    return {"ok": True}
 
 
 @router.post("/bots/{user_id}/session", response_model=dict)

@@ -5,7 +5,7 @@ import { actAs, api } from "../../api";
 import { toast } from "../../store";
 import type { UserSummary } from "../../types";
 import { Avatar, Icon } from "../common";
-import { SectionHead } from "./AdminPage";
+import { SectionHead, goSection } from "./AdminPage";
 import { a } from "./i18n";
 import { Badge } from "./kit";
 
@@ -34,6 +34,7 @@ export function Bots() {
         <div className={"adm-state" + (automod.enabled ? " ok" : "")}>
           <span className="adm-state-ic"><Icon name="shield" /></span>
           <span className="grow"><b>{automod.enabled ? t("ui_admin_automod_on") : t("ui_admin_automod_off")}</b>{automod.enabled ? <small>{automod.model}</small> : null}</span>
+          {automod.enabled ? null : <button className="btn sm" onClick={() => goSection("settings")}>{a("bi_edit")}</button>}
           <span className="adm-state-dot" aria-hidden="true">{automod.enabled ? "✓" : "!"}</span>
         </div>
       ) : null}

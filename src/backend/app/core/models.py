@@ -122,6 +122,13 @@ class Interest(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     slug: Mapped[str] = mapped_column(String(64), unique=True, index=True)
     name: Mapped[str] = mapped_column(String(128))
+    # Set in the administration; empty means automatic (guessed from the name in the app).
+    category: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    icon: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    color: Mapped[str | None] = mapped_column(String(16), nullable=True)
+    # Restrictions: the age ranges it exists for (empty = all) and whether it is open at all.
+    age_ranges: Mapped[list] = mapped_column(JSONB, default=list)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
 class UserInterest(Base):

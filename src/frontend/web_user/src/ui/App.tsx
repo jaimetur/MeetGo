@@ -9,7 +9,7 @@ import { getState, loadBlocks, loadConversations, loadMyCommunities, loadMyPlans
 import { AuthScreen } from "./Auth";
 import { ChatView } from "./Chat";
 import { HomePage, PostPage, PublishPage } from "./Board";
-import { AboutModal, Icon, InstallHint, Splash, Wordmark } from "./common";
+import { AboutModal, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
 import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
@@ -142,6 +142,8 @@ export async function startSession() {
   const me = await api.me();
   setState({ me });
   native.setSession(API_BASE, getToken());
+  // the look given to each interest in the administration (icons, colours, categories)
+  await api.interests().then(setInterestLooks).catch(() => undefined);
   await loadConversations();
   refreshBilling();
   refreshRequests();

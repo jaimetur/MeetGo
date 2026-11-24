@@ -108,12 +108,25 @@ async def get_community(db: AsyncSession, community_id: int, user: User) -> tupl
     return conv, member
 
 
+def interest_allows(interest: Interest | None, age: str | None) -> bool:
+    """An interest's restrictions: it is active and, when it lists age ranges, `age` is one of them."""
+    return bool(interest and interest.active is not False and (not interest.age_ranges or age in interest.age_ranges))
+
+
+def interest_visible():
+    """SQL: the channel has no interest, or its interest is active and open to the channel's age range."""
+    return or_(Conversation.interest_id.is_(None), and_(
+        Interest.active.is_not(False),
+        or_(func.jsonb_array_length(Interest.age_ranges) == 0,
+            Interest.age_ranges.op("@>")(func.jsonb_build_array(Conversation.age_range)))))
+
+
 async def ensure_interest_channels(db: AsyncSession, user: User, zone: tuple[str, str] | None = None) -> None:
     """Every interest has its community in each zone: create the missing ones of my zone (or of `zone`)."""
-    ids = (await db.execute(select(Interest.id))).scalars().all()
+    province, age = zone or (user.province, user_age_key(user))
+    ids = [i.id for i in (await db.execute(select(Interest))).scalars().all() if interest_allows(i, age)]
     if not ids:
         return
-    province, age = zone or (user.province, user_age_key(user))
     rows = [dict(kind="channel", province=province, age_range=age, interest_id=i, created_at=utcnow(),
                  slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, policy_json={}, access_mode="open", board_mode="open")
             for i in ids]
@@ -181,6 +194,10 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "invite_code": c.invite_code if detail and admin_of(member, user) else None,
             "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
+            # set in the administration (None: the app picks them from the name)
+            "category": interest.category if interest else None,
+            "icon": interest.icon if interest else None,
+            "color": interest.color if interest else None,
         })
     return out
 
@@ -221,7 +238,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
         provinces, age = zone
         query = select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(
             Conversation.kind == "channel", Conversation.province.in_(provinces), Conversation.age_range == age,
-            Conversation.access_mode != "invite")
+            Conversation.access_mode != "invite", interest_visible())
         if len(provinces) == 1:
             await ensure_interest_channels(db, user, (provinces[0], age))
         else:
@@ -247,7 +264,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
     if mine:
         query = query.where(Conversation.id.in_(my_ids))
     else:
-        query = query.where(or_(Conversation.access_mode != "invite", Conversation.id.in_(my_ids)))
+        query = query.where(or_(and_(Conversation.access_mode != "invite", interest_visible()), Conversation.id.in_(my_ids)))
     if q.strip():
         like = f"%{q.strip()}%"
         query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), Conversation.description.ilike(like)))

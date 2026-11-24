@@ -932,6 +932,30 @@ msgstr "このユーザーにはメールアドレスがありません"
 msgid "err_cannot_ban_self"
 msgstr "自分のアカウントはブロックできません"
 
+msgid "err_ai_key_format"
+msgstr "Claude の API キーは sk-ant- で始まります"
+
+msgid "err_ai_model"
+msgstr "このモデルは利用できません"
+
+msgid "err_ai_no_key"
+msgstr "Claude の API キーが設定されていません"
+
+msgid "err_invalid_color"
+msgstr "色が正しくありません（#1e90ff の形式で）"
+
+msgid "err_language_code"
+msgstr "言語のコード（ro や pt-br など）と名前を入力してください"
+
+msgid "err_language_exists"
+msgstr "その言語はすでにあります"
+
+msgid "err_language_not_found"
+msgstr "言語が見つかりません"
+
+msgid "err_language_english"
+msgstr "英語は元の言語なので無効にできません"
+
 msgid "err_cannot_delete_self"
 msgstr "自分自身は削除できません"
 

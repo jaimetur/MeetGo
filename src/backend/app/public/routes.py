@@ -17,6 +17,26 @@ from app.core.app_settings import app_base_url
 router = APIRouter(tags=["public"])
 
 
+@router.get("/i18n/languages", response_model=dict)
+async def public_languages(db: AsyncSession = Depends(get_db)):
+    """The languages people can pick: the ones switched off, and the added ones (name; their texts at /i18n/<code>)."""
+    from app.core import languages
+    cfg = await languages.settings_of(db)
+    added = [{"code": c, "name": n} for c, n in cfg["custom"].items() if c not in cfg["disabled"] and languages.custom_path(c).exists()]
+    return {"disabled": cfg["disabled"], "added": added}
+
+
+@router.get("/i18n/{code}", response_model=dict)
+async def language_texts(code: str, db: AsyncSession = Depends(get_db)):
+    """The texts of a language added from the administration."""
+    from app.core import languages
+    from app.core.i18n import _load_lang
+    cfg = await languages.settings_of(db)
+    if code not in cfg["custom"] or not languages.custom_path(code).exists():
+        raise HTTPException(404, "")
+    return JSONResponse(_load_lang(code), headers={"Cache-Control": "public, max-age=300"})
+
+
 @router.get("/healthz", response_model=dict)
 async def healthz():
     return {"status": "ok"}

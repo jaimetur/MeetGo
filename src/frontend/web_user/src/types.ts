@@ -117,7 +117,10 @@ export type Plans = {
   play: { enabled: boolean; product: string; store_url: string };
 };
 
-export type Interest = { id: number; slug: string; name: string };
+export type Interest = {
+  id: number; slug: string; name: string;
+  category?: string | null; icon?: string | null; color?: string | null; age_ranges?: string[]; active?: boolean;
+};
 
 // ---- communities, board and plans (docs/COMMUNITIES.md) ----
 export type AccessMode = "open" | "request" | "invite";

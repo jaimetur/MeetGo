@@ -931,6 +931,30 @@ msgstr "L’utilisateur n’a pas d’e-mail"
 msgid "err_cannot_ban_self"
 msgstr "Vous ne pouvez pas bloquer votre propre compte"
 
+msgid "err_ai_key_format"
+msgstr "Les clés de Claude commencent par sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Modèle non disponible"
+
+msgid "err_ai_no_key"
+msgstr "Aucune clé Claude n’est configurée"
+
+msgid "err_invalid_color"
+msgstr "Couleur non valide (format #1e90ff)"
+
+msgid "err_language_code"
+msgstr "Indiquez le code (comme ro ou pt-br) et le nom de la langue"
+
+msgid "err_language_exists"
+msgstr "Cette langue existe déjà"
+
+msgid "err_language_not_found"
+msgstr "Langue introuvable"
+
+msgid "err_language_english"
+msgstr "L’anglais ne peut pas être désactivé : c’est la langue source"
+
 msgid "err_cannot_delete_self"
 msgstr "Impossible de se supprimer soi-même"
 

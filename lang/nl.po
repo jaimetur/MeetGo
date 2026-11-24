@@ -932,6 +932,30 @@ msgstr "Gebruiker heeft geen e-mailadres"
 msgid "err_cannot_ban_self"
 msgstr "Je kunt je eigen account niet blokkeren"
 
+msgid "err_ai_key_format"
+msgstr "Claude-sleutels beginnen met sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Model niet beschikbaar"
+
+msgid "err_ai_no_key"
+msgstr "Er is geen Claude-sleutel ingesteld"
+
+msgid "err_invalid_color"
+msgstr "Ongeldige kleur (gebruik #1e90ff)"
+
+msgid "err_language_code"
+msgstr "Geef de code (zoals ro of pt-br) en de naam van de taal"
+
+msgid "err_language_exists"
+msgstr "Die taal bestaat al"
+
+msgid "err_language_not_found"
+msgstr "Taal niet gevonden"
+
+msgid "err_language_english"
+msgstr "Engels kan niet uit: het is de brontaal"
+
 msgid "err_cannot_delete_self"
 msgstr "Je kunt jezelf niet verwijderen"
 

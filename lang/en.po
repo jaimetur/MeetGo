@@ -932,6 +932,30 @@ msgstr "User has no email"
 msgid "err_cannot_ban_self"
 msgstr "You cannot block your own account"
 
+msgid "err_ai_key_format"
+msgstr "Claude API keys start with sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Model not available"
+
+msgid "err_ai_no_key"
+msgstr "No Claude API key is set"
+
+msgid "err_invalid_color"
+msgstr "Invalid colour (use the #1e90ff format)"
+
+msgid "err_language_code"
+msgstr "Give the language's code (like ro or pt-br) and name"
+
+msgid "err_language_exists"
+msgstr "That language already exists"
+
+msgid "err_language_not_found"
+msgstr "Language not found"
+
+msgid "err_language_english"
+msgstr "English cannot be switched off: it is the source language"
+
 msgid "err_cannot_delete_self"
 msgstr "Cannot delete self"
 

@@ -932,6 +932,30 @@ msgstr "L'usuari no té correu"
 msgid "err_cannot_ban_self"
 msgstr "No pots bloquejar el teu propi compte"
 
+msgid "err_ai_key_format"
+msgstr "La clau de Claude comença per sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Model no disponible"
+
+msgid "err_ai_no_key"
+msgstr "No hi ha cap clau de Claude configurada"
+
+msgid "err_invalid_color"
+msgstr "Color no vàlid (fes servir el format #1e90ff)"
+
+msgid "err_language_code"
+msgstr "Indica el codi (com ro o pt-br) i el nom de l’idioma"
+
+msgid "err_language_exists"
+msgstr "Aquest idioma ja existeix"
+
+msgid "err_language_not_found"
+msgstr "Idioma no trobat"
+
+msgid "err_language_english"
+msgstr "L’anglès no es pot desactivar: és l’idioma d’origen"
+
 msgid "err_cannot_delete_self"
 msgstr "No et pots eliminar a tu mateix"
 

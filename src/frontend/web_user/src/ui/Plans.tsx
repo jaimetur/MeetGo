@@ -6,7 +6,7 @@ import { coverGradient, dateTile, hourOf, onBoardEvent, relative, shortDay } fro
 import { chatPath, communityPath, navigate, postPath } from "../router";
 import { useStore } from "../store";
 import type { Post } from "../types";
-import { Icon, hobbyIcon } from "./common";
+import { Icon, communityCover, hobbyIcon } from "./common";
 import { EmptyState, KindTag, PhoneTop, placesText } from "./Board";
 
 type Tab = "upcoming" | "organizing" | "past";
@@ -143,7 +143,7 @@ export function RightColumn() {
         {communities === null ? <div className="mini skel"><span className="sk w60" /></div> : null}
         {[...(communities || [])].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" })).map((c) => (
           <button key={c.id} className="mini" onClick={() => navigate(communityPath(c.id))}>
-            <span className="minitile round" style={{ background: coverGradient("c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+            <span className="minitile round" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
             <span className="grow" style={{ minWidth: 0 }}>
               <b>{c.title}</b>
               <span className="muted">

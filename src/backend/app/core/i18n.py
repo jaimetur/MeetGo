@@ -75,6 +75,8 @@ def _load_lang(lang: str) -> dict[str, str]:
     # lang/ is at the repository root (src/backend/app/core/i18n.py) or next to the code in the image (/srv/lang).
     path = next((p / "lang" / f"{lang}.po" for p in Path(__file__).resolve().parents if (p / "lang" / f"{lang}.po").exists()),
                 Path("lang") / f"{lang}.po")
+    if not path.exists():  # a language added from the administration (translated by Claude)
+        path = extra_dir() / f"{lang}.po"
     if not path.exists():
         _dicts[lang] = {}
         return _dicts[lang]
@@ -83,11 +85,30 @@ def _load_lang(lang: str) -> dict[str, str]:
     return data
 
 
+def builtin_dir() -> Path:
+    return next((p / "lang" for p in Path(__file__).resolve().parents if (p / "lang" / "en.po").exists()), Path("lang"))
+
+
+def extra_dir() -> Path:
+    """Languages added from the administration: <DATA_DIR>/lang/<code>.po."""
+    from app.core.config import settings
+    return Path(settings.DATA_DIR) / "lang"
+
+
 @lru_cache(maxsize=1)
 def supported() -> frozenset[str]:
-    """Every lang/<code>.po is a language (English is the source)."""
-    base = next((p / "lang" for p in Path(__file__).resolve().parents if (p / "lang" / "en.po").exists()), Path("lang"))
-    return frozenset(f.stem for f in base.glob("*.po")) or frozenset({"en"})
+    """Every lang/<code>.po is a language (English is the source), and so is every language added later."""
+    codes = {f.stem for f in builtin_dir().glob("*.po")} | {f.stem for f in extra_dir().glob("*.po")}
+    return frozenset(codes) or frozenset({"en"})
+
+
+def reload(lang: str | None = None) -> None:
+    """Forget what was read (after a language is added, translated further or deleted)."""
+    if lang:
+        _dicts.pop(lang, None)
+    else:
+        _dicts.clear()
+    supported.cache_clear()
 
 
 def _valid(lang: str | None) -> str:

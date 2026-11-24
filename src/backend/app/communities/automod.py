@@ -3,7 +3,7 @@
 It reads what people write in a community (chat messages, board posts and comments) against the community's rules
 with Claude. When something breaks a rule it is removed and the author gets the next sanction of the ladder: a ban of
 6 hours, then 24 hours, then a ban for good. The bot says so in the community chat and tells the person. Only an
-admin of the community lifts a ban. Without ANTHROPIC_API_KEY the rules are not checked.
+admin of the community lifts a ban. Without a Claude API key (administration or ANTHROPIC_API_KEY) the rules are not checked.
 """
 
 import json
@@ -12,7 +12,7 @@ import logging
 import anthropic
 from sqlalchemy import select
 
-from app.core.config import settings
+from app.core import ai
 from app.core.db import SessionLocal
 from app.core.i18n import t, use_lang
 from app.core.models import BoardComment, BoardPost, Conversation, Message, User, utcnow
@@ -20,7 +20,6 @@ from app.communities.service import bot_ids, sanction
 from app.conversations.service import get_membership
 
 logger = logging.getLogger("meetgo.automod")
-_client: anthropic.AsyncAnthropic | None = None
 
 SYSTEM = (
     "You are the moderation bot of a community in MeetGo, a social app where people of the same area chat and meet up. "
@@ -46,21 +45,18 @@ RULE_REASONS = ("TOXICITY", "PHONE_NOT_ALLOWED", "LINKS_NOT_ALLOWED")
 
 
 def enabled() -> bool:
-    return bool(settings.ANTHROPIC_API_KEY)
+    return bool(ai.api_key())
 
 
 def _api() -> anthropic.AsyncAnthropic:
-    global _client
-    if _client is None:
-        _client = anthropic.AsyncAnthropic(api_key=settings.ANTHROPIC_API_KEY)
-    return _client
+    return ai.client()
 
 
 async def judge(rules: str, text: str) -> dict | None:
     """Claude's verdict {violation, rule, reason}, or None when it could not decide (nothing is done then)."""
     try:
         response = await _api().beta.messages.create(
-            model=settings.MODERATION_MODEL,
+            model=ai.model(),
             max_tokens=4096,
             betas=["server-side-fallback-2026-07-01"],
             fallbacks="default",
@@ -135,6 +131,7 @@ async def punish(db, conv: Conversation, user_id: int, rule: str) -> None:
 
 
 async def check_message(conv_id: int, msg_id: int) -> None:
+    await ai.refresh_if_stale()
     async with SessionLocal() as db:
         conv = await db.get(Conversation, conv_id)
         msg = await db.get(Message, msg_id)
@@ -160,6 +157,7 @@ async def check_message(conv_id: int, msg_id: int) -> None:
 
 
 async def check_post(post_id: int) -> None:
+    await ai.refresh_if_stale()
     async with SessionLocal() as db:
         post = await db.get(BoardPost, post_id)
         conv = await db.get(Conversation, post.conversation_id) if post else None
@@ -181,6 +179,7 @@ async def check_post(post_id: int) -> None:
 
 
 async def check_comment(comment_id: int) -> None:
+    await ai.refresh_if_stale()
     async with SessionLocal() as db:
         comment = await db.get(BoardComment, comment_id)
         post = await db.get(BoardPost, comment.post_id) if comment else None

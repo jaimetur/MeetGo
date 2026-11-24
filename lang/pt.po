@@ -931,6 +931,30 @@ msgstr "O utilizador não tem email"
 msgid "err_cannot_ban_self"
 msgstr "Não pode bloquear a sua própria conta"
 
+msgid "err_ai_key_format"
+msgstr "As chaves do Claude começam por sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Modelo não disponível"
+
+msgid "err_ai_no_key"
+msgstr "Nenhuma chave do Claude configurada"
+
+msgid "err_invalid_color"
+msgstr "Cor inválida (use o formato #1e90ff)"
+
+msgid "err_language_code"
+msgstr "Indique o código (como ro ou pt-br) e o nome do idioma"
+
+msgid "err_language_exists"
+msgstr "Esse idioma já existe"
+
+msgid "err_language_not_found"
+msgstr "Idioma não encontrado"
+
+msgid "err_language_english"
+msgstr "O inglês não pode ser desativado: é o idioma de origem"
+
 msgid "err_cannot_delete_self"
 msgstr "Não podes apagar-te a ti próprio"
 

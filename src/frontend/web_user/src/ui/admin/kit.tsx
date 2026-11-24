@@ -82,3 +82,14 @@ export function Empty({ icon, text }: { icon: string; text: string }) {
     </div>
   );
 }
+
+/** A short how-to: numbered steps, with an optional link to where they happen. */
+export function Steps({ title, steps, link }: { title: string; steps: React.ReactNode[]; link?: { href: string; text: string } }) {
+  return (
+    <div className="adm-steps">
+      <b>{title}</b>
+      <ol>{steps.map((s, i) => <li key={i}>{s}</li>)}</ol>
+      {link ? <a className="btn sm" href={link.href} target="_blank" rel="noreferrer"><Icon name="link" size="sm" />{link.text}</a> : null}
+    </div>
+  );
+}

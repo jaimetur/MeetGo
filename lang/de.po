@@ -932,6 +932,30 @@ msgstr "Nutzer hat keine E-Mail-Adresse"
 msgid "err_cannot_ban_self"
 msgstr "Du kannst dein eigenes Konto nicht sperren"
 
+msgid "err_ai_key_format"
+msgstr "Claude-API-Schlüssel beginnen mit sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Modell nicht verfügbar"
+
+msgid "err_ai_no_key"
+msgstr "Kein Claude-API-Schlüssel eingerichtet"
+
+msgid "err_invalid_color"
+msgstr "Ungültige Farbe (Format #1e90ff)"
+
+msgid "err_language_code"
+msgstr "Gib den Code (z. B. ro oder pt-br) und den Namen der Sprache an"
+
+msgid "err_language_exists"
+msgstr "Diese Sprache gibt es schon"
+
+msgid "err_language_not_found"
+msgstr "Sprache nicht gefunden"
+
+msgid "err_language_english"
+msgstr "Englisch kann nicht abgeschaltet werden: Es ist die Ausgangssprache"
+
 msgid "err_cannot_delete_self"
 msgstr "Du kannst dich nicht selbst löschen"
 

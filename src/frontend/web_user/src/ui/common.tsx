@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { t, getLang } from "@lang";
 import { fileUrl } from "../api";
+import { coverGradient } from "../board";
 import type { Conversation, UserSummary } from "../types";
 import { colorFor, initials } from "../util";
 
@@ -104,7 +105,7 @@ export function Avatar({ user, size = 38, online }: { user: UserSummary | null |
 export function ConvIcon({ conv, size = 40 }: { conv: Conversation; size?: number }) {
   if (conv.kind === "dm") return <Avatar user={conv.other_user} size={size} online={conv.other_user?.online} />;
   if (conv.kind === "channel") {
-    const color = colorFor(conv.slug || conv.id);
+    const color = interestLook(conv.slug).color || colorFor(conv.slug || conv.id);
     return (
       <div className="chan" style={{ width: size, height: size, color, background: `color-mix(in srgb, ${color} 15%, transparent)` }} aria-hidden="true">
         <Icon name={hobbyIcon(conv.slug, conv.title)} />
@@ -281,7 +282,30 @@ export function regionLabel(settings: any, country?: string | null): string {
   return kind === "province" ? t("ui_province") : t(`ui_region_${kind}`);
 }
 
+// The look an administrator gave each interest (icon, colour, category), by slug; empty fields stay automatic.
+type Look = { icon?: string | null; color?: string | null; category?: string | null };
+const LOOKS: Record<string, Look> = {};
+
+export function setInterestLooks(list: ({ slug: string } & Look)[]) {
+  for (const i of list) LOOKS[i.slug] = { icon: i.icon, color: i.color, category: i.category };
+}
+
+export function interestLook(slug?: string | null): Look {
+  return (slug && LOOKS[slug]) || {};
+}
+
+/** A community's colours: the one its interest was given, or the usual ones made from `seed`. */
+export function communityCover(slug: string | null | undefined, seed: string | number, angle = 135): string {
+  const color = interestLook(slug).color;
+  return color ? `linear-gradient(${angle}deg, ${color}, color-mix(in srgb, ${color} 55%, #0b1220))` : coverGradient(seed, angle);
+}
+
 export function hobbyIcon(slug?: string | null, title?: string | null): string {
+  return interestLook(slug).icon || guessIcon(slug, title);
+}
+
+/** The icon that fits the hobby's name, whatever was chosen in the administration. */
+export function guessIcon(slug?: string | null, title?: string | null): string {
   const text = `${slug || ""} ${title || ""}`.toLowerCase();
   return HOBBY_ICONS.find(([re]) => re.test(text))?.[1] || "users";
 }

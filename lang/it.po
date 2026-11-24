@@ -932,6 +932,30 @@ msgstr "L'utente non ha un'email"
 msgid "err_cannot_ban_self"
 msgstr "Non puoi bloccare il tuo account"
 
+msgid "err_ai_key_format"
+msgstr "Le chiavi di Claude iniziano con sk-ant-"
+
+msgid "err_ai_model"
+msgstr "Modello non disponibile"
+
+msgid "err_ai_no_key"
+msgstr "Nessuna chiave di Claude configurata"
+
+msgid "err_invalid_color"
+msgstr "Colore non valido (usa il formato #1e90ff)"
+
+msgid "err_language_code"
+msgstr "Indica il codice (come ro o pt-br) e il nome della lingua"
+
+msgid "err_language_exists"
+msgstr "Questa lingua esiste già"
+
+msgid "err_language_not_found"
+msgstr "Lingua non trovata"
+
+msgid "err_language_english"
+msgstr "L’inglese non si può disattivare: è la lingua di partenza"
+
 msgid "err_cannot_delete_self"
 msgstr "Non puoi eliminare te stesso"
 

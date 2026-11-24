@@ -181,6 +181,33 @@ export const api = {
   async deletePromoCode(code: string) {
     return await req(`/admin/promo-codes/${encodeURIComponent(code)}`, { method: "DELETE" });
   },
+  async ai(): Promise<AiStatus> {
+    return await req("/admin/ai");
+  },
+  async saveAi(payload: { api_key?: string; model?: string; clear?: boolean }): Promise<AiStatus> {
+    return await req("/admin/ai", { method: "PUT", body: JSON.stringify(payload) });
+  },
+  async testAi(): Promise<{ ok: boolean; error?: string }> {
+    return await req("/admin/ai/test", { method: "POST" });
+  },
+  async languages(): Promise<AdminLanguage[]> {
+    return await req("/admin/languages");
+  },
+  async addLanguage(code: string, name: string): Promise<AdminLanguage[]> {
+    return await req("/admin/languages", { method: "POST", body: JSON.stringify({ code, name }) });
+  },
+  async completeLanguage(code: string): Promise<AdminLanguage[]> {
+    return await req(`/admin/languages/${encodeURIComponent(code)}/translate`, { method: "POST" });
+  },
+  async editLanguage(code: string, payload: { enabled?: boolean; name?: string }): Promise<AdminLanguage[]> {
+    return await req(`/admin/languages/${encodeURIComponent(code)}`, { method: "PATCH", body: JSON.stringify(payload) });
+  },
+  async deleteLanguage(code: string): Promise<AdminLanguage[]> {
+    return await req(`/admin/languages/${encodeURIComponent(code)}`, { method: "DELETE" });
+  },
+  async adminInterests(): Promise<AdminInterest[]> {
+    return await req("/admin/interests");
+  },
   async stats(): Promise<AdminStats> {
     return await req("/admin/stats");
   },
@@ -314,4 +341,16 @@ export type AdminStats = {
 export type UserActivity = {
   messages: number; communities: number; groups: number; dms: number; friends: number; posts: number;
   reports_received: number; reports_made: number; online: boolean;
+};
+
+export type AiStatus = { configured: boolean; source: "panel" | "env" | ""; hint: string; model: string; models: string[] };
+
+export type AdminLanguage = {
+  code: string; name: string; builtin: boolean; enabled: boolean; translated: number; total: number;
+  job: { done: number; total: number; state: "running" | "done" | "error"; error: string } | null;
+};
+
+export type AdminInterest = {
+  id: number; slug: string; name: string; category: string | null; icon: string | null; color: string | null;
+  age_ranges: string[]; active: boolean; zones: number; people: number;
 };

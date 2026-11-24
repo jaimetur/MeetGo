@@ -1331,3 +1331,60 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   .adm-urow-side .muted { font-size: 11.5px; }
   .adm-savebar { bottom: calc(var(--mnavh, 70px) + 10px); }
 }
+
+/* administration: how-tos, languages, countries, communities' look */
+.adm-steps { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--blue) 8%, var(--panel2)); font-size: 13px; }
+.adm-steps ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; line-height: 1.45; }
+.adm-steps .btn { align-self: flex-start; }
+.adm-result { padding: 10px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--admred, #ef4444); background: rgba(239, 68, 68, 0.1); overflow-wrap: anywhere; }
+.adm-result.ok { color: #16a34a; background: rgba(34, 197, 94, 0.12); }
+.adm-langs { display: flex; flex-direction: column; gap: 6px; }
+.adm-lang { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: var(--panel2); }
+.adm-lang-code { width: 44px; height: 44px; flex: none; border-radius: 12px; display: grid; place-items: center; font-weight: 800; font-size: 13px; text-transform: uppercase; color: var(--blue); background: var(--panel); }
+.adm-lang-bar { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+.adm-lang-bar .track { flex: 1; height: 6px; border-radius: 999px; background: var(--panel); overflow: hidden; }
+.adm-lang-bar .track i { display: block; height: 100%; border-radius: 999px; background: #f59e0b; transition: width 0.4s; }
+.adm-lang-bar .track i.full { background: #22c55e; }
+.adm-lang-bar small { font-size: 11.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.adm-mini-switch { position: relative; flex: none; cursor: pointer; }
+.adm-mini-switch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.adm-mini-switch .sw { display: block; width: 46px; height: 28px; border-radius: 999px; background: var(--line2); position: relative; transition: background 0.2s; }
+.adm-mini-switch .sw::after { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); transition: transform 0.2s; }
+.adm-mini-switch input:checked + .sw { background: var(--grad-go); }
+.adm-mini-switch input:checked + .sw::after { transform: translateX(18px); }
+.adm-mini-switch input:disabled + .sw { opacity: 0.5; }
+.adm-countries { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; max-height: 460px; overflow-y: auto; padding: 2px; }
+.adm-country { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 12px; background: var(--panel2); text-align: left; color: var(--fg); min-width: 0; }
+.adm-country:hover { background: var(--raise); }
+.adm-flag { font-size: 26px; line-height: 1; flex: none; }
+.adm-regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px; max-height: 300px; overflow-y: auto; }
+.adm-region { display: flex; align-items: center; gap: 2px; padding: 4px 4px 4px 10px; border-radius: 10px; background: var(--panel); min-width: 0; min-height: 40px; }
+.adm-region .iconbtn { width: 30px; height: 30px; }
+.adm-ages { display: flex; gap: 4px; border-radius: 14px; overflow: hidden; }
+.adm-ages > div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 14px 6px; color: #fff; min-width: 0; text-align: center; }
+.adm-ages b { font-family: var(--display); font-size: 18px; }
+.adm-ages small { font-size: 11.5px; opacity: 0.9; }
+button.adm-tile { text-align: left; color: var(--fg); cursor: pointer; }
+button.adm-tile:hover { border-color: var(--line2); background: var(--raise); }
+.adm-tile.dim { opacity: 0.6; }
+.adm-tile-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+.adm-preview { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; color: #fff; }
+.adm-preview > span { width: 52px; height: 52px; flex: none; border-radius: 16px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.18); }
+.adm-preview > span .ic { width: 28px; height: 28px; }
+.adm-preview b { display: block; font-family: var(--display); font-size: 18px; }
+.adm-preview small { opacity: 0.85; font-size: 12.5px; }
+.adm-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 4px; }
+.adm-icons button { height: 42px; border-radius: 10px; display: grid; place-items: center; background: var(--panel2); color: var(--fg); border: 2px solid transparent; }
+.adm-icons button.auto { grid-column: span 2; display: flex; gap: 6px; justify-content: center; font-size: 12px; font-weight: 700; }
+.adm-icons button.on { border-color: var(--blue); background: color-mix(in srgb, var(--blue) 14%, var(--panel2)); color: var(--blue); }
+.adm-colors { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.adm-colors button { width: 32px; height: 32px; border-radius: 50%; border: 3px solid transparent; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25); }
+.adm-colors button.on { border-color: var(--fg); }
+.adm-colors button.auto { width: auto; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--panel2); color: var(--fg); box-shadow: none; }
+.adm-color-own { position: relative; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--panel2); cursor: pointer; overflow: hidden; }
+.adm-color-own input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.modal .adm-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.modal footer .grow { flex: 1; }
+/* a long dialog scrolls inside and keeps its buttons on screen (the % height did not resolve inside the grid) */
+.modal { max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
+.modal .mbody { min-height: 0; }

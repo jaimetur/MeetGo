@@ -141,6 +141,11 @@ class InterestOut(BaseModel):
     id: int
     slug: str
     name: str
+    category: str | None = None
+    icon: str | None = None
+    color: str | None = None
+    age_ranges: list[str] = Field(default_factory=list)
+    active: bool = True
 
 class SetInterestsIn(BaseModel):
     interest_slugs: list[str] = Field(default_factory=list)
@@ -232,6 +237,11 @@ class PostCreateIn(BaseModel):
 class AdminInterestIn(BaseModel):
     slug: str
     name: str
+    category: str | None = None
+    icon: str | None = None
+    color: str | None = None
+    age_ranges: list[str] | None = None
+    active: bool | None = None
 
 class AdminSmtpTestIn(BaseModel):
     to_email: str
