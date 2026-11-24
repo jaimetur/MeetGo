@@ -112,6 +112,7 @@ All notable changes to this project will be documented in this file.
 - Administration → Communities: each interest community has a category, an icon and a colour (or automatic), and restrictions: active or not, and the age ranges it exists for. The app uses that look everywhere, and a restricted community is not created, listed or joinable outside its ages.
 - Administration → Subscriptions → Firebase: step-by-step guide to get the service account JSON for Android push notifications.
 - Dialogs that are taller than the screen scroll inside and keep their buttons visible.
+- The bar shown while an administrator uses a bot account is one line again on phones (it wrapped word by word into a bubble): the bot's name and the way back.
 - Phones: the People tab has its colour (rose) again; selected, it no longer turned white on white.
 - Fixed translations whose text ends in quotes losing the last quote.
 - Fixed the empty band under the phone tab bar in Safari: the app fills the whole screen and only fits the visible area while the keyboard is open.
