@@ -165,6 +165,10 @@ DEFAULT_INTERESTS = [
     ("padel", "Padel"),
     ("fitness", "Fitness"),
     ("crossfit", "CrossFit"),
+    ("conciertos", "Conciertos"),
+    ("musica_80", "Música de los 80"),
+    ("musica_rock", "Música Rock"),
+    ("musica_flamenca", "Música Flamenca"),
 ]
 
 

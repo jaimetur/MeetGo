@@ -27,6 +27,7 @@ const PATHS: Record<string, string> = {
   trophy: "M7 4h10v5a5 5 0 0 1-10 0zM7 5.5H4a3 3 0 0 0 3 4M17 5.5h3a3 3 0 0 1-3 4M12 14v4M8 20.5h8M9.5 18h5",
   camera: "M3.5 7.5h4l2-3h5l2 3h4V19h-17zM12 10a3.5 3.5 0 1 0 0 7a3.5 3.5 0 1 0 0-7z",
   music: "M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0a3 3 0 1 1 6 0zM20 16a3 3 0 1 1-6 0a3 3 0 1 1 6 0z",
+  guitar: "M11.9 12.1l4.5-4.5M20.1 2.3a1 1 0 0 0-1.4 0l-1.1 1.1A2 2 0 0 0 17 4.8v1.4a2 2 0 0 1-.6 1.4A2 2 0 0 1 17.8 7h1.4a2 2 0 0 0 1.4-.6l1.1-1.1a1 1 0 0 0 0-1.4zM6 16l2 2M8.2 9.9C8.7 8.8 9.8 8 11 8c2.8 0 5 2.2 5 5 0 1.2-.8 2.3-1.9 2.8l-.9.4A2 2 0 0 0 12 18a4 4 0 0 1-4 4c-3.3 0-6-2.7-6-6a4 4 0 0 1 4-4 2 2 0 0 0 1.8-1.2zM11.5 15.5a1 1 0 1 0 0-2a1 1 0 0 0 0 2z",
   palette: "M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.9 1.4-2-.5-1.3.4-2.5 1.8-2.5H18a3 3 0 0 0 3-3A9 9 0 0 0 12 3zM7.5 11h.01M10 7h.01M14.5 7h.01M17 11h.01",
   paw: "M12 13c-3 0-5.5 3-5.5 5.5 0 1.5 1.5 2.5 3 2l2.5-.8 2.5.8c1.5.5 3-.5 3-2C17.5 16 15 13 12 13zM5 9.5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M15 9.5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M8.5 5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M11.5 5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0",
   gamepad: "M6 8h12a4 4 0 0 1 4 4v1.5a3.5 3.5 0 0 1-6.2 2.2L14.5 14h-5l-1.3 1.7A3.5 3.5 0 0 1 2 13.5V12a4 4 0 0 1 4-4zM7 10.5v3M5.5 12h3M15.5 11.5h.01M17.5 13h.01",
@@ -215,7 +216,7 @@ const HOBBY_ICONS: [RegExp, string][] = [
   [/tenis|tennis|padel|pádel/, "racket"], [/playa|beach|plage|spiaggia/, "umbrella"], [/cerveza|beer|bière|birra|bier/, "beer"],
   [/caf[eé]|coffee/, "coffee"], [/copa|cocktail|drink|vino|wine/, "cocktail"], [/viaj|travel|voyage|viagg|reis/, "plane"],
   [/network|negocio|business|emprend/, "network"], [/picnic|pícnic/, "basket"], [/acuat|acuát|nata|surf|swim|water|kayak|vela/, "waves"],
-  [/aire_libre|aire libre|outdoor|naturaleza|nature/, "trees"], [/foto|photo/, "camera"], [/m[uú]sic|concier|music/, "music"],
+  [/aire_libre|aire libre|outdoor|naturaleza|nature/, "trees"], [/foto|photo/, "camera"], [/concier|concert/, "ticket"], [/rock|flamenc|guitar/, "guitar"], [/m[uú]sic|music/, "music"],
   [/arte|art|pint|paint|dibuj/, "palette"], [/perro|mascot|dog|pet|gato/, "paw"], [/juego|game|videojue|gaming/, "gamepad"],
   [/cocina|comida|food|cook|gastro|tapas|cena/, "food"], [/deporte|sport/, "trophy"],
 ];
