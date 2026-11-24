@@ -491,16 +491,17 @@ export function AccountPage() {
               <ThemePicker value={theme} onChange={changeTheme} />
             </div>
             <ChatSizePicker />
-            <label className="fld">{t("ui_language")}
+            <label className="fld setfld">{t("ui_language")}
               <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value)}>
                 {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
               </select>
             </label>
           </div>
-          <div className="row" style={{ flexWrap: "wrap" }}>
-            {isNativeApp ? <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button> : null}
-            <button className="btn danger" onClick={signOut}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
-          </div>
+          {isNativeApp ? (
+            <div className="row" style={{ flexWrap: "wrap" }}>
+              <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button>
+            </div>
+          ) : null}
           <BlockedPeople />
           <DeleteAccount />
         </div>
@@ -716,7 +717,7 @@ function ChatSizePicker() {
   };
   const labels: Record<string, string> = { small: t("ui_chat_size_small"), normal: t("ui_chat_size_normal"), large: t("ui_chat_size_large") };
   return (
-    <div className="fld">{t("ui_chat_size")}
+    <div className="fld setfld">{t("ui_chat_size")}
       <div className="sizepick" role="radiogroup" aria-label={t("ui_chat_size")}>
         {CHAT_SIZES.map((k) => (
           <button key={k} id={`chat-size-${k}`} role="radio" aria-checked={size === k} className={"sz-" + k + (size === k ? " on" : "")} onClick={() => pick(k)}>

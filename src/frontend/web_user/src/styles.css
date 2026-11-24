@@ -1083,3 +1083,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 
 /* phones: the chats list has the same top bar as the other screens (its big title is for computers) */
 @media (max-width: 820px) { .list .lhead .titlerow { display: none; } }
+
+/* Settings: the field titles and the language list at the size of the rest of the page */
+.fld.setfld { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--fg); align-self: start; }
+.fld.setfld select.inp { font-size: 15px; padding: 11px 12px; min-height: 46px; max-width: 420px; }
