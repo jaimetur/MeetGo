@@ -3221,6 +3221,9 @@ msgstr "Groot"
 msgid "ui_chat_size_preview"
 msgstr "Hoi! Spreken we zaterdag af voor de wandeling?"
 
+msgid "ui_cshow_mine_short"
+msgstr "Mijn"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 

@@ -3221,6 +3221,9 @@ msgstr "Gran"
 msgid "ui_chat_size_preview"
 msgstr "Hola! Quedem aquest dissabte per a la ruta?"
 
+msgid "ui_cshow_mine_short"
+msgstr "Meves"
+
 msgid "ui_sec_communities"
 msgstr "Comunitats"
 

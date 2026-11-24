@@ -3221,6 +3221,9 @@ msgstr "大"
 msgid "ui_chat_size_preview"
 msgstr "こんにちは!土曜日にハイキングしませんか?"
 
+msgid "ui_cshow_mine_short"
+msgstr "参加中"
+
 msgid "ui_sec_communities"
 msgstr "コミュニティ"
 

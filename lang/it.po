@@ -3221,6 +3221,9 @@ msgstr "Grande"
 msgid "ui_chat_size_preview"
 msgstr "Ciao! Ci vediamo sabato per l'escursione?"
 
+msgid "ui_cshow_mine_short"
+msgstr "Mie"
+
 msgid "ui_sec_communities"
 msgstr "Comunità"
 

@@ -3221,6 +3221,9 @@ msgstr "大"
 msgid "ui_chat_size_preview"
 msgstr "你好!周六一起去徒步吗?"
 
+msgid "ui_cshow_mine_short"
+msgstr "我的"
+
 msgid "ui_sec_communities"
 msgstr "社区"
 

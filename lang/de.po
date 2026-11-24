@@ -4082,6 +4082,9 @@ msgstr "Groß"
 msgid "ui_chat_size_preview"
 msgstr "Hallo! Treffen wir uns am Samstag zur Wanderung?"
 
+msgid "ui_cshow_mine_short"
+msgstr "Meine"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 

@@ -1016,7 +1016,10 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 @media (max-width: 420px) { .ncmode small { display: none; } .ncmode button { padding: 9px 8px; gap: 8px; } }
 
 /* communities: all / mine / new */
-.segtabs.cfilter { margin: 0 0 16px; max-width: 520px; }
+.segtabs.cfilter { margin: 0 0 16px; max-width: 520px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.segtabs.cfilter button { min-width: 0; padding-inline: 6px; overflow: hidden; text-overflow: ellipsis; }
+.segtabs.cfilter .cfs { display: none; }
+@media (max-width: 520px) { .segtabs.cfilter .cfl { display: none; } .segtabs.cfilter .cfs { display: inline; } }
 .segtabs.cfilter .cfn { opacity: 0.75; font-weight: 700; margin-left: 2px; font-variant-numeric: tabular-nums; }
 
 /* right-click menu of a chat in the list */

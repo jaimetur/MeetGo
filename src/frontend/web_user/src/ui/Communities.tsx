@@ -207,9 +207,10 @@ export function CommunitiesPage() {
         ) : null}
         {list && list.length && !browse ? (
           <div className="segtabs cfilter" role="tablist" aria-label={t("ui_nav_communities")}>
-            {([["all", t("ui_cshow_all"), list.length], ["mine", t("ui_cshow_mine"), mineCount], ["new", t("ui_cshow_new"), notMine]] as [Show, string, number][]).map(([k, label, n]) => (
-              <button key={k} id={`communities-show-${k}`} role="tab" aria-selected={show === k} className={show === k ? "on" : ""} onClick={() => setShow(k)}>
-                {label} <span className="cfn">{n}</span>
+            {([["all", t("ui_cshow_all"), t("ui_cshow_all"), list.length], ["mine", t("ui_cshow_mine"), t("ui_cshow_mine_short"), mineCount],
+              ["new", t("ui_cshow_new"), t("ui_cshow_new"), notMine]] as [Show, string, string, number][]).map(([k, label, short, n]) => (
+              <button key={k} id={`communities-show-${k}`} role="tab" aria-selected={show === k} aria-label={`${label} ${n}`} className={show === k ? "on" : ""} onClick={() => setShow(k)}>
+                <span className="cfl">{label}</span><span className="cfs">{short}</span> <span className="cfn">{n}</span>
               </button>
             ))}
           </div>

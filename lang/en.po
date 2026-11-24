@@ -3222,6 +3222,9 @@ msgstr "Large"
 msgid "ui_chat_size_preview"
 msgstr "Hi! Shall we meet on Saturday for the hike?"
 
+msgid "ui_cshow_mine_short"
+msgstr "Mine"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 
