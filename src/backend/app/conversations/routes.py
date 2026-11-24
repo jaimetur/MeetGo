@@ -22,6 +22,8 @@ from app.conversations.service import (
 )
 from app.messaging.service import mark_read, recipients
 
+from app.social.blocks import require_not_blocked
+
 router = APIRouter(tags=["conversations"])
 
 
@@ -307,6 +309,7 @@ async def open_dm(payload: DMOpenIn, db: AsyncSession = Depends(get_db), user: U
     other = await db.get(User, payload.user_id)
     if not other or other.is_banned:
         raise HTTPException(404, t("err_user_not_found"))
+    await require_not_blocked(db, user.id, other.id)
     existing = await dm_between(db, user.id, other.id, create=False)
     if existing:
         member = await get_membership(db, existing.id, user.id)

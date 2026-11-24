@@ -3395,6 +3395,72 @@ msgstr "Foto ändern"
 msgid "ui_avatar_remove"
 msgstr "Foto entfernen"
 
+msgid "ui_cat_social"
+msgstr "Ausgehen und Leute kennenlernen"
+
+msgid "ui_cat_sports"
+msgstr "Sport"
+
+msgid "ui_cat_nature"
+msgstr "Natur und Reisen"
+
+msgid "ui_cat_culture"
+msgstr "Musik und Kultur"
+
+msgid "ui_cat_motor"
+msgstr "Motor"
+
+msgid "ui_cat_other"
+msgstr "Weitere"
+
+msgid "ui_blocked_message"
+msgstr "Ausgeblendete Nachricht einer Person, die du blockiert hast"
+
+msgid "ui_block"
+msgstr "Blockieren"
+
+msgid "ui_unblock"
+msgstr "Entsperren"
+
+msgid "ui_block_confirm"
+msgstr "{name} blockieren? Du siehst ihre Nachrichten nicht mehr, und keiner von euch kann dem anderen schreiben, folgen oder Anfragen senden."
+
+msgid "ui_blocked_toast"
+msgstr "{name} ist blockiert"
+
+msgid "ui_unblocked_toast"
+msgstr "{name} ist entsperrt"
+
+msgid "ui_blocked_title"
+msgstr "Blockierte Personen"
+
+msgid "ui_blocked_none"
+msgstr "Du hast niemanden blockiert."
+
+msgid "ui_delete_account"
+msgstr "Mein Konto löschen"
+
+msgid "ui_delete_account_hint"
+msgstr "Dein Konto, Profil, Foto, deine Freunde und Interessen werden endgültig gelöscht, und was du geschrieben hast, wird entfernt. Das lässt sich nicht rückgängig machen."
+
+msgid "ui_delete_account_password"
+msgstr "Dein Passwort zur Bestätigung"
+
+msgid "ui_delete_account_confirm"
+msgstr "Mein Konto endgültig löschen"
+
+msgid "ui_delete_account_done"
+msgstr "Dein Konto wurde gelöscht"
+
+msgid "err_blocked"
+msgstr "Das ist mit dieser Person nicht möglich."
+
+msgid "err_cannot_block_self"
+msgstr "Du kannst dich nicht selbst blockieren."
+
+msgid "err_wrong_password"
+msgstr "Das Passwort ist falsch."
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 

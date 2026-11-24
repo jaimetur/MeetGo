@@ -1,5 +1,6 @@
 """Test setup: a disposable PostgreSQL and Redis (see tests/README.md)."""
 
+import asyncio
 import os
 import tempfile
 
@@ -30,6 +31,11 @@ async def fresh_database():
     await redis_conn.get_redis().flushdb()
     await startup()
     yield
+    # Background work a test started (push notifications, the moderation bot) finishes before the next test drops
+    # the schema; an unfinished query would otherwise keep its lock and block it.
+    from app.messaging.service import _tasks
+    if _tasks:
+        await asyncio.gather(*list(_tasks), return_exceptions=True)
     await redis_conn.close_redis()
 
 

@@ -5,7 +5,7 @@ import { native, setNativeHandlers } from "../native";
 import { announceActiveConversation, registerServiceWorker, setupNativePush, subscribeExisting } from "../push";
 import { startRealtime, stopRealtime, setRealtimeHooks } from "../realtime";
 import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } from "../router";
-import { getState, loadConversations, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
+import { getState, loadBlocks, loadConversations, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen } from "./Auth";
 import { ChatView } from "./Chat";
 import { HomePage, PostPage, PublishPage } from "./Board";
@@ -173,6 +173,7 @@ function Shell() {
   }, []);
   useEffect(() => {
     loadMyCommunities();
+    loadBlocks();
   }, [roomCount]);
 
   const back = useCallback(() => {

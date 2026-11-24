@@ -4,8 +4,8 @@ import { api } from "../api";
 import { isNativeApp, native } from "../native";
 import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
 import { chatPath, communityPath, navigate, queryParam, useRoute } from "../router";
-import { loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
-import type { Interest, Message } from "../types";
+import { loadBlocks, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
+import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { THEMES, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
@@ -483,6 +483,8 @@ export function AccountPage() {
             {isNativeApp ? <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button> : null}
             <button className="btn danger" onClick={signOut}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
           </div>
+          <BlockedPeople />
+          <DeleteAccount />
         </div>
       ) : null}
     </PageShell>
@@ -607,6 +609,72 @@ function AvatarPicker() {
         e.target.value = "";
         if (f) run(() => api.uploadAvatar(f));
       }} />
+    </div>
+  );
+}
+
+/** People I blocked, to unblock them. */
+function BlockedPeople() {
+  const [list, setList] = useState<(UserSummary & { blocked_at: string })[] | null>(null);
+  const load = () => api.blocks().then(setList).catch(() => setList([]));
+  useEffect(() => {
+    load();
+  }, []);
+  return (
+    <div className="box stack">
+      <h3 className="boxtitle">{t("ui_blocked_title")}</h3>
+      {list && !list.length ? <div className="muted" style={{ fontSize: 13 }}>{t("ui_blocked_none")}</div> : null}
+      {(list || []).map((u) => (
+        <div key={u.id} className="row" style={{ gap: 10 }}>
+          <Avatar user={u} size={32} />
+          <span className="grow">{u.display_name}</span>
+          <button className="btn sm" onClick={async () => {
+            try {
+              await api.unblock(u.id);
+              toast(t("ui_unblocked_toast", { name: u.display_name }));
+              load();
+              loadBlocks();
+            } catch (e: any) {
+              toast(e.message, "error");
+            }
+          }}>{t("ui_unblock")}</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Deleting my account for good, with my password (Google Play asks every app with accounts to offer this). */
+function DeleteAccount() {
+  const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function confirm() {
+    setBusy(true);
+    try {
+      await api.deleteMe(password);
+      toast(t("ui_delete_account_done"));
+      signOut();
+    } catch (e: any) {
+      toast(e.message, "error");
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="box stack dangerbox">
+      <h3 className="boxtitle">{t("ui_delete_account")}</h3>
+      <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_delete_account_hint")}</p>
+      {!open ? <div><button className="btn danger" onClick={() => setOpen(true)}><Icon name="trash" size="sm" />{t("ui_delete_account")}</button></div> : (
+        <div className="stack" style={{ gap: 8 }}>
+          <label className="fld">{t("ui_delete_account_password")}
+            <input id="delete-password" className="inp" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </label>
+          <div className="row" style={{ gap: 8 }}>
+            <button className="btn danger" disabled={!password || busy} onClick={confirm}>{t("ui_delete_account_confirm")}</button>
+            <button className="btn" disabled={busy} onClick={() => { setOpen(false); setPassword(""); }}>{t("ui_cancel")}</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

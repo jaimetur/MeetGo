@@ -13,6 +13,8 @@ from app.realtime import service as realtime
 from app.conversations.service import user_summary
 from app.accounts.common import summary
 
+from app.social.blocks import require_not_blocked
+
 router = APIRouter(tags=["social"])
 
 
@@ -23,6 +25,7 @@ async def follow_user(user_id: int, db: AsyncSession = Depends(get_db), user: Us
     other = await db.get(User, user_id)
     if not other:
         raise HTTPException(404, t("err_user_not_found"))
+    await require_not_blocked(db, user.id, user_id)
     if not await db.get(Follow, (user.id, user_id)):
         db.add(Follow(follower_id=user.id, following_id=user_id))
         await db.commit()
@@ -60,6 +63,7 @@ async def create_friend_request(payload: FriendRequestCreateIn, db: AsyncSession
     other = await db.get(User, payload.to_user_id)
     if not other:
         raise HTTPException(404, t("err_user_not_found"))
+    await require_not_blocked(db, user.id, other.id)
     if await db.get(Friendship, (user.id, other.id)):
         raise HTTPException(409, t("err_already_friends"))
     res = await db.execute(select(FriendRequest).where(FriendRequest.from_user_id == user.id, FriendRequest.to_user_id == other.id,

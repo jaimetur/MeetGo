@@ -33,6 +33,7 @@ from app.core.app_settings import app_base_url
 from app.messaging.service import delete_message
 from app.board.service import delete_post_data
 from app.accounts.common import me_out, normalize_phone, parse_dob
+from app.accounts.deletion import delete_account
 
 try:
     import docker
@@ -196,24 +197,10 @@ async def _table_exists(db: AsyncSession, name: str) -> bool:
 async def delete_user(user_id: int, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     if admin.id == user_id:
         raise HTTPException(400, t("err_cannot_delete_self"))
-    # Tables from version 0.1 that are kept after the migration and have no cascading keys.
-    if await _table_exists(db, "dm_messages"):
-        await db.execute(text("""DELETE FROM dm_messages WHERE user_id = :u OR conversation_id IN
-                                 (SELECT id FROM dm_conversations WHERE user1_id = :u OR user2_id = :u)"""), {"u": user_id})
-        await db.execute(text("DELETE FROM dm_conversations WHERE user1_id = :u OR user2_id = :u"), {"u": user_id})
-    if await _table_exists(db, "room_messages"):
-        await db.execute(text("DELETE FROM room_messages WHERE user_id = :u"), {"u": user_id})
-        await db.execute(text("DELETE FROM room_discipline WHERE user_id = :u"), {"u": user_id})
-        await db.execute(text("UPDATE room_rules SET updated_by_user_id = NULL WHERE updated_by_user_id = :u"), {"u": user_id})
-    await db.execute(delete(DMRequest).where(or_(DMRequest.from_user_id == user_id, DMRequest.to_user_id == user_id)))
-    await db.execute(delete(FriendRequest).where(or_(FriendRequest.from_user_id == user_id, FriendRequest.to_user_id == user_id)))
-    await db.execute(delete(Friendship).where(or_(Friendship.user_id == user_id, Friendship.friend_id == user_id)))
-    await db.execute(delete(Follow).where(or_(Follow.follower_id == user_id, Follow.following_id == user_id)))
-    await db.execute(delete(Post).where(Post.user_id == user_id))
-    await db.execute(delete(UserInterest).where(UserInterest.user_id == user_id))
-    await db.execute(update(Conversation).where(Conversation.created_by_id == user_id).values(created_by_id=None))
-    await db.execute(delete(User).where(User.id == user_id))
-    await db.commit()
+    target = await db.get(User, user_id)
+    if not target:
+        raise HTTPException(404, t("err_user_not_found"))
+    await delete_account(db, target)
     return {"ok": True}
 
 

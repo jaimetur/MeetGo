@@ -214,7 +214,7 @@ const HOBBY_ICONS: [RegExp, string][] = [
   [/lect|libro|book|read|lectur|livre|lettur/, "book"], [/cine|film|movie|pel/, "film"], [/coche|car|auto/, "car"],
   [/moto/, "moto"], [/fitness|crossfit|gym|gimnas|muscul/, "dumbbell"], [/futbol|fútbol|football|soccer|calcio/, "ball"],
   [/tenis|tennis|padel|pádel/, "racket"], [/playa|beach|plage|spiaggia/, "umbrella"], [/cerveza|beer|bière|birra|bier/, "beer"],
-  [/caf[eé]|coffee/, "coffee"], [/copa|cocktail|drink|vino|wine/, "cocktail"], [/viaj|travel|voyage|viagg|reis/, "plane"],
+  [/caf[eé]|coffee/, "coffee"], [/copa|cocktail|drink|vino|wine|tomar/, "cocktail"], [/viaj|travel|voyage|viagg|reis/, "plane"],
   [/network|negocio|business|emprend/, "network"], [/picnic|pícnic/, "basket"], [/acuat|acuát|nata|surf|swim|water|kayak|vela/, "waves"],
   [/aire_libre|aire libre|outdoor|naturaleza|nature/, "trees"], [/foto|photo/, "camera"], [/concier|concert/, "ticket"], [/rock|flamenc|guitar/, "guitar"], [/m[uú]sic|music/, "music"],
   [/arte|art|pint|paint|dibuj/, "palette"], [/perro|mascot|dog|pet|gato/, "paw"], [/juego|game|videojue|gaming/, "gamepad"],

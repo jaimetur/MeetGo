@@ -25,6 +25,8 @@ export type State = {
   // Board: my upcoming plans and my communities (right column, Chats filters, Publish). null until loaded.
   myPlans: Post[] | null;
   myCommunities: Community[] | null;
+  // people I blocked: their messages are hidden from me
+  blocked: number[];
 };
 
 const initial: State = {
@@ -44,6 +46,7 @@ const initial: State = {
   subscriptions: false,
   myPlans: null,
   myCommunities: null,
+  blocked: [],
 };
 
 let state: State = initial;
@@ -288,4 +291,13 @@ export function refreshMyPlansSoon() {
     planTimer = null;
     loadMyPlans();
   }, 600);
+}
+
+export async function loadBlocks() {
+  try {
+    const list = await api.blocks();
+    setState({ blocked: list.map((u) => u.id) });
+  } catch {
+    /* not critical */
+  }
 }

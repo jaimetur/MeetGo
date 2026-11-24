@@ -138,6 +138,14 @@ class DMRequest(Base):
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
 
+class UserBlock(Base):
+    """Someone I blocked: no direct messages, requests or follows between us, and I do not see what they write."""
+    __tablename__ = "user_blocks"
+    blocker_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    blocked_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
 class Follow(Base):
     __tablename__ = "follows"
     follower_id: Mapped[int] = mapped_column(ForeignKey("users.id"), primary_key=True)

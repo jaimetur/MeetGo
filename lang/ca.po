@@ -3764,6 +3764,72 @@ msgstr "Canvia la foto"
 msgid "ui_avatar_remove"
 msgstr "Treu la foto"
 
+msgid "ui_cat_social"
+msgstr "Sortir i conèixer gent"
+
+msgid "ui_cat_sports"
+msgstr "Esports"
+
+msgid "ui_cat_nature"
+msgstr "Natura i viatges"
+
+msgid "ui_cat_culture"
+msgstr "Música i cultura"
+
+msgid "ui_cat_motor"
+msgstr "Motor"
+
+msgid "ui_cat_other"
+msgstr "Altres"
+
+msgid "ui_blocked_message"
+msgstr "Missatge amagat d'una persona que has bloquejat"
+
+msgid "ui_block"
+msgstr "Bloqueja"
+
+msgid "ui_unblock"
+msgstr "Desbloqueja"
+
+msgid "ui_block_confirm"
+msgstr "Vols bloquejar {name}? No veuràs els seus missatges i cap dels dos podrà escriure, seguir ni enviar sol·licituds a l'altre."
+
+msgid "ui_blocked_toast"
+msgstr "Has bloquejat {name}"
+
+msgid "ui_unblocked_toast"
+msgstr "Has desbloquejat {name}"
+
+msgid "ui_blocked_title"
+msgstr "Persones bloquejades"
+
+msgid "ui_blocked_none"
+msgstr "No has bloquejat ningú."
+
+msgid "ui_delete_account"
+msgstr "Elimina el meu compte"
+
+msgid "ui_delete_account_hint"
+msgstr "S'esborren per sempre el teu compte, perfil, foto, amics i interessos, i es retira el que vas escriure. No es pot desfer."
+
+msgid "ui_delete_account_password"
+msgstr "La teva contrasenya, per confirmar"
+
+msgid "ui_delete_account_confirm"
+msgstr "Elimina el meu compte per sempre"
+
+msgid "ui_delete_account_done"
+msgstr "El teu compte s'ha eliminat"
+
+msgid "err_blocked"
+msgstr "No pots fer això amb aquesta persona."
+
+msgid "err_cannot_block_self"
+msgstr "No et pots bloquejar a tu mateix."
+
+msgid "err_wrong_password"
+msgstr "La contrasenya no és correcta."
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

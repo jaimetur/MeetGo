@@ -190,6 +190,10 @@ export const api = {
     return req<Me>("/me/avatar", { method: "POST", body: form });
   },
   deleteAvatar: () => req<Me>("/me/avatar", { method: "DELETE" }),
+  deleteMe: (password: string) => req("/me", { method: "DELETE", json: { password } }),
+  blocks: () => req<(UserSummary & { blocked_at: string })[]>("/me/blocks"),
+  block: (userId: number) => req(`/users/${userId}/block`, { method: "POST" }),
+  unblock: (userId: number) => req(`/users/${userId}/block`, { method: "DELETE" }),
   ticket: () => req<{ ticket: string }>("/realtime/ticket", { method: "POST" }),
 
   // social

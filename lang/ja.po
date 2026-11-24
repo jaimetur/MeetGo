@@ -3764,6 +3764,72 @@ msgstr "写真を変更"
 msgid "ui_avatar_remove"
 msgstr "写真を削除"
 
+msgid "ui_cat_social"
+msgstr "お出かけ・出会い"
+
+msgid "ui_cat_sports"
+msgstr "スポーツ"
+
+msgid "ui_cat_nature"
+msgstr "自然・旅行"
+
+msgid "ui_cat_culture"
+msgstr "音楽・カルチャー"
+
+msgid "ui_cat_motor"
+msgstr "モーター"
+
+msgid "ui_cat_other"
+msgstr "その他"
+
+msgid "ui_blocked_message"
+msgstr "ブロックした人のメッセージは非表示です"
+
+msgid "ui_block"
+msgstr "ブロック"
+
+msgid "ui_unblock"
+msgstr "ブロック解除"
+
+msgid "ui_block_confirm"
+msgstr "{name} さんをブロックしますか？相手のメッセージは表示されず、お互いにメッセージ・フォロー・リクエストができなくなります。"
+
+msgid "ui_blocked_toast"
+msgstr "{name} さんをブロックしました"
+
+msgid "ui_unblocked_toast"
+msgstr "{name} さんのブロックを解除しました"
+
+msgid "ui_blocked_title"
+msgstr "ブロックした人"
+
+msgid "ui_blocked_none"
+msgstr "ブロックしている人はいません。"
+
+msgid "ui_delete_account"
+msgstr "アカウントを削除"
+
+msgid "ui_delete_account_hint"
+msgstr "アカウント、プロフィール、写真、友達、興味は完全に削除され、書き込んだ内容も取り除かれます。元に戻せません。"
+
+msgid "ui_delete_account_password"
+msgstr "確認のためパスワードを入力"
+
+msgid "ui_delete_account_confirm"
+msgstr "アカウントを完全に削除"
+
+msgid "ui_delete_account_done"
+msgstr "アカウントを削除しました"
+
+msgid "err_blocked"
+msgstr "この相手にはこの操作はできません。"
+
+msgid "err_cannot_block_self"
+msgstr "自分をブロックすることはできません。"
+
+msgid "err_wrong_password"
+msgstr "パスワードが正しくありません。"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

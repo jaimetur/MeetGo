@@ -1,4 +1,4 @@
-"""My photo: uploaded, cropped square and saved small (WebP), served at a fixed public address /avatars/<name>.
+"""My photo and deleting my account. My photo: uploaded, cropped square and saved small (WebP), served at a fixed public address /avatars/<name>.
 
 The address goes in users.avatar_url, so every list, message and card shows it without signed links that expire.
 """
@@ -13,10 +13,12 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.accounts.common import me_out
-from app.core.deps import get_db, require_write_access
+from app.accounts.deletion import delete_account
+from app.core.deps import get_current_user, get_db, require_write_access
+from app.core.security import verify_password
 from app.core.i18n import t
 from app.core.models import User
-from app.core.schemas import MeOut
+from app.core.schemas import DeleteMeIn, MeOut
 from app.messaging.storage import uploads_dir
 
 router = APIRouter(tags=["me"])
@@ -66,6 +68,15 @@ async def delete_avatar(db: AsyncSession = Depends(get_db), user: User = Depends
     await db.commit()
     await db.refresh(user)
     return me_out(user)
+
+
+@router.delete("/me", response_model=dict)
+async def delete_me(payload: DeleteMeIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """Deleting my own account (Settings → Delete my account), with my password."""
+    if not user.password_hash or not verify_password(payload.password, user.password_hash):
+        raise HTTPException(403, t("err_wrong_password"))
+    await delete_account(db, user)
+    return {"ok": True}
 
 
 @router.get("/avatars/{name}")

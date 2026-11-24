@@ -27,7 +27,7 @@ DOMAIN = "demo.meetgo.invalid"
 BIO = "Cuenta de demostración de MeetGo."
 PEOPLE = [("lucia", "Lucía Martín"), ("carlos", "Carlos Ruiz"), ("marta", "Marta Gil"),
           ("pablo", "Pablo Ortega"), ("elena", "Elena Navarro"), ("javier", "Javier Soto")]
-INTERESTS = ["senderismo", "cine", "cafe"]
+INTERESTS = ["senderismo", "cine", "tomar_algo"]
 CHATS = {
     "senderismo": [("lucia", "¡Buenas! ¿Alguien se anima a una ruta este finde?"),
                    ("carlos", "Yo me apunto si es por la mañana, que luego aprieta el calor 🥵"),
@@ -36,7 +36,7 @@ CHATS = {
     "cine": [("pablo", "¿Habéis visto el cartel del cine de verano? Este viernes ponen un clásico"),
              ("elena", "¡Sí! Yo voy seguro, ¿quedamos antes para cenar algo?"),
              ("javier", "Me apunto a la cena 🍕")],
-    "cafe": [("marta", "Buenos días ☕ ¿Algún sitio nuevo para desayunar por el centro?"),
+    "tomar_algo": [("marta", "Buenos días ☕ ¿Algún sitio nuevo para desayunar por el centro?"),
              ("elena", "La cafetería de la plaza tiene unas tostadas buenísimas"),
              ("carlos", "Confirmo, y el café está muy bien")],
 }
@@ -139,8 +139,8 @@ async def seed(email: str) -> dict:
                         body="Sesión en el auditorio al aire libre. Quedamos antes para cenar algo cerca.",
                         starts_at=_next(4, 21, 30), ends_at=_next(4, 23, 30), place="Auditorio municipal",
                         capacity=None, comments_mode="all", join_mode="open")
-        if "cafe" in convs:
-            coffee = await _post(db, convs["cafe"], p["marta"], [], kind="notice",
+        if "tomar_algo" in convs:
+            coffee = await _post(db, convs["tomar_algo"], p["marta"], [], kind="notice",
                                  title="¿Café el domingo por la mañana?",
                                  body="Me apetece conocer gente nueva de la zona. ¿Alguien se apunta a un café tranquilo?",
                                  comments_mode="all")

@@ -91,10 +91,56 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
   );
 }
 
+/** Categories of communities, from the interest's slug or the title (any language); the rest go to "Other". */
+const CATEGORIES: [string, RegExp][] = [
+  ["ui_cat_social", /tomar|caf[eé]|cerve|beer|copa|drink|picnic|network|gastro|comida|cena|food|tapas/],
+  ["ui_cat_sports", /deport|sport|futbol|fútbol|football|soccer|tenis|tennis|padel|pádel|fitness|crossfit|gym|cicl|bici|bike|mtb|run|correr|nata|swim|surf|yoga/],
+  ["ui_cat_nature", /sender|hik|trek|monta|mountain|playa|beach|viaj|travel|natur|camp/],
+  ["ui_cat_culture", /cine|film|movie|lect|libro|book|read|m[uú]sic|music|concier|concert|rock|flamenc|arte|art|foto|photo|teatro|theat/],
+  ["ui_cat_motor", /coche|car\b|auto|moto/],
+];
+
+export function communityCategory(c: Community): string {
+  const text = `${c.slug || ""} ${c.title || ""}`.toLowerCase();
+  return CATEGORIES.find(([, re]) => re.test(text))?.[0] || "ui_cat_other";
+}
+
+const byTitle = (a: Community, b: Community) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+
+/** The communities by category (in the order above, "Other" last), each in alphabetical order. */
+function byCategory(list: Community[]): [string, Community[]][] {
+  const order = [...CATEGORIES.map(([k]) => k), "ui_cat_other"];
+  const groups = new Map<string, Community[]>();
+  for (const c of list) {
+    const k = communityCategory(c);
+    groups.set(k, [...(groups.get(k) || []), c]);
+  }
+  return order.filter((k) => groups.has(k)).map((k) => [k, groups.get(k)!.sort(byTitle)]);
+}
+
+// Coming back to the list (Back from a community) shows it as it was: the same search, the list at once, and
+// the same scroll position, instead of starting again from the top.
+const listMemory: { q: string; list: Community[] | null; scroll: number } = { q: "", list: null, scroll: 0 };
+
 export function CommunitiesPage() {
   const me = useStore((s) => s.me);
-  const [q, setQ] = useState("");
-  const [list, setList] = useState<Community[] | null>(null);
+  const [q, setQ] = useState(listMemory.q);
+  const [list, setListState] = useState<Community[] | null>(listMemory.list);
+  const setList: React.Dispatch<React.SetStateAction<Community[] | null>> = (v) => setListState((prev) => {
+    const next = typeof v === "function" ? (v as (p: Community[] | null) => Community[] | null)(prev) : v;
+    listMemory.list = next;
+    return next;
+  });
+  const scroller = React.useRef<HTMLElement>(null);
+  const restored = React.useRef(false);
+  useEffect(() => {
+    listMemory.q = q;
+  }, [q]);
+  React.useLayoutEffect(() => {
+    if (restored.current || !list || !scroller.current) return;
+    restored.current = true;
+    scroller.current.scrollTop = listMemory.scroll;
+  }, [list]);
   const [error, setError] = useState<string | null>(null);
   const [create, setCreate] = useState(false);
 
@@ -111,11 +157,11 @@ export function CommunitiesPage() {
   }, [q, load]);
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
-  const mine = (list || []).filter((c) => c.joined);
-  const others = (list || []).filter((c) => !c.joined);
+  const mine = (list || []).filter((c) => c.joined).sort(byTitle);
+  const others = byCategory((list || []).filter((c) => !c.joined));
 
   return (
-    <main className="screen">
+    <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
       <PhoneTop title={t("ui_nav_communities")} />
       <div className="swrap">
         <header className="shead">
@@ -141,7 +187,13 @@ export function CommunitiesPage() {
         ) : (
           <>
             {mine.length ? <><div className="lsec">{t("ui_community_yours")}</div><div className="cgrid">{mine.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div></> : null}
-            {others.length ? <><div className="lsec">{t("ui_community_discover")}</div><div className="cgrid">{others.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div></> : null}
+            {others.length ? <h2 className="lsec csec-discover">{t("ui_community_discover")}</h2> : null}
+            {others.map(([cat, items]) => (
+              <section key={cat} className="ccat">
+                <div className="lsec ccat-title">{t(cat)} <span className="muted">· {items.length}</span></div>
+                <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
+              </section>
+            ))}
           </>
         )}
       </div>

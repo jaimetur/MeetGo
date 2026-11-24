@@ -3764,6 +3764,72 @@ msgstr "Cambia foto"
 msgid "ui_avatar_remove"
 msgstr "Rimuovi foto"
 
+msgid "ui_cat_social"
+msgstr "Uscire e conoscere gente"
+
+msgid "ui_cat_sports"
+msgstr "Sport"
+
+msgid "ui_cat_nature"
+msgstr "Natura e viaggi"
+
+msgid "ui_cat_culture"
+msgstr "Musica e cultura"
+
+msgid "ui_cat_motor"
+msgstr "Motori"
+
+msgid "ui_cat_other"
+msgstr "Altre"
+
+msgid "ui_blocked_message"
+msgstr "Messaggio nascosto di una persona che hai bloccato"
+
+msgid "ui_block"
+msgstr "Blocca"
+
+msgid "ui_unblock"
+msgstr "Sblocca"
+
+msgid "ui_block_confirm"
+msgstr "Bloccare {name}? Non vedrai i suoi messaggi e nessuno dei due potrà scrivere, seguire o inviare richieste all'altro."
+
+msgid "ui_blocked_toast"
+msgstr "Hai bloccato {name}"
+
+msgid "ui_unblocked_toast"
+msgstr "Hai sbloccato {name}"
+
+msgid "ui_blocked_title"
+msgstr "Persone bloccate"
+
+msgid "ui_blocked_none"
+msgstr "Non hai bloccato nessuno."
+
+msgid "ui_delete_account"
+msgstr "Elimina il mio account"
+
+msgid "ui_delete_account_hint"
+msgstr "Account, profilo, foto, amici e interessi vengono eliminati per sempre e ciò che hai scritto viene rimosso. Non si può annullare."
+
+msgid "ui_delete_account_password"
+msgstr "La tua password, per confermare"
+
+msgid "ui_delete_account_confirm"
+msgstr "Elimina il mio account per sempre"
+
+msgid "ui_delete_account_done"
+msgstr "Il tuo account è stato eliminato"
+
+msgid "err_blocked"
+msgstr "Non puoi farlo con questa persona."
+
+msgid "err_cannot_block_self"
+msgstr "Non puoi bloccare te stesso."
+
+msgid "err_wrong_password"
+msgstr "La password non è corretta."
+
 msgid "ui_community_tab_members"
 msgstr "Membri"
 

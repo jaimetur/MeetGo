@@ -20,7 +20,7 @@ from app.accounts import avatar, routes as me
 from app.messaging import routes as messages
 from app.public import routes as public
 from app.realtime import routes as realtime
-from app.social import routes as social
+from app.social import blocks, routes as social
 from app.push.service import ensure_vapid_keys
 from app.realtime.service import gateway
 from app.core.seed import seed
@@ -48,7 +48,7 @@ async def i18n_middleware(request: Request, call_next):
     return await call_next(request)
 
 
-for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, billing, admin, communities, board):
+for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, admin, communities, board):
     app.include_router(module.router)
 
 

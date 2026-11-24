@@ -16,7 +16,7 @@ async def test_fills_the_reviewer_zone_and_runs_again(client, db_session):
     assert again == out
 
     mine = (await client.get("/communities", params={"mine": 1}, headers=rev[0])).json()
-    assert {c["slug"] for c in mine} == {"senderismo", "cine", "cafe"}
+    assert {c["slug"] for c in mine} == {"senderismo", "cine", "tomar_algo"}
     assert all(c["member_count"] == 7 for c in mine)  # the reviewer and six demo people, bots not counted
     feed = (await client.get("/board/feed", headers=rev[0])).json()["posts"]
     assert {p["kind"] for p in feed} == {"meetup", "event", "thread", "notice"}

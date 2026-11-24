@@ -65,6 +65,12 @@ async def send_message(
     if len(body) > settings.MAX_MESSAGE_CHARS:
         raise HTTPException(413, t("err_message_too_long"))
     check_can_write(conv, member)
+    if conv.kind == "dm":  # a direct message with someone who blocked me, or whom I blocked
+        from app.social.blocks import require_not_blocked
+        other = (await db.execute(select(ConversationMember.user_id).where(
+            ConversationMember.conversation_id == conv.id, ConversationMember.user_id != user.id))).scalar_one_or_none()
+        if other:
+            await require_not_blocked(db, user.id, other)
 
     staff = is_staff(member, user)
     if conv.slow_mode_seconds and not staff:

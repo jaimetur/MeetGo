@@ -141,7 +141,7 @@ DEFAULT_SETTINGS = {
 }
 
 DEFAULT_INTERESTS = [
-    ("cafe", "Quedar para un cafe"),
+    ("tomar_algo", "Quedar para tomar algo"),
     ("senderismo", "Senderismo"),
     ("cine", "Cine"),
     ("deporte", "Deporte"),
@@ -154,8 +154,6 @@ DEFAULT_INTERESTS = [
     ("viajes", "Viajes"),
     ("lectura", "Lectura"),
     ("picnics", "Picnics"),
-    ("cerveza", "Quedar para una Cerveza"),
-    ("copas", "Quedar para unas Copas"),
     ("deportes", "Deportes (general)"),
     ("deportes_aire_libre", "Deportes al aire libre"),
     ("deportes_acuaticos", "Deportes acuaticos"),
@@ -182,8 +180,69 @@ async def seed(db: AsyncSession) -> None:
         if slug not in existing:
             db.add(Interest(slug=slug, name=name))
     await db.commit()
+    await merge_interests(db, MERGED_INTERESTS, "tomar_algo")
     await ensure_admin(db)
     await ensure_bots(db)
+
+
+# Interests that became one: a coffee, a beer and drinks are now "Quedar para tomar algo".
+MERGED_INTERESTS = ("cafe", "cerveza", "copas")
+
+
+async def merge_interests(db: AsyncSession, old_slugs: tuple[str, ...], new_slug: str) -> None:
+    """Moves everything of the old interests into the new one, zone by zone: the community (the first old one becomes
+    the new one; the others' members, messages, posts and join requests move into it and they go), and the people
+    who had chosen any of them. Nothing to do once the old interests are gone."""
+    old = dict((await db.execute(select(Interest.slug, Interest.id).where(Interest.slug.in_(old_slugs)))).all())
+    new_id = (await db.execute(select(Interest.id).where(Interest.slug == new_slug))).scalar_one_or_none()
+    if not old or not new_id:
+        return
+    old_ids = [old[s] for s in old_slugs if s in old]
+    zones = (await db.execute(text(
+        "SELECT DISTINCT province, age_range FROM conversations WHERE kind = 'channel' AND interest_id = ANY(:ids)"),
+        {"ids": old_ids})).all()
+    for province, age in zones:
+        rows = (await db.execute(text(
+            "SELECT id, interest_id FROM conversations WHERE kind = 'channel' AND province = :p AND age_range = :a "
+            "AND interest_id = ANY(:ids)"), {"p": province, "a": age, "ids": old_ids + [new_id]})).all()
+        by_interest = {i: c for c, i in rows}
+        target = by_interest.get(new_id) or next(by_interest[i] for i in old_ids if i in by_interest)
+        others = [c for c, _ in rows if c != target]
+        if others:
+            params = {"t": target, "o": others}
+            await db.execute(text("""
+                INSERT INTO conversation_members (conversation_id, user_id, role, joined_at, last_read_message_id, notify,
+                    muted_until, pinned, hidden, strikes, last_strike_at, silenced_until, banned, ban_until,
+                    email_notified_message_id, away)
+                SELECT DISTINCT ON (user_id) :t, user_id, role, joined_at, 0, notify, muted_until, pinned, hidden, strikes,
+                    last_strike_at, silenced_until, banned, ban_until, 0, away
+                FROM conversation_members WHERE conversation_id = ANY(:o) ORDER BY user_id, joined_at
+                ON CONFLICT DO NOTHING"""), params)
+            for table in ("messages", "board_posts", "community_requests"):
+                await db.execute(text(f"UPDATE {table} SET conversation_id = :t WHERE conversation_id = ANY(:o)"), params)
+            # who moved in has read everything up to now (no flood of "unread" or digest emails)
+            await db.execute(text("""
+                UPDATE conversation_members SET
+                    last_read_message_id = (SELECT coalesce(max(id), 0) FROM messages WHERE conversation_id = :t),
+                    email_notified_message_id = (SELECT coalesce(max(id), 0) FROM messages WHERE conversation_id = :t)
+                WHERE conversation_id = :t AND last_read_message_id = 0"""), {"t": target})
+            await db.execute(text("DELETE FROM conversations WHERE id = ANY(:o)"), {"o": others})
+        await db.execute(text("""
+            UPDATE conversations SET interest_id = :n, last_message_id = (SELECT max(id) FROM messages WHERE conversation_id = :t),
+                last_message_at = (SELECT max(created_at) FROM messages WHERE conversation_id = :t) WHERE id = :t"""),
+            {"n": new_id, "t": target})
+    await db.execute(text("""
+        INSERT INTO user_interests (user_id, interest_id, created_at)
+        SELECT DISTINCT ON (user_id) user_id, :n, created_at FROM user_interests WHERE interest_id = ANY(:ids)
+        ORDER BY user_id, created_at ON CONFLICT DO NOTHING"""), {"n": new_id, "ids": old_ids})
+    await db.execute(text("DELETE FROM user_interests WHERE interest_id = ANY(:ids)"), {"ids": old_ids})
+    # The rooms of version 0.1 (kept untouched, unused) still name the old interests: they keep their values,
+    # without the link that would stop the old interests from going.
+    if (await db.execute(text("SELECT to_regclass('rooms') IS NOT NULL"))).scalar():
+        await db.execute(text("ALTER TABLE rooms DROP CONSTRAINT IF EXISTS rooms_interest_id_fkey"))
+    await db.execute(text("DELETE FROM interests WHERE id = ANY(:ids)"), {"ids": old_ids})
+    await db.commit()
+    logger.info("Merged the interests %s into %s", ", ".join(old), new_slug)
 
 
 BOTS = {"admin": "bot-admin", "moderator": "bot-moderator"}

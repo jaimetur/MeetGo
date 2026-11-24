@@ -36,6 +36,22 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
   const [firstItemIndex, setFirstItemIndex] = useState(START_INDEX);
   const [lastReadAtOpen, setLastReadAtOpen] = useState<number | null>(null);
   const virtuoso = useRef<VirtuosoHandle>(null);
+  // The last message stays fully in view: after sending (the message box shrinks back, the keyboard may move) and
+  // whenever the visible area changes (keyboard opening or closing) while I was at the bottom.
+  const bottomRef = useRef(true);
+  const toBottom = useCallback(() => {
+    for (const ms of [0, 80, 250, 500]) window.setTimeout(() => virtuoso.current?.scrollToIndex({ index: "LAST", align: "end" }), ms);
+  }, []);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    const onResize = () => { if (bottomRef.current) toBottom(); };
+    vv?.addEventListener("resize", onResize);
+    window.addEventListener("resize", onResize);
+    return () => {
+      vv?.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [toBottom]);
   const firstIdRef = useRef<number | null>(null);
   const readTimer = useRef<number | null>(null);
 
@@ -187,7 +203,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
               computeItemKey={(_, m) => m.client_id || m.id}
               startReached={() => list.hasMoreBefore && loadMessages(conversationId, true).catch(() => undefined)}
               followOutput={(bottom) => (bottom ? "smooth" : false)}
-              atBottomStateChange={setAtBottom}
+              atBottomStateChange={(b) => { bottomRef.current = b; setAtBottom(b); }}
               atBottomThreshold={80}
               increaseViewportBy={{ top: 600, bottom: 300 }}
               components={{ Header: () => (list.hasMoreBefore ? <div className="empty" style={{ padding: 12 }}>{t("ui_loading")}</div> : <ConversationStart conv={conv} />) }}
@@ -224,7 +240,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
       ) : silencedUntil && silencedUntil > new Date() ? (
         <div className="readonly"><Icon name="shield" /><span>{t("ui_silenced_until", { time: timeOf(conv.silenced_until!) })}</span></div>
       ) : (
-        <Composer conv={conv} replyTo={replyTo} onCancelReply={() => setReplyTo(null)} onSent={() => virtuoso.current?.scrollToIndex({ index: "LAST" })} />
+        <Composer conv={conv} replyTo={replyTo} onCancelReply={() => setReplyTo(null)} onSent={toBottom} />
       )}
 
       {sheetFor ? <ActionSheet m={sheetFor} conv={conv} meId={me?.id} staff={staff} actions={actions} onClose={() => setSheetFor(null)} /> : null}
@@ -426,6 +442,7 @@ export function MessageItem(props: {
   const cont = !newDay && !props.showNewSep && prev && prev.kind !== "system" && m.kind !== "system" && prev.sender?.id === m.sender?.id
     && !m.reply_to && !prev.thread && new Date(m.created_at).getTime() - new Date(prev.created_at).getTime() < 5 * 60000;
   const mine = m.sender?.id === meId;
+  const blocked = useStore((s) => s.blocked);
   const mentioned = meId != null && m.mentions.includes(meId);
   const canEdit = mine && !m.deleted && Date.now() - new Date(m.created_at).getTime() < 48 * 3600000;
 
@@ -438,6 +455,9 @@ export function MessageItem(props: {
 
   if (m.kind === "system") {
     return <div>{separators}<div className="sysmsg"><span>{m.body}</span></div></div>;
+  }
+  if (!mine && m.sender && blocked.includes(m.sender.id)) {
+    return <div>{separators}<div className="sysmsg blockedmsg"><span>{t("ui_blocked_message")}</span></div></div>;
   }
 
   const onTouchStart = () => {

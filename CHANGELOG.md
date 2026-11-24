@@ -36,6 +36,12 @@ All notable changes to this project will be documented in this file.
 - Ten colour themes besides the system's: six light (Light, Sand, Mint, Lavender, Peach, Sky) and four dark (Night, OLED black, Forest, Plum), chosen with swatches in Settings.
 - Account tabs with an icon above a short name, so all of them fit on a phone; the avatar's My profile and Settings open their own tab, also from the account page.
 - Profile photo: choose one from the gallery or the camera (Profile → Change photo); it is cropped square, kept small and shown everywhere, and can be removed. It replaces the old photo address field.
+- Delete my account from the app (Settings → Delete my account, with the password) and a public page, /delete-account, with the steps and what is deleted (also for deleting only some data), as Google Play requires; administrators delete accounts the same way.
+- Block people: from their card in a chat; neither of you can then message, follow or send requests to the other, you get no notifications of them and their messages are hidden from you; Settings lists the people you blocked.
+- "Quedar para un café", "Quedar para una cerveza" and "Quedar para unas copas" are now one community, "Quedar para tomar algo": in each zone their members, messages, posts and requests move into it.
+- Communities grouped by category (going out, sports, nature and travel, music and culture, motor, other), alphabetical in each; back from a community, the list is where you left it.
+- In a chat, the message just sent (and the last one when the keyboard opens) stays fully in view.
+- The privacy policy is no longer marked as a draft and links to the account deletion page.
 - Board of meetups, events, notices and threads: places and waiting list, sign-up open or with approval, comments for everyone, only for people going or off, a plan chat that people going join automatically, pin and close, reports to the moderation queue, and a reminder the day before.
 - Full redesign of the web and phone app: Home board with filters (today, weekend, this week, meetups, events, notices), Plans (going, organising, past, with repeat), Publish, Chats and Profile; communities with board, chat and members; three columns on the desktop. Translated into the ten languages.
 - Ten languages, translated from English: English, Spanish, Catalan, French, Italian, German, Portuguese, Dutch, Chinese and Japanese. The app, the landing page and the emails follow each person's language, the browser's language picks it the first time, and every `lang/<code>.po` added is a new language.

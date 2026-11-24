@@ -3765,6 +3765,72 @@ msgstr "Change photo"
 msgid "ui_avatar_remove"
 msgstr "Remove photo"
 
+msgid "ui_cat_social"
+msgstr "Going out and meeting people"
+
+msgid "ui_cat_sports"
+msgstr "Sports"
+
+msgid "ui_cat_nature"
+msgstr "Nature and travel"
+
+msgid "ui_cat_culture"
+msgstr "Music and culture"
+
+msgid "ui_cat_motor"
+msgstr "Motor"
+
+msgid "ui_cat_other"
+msgstr "Other"
+
+msgid "ui_blocked_message"
+msgstr "Hidden message from someone you blocked"
+
+msgid "ui_block"
+msgstr "Block"
+
+msgid "ui_unblock"
+msgstr "Unblock"
+
+msgid "ui_block_confirm"
+msgstr "Block {name}? You will not see their messages, and neither of you can message, follow or send requests to the other."
+
+msgid "ui_blocked_toast"
+msgstr "{name} is blocked"
+
+msgid "ui_unblocked_toast"
+msgstr "{name} is unblocked"
+
+msgid "ui_blocked_title"
+msgstr "Blocked people"
+
+msgid "ui_blocked_none"
+msgstr "You have not blocked anyone."
+
+msgid "ui_delete_account"
+msgstr "Delete my account"
+
+msgid "ui_delete_account_hint"
+msgstr "Your account, profile, photo, friends and interests are deleted for good, and what you wrote is removed. This cannot be undone."
+
+msgid "ui_delete_account_password"
+msgstr "Your password, to confirm"
+
+msgid "ui_delete_account_confirm"
+msgstr "Delete my account for good"
+
+msgid "ui_delete_account_done"
+msgstr "Your account has been deleted"
+
+msgid "err_blocked"
+msgstr "You cannot do this with this person."
+
+msgid "err_cannot_block_self"
+msgstr "You cannot block yourself."
+
+msgid "err_wrong_password"
+msgstr "The password is not right."
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { t } from "@lang";
 import { api } from "../api";
 import { chatPath, navigate, queryParam } from "../router";
-import { getState, loadConversations, loadThread, refreshConversation, toast, useStore } from "../store";
+import { getState, loadBlocks, loadConversations, loadThread, refreshConversation, toast, useStore } from "../store";
 import type { Conversation, Member, Message } from "../types";
 import { ActionSheet, Composer, MessageItem, type MessageActions } from "./Chat";
 import { Avatar, Icon, convTitle } from "./common";
@@ -123,6 +123,7 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
   }, [userId]);
   if (!user) return null;
   const isMe = me?.id === userId;
+  const blocked = useStore((s) => s.blocked);
   const staff = ["owner", "admin", "moderator"].includes(conv.role) || me?.role === "admin";
   const canModerate = staff && !isMe && member && member.role !== "owner" && conv.kind !== "dm";
 
@@ -175,6 +176,11 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
           {following.includes(userId)
             ? <button className="btn sm" onClick={() => run(() => api.unfollow(userId)).then(() => setFollowing((f) => f.filter((x) => x !== userId)))}>{t("ui_unfollow")}</button>
             : <button className="btn sm" onClick={() => run(() => api.follow(userId)).then(() => setFollowing((f) => [...f, userId]))}>{t("ui_follow")}</button>}
+          {blocked.includes(userId)
+            ? <button className="btn sm" onClick={() => run(() => api.unblock(userId), t("ui_unblocked_toast", { name: user.display_name })).then(loadBlocks)}>{t("ui_unblock")}</button>
+            : <button className="btn sm danger" onClick={() => {
+              if (window.confirm(t("ui_block_confirm", { name: user.display_name }))) run(() => api.block(userId), t("ui_blocked_toast", { name: user.display_name })).then(loadBlocks);
+            }}><Icon name="lock" size="sm" />{t("ui_block")}</button>}
         </div>
       ) : null}
       {canModerate ? (

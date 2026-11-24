@@ -3764,6 +3764,72 @@ msgstr "更换照片"
 msgid "ui_avatar_remove"
 msgstr "移除照片"
 
+msgid "ui_cat_social"
+msgstr "外出与交友"
+
+msgid "ui_cat_sports"
+msgstr "运动"
+
+msgid "ui_cat_nature"
+msgstr "自然与旅行"
+
+msgid "ui_cat_culture"
+msgstr "音乐与文化"
+
+msgid "ui_cat_motor"
+msgstr "汽车摩托"
+
+msgid "ui_cat_other"
+msgstr "其他"
+
+msgid "ui_blocked_message"
+msgstr "来自你已屏蔽的人的消息已隐藏"
+
+msgid "ui_block"
+msgstr "屏蔽"
+
+msgid "ui_unblock"
+msgstr "取消屏蔽"
+
+msgid "ui_block_confirm"
+msgstr "屏蔽 {name}？你将看不到对方的消息，双方都无法给对方发消息、关注或发送请求。"
+
+msgid "ui_blocked_toast"
+msgstr "已屏蔽 {name}"
+
+msgid "ui_unblocked_toast"
+msgstr "已取消屏蔽 {name}"
+
+msgid "ui_blocked_title"
+msgstr "已屏蔽的人"
+
+msgid "ui_blocked_none"
+msgstr "你还没有屏蔽任何人。"
+
+msgid "ui_delete_account"
+msgstr "删除我的账号"
+
+msgid "ui_delete_account_hint"
+msgstr "你的账号、资料、照片、好友和兴趣将被永久删除，你发布的内容也会被移除。此操作无法撤销。"
+
+msgid "ui_delete_account_password"
+msgstr "输入密码以确认"
+
+msgid "ui_delete_account_confirm"
+msgstr "永久删除我的账号"
+
+msgid "ui_delete_account_done"
+msgstr "你的账号已删除"
+
+msgid "err_blocked"
+msgstr "你不能对此人执行此操作。"
+
+msgid "err_cannot_block_self"
+msgstr "你不能屏蔽自己。"
+
+msgid "err_wrong_password"
+msgstr "密码不正确。"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

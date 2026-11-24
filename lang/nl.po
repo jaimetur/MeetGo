@@ -3764,6 +3764,72 @@ msgstr "Foto wijzigen"
 msgid "ui_avatar_remove"
 msgstr "Foto verwijderen"
 
+msgid "ui_cat_social"
+msgstr "Uitgaan en mensen leren kennen"
+
+msgid "ui_cat_sports"
+msgstr "Sport"
+
+msgid "ui_cat_nature"
+msgstr "Natuur en reizen"
+
+msgid "ui_cat_culture"
+msgstr "Muziek en cultuur"
+
+msgid "ui_cat_motor"
+msgstr "Motor"
+
+msgid "ui_cat_other"
+msgstr "Overig"
+
+msgid "ui_blocked_message"
+msgstr "Verborgen bericht van iemand die je hebt geblokkeerd"
+
+msgid "ui_block"
+msgstr "Blokkeren"
+
+msgid "ui_unblock"
+msgstr "Deblokkeren"
+
+msgid "ui_block_confirm"
+msgstr "{name} blokkeren? Je ziet hun berichten niet meer en jullie kunnen elkaar niet schrijven, volgen of verzoeken sturen."
+
+msgid "ui_blocked_toast"
+msgstr "{name} is geblokkeerd"
+
+msgid "ui_unblocked_toast"
+msgstr "{name} is gedeblokkeerd"
+
+msgid "ui_blocked_title"
+msgstr "Geblokkeerde personen"
+
+msgid "ui_blocked_none"
+msgstr "Je hebt niemand geblokkeerd."
+
+msgid "ui_delete_account"
+msgstr "Mijn account verwijderen"
+
+msgid "ui_delete_account_hint"
+msgstr "Je account, profiel, foto, vrienden en interesses worden definitief verwijderd en wat je schreef wordt weggehaald. Dit kan niet ongedaan worden gemaakt."
+
+msgid "ui_delete_account_password"
+msgstr "Je wachtwoord, ter bevestiging"
+
+msgid "ui_delete_account_confirm"
+msgstr "Mijn account definitief verwijderen"
+
+msgid "ui_delete_account_done"
+msgstr "Je account is verwijderd"
+
+msgid "err_blocked"
+msgstr "Dat kan niet met deze persoon."
+
+msgid "err_cannot_block_self"
+msgstr "Je kunt jezelf niet blokkeren."
+
+msgid "err_wrong_password"
+msgstr "Het wachtwoord klopt niet."
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

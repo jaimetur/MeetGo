@@ -96,6 +96,10 @@ async def _notify(db: AsyncSession, conversation_id: int, message_id: int) -> No
 
     members = (await db.execute(select(ConversationMember).where(ConversationMember.conversation_id == conv.id))).scalars().all()
     targets = [m.user_id for m in members if _wants(conv, m, msg, root_author, reply_author)]
+    if msg.sender_id:  # nobody is notified of someone they blocked
+        from app.social.blocks import blocking
+        blocked = await blocking(db, targets)
+        targets = [u for u in targets if msg.sender_id not in blocked.get(u, set())]
     if not targets:
         return
     devices = (await db.execute(select(Device).where(Device.user_id.in_(targets)))).scalars().all()

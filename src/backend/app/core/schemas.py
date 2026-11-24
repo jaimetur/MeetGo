@@ -104,6 +104,10 @@ class AdminLoginIn(BaseModel):
     username: str
     password: str
 
+class DeleteMeIn(BaseModel):
+    password: str = Field(min_length=1, max_length=200)
+
+
 class BanIn(BaseModel):
     hours: int | None = Field(default=None, ge=1, le=24 * 365)  # None: for good
 
