@@ -217,6 +217,7 @@ export const api = {
   joinCommunity: (id: number) => req<{ status: "joined" | "requested" }>(`/communities/${id}/join`, { method: "POST" }),
   joinCommunityCode: (code: string) => req<{ status: "joined"; community_id: number }>(`/communities/join/${encodeURIComponent(code)}`, { method: "POST" }),
   communityInvite: (id: number) => req<{ code: string; url: string }>(`/communities/${id}/invite`, { method: "POST" }),
+  deleteChatForMe: (id: number) => req(`/conversations/${id}/delete-for-me`, { method: "POST" }),
   leaveCommunity: (id: number) => req(`/communities/${id}/membership`, { method: "DELETE" }),
   communityRequests: (id: number) => req<{ user: UserSummary; created_at: string }[]>(`/communities/${id}/requests`),
   resolveCommunityRequest: (id: number, userId: number, accept: boolean) => req(`/communities/${id}/requests/${userId}/resolve`, { method: "POST", json: { accept } }),

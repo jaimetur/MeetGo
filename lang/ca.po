@@ -1772,6 +1772,33 @@ msgstr "Perfil"
 msgid "ui_promo_code"
 msgstr "Codi promocional"
 
+msgid "ui_region_state"
+msgstr "Estat"
+
+msgid "ui_region_region"
+msgstr "Regió"
+
+msgid "ui_region_department"
+msgstr "Departament"
+
+msgid "ui_region_county"
+msgstr "Comtat"
+
+msgid "ui_region_prefecture"
+msgstr "Prefectura"
+
+msgid "ui_region_canton"
+msgstr "Cantó"
+
+msgid "ui_region_district"
+msgstr "Districte"
+
+msgid "ui_region_parish"
+msgstr "Parròquia"
+
+msgid "ui_region_voivodeship"
+msgstr "Voivodat"
+
 msgid "ui_province"
 msgstr "Província"
 
@@ -3157,6 +3184,27 @@ msgstr "Treure {name}"
 
 msgid "ui_nc_create_n"
 msgstr "Crear un grup de {n}"
+
+msgid "ui_cshow_all"
+msgstr "Totes"
+
+msgid "ui_cshow_mine"
+msgstr "Les meves comunitats"
+
+msgid "ui_cshow_new"
+msgstr "Noves"
+
+msgid "ui_community_no_new"
+msgstr "Ja ets a totes les comunitats de la teva zona"
+
+msgid "ui_delete_chat_for_me"
+msgstr "Esborrar xat"
+
+msgid "ui_delete_chat_confirm"
+msgstr "Vols esborrar aquest xat només per a tu? El teu historial es buida i desapareix de la teva llista fins que algú torni a escriure. Els altres no noten res."
+
+msgid "ui_delete_chat_done"
+msgstr "Xat esborrat"
 
 msgid "ui_sec_communities"
 msgstr "Comunitats"

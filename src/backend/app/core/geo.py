@@ -193,6 +193,16 @@ COUNTRIES: list[tuple[str, str, str, list]] = [
 ]
 
 
+# What each country's regions are called (Spain and the rest: provinces).
+REGION_KINDS = {
+    "DE": "state", "AT": "state", "BR": "state", "MX": "state", "US": "state", "VE": "state",
+    "CL": "region", "FR": "region", "IT": "region", "GB": "region",
+    "BO": "department", "CO": "department", "SV": "department", "GT": "department", "HN": "department",
+    "NI": "department", "PY": "department", "PE": "department", "UY": "department",
+    "IE": "county", "JP": "prefecture", "CH": "canton", "PT": "district", "AD": "parish", "PL": "voivodeship",
+}
+
+
 def _key(s: str) -> str:
     return "".join(ch for ch in unicodedata.normalize("NFD", s.lower()) if unicodedata.category(ch) != "Mn")
 
@@ -231,4 +241,8 @@ def merge_geography(data: dict) -> bool:
         values = {r["value"] for r in regions}
         provinces[code] = regions + [r for r in provinces.get(code) or [] if r.get("value") not in values]
     data["provinces_by_country"] = provinces
-    return repr((data.get("countries"), data.get("calling_codes"), data.get("provinces_by_country"))) != before
+    changed = repr((data.get("countries"), data.get("calling_codes"), data.get("provinces_by_country"))) != before
+    if data.get("region_kinds") != REGION_KINDS:
+        data["region_kinds"] = dict(REGION_KINDS)
+        changed = True
+    return changed

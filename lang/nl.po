@@ -1772,6 +1772,33 @@ msgstr "Profiel"
 msgid "ui_promo_code"
 msgstr "Actiecode"
 
+msgid "ui_region_state"
+msgstr "Staat"
+
+msgid "ui_region_region"
+msgstr "Regio"
+
+msgid "ui_region_department"
+msgstr "Departement"
+
+msgid "ui_region_county"
+msgstr "Graafschap"
+
+msgid "ui_region_prefecture"
+msgstr "Prefectuur"
+
+msgid "ui_region_canton"
+msgstr "Kanton"
+
+msgid "ui_region_district"
+msgstr "District"
+
+msgid "ui_region_parish"
+msgstr "Parochie"
+
+msgid "ui_region_voivodeship"
+msgstr "Woiwodschap"
+
 msgid "ui_province"
 msgstr "Provincie"
 
@@ -3157,6 +3184,27 @@ msgstr "{name} verwijderen"
 
 msgid "ui_nc_create_n"
 msgstr "Groep van {n} maken"
+
+msgid "ui_cshow_all"
+msgstr "Alle"
+
+msgid "ui_cshow_mine"
+msgstr "Mijn communities"
+
+msgid "ui_cshow_new"
+msgstr "Nieuw"
+
+msgid "ui_community_no_new"
+msgstr "Je zit al in alle communities van je zone"
+
+msgid "ui_delete_chat_for_me"
+msgstr "Chat verwijderen"
+
+msgid "ui_delete_chat_confirm"
+msgstr "Deze chat alleen voor jou verwijderen? Je geschiedenis wordt leeggemaakt en de chat verdwijnt uit je lijst tot iemand weer schrijft. De anderen merken niets."
+
+msgid "ui_delete_chat_done"
+msgstr "Chat verwijderd"
 
 msgid "ui_sec_communities"
 msgstr "Communities"

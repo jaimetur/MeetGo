@@ -87,7 +87,7 @@ async def channel_for(db: AsyncSession, province: str, age_key: str, interest_id
 DEFAULT_RULES = (
     "- Respeto ante todo: nada de acoso.\n"
     "- Sin spam ni autopromoción.\n"
-    "- No compartas teléfonos en el canal; usa mensajes directos.\n"
+    "- No compartas teléfonos en el chat; usa mensajes directos.\n"
     "- Las quedadas se organizan mejor en un grupo.\n"
 )
 
@@ -232,6 +232,8 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
     out = []
     for member, conv in rows:
         last = last_msgs.get(conv.last_message_id or 0)
+        if last and last.id <= (member.cleared_message_id or 0):
+            last = None
         item = conversation_base(conv, member, interests.get(conv.interest_id), others.get(conv.id), online)
         item.update({
             "member_count": counts.get(conv.id, 0),

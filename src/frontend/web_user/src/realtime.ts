@@ -2,8 +2,7 @@ import { api, WS_BASE } from "./api";
 import { emitBoardEvent } from "./board";
 import {
   addMessage, catchUp, getState, loadConversations, loadMessages, patchConversation, refreshConversation, removeConversation,
-  refreshMyPlansSoon, replaceMessage, setReactions, setState, updateMessage,
-} from "./store";
+  refreshMyPlansSoon, replaceMessage, setReactions, setState, updateMessage, forgetConversation } from "./store";
 import type { Message } from "./types";
 
 let ws: WebSocket | null = null;
@@ -161,6 +160,9 @@ function handle(ev: any) {
       break;
     case "conversation.changed":
       refreshConversation(ev.conversation_id);
+      break;
+    case "conversation.hidden": // deleted for me (maybe in another tab): out of the list, its old messages forgotten
+      forgetConversation(ev.conversation_id);
       break;
     case "membership.removed":
       removeConversation(ev.conversation_id);

@@ -1772,6 +1772,33 @@ msgstr "个人资料"
 msgid "ui_promo_code"
 msgstr "优惠码"
 
+msgid "ui_region_state"
+msgstr "州"
+
+msgid "ui_region_region"
+msgstr "大区"
+
+msgid "ui_region_department"
+msgstr "省"
+
+msgid "ui_region_county"
+msgstr "郡"
+
+msgid "ui_region_prefecture"
+msgstr "都道府县"
+
+msgid "ui_region_canton"
+msgstr "州"
+
+msgid "ui_region_district"
+msgstr "区"
+
+msgid "ui_region_parish"
+msgstr "堂区"
+
+msgid "ui_region_voivodeship"
+msgstr "省"
+
 msgid "ui_province"
 msgstr "省份"
 
@@ -3157,6 +3184,27 @@ msgstr "移除 {name}"
 
 msgid "ui_nc_create_n"
 msgstr "创建 {n} 人群组"
+
+msgid "ui_cshow_all"
+msgstr "全部"
+
+msgid "ui_cshow_mine"
+msgstr "我的社区"
+
+msgid "ui_cshow_new"
+msgstr "新社区"
+
+msgid "ui_community_no_new"
+msgstr "你已加入你所在区域的所有社区"
+
+msgid "ui_delete_chat_for_me"
+msgstr "删除聊天"
+
+msgid "ui_delete_chat_confirm"
+msgstr "仅为你删除此聊天?你的记录将被清空,在有人再次发言前它不会出现在你的列表中。其他人不受影响。"
+
+msgid "ui_delete_chat_done"
+msgstr "聊天已删除"
 
 msgid "ui_sec_communities"
 msgstr "社区"

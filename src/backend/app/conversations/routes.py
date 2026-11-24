@@ -282,6 +282,21 @@ async def my_settings(conv_id: int, payload: MemberSettingsIn, db: AsyncSession 
     return {"ok": True}
 
 
+@router.post("/conversations/{conv_id}/delete-for-me", response_model=dict)
+async def delete_for_me(conv_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """Deletes the chat only for you: its messages so far are no longer shown to you and it leaves your list until
+    someone writes again. The others keep everything, and you stay a member."""
+    conv, member = await require_member(db, conv_id, user)
+    last = conv.last_message_id or 0
+    member.cleared_message_id = last
+    member.last_read_message_id = max(member.last_read_message_id or 0, last)
+    member.hidden = True
+    member.pinned = False
+    await db.commit()
+    await realtime.publish([user.id], {"type": "conversation.hidden", "conversation_id": conv.id})
+    return {"ok": True}
+
+
 @router.post("/conversations/{conv_id}/read", response_model=dict)
 async def read(conv_id: int, payload: ReadIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     conv, member = await require_member(db, conv_id, user)
@@ -386,6 +401,9 @@ async def search_messages(q: str, conversation_id: int | None = None, limit: int
     ts_query = func.plainto_tsquery("simple", q)
     query = select(Message).where(
         Message.conversation_id.in_(mine), Message.deleted_at.is_(None), Message.kind == "text",
+        Message.id > select(ConversationMember.cleared_message_id).where(
+            ConversationMember.conversation_id == Message.conversation_id, ConversationMember.user_id == user.id
+        ).scalar_subquery(),
         or_(func.to_tsvector("simple", Message.body).op("@@")(ts_query), Message.body.ilike(f"%{q}%")),
     )
     if conversation_id:

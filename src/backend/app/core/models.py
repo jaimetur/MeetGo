@@ -241,6 +241,8 @@ class ConversationMember(Base):
     email_notified_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
     # Channel of a zone the person has left: kept (with its role) but hidden, silent and read-only until they return.
     away: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    # The person deleted the chat for themselves: messages up to this one are not shown to them.
+    cleared_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
 
 
 class Message(Base):

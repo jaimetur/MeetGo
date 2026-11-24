@@ -1772,6 +1772,33 @@ msgstr "Perfil"
 msgid "ui_promo_code"
 msgstr "Código promocional"
 
+msgid "ui_region_state"
+msgstr "Estado"
+
+msgid "ui_region_region"
+msgstr "Región"
+
+msgid "ui_region_department"
+msgstr "Departamento"
+
+msgid "ui_region_county"
+msgstr "Condado"
+
+msgid "ui_region_prefecture"
+msgstr "Prefectura"
+
+msgid "ui_region_canton"
+msgstr "Cantón"
+
+msgid "ui_region_district"
+msgstr "Distrito"
+
+msgid "ui_region_parish"
+msgstr "Parroquia"
+
+msgid "ui_region_voivodeship"
+msgstr "Voivodato"
+
 msgid "ui_province"
 msgstr "Provincia"
 
@@ -3158,6 +3185,27 @@ msgstr "Quitar a {name}"
 
 msgid "ui_nc_create_n"
 msgstr "Crear grupo de {n}"
+
+msgid "ui_cshow_all"
+msgstr "Todas"
+
+msgid "ui_cshow_mine"
+msgstr "Mis comunidades"
+
+msgid "ui_cshow_new"
+msgstr "Nuevas"
+
+msgid "ui_community_no_new"
+msgstr "Ya estás en todas las comunidades de tu zona"
+
+msgid "ui_delete_chat_for_me"
+msgstr "Borrar chat"
+
+msgid "ui_delete_chat_confirm"
+msgstr "¿Borrar este chat solo para ti? Se vacía tu historial y desaparece de tu lista hasta que alguien vuelva a escribir. Los demás no notan nada."
+
+msgid "ui_delete_chat_done"
+msgstr "Chat borrado"
 
 msgid "ui_sec_communities"
 msgstr "Comunidades"

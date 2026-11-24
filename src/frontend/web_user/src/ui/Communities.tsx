@@ -159,24 +159,28 @@ export function CommunitiesPage() {
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
   const notMine = (list || []).filter((c) => !c.joined).length;
-  // Show or hide the communities I do not follow (remembered on this device); a search always shows them.
-  const [showOthers, setShowOthers] = useState(() => {
+  // All of them, only mine (Open, blue) or only new ones (Join, green); remembered on this device.
+  type Show = "all" | "mine" | "new";
+  const [show, setShowState] = useState<Show>(() => {
     try {
-      return localStorage.getItem("communities.showOthers") !== "0";
+      const v = localStorage.getItem("communities.show");
+      if (v === "all" || v === "mine" || v === "new") return v;
+      return localStorage.getItem("communities.showOthers") === "0" ? "mine" : "all";
     } catch {
-      return true;
+      return "all";
     }
   });
-  const toggleOthers = () => setShowOthers((v) => {
+  const setShow = (v: Show) => {
+    setShowState(v);
     try {
-      localStorage.setItem("communities.showOthers", v ? "0" : "1");
+      localStorage.setItem("communities.show", v);
     } catch {
       /* per device */
     }
-    return !v;
-  });
-  // one list by category: mine (Open, blue) and the rest (Join, green); the switch keeps only mine
-  const groups = byCategory((list || []).filter((c) => c.joined || showOthers || !!q.trim() || !!browse));
+  };
+  const mineCount = (list || []).length - notMine;
+  const shown = (list || []).filter((c) => browse || show === "all" || (show === "mine" ? c.joined : !c.joined));
+  const groups = byCategory(shown);
 
   return (
     <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
@@ -201,12 +205,14 @@ export function CommunitiesPage() {
             <button className="btn sm" onClick={() => setState({ browseZone: null })}>{t("ui_zone_back_mine")}</button>
           </div>
         ) : null}
-        {list && notMine && !browse ? (
-          <label className="cswitch">
-            <input id="communities-only-mine" type="checkbox" checked={!showOthers} onChange={toggleOthers} />
-            <span className="cswitch-track" aria-hidden="true"><i /></span>
-            <span>{t("ui_community_only_mine")}</span>
-          </label>
+        {list && list.length && !browse ? (
+          <div className="segtabs cfilter" role="tablist" aria-label={t("ui_nav_communities")}>
+            {([["all", t("ui_cshow_all"), list.length], ["mine", t("ui_cshow_mine"), mineCount], ["new", t("ui_cshow_new"), notMine]] as [Show, string, number][]).map(([k, label, n]) => (
+              <button key={k} id={`communities-show-${k}`} role="tab" aria-selected={show === k} className={show === k ? "on" : ""} onClick={() => setShow(k)}>
+                {label} <span className="cfn">{n}</span>
+              </button>
+            ))}
+          </div>
         ) : null}
 
         {list === null ? (
@@ -224,7 +230,8 @@ export function CommunitiesPage() {
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
               </section>
             ))}
-            {!groups.length ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={toggleOthers} /> : null}
+            {!groups.length && show === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
+            {!groups.length && show === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
           </>
         )}
       </div>

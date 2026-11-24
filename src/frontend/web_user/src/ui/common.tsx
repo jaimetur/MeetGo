@@ -247,6 +247,12 @@ export function countryOptions(list?: { code: string; name: string }[]): { code:
   return out.sort((a, b) => a.name.localeCompare(b.name, getLang(), { sensitivity: "base" }));
 }
 
+/** "Province", "State", "Region"...: what the country's regions are called (from the settings). */
+export function regionLabel(settings: any, country?: string | null): string {
+  const kind = (country && settings?.region_kinds?.[country]) || "province";
+  return kind === "province" ? t("ui_province") : t(`ui_region_${kind}`);
+}
+
 export function hobbyIcon(slug?: string | null, title?: string | null): string {
   const text = `${slug || ""} ${title || ""}`.toLowerCase();
   return HOBBY_ICONS.find(([re]) => re.test(text))?.[1] || "users";

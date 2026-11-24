@@ -3,7 +3,7 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api, setToken } from "../api";
 import { isNativeApp } from "../native";
 import { queryParam } from "../router";
-import { countryOptions } from "./common";
+import { countryOptions, regionLabel } from "./common";
 
 type View = "login" | "register" | "forgot" | "reset" | "sent";
 
@@ -142,7 +142,7 @@ function Register({ setView }: { setView: (v: View) => void }) {
           </select>
         </label>
       </div>
-      <label className="fld">{t("ui_province")}
+      <label className="fld">{regionLabel(settings, form.country)}
         {provinces.length ? (
           <select id="reg-province" className="inp" required value={form.province} onChange={(e) => set("province", e.target.value)}>
             <option value="">{t("ui_choose")}</option>

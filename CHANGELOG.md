@@ -13,6 +13,9 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Right-click a chat in the list for its menu (notifications, mute, pin, leave...) and the new "Delete chat": just for you, your history is emptied and it leaves your list until someone writes again.
+- Communities: the switch is now All / My communities / New (the ones you are not in), with counts.
+- The region field is named as each country calls it: province, state, region, department, county, prefecture, canton, district...
 - "Channels" are called "chats" everywhere (app, emails, public pages) in every language.
 - Age ranges are now 18-30, 31-60 and 61+: 31-50 communities become 31-60 and 51+ ones become 61+ (people aged 51 to 60 move to the 31-60 one).
 - 36 countries with all their provinces, regions or states (all 52 Spanish provinces, including Ceuta and Melilla), shown in each person's language; an administrator's additions are kept.

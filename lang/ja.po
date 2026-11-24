@@ -1772,6 +1772,33 @@ msgstr "プロフィール"
 msgid "ui_promo_code"
 msgstr "プロモーションコード"
 
+msgid "ui_region_state"
+msgstr "州"
+
+msgid "ui_region_region"
+msgstr "地域"
+
+msgid "ui_region_department"
+msgstr "県"
+
+msgid "ui_region_county"
+msgstr "郡"
+
+msgid "ui_region_prefecture"
+msgstr "都道府県"
+
+msgid "ui_region_canton"
+msgstr "州"
+
+msgid "ui_region_district"
+msgstr "県"
+
+msgid "ui_region_parish"
+msgstr "教区"
+
+msgid "ui_region_voivodeship"
+msgstr "県"
+
 msgid "ui_province"
 msgstr "都道府県／州"
 
@@ -3157,6 +3184,27 @@ msgstr "{name} を外す"
 
 msgid "ui_nc_create_n"
 msgstr "{n}人のグループを作成"
+
+msgid "ui_cshow_all"
+msgstr "すべて"
+
+msgid "ui_cshow_mine"
+msgstr "参加中"
+
+msgid "ui_cshow_new"
+msgstr "新しい"
+
+msgid "ui_community_no_new"
+msgstr "このエリアのすべてのコミュニティに参加済みです"
+
+msgid "ui_delete_chat_for_me"
+msgstr "チャットを削除"
+
+msgid "ui_delete_chat_confirm"
+msgstr "このチャットを自分だけ削除しますか?履歴が消え、誰かが再び書き込むまでリストから消えます。他の人には影響しません。"
+
+msgid "ui_delete_chat_done"
+msgstr "チャットを削除しました"
 
 msgid "ui_sec_communities"
 msgstr "コミュニティ"

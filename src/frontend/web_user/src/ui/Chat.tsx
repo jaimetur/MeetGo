@@ -6,8 +6,7 @@ import { sendTyping } from "../realtime";
 import { chatPath, communityPath, navigate } from "../router";
 import {
   addMessage, getState, loadConversations, loadMessages, patchConversation, refreshConversation, removeConversation,
-  removeLocal, setState, toast, updateMessage, useStore,
-} from "../store";
+  removeLocal, setState, toast, updateMessage, useStore, forgetConversation } from "../store";
 import type { Conversation, Member, Message } from "../types";
 import { dayKey, dayLabel, fileSize, isOnlyEmoji, timeOf, tokenize, uuid } from "../util";
 import { Avatar, ConvIcon, EMOJIS, Icon, Modal, QUICK_REACTIONS, convTitle, useClickOutside } from "./common";
@@ -309,15 +308,11 @@ export async function sendMessage(conversationId: number, payload: { body: strin
   }
 }
 
-function ChatHeader({ conv }: { conv: Conversation }) {
-  const [menu, setMenu] = useState(false);
-  const [search, setSearch] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useClickOutside(ref, () => setMenu(false), menu);
-  const muted = conv.notify === "none" || (conv.muted_until && new Date(conv.muted_until) > new Date());
-
+/** What you can do with a conversation: notifications, mute, pin, delete it for you, empty it (admins), leave.
+ *  The same items in the chat header's ⋯ menu and when right-clicking a chat in the list. */
+export function ConvMenuItems({ conv, onDone }: { conv: Conversation; onDone: () => void }) {
   async function settings(payload: { notify?: string; mute_minutes?: number; pinned?: boolean }) {
-    setMenu(false);
+    onDone();
     try {
       await api.settings(conv.id, payload);
       await refreshConversation(conv.id);
@@ -327,7 +322,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
   }
 
   async function clearChat() {
-    setMenu(false);
+    onDone();
     if (!window.confirm(t("ui_clear_chat_confirm"))) return;
     try {
       await api.clearCommunityChat(conv.id);
@@ -337,17 +332,62 @@ function ChatHeader({ conv }: { conv: Conversation }) {
     }
   }
 
+  const leaveCurrent = () => {
+    if (window.location.pathname.includes(chatPath(conv.id))) navigate("/chats");
+  };
+
+  async function deleteForMe() {
+    onDone();
+    if (!window.confirm(t("ui_delete_chat_confirm"))) return;
+    try {
+      await api.deleteChatForMe(conv.id);
+      forgetConversation(conv.id);
+      leaveCurrent();
+      toast(t("ui_delete_chat_done"));
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
+
   async function leave() {
-    setMenu(false);
+    onDone();
     try {
       await api.removeMember(conv.id, getState().me!.id);
       removeConversation(conv.id);
-      navigate("/chats");
+      leaveCurrent();
       if (conv.kind !== "dm") loadConversations();
     } catch (e: any) {
       toast(e.message, "error");
     }
   }
+
+  return (
+    <>
+      <button onClick={() => settings({ notify: "all" })}><Icon name="bell" size="sm" />{t("ui_notify_all")}{conv.notify === "all" ? " ✓" : ""}</button>
+      <button onClick={() => settings({ notify: "mentions" })}><Icon name="at" size="sm" />{t("ui_notify_mentions")}{conv.notify === "mentions" ? " ✓" : ""}</button>
+      <button onClick={() => settings({ notify: "none" })}><Icon name="belloff" size="sm" />{t("ui_notify_none")}{conv.notify === "none" ? " ✓" : ""}</button>
+      {conv.muted_until && new Date(conv.muted_until) > new Date()
+        ? <button onClick={() => settings({ mute_minutes: 0 })}><Icon name="bell" size="sm" />{t("ui_unmute")}</button>
+        : <>
+            <button onClick={() => settings({ mute_minutes: 60 })}><Icon name="belloff" size="sm" />{t("ui_mute_1h")}</button>
+            <button onClick={() => settings({ mute_minutes: 60 * 24 * 7 })}><Icon name="belloff" size="sm" />{t("ui_mute_week")}</button>
+          </>}
+      <button onClick={() => settings({ pinned: !conv.pinned })}><Icon name="pin" size="sm" />{conv.pinned ? t("ui_unpin_chat") : t("ui_pin_chat")}</button>
+      <button className="warn" onClick={deleteForMe}><Icon name="trash" size="sm" />{t("ui_delete_chat_for_me")}</button>
+      {conv.kind === "channel" && (conv.role === "owner" || conv.role === "admin" || getState().me?.role === "admin")
+        ? <button className="warn" onClick={clearChat}><Icon name="trash" size="sm" />{t("ui_clear_chat")}</button> : null}
+      {conv.kind !== "dm"
+        ? <button className="warn" onClick={leave}><Icon name="logout" size="sm" />{conv.kind === "channel" ? t("ui_leave_channel") : t("ui_leave_group")}</button> : null}
+    </>
+  );
+}
+
+function ChatHeader({ conv }: { conv: Conversation }) {
+  const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useClickOutside(ref, () => setMenu(false), menu);
+  const muted = conv.notify === "none" || (conv.muted_until && new Date(conv.muted_until) > new Date());
 
   let sub: React.ReactNode = conv.subtitle;
   if (conv.kind === "dm") sub = conv.other_user?.online ? <span className="on">{t("ui_online")}</span> : t("ui_offline");
@@ -370,19 +410,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
         <button className="iconbtn" title={t("ui_more")} aria-label={t("ui_more")} aria-expanded={menu} onClick={() => setMenu((v) => !v)}><Icon name="more" /></button>
         {menu ? (
           <div className="menu" style={{ right: 0, top: 40 }} role="menu">
-            <button onClick={() => settings({ notify: "all" })}><Icon name="bell" size="sm" />{t("ui_notify_all")}{conv.notify === "all" ? " ✓" : ""}</button>
-            <button onClick={() => settings({ notify: "mentions" })}><Icon name="at" size="sm" />{t("ui_notify_mentions")}{conv.notify === "mentions" ? " ✓" : ""}</button>
-            <button onClick={() => settings({ notify: "none" })}><Icon name="belloff" size="sm" />{t("ui_notify_none")}{conv.notify === "none" ? " ✓" : ""}</button>
-            {conv.muted_until && new Date(conv.muted_until) > new Date()
-              ? <button onClick={() => settings({ mute_minutes: 0 })}><Icon name="bell" size="sm" />{t("ui_unmute")}</button>
-              : <>
-                  <button onClick={() => settings({ mute_minutes: 60 })}><Icon name="belloff" size="sm" />{t("ui_mute_1h")}</button>
-                  <button onClick={() => settings({ mute_minutes: 60 * 24 * 7 })}><Icon name="belloff" size="sm" />{t("ui_mute_week")}</button>
-                </>}
-            <button onClick={() => settings({ pinned: !conv.pinned })}><Icon name="pin" size="sm" />{conv.pinned ? t("ui_unpin_chat") : t("ui_pin_chat")}</button>
-            {conv.kind === "channel" && (conv.role === "owner" || conv.role === "admin" || getState().me?.role === "admin")
-              ? <button className="warn" onClick={clearChat}><Icon name="trash" size="sm" />{t("ui_clear_chat")}</button> : null}
-            <button className="warn" onClick={leave}><Icon name="logout" size="sm" />{conv.kind === "dm" ? t("ui_hide_chat") : conv.kind === "channel" ? t("ui_leave_channel") : t("ui_leave_group")}</button>
+            <ConvMenuItems conv={conv} onDone={() => setMenu(false)} />
           </div>
         ) : null}
       </div>

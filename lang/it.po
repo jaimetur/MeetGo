@@ -1772,6 +1772,33 @@ msgstr "Profilo"
 msgid "ui_promo_code"
 msgstr "Codice promozionale"
 
+msgid "ui_region_state"
+msgstr "Stato"
+
+msgid "ui_region_region"
+msgstr "Regione"
+
+msgid "ui_region_department"
+msgstr "Dipartimento"
+
+msgid "ui_region_county"
+msgstr "Contea"
+
+msgid "ui_region_prefecture"
+msgstr "Prefettura"
+
+msgid "ui_region_canton"
+msgstr "Cantone"
+
+msgid "ui_region_district"
+msgstr "Distretto"
+
+msgid "ui_region_parish"
+msgstr "Parrocchia"
+
+msgid "ui_region_voivodeship"
+msgstr "Voivodato"
+
 msgid "ui_province"
 msgstr "Provincia"
 
@@ -3157,6 +3184,27 @@ msgstr "Rimuovi {name}"
 
 msgid "ui_nc_create_n"
 msgstr "Crea un gruppo di {n}"
+
+msgid "ui_cshow_all"
+msgstr "Tutte"
+
+msgid "ui_cshow_mine"
+msgstr "Le mie community"
+
+msgid "ui_cshow_new"
+msgstr "Nuove"
+
+msgid "ui_community_no_new"
+msgstr "Sei già in tutte le community della tua zona"
+
+msgid "ui_delete_chat_for_me"
+msgstr "Elimina chat"
+
+msgid "ui_delete_chat_confirm"
+msgstr "Eliminare questa chat solo per te? La tua cronologia viene svuotata e la chat esce dalla tua lista finché qualcuno non scrive di nuovo. Gli altri non notano nulla."
+
+msgid "ui_delete_chat_done"
+msgstr "Chat eliminata"
 
 msgid "ui_sec_communities"
 msgstr "Comunità"

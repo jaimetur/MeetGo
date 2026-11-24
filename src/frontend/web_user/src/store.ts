@@ -113,6 +113,17 @@ export function removeConversation(id: number) {
   });
 }
 
+/** A chat deleted for me: out of the list and its loaded messages forgotten (they are gone for me). */
+export function forgetConversation(id: number) {
+  setState((s) => {
+    const conversations = { ...s.conversations };
+    const messages = { ...s.messages };
+    delete conversations[id];
+    delete messages[id];
+    return { conversations, messages };
+  });
+}
+
 export function patchConversation(id: number, patch: Partial<Conversation>) {
   setState((s) => (s.conversations[id] ? { conversations: { ...s.conversations, [id]: { ...s.conversations[id], ...patch } } } : {}));
 }

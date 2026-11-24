@@ -1772,6 +1772,33 @@ msgstr "Profil"
 msgid "ui_promo_code"
 msgstr "Aktionscode"
 
+msgid "ui_region_state"
+msgstr "Bundesland"
+
+msgid "ui_region_region"
+msgstr "Region"
+
+msgid "ui_region_department"
+msgstr "Departamento"
+
+msgid "ui_region_county"
+msgstr "County"
+
+msgid "ui_region_prefecture"
+msgstr "Präfektur"
+
+msgid "ui_region_canton"
+msgstr "Kanton"
+
+msgid "ui_region_district"
+msgstr "Distrikt"
+
+msgid "ui_region_parish"
+msgstr "Parroquia"
+
+msgid "ui_region_voivodeship"
+msgstr "Woiwodschaft"
+
 msgid "ui_province"
 msgstr "Provinz"
 
@@ -4018,6 +4045,27 @@ msgstr "{name} entfernen"
 
 msgid "ui_nc_create_n"
 msgstr "Gruppe mit {n} erstellen"
+
+msgid "ui_cshow_all"
+msgstr "Alle"
+
+msgid "ui_cshow_mine"
+msgstr "Meine Communities"
+
+msgid "ui_cshow_new"
+msgstr "Neue"
+
+msgid "ui_community_no_new"
+msgstr "Du bist schon in allen Communities deiner Zone"
+
+msgid "ui_delete_chat_for_me"
+msgstr "Chat löschen"
+
+msgid "ui_delete_chat_confirm"
+msgstr "Diesen Chat nur für dich löschen? Dein Verlauf wird geleert und er verschwindet aus deiner Liste, bis wieder jemand schreibt. Die anderen merken nichts."
+
+msgid "ui_delete_chat_done"
+msgstr "Chat gelöscht"
 
 msgid "ui_sec_communities"
 msgstr "Communities"

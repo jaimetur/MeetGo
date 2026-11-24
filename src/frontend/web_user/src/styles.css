@@ -1014,3 +1014,11 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .ncempty .ic { width: 30px; height: 30px; opacity: 0.6; }
 .ncmode b { white-space: normal; line-height: 1.2; }
 @media (max-width: 420px) { .ncmode small { display: none; } .ncmode button { padding: 9px 8px; gap: 8px; } }
+
+/* communities: all / mine / new */
+.segtabs.cfilter { margin: 0 0 16px; max-width: 520px; }
+.segtabs.cfilter .cfn { opacity: 0.75; font-weight: 700; margin-left: 2px; font-variant-numeric: tabular-nums; }
+
+/* right-click menu of a chat in the list */
+.menu.ctxmenu { z-index: 60; min-width: 230px; max-height: calc(100vh - 16px); overflow-y: auto; }
+.crow.ctx { background: var(--line); }

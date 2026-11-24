@@ -178,3 +178,22 @@ async def test_search_finds_messages_only_in_your_conversations(client, db_sessi
     await _send(client, ana[0], conv["id"], "Quedamos en la Pedriza el domingo")
     assert len((await client.get("/search/messages?q=pedriza", headers=ana[0])).json()) == 1
     assert (await client.get("/search/messages?q=pedriza", headers=leo[0])).json() == []
+
+
+async def test_deleting_a_chat_only_for_me(client, db_session):
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    bea = await make_user(client, db_session, "bea@example.com", "Bea")
+    conv = await _channel(client, ana[0])
+    await _channel(client, bea[0])
+    await _send(client, ana[0], conv["id"], "hola a todos")
+    assert (await client.post(f"/conversations/{conv['id']}/delete-for-me", headers=bea[0])).status_code == 200
+    # gone from Bea's list and history; Ana keeps everything
+    assert conv["id"] not in [c["id"] for c in (await client.get("/conversations", headers=bea[0])).json()]
+    assert (await client.get(f"/conversations/{conv['id']}/messages", headers=bea[0])).json()["messages"] == []
+    assert [m["body"] for m in (await client.get(f"/conversations/{conv['id']}/messages", headers=ana[0])).json()["messages"]
+            if m["kind"] == "text"] == ["hola a todos"]
+    # someone writes again: the chat comes back with only the new message
+    await _send(client, ana[0], conv["id"], "¿quedamos?")
+    mine = next(c for c in (await client.get("/conversations", headers=bea[0])).json() if c["id"] == conv["id"])
+    assert mine["last_message"]["body"] == "¿quedamos?"
+    assert [m["body"] for m in (await client.get(f"/conversations/{conv['id']}/messages", headers=bea[0])).json()["messages"]] == ["¿quedamos?"]

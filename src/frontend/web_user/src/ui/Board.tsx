@@ -10,7 +10,7 @@ import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
-import { Avatar, Icon, Modal, Wordmark, useClickOutside, countryOptions } from "./common";
+import { Avatar, Icon, Modal, Wordmark, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -1075,7 +1075,7 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
             {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
           </select>
         </label>
-        <label className="fld">{t("ui_province")}
+        <label className="fld">{regionLabel(geo, country)}
           <select id="zone-province" className="inp" value={province} onChange={(e) => setProvince(e.target.value)}>
             <option value="">{t("ui_choose")}</option>
             {provinces.map((p) => <option key={p.value} value={p.value}>{p.name}</option>)}

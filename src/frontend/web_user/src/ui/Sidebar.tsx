@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { t } from "@lang";
 import { api } from "../api";
 import { chatPath, navigate } from "../router";
@@ -6,6 +7,7 @@ import { loadConversations, sortedConversations, toast, useStore } from "../stor
 import type { Conversation, Message, UserSummary } from "../types";
 import { shortWhen } from "../util";
 import { AvatarMenu } from "./Board";
+import { ConvMenuItems } from "./Chat";
 import { Avatar, ConvIcon, Icon, Modal, Wordmark, convTitle } from "./common";
 
 type Filter = "all" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
@@ -112,8 +114,11 @@ function ConvRow({ c, active, typing }: { c: Conversation; active: boolean; typi
     const who = last.kind === "system" ? "" : last.sender_name && c.kind !== "dm" ? `${last.sender_name}: ` : "";
     preview = last.deleted ? t("ui_msg_deleted") : who + (last.body || (last.has_attachments ? "📎 " + t("ui_attachment") : ""));
   }
+  const [menuAt, setMenuAt] = useState<{ x: number; y: number } | null>(null);
   return (
-    <button className={"crow" + (c.unread_count ? " unr" : "") + (active ? " sel" : "")} onClick={() => navigate(chatPath(c.id))} aria-current={active ? "page" : undefined}>
+    <>
+    <button className={"crow" + (c.unread_count ? " unr" : "") + (active ? " sel" : "") + (menuAt ? " ctx" : "")} onClick={() => navigate(chatPath(c.id))} aria-current={active ? "page" : undefined}
+      onContextMenu={(e) => { e.preventDefault(); setMenuAt({ x: e.clientX, y: e.clientY }); }}>
       <ConvIcon conv={c} />
       <div style={{ minWidth: 0 }}>
         <div className="cname">{convTitle(c)}{muted ? <Icon name="belloff" size="sm" /> : null}{c.pinned ? <Icon name="pin" size="sm" /> : null}</div>
@@ -127,6 +132,38 @@ function ConvRow({ c, active, typing }: { c: Conversation; active: boolean; typi
         </div>
       </div>
     </button>
+    {menuAt ? <ContextMenu at={menuAt} onClose={() => setMenuAt(null)}><ConvMenuItems conv={c} onDone={() => setMenuAt(null)} /></ContextMenu> : null}
+    </>
+  );
+}
+
+/** A menu where the pointer is (kept inside the window); closes on a click elsewhere, Escape or scrolling. */
+function ContextMenu({ at, onClose, children }: { at: { x: number; y: number }; onClose: () => void; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ left: at.x, top: at.y });
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const w = el.offsetWidth, h = el.offsetHeight;
+    setPos({ left: Math.max(8, Math.min(at.x, window.innerWidth - w - 8)), top: Math.max(8, Math.min(at.y, window.innerHeight - h - 8)) });
+  }, [at]);
+  useEffect(() => {
+    const down = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) onClose(); };
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("mousedown", down, true);
+    window.addEventListener("keydown", key);
+    window.addEventListener("scroll", onClose, true);
+    window.addEventListener("resize", onClose);
+    return () => {
+      window.removeEventListener("mousedown", down, true);
+      window.removeEventListener("keydown", key);
+      window.removeEventListener("scroll", onClose, true);
+      window.removeEventListener("resize", onClose);
+    };
+  }, [onClose]);
+  return createPortal(
+    <div ref={ref} className="menu ctxmenu" role="menu" style={{ position: "fixed", left: pos.left, top: pos.top }}>{children}</div>,
+    document.body,
   );
 }
 

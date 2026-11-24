@@ -24,6 +24,8 @@ async def list_messages(conv_id: int, before_id: int | None = None, after_id: in
     conv, member = await require_member(db, conv_id, user)
     limit = max(1, min(limit, 100))
     base = select(Message).where(Message.conversation_id == conv.id)
+    if member.cleared_message_id:
+        base = base.where(Message.id > member.cleared_message_id)
     if thread_root_id:
         base = base.where(Message.thread_root_id == thread_root_id)
     else:
