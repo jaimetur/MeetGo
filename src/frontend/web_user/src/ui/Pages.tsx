@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LANGUAGES, getLang, setLang, t } from "@lang";
-import { api } from "../api";
+import { api, fileUrl } from "../api";
 import { isNativeApp, native } from "../native";
 import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
 import { chatPath, communityPath, navigate, queryParam, useRoute } from "../router";
@@ -502,6 +502,7 @@ export function AccountPage() {
               <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button>
             </div>
           ) : null}
+          <CalendarFeed />
           <BlockedPeople />
           <DeleteAccount />
           <AboutButton />
@@ -705,6 +706,38 @@ function DeleteAccount() {
 }
 
 /** The text size of the whole app on this device: small, normal or large, with a preview. */
+/** My plans as a calendar the phone (or Google) subscribes to and keeps up to date. */
+function CalendarFeed() {
+  const [path, setPath] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const url = path ? fileUrl(path) : "";
+  const webcal = url.replace(/^https?:/, "webcal:");
+  const get = (reset = false) => {
+    setBusy(true);
+    api.myCalendar(reset).then((r) => { setPath(r.path); if (reset) toast(t("ui_calendar_reset_done")); })
+      .catch((e) => toast(e.message, "error")).finally(() => setBusy(false));
+  };
+  return (
+    <section className="box stack">
+      <h3 className="boxtitle"><Icon name="calendar" size="sm" /> {t("ui_calendar_title")}</h3>
+      <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_calendar_hint")}</p>
+      {!path ? <div><button id="acc-calendar" className="btn" disabled={busy} onClick={() => get()}>{t("ui_calendar_get")}</button></div> : (
+        <>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+            <a className="btn pri" href={webcal}><Icon name="calendar" size="sm" />{t("ui_calendar_subscribe")}</a>
+            <a className="btn" href={`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcal)}`} target="_blank" rel="noreferrer">Google Calendar</a>
+          </div>
+          <div className="copyrow">
+            <input className="inp" readOnly value={url} onFocus={(e) => e.target.select()} />
+            <button className="btn" onClick={() => navigator.clipboard?.writeText(url).then(() => toast(t("ui_copied"))).catch(() => undefined)}><Icon name="copy" size="sm" />{t("ui_copy")}</button>
+          </div>
+          <small className="muted">{t("ui_calendar_private")} <button className="linkbtn" disabled={busy} onClick={() => get(true)}>{t("ui_calendar_reset")}</button></small>
+        </>
+      )}
+    </section>
+  );
+}
+
 function AboutButton() {
   const [open, setOpen] = useState(false);
   return (

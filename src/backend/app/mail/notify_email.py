@@ -319,6 +319,21 @@ async def plans_reminders_once(db: AsyncSession) -> int:
     return sent
 
 
+async def plans_pushes_once(db: AsyncSession) -> int:
+    """Push only: a plan starts within 2 hours, and "how was it?" the day after. Once each (EmailNotice)."""
+    from app.board.service import plans_soon_due, plans_to_rate_due, push_plan
+    sent = 0
+    for due, key_text in ((await plans_soon_due(db), "push_plan_soon"), (await plans_to_rate_due(db), "push_plan_rate")):
+        for user, post, key, params in due:
+            if await db.get(EmailNotice, (user.id, key)):
+                continue
+            db.add(EmailNotice(user_id=user.id, key=key))
+            await db.commit()
+            push_plan([user], post, key_text, params)
+            sent += 1
+    return sent
+
+
 # ---------- background loop ----------
 
 _task: asyncio.Task | None = None
@@ -335,6 +350,9 @@ async def _loop() -> None:
             async with SessionLocal() as db:
                 await digest_once(db)
                 await plans_reminders_once(db)
+                await plans_pushes_once(db)
+                from app.board.service import series_once
+                await series_once(db)
                 loop_time = asyncio.get_running_loop().time()
                 if loop_time - last_reminders >= REMINDERS_EVERY or last_reminders == 0.0:
                     last_reminders = loop_time

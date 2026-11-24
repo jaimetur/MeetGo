@@ -39,6 +39,39 @@ def user_age_key(user: User) -> str:
         return normalize_age_range(user.age_range).value
 
 
+def user_years(user: User) -> int | None:
+    """Age in years from the date of birth (which can be changed only once)."""
+    try:
+        return age_from_dob(user.dob)
+    except Exception:
+        return None
+
+
+def has_age_span(conv: Conversation) -> bool:
+    return conv.min_age is not None or conv.max_age is not None
+
+
+def fits_age(user: User, conv: Conversation) -> bool:
+    """Whether the person's age fits the community: its own span (min_age-max_age, communities made by people) or,
+    without one, the fixed range of its zone (18-30, 31-60, 61+). Always from the date of birth, never chosen."""
+    if has_age_span(conv):
+        years = user_years(user)
+        return years is not None and (conv.min_age or 0) <= years <= (conv.max_age if conv.max_age is not None else 200)
+    return conv.age_range == user_age_key(user)
+
+
+def age_fits_sql(user: User):
+    """SQL for fits_age over Conversation rows."""
+    from sqlalchemy import and_, func, or_
+    years = user_years(user)
+    span = or_(Conversation.min_age.is_not(None), Conversation.max_age.is_not(None))
+    return or_(
+        and_(~span, Conversation.age_range == user_age_key(user)),
+        and_(span, func.coalesce(Conversation.min_age, 0) <= (years if years is not None else -1),
+             func.coalesce(Conversation.max_age, 200) >= (years if years is not None else -1)),
+    )
+
+
 def can_join_channel(user: User, conv: Conversation) -> bool:
     if conv.province != user.province:
         return False
@@ -137,7 +170,7 @@ async def move_channels_to_zone(db: AsyncSession, user: User, old_province: str,
         Conversation, Conversation.id == ConversationMember.conversation_id).where(
         ConversationMember.user_id == user.id, Conversation.kind == "channel"))
     for member, conv in res.all():
-        member.away = not (conv.province == user.province and conv.age_range == age)
+        member.away = not (conv.province == user.province and fits_age(user, conv))
 
 
 # ---------- direct messages ----------

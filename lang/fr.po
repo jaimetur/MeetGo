@@ -955,6 +955,45 @@ msgstr "Langue introuvable"
 msgid "err_language_english"
 msgstr "L’anglais ne peut pas être désactivé : c’est la langue source"
 
+msgid "err_age_span"
+msgstr "L’âge minimum ne peut pas dépasser l’âge maximum"
+
+msgid "err_age_span_creator"
+msgstr "Votre âge doit être dans la tranche de la communauté"
+
+msgid "err_join_answers"
+msgstr "Répondez aux questions pour demander à rejoindre"
+
+msgid "err_too_many_guests"
+msgstr "Vous pouvez venir avec {n} accompagnants au plus"
+
+msgid "err_no_room_guests"
+msgstr "Il ne reste pas de places pour vos accompagnants"
+
+msgid "err_checkin_time"
+msgstr "La présence se note de 2 heures avant à 14 jours après la sortie"
+
+msgid "err_rating_not_allowed"
+msgstr "Seules les personnes venues peuvent noter"
+
+msgid "err_rating_time"
+msgstr "On peut noter dès le début et jusqu’à 30 jours après"
+
+msgid "err_cohost_not_member"
+msgstr "Les co-organisateurs doivent être membres de la communauté"
+
+msgid "push_plan_soon_subject"
+msgstr "Bientôt : « {plan} »"
+
+msgid "push_plan_soon_body"
+msgstr "Ça commence bientôt : {date}. {place}"
+
+msgid "push_plan_rate_subject"
+msgstr "Alors, « {plan} » ?"
+
+msgid "push_plan_rate_body"
+msgstr "Notez-le en un instant : ça aide l’organisateur."
+
 msgid "err_cannot_delete_self"
 msgstr "Impossible de se supprimer soi-même"
 
@@ -2952,6 +2991,249 @@ msgstr "Confidentialité"
 
 msgid "ui_about_rights"
 msgstr "Tous droits réservés."
+
+msgid "ui_calendar_title"
+msgstr "Vos sorties dans votre agenda"
+
+msgid "ui_calendar_hint"
+msgstr "Abonnez-vous une fois : les sorties auxquelles vous participez apparaîtront toutes seules dans l’agenda du téléphone ou Google, et se mettront à jour."
+
+msgid "ui_calendar_get"
+msgstr "Obtenir mon agenda"
+
+msgid "ui_calendar_subscribe"
+msgstr "S’abonner"
+
+msgid "ui_calendar_private"
+msgstr "C’est un lien privé : ne le partagez pas."
+
+msgid "ui_calendar_reset"
+msgstr "En créer un nouveau"
+
+msgid "ui_calendar_reset_done"
+msgstr "Nouveau lien créé : l’ancien ne marche plus"
+
+msgid "ui_community_age_limit"
+msgstr "Limiter par âge"
+
+msgid "ui_community_age_limit_hint"
+msgstr "Seules les personnes dont l’âge, calculé d’après la date de naissance, est dans la tranche pourront entrer. Vous avez {age} ans : vous devez y être."
+
+msgid "ui_community_age_must_include"
+msgstr "La tranche doit inclure votre âge ({age})"
+
+msgid "ui_community_ages_from"
+msgstr "À partir de {min} ans"
+
+msgid "ui_community_ages_span"
+msgstr "{min}–{max} ans"
+
+msgid "ui_community_ages_upto"
+msgstr "Jusqu’à {max} ans"
+
+msgid "ui_community_min_age"
+msgstr "Âge minimum"
+
+msgid "ui_community_max_age"
+msgstr "Âge maximum"
+
+msgid "ui_community_f_questions"
+msgstr "Questions pour rejoindre"
+
+msgid "ui_community_question_ph"
+msgstr "Question {n} (facultative)"
+
+msgid "ui_community_questions_hint"
+msgstr "Jusqu’à 3. Qui demande à rejoindre y répond, et vous voyez les réponses dans les demandes."
+
+msgid "ui_community_questions_lead"
+msgstr "Pour rejoindre « {name} », répondez à ces questions. L’équipe de la communauté lira vos réponses."
+
+msgid "ui_community_send_request"
+msgstr "Envoyer la demande"
+
+msgid "ui_community_tab_stats"
+msgstr "Statistiques"
+
+msgid "ui_post_add_calendar"
+msgstr "Ajouter à l’agenda"
+
+msgid "ui_post_call_after_signup"
+msgstr "Le lien de la visio apparaît une fois inscrit"
+
+msgid "ui_post_call_soon"
+msgstr "L’organisateur ajoutera le lien de la visio"
+
+msgid "ui_post_join_call"
+msgstr "Rejoindre la visio"
+
+msgid "ui_post_came"
+msgstr "Présent"
+
+msgid "ui_post_no_show"
+msgstr "Absent"
+
+msgid "ui_post_checkin"
+msgstr "Présence"
+
+msgid "ui_post_checkin_hint"
+msgstr "Notez qui est venu (✓) et qui non (✕). Seuls les organisateurs le voient."
+
+msgid "ui_post_cohosted_by"
+msgstr "Co-organisé par {names}"
+
+msgid "ui_post_cohosts"
+msgstr "Co-organisateurs"
+
+msgid "ui_post_cohosts_hint"
+msgstr "Ils peuvent modifier la sortie, gérer les participants et noter la présence, comme vous. Choisissez jusqu’à 10 membres."
+
+msgid "ui_post_duplicate"
+msgstr "Dupliquer"
+
+msgid "ui_post_guests"
+msgstr "Accompagnants"
+
+msgid "ui_post_guests_max"
+msgstr "{n} au plus"
+
+msgid "ui_post_how_was_it"
+msgstr "C’était comment ?"
+
+msgid "ui_post_your_rating"
+msgstr "Votre note"
+
+msgid "ui_post_rating_note_ph"
+msgstr "Un mot pour l’organisateur (facultatif)"
+
+msgid "ui_post_rating_private"
+msgstr "L’organisateur voit la moyenne et les commentaires, pas qui les a écrits."
+
+msgid "ui_post_rating_thanks"
+msgstr "Merci pour votre note !"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} notes"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 note"
+
+msgid "ui_post_ratings_title"
+msgstr "Notes"
+
+msgid "ui_post_series_weekly"
+msgstr "Chaque semaine"
+
+msgid "ui_post_series_biweekly"
+msgstr "Toutes les 2 semaines"
+
+msgid "ui_post_series_monthly"
+msgstr "Chaque mois"
+
+msgid "ui_publish_mode"
+msgstr "Format"
+
+msgid "ui_publish_mode_in_person"
+msgstr "Sur place"
+
+msgid "ui_publish_mode_online"
+msgstr "En ligne"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "Hybride"
+
+msgid "ui_publish_f_online_url"
+msgstr "Lien de la visio"
+
+msgid "ui_publish_online_url_hint"
+msgstr "Seuls les inscrits le verront. Vous pourrez l’ajouter plus tard."
+
+msgid "ui_publish_online_url_bad"
+msgstr "Le lien de la visio doit commencer par https://"
+
+msgid "ui_publish_guests"
+msgstr "On peut venir accompagné"
+
+msgid "ui_publish_guests_hint"
+msgstr "Chacun pourra ajouter des accompagnants (+1, +2…). Ils prennent une place."
+
+msgid "ui_publish_guests_max"
+msgstr "Accompagnants par personne"
+
+msgid "ui_publish_repeat"
+msgstr "Se répète"
+
+msgid "ui_publish_repeat_none"
+msgstr "Non"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "Hebdo"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "Toutes 2 sem."
+
+msgid "ui_publish_repeat_monthly"
+msgstr "Mensuel"
+
+msgid "ui_publish_repeat_hint"
+msgstr "Les prochaines dates se créent toutes seules (environ 5 semaines à l’avance), chacune avec sa liste et sa discussion. Mensuel : le même jour de la semaine (par exemple le 2e jeudi)."
+
+msgid "ui_publish_repeat_until"
+msgstr "Jusqu’au (facultatif, un an au plus)"
+
+msgid "ui_series_scope_title"
+msgstr "Cette sortie se répète"
+
+msgid "ui_series_scope_body"
+msgstr "Appliquer les changements à cette date seulement, ou aux suivantes aussi ?"
+
+msgid "ui_series_scope_one"
+msgstr "Cette date seulement"
+
+msgid "ui_series_scope_following"
+msgstr "Celle-ci et les suivantes"
+
+msgid "ui_series_delete_one"
+msgstr "Supprimer cette date seulement"
+
+msgid "ui_series_delete_following"
+msgstr "Supprimer celle-ci et les suivantes"
+
+msgid "ui_stats_members"
+msgstr "Membres"
+
+msgid "ui_stats_new_30d"
+msgstr "+{n} en 30 jours"
+
+msgid "ui_stats_messages"
+msgstr "Messages (30 jours)"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} personnes actives"
+
+msgid "ui_stats_plans"
+msgstr "Sorties à venir"
+
+msgid "ui_stats_plans_90d"
+msgstr "{n} ces 90 derniers jours"
+
+msgid "ui_stats_attendance"
+msgstr "Présence réelle"
+
+msgid "ui_stats_attendance_sub"
+msgstr "{came} sur {marked} notés"
+
+msgid "ui_stats_rating"
+msgstr "Note moyenne"
+
+msgid "ui_stats_joined_weeks"
+msgstr "Arrivées par semaine (12 semaines)"
+
+msgid "ui_stats_top_organisers"
+msgstr "Qui organise le plus (90 jours)"
+
+msgid "ui_stats_private"
+msgstr "Visible seulement par l’équipe de la communauté."
 
 msgid "ui_install_title"
 msgstr "Installer MeetGo"

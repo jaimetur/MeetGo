@@ -468,6 +468,8 @@ export function PostPage({ id }: { id: number }) {
   const [report, setReport] = useState(false);
   const [people, setPeople] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [cohostsOpen, setCohostsOpen] = useState(false);
+  const [ratingsOpen, setRatingsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   useClickOutside(menuRef, () => setMenu(false), menu);
 
@@ -526,9 +528,9 @@ export function PostPage({ id }: { id: number }) {
     }
   }
 
-  async function remove() {
+  async function remove(scope: "one" | "following" = "one") {
     try {
-      await api.deletePost(id);
+      await api.deletePost(id, scope);
       emitBoardEvent({ type: "post.deleted", post_id: id });
       refreshMyPlansSoon();
     } catch (e: any) {
@@ -579,7 +581,8 @@ export function PostPage({ id }: { id: number }) {
               <div className="menu" style={{ right: 0, top: 42 }} role="menu">
                 <button onClick={() => { setMenu(false); navigator.clipboard?.writeText(window.location.href).then(() => toast(t("ui_copied"))).catch(() => undefined); }}><Icon name="link" size="sm" />{t("ui_post_copy_link")}</button>
                 {post.can_edit ? <button onClick={() => navigate(`/publish?edit=${id}`)}><Icon name="edit" size="sm" />{t("ui_post_edit")}</button> : null}
-                {dated && past ? <button onClick={() => navigate(`/publish?repeat=${id}`)}><Icon name="repeat" size="sm" />{t("ui_post_repeat")}</button> : null}
+                {dated && (past || canManage) ? <button onClick={() => navigate(`/publish?repeat=${id}`)}><Icon name="copy" size="sm" />{past ? t("ui_post_repeat") : t("ui_post_duplicate")}</button> : null}
+                {dated && (mine || staff) ? <button onClick={() => { setMenu(false); setCohostsOpen(true); }}><Icon name="users" size="sm" />{t("ui_post_cohosts")}</button> : null}
                 {staff ? <button onClick={() => patch({ pinned: !post.pinned }, post.pinned ? t("ui_post_unpinned_toast") : t("ui_post_pinned_toast"))}><Icon name="pin" size="sm" />{post.pinned ? t("ui_post_unpin") : t("ui_post_pin")}</button> : null}
                 {canManage ? <button onClick={() => patch({ closed: !post.closed }, post.closed ? t("ui_post_reopened_toast") : t("ui_post_closed_toast"))}><Icon name="lock" size="sm" />{post.closed ? t("ui_post_reopen") : t("ui_post_close")}</button> : null}
                 {!mine ? <button onClick={() => { setMenu(false); setReport(true); }}><Icon name="flag" size="sm" />{t("ui_report")}</button> : null}
@@ -598,18 +601,36 @@ export function PostPage({ id }: { id: number }) {
           {post.pinned ? <span className="ktag"><Icon name="pin" size="sm" />{t("ui_post_pinned")}</span> : null}
           {post.closed ? <span className="ktag"><Icon name="lock" size="sm" />{t("ui_post_closed")}</span> : null}
           {past ? <span className="ktag">{t("ui_post_finished")}</span> : null}
+          {post.series ? <span className="ktag"><Icon name="repeat" size="sm" />{t("ui_post_series_" + post.series.freq)}</span> : null}
+          {dated && post.mode && post.mode !== "in_person" ? <span className="ktag k-meetup"><Icon name="link" size="sm" />{t("ui_publish_mode_" + post.mode)}</span> : null}
         </div>
         <h1 className="dtitle">{post.title}</h1>
 
         <div className="kv">
           {post.starts_at ? <div><span className="kvi"><Icon name="calendar" size="sm" /></span><span>{longWhen(post.starts_at)}{post.ends_at ? ` – ${new Date(post.ends_at).toDateString() === new Date(post.starts_at).toDateString() ? hourOf(post.ends_at) : longWhen(post.ends_at)}` : ""}{!past ? <span className="muted"> · {relative(post.starts_at)}</span> : null}</span></div> : null}
           {post.place ? <div><span className="kvi"><Icon name="place" size="sm" /></span><span>{post.place}{mapUrl ? <> · <a href={mapUrl} target="_blank" rel="noreferrer">{t("ui_post_see_map")}</a></> : null}</span></div> : null}
+          {dated && post.mode && post.mode !== "in_person" ? (
+            <div><span className="kvi"><Icon name="link" size="sm" /></span>
+              {post.online_url ? <a href={post.online_url} target="_blank" rel="noreferrer">{t("ui_post_join_call")}</a>
+                : <span className="muted">{post.has_online_url ? t("ui_post_call_after_signup") : t("ui_post_call_soon")}</span>}
+            </div>
+          ) : null}
+          {post.cohosts?.length ? <div><span className="kvi"><Icon name="users" size="sm" /></span><span>{t("ui_post_cohosted_by", { names: post.cohosts.map((c) => c.display_name).join(", ") })}</span></div> : null}
           <div><span className="kvi"><Icon name="user" size="sm" /></span><span className="row" style={{ gap: 6 }}><Avatar user={post.author} size={20} />{dated ? t("ui_post_organised_by", { name: post.author.display_name }) : t("ui_post_posted_by", { name: post.author.display_name })} <span className="muted">· {relative(post.created_at)}</span></span></div>
           {post.link_url ? <div><span className="kvi"><Icon name="ticket" size="sm" /></span><a href={post.link_url} target="_blank" rel="noreferrer">{t("ui_post_tickets")}</a></div> : null}
           {dated && post.join_mode === "approval" ? <div><span className="kvi"><Icon name="shield" size="sm" /></span><span>{t("ui_post_approval_note")}</span></div> : null}
         </div>
 
+        {dated && !past ? <CalendarButtons post={post} /> : null}
         {post.body ? <div className="pbodytext">{post.body}</div> : null}
+        {dated && going && !past && (post.max_guests || 0) > 0 ? <GuestsStepper post={post} onChanged={() => load().catch(() => undefined)} /> : null}
+        {dated && started(post) && going && !mine ? <RatingCard post={post} onRated={(n) => setPost({ ...post, my_rating: n })} /> : null}
+        {post.rating ? (
+          <button className="ratingsum" onClick={() => setRatingsOpen(true)}>
+            <span className="stars" aria-hidden="true">★</span><b>{post.rating.average.toLocaleString()}</b>
+            <span className="muted">{t("ui_post_ratings_n", { n: post.rating.count })}</span><span className="grow" />›
+          </button>
+        ) : null}
 
         {dated ? (
           <section className="dsec">
@@ -641,9 +662,17 @@ export function PostPage({ id }: { id: number }) {
         </div>
       ) : null}
 
-      {confirmDelete ? (
-        <ConfirmModal title={t("ui_post_delete")} body={dated ? t("ui_post_delete_plan_body") : t("ui_post_delete_body")} confirm={t("ui_post_delete")} danger onConfirm={remove} onClose={() => setConfirmDelete(false)} />
+      {confirmDelete && post.series && !post.series.ended ? (
+        <Modal title={t("ui_post_delete")} onClose={() => setConfirmDelete(false)}>
+          <p className="muted" style={{ margin: 0 }}>{t("ui_post_delete_plan_body")}</p>
+          <button className="btn danger block" onClick={() => { setConfirmDelete(false); remove("one"); }}>{t("ui_series_delete_one")}</button>
+          <button className="btn dangerfill block" onClick={() => { setConfirmDelete(false); remove("following"); }}>{t("ui_series_delete_following")}</button>
+        </Modal>
+      ) : confirmDelete ? (
+        <ConfirmModal title={t("ui_post_delete")} body={dated ? t("ui_post_delete_plan_body") : t("ui_post_delete_body")} confirm={t("ui_post_delete")} danger onConfirm={() => remove()} onClose={() => setConfirmDelete(false)} />
       ) : null}
+      {cohostsOpen ? <CohostsModal post={post} onClose={() => setCohostsOpen(false)} onSaved={(p) => { setPost(p); setCohostsOpen(false); }} /> : null}
+      {ratingsOpen ? <RatingsModal post={post} onClose={() => setRatingsOpen(false)} /> : null}
       {report ? <ReportPostModal postId={id} onClose={() => setReport(false)} /> : null}
       {people ? <AttendeesModal post={post} manage={canManage} onClose={() => setPeople(false)} onChanged={() => load().catch(() => undefined)} /> : null}
     </main>
@@ -740,12 +769,169 @@ function Comments({ post }: { post: Post }) {
   );
 }
 
+/** Started (from its start time on): it can be rated; check-in opens 2 hours before. */
+function started(post: Post) {
+  return !!post.starts_at && new Date(post.starts_at).getTime() <= Date.now();
+}
+
+function checkinOpen(post: Post) {
+  if (!post.starts_at) return false;
+  const start = new Date(post.starts_at).getTime();
+  const end = new Date(post.ends_at || post.starts_at).getTime();
+  return Date.now() >= start - 2 * 3600e3 && Date.now() <= end + 14 * 86400e3;
+}
+
+/** Add the plan to the phone's calendar (.ics, opened by Apple/Outlook/Android) or to Google Calendar. */
+function CalendarButtons({ post }: { post: Post }) {
+  if (!post.starts_at || !post.calendar_url) return null;
+  const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const start = new Date(post.starts_at);
+  const end = post.ends_at ? new Date(post.ends_at) : new Date(start.getTime() + 2 * 3600e3);
+  const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(post.title)}&dates=${fmt(start)}/${fmt(end)}`
+    + `&details=${encodeURIComponent(`${window.location.origin}/app/p/${post.id}`)}&location=${encodeURIComponent(post.place || "")}`;
+  return (
+    <div className="calrow">
+      <a className="btn sm" href={fileUrl(post.calendar_url)} target="_blank" rel="noreferrer"><Icon name="calendar" size="sm" />{t("ui_post_add_calendar")}</a>
+      <a className="btn sm" href={google} target="_blank" rel="noreferrer">Google Calendar</a>
+    </div>
+  );
+}
+
+/** How many companions I bring (+1, +2…), up to what the organiser allows. */
+function GuestsStepper({ post, onChanged }: { post: Post; onChanged: () => void }) {
+  const [busy, setBusy] = useState(false);
+  const n = post.my_guests || 0;
+  const change = async (next: number) => {
+    setBusy(true);
+    try {
+      await api.setGuests(post.id, next);
+      onChanged();
+    } catch (e: any) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="stepper guestbox">
+      <span className="grow">{t("ui_post_guests")}<small className="muted"> · {t("ui_post_guests_max", { n: post.max_guests || 0 })}</small></span>
+      <button className="iconbtn" disabled={busy || n <= 0} aria-label="−" onClick={() => change(n - 1)}>−</button>
+      <b className="guestn">+{n}</b>
+      <button className="iconbtn" disabled={busy || n >= (post.max_guests || 0)} aria-label="+" onClick={() => change(n + 1)}><Icon name="plus" size="sm" /></button>
+    </div>
+  );
+}
+
+/** "How was it?": 1-5 stars and a note for the organisers (they see the average and the notes, not who wrote them). */
+function RatingCard({ post, onRated }: { post: Post; onRated: (n: number) => void }) {
+  const [stars, setStars] = useState(post.my_rating || 0);
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState(!!post.my_rating);
+  async function send(n: number, withNote = false) {
+    setStars(n);
+    setBusy(true);
+    try {
+      await api.rate(post.id, n, withNote ? note.trim() || undefined : undefined);
+      onRated(n);
+      if (withNote) {
+        setDone(true);
+        toast(t("ui_post_rating_thanks"));
+      }
+    } catch (e: any) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <section className="ratecard">
+      <b>{done ? t("ui_post_your_rating") : t("ui_post_how_was_it")}</b>
+      <div className="starpick" role="radiogroup" aria-label={t("ui_post_how_was_it")}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button key={n} type="button" role="radio" aria-checked={stars === n} aria-label={String(n)} className={n <= stars ? "on" : ""} disabled={busy} onClick={() => send(n)}>★</button>
+        ))}
+      </div>
+      {stars && !done ? (
+        <>
+          <textarea className="inp" rows={2} maxLength={1000} placeholder={t("ui_post_rating_note_ph")} value={note} onChange={(e) => setNote(e.target.value)} />
+          <button className="btn pri sm" disabled={busy} onClick={() => send(stars, true)}>{t("ui_send")}</button>
+        </>
+      ) : null}
+      <small className="muted">{t("ui_post_rating_private")}</small>
+    </section>
+  );
+}
+
+function RatingsModal({ post, onClose }: { post: Post; onClose: () => void }) {
+  const [r, setR] = useState<{ average: number | null; count: number; counts: Record<string, number>; notes: string[] } | null>(null);
+  useEffect(() => { api.ratings(post.id).then(setR).catch((e) => toast(e.message, "error")); }, [post.id]);
+  const max = Math.max(1, ...Object.values(r?.counts || {}));
+  return (
+    <Modal title={t("ui_post_ratings_title")} onClose={onClose}>
+      {!r ? <div className="muted">{t("ui_loading")}</div> : (
+        <>
+          <div className="ratingbig"><span className="stars">★</span><b>{r.average?.toLocaleString() ?? "—"}</b><span className="muted">{t("ui_post_ratings_n", { n: r.count })}</span></div>
+          <div className="ratingbars">
+            {[5, 4, 3, 2, 1].map((n) => (
+              <div key={n}><span>{n}★</span><span className="track"><i style={{ width: `${((r.counts[n] || 0) / max) * 100}%` }} /></span><span>{r.counts[n] || 0}</span></div>
+            ))}
+          </div>
+          {r.notes.length ? <div className="stack" style={{ gap: 8 }}>{r.notes.map((n, i) => <blockquote key={i} className="ratingnote">{n}</blockquote>)}</div> : null}
+          <small className="muted">{t("ui_post_rating_private")}</small>
+        </>
+      )}
+    </Modal>
+  );
+}
+
+/** The organiser (or the community's staff) names co-organisers among the community's members. */
+function CohostsModal({ post, onClose, onSaved }: { post: Post; onClose: () => void; onSaved: (p: Post) => void }) {
+  const [members, setMembers] = useState<{ id: number; display_name: string; avatar_url?: string | null; bot?: boolean }[] | null>(null);
+  const [chosen, setChosen] = useState<number[]>((post.cohosts || []).map((c) => c.id));
+  const [q, setQ] = useState("");
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { api.communityMembers(post.community.id).then(setMembers).catch(() => setMembers([])); }, [post.community.id]);
+  const shown = (members || []).filter((m) => !m.bot && m.id !== post.author.id && (!q.trim() || m.display_name.toLowerCase().includes(q.trim().toLowerCase())));
+  return (
+    <Modal title={t("ui_post_cohosts")} onClose={onClose} footer={<>
+      <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
+      <button className="btn pri" disabled={busy} onClick={async () => {
+        setBusy(true);
+        try { onSaved(await api.setCohosts(post.id, chosen)); toast(t("ui_saved")); } catch (e: any) { toast(e.message, "error"); } finally { setBusy(false); }
+      }}>{t("ui_save")}</button>
+    </>}>
+      <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_post_cohosts_hint")}</p>
+      <div className="search"><Icon name="search" size="sm" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_search_members")} /></div>
+      <div className="plist">
+        {members === null ? <div className="muted">{t("ui_loading")}</div> : shown.map((m) => (
+          <label key={m.id} className="item" style={{ cursor: "pointer" }}>
+            <Avatar user={m} size={34} />
+            <span className="grow">{m.display_name}</span>
+            <input type="checkbox" checked={chosen.includes(m.id)} disabled={!chosen.includes(m.id) && chosen.length >= 10}
+              onChange={(e) => setChosen(e.target.checked ? [...chosen, m.id] : chosen.filter((x) => x !== m.id))} />
+          </label>
+        ))}
+      </div>
+    </Modal>
+  );
+}
+
 function AttendeesModal({ post, manage, onClose, onChanged }: { post: Post; manage: boolean; onClose: () => void; onChanged: () => void }) {
   const [list, setList] = useState<Attendee[] | null>(null);
   const load = useCallback(() => api.attendees(post.id).then(setList).catch(() => setList(post.attendees?.map((a) => ({ ...a, status: "going" as const })) || [])), [post.id, post.attendees]);
   useEffect(() => {
     load();
   }, [load]);
+  const canCheck = manage && checkinOpen(post);
+  async function mark(a: Attendee, attended: boolean | null) {
+    try {
+      const r = await api.checkin(post.id, a.id, attended);
+      setList((l) => (l || []).map((x) => (x.id === a.id ? { ...x, attended: r.attended } : x)));
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
   async function resolve(userId: number, accept: boolean) {
     try {
       await api.resolveAttendee(post.id, userId, accept);
@@ -763,6 +949,7 @@ function AttendeesModal({ post, manage, onClose, onChanged }: { post: Post; mana
   ];
   return (
     <Modal title={t("ui_post_people_going")} onClose={onClose}>
+      {canCheck ? <p className="muted" style={{ margin: 0, fontSize: 12.5 }}>{t("ui_post_checkin_hint")}</p> : null}
       {!list ? <div className="muted">{t("ui_loading")}</div> : null}
       {list && !list.length ? <div className="muted">{t("ui_post_nobody_yet")}</div> : null}
       {groups.map(([label, xs]) => xs.length ? (
@@ -772,7 +959,13 @@ function AttendeesModal({ post, manage, onClose, onChanged }: { post: Post; mana
             {xs.map((a) => (
               <div key={a.id} className="item">
                 <Avatar user={a} size={34} />
-                <span className="grow">{a.display_name}{a.id === post.author.id ? <span className="role" style={{ marginLeft: 6 }}>{t("ui_post_organiser")}</span> : null}</span>
+                <span className="grow">{a.display_name}{a.guests ? <span className="muted"> +{a.guests}</span> : null}{a.id === post.author.id ? <span className="role" style={{ marginLeft: 6 }}>{t("ui_post_organiser")}</span> : null}</span>
+                {canCheck && a.status === "going" ? (
+                  <span className="checkin" role="group" aria-label={t("ui_post_checkin")}>
+                    <button className={a.attended === true ? "on yes" : ""} title={t("ui_post_came")} aria-pressed={a.attended === true} onClick={() => mark(a, a.attended === true ? null : true)}>✓</button>
+                    <button className={a.attended === false ? "on no" : ""} title={t("ui_post_no_show")} aria-pressed={a.attended === false} onClick={() => mark(a, a.attended === false ? null : false)}>✕</button>
+                  </span>
+                ) : null}
                 {manage && a.status === "pending" ? (
                   <>
                     <button className="btn sm pri" onClick={() => resolve(a.id, true)}>{t("ui_accept")}</button>
@@ -816,11 +1009,14 @@ type Form = {
   date: string; time: string; endDate: string; endTime: string; place: string; place_url: string;
   limit: boolean; capacity: number; link_url: string; comments_mode: "all" | "attendees" | "off"; approval: boolean;
   cover: { id: number; url: string } | null;
+  mode: "in_person" | "online" | "hybrid"; online_url: string; guests: boolean; max_guests: number;
+  repeat: "none" | "weekly" | "biweekly" | "monthly"; repeat_until: string;
 };
 
 const EMPTY_FORM: Form = {
   kind: "meetup", community_id: null, title: "", body: "", date: "", time: "", endDate: "", endTime: "", place: "", place_url: "",
   limit: false, capacity: 8, link_url: "", comments_mode: "all", approval: false, cover: null,
+  mode: "in_person", online_url: "", guests: false, max_guests: 1, repeat: "none", repeat_until: "",
 };
 
 function Toggle({ label, hint, on, onChange, id }: { label: string; hint?: string; on: boolean; onChange: (v: boolean) => void; id: string }) {
@@ -849,6 +1045,8 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   const [loading, setLoading] = useState(!!(repeat || edit));
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [series, setSeries] = useState<Post["series"]>(null);
+  const [askScope, setAskScope] = useState(false);
   const set = (patch: Partial<Form>) => setForm((f) => ({ ...f, ...patch }));
 
   useEffect(() => {
@@ -867,7 +1065,10 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
         date: edit ? start.date : "", time: start.time, endDate: edit ? end.date : "", endTime: end.time,
         place: p.place || "", place_url: p.place_url || "", limit: !!p.capacity, capacity: p.capacity || 8, link_url: p.link_url || "",
         comments_mode: p.comments_mode, approval: p.join_mode === "approval", cover: null,
+        mode: p.mode || "in_person", online_url: p.online_url || "", guests: (p.max_guests || 0) > 0, max_guests: p.max_guests || 1,
+        repeat: "none", repeat_until: "",
       });
+      if (edit) setSeries(p.series || null);
     }).catch((e) => toast(e.message, "error")).finally(() => setLoading(false));
   }, [edit, repeat]);
 
@@ -888,6 +1089,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   if (dated && (!form.date || !form.time)) problems.push(t("ui_publish_need_date"));
   if (dated && starts && !edit && new Date(starts) < new Date()) problems.push(t("ui_publish_date_past"));
   if (ends && starts && ends <= starts) problems.push(t("ui_publish_end_before"));
+  if (dated && form.mode !== "in_person" && form.online_url.trim() && !/^https?:\/\//.test(form.online_url.trim())) problems.push(t("ui_publish_online_url_bad"));
 
   async function uploadCover(file: File) {
     setUploading(true);
@@ -901,11 +1103,17 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
     }
   }
 
-  async function submit() {
+  async function submit(scope?: "one" | "following") {
     if (problems.length) {
       toast(problems[0], "error");
       return;
     }
+    // a plan that repeats: this date only, or the following ones too
+    if (edit && series && !series.ended && !scope) {
+      setAskScope(true);
+      return;
+    }
+    setAskScope(false);
     setBusy(true);
     const payload: Record<string, unknown> = {
       title: form.title.trim(), body: form.body.trim() || null,
@@ -916,8 +1124,17 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
       Object.assign(payload, {
         starts_at: starts, ends_at: ends, place: form.place.trim() || null, place_url: form.place_url.trim() || null,
         capacity: form.limit ? Math.max(1, Math.round(form.capacity)) : null, join_mode: form.approval ? "approval" : "open",
+        mode: form.mode, online_url: form.mode !== "in_person" ? form.online_url.trim() || null : null,
+        max_guests: form.guests ? Math.max(1, Math.min(5, Math.round(form.max_guests))) : 0,
       });
+      if (form.mode === "online") Object.assign(payload, { place: null, place_url: null });
       if (form.kind === "event") payload.link_url = form.link_url.trim() || null;
+      if (!edit && form.repeat !== "none") {
+        payload.repeat = form.repeat;
+        payload.repeat_until = form.repeat_until ? fromLocalParts(form.repeat_until, "23:59") : null;
+        payload.tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      }
+      if (scope) payload.scope = scope;
     }
     if (form.cover) payload.cover_attachment_id = form.cover.id;
     try {
@@ -956,7 +1173,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
       <div className="formtop">
         <button className="iconbtn" onClick={() => goBack("/")} aria-label={t("ui_cancel")}><Icon name="x" /></button>
         <h1 className="grow">{edit ? t("ui_publish_edit_title") : repeat ? t("ui_publish_repeat_title") : t("ui_publish_title")}</h1>
-        <button className="btn go sm deskonly" disabled={busy || loading || uploading} onClick={submit}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
+        <button className="btn go sm deskonly" disabled={busy || loading || uploading} onClick={() => submit()}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
       </div>
       <div className="swrap pform">
         {loading ? <Skeletons n={1} /> : (
@@ -992,8 +1209,33 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
                     <label className="fld">{t("ui_publish_f_end_time")}<input id="pub-end-time" className="inp" type="time" value={form.endTime} onChange={(e) => set({ endTime: e.target.value })} /></label>
                   </div>
                 ) : null}
-                <label className="fld">{t("ui_publish_f_place")}<input id="pub-place" className="inp" maxLength={200} value={form.place} onChange={(e) => set({ place: e.target.value })} placeholder={t("ui_publish_place_ph")} /></label>
-                <label className="fld">{t("ui_publish_f_place_url")}<input id="pub-place-url" className="inp" type="url" inputMode="url" value={form.place_url} onChange={(e) => set({ place_url: e.target.value })} placeholder="https://…" /></label>
+                {!edit ? (
+                  <div className="fld"><span>{t("ui_publish_repeat")}</span>
+                    <Seg label={t("ui_publish_repeat")} value={form.repeat} onChange={(repeat) => set({ repeat })}
+                      options={[["none", t("ui_publish_repeat_none")], ["weekly", t("ui_publish_repeat_weekly")], ["biweekly", t("ui_publish_repeat_biweekly")], ["monthly", t("ui_publish_repeat_monthly")]]} />
+                    {form.repeat !== "none" ? (
+                      <>
+                        <small className="muted">{t("ui_publish_repeat_hint")}</small>
+                        <label className="fld">{t("ui_publish_repeat_until")}<input id="pub-repeat-until" className="inp" type="date" min={form.date || undefined} value={form.repeat_until} onChange={(e) => set({ repeat_until: e.target.value })} /></label>
+                      </>
+                    ) : null}
+                  </div>
+                ) : series ? <div className="note"><Icon name="repeat" size="sm" />{t("ui_post_series_" + series.freq)}</div> : null}
+                <div className="fld"><span>{t("ui_publish_mode")}</span>
+                  <Seg label={t("ui_publish_mode")} value={form.mode} onChange={(mode) => set({ mode })}
+                    options={[["in_person", t("ui_publish_mode_in_person")], ["online", t("ui_publish_mode_online")], ["hybrid", t("ui_publish_mode_hybrid")]]} />
+                </div>
+                {form.mode !== "in_person" ? (
+                  <label className="fld">{t("ui_publish_f_online_url")}<input id="pub-online-url" className="inp" type="url" inputMode="url" value={form.online_url} onChange={(e) => set({ online_url: e.target.value })} placeholder="https://meet.google.com/…" />
+                    <small className="muted">{t("ui_publish_online_url_hint")}</small>
+                  </label>
+                ) : null}
+                {form.mode !== "online" ? (
+                  <>
+                    <label className="fld">{t("ui_publish_f_place")}<input id="pub-place" className="inp" maxLength={200} value={form.place} onChange={(e) => set({ place: e.target.value })} placeholder={t("ui_publish_place_ph")} /></label>
+                    <label className="fld">{t("ui_publish_f_place_url")}<input id="pub-place-url" className="inp" type="url" inputMode="url" value={form.place_url} onChange={(e) => set({ place_url: e.target.value })} placeholder="https://…" /></label>
+                  </>
+                ) : null}
                 {form.kind === "event" ? (
                   <label className="fld">{t("ui_publish_f_link")}<input id="pub-link" className="inp" type="url" inputMode="url" value={form.link_url} onChange={(e) => set({ link_url: e.target.value })} placeholder="https://…" /></label>
                 ) : null}
@@ -1018,6 +1260,15 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
               {dated ? (
                 <>
                   <Toggle id="pub-approval" label={t("ui_publish_approval")} hint={t("ui_publish_approval_hint")} on={form.approval} onChange={(approval) => set({ approval })} />
+                  <Toggle id="pub-guests" label={t("ui_publish_guests")} hint={t("ui_publish_guests_hint")} on={form.guests} onChange={(guests) => set({ guests })} />
+                  {form.guests ? (
+                    <div className="stepper">
+                      <span className="grow">{t("ui_publish_guests_max")}</span>
+                      <button className="iconbtn" aria-label="−" onClick={() => set({ max_guests: Math.max(1, form.max_guests - 1) })}>−</button>
+                      <input id="pub-max-guests" className="inp" type="number" min={1} max={5} inputMode="numeric" value={form.max_guests} onChange={(e) => set({ max_guests: Math.min(5, Math.max(1, Number(e.target.value) || 1)) })} />
+                      <button className="iconbtn" aria-label="+" onClick={() => set({ max_guests: Math.min(5, form.max_guests + 1) })}><Icon name="plus" size="sm" /></button>
+                    </div>
+                  ) : null}
                   <Toggle id="pub-limit" label={t("ui_publish_limit")} hint={t("ui_publish_limit_hint")} on={form.limit} onChange={(limit) => set({ limit })} />
                   {form.limit ? (
                     <div className="stepper">
@@ -1034,8 +1285,15 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
         )}
       </div>
       <div className="dbar single phoneonly">
-        <button className="btn go" disabled={busy || loading || uploading} onClick={submit}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
+        <button className="btn go" disabled={busy || loading || uploading} onClick={() => submit()}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
       </div>
+      {askScope ? (
+        <Modal title={t("ui_series_scope_title")} onClose={() => setAskScope(false)}>
+          <p className="muted" style={{ margin: 0 }}>{t("ui_series_scope_body")}</p>
+          <button id="pub-scope-one" className="btn block" onClick={() => submit("one")}>{t("ui_series_scope_one")}</button>
+          <button id="pub-scope-following" className="btn pri block" onClick={() => submit("following")}>{t("ui_series_scope_following")}</button>
+        </Modal>
+      ) : null}
     </main>
   );
 }

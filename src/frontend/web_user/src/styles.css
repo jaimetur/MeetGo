@@ -1392,3 +1392,44 @@ button.adm-tile:hover { border-color: var(--line2); background: var(--raise); }
 /* a long dialog scrolls inside and keeps its buttons on screen (the % height did not resolve inside the grid) */
 .modal { max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
 .modal .mbody { min-height: 0; }
+
+/* plans: calendar, companions, ratings, check-in */
+.calrow { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 2px; }
+.calrow .btn { text-decoration: none; color: var(--fg); }
+.guestbox { margin: 12px 0 0; }
+.guestbox small { font-size: 12px; }
+.guestn { min-width: 34px; text-align: center; font-variant-numeric: tabular-nums; }
+.ratecard { display: flex; flex-direction: column; gap: 8px; margin: 14px 0 0; padding: 14px; border-radius: 16px; background: var(--panel2); }
+.starpick { display: flex; gap: 4px; }
+.starpick button { font-size: 32px; line-height: 1; color: var(--line2); padding: 2px; transition: transform 0.1s, color 0.15s; }
+.starpick button.on { color: #f5b301; }
+.starpick button:active { transform: scale(0.9); }
+.ratecard .btn { align-self: flex-start; }
+.ratingsum { display: flex; align-items: center; gap: 8px; width: 100%; margin: 12px 0 0; padding: 10px 14px; border-radius: 14px; background: var(--panel2); color: var(--fg); font-size: 14px; }
+.ratingsum .stars, .ratingbig .stars { color: #f5b301; font-size: 20px; }
+.ratingbig { display: flex; align-items: baseline; gap: 8px; }
+.ratingbig b { font-family: var(--display); font-size: 30px; }
+.ratingbars { display: flex; flex-direction: column; gap: 5px; }
+.ratingbars > div { display: grid; grid-template-columns: 34px minmax(0, 1fr) 28px; align-items: center; gap: 8px; font-size: 12.5px; }
+.ratingbars .track { height: 8px; border-radius: 999px; background: var(--panel2); overflow: hidden; }
+.ratingbars .track i { display: block; height: 100%; background: #f5b301; border-radius: 999px; }
+.ratingnote { margin: 0; padding: 8px 12px; border-left: 3px solid #f5b301; background: var(--panel2); border-radius: 0 10px 10px 0; font-size: 13.5px; }
+.checkin { display: inline-flex; gap: 4px; flex: none; }
+.checkin button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line2); font-weight: 800; color: var(--muted); }
+.checkin button.on.yes { background: #22c55e; border-color: #22c55e; color: #fff; }
+.checkin button.on.no { background: #ef4444; border-color: #ef4444; color: #fff; }
+/* communities: join answers, statistics */
+.reqitem { align-items: flex-start; }
+.reqanswer { display: flex; flex-direction: column; margin-top: 4px; font-size: 13px; }
+.reqanswer small { color: var(--muted); font-size: 11.5px; }
+.cstats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.cstat { display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
+.cstat .ic { color: var(--blue); }
+.cstat b { font-family: var(--display); font-size: 22px; color: var(--strong); }
+.cstat span { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.cstat small { font-size: 11.5px; color: var(--muted); }
+.cbars { display: flex; align-items: flex-end; gap: 4px; height: 110px; }
+.cbars span { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.cbars i { display: block; width: 100%; border-radius: 4px 4px 2px 2px; background: var(--grad2); }
+.cbars i.zero { background: var(--line2); }
+a.btn { text-decoration: none; }

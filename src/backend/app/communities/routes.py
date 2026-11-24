@@ -10,11 +10,13 @@ from app.core.app_settings import app_base_url
 from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
 from app.core.models import CommunityRequest, Conversation, ConversationMember, User, UserInterest, utcnow
-from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, MemberRoleIn, ResolveIn
+from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
-    hand_over_ownership, in_zone, lift_ban, list_communities, pending_request, rank_of, staff_ids, staff_of, valid_zone,
+    clean_questions, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
+    staff_ids, staff_of, valid_zone,
 )
+from app.conversations.service import fits_age
 from app.conversations.service import get_membership, join, user_age_key, user_summary
 from app.mail import notify_email
 from app.messaging.service import recipients
@@ -79,11 +81,17 @@ async def communities(q: str = "", mine: int = 0, province: str | None = None, a
 @router.post("/communities", response_model=dict)
 async def create_community(payload: CommunityCreateIn, db: AsyncSession = Depends(get_db),
                            user: User = Depends(require_write_access)):
+    # An age span replaces the creator's fixed range; it must include the creator, worked out from the date of birth.
+    if payload.min_age is not None and payload.max_age is not None and payload.min_age > payload.max_age:
+        raise HTTPException(400, t("err_age_span"))
     conv = Conversation(kind="channel", title=payload.title.strip(), description=payload.description,
                         avatar_url=payload.avatar_url or None, province=user.province, age_range=user_age_key(user),
                         created_by_id=user.id, created_at=utcnow(), slow_mode_seconds=0, rules_markdown="",
-                        policy_json={}, invite_code=secrets.token_urlsafe(9), access_mode=payload.access_mode,
-                        board_mode=payload.board_mode)
+                        policy_json={"join_questions": clean_questions(payload.join_questions)} if payload.join_questions else {},
+                        invite_code=secrets.token_urlsafe(9), access_mode=payload.access_mode,
+                        board_mode=payload.board_mode, min_age=payload.min_age, max_age=payload.max_age)
+    if not fits_age(user, conv):
+        raise HTTPException(400, t("err_age_span_creator"))
     db.add(conv)
     await db.flush()
     await join(db, conv, user.id, role="owner")
@@ -137,13 +145,16 @@ async def update_community(community_id: int, payload: CommunityUpdateIn, db: As
         conv.board_mode = payload.board_mode
     if payload.rules is not None:
         conv.rules_markdown = payload.rules
+    if payload.join_questions is not None:
+        conv.policy_json = {**(conv.policy_json or {}), "join_questions": clean_questions(payload.join_questions)}
     await db.commit()
     await _changed(db, conv.id)
     return await _out(db, user, conv)
 
 
 @router.post("/communities/{community_id}/join", response_model=dict)
-async def join_community(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(require_write_access)):
+async def join_community(community_id: int, payload: JoinIn | None = None, db: AsyncSession = Depends(get_db),
+                         user: User = Depends(require_write_access)):
     conv = await db.get(Conversation, community_id)
     member = await get_membership(db, community_id, user.id) if conv else None
     if not conv or conv.kind != "channel":
@@ -159,7 +170,11 @@ async def join_community(community_id: int, db: AsyncSession = Depends(get_db), 
     if member is None and conv.access_mode == "request":
         if await pending_request(db, conv.id, user.id):
             return {"status": "requested"}
-        db.add(CommunityRequest(conversation_id=conv.id, user_id=user.id, status="pending"))
+        questions = join_questions(conv)
+        answers = [a.strip()[:500] for a in (payload.answers if payload else [])][:len(questions)]
+        if questions and (len(answers) < len(questions) or not all(answers)):
+            raise HTTPException(400, t("err_join_answers"))
+        db.add(CommunityRequest(conversation_id=conv.id, user_id=user.id, status="pending", answers=answers))
         await db.commit()
         staff = await staff_ids(db, conv.id)
         await realtime.publish(staff, {"type": "community.request", "community_id": conv.id, "user_id": user.id})
@@ -215,7 +230,9 @@ async def list_requests(community_id: int, db: AsyncSession = Depends(get_db), u
     _require_admin(member, user)
     res = await db.execute(select(CommunityRequest, User).join(User, User.id == CommunityRequest.user_id).where(
         CommunityRequest.conversation_id == conv.id, CommunityRequest.status == "pending").order_by(CommunityRequest.id))
-    return [{"user": user_summary(u), "created_at": r.created_at.isoformat().replace("+00:00", "Z")} for r, u in res.all()]
+    questions = join_questions(conv)
+    return [{"user": user_summary(u), "created_at": r.created_at.isoformat().replace("+00:00", "Z"),
+             "answers": [{"question": q, "answer": a} for q, a in zip(questions, r.answers or [])]} for r, u in res.all()]
 
 
 @router.post("/communities/{community_id}/requests/{user_id}/resolve", response_model=dict)
@@ -359,3 +376,55 @@ async def clear_chat(community_id: int, db: AsyncSession = Depends(get_db), user
     await realtime.publish(await recipients(db, conv.id), {"type": "conversation.cleared", "conversation_id": conv.id})
     await _changed(db, conv.id)
     return {"ok": True}
+
+
+@router.get("/communities/{community_id}/stats", response_model=dict)
+async def community_stats(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """For the community's staff: members and how they grow, activity, plans, real attendance and ratings."""
+    from datetime import timedelta
+    from sqlalchemy import func
+    from app.core.models import BoardAttendee, BoardPost, Message
+    conv, member = await get_community(db, community_id, user)
+    _require_staff(member, user)
+    now = utcnow()
+    bots = set((await bot_ids(db)).values()) or {0}
+    people = (ConversationMember.conversation_id == conv.id, ConversationMember.away.is_(False),
+                            ConversationMember.banned.is_(False), ConversationMember.user_id.not_in(bots))
+
+    async def n(stmt) -> int:
+        return int((await db.execute(stmt)).scalar() or 0)
+
+    week = func.date_trunc("week", ConversationMember.joined_at)
+    joined = dict((await db.execute(select(week, func.count()).where(*people, ConversationMember.joined_at >= now - timedelta(weeks=12))
+                                    .group_by(week))).all())
+    weeks = []
+    for i in range(11, -1, -1):
+        start = (now - timedelta(weeks=i)).date()
+        start = start - timedelta(days=start.weekday())
+        weeks.append({"week": start.isoformat(), "count": int(next((v for k, v in joined.items() if k.date() == start), 0))})
+    plans = select(BoardPost.id).where(BoardPost.conversation_id == conv.id, BoardPost.deleted_at.is_(None),
+                                       BoardPost.kind.in_(("meetup", "event")))
+    past = plans.where(func.coalesce(BoardPost.ends_at, BoardPost.starts_at) < now, BoardPost.starts_at >= now - timedelta(days=90))
+    marked = await n(select(func.count()).select_from(BoardAttendee).where(BoardAttendee.post_id.in_(past), BoardAttendee.attended.is_not(None)))
+    came = await n(select(func.count()).select_from(BoardAttendee).where(BoardAttendee.post_id.in_(past), BoardAttendee.attended.is_(True)))
+    rating = (await db.execute(select(func.avg(BoardAttendee.rating), func.count(BoardAttendee.rating)).where(
+        BoardAttendee.post_id.in_(past), BoardAttendee.rating.is_not(None)))).one()
+    organisers = [{"user": user_summary(u), "plans": int(c)} for u, c in (await db.execute(
+        select(User, func.count()).join(BoardPost, BoardPost.author_id == User.id).where(BoardPost.id.in_(past)).group_by(User.id)
+        .order_by(func.count().desc()).limit(5))).all()]
+    return {
+        "members": await n(select(func.count()).select_from(ConversationMember).where(*people)),
+        "new_30d": await n(select(func.count()).select_from(ConversationMember).where(*people, ConversationMember.joined_at >= now - timedelta(days=30))),
+        "joined_by_week": weeks,
+        "messages_30d": await n(select(func.count()).select_from(Message).where(
+            Message.conversation_id == conv.id, Message.kind == "text", Message.created_at >= now - timedelta(days=30))),
+        "active_30d": await n(select(func.count(func.distinct(Message.sender_id))).where(
+            Message.conversation_id == conv.id, Message.kind == "text", Message.created_at >= now - timedelta(days=30),
+            Message.sender_id.not_in(bots))),
+        "plans_upcoming": await n(select(func.count()).select_from(BoardPost).where(
+            BoardPost.id.in_(plans), func.coalesce(BoardPost.ends_at, BoardPost.starts_at) >= now)),
+        "plans_90d": await n(select(func.count()).select_from(BoardPost).where(BoardPost.id.in_(past))),
+        "attendance": {"marked": marked, "came": came, "rate": round(came / marked, 2) if marked else None},
+        "rating": {"average": round(float(rating[0]), 1) if rating[0] is not None else None, "count": int(rating[1] or 0)},
+        "top_organisers": organisers,
+    }

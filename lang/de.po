@@ -956,6 +956,45 @@ msgstr "Sprache nicht gefunden"
 msgid "err_language_english"
 msgstr "Englisch kann nicht abgeschaltet werden: Es ist die Ausgangssprache"
 
+msgid "err_age_span"
+msgstr "Das Mindestalter darf nicht über dem Höchstalter liegen"
+
+msgid "err_age_span_creator"
+msgstr "Dein Alter muss im Bereich der Community liegen"
+
+msgid "err_join_answers"
+msgstr "Beantworte die Fragen, um beitreten zu können"
+
+msgid "err_too_many_guests"
+msgstr "Du kannst höchstens {n} Begleitpersonen mitbringen"
+
+msgid "err_no_room_guests"
+msgstr "Für deine Begleitpersonen sind keine Plätze mehr frei"
+
+msgid "err_checkin_time"
+msgstr "Die Teilnahme wird von 2 Stunden vorher bis 14 Tage nach dem Treffen erfasst"
+
+msgid "err_rating_not_allowed"
+msgstr "Nur wer dabei war, kann bewerten"
+
+msgid "err_rating_time"
+msgstr "Bewerten kannst du ab Beginn bis 30 Tage danach"
+
+msgid "err_cohost_not_member"
+msgstr "Mitorganisatoren müssen Mitglieder der Community sein"
+
+msgid "push_plan_soon_subject"
+msgstr "Gleich: „{plan}“"
+
+msgid "push_plan_soon_body"
+msgstr "Geht bald los: {date}. {place}"
+
+msgid "push_plan_rate_subject"
+msgstr "Wie war „{plan}“?"
+
+msgid "push_plan_rate_body"
+msgstr "Bewerte es kurz – das hilft der Person, die es organisiert hat."
+
 msgid "err_cannot_delete_self"
 msgstr "Du kannst dich nicht selbst löschen"
 
@@ -2953,6 +2992,249 @@ msgstr "Datenschutz"
 
 msgid "ui_about_rights"
 msgstr "Alle Rechte vorbehalten."
+
+msgid "ui_calendar_title"
+msgstr "Deine Treffen im Kalender"
+
+msgid "ui_calendar_hint"
+msgstr "Einmal abonnieren und deine Treffen erscheinen von selbst im Handy- oder Google-Kalender und werden aktualisiert."
+
+msgid "ui_calendar_get"
+msgstr "Meinen Kalender holen"
+
+msgid "ui_calendar_subscribe"
+msgstr "Abonnieren"
+
+msgid "ui_calendar_private"
+msgstr "Das ist ein privater Link: teile ihn nicht."
+
+msgid "ui_calendar_reset"
+msgstr "Neuen erstellen"
+
+msgid "ui_calendar_reset_done"
+msgstr "Neuer Link erstellt: der alte funktioniert nicht mehr"
+
+msgid "ui_community_age_limit"
+msgstr "Nach Alter begrenzen"
+
+msgid "ui_community_age_limit_hint"
+msgstr "Nur Menschen, deren Alter laut Geburtsdatum im Bereich liegt, können beitreten. Du bist {age}: du musst dazugehören."
+
+msgid "ui_community_age_must_include"
+msgstr "Der Bereich muss dein Alter ({age}) enthalten"
+
+msgid "ui_community_ages_from"
+msgstr "Ab {min} Jahren"
+
+msgid "ui_community_ages_span"
+msgstr "{min}–{max} Jahre"
+
+msgid "ui_community_ages_upto"
+msgstr "Bis {max} Jahre"
+
+msgid "ui_community_min_age"
+msgstr "Mindestalter"
+
+msgid "ui_community_max_age"
+msgstr "Höchstalter"
+
+msgid "ui_community_f_questions"
+msgstr "Fragen beim Beitrittswunsch"
+
+msgid "ui_community_question_ph"
+msgstr "Frage {n} (optional)"
+
+msgid "ui_community_questions_hint"
+msgstr "Bis zu 3. Wer beitreten will, beantwortet sie; die Antworten siehst du bei den Anfragen."
+
+msgid "ui_community_questions_lead"
+msgstr "Um „{name}“ beizutreten, beantworte diese Fragen. Das Team der Community liest deine Antworten."
+
+msgid "ui_community_send_request"
+msgstr "Anfrage senden"
+
+msgid "ui_community_tab_stats"
+msgstr "Statistik"
+
+msgid "ui_post_add_calendar"
+msgstr "Zum Kalender hinzufügen"
+
+msgid "ui_post_call_after_signup"
+msgstr "Der Link zum Videoanruf erscheint nach der Anmeldung"
+
+msgid "ui_post_call_soon"
+msgstr "Die Organisation fügt den Link zum Videoanruf noch hinzu"
+
+msgid "ui_post_join_call"
+msgstr "Zum Videoanruf"
+
+msgid "ui_post_came"
+msgstr "Dabei"
+
+msgid "ui_post_no_show"
+msgstr "Nicht gekommen"
+
+msgid "ui_post_checkin"
+msgstr "Anwesenheit"
+
+msgid "ui_post_checkin_hint"
+msgstr "Markiere, wer da war (✓) und wer nicht (✕). Nur die Organisatoren sehen es."
+
+msgid "ui_post_cohosted_by"
+msgstr "Mitorganisiert von {names}"
+
+msgid "ui_post_cohosts"
+msgstr "Mitorganisatoren"
+
+msgid "ui_post_cohosts_hint"
+msgstr "Sie können das Treffen bearbeiten, Teilnehmende verwalten und die Anwesenheit erfassen, wie du. Wähle bis zu 10 Mitglieder."
+
+msgid "ui_post_duplicate"
+msgstr "Duplizieren"
+
+msgid "ui_post_guests"
+msgstr "Begleitpersonen"
+
+msgid "ui_post_guests_max"
+msgstr "höchstens {n}"
+
+msgid "ui_post_how_was_it"
+msgstr "Wie war’s?"
+
+msgid "ui_post_your_rating"
+msgstr "Deine Bewertung"
+
+msgid "ui_post_rating_note_ph"
+msgstr "Etwas für die Organisation (optional)"
+
+msgid "ui_post_rating_private"
+msgstr "Die Organisation sieht den Durchschnitt und die Kommentare, aber nicht, wer sie geschrieben hat."
+
+msgid "ui_post_rating_thanks"
+msgstr "Danke für deine Bewertung!"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} Bewertungen"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 Bewertung"
+
+msgid "ui_post_ratings_title"
+msgstr "Bewertungen"
+
+msgid "ui_post_series_weekly"
+msgstr "Jede Woche"
+
+msgid "ui_post_series_biweekly"
+msgstr "Alle 2 Wochen"
+
+msgid "ui_post_series_monthly"
+msgstr "Jeden Monat"
+
+msgid "ui_publish_mode"
+msgstr "Format"
+
+msgid "ui_publish_mode_in_person"
+msgstr "Vor Ort"
+
+msgid "ui_publish_mode_online"
+msgstr "Online"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "Hybrid"
+
+msgid "ui_publish_f_online_url"
+msgstr "Link zum Videoanruf"
+
+msgid "ui_publish_online_url_hint"
+msgstr "Nur Angemeldete sehen ihn. Du kannst ihn später hinzufügen."
+
+msgid "ui_publish_online_url_bad"
+msgstr "Der Link zum Videoanruf muss mit https:// beginnen"
+
+msgid "ui_publish_guests"
+msgstr "Begleitung erlaubt"
+
+msgid "ui_publish_guests_hint"
+msgstr "Jede Person kann Begleitpersonen anmelden (+1, +2…). Sie belegen Plätze."
+
+msgid "ui_publish_guests_max"
+msgstr "Begleitpersonen pro Person"
+
+msgid "ui_publish_repeat"
+msgstr "Wiederholt sich"
+
+msgid "ui_publish_repeat_none"
+msgstr "Nein"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "Wöchentlich"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "Alle 2 Wo."
+
+msgid "ui_publish_repeat_monthly"
+msgstr "Monatlich"
+
+msgid "ui_publish_repeat_hint"
+msgstr "Die nächsten Termine entstehen von selbst (etwa 5 Wochen im Voraus), jeder mit eigener Liste und eigenem Chat. Monatlich: derselbe Wochentag (z. B. der 2. Donnerstag)."
+
+msgid "ui_publish_repeat_until"
+msgstr "Bis (optional, höchstens ein Jahr)"
+
+msgid "ui_series_scope_title"
+msgstr "Dieses Treffen wiederholt sich"
+
+msgid "ui_series_scope_body"
+msgstr "Änderungen nur für diesen Termin oder auch für die folgenden übernehmen?"
+
+msgid "ui_series_scope_one"
+msgstr "Nur dieser Termin"
+
+msgid "ui_series_scope_following"
+msgstr "Dieser und die folgenden"
+
+msgid "ui_series_delete_one"
+msgstr "Nur diesen Termin löschen"
+
+msgid "ui_series_delete_following"
+msgstr "Diesen und die folgenden löschen"
+
+msgid "ui_stats_members"
+msgstr "Mitglieder"
+
+msgid "ui_stats_new_30d"
+msgstr "+{n} in 30 Tagen"
+
+msgid "ui_stats_messages"
+msgstr "Nachrichten (30 Tage)"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} aktive Personen"
+
+msgid "ui_stats_plans"
+msgstr "Kommende Treffen"
+
+msgid "ui_stats_plans_90d"
+msgstr "{n} in den letzten 90 Tagen"
+
+msgid "ui_stats_attendance"
+msgstr "Tatsächliche Teilnahme"
+
+msgid "ui_stats_attendance_sub"
+msgstr "{came} von {marked} erfasst"
+
+msgid "ui_stats_rating"
+msgstr "Durchschnittliche Bewertung"
+
+msgid "ui_stats_joined_weeks"
+msgstr "Beitritte pro Woche (12 Wochen)"
+
+msgid "ui_stats_top_organisers"
+msgstr "Wer am meisten organisiert (90 Tage)"
+
+msgid "ui_stats_private"
+msgstr "Nur das Team der Community sieht das."
 
 msgid "ui_install_title"
 msgstr "MeetGo installieren"

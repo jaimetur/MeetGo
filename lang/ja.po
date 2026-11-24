@@ -956,6 +956,45 @@ msgstr "言語が見つかりません"
 msgid "err_language_english"
 msgstr "英語は元の言語なので無効にできません"
 
+msgid "err_age_span"
+msgstr "最低年齢は最高年齢より大きくできません"
+
+msgid "err_age_span_creator"
+msgstr "あなたの年齢がコミュニティの範囲内である必要があります"
+
+msgid "err_join_answers"
+msgstr "参加リクエストには質問への回答が必要です"
+
+msgid "err_too_many_guests"
+msgstr "同伴者は最大 {n} 人までです"
+
+msgid "err_no_room_guests"
+msgstr "同伴者の分の空きがありません"
+
+msgid "err_checkin_time"
+msgstr "出欠は開始 2 時間前から終了後 14 日まで記録できます"
+
+msgid "err_rating_not_allowed"
+msgstr "評価できるのは参加した人だけです"
+
+msgid "err_rating_time"
+msgstr "評価は開始時から 30 日後までできます"
+
+msgid "err_cohost_not_member"
+msgstr "共同主催者はコミュニティのメンバーである必要があります"
+
+msgid "push_plan_soon_subject"
+msgstr "まもなく：「{plan}」"
+
+msgid "push_plan_soon_body"
+msgstr "もうすぐ始まります：{date}。{place}"
+
+msgid "push_plan_rate_subject"
+msgstr "「{plan}」はどうでしたか？"
+
+msgid "push_plan_rate_body"
+msgstr "さっと評価して主催者に伝えましょう。"
+
 msgid "err_cannot_delete_self"
 msgstr "自分自身は削除できません"
 
@@ -2953,6 +2992,249 @@ msgstr "プライバシー"
 
 msgid "ui_about_rights"
 msgstr "All rights reserved."
+
+msgid "ui_calendar_title"
+msgstr "予定をカレンダーに"
+
+msgid "ui_calendar_hint"
+msgstr "一度登録すると、参加する予定がスマホや Google のカレンダーに自動で表示され、変更も反映されます。"
+
+msgid "ui_calendar_get"
+msgstr "カレンダーを取得"
+
+msgid "ui_calendar_subscribe"
+msgstr "登録する"
+
+msgid "ui_calendar_private"
+msgstr "非公開のリンクです。共有しないでください。"
+
+msgid "ui_calendar_reset"
+msgstr "新しく作る"
+
+msgid "ui_calendar_reset_done"
+msgstr "新しいリンクを作りました。以前のものは使えません"
+
+msgid "ui_community_age_limit"
+msgstr "年齢で制限"
+
+msgid "ui_community_age_limit_hint"
+msgstr "生年月日から計算した年齢が範囲内の人だけが参加できます。あなたは {age} 歳なので、範囲に含まれる必要があります。"
+
+msgid "ui_community_age_must_include"
+msgstr "範囲にあなたの年齢（{age}）を含めてください"
+
+msgid "ui_community_ages_from"
+msgstr "{min} 歳以上"
+
+msgid "ui_community_ages_span"
+msgstr "{min}〜{max} 歳"
+
+msgid "ui_community_ages_upto"
+msgstr "{max} 歳まで"
+
+msgid "ui_community_min_age"
+msgstr "最低年齢"
+
+msgid "ui_community_max_age"
+msgstr "最高年齢"
+
+msgid "ui_community_f_questions"
+msgstr "参加リクエスト時の質問"
+
+msgid "ui_community_question_ph"
+msgstr "質問 {n}（任意）"
+
+msgid "ui_community_questions_hint"
+msgstr "3 つまで。参加を希望する人は回答し、リクエストで回答を確認できます。"
+
+msgid "ui_community_questions_lead"
+msgstr "「{name}」に参加するには、次の質問に答えてください。コミュニティの運営が回答を読みます。"
+
+msgid "ui_community_send_request"
+msgstr "リクエストを送る"
+
+msgid "ui_community_tab_stats"
+msgstr "統計"
+
+msgid "ui_post_add_calendar"
+msgstr "カレンダーに追加"
+
+msgid "ui_post_call_after_signup"
+msgstr "参加登録するとビデオ通話のリンクが表示されます"
+
+msgid "ui_post_call_soon"
+msgstr "主催者がビデオ通話のリンクを追加します"
+
+msgid "ui_post_join_call"
+msgstr "ビデオ通話に参加"
+
+msgid "ui_post_came"
+msgstr "出席"
+
+msgid "ui_post_no_show"
+msgstr "欠席"
+
+msgid "ui_post_checkin"
+msgstr "出欠"
+
+msgid "ui_post_checkin_hint"
+msgstr "来た人（✓）と来なかった人（✕）を記録します。主催者だけが見られます。"
+
+msgid "ui_post_cohosted_by"
+msgstr "共同主催：{names}"
+
+msgid "ui_post_cohosts"
+msgstr "共同主催者"
+
+msgid "ui_post_cohosts_hint"
+msgstr "あなたと同じように、予定の編集、参加者の管理、出欠の記録ができます。メンバーから 10 人まで選べます。"
+
+msgid "ui_post_duplicate"
+msgstr "複製"
+
+msgid "ui_post_guests"
+msgstr "同伴者"
+
+msgid "ui_post_guests_max"
+msgstr "最大 {n} 人"
+
+msgid "ui_post_how_was_it"
+msgstr "どうでしたか？"
+
+msgid "ui_post_your_rating"
+msgstr "あなたの評価"
+
+msgid "ui_post_rating_note_ph"
+msgstr "主催者へのひとこと（任意）"
+
+msgid "ui_post_rating_private"
+msgstr "主催者には平均とコメントが見えますが、誰が書いたかは見えません。"
+
+msgid "ui_post_rating_thanks"
+msgstr "評価ありがとうございます！"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} 件の評価"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 件の評価"
+
+msgid "ui_post_ratings_title"
+msgstr "評価"
+
+msgid "ui_post_series_weekly"
+msgstr "毎週"
+
+msgid "ui_post_series_biweekly"
+msgstr "隔週"
+
+msgid "ui_post_series_monthly"
+msgstr "毎月"
+
+msgid "ui_publish_mode"
+msgstr "形式"
+
+msgid "ui_publish_mode_in_person"
+msgstr "対面"
+
+msgid "ui_publish_mode_online"
+msgstr "オンライン"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "ハイブリッド"
+
+msgid "ui_publish_f_online_url"
+msgstr "ビデオ通話のリンク"
+
+msgid "ui_publish_online_url_hint"
+msgstr "参加登録した人だけが見られます。後から追加できます。"
+
+msgid "ui_publish_online_url_bad"
+msgstr "ビデオ通話のリンクは https:// で始めてください"
+
+msgid "ui_publish_guests"
+msgstr "同伴者 OK"
+
+msgid "ui_publish_guests_hint"
+msgstr "各自が同伴者（+1、+2…）を登録できます。席を使います。"
+
+msgid "ui_publish_guests_max"
+msgstr "1 人あたりの同伴者"
+
+msgid "ui_publish_repeat"
+msgstr "繰り返し"
+
+msgid "ui_publish_repeat_none"
+msgstr "なし"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "毎週"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "隔週"
+
+msgid "ui_publish_repeat_monthly"
+msgstr "毎月"
+
+msgid "ui_publish_repeat_hint"
+msgstr "次の日程が自動で作られます（約 5 週間先まで）。それぞれに参加者リストとチャットがあります。毎月：同じ曜日（例：第 2 木曜日）。"
+
+msgid "ui_publish_repeat_until"
+msgstr "終了日（任意、最長 1 年）"
+
+msgid "ui_series_scope_title"
+msgstr "この予定は繰り返します"
+
+msgid "ui_series_scope_body"
+msgstr "変更をこの日だけに適用しますか？ それとも以降の日程にも？"
+
+msgid "ui_series_scope_one"
+msgstr "この日だけ"
+
+msgid "ui_series_scope_following"
+msgstr "この日以降すべて"
+
+msgid "ui_series_delete_one"
+msgstr "この日だけ削除"
+
+msgid "ui_series_delete_following"
+msgstr "この日以降をすべて削除"
+
+msgid "ui_stats_members"
+msgstr "メンバー"
+
+msgid "ui_stats_new_30d"
+msgstr "30 日で +{n}"
+
+msgid "ui_stats_messages"
+msgstr "メッセージ（30 日）"
+
+msgid "ui_stats_active_30d"
+msgstr "アクティブ {n} 人"
+
+msgid "ui_stats_plans"
+msgstr "今後の予定"
+
+msgid "ui_stats_plans_90d"
+msgstr "過去 90 日で {n} 件"
+
+msgid "ui_stats_attendance"
+msgstr "実際の出席率"
+
+msgid "ui_stats_attendance_sub"
+msgstr "記録 {marked} 人中 {came} 人"
+
+msgid "ui_stats_rating"
+msgstr "平均評価"
+
+msgid "ui_stats_joined_weeks"
+msgstr "週ごとの参加（12 週）"
+
+msgid "ui_stats_top_organisers"
+msgstr "よく主催する人（90 日）"
+
+msgid "ui_stats_private"
+msgstr "コミュニティの運営だけが見られます。"
 
 msgid "ui_install_title"
 msgstr "MeetGoをインストール"

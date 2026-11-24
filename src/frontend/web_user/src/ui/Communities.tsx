@@ -5,10 +5,10 @@ import { api, fileUrl } from "../api";
 import { coverGradient } from "../board";
 import { chatPath, communityPath, goBack, navigate } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
-import type { AccessMode, BoardMode, Community, CommunityMember, Post, UserSummary } from "../types";
+import type { AccessMode, BoardMode, Community, CommunityMember, CommunityStats, Post, UserSummary } from "../types";
 import { Avatar, Icon, Modal, communityCover, hobbyIcon, interestLook } from "./common";
 import { RichEditor, RichText } from "./RichText";
-import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, usePostFeed } from "./Board";
+import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, Skeletons, usePostFeed } from "./Board";
 
 const ACCESS_KEYS: Record<AccessMode, string> = { open: "ui_community_access_open", request: "ui_community_access_request", invite: "ui_community_access_invite" };
 const ROLE_KEYS: Record<string, string> = { owner: "ui_role_owner", admin: "ui_role_admin", moderator: "ui_role_moderator", member: "ui_role_member" };
@@ -24,9 +24,9 @@ function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
 }
 
 /** Join, ask to join, or the state I am in. Returns the new community state. */
-async function joinCommunity(c: Community): Promise<Community | null> {
+async function joinCommunity(c: Community, answers?: string[]): Promise<Community | null> {
   try {
-    const { status } = await api.joinCommunity(c.id);
+    const { status } = await api.joinCommunity(c.id, answers);
     if (status === "joined") {
       toast(t("ui_community_joined_toast", { name: c.title }));
       loadConversations().catch(() => undefined);
@@ -43,19 +43,53 @@ async function joinCommunity(c: Community): Promise<Community | null> {
 
 function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Community) => void; big?: boolean }) {
   const [busy, setBusy] = useState(false);
+  const [asking, setAsking] = useState(false);
   const cls = "btn " + (big ? "" : "sm ");
   if (c.joined) return <button className={cls + "pri"} onClick={(e) => { e.stopPropagation(); navigate(communityPath(c.id)); }}>{t("ui_open")}</button>;
   if (c.my_zone === false) return <span className="spill"><Icon name="place" size="sm" />{t("ui_zone_other")}</span>;
   if (c.request_pending) return <span className="spill wait">{t("ui_community_requested")}</span>;
   if (c.access_mode === "invite") return <span className="spill"><Icon name="lock" size="sm" />{t("ui_community_access_invite")}</span>;
+  const questions = c.access_mode === "request" ? c.join_questions || [] : [];
   return (
-    <button className={cls + "go"} disabled={busy} onClick={async (e) => {
-      e.stopPropagation();
-      setBusy(true);
-      const next = await joinCommunity(c);
-      setBusy(false);
-      if (next) onChange(next);
-    }}>{c.access_mode === "request" ? t("ui_community_ask_join") : t("ui_join")}</button>
+    <>
+      <button className={cls + "go"} disabled={busy} onClick={async (e) => {
+        e.stopPropagation();
+        if (questions.length) return setAsking(true);
+        setBusy(true);
+        const next = await joinCommunity(c);
+        setBusy(false);
+        if (next) onChange(next);
+      }}>{c.access_mode === "request" ? t("ui_community_ask_join") : t("ui_join")}</button>
+      {asking ? <JoinQuestionsModal c={c} onClose={() => setAsking(false)} onDone={(next) => { setAsking(false); onChange(next); }} /> : null}
+    </>
+  );
+}
+
+/** A community that needs approval asks its questions first; the answers go with the request. */
+function JoinQuestionsModal({ c, onClose, onDone }: { c: Community; onClose: () => void; onDone: (c: Community) => void }) {
+  const questions = c.join_questions || [];
+  const [answers, setAnswers] = useState<string[]>(questions.map(() => ""));
+  const [busy, setBusy] = useState(false);
+  const ready = answers.every((a) => a.trim());
+  return (
+    <span onClick={(e) => e.stopPropagation()}>
+      <Modal title={t("ui_community_ask_join")} onClose={onClose} footer={<>
+        <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
+        <button className="btn go" disabled={busy || !ready} onClick={async () => {
+          setBusy(true);
+          const next = await joinCommunity(c, answers.map((a) => a.trim()));
+          setBusy(false);
+          if (next) onDone(next);
+        }}>{t("ui_community_send_request")}</button>
+      </>}>
+        <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_questions_lead", { name: c.title })}</p>
+        {questions.map((q, i) => (
+          <label key={i} className="fld">{q}
+            <textarea id={`cm-answer-${i}`} className="inp" rows={2} maxLength={500} value={answers[i]} onChange={(e) => setAnswers(answers.map((a, j) => (j === i ? e.target.value : a)))} />
+          </label>
+        ))}
+      </Modal>
+    </span>
   );
 }
 
@@ -257,16 +291,21 @@ export function CommunitiesPage() {
 
 /** Create a community, or change one (owner and admins). */
 function CommunityFormModal({ community, onClose, onSaved }: { community?: Community; onClose: () => void; onSaved?: (c: Community) => void }) {
+  const me = useStore((s) => s.me);
+  const myAge = me?.dob ? Math.floor((Date.now() - new Date(me.dob + "T00:00:00").getTime()) / (365.2425 * 86400e3)) : 30;
   const [form, setForm] = useState({
     title: community?.title || "", description: community?.description || "", rules: community?.rules || "",
     access_mode: (community?.access_mode || "open") as AccessMode, board_mode: (community?.board_mode || "open") as BoardMode,
+    ageLimit: false, min_age: Math.max(18, myAge - 5), max_age: myAge + 5,
+    questions: [...(community?.join_questions || []), "", "", ""].slice(0, 3),
   });
   const [busy, setBusy] = useState(false);
   const set = (p: Partial<typeof form>) => setForm((f) => ({ ...f, ...p }));
   async function save() {
     setBusy(true);
     try {
-      const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode };
+      const questions = form.access_mode === "request" ? form.questions.map((q) => q.trim()).filter(Boolean) : [];
+      const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions };
       if (community) {
         const c = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
         toast(t("ui_saved"));
@@ -274,7 +313,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         loadMyCommunities();
         onClose();
       } else {
-        const c = await api.createCommunity(payload);
+        const c = await api.createCommunity({ ...payload, ...(form.ageLimit ? { min_age: form.min_age, max_age: form.max_age } : {}) });
         toast(t("ui_community_created_toast"));
         loadMyCommunities();
         loadConversations().catch(() => undefined);
@@ -294,7 +333,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     <Modal title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
       <>
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
-        <button className="btn pri" disabled={busy || form.title.trim().length < 3} onClick={save}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
+        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || (!community && form.ageLimit && (form.min_age > myAge || form.max_age < myAge || form.min_age > form.max_age))} onClick={save}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
       </>
     )}>
       {!community ? <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_create_lead")}</p> : null}
@@ -306,6 +345,33 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
           options={[["open", t("ui_community_access_open")], ["request", t("ui_community_access_request")], ["invite", t("ui_community_access_invite")]]} />
         <small className="muted">{accessHints[form.access_mode]}</small>
       </div>
+      {form.access_mode === "request" ? (
+        <div className="fld"><span>{t("ui_community_f_questions")}</span>
+          {form.questions.map((q, i) => (
+            <input key={i} id={`cm-question-${i}`} className="inp" maxLength={200} value={q} placeholder={t("ui_community_question_ph", { n: i + 1 })}
+              onChange={(e) => set({ questions: form.questions.map((x, j) => (j === i ? e.target.value : x)) })} />
+          ))}
+          <small className="muted">{t("ui_community_questions_hint")}</small>
+        </div>
+      ) : null}
+      {!community ? (
+        <>
+          <label className="tgl" htmlFor="cm-age-limit">
+            <span className="grow">{t("ui_community_age_limit")}<small>{t("ui_community_age_limit_hint", { age: myAge })}</small></span>
+            <input id="cm-age-limit" type="checkbox" role="switch" checked={form.ageLimit} onChange={(e) => set({ ageLimit: e.target.checked })} />
+            <span className="sw" aria-hidden="true" />
+          </label>
+          {form.ageLimit ? (
+            <div className="grid2c">
+              <label className="fld">{t("ui_community_min_age")}<input id="cm-min-age" className="inp" type="number" min={18} max={myAge} value={form.min_age} onChange={(e) => set({ min_age: Number(e.target.value) || 18 })} /></label>
+              <label className="fld">{t("ui_community_max_age")}<input id="cm-max-age" className="inp" type="number" min={myAge} max={120} value={form.max_age} onChange={(e) => set({ max_age: Number(e.target.value) || myAge })} /></label>
+            </div>
+          ) : null}
+          {form.ageLimit && (form.min_age > myAge || form.max_age < myAge) ? <small className="err">{t("ui_community_age_must_include", { age: myAge })}</small> : null}
+        </>
+      ) : community.min_age != null || community.max_age != null ? (
+        <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
+      ) : null}
       <div className="fld"><span>{t("ui_community_f_board")}</span>
         <Seg label={t("ui_community_f_board")} value={form.board_mode} onChange={(board_mode) => set({ board_mode })}
           options={[["open", t("ui_community_board_open")], ["admins", t("ui_community_board_admins")]]} />
@@ -316,7 +382,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
 }
 
 // ---------- a community ----------
-export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" | "agenda" | "members" }) {
+export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" | "agenda" | "members" | "stats" }) {
   const [c, setC] = useState<Community | null>(null);
   const unread = useStore((s) => (c ? s.conversations[c.conversation_id]?.unread_count ?? 0 : 0));
   const [error, setError] = useState<string | null>(null);
@@ -342,7 +408,8 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
   const staff = globalAdmin || (!!c.role && STAFF_ROLES.includes(c.role));
   const manager = globalAdmin || c.role === "owner" || c.role === "admin";
   // Board, the community's agenda of plans, and its people; the chat is the real conversation, one button away.
-  const tabs: ["board" | "agenda" | "members", string][] = [["board", t("ui_community_tab_board")], ["agenda", t("ui_community_tab_agenda")], ["members", t("ui_community_tab_members")]];
+  const tabs: ["board" | "agenda" | "members" | "stats", string][] = [["board", t("ui_community_tab_board")], ["agenda", t("ui_community_tab_agenda")], ["members", t("ui_community_tab_members")],
+    ...(staff ? [["stats", t("ui_community_tab_stats")] as ["stats", string]] : [])];
   const openChat = () => navigate(chatPath(c.conversation_id));
   const chatButton = <button className="btn go cchatbtn" onClick={openChat}><Icon name="chat" size="sm" />{t("ui_community_tab_chat")}{unread ? <span className="bdg">{unread > 99 ? "99+" : unread}</span> : null}</button>;
 
@@ -385,6 +452,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
         <div className="row chead2-tags" style={{ flexWrap: "wrap" }}>
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.board_mode === "admins" ? <span className="ktag"><Icon name="megaphone" size="sm" />{t("ui_community_board_admins")}</span> : null}
+          {c.min_age != null || c.max_age != null ? <span className="ktag"><Icon name="user" size="sm" />{ageSpanText(c)}</span> : null}
           {c.role ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role] || "ui_role_member")}</span> : null}
           {c.rules ? <button className="ktag link" onClick={() => setRules(true)}><Icon name="shield" size="sm" />{t("ui_community_rules")}</button> : null}
           <span className="grow" />
@@ -402,6 +470,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
       {tab === "agenda" ? <Agenda c={c} /> : null}
       {tab === "chat" ? <CommunityChat c={c} onJoined={setC} /> : null}
       {tab === "members" ? <Members c={c} onChange={load} /> : null}
+      {tab === "stats" && staff ? <CommunityStatsView c={c} /> : null}
 
       {leave ? (
         <ConfirmModal title={t("ui_community_leave")} body={c.role === "owner" ? t("ui_community_leave_owner_body") : t("ui_community_leave_body", { name: c.title })}
@@ -537,7 +606,7 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
   const me = useStore((s) => s.me);
   const [q, setQ] = useState("");
   const [list, setList] = useState<CommunityMember[] | null>(null);
-  const [requests, setRequests] = useState<{ user: UserSummary; created_at: string }[]>([]);
+  const [requests, setRequests] = useState<{ user: UserSummary; created_at: string; answers?: { question: string; answer: string }[] }[]>([]);
   const [invite, setInvite] = useState<string | null>(c.invite_code ? `${window.location.origin}/app/join/${c.invite_code}` : null);
   const [manage, setManage] = useState<CommunityMember | null>(null);
   // MeetGo's administrators manage every community as if they were its owner.
@@ -644,9 +713,12 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
           <h3 className="boxtitle">{t("ui_community_requests_n", { n: requests.length })}</h3>
           <div className="plist">
             {requests.map((r) => (
-              <div key={r.user.id} className="item">
+              <div key={r.user.id} className="item reqitem">
                 <Avatar user={r.user} size={36} />
-                <span className="grow">{r.user.display_name}</span>
+                <div className="grow" style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: 600 }}>{r.user.display_name}</div>
+                  {(r.answers || []).map((x, i) => <div key={i} className="reqanswer"><small>{x.question}</small><span>{x.answer}</span></div>)}
+                </div>
                 <button className="btn sm pri" onClick={() => resolve(r.user.id, true)}>{t("ui_accept")}</button>
                 <button className="btn sm" onClick={() => resolve(r.user.id, false)}>{t("ui_decline")}</button>
               </div>
@@ -753,3 +825,45 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 
 /** Home: the communities I belong to, one tap away (board, chat and members). */
 
+
+/** "25–40 años", "From 25", "Up to 40". */
+function ageSpanText(c: Community): string {
+  if (c.min_age != null && c.max_age != null) return t("ui_community_ages_span", { min: c.min_age, max: c.max_age });
+  if (c.min_age != null) return t("ui_community_ages_from", { min: c.min_age });
+  return t("ui_community_ages_upto", { max: c.max_age ?? 0 });
+}
+
+/** For the community's staff: members, how they grow, activity, plans, real attendance and ratings. */
+function CommunityStatsView({ c }: { c: Community }) {
+  const [s, setS] = useState<CommunityStats | null>(null);
+  useEffect(() => { api.communityStats(c.id).then(setS).catch((e) => toast(e.message, "error")); }, [c.id]);
+  if (!s) return <div className="swrap"><Skeletons n={1} /></div>;
+  const max = Math.max(1, ...s.joined_by_week.map((w) => w.count));
+  const tiles: [string, string, string | number, string?][] = [
+    ["users", t("ui_stats_members"), s.members, t("ui_stats_new_30d", { n: s.new_30d })],
+    ["chat", t("ui_stats_messages"), s.messages_30d, t("ui_stats_active_30d", { n: s.active_30d })],
+    ["calendar", t("ui_stats_plans"), s.plans_upcoming, t("ui_stats_plans_90d", { n: s.plans_90d })],
+    ["check2", t("ui_stats_attendance"), s.attendance.rate != null ? `${Math.round(s.attendance.rate * 100)}%` : "—", t("ui_stats_attendance_sub", { came: s.attendance.came, marked: s.attendance.marked })],
+    ["star", t("ui_stats_rating"), s.rating.average != null ? `${s.rating.average.toLocaleString()}★` : "—", t("ui_post_ratings_n", { n: s.rating.count })],
+  ];
+  return (
+    <div className="swrap stack" style={{ gap: 14 }}>
+      <div className="cstats">
+        {tiles.map(([icon, label, value, sub]) => (
+          <div key={label} className="cstat"><Icon name={icon} size="sm" /><b>{value}</b><span>{label}</span>{sub ? <small>{sub}</small> : null}</div>
+        ))}
+      </div>
+      <section className="box">
+        <h3 className="boxtitle">{t("ui_stats_joined_weeks")}</h3>
+        <div className="cbars">{s.joined_by_week.map((w) => <span key={w.week} title={`${w.week}: ${w.count}`}><i style={{ height: `${Math.max(w.count ? 8 : 3, (w.count / max) * 100)}%` }} className={w.count ? "" : "zero"} /></span>)}</div>
+      </section>
+      {s.top_organisers.length ? (
+        <section className="box">
+          <h3 className="boxtitle">{t("ui_stats_top_organisers")}</h3>
+          <div className="plist">{s.top_organisers.map((o) => <div key={o.user.id} className="item"><Avatar user={o.user} size={32} /><span className="grow">{o.user.display_name}</span><b>{o.plans}</b></div>)}</div>
+        </section>
+      ) : null}
+      <p className="muted" style={{ margin: 0, fontSize: 12.5 }}>{t("ui_stats_private")}</p>
+    </div>
+  );
+}

@@ -956,6 +956,45 @@ msgstr "Idioma no trobat"
 msgid "err_language_english"
 msgstr "L’anglès no es pot desactivar: és l’idioma d’origen"
 
+msgid "err_age_span"
+msgstr "L’edat mínima no pot ser més gran que la màxima"
+
+msgid "err_age_span_creator"
+msgstr "La teva edat ha d’estar dins del rang de la comunitat"
+
+msgid "err_join_answers"
+msgstr "Respon les preguntes per demanar d’unir-te"
+
+msgid "err_too_many_guests"
+msgstr "Pots portar com a màxim {n} acompanyants"
+
+msgid "err_no_room_guests"
+msgstr "No queden places per als teus acompanyants"
+
+msgid "err_checkin_time"
+msgstr "L’assistència es marca des de 2 hores abans fins a 14 dies després del pla"
+
+msgid "err_rating_not_allowed"
+msgstr "Només pot valorar qui hi va anar"
+
+msgid "err_rating_time"
+msgstr "Es pot valorar des que comença el pla fins a 30 dies després"
+
+msgid "err_cohost_not_member"
+msgstr "Els coorganitzadors han de ser membres de la comunitat"
+
+msgid "push_plan_soon_subject"
+msgstr "Aviat: «{plan}»"
+
+msgid "push_plan_soon_body"
+msgstr "Comença aviat: {date}. {place}"
+
+msgid "push_plan_rate_subject"
+msgstr "Què tal «{plan}»?"
+
+msgid "push_plan_rate_body"
+msgstr "Valora’l en un moment: ajuda qui l’ha organitzat."
+
 msgid "err_cannot_delete_self"
 msgstr "No et pots eliminar a tu mateix"
 
@@ -2953,6 +2992,249 @@ msgstr "Privadesa"
 
 msgid "ui_about_rights"
 msgstr "Tots els drets reservats."
+
+msgid "ui_calendar_title"
+msgstr "Els teus plans al calendari"
+
+msgid "ui_calendar_hint"
+msgstr "Subscriu-t’hi una vegada i els plans on vas sortiran sols al calendari del mòbil o de Google, i s’actualitzaran si canvien."
+
+msgid "ui_calendar_get"
+msgstr "Obtenir el meu calendari"
+
+msgid "ui_calendar_subscribe"
+msgstr "Subscriure’s"
+
+msgid "ui_calendar_private"
+msgstr "És un enllaç privat: no el comparteixis."
+
+msgid "ui_calendar_reset"
+msgstr "Crear-ne un de nou"
+
+msgid "ui_calendar_reset_done"
+msgstr "Enllaç nou creat: l’anterior ja no funciona"
+
+msgid "ui_community_age_limit"
+msgstr "Limitar per edat"
+
+msgid "ui_community_age_limit_hint"
+msgstr "Només hi podrà entrar gent l’edat de la qual, calculada per la data de naixement, sigui dins del rang. Tens {age} anys: hi has de ser dins."
+
+msgid "ui_community_age_must_include"
+msgstr "El rang ha d’incloure la teva edat ({age})"
+
+msgid "ui_community_ages_from"
+msgstr "Des de {min} anys"
+
+msgid "ui_community_ages_span"
+msgstr "{min}–{max} anys"
+
+msgid "ui_community_ages_upto"
+msgstr "Fins a {max} anys"
+
+msgid "ui_community_min_age"
+msgstr "Edat mínima"
+
+msgid "ui_community_max_age"
+msgstr "Edat màxima"
+
+msgid "ui_community_f_questions"
+msgstr "Preguntes en demanar d’unir-se"
+
+msgid "ui_community_question_ph"
+msgstr "Pregunta {n} (opcional)"
+
+msgid "ui_community_questions_hint"
+msgstr "Fins a 3. Qui demani entrar les haurà de respondre i veuràs les respostes a les sol·licituds."
+
+msgid "ui_community_questions_lead"
+msgstr "Per entrar a «{name}», respon aquestes preguntes. L’equip de la comunitat llegirà les respostes."
+
+msgid "ui_community_send_request"
+msgstr "Enviar sol·licitud"
+
+msgid "ui_community_tab_stats"
+msgstr "Estadístiques"
+
+msgid "ui_post_add_calendar"
+msgstr "Afegir al calendari"
+
+msgid "ui_post_call_after_signup"
+msgstr "L’enllaç de la videotrucada apareix quan t’apuntes"
+
+msgid "ui_post_call_soon"
+msgstr "L’organitzador afegirà l’enllaç de la videotrucada"
+
+msgid "ui_post_join_call"
+msgstr "Entrar a la videotrucada"
+
+msgid "ui_post_came"
+msgstr "Hi va venir"
+
+msgid "ui_post_no_show"
+msgstr "No hi va venir"
+
+msgid "ui_post_checkin"
+msgstr "Assistència"
+
+msgid "ui_post_checkin_hint"
+msgstr "Marca qui hi va venir (✓) i qui no (✕). Només ho veieu els organitzadors."
+
+msgid "ui_post_cohosted_by"
+msgstr "Coorganitza: {names}"
+
+msgid "ui_post_cohosts"
+msgstr "Coorganitzadors"
+
+msgid "ui_post_cohosts_hint"
+msgstr "Poden editar el pla, gestionar els assistents i passar llista, com tu. Tria fins a 10 membres de la comunitat."
+
+msgid "ui_post_duplicate"
+msgstr "Duplicar"
+
+msgid "ui_post_guests"
+msgstr "Acompanyants"
+
+msgid "ui_post_guests_max"
+msgstr "màxim {n}"
+
+msgid "ui_post_how_was_it"
+msgstr "Què tal va anar?"
+
+msgid "ui_post_your_rating"
+msgstr "La teva valoració"
+
+msgid "ui_post_rating_note_ph"
+msgstr "Alguna cosa que vulguis dir a l’organitzador (opcional)"
+
+msgid "ui_post_rating_private"
+msgstr "L’organitzador veu la mitjana i els comentaris, però no qui els ha escrit."
+
+msgid "ui_post_rating_thanks"
+msgstr "Gràcies per la valoració!"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} valoracions"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 valoració"
+
+msgid "ui_post_ratings_title"
+msgstr "Valoracions"
+
+msgid "ui_post_series_weekly"
+msgstr "Cada setmana"
+
+msgid "ui_post_series_biweekly"
+msgstr "Cada 2 setmanes"
+
+msgid "ui_post_series_monthly"
+msgstr "Cada mes"
+
+msgid "ui_publish_mode"
+msgstr "Com és"
+
+msgid "ui_publish_mode_in_person"
+msgstr "Presencial"
+
+msgid "ui_publish_mode_online"
+msgstr "En línia"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "Híbrid"
+
+msgid "ui_publish_f_online_url"
+msgstr "Enllaç de la videotrucada"
+
+msgid "ui_publish_online_url_hint"
+msgstr "Només el veuran els qui s’apuntin. El pots afegir més tard."
+
+msgid "ui_publish_online_url_bad"
+msgstr "L’enllaç de la videotrucada ha de començar per https://"
+
+msgid "ui_publish_guests"
+msgstr "Es pot venir acompanyat"
+
+msgid "ui_publish_guests_hint"
+msgstr "Cada persona podrà apuntar acompanyants (+1, +2…). Ocupen plaça."
+
+msgid "ui_publish_guests_max"
+msgstr "Acompanyants per persona"
+
+msgid "ui_publish_repeat"
+msgstr "Es repeteix"
+
+msgid "ui_publish_repeat_none"
+msgstr "No"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "Setmanal"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "Cada 2 set."
+
+msgid "ui_publish_repeat_monthly"
+msgstr "Mensual"
+
+msgid "ui_publish_repeat_hint"
+msgstr "Les properes dates es creen soles (unes 5 setmanes per endavant), cadascuna amb la seva llista i el seu xat. Mensual: el mateix dia de la setmana (per exemple, el 2n dijous)."
+
+msgid "ui_publish_repeat_until"
+msgstr "Fins a (opcional, com a molt un any)"
+
+msgid "ui_series_scope_title"
+msgstr "Aquest pla es repeteix"
+
+msgid "ui_series_scope_body"
+msgstr "Vols aplicar els canvis només a aquesta data o també a les següents?"
+
+msgid "ui_series_scope_one"
+msgstr "Només a aquesta data"
+
+msgid "ui_series_scope_following"
+msgstr "A aquesta i a les següents"
+
+msgid "ui_series_delete_one"
+msgstr "Esborrar només aquesta data"
+
+msgid "ui_series_delete_following"
+msgstr "Esborrar aquesta i les següents"
+
+msgid "ui_stats_members"
+msgstr "Membres"
+
+msgid "ui_stats_new_30d"
+msgstr "+{n} en 30 dies"
+
+msgid "ui_stats_messages"
+msgstr "Missatges (30 dies)"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} persones actives"
+
+msgid "ui_stats_plans"
+msgstr "Plans propers"
+
+msgid "ui_stats_plans_90d"
+msgstr "{n} en els últims 90 dies"
+
+msgid "ui_stats_attendance"
+msgstr "Assistència real"
+
+msgid "ui_stats_attendance_sub"
+msgstr "{came} de {marked} marcats"
+
+msgid "ui_stats_rating"
+msgstr "Valoració mitjana"
+
+msgid "ui_stats_joined_weeks"
+msgstr "Altes per setmana (12 setmanes)"
+
+msgid "ui_stats_top_organisers"
+msgstr "Qui organitza més (90 dies)"
+
+msgid "ui_stats_private"
+msgstr "Només ho veu l’equip de la comunitat."
 
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"

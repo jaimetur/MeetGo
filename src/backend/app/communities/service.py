@@ -13,7 +13,7 @@ from app.core.i18n import t
 from app.core.models import (
     BoardPost, CommunityRequest, Conversation, ConversationMember, Interest, User, utcnow,
 )
-from app.conversations.service import DEFAULT_RULES, get_membership, iso, user_age_key
+from app.conversations.service import DEFAULT_RULES, age_fits_sql, fits_age, get_membership, iso, user_age_key
 from app.realtime.service import online_ids
 
 ROLE_RANK = {"owner": 0, "admin": 1, "moderator": 2, "member": 3}
@@ -25,8 +25,18 @@ def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", plain).strip("-")[:60] or "community"
 
 
+def join_questions(conv: Conversation) -> list[str]:
+    """Up to 3 questions people answer when they ask to join (communities that need approval)."""
+    return [q for q in ((conv.policy_json or {}).get("join_questions") or []) if isinstance(q, str) and q.strip()][:3]
+
+
+def clean_questions(questions: list[str] | None) -> list[str]:
+    return [q.strip()[:200] for q in (questions or []) if q and q.strip()][:3]
+
+
 def in_zone(user: User, conv: Conversation) -> bool:
-    return conv.province == user.province and conv.age_range == user_age_key(user)
+    """My province, and my age fits (the zone's range, or the community's own age span)."""
+    return conv.province == user.province and fits_age(user, conv)
 
 
 def active(member: ConversationMember | None) -> bool:
@@ -194,6 +204,9 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "invite_code": c.invite_code if detail and admin_of(member, user) else None,
             "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
+            "min_age": c.min_age,
+            "max_age": c.max_age,
+            "join_questions": join_questions(c),
             # set in the administration (None: the app picks them from the name)
             "category": interest.category if interest else None,
             "icon": interest.icon if interest else None,
@@ -260,7 +273,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
     if user.bot_role:  # the bots are in every community, of every zone
         query = query.where(Conversation.id.in_(my_ids)).limit(300)
     else:
-        query = query.where(Conversation.province == user.province, Conversation.age_range == user_age_key(user))
+        query = query.where(Conversation.province == user.province, age_fits_sql(user))
     if mine:
         query = query.where(Conversation.id.in_(my_ids))
     else:

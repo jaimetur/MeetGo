@@ -149,7 +149,16 @@ export type Community = {
   invite_code?: string | null;
   ban_until?: string | null;
   my_zone?: boolean;
+  min_age?: number | null;
+  max_age?: number | null;
+  join_questions?: string[];
   created_at: string;
+};
+
+export type CommunityStats = {
+  members: number; new_30d: number; joined_by_week: { week: string; count: number }[]; messages_30d: number; active_30d: number;
+  plans_upcoming: number; plans_90d: number; attendance: { marked: number; came: number; rate: number | null };
+  rating: { average: number | null; count: number }; top_organisers: { user: UserSummary; plans: number }[];
 };
 
 export type CommunityMember = UserSummary & { role: CommunityRole; online: boolean; bot?: boolean; ban_until?: string | null; strikes?: number };
@@ -184,11 +193,21 @@ export type Post = {
   can_edit: boolean;
   chat_conversation_id: number | null;
   attendees?: UserSummary[];
+  mode?: "in_person" | "online" | "hybrid";
+  online_url?: string | null;
+  has_online_url?: boolean;
+  max_guests?: number;
+  my_guests?: number;
+  series?: { id: number; freq: "weekly" | "biweekly" | "monthly"; until: string | null; ended: boolean } | null;
+  cohosts?: UserSummary[];
+  my_rating?: number | null;
+  rating?: { average: number; count: number } | null;
+  calendar_url?: string | null;
   created_at: string;
   updated_at: string;
 };
 
 export type PostPage = { posts: Post[]; has_more: boolean };
-export type Attendee = UserSummary & { status: AttendStatus };
+export type Attendee = UserSummary & { status: AttendStatus; guests?: number; attended?: boolean | null };
 export type Comment = { id: number; post_id: number; author: UserSummary; body: string; created_at: string; can_delete: boolean };
 export type FeedFilter = { kind?: PostKind; when?: "all" | "today" | "weekend" | "week" | "upcoming" | "past"; community_id?: number; before_id?: number; limit?: number };

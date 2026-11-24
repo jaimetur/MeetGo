@@ -956,6 +956,45 @@ msgstr "Language not found"
 msgid "err_language_english"
 msgstr "English cannot be switched off: it is the source language"
 
+msgid "err_age_span"
+msgstr "The minimum age cannot be higher than the maximum"
+
+msgid "err_age_span_creator"
+msgstr "Your age has to be within the community's range"
+
+msgid "err_join_answers"
+msgstr "Answer the questions to ask to join"
+
+msgid "err_too_many_guests"
+msgstr "You can bring at most {n} companions"
+
+msgid "err_no_room_guests"
+msgstr "There are no places left for your companions"
+
+msgid "err_checkin_time"
+msgstr "Attendance is marked from 2 hours before to 14 days after the plan"
+
+msgid "err_rating_not_allowed"
+msgstr "Only people who went can rate the plan"
+
+msgid "err_rating_time"
+msgstr "You can rate it from its start until 30 days later"
+
+msgid "err_cohost_not_member"
+msgstr "Co-organisers have to be members of the community"
+
+msgid "push_plan_soon_subject"
+msgstr "Soon: “{plan}”"
+
+msgid "push_plan_soon_body"
+msgstr "Starting soon: {date}. {place}"
+
+msgid "push_plan_rate_subject"
+msgstr "How was “{plan}”?"
+
+msgid "push_plan_rate_body"
+msgstr "Rate it in a moment: it helps whoever organised it."
+
 msgid "err_cannot_delete_self"
 msgstr "Cannot delete self"
 
@@ -2953,6 +2992,249 @@ msgstr "Privacy"
 
 msgid "ui_about_rights"
 msgstr "All rights reserved."
+
+msgid "ui_calendar_title"
+msgstr "Your plans in your calendar"
+
+msgid "ui_calendar_hint"
+msgstr "Subscribe once and the plans you go to show up by themselves in your phone's or Google calendar, and update if they change."
+
+msgid "ui_calendar_get"
+msgstr "Get my calendar"
+
+msgid "ui_calendar_subscribe"
+msgstr "Subscribe"
+
+msgid "ui_calendar_private"
+msgstr "It is a private link: do not share it."
+
+msgid "ui_calendar_reset"
+msgstr "Make a new one"
+
+msgid "ui_calendar_reset_done"
+msgstr "New link made: the old one no longer works"
+
+msgid "ui_community_age_limit"
+msgstr "Limit by age"
+
+msgid "ui_community_age_limit_hint"
+msgstr "Only people whose age, worked out from their date of birth, is in the range can join. You are {age}: you have to be inside."
+
+msgid "ui_community_age_must_include"
+msgstr "The range has to include your age ({age})"
+
+msgid "ui_community_ages_from"
+msgstr "From {min}"
+
+msgid "ui_community_ages_span"
+msgstr "Ages {min}–{max}"
+
+msgid "ui_community_ages_upto"
+msgstr "Up to {max}"
+
+msgid "ui_community_min_age"
+msgstr "Minimum age"
+
+msgid "ui_community_max_age"
+msgstr "Maximum age"
+
+msgid "ui_community_f_questions"
+msgstr "Questions when asking to join"
+
+msgid "ui_community_question_ph"
+msgstr "Question {n} (optional)"
+
+msgid "ui_community_questions_hint"
+msgstr "Up to 3. Whoever asks to join answers them, and you see the answers in the requests."
+
+msgid "ui_community_questions_lead"
+msgstr "To join “{name}”, answer these questions. The community's team will read your answers."
+
+msgid "ui_community_send_request"
+msgstr "Send request"
+
+msgid "ui_community_tab_stats"
+msgstr "Statistics"
+
+msgid "ui_post_add_calendar"
+msgstr "Add to calendar"
+
+msgid "ui_post_call_after_signup"
+msgstr "The video call link shows once you sign up"
+
+msgid "ui_post_call_soon"
+msgstr "The organiser will add the video call link"
+
+msgid "ui_post_join_call"
+msgstr "Join the video call"
+
+msgid "ui_post_came"
+msgstr "Came"
+
+msgid "ui_post_no_show"
+msgstr "Did not come"
+
+msgid "ui_post_checkin"
+msgstr "Attendance"
+
+msgid "ui_post_checkin_hint"
+msgstr "Mark who came (✓) and who did not (✕). Only the organisers see it."
+
+msgid "ui_post_cohosted_by"
+msgstr "Co-organised by {names}"
+
+msgid "ui_post_cohosts"
+msgstr "Co-organisers"
+
+msgid "ui_post_cohosts_hint"
+msgstr "They can edit the plan, manage attendees and take attendance, like you. Pick up to 10 members of the community."
+
+msgid "ui_post_duplicate"
+msgstr "Duplicate"
+
+msgid "ui_post_guests"
+msgstr "Companions"
+
+msgid "ui_post_guests_max"
+msgstr "up to {n}"
+
+msgid "ui_post_how_was_it"
+msgstr "How was it?"
+
+msgid "ui_post_your_rating"
+msgstr "Your rating"
+
+msgid "ui_post_rating_note_ph"
+msgstr "Anything you want to tell the organiser (optional)"
+
+msgid "ui_post_rating_private"
+msgstr "The organiser sees the average and the comments, not who wrote them."
+
+msgid "ui_post_rating_thanks"
+msgstr "Thanks for rating!"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} ratings"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 rating"
+
+msgid "ui_post_ratings_title"
+msgstr "Ratings"
+
+msgid "ui_post_series_weekly"
+msgstr "Every week"
+
+msgid "ui_post_series_biweekly"
+msgstr "Every 2 weeks"
+
+msgid "ui_post_series_monthly"
+msgstr "Every month"
+
+msgid "ui_publish_mode"
+msgstr "Format"
+
+msgid "ui_publish_mode_in_person"
+msgstr "In person"
+
+msgid "ui_publish_mode_online"
+msgstr "Online"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "Hybrid"
+
+msgid "ui_publish_f_online_url"
+msgstr "Video call link"
+
+msgid "ui_publish_online_url_hint"
+msgstr "Only people who sign up see it. You can add it later."
+
+msgid "ui_publish_online_url_bad"
+msgstr "The video call link has to start with https://"
+
+msgid "ui_publish_guests"
+msgstr "People may bring companions"
+
+msgid "ui_publish_guests_hint"
+msgstr "Each person can add companions (+1, +2…). They take places."
+
+msgid "ui_publish_guests_max"
+msgstr "Companions per person"
+
+msgid "ui_publish_repeat"
+msgstr "Repeats"
+
+msgid "ui_publish_repeat_none"
+msgstr "No"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "Weekly"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "Every 2 wks"
+
+msgid "ui_publish_repeat_monthly"
+msgstr "Monthly"
+
+msgid "ui_publish_repeat_hint"
+msgstr "The next dates are made by themselves (about 5 weeks ahead), each with its own list and chat. Monthly: the same weekday (for example, the 2nd Thursday)."
+
+msgid "ui_publish_repeat_until"
+msgstr "Until (optional, a year at most)"
+
+msgid "ui_series_scope_title"
+msgstr "This plan repeats"
+
+msgid "ui_series_scope_body"
+msgstr "Apply the changes to this date only, or to the following ones too?"
+
+msgid "ui_series_scope_one"
+msgstr "This date only"
+
+msgid "ui_series_scope_following"
+msgstr "This and the following ones"
+
+msgid "ui_series_delete_one"
+msgstr "Delete this date only"
+
+msgid "ui_series_delete_following"
+msgstr "Delete this and the following ones"
+
+msgid "ui_stats_members"
+msgstr "Members"
+
+msgid "ui_stats_new_30d"
+msgstr "+{n} in 30 days"
+
+msgid "ui_stats_messages"
+msgstr "Messages (30 days)"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} active people"
+
+msgid "ui_stats_plans"
+msgstr "Upcoming plans"
+
+msgid "ui_stats_plans_90d"
+msgstr "{n} in the last 90 days"
+
+msgid "ui_stats_attendance"
+msgstr "Real attendance"
+
+msgid "ui_stats_attendance_sub"
+msgstr "{came} of {marked} marked"
+
+msgid "ui_stats_rating"
+msgstr "Average rating"
+
+msgid "ui_stats_joined_weeks"
+msgstr "Joined per week (12 weeks)"
+
+msgid "ui_stats_top_organisers"
+msgstr "Who organises most (90 days)"
+
+msgid "ui_stats_private"
+msgstr "Only the community's team sees this."
 
 msgid "ui_install_title"
 msgstr "Install MeetGo"

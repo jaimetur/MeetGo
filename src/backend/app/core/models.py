@@ -88,6 +88,7 @@ class User(Base):
     bio: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     accept_dm: Mapped[bool] = mapped_column(Boolean, default=False)
+    calendar_token: Mapped[str | None] = mapped_column(String(64), nullable=True, unique=True)  # my plans as a calendar feed
     created_at: Mapped[datetime] = mapped_column(DateTime, default=naive_utcnow)
     last_active_at: Mapped[datetime] = mapped_column(DateTime, default=naive_utcnow)
     role: Mapped[str] = mapped_column(String(32), default="user", index=True)
@@ -217,6 +218,9 @@ class Conversation(Base):
     rules_markdown: Mapped[str] = mapped_column(Text, default="")
     policy_json: Mapped[dict] = mapped_column(JSONB, default=dict)
     invite_code: Mapped[str | None] = mapped_column(String(32), nullable=True, unique=True)
+    # Communities made by people may admit an age span (from the date of birth) instead of their creator's range.
+    min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     pinned_message_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     legacy_room_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)
     legacy_dm_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)
@@ -337,6 +341,7 @@ class CommunityRequest(Base):
     conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id", ondelete="CASCADE"), index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
     status: Mapped[str] = mapped_column(String(16), default="pending", index=True)  # pending | accepted | rejected
+    answers: Mapped[list] = mapped_column(JSONB, default=list)  # to the community's join questions
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     resolved_by: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
@@ -362,9 +367,30 @@ class BoardPost(Base):
     pinned: Mapped[bool] = mapped_column(Boolean, default=False)
     closed: Mapped[bool] = mapped_column(Boolean, default=False)
     chat_conversation_id: Mapped[int | None] = mapped_column(ForeignKey("conversations.id", ondelete="SET NULL"), nullable=True)
+    # in_person | online | hybrid; the video call link is shown only to the people going.
+    mode: Mapped[str] = mapped_column(String(16), default="in_person")
+    online_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
+    max_guests: Mapped[int] = mapped_column(Integer, default=0)  # companions each person may bring (+1, +2…)
+    series_id: Mapped[int | None] = mapped_column(ForeignKey("board_series.id", ondelete="SET NULL"), nullable=True, index=True)
+    cohost_ids: Mapped[list] = mapped_column(JSONB, default=list)  # co-organisers: manage the plan like its author
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class BoardSeries(Base):
+    """A plan that repeats: each date is a plan of its own (attendees, chat), made a few weeks ahead from `template`."""
+    __tablename__ = "board_series"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id", ondelete="CASCADE"), index=True)
+    author_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    freq: Mapped[str] = mapped_column(String(16))  # weekly | biweekly | monthly
+    tz: Mapped[str] = mapped_column(String(64), default="Europe/Madrid")
+    first_starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    template: Mapped[dict] = mapped_column(JSONB, default=dict)
+    ended: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
 class BoardAttendee(Base):
@@ -372,6 +398,10 @@ class BoardAttendee(Base):
     post_id: Mapped[int] = mapped_column(ForeignKey("board_posts.id", ondelete="CASCADE"), primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, index=True)
     status: Mapped[str] = mapped_column(String(16))  # going | waitlist | pending
+    guests: Mapped[int] = mapped_column(Integer, default=0)  # companions (+1, +2…), they take places too
+    attended: Mapped[bool | None] = mapped_column(Boolean, nullable=True)  # check-in by the organisers
+    rating: Mapped[int | None] = mapped_column(Integer, nullable=True)  # 1-5, after the plan, seen by organisers
+    rating_note: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 

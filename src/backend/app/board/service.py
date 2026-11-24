@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.i18n import t
 from app.core.models import (
-    Attachment, BoardAttendee, BoardComment, BoardPost, Conversation, ConversationMember, Interest, Message, User,
+    Attachment, BoardAttendee, BoardComment, BoardPost, BoardSeries, Conversation, ConversationMember, Interest, Message, User,
     utcnow,
 )
 from app.communities.service import active, can_see, slugify, staff_of
@@ -78,6 +78,11 @@ def require_poster(conv: Conversation, member: ConversationMember | None, user: 
         raise HTTPException(403, t("err_board_admins_only"))
 
 
+def can_manage(post: BoardPost, member: ConversationMember | None, user: User) -> bool:
+    """The organiser, the co-organisers and the community's staff manage a post (edit, attendees, check-in)."""
+    return post.author_id == user.id or user.id in (post.cohost_ids or []) or staff_of(member, user)
+
+
 def comment_block(post: BoardPost, member: ConversationMember | None, user: User, my_status: str | None) -> str | None:
     """Why I cannot comment (an error key), or None."""
     if post.closed:
@@ -88,8 +93,7 @@ def comment_block(post: BoardPost, member: ConversationMember | None, user: User
         return "err_join_community_first"
     if user.role != "admin" and member.ban_until and member.ban_until > utcnow():
         return "err_banned_for_now"
-    if post.comments_mode == "attendees" and not (
-            my_status == "going" or post.author_id == user.id or staff_of(member, user)):
+    if post.comments_mode == "attendees" and not (my_status == "going" or can_manage(post, member, user)):
         return "err_comments_attendees_only"
     return None
 
@@ -132,11 +136,20 @@ async def posts_out(db: AsyncSession, user: User, posts: list[BoardPost]) -> lis
         ConversationMember.conversation_id.in_({p.conversation_id for p in posts}),
         ConversationMember.user_id == user.id))).scalars().all()}
     counts: dict[tuple[int, str], int] = {}
-    for pid, status, n in (await db.execute(select(BoardAttendee.post_id, BoardAttendee.status, func.count()).where(
+    # places: each person and their companions
+    for pid, status, n in (await db.execute(select(BoardAttendee.post_id, BoardAttendee.status, func.sum(1 + BoardAttendee.guests)).where(
             BoardAttendee.post_id.in_(ids)).group_by(BoardAttendee.post_id, BoardAttendee.status))).all():
-        counts[(pid, status)] = n
-    statuses = dict((await db.execute(select(BoardAttendee.post_id, BoardAttendee.status).where(
-        BoardAttendee.post_id.in_(ids), BoardAttendee.user_id == user.id))).all())
+        counts[(pid, status)] = int(n or 0)
+    my_rows = {a.post_id: a for a in (await db.execute(select(BoardAttendee).where(
+        BoardAttendee.post_id.in_(ids), BoardAttendee.user_id == user.id))).scalars().all()}
+    statuses = {pid: a.status for pid, a in my_rows.items()}
+    ratings = {pid: (float(avg), int(n)) for pid, avg, n in (await db.execute(select(
+        BoardAttendee.post_id, func.avg(BoardAttendee.rating), func.count(BoardAttendee.rating)).where(
+        BoardAttendee.post_id.in_(ids), BoardAttendee.rating.is_not(None)).group_by(BoardAttendee.post_id))).all()}
+    series_ids = {p.series_id for p in posts if p.series_id}
+    series = {s.id: s for s in (await db.execute(select(BoardSeries).where(BoardSeries.id.in_(series_ids)))).scalars().all()} if series_ids else {}
+    cohost_ids = {u for p in posts for u in (p.cohost_ids or [])}
+    cohosts = {u.id: u for u in (await db.execute(select(User).where(User.id.in_(cohost_ids)))).scalars().all()} if cohost_ids else {}
     going: dict[int, list[User]] = {}
     for pid, u in (await db.execute(select(BoardAttendee.post_id, User).join(User, User.id == BoardAttendee.user_id).where(
             BoardAttendee.post_id.in_(ids), BoardAttendee.status == "going").order_by(BoardAttendee.created_at))).all():
@@ -153,7 +166,10 @@ async def posts_out(db: AsyncSession, user: User, posts: list[BoardPost]) -> lis
         member = mine.get(p.conversation_id)
         status = statuses.get(p.id)
         organiser = p.author_id == user.id
+        manager = can_manage(p, member, user)
+        mine_row = my_rows.get(p.id)
         cover = covers.get(p.cover_attachment_id or 0)
+        s = series.get(p.series_id or 0)
         out.append({
             "id": p.id,
             "community": communities.get(p.conversation_id),
@@ -177,8 +193,19 @@ async def posts_out(db: AsyncSession, user: User, posts: list[BoardPost]) -> lis
             "closed": p.closed,
             "my_status": status,
             "can_comment": comment_block(p, member, user, status) is None,
-            "can_edit": organiser or staff_of(member, user),
+            "can_edit": manager,
             "chat_conversation_id": p.chat_conversation_id if (status == "going" or organiser) else None,
+            "mode": p.mode or "in_person",
+            # the video call link only for the people going and the organisers
+            "online_url": p.online_url if (status == "going" or manager) else None,
+            "has_online_url": bool(p.online_url),
+            "max_guests": p.max_guests or 0,
+            "my_guests": mine_row.guests if mine_row else 0,
+            "series": {"id": s.id, "freq": s.freq, "until": iso(s.until), "ended": s.ended} if s else None,
+            "cohosts": [user_summary(cohosts[u]) for u in (p.cohost_ids or []) if u in cohosts],
+            "my_rating": mine_row.rating if mine_row else None,
+            "rating": ({"average": round(ratings[p.id][0], 1), "count": ratings[p.id][1]} if manager and p.id in ratings else None),
+            "calendar_url": calendar_url(p),
             "attendees": [user_summary(u) for u in going.get(p.id, [])[:ATTENDEES_SHOWN]],
             "created_at": iso(p.created_at),
             "updated_at": iso(p.updated_at),
@@ -322,26 +349,30 @@ async def chat_remove(db: AsyncSession, post: BoardPost, user: User) -> None:
 # ---------- attendance ----------
 
 async def going_count(db: AsyncSession, post_id: int) -> int:
-    return (await db.execute(select(func.count()).select_from(BoardAttendee).where(
-        BoardAttendee.post_id == post_id, BoardAttendee.status == "going"))).scalar_one()
+    """Places taken: the people going and their companions."""
+    return int((await db.execute(select(func.coalesce(func.sum(1 + BoardAttendee.guests), 0)).where(
+        BoardAttendee.post_id == post_id, BoardAttendee.status == "going"))).scalar_one())
 
 
-def has_room(post: BoardPost, going: int) -> bool:
-    return not post.capacity or going < post.capacity
+def has_room(post: BoardPost, going: int, need: int = 1) -> bool:
+    return not post.capacity or going + need <= post.capacity
 
 
 async def promote(db: AsyncSession, post: BoardPost) -> list[User]:
     """Fill free places with the oldest people on the waiting list. Returns who moved up (not yet committed)."""
     moved = []
     going = await going_count(db, post.id)
-    while has_room(post, going):
-        nxt = (await db.execute(select(BoardAttendee).where(
-            BoardAttendee.post_id == post.id, BoardAttendee.status == "waitlist").order_by(
-            BoardAttendee.created_at, BoardAttendee.user_id).limit(1))).scalar_one_or_none()
-        if not nxt:
+    # in order of arrival; a party that does not fit waits and the next one that fits goes up
+    waiting = list((await db.execute(select(BoardAttendee).where(
+        BoardAttendee.post_id == post.id, BoardAttendee.status == "waitlist").order_by(
+        BoardAttendee.created_at, BoardAttendee.user_id))).scalars().all())
+    for nxt in waiting:
+        if not has_room(post, going):
             break
+        if not has_room(post, going, 1 + (nxt.guests or 0)):
+            continue
         nxt.status = "going"
-        going += 1
+        going += 1 + (nxt.guests or 0)
         u = await db.get(User, nxt.user_id)
         if u:
             await chat_add(db, post, u)
@@ -407,3 +438,172 @@ async def delete_post_data(db: AsyncSession, post: BoardPost) -> None:
             chat.policy_json = {**(chat.policy_json or {}), "read_only": True}
             await _system(db, chat, t("sys_plan_cancelled", {"plan": post.title}))
 
+
+
+# ---------- calendar (.ics) ----------
+
+def _sign(text: str) -> str:
+    import hashlib
+    import hmac
+    from app.core.config import settings
+    return hmac.new(settings.JWT_SECRET.encode(), text.encode(), hashlib.sha256).hexdigest()[:24]
+
+
+def calendar_url(post: BoardPost) -> str | None:
+    """A link (without a session) that calendars open to add the plan; relative to the API."""
+    return f"/calendar/plan/{post.id}.ics?s={_sign(f'plan:{post.id}')}" if is_plan(post) else None
+
+
+def calendar_signature_ok(post_id: int, sig: str) -> bool:
+    import hmac
+    return hmac.compare_digest(_sign(f"plan:{post_id}"), sig or "")
+
+
+def _ics_text(value: str) -> str:
+    return (value or "").replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\r", "").replace("\n", "\\n")
+
+
+def _fold(line: str) -> list[str]:
+    """Lines of at most 75 bytes, continued with a space (RFC 5545)."""
+    out, cur = [], ""
+    for ch in line:
+        if len((cur + ch).encode()) > 75:
+            out.append(cur)
+            cur = " " + ch
+        else:
+            cur += ch
+    return out + [cur]
+
+
+def ics(posts: list[BoardPost], base_url: str, name: str = "MeetGo") -> str:
+    stamp = utcnow().strftime("%Y%m%dT%H%M%SZ")
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//MeetGo//Plans//ES", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+             f"X-WR-CALNAME:{_ics_text(name)}"]
+    for p in posts:
+        if not p.starts_at:
+            continue
+        start = as_utc(p.starts_at)
+        end = as_utc(p.ends_at) or start + timedelta(hours=2)
+        link = f"{base_url}/app/p/{p.id}"
+        where = p.place or ("Online" if p.mode == "online" else "")
+        lines += ["BEGIN:VEVENT", f"UID:plan-{p.id}@meetgo.app", f"DTSTAMP:{stamp}",
+                  f"DTSTART:{start:%Y%m%dT%H%M%SZ}", f"DTEND:{end:%Y%m%dT%H%M%SZ}",
+                  f"SUMMARY:{_ics_text(p.title)}", f"DESCRIPTION:{_ics_text(((p.body or '') + chr(10) + chr(10) + link).strip())}",
+                  f"URL:{link}"]
+        if where:
+            lines.append(f"LOCATION:{_ics_text(where)}")
+        if p.deleted_at:
+            lines.append("STATUS:CANCELLED")
+        lines.append("END:VEVENT")
+    lines.append("END:VCALENDAR")
+    return "\r\n".join(part for line in lines for part in _fold(line)) + "\r\n"
+
+
+# ---------- plans that repeat ----------
+
+FREQS = ("weekly", "biweekly", "monthly")
+HORIZON_DAYS = 35  # dates made ahead of time
+
+
+def occurrence(series: BoardSeries, k: int) -> datetime:
+    """The k-th date of a series (0 is the first), at the same local time (summer time included)."""
+    tz = zone(series.tz)
+    first = as_utc(series.first_starts_at).astimezone(tz)
+    if series.freq in ("weekly", "biweekly"):
+        local = first.replace(tzinfo=None) + timedelta(days=(7 if series.freq == "weekly" else 14) * k)
+    else:  # monthly: the same weekday of the same week of the month (the 2nd Thursday…; the 5th becomes the last)
+        nth = (first.day - 1) // 7
+        month0 = first.month - 1 + k
+        year, month = first.year + month0 // 12, month0 % 12 + 1
+        day1 = date(year, month, 1)
+        day = 1 + (first.weekday() - day1.weekday()) % 7 + 7 * nth
+        last = (date(year + (month == 12), month % 12 + 1, 1) - timedelta(days=1)).day
+        while day > last:
+            day -= 7
+        local = datetime.combine(date(year, month, day), first.time().replace(tzinfo=None))
+    return local.replace(tzinfo=tz).astimezone(timezone.utc)
+
+
+async def ensure_series(db: AsyncSession, series: BoardSeries, author: User | None = None) -> list[BoardPost]:
+    """Makes the dates of the series that fall in the next weeks and do not exist yet. Returns the new plans."""
+    if series.ended:
+        return []
+    author = author or (await db.get(User, series.author_id) if series.author_id else None)
+    if not author:
+        return []
+    now = utcnow()
+    existing = {as_utc(d) for d in (await db.execute(select(BoardPost.starts_at).where(BoardPost.series_id == series.id))).scalars().all()}
+    tpl = series.template or {}
+    made = []
+    for k in range(0, 400):
+        when = occurrence(series, k)
+        if when > now + timedelta(days=HORIZON_DAYS) or (series.until and when > as_utc(series.until)):
+            break
+        if when < now - timedelta(hours=1) or when in existing:
+            continue
+        minutes = tpl.get("duration_minutes")
+        post = BoardPost(
+            conversation_id=series.conversation_id, author_id=author.id, kind=tpl.get("kind", "meetup"),
+            title=tpl.get("title", "")[:160], body=tpl.get("body") or "", starts_at=when,
+            ends_at=when + timedelta(minutes=minutes) if minutes else None, place=tpl.get("place"), place_url=tpl.get("place_url"),
+            capacity=tpl.get("capacity"), link_url=tpl.get("link_url"), cover_attachment_id=tpl.get("cover_attachment_id"),
+            comments_mode=tpl.get("comments_mode") or "all", join_mode=tpl.get("join_mode") or "open",
+            mode=tpl.get("mode") or "in_person", online_url=tpl.get("online_url"), max_guests=tpl.get("max_guests") or 0,
+            cohost_ids=tpl.get("cohost_ids") or [], series_id=series.id, created_at=now, updated_at=now)
+        db.add(post)
+        await db.flush()
+        db.add(BoardAttendee(post_id=post.id, user_id=author.id, status="going", created_at=now))
+        await create_plan_chat(db, post, author)
+        # the dates made by the series do not land as unread chats on the organiser
+        chat = await db.get(Conversation, post.chat_conversation_id)
+        mine = await get_membership(db, post.chat_conversation_id, author.id)
+        if chat and mine:
+            mine.last_read_message_id = chat.last_message_id or 0
+        made.append(post)
+    return made
+
+
+def series_template(post: BoardPost) -> dict:
+    return {
+        "kind": post.kind, "title": post.title, "body": post.body, "place": post.place, "place_url": post.place_url,
+        "capacity": post.capacity, "link_url": post.link_url, "cover_attachment_id": post.cover_attachment_id,
+        "comments_mode": post.comments_mode, "join_mode": post.join_mode, "mode": post.mode, "online_url": post.online_url,
+        "max_guests": post.max_guests, "cohost_ids": post.cohost_ids or [],
+        "duration_minutes": int((as_utc(post.ends_at) - as_utc(post.starts_at)).total_seconds() // 60) if post.ends_at and post.starts_at else None,
+    }
+
+
+async def series_once(db: AsyncSession) -> int:
+    """Keeps every running series a few weeks ahead (the automatic round). Returns how many plans were made."""
+    made = 0
+    for series in (await db.execute(select(BoardSeries).where(BoardSeries.ended.is_(False)))).scalars().all():
+        made += len(await ensure_series(db, series))
+        if series.until and as_utc(series.until) < utcnow():
+            series.ended = True
+    await db.commit()
+    return made
+
+
+# ---------- short reminders and "how was it?" ----------
+
+async def plans_soon_due(db: AsyncSession) -> list[tuple[User, BoardPost, str, dict]]:
+    """People going to a plan that starts within the next 2 hours (a push, once per plan and start time)."""
+    now = utcnow()
+    rows = (await db.execute(select(User, BoardPost).join(BoardAttendee, BoardAttendee.user_id == User.id).join(
+        BoardPost, BoardPost.id == BoardAttendee.post_id).where(
+        BoardAttendee.status == "going", BoardPost.deleted_at.is_(None), BoardPost.kind.in_(PLAN_KINDS),
+        BoardPost.starts_at > now, BoardPost.starts_at <= now + timedelta(hours=2)).limit(2000))).all()
+    return [(u, p, f"plan_soon:{p.id}:{as_utc(p.starts_at):%Y%m%d%H%M}", {"plan": p.title, "date": when_text(p), "place": p.place or ""})
+            for u, p in rows]
+
+
+async def plans_to_rate_due(db: AsyncSession) -> list[tuple[User, BoardPost, str, dict]]:
+    """People who went to a plan that ended 1 to 24 hours ago and have not rated it (not its organiser)."""
+    now = utcnow()
+    ended = func.coalesce(BoardPost.ends_at, BoardPost.starts_at + timedelta(hours=2))
+    rows = (await db.execute(select(User, BoardPost).join(BoardAttendee, BoardAttendee.user_id == User.id).join(
+        BoardPost, BoardPost.id == BoardAttendee.post_id).where(
+        BoardAttendee.status == "going", BoardAttendee.rating.is_(None), BoardAttendee.attended.is_not(False),
+        BoardPost.deleted_at.is_(None), BoardPost.kind.in_(PLAN_KINDS), BoardPost.author_id != User.id,
+        ended <= now - timedelta(hours=1), ended >= now - timedelta(hours=24)).limit(2000))).all()
+    return [(u, p, f"plan_rate:{p.id}", {"plan": p.title}) for u, p in rows]

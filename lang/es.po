@@ -956,6 +956,45 @@ msgstr "Idioma no encontrado"
 msgid "err_language_english"
 msgstr "El inglés no se puede desactivar: es el idioma de origen"
 
+msgid "err_age_span"
+msgstr "La edad mínima no puede ser mayor que la máxima"
+
+msgid "err_age_span_creator"
+msgstr "Tu edad tiene que estar dentro del rango de la comunidad"
+
+msgid "err_join_answers"
+msgstr "Responde a las preguntas para pedir unirte"
+
+msgid "err_too_many_guests"
+msgstr "Puedes llevar como mucho {n} acompañantes"
+
+msgid "err_no_room_guests"
+msgstr "No quedan plazas para tus acompañantes"
+
+msgid "err_checkin_time"
+msgstr "La asistencia se marca desde 2 horas antes hasta 14 días después del plan"
+
+msgid "err_rating_not_allowed"
+msgstr "Solo puede valorar quien fue al plan"
+
+msgid "err_rating_time"
+msgstr "Se puede valorar desde que empieza el plan hasta 30 días después"
+
+msgid "err_cohost_not_member"
+msgstr "Los coorganizadores tienen que ser miembros de la comunidad"
+
+msgid "push_plan_soon_subject"
+msgstr "En breve: «{plan}»"
+
+msgid "push_plan_soon_body"
+msgstr "Empieza pronto: {date}. {place}"
+
+msgid "push_plan_rate_subject"
+msgstr "¿Qué tal «{plan}»?"
+
+msgid "push_plan_rate_body"
+msgstr "Valóralo en un momento: ayuda a quien lo organizó."
+
 msgid "err_cannot_delete_self"
 msgstr "No puedes eliminarte"
 
@@ -2953,6 +2992,249 @@ msgstr "Privacidad"
 
 msgid "ui_about_rights"
 msgstr "Todos los derechos reservados."
+
+msgid "ui_calendar_title"
+msgstr "Tus planes en tu calendario"
+
+msgid "ui_calendar_hint"
+msgstr "Suscríbete una vez y los planes a los que vas aparecerán solos en el calendario del móvil o de Google, y se actualizarán si cambian."
+
+msgid "ui_calendar_get"
+msgstr "Obtener mi calendario"
+
+msgid "ui_calendar_subscribe"
+msgstr "Suscribirse"
+
+msgid "ui_calendar_private"
+msgstr "Es un enlace privado: no lo compartas."
+
+msgid "ui_calendar_reset"
+msgstr "Crear uno nuevo"
+
+msgid "ui_calendar_reset_done"
+msgstr "Enlace nuevo creado: el anterior ya no funciona"
+
+msgid "ui_community_age_limit"
+msgstr "Limitar por edad"
+
+msgid "ui_community_age_limit_hint"
+msgstr "Solo podrá entrar gente cuya edad, calculada por su fecha de nacimiento, esté en el rango. Tienes {age} años: tienes que estar dentro."
+
+msgid "ui_community_age_must_include"
+msgstr "El rango tiene que incluir tu edad ({age})"
+
+msgid "ui_community_ages_from"
+msgstr "Desde {min} años"
+
+msgid "ui_community_ages_span"
+msgstr "{min}–{max} años"
+
+msgid "ui_community_ages_upto"
+msgstr "Hasta {max} años"
+
+msgid "ui_community_min_age"
+msgstr "Edad mínima"
+
+msgid "ui_community_max_age"
+msgstr "Edad máxima"
+
+msgid "ui_community_f_questions"
+msgstr "Preguntas al pedir unirse"
+
+msgid "ui_community_question_ph"
+msgstr "Pregunta {n} (opcional)"
+
+msgid "ui_community_questions_hint"
+msgstr "Hasta 3. Quien pida entrar tendrá que contestarlas y verás sus respuestas en las solicitudes."
+
+msgid "ui_community_questions_lead"
+msgstr "Para entrar en «{name}», responde a estas preguntas. El equipo de la comunidad leerá tus respuestas."
+
+msgid "ui_community_send_request"
+msgstr "Enviar solicitud"
+
+msgid "ui_community_tab_stats"
+msgstr "Estadísticas"
+
+msgid "ui_post_add_calendar"
+msgstr "Añadir al calendario"
+
+msgid "ui_post_call_after_signup"
+msgstr "El enlace de la videollamada aparece al apuntarte"
+
+msgid "ui_post_call_soon"
+msgstr "El organizador añadirá el enlace de la videollamada"
+
+msgid "ui_post_join_call"
+msgstr "Entrar en la videollamada"
+
+msgid "ui_post_came"
+msgstr "Vino"
+
+msgid "ui_post_no_show"
+msgstr "No vino"
+
+msgid "ui_post_checkin"
+msgstr "Asistencia"
+
+msgid "ui_post_checkin_hint"
+msgstr "Marca quién vino (✓) y quién no (✕). Solo lo veis los organizadores."
+
+msgid "ui_post_cohosted_by"
+msgstr "Coorganiza: {names}"
+
+msgid "ui_post_cohosts"
+msgstr "Coorganizadores"
+
+msgid "ui_post_cohosts_hint"
+msgstr "Pueden editar el plan, gestionar asistentes y pasar lista, como tú. Elige hasta 10 miembros de la comunidad."
+
+msgid "ui_post_duplicate"
+msgstr "Duplicar"
+
+msgid "ui_post_guests"
+msgstr "Acompañantes"
+
+msgid "ui_post_guests_max"
+msgstr "máximo {n}"
+
+msgid "ui_post_how_was_it"
+msgstr "¿Qué tal fue?"
+
+msgid "ui_post_your_rating"
+msgstr "Tu valoración"
+
+msgid "ui_post_rating_note_ph"
+msgstr "Algo que quieras contar al organizador (opcional)"
+
+msgid "ui_post_rating_private"
+msgstr "El organizador ve la media y los comentarios, pero no quién los escribió."
+
+msgid "ui_post_rating_thanks"
+msgstr "¡Gracias por tu valoración!"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} valoraciones"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 valoración"
+
+msgid "ui_post_ratings_title"
+msgstr "Valoraciones"
+
+msgid "ui_post_series_weekly"
+msgstr "Cada semana"
+
+msgid "ui_post_series_biweekly"
+msgstr "Cada 2 semanas"
+
+msgid "ui_post_series_monthly"
+msgstr "Cada mes"
+
+msgid "ui_publish_mode"
+msgstr "Cómo es"
+
+msgid "ui_publish_mode_in_person"
+msgstr "Presencial"
+
+msgid "ui_publish_mode_online"
+msgstr "Online"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "Híbrido"
+
+msgid "ui_publish_f_online_url"
+msgstr "Enlace de la videollamada"
+
+msgid "ui_publish_online_url_hint"
+msgstr "Solo lo verán quienes se apunten. Puedes añadirlo más tarde."
+
+msgid "ui_publish_online_url_bad"
+msgstr "El enlace de la videollamada tiene que empezar por https://"
+
+msgid "ui_publish_guests"
+msgstr "Se puede venir acompañado"
+
+msgid "ui_publish_guests_hint"
+msgstr "Cada persona podrá apuntar acompañantes (+1, +2…). Ocupan plaza."
+
+msgid "ui_publish_guests_max"
+msgstr "Acompañantes por persona"
+
+msgid "ui_publish_repeat"
+msgstr "Se repite"
+
+msgid "ui_publish_repeat_none"
+msgstr "No"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "Semanal"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "Cada 2 sem."
+
+msgid "ui_publish_repeat_monthly"
+msgstr "Mensual"
+
+msgid "ui_publish_repeat_hint"
+msgstr "Se crean solas las próximas fechas (unas 5 semanas por delante), cada una con su lista y su chat. Mensual: el mismo día de la semana (por ejemplo, el 2.º jueves)."
+
+msgid "ui_publish_repeat_until"
+msgstr "Hasta (opcional, como mucho un año)"
+
+msgid "ui_series_scope_title"
+msgstr "Este plan se repite"
+
+msgid "ui_series_scope_body"
+msgstr "¿Aplicar los cambios solo a esta fecha o también a las siguientes?"
+
+msgid "ui_series_scope_one"
+msgstr "Solo a esta fecha"
+
+msgid "ui_series_scope_following"
+msgstr "A esta y a las siguientes"
+
+msgid "ui_series_delete_one"
+msgstr "Borrar solo esta fecha"
+
+msgid "ui_series_delete_following"
+msgstr "Borrar esta y las siguientes"
+
+msgid "ui_stats_members"
+msgstr "Miembros"
+
+msgid "ui_stats_new_30d"
+msgstr "+{n} en 30 días"
+
+msgid "ui_stats_messages"
+msgstr "Mensajes (30 días)"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} personas activas"
+
+msgid "ui_stats_plans"
+msgstr "Planes próximos"
+
+msgid "ui_stats_plans_90d"
+msgstr "{n} en los últimos 90 días"
+
+msgid "ui_stats_attendance"
+msgstr "Asistencia real"
+
+msgid "ui_stats_attendance_sub"
+msgstr "{came} de {marked} marcados"
+
+msgid "ui_stats_rating"
+msgstr "Valoración media"
+
+msgid "ui_stats_joined_weeks"
+msgstr "Altas por semana (12 semanas)"
+
+msgid "ui_stats_top_organisers"
+msgstr "Quién más organiza (90 días)"
+
+msgid "ui_stats_private"
+msgstr "Solo lo ve el equipo de la comunidad."
 
 msgid "ui_install_title"
 msgstr "Instala MeetGo"

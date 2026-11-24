@@ -131,6 +131,32 @@ Notes on the implementation (additions, nothing above changes):
 - Push notifications that are not chat messages carry `{type: "plan" | "community.request" | "community.joined",
   title, body, url}`; links: posts `/app/p/{id}`, communities `/app/communities/{id}`.
 
+### Plans like Meetup
+
+| Method and path | Body / query | Answer |
+|---|---|---|
+| `POST /communities/{id}/posts` | also `mode` (`in_person` \| `online` \| `hybrid`), `online_url`, `max_guests` (0-5), `repeat` (`weekly` \| `biweekly` \| `monthly`), `repeat_until`, `tz` | `Post`; a plan that repeats makes its dates about 5 weeks ahead (each with attendees and chat), and the automatic round keeps making them |
+| `PATCH /posts/{id}` | also `mode`, `online_url`, `max_guests`, `scope` (`one` \| `following`) | `Post`; `following` changes the later dates of the series too (a new time moves them by the same amount) |
+| `DELETE /posts/{id}` | `scope=one\|following` | `following` deletes this date and the next ones and ends the series |
+| `POST /posts/{id}/attend` | `{guests}` | companions take places; a party waits whole on the waiting list |
+| `PUT /posts/{id}/guests` | `{guests}` | change my companions |
+| `POST /posts/{id}/attendees/{user_id}/checkin` | organisers: `{attended: true \| false \| null}` | from 2 h before to 14 days after |
+| `POST /posts/{id}/rating` | `{rating: 1-5, note?}` | people who went, from the start to 30 days after |
+| `GET /posts/{id}/ratings` | organisers | `{average, count, counts, notes}` (no names) |
+| `PUT /posts/{id}/cohosts` | organiser/staff: `{user_ids}` | co-organisers manage the plan like its author |
+| `GET /calendar/plan/{id}.ics?s=` | public, signed (`Post.calendar_url`) | the plan for a calendar app |
+| `GET /me/calendar` | `reset?=1` | `{path}`: `GET /calendar/u/{token}.ics`, my plans as a calendar feed |
+
+`Post` adds `mode`, `online_url` (only for people going and organisers), `has_online_url`, `max_guests`, `my_guests`,
+`series`, `cohosts`, `my_rating`, `rating` (organisers) and `calendar_url`; `going_count` counts companions.
+
+**Communities made by people** may set `min_age`/`max_age` (on creation, including the creator): who fits is worked out
+from the date of birth (changed only once), whatever their fixed range; without a span they belong to the creator's
+range as before. Interest communities always use the fixed ranges. With `access_mode: request`, up to 3
+`join_questions`: `POST /communities/{id}/join` takes `{answers}` and `GET …/requests` returns them.
+`GET /communities/{id}/stats` (staff): members, joined per week, messages, active people, plans, real attendance and
+the average rating.
+
 ### Notifications
 
 Real-time events (WebSocket, to community members or attendees): `post.created`, `post.updated`, `post.deleted`,

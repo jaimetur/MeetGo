@@ -361,6 +361,9 @@ class CommunityCreateIn(BaseModel):
     avatar_url: str | None = Field(default=None, max_length=512)
     access_mode: str = Field(default="open", pattern="^(open|request|invite)$")
     board_mode: str = Field(default="open", pattern="^(open|admins)$")
+    min_age: int | None = Field(default=None, ge=18, le=120)
+    max_age: int | None = Field(default=None, ge=18, le=120)
+    join_questions: list[str] | None = Field(default=None, max_length=3)
 
 
 class CommunityUpdateIn(BaseModel):
@@ -370,6 +373,11 @@ class CommunityUpdateIn(BaseModel):
     access_mode: str | None = Field(default=None, pattern="^(open|request|invite)$")
     board_mode: str | None = Field(default=None, pattern="^(open|admins)$")
     rules: str | None = Field(default=None, max_length=4000)
+    join_questions: list[str] | None = Field(default=None, max_length=3)
+
+
+class JoinIn(BaseModel):
+    answers: list[str] = Field(default_factory=list, max_length=3)
 
 
 class ResolveIn(BaseModel):
@@ -389,6 +397,12 @@ class BoardPostIn(BaseModel):
     cover_attachment_id: int | None = None
     comments_mode: str | None = Field(default=None, pattern="^(all|attendees|off)$")
     join_mode: str | None = Field(default=None, pattern="^(open|approval)$")
+    mode: str | None = Field(default=None, pattern="^(in_person|online|hybrid)$")
+    online_url: str | None = Field(default=None, max_length=512)
+    max_guests: int | None = Field(default=None, ge=0, le=5)
+    repeat: str | None = Field(default=None, pattern="^(weekly|biweekly|monthly)$")
+    repeat_until: datetime | None = None
+    tz: str | None = Field(default=None, max_length=64)
 
 
 class BoardPostUpdateIn(BaseModel):
@@ -405,6 +419,27 @@ class BoardPostUpdateIn(BaseModel):
     join_mode: str | None = Field(default=None, pattern="^(open|approval)$")
     pinned: bool | None = None
     closed: bool | None = None
+    mode: str | None = Field(default=None, pattern="^(in_person|online|hybrid)$")
+    online_url: str | None = Field(default=None, max_length=512)
+    max_guests: int | None = Field(default=None, ge=0, le=5)
+    scope: str | None = Field(default=None, pattern="^(one|following)$")  # a plan that repeats: this date or the following ones too
+
+
+class AttendIn(BaseModel):
+    guests: int = Field(default=0, ge=0, le=5)
+
+
+class CheckinIn(BaseModel):
+    attended: bool | None = None
+
+
+class RatingIn(BaseModel):
+    rating: int = Field(ge=1, le=5)
+    note: str | None = Field(default=None, max_length=1000)
+
+
+class CohostsIn(BaseModel):
+    user_ids: list[int] = Field(default_factory=list, max_length=10)
 
 
 class CommentIn(BaseModel):

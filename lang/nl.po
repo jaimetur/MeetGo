@@ -956,6 +956,45 @@ msgstr "Taal niet gevonden"
 msgid "err_language_english"
 msgstr "Engels kan niet uit: het is de brontaal"
 
+msgid "err_age_span"
+msgstr "De minimumleeftijd mag niet hoger zijn dan de maximumleeftijd"
+
+msgid "err_age_span_creator"
+msgstr "Je leeftijd moet binnen het bereik van de community vallen"
+
+msgid "err_join_answers"
+msgstr "Beantwoord de vragen om lid te worden"
+
+msgid "err_too_many_guests"
+msgstr "Je kunt maximaal {n} gasten meenemen"
+
+msgid "err_no_room_guests"
+msgstr "Er zijn geen plaatsen meer voor je gasten"
+
+msgid "err_checkin_time"
+msgstr "Aanwezigheid wordt bijgehouden van 2 uur vooraf tot 14 dagen erna"
+
+msgid "err_rating_not_allowed"
+msgstr "Alleen wie erbij was, kan een beoordeling geven"
+
+msgid "err_rating_time"
+msgstr "Beoordelen kan vanaf de start tot 30 dagen erna"
+
+msgid "err_cohost_not_member"
+msgstr "Mede-organisatoren moeten lid zijn van de community"
+
+msgid "push_plan_soon_subject"
+msgstr "Zo meteen: ‘{plan}’"
+
+msgid "push_plan_soon_body"
+msgstr "Begint binnenkort: {date}. {place}"
+
+msgid "push_plan_rate_subject"
+msgstr "Hoe was ‘{plan}’?"
+
+msgid "push_plan_rate_body"
+msgstr "Geef snel een beoordeling: dat helpt de organisator."
+
 msgid "err_cannot_delete_self"
 msgstr "Je kunt jezelf niet verwijderen"
 
@@ -2953,6 +2992,249 @@ msgstr "Privacy"
 
 msgid "ui_about_rights"
 msgstr "Alle rechten voorbehouden."
+
+msgid "ui_calendar_title"
+msgstr "Je plannen in je agenda"
+
+msgid "ui_calendar_hint"
+msgstr "Abonneer je één keer en de plannen waar je heen gaat verschijnen vanzelf in de agenda van je telefoon of Google, en worden bijgewerkt."
+
+msgid "ui_calendar_get"
+msgstr "Mijn agenda ophalen"
+
+msgid "ui_calendar_subscribe"
+msgstr "Abonneren"
+
+msgid "ui_calendar_private"
+msgstr "Dit is een privélink: deel hem niet."
+
+msgid "ui_calendar_reset"
+msgstr "Nieuwe maken"
+
+msgid "ui_calendar_reset_done"
+msgstr "Nieuwe link gemaakt: de oude werkt niet meer"
+
+msgid "ui_community_age_limit"
+msgstr "Beperken op leeftijd"
+
+msgid "ui_community_age_limit_hint"
+msgstr "Alleen mensen van wie de leeftijd (volgens geboortedatum) binnen het bereik valt, kunnen lid worden. Je bent {age}: je moet erbinnen vallen."
+
+msgid "ui_community_age_must_include"
+msgstr "Het bereik moet jouw leeftijd ({age}) bevatten"
+
+msgid "ui_community_ages_from"
+msgstr "Vanaf {min} jaar"
+
+msgid "ui_community_ages_span"
+msgstr "{min}–{max} jaar"
+
+msgid "ui_community_ages_upto"
+msgstr "Tot {max} jaar"
+
+msgid "ui_community_min_age"
+msgstr "Minimumleeftijd"
+
+msgid "ui_community_max_age"
+msgstr "Maximumleeftijd"
+
+msgid "ui_community_f_questions"
+msgstr "Vragen bij een verzoek"
+
+msgid "ui_community_question_ph"
+msgstr "Vraag {n} (optioneel)"
+
+msgid "ui_community_questions_hint"
+msgstr "Tot 3. Wie lid wil worden, beantwoordt ze; je ziet de antwoorden bij de verzoeken."
+
+msgid "ui_community_questions_lead"
+msgstr "Beantwoord deze vragen om lid te worden van ‘{name}’. Het team van de community leest je antwoorden."
+
+msgid "ui_community_send_request"
+msgstr "Verzoek sturen"
+
+msgid "ui_community_tab_stats"
+msgstr "Statistieken"
+
+msgid "ui_post_add_calendar"
+msgstr "Aan agenda toevoegen"
+
+msgid "ui_post_call_after_signup"
+msgstr "De link voor het videogesprek verschijnt na aanmelden"
+
+msgid "ui_post_call_soon"
+msgstr "De organisator voegt de link voor het videogesprek toe"
+
+msgid "ui_post_join_call"
+msgstr "Naar het videogesprek"
+
+msgid "ui_post_came"
+msgstr "Was er"
+
+msgid "ui_post_no_show"
+msgstr "Niet gekomen"
+
+msgid "ui_post_checkin"
+msgstr "Aanwezigheid"
+
+msgid "ui_post_checkin_hint"
+msgstr "Markeer wie er was (✓) en wie niet (✕). Alleen de organisatoren zien het."
+
+msgid "ui_post_cohosted_by"
+msgstr "Mede georganiseerd door {names}"
+
+msgid "ui_post_cohosts"
+msgstr "Mede-organisatoren"
+
+msgid "ui_post_cohosts_hint"
+msgstr "Zij kunnen het plan bewerken, deelnemers beheren en aanwezigheid bijhouden, net als jij. Kies tot 10 leden."
+
+msgid "ui_post_duplicate"
+msgstr "Dupliceren"
+
+msgid "ui_post_guests"
+msgstr "Gasten"
+
+msgid "ui_post_guests_max"
+msgstr "maximaal {n}"
+
+msgid "ui_post_how_was_it"
+msgstr "Hoe was het?"
+
+msgid "ui_post_your_rating"
+msgstr "Jouw beoordeling"
+
+msgid "ui_post_rating_note_ph"
+msgstr "Iets voor de organisator (optioneel)"
+
+msgid "ui_post_rating_private"
+msgstr "De organisator ziet het gemiddelde en de opmerkingen, maar niet wie ze schreef."
+
+msgid "ui_post_rating_thanks"
+msgstr "Bedankt voor je beoordeling!"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} beoordelingen"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 beoordeling"
+
+msgid "ui_post_ratings_title"
+msgstr "Beoordelingen"
+
+msgid "ui_post_series_weekly"
+msgstr "Elke week"
+
+msgid "ui_post_series_biweekly"
+msgstr "Om de 2 weken"
+
+msgid "ui_post_series_monthly"
+msgstr "Elke maand"
+
+msgid "ui_publish_mode"
+msgstr "Vorm"
+
+msgid "ui_publish_mode_in_person"
+msgstr "Op locatie"
+
+msgid "ui_publish_mode_online"
+msgstr "Online"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "Hybride"
+
+msgid "ui_publish_f_online_url"
+msgstr "Link voor het videogesprek"
+
+msgid "ui_publish_online_url_hint"
+msgstr "Alleen aangemelde mensen zien hem. Je kunt hem later toevoegen."
+
+msgid "ui_publish_online_url_bad"
+msgstr "De link voor het videogesprek moet met https:// beginnen"
+
+msgid "ui_publish_guests"
+msgstr "Gasten meenemen mag"
+
+msgid "ui_publish_guests_hint"
+msgstr "Iedereen kan gasten aanmelden (+1, +2…). Ze nemen een plaats in."
+
+msgid "ui_publish_guests_max"
+msgstr "Gasten per persoon"
+
+msgid "ui_publish_repeat"
+msgstr "Herhaalt zich"
+
+msgid "ui_publish_repeat_none"
+msgstr "Nee"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "Wekelijks"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "Om de 2 wk."
+
+msgid "ui_publish_repeat_monthly"
+msgstr "Maandelijks"
+
+msgid "ui_publish_repeat_hint"
+msgstr "De volgende data worden vanzelf gemaakt (zo’n 5 weken vooruit), elk met een eigen lijst en chat. Maandelijks: dezelfde weekdag (bijvoorbeeld de 2e donderdag)."
+
+msgid "ui_publish_repeat_until"
+msgstr "Tot (optioneel, maximaal een jaar)"
+
+msgid "ui_series_scope_title"
+msgstr "Dit plan herhaalt zich"
+
+msgid "ui_series_scope_body"
+msgstr "Wijzigingen alleen voor deze datum, of ook voor de volgende?"
+
+msgid "ui_series_scope_one"
+msgstr "Alleen deze datum"
+
+msgid "ui_series_scope_following"
+msgstr "Deze en de volgende"
+
+msgid "ui_series_delete_one"
+msgstr "Alleen deze datum verwijderen"
+
+msgid "ui_series_delete_following"
+msgstr "Deze en de volgende verwijderen"
+
+msgid "ui_stats_members"
+msgstr "Leden"
+
+msgid "ui_stats_new_30d"
+msgstr "+{n} in 30 dagen"
+
+msgid "ui_stats_messages"
+msgstr "Berichten (30 dagen)"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} actieve mensen"
+
+msgid "ui_stats_plans"
+msgstr "Komende plannen"
+
+msgid "ui_stats_plans_90d"
+msgstr "{n} in de laatste 90 dagen"
+
+msgid "ui_stats_attendance"
+msgstr "Werkelijke opkomst"
+
+msgid "ui_stats_attendance_sub"
+msgstr "{came} van {marked} gemarkeerd"
+
+msgid "ui_stats_rating"
+msgstr "Gemiddelde beoordeling"
+
+msgid "ui_stats_joined_weeks"
+msgstr "Nieuwe leden per week (12 weken)"
+
+msgid "ui_stats_top_organisers"
+msgstr "Wie het meest organiseert (90 dagen)"
+
+msgid "ui_stats_private"
+msgstr "Alleen het team van de community ziet dit."
 
 msgid "ui_install_title"
 msgstr "MeetGo installeren"

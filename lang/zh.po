@@ -956,6 +956,45 @@ msgstr "未找到该语言"
 msgid "err_language_english"
 msgstr "英语是源语言，不能关闭"
 
+msgid "err_age_span"
+msgstr "最小年龄不能大于最大年龄"
+
+msgid "err_age_span_creator"
+msgstr "你的年龄必须在社区的年龄范围内"
+
+msgid "err_join_answers"
+msgstr "请回答问题后再申请加入"
+
+msgid "err_too_many_guests"
+msgstr "最多可带 {n} 位同伴"
+
+msgid "err_no_room_guests"
+msgstr "没有剩余名额给你的同伴"
+
+msgid "err_checkin_time"
+msgstr "出席情况可在活动开始前 2 小时至结束后 14 天内标记"
+
+msgid "err_rating_not_allowed"
+msgstr "只有参加了活动的人才能评价"
+
+msgid "err_rating_time"
+msgstr "可在活动开始后 30 天内评价"
+
+msgid "err_cohost_not_member"
+msgstr "联合组织者必须是社区成员"
+
+msgid "push_plan_soon_subject"
+msgstr "即将开始：“{plan}”"
+
+msgid "push_plan_soon_body"
+msgstr "马上开始：{date}。{place}"
+
+msgid "push_plan_rate_subject"
+msgstr "“{plan}”怎么样？"
+
+msgid "push_plan_rate_body"
+msgstr "花一秒评价一下，帮助组织者。"
+
 msgid "err_cannot_delete_self"
 msgstr "不能删除自己"
 
@@ -2953,6 +2992,249 @@ msgstr "隐私"
 
 msgid "ui_about_rights"
 msgstr "保留所有权利。"
+
+msgid "ui_calendar_title"
+msgstr "把你的计划加入日历"
+
+msgid "ui_calendar_hint"
+msgstr "订阅一次，你参加的计划就会自动出现在手机或 Google 日历中，并随变更更新。"
+
+msgid "ui_calendar_get"
+msgstr "获取我的日历"
+
+msgid "ui_calendar_subscribe"
+msgstr "订阅"
+
+msgid "ui_calendar_private"
+msgstr "这是私密链接，请勿分享。"
+
+msgid "ui_calendar_reset"
+msgstr "重新生成"
+
+msgid "ui_calendar_reset_done"
+msgstr "已生成新链接，旧链接失效"
+
+msgid "ui_community_age_limit"
+msgstr "按年龄限制"
+
+msgid "ui_community_age_limit_hint"
+msgstr "只有根据出生日期计算的年龄在范围内的人才能加入。你 {age} 岁，必须在范围内。"
+
+msgid "ui_community_age_must_include"
+msgstr "范围必须包含你的年龄（{age}）"
+
+msgid "ui_community_ages_from"
+msgstr "{min} 岁以上"
+
+msgid "ui_community_ages_span"
+msgstr "{min}–{max} 岁"
+
+msgid "ui_community_ages_upto"
+msgstr "{max} 岁以下"
+
+msgid "ui_community_min_age"
+msgstr "最小年龄"
+
+msgid "ui_community_max_age"
+msgstr "最大年龄"
+
+msgid "ui_community_f_questions"
+msgstr "申请加入时的问题"
+
+msgid "ui_community_question_ph"
+msgstr "问题 {n}（可选）"
+
+msgid "ui_community_questions_hint"
+msgstr "最多 3 个。申请者需回答，你可在申请中看到答案。"
+
+msgid "ui_community_questions_lead"
+msgstr "要加入“{name}”，请回答以下问题。社区团队会阅读你的回答。"
+
+msgid "ui_community_send_request"
+msgstr "发送申请"
+
+msgid "ui_community_tab_stats"
+msgstr "统计"
+
+msgid "ui_post_add_calendar"
+msgstr "添加到日历"
+
+msgid "ui_post_call_after_signup"
+msgstr "报名后显示视频通话链接"
+
+msgid "ui_post_call_soon"
+msgstr "组织者稍后会添加视频通话链接"
+
+msgid "ui_post_join_call"
+msgstr "加入视频通话"
+
+msgid "ui_post_came"
+msgstr "已到"
+
+msgid "ui_post_no_show"
+msgstr "未到"
+
+msgid "ui_post_checkin"
+msgstr "签到"
+
+msgid "ui_post_checkin_hint"
+msgstr "标记谁到了（✓）谁没来（✕）。只有组织者能看到。"
+
+msgid "ui_post_cohosted_by"
+msgstr "联合组织：{names}"
+
+msgid "ui_post_cohosts"
+msgstr "联合组织者"
+
+msgid "ui_post_cohosts_hint"
+msgstr "他们和你一样可以编辑计划、管理参加者和签到。最多从社区成员中选 10 人。"
+
+msgid "ui_post_duplicate"
+msgstr "复制"
+
+msgid "ui_post_guests"
+msgstr "同伴"
+
+msgid "ui_post_guests_max"
+msgstr "最多 {n} 位"
+
+msgid "ui_post_how_was_it"
+msgstr "体验如何？"
+
+msgid "ui_post_your_rating"
+msgstr "你的评价"
+
+msgid "ui_post_rating_note_ph"
+msgstr "想对组织者说的话（可选）"
+
+msgid "ui_post_rating_private"
+msgstr "组织者能看到平均分和评论，但看不到是谁写的。"
+
+msgid "ui_post_rating_thanks"
+msgstr "感谢你的评价！"
+
+msgid "ui_post_ratings_n"
+msgstr "{n} 条评价"
+
+msgid "ui_post_ratings_n_one"
+msgstr "1 条评价"
+
+msgid "ui_post_ratings_title"
+msgstr "评价"
+
+msgid "ui_post_series_weekly"
+msgstr "每周"
+
+msgid "ui_post_series_biweekly"
+msgstr "每两周"
+
+msgid "ui_post_series_monthly"
+msgstr "每月"
+
+msgid "ui_publish_mode"
+msgstr "形式"
+
+msgid "ui_publish_mode_in_person"
+msgstr "线下"
+
+msgid "ui_publish_mode_online"
+msgstr "线上"
+
+msgid "ui_publish_mode_hybrid"
+msgstr "混合"
+
+msgid "ui_publish_f_online_url"
+msgstr "视频通话链接"
+
+msgid "ui_publish_online_url_hint"
+msgstr "只有报名的人能看到，可以稍后添加。"
+
+msgid "ui_publish_online_url_bad"
+msgstr "视频通话链接必须以 https:// 开头"
+
+msgid "ui_publish_guests"
+msgstr "可以带同伴"
+
+msgid "ui_publish_guests_hint"
+msgstr "每人可登记同伴（+1、+2…），同伴占名额。"
+
+msgid "ui_publish_guests_max"
+msgstr "每人同伴数"
+
+msgid "ui_publish_repeat"
+msgstr "重复"
+
+msgid "ui_publish_repeat_none"
+msgstr "不重复"
+
+msgid "ui_publish_repeat_weekly"
+msgstr "每周"
+
+msgid "ui_publish_repeat_biweekly"
+msgstr "每两周"
+
+msgid "ui_publish_repeat_monthly"
+msgstr "每月"
+
+msgid "ui_publish_repeat_hint"
+msgstr "接下来的日期会自动创建（约提前 5 周），每个日期都有自己的名单和聊天。每月：同一个星期几（例如第 2 个星期四）。"
+
+msgid "ui_publish_repeat_until"
+msgstr "截止日期（可选，最多一年）"
+
+msgid "ui_series_scope_title"
+msgstr "该计划会重复"
+
+msgid "ui_series_scope_body"
+msgstr "只修改这一天，还是也修改之后的日期？"
+
+msgid "ui_series_scope_one"
+msgstr "只修改这一天"
+
+msgid "ui_series_scope_following"
+msgstr "这一天及之后"
+
+msgid "ui_series_delete_one"
+msgstr "只删除这一天"
+
+msgid "ui_series_delete_following"
+msgstr "删除这一天及之后"
+
+msgid "ui_stats_members"
+msgstr "成员"
+
+msgid "ui_stats_new_30d"
+msgstr "30 天内 +{n}"
+
+msgid "ui_stats_messages"
+msgstr "消息（30 天）"
+
+msgid "ui_stats_active_30d"
+msgstr "{n} 人活跃"
+
+msgid "ui_stats_plans"
+msgstr "即将进行的计划"
+
+msgid "ui_stats_plans_90d"
+msgstr "过去 90 天 {n} 个"
+
+msgid "ui_stats_attendance"
+msgstr "实际出席"
+
+msgid "ui_stats_attendance_sub"
+msgstr "已标记 {marked} 人中 {came} 人到场"
+
+msgid "ui_stats_rating"
+msgstr "平均评分"
+
+msgid "ui_stats_joined_weeks"
+msgstr "每周加入（12 周）"
+
+msgid "ui_stats_top_organisers"
+msgstr "组织最多的人（90 天）"
+
+msgid "ui_stats_private"
+msgstr "只有社区团队能看到。"
 
 msgid "ui_install_title"
 msgstr "安装 MeetGo"
