@@ -928,6 +928,9 @@ msgstr "Utilisateur introuvable"
 msgid "err_user_no_email"
 msgstr "L’utilisateur n’a pas d’e-mail"
 
+msgid "err_cannot_ban_self"
+msgstr "Vous ne pouvez pas bloquer votre propre compte"
+
 msgid "err_cannot_delete_self"
 msgstr "Impossible de se supprimer soi-même"
 

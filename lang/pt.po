@@ -928,6 +928,9 @@ msgstr "Utilizador não encontrado"
 msgid "err_user_no_email"
 msgstr "O utilizador não tem email"
 
+msgid "err_cannot_ban_self"
+msgstr "Não pode bloquear a sua própria conta"
+
 msgid "err_cannot_delete_self"
 msgstr "Não podes apagar-te a ti próprio"
 

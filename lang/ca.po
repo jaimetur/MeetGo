@@ -929,6 +929,9 @@ msgstr "Usuari no trobat"
 msgid "err_user_no_email"
 msgstr "L'usuari no té correu"
 
+msgid "err_cannot_ban_self"
+msgstr "No pots bloquejar el teu propi compte"
+
 msgid "err_cannot_delete_self"
 msgstr "No et pots eliminar a tu mateix"
 

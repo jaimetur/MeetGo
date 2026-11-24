@@ -929,6 +929,9 @@ msgstr "Nutzer nicht gefunden"
 msgid "err_user_no_email"
 msgstr "Nutzer hat keine E-Mail-Adresse"
 
+msgid "err_cannot_ban_self"
+msgstr "Du kannst dein eigenes Konto nicht sperren"
+
 msgid "err_cannot_delete_self"
 msgstr "Du kannst dich nicht selbst löschen"
 

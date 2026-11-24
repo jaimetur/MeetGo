@@ -929,6 +929,9 @@ msgstr "未找到用户"
 msgid "err_user_no_email"
 msgstr "该用户没有邮箱"
 
+msgid "err_cannot_ban_self"
+msgstr "不能封禁自己的账号"
+
 msgid "err_cannot_delete_self"
 msgstr "不能删除自己"
 

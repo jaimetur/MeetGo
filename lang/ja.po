@@ -929,6 +929,9 @@ msgstr "ユーザーが見つかりません"
 msgid "err_user_no_email"
 msgstr "このユーザーにはメールアドレスがありません"
 
+msgid "err_cannot_ban_self"
+msgstr "自分のアカウントはブロックできません"
+
 msgid "err_cannot_delete_self"
 msgstr "自分自身は削除できません"
 

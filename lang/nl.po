@@ -929,6 +929,9 @@ msgstr "Gebruiker niet gevonden"
 msgid "err_user_no_email"
 msgstr "Gebruiker heeft geen e-mailadres"
 
+msgid "err_cannot_ban_self"
+msgstr "Je kunt je eigen account niet blokkeren"
+
 msgid "err_cannot_delete_self"
 msgstr "Je kunt jezelf niet verwijderen"
 

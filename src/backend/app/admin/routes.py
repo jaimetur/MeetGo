@@ -4,7 +4,7 @@ import json
 import os
 import secrets
 import threading
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
@@ -15,7 +15,7 @@ from app.core.config import settings
 from app.core.deps import get_db, require_admin
 from app.core.i18n import t
 from app.core.models import (
-    AccessGrant, BoardPost, Conversation, DMRequest, Follow, FriendRequest, Friendship, Interest, Message, Post, PromoCode, Report,
+    AccessGrant, BoardPost, Conversation, ConversationMember, DMRequest, Follow, FriendRequest, Friendship, Interest, Message, Post, PromoCode, Report,
     StripeSubscription, PlaySubscription, User, UserInterest, utcnow,
 )
 from app.core.schemas import (
@@ -34,6 +34,7 @@ from app.messaging.service import delete_message
 from app.board.service import delete_post_data
 from app.accounts.common import me_out, normalize_phone, parse_dob
 from app.accounts.deletion import delete_account
+from app.realtime.service import online_ids
 
 try:
     import docker
@@ -94,9 +95,126 @@ async def list_users(q: str | None = None, db: AsyncSession = Depends(get_db), a
         query = query.where(or_(User.display_name.ilike(like), User.email.ilike(like), User.phone.ilike(like)))
     users = (await db.execute(query.order_by(User.id.desc()).limit(500))).scalars().all()
     plans = await _plans(db, [u.id for u in users])
+    try:
+        online = await online_ids([u.id for u in users])
+    except Exception:  # Redis down: nobody shows as online
+        online = set()
     return [{**me_out(u).model_dump(mode="json"), "access_required": u.access_required,
              "plan": plans.get(u.id) or ({"kind": "free"} if not u.access_required else {"kind": "none"}),
-             "is_banned": u.is_banned} for u in users]
+             "is_banned": u.is_banned, "banned_until": _iso(u.banned_until), "created_at": _iso(u.created_at),
+             "online": u.id in online} for u in users]
+
+
+def _iso(value: datetime | None) -> str | None:
+    """Naive UTC columns as ISO with "Z", so browsers read them in their own time zone."""
+    if value is None:
+        return None
+    return value.isoformat() + ("Z" if value.tzinfo is None else "")
+
+
+@router.get("/stats", response_model=dict)
+async def stats(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """The administration overview: people, activity, moderation and subscriptions at a glance."""
+    now = datetime.utcnow()
+    people = User.bot_role.is_(None)
+
+    async def count(*where) -> int:
+        return int((await db.execute(select(func.count()).select_from(User).where(people, *where))).scalar() or 0)
+
+    ids = (await db.execute(select(User.id).where(people))).scalars().all()
+    try:
+        online = len(await online_ids(ids))
+    except Exception:
+        online = 0
+    since = now - timedelta(days=29)
+    day = func.date_trunc("day", User.created_at)
+    signups = dict((await db.execute(select(day, func.count()).where(people, User.created_at >= since.replace(hour=0, minute=0, second=0, microsecond=0)).group_by(day))).all())
+    series = []
+    for i in range(30):
+        d = (since + timedelta(days=i)).date()
+        series.append({"day": d.isoformat(), "count": int(next((v for k, v in signups.items() if k.date() == d), 0))})
+    aware = utcnow()
+    messages_24h = int((await db.execute(select(func.count()).select_from(Message).where(
+        Message.created_at >= aware - timedelta(hours=24), Message.kind == "text"))).scalar() or 0)
+    messages_7d = int((await db.execute(select(func.count()).select_from(Message).where(
+        Message.created_at >= aware - timedelta(days=7), Message.kind == "text"))).scalar() or 0)
+    communities = int((await db.execute(select(func.count()).select_from(Conversation).where(
+        Conversation.kind == "channel", Conversation.last_message_at.is_not(None)))).scalar() or 0)
+    upcoming = int((await db.execute(select(func.count()).select_from(BoardPost).where(BoardPost.starts_at >= aware))).scalar() or 0)
+    reports_open = int((await db.execute(select(func.count()).select_from(Report).where(Report.status == "open"))).scalar() or 0)
+    provinces = [{"province": p, "count": int(c)} for p, c in (await db.execute(
+        select(User.province, func.count()).where(people, User.province.is_not(None)).group_by(User.province)
+        .order_by(func.count().desc()).limit(6))).all()]
+    plans = await _plans(db, list(ids))
+    return {
+        "users": {
+            "total": len(ids), "online": online,
+            "new_7d": await count(User.created_at >= now - timedelta(days=7)),
+            "active_24h": await count(User.last_seen_at >= now - timedelta(hours=24)),
+            "active_7d": await count(User.last_seen_at >= now - timedelta(days=7)),
+            "banned": await count(or_(User.is_banned.is_(True), User.banned_until > now)),
+            "unverified": await count(User.email_verified.is_(False)),
+            "admins": await count(User.role == "admin"),
+        },
+        "signups": series,
+        "activity": {"messages_24h": messages_24h, "messages_7d": messages_7d, "communities": communities, "upcoming_plans": upcoming},
+        "reports_open": reports_open,
+        "plans": {k: sum(1 for p in plans.values() if p["kind"] == k) for k in ("gift", "web", "play")},
+        "provinces": provinces,
+    }
+
+
+@router.get("/users/{user_id}/summary", response_model=dict)
+async def user_summary_stats(user_id: int, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """What a person does in MeetGo: messages, communities, groups, friends, plans and reports."""
+    target = await db.get(User, user_id)
+    if not target:
+        raise HTTPException(404, t("err_user_not_found"))
+
+    async def n(stmt) -> int:
+        return int((await db.execute(stmt)).scalar() or 0)
+
+    member_kinds = select(Conversation.kind, func.count()).join(
+        ConversationMember, ConversationMember.conversation_id == Conversation.id).where(
+        ConversationMember.user_id == user_id).group_by(Conversation.kind)
+    kinds = dict((await db.execute(member_kinds)).all())
+    return {
+        "messages": await n(select(func.count()).select_from(Message).where(Message.sender_id == user_id, Message.kind == "text")),
+        "communities": int(kinds.get("channel", 0)),
+        "groups": int(kinds.get("group", 0)),
+        "dms": int(kinds.get("dm", 0)),
+        "friends": await n(select(func.count()).select_from(Friendship).where(Friendship.user_id == user_id)),
+        "posts": await n(select(func.count()).select_from(BoardPost).where(BoardPost.author_id == user_id)),
+        "reports_received": await n(select(func.count()).select_from(Report).join(Message, Message.id == Report.message_id).where(Message.sender_id == user_id)),
+        "reports_made": await n(select(func.count()).select_from(Report).where(Report.reporter_id == user_id)),
+        "online": await _is_online(user_id),
+    }
+
+
+async def _is_online(user_id: int) -> bool:
+    try:
+        return bool(await online_ids([user_id]))
+    except Exception:
+        return False
+
+
+@router.post("/users/{user_id}/ban", response_model=dict)
+async def ban_user(user_id: int, payload: dict, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """Block access: {"days": N} for a while, {"days": null} for good, {"days": 0} to lift it."""
+    if admin.id == user_id:
+        raise HTTPException(400, t("err_cannot_ban_self"))
+    target = await db.get(User, user_id)
+    if not target:
+        raise HTTPException(404, t("err_user_not_found"))
+    days = payload.get("days", 0) if isinstance(payload, dict) else 0
+    if days is None:
+        target.is_banned, target.banned_until = True, None
+    elif isinstance(days, (int, float)) and days > 0:
+        target.is_banned, target.banned_until = False, datetime.utcnow() + timedelta(days=float(days))
+    else:
+        target.is_banned, target.banned_until = False, None
+    await db.commit()
+    return {"is_banned": target.is_banned, "banned_until": _iso(target.banned_until)}
 
 
 @router.post("/users", response_model=MeOut)

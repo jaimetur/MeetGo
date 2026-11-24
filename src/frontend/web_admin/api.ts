@@ -181,6 +181,16 @@ export const api = {
   async deletePromoCode(code: string) {
     return await req(`/admin/promo-codes/${encodeURIComponent(code)}`, { method: "DELETE" });
   },
+  async stats(): Promise<AdminStats> {
+    return await req("/admin/stats");
+  },
+  async userSummary(id: number): Promise<UserActivity> {
+    return await req(`/admin/users/${id}/summary`);
+  },
+  /** days: N for a while, null for good, 0 to lift the block. */
+  async banUser(id: number, days: number | null): Promise<{ is_banned: boolean; banned_until: string | null }> {
+    return await req(`/admin/users/${id}/ban`, { method: "POST", body: JSON.stringify({ days }) });
+  },
   /** Channel moderation; the backend only allows it to members (staff) of that conversation. */
   async moderateMember(conversationId: number, userId: number, action: ModerateAction, minutes = 60) {
     return await req(`/conversations/${conversationId}/members/${userId}/moderate`, {
@@ -291,3 +301,17 @@ export type PromoCodeIn = {
 };
 
 export type ModerateAction = "silence" | "unsilence" | "ban" | "unban" | "remove";
+
+export type AdminStats = {
+  users: { total: number; online: number; new_7d: number; active_24h: number; active_7d: number; banned: number; unverified: number; admins: number };
+  signups: { day: string; count: number }[];
+  activity: { messages_24h: number; messages_7d: number; communities: number; upcoming_plans: number };
+  reports_open: number;
+  plans: { gift: number; web: number; play: number };
+  provinces: { province: string; count: number }[];
+};
+
+export type UserActivity = {
+  messages: number; communities: number; groups: number; dms: number; friends: number; posts: number;
+  reports_received: number; reports_made: number; online: boolean;
+};
