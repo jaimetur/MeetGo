@@ -2911,6 +2911,21 @@ msgstr "Todas as tuas conversas num relance"
 msgid "ui_splash_tagline"
 msgstr "Fala com gente perto de ti. E depois combinem."
 
+msgid "ui_about_title"
+msgstr "Sobre o MeetGo"
+
+msgid "ui_about_version"
+msgstr "Versão {version}"
+
+msgid "ui_about_terms"
+msgstr "Termos"
+
+msgid "ui_about_privacy"
+msgstr "Privacidade"
+
+msgid "ui_about_rights"
+msgstr "Todos os direitos reservados."
+
 msgid "ui_install_title"
 msgstr "Instalar o MeetGo"
 

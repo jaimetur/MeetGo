@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { t, getLang } from "@lang";
 import { fileUrl } from "../api";
 import type { Conversation, UserSummary } from "../types";
@@ -171,6 +172,33 @@ export function Wordmark({ size = 24 }: { size?: number }) {
         <circle cx="3" cy="19" r="3" fill="url(#wmGo)" /><path d="M11 2 L29 12 L11 22 Z" fill="url(#wmGo)" />
       </svg>
     </span>
+  );
+}
+
+/** The brand slogan, in English in every language. */
+export const SLOGAN = "Meet People, Go Places!";
+
+/** About MeetGo: icon, wordmark, slogan, version, copyright and the legal pages. */
+export function AboutModal({ onClose }: { onClose: () => void }) {
+  const site = "https://www.meetgo.app";
+  // on document.body: the page around it is zoomed (text size) and would trap a fixed dialog
+  return createPortal(
+    <Modal title={t("ui_about_title")} onClose={onClose}>
+      <div className="about">
+        <img className="about-icon" src="/apple-touch-icon.png" alt="" />
+        <Wordmark size={34} />
+        <p className="slogan">{SLOGAN}</p>
+        <p className="muted">{t("ui_splash_tagline")}</p>
+        <p className="about-ver">{t("ui_about_version", { version: __APP_VERSION__ })}</p>
+        <nav className="about-links">
+          <a href={site} target="_blank" rel="noreferrer">meetgo.app</a>
+          <a href={`${site}/terms.html`} target="_blank" rel="noreferrer">{t("ui_about_terms")}</a>
+          <a href={`${site}/privacy.html`} target="_blank" rel="noreferrer">{t("ui_about_privacy")}</a>
+        </nav>
+        <p className="muted about-copy">© {new Date().getFullYear()} MeetGo. {t("ui_about_rights")}</p>
+      </div>
+    </Modal>,
+    document.body,
   );
 }
 

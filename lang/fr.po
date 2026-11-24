@@ -2911,6 +2911,21 @@ msgstr "Toutes tes conversations d’un coup d’œil"
 msgid "ui_splash_tagline"
 msgstr "Parle avec des gens près de chez toi. Puis retrouvez-vous."
 
+msgid "ui_about_title"
+msgstr "À propos de MeetGo"
+
+msgid "ui_about_version"
+msgstr "Version {version}"
+
+msgid "ui_about_terms"
+msgstr "Conditions"
+
+msgid "ui_about_privacy"
+msgstr "Confidentialité"
+
+msgid "ui_about_rights"
+msgstr "Tous droits réservés."
+
 msgid "ui_install_title"
 msgstr "Installer MeetGo"
 

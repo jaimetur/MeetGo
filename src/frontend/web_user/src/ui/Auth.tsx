@@ -3,7 +3,7 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api, setToken } from "../api";
 import { isNativeApp } from "../native";
 import { queryParam } from "../router";
-import { countryOptions, regionLabel } from "./common";
+import { SLOGAN, countryOptions, regionLabel } from "./common";
 
 type View = "login" | "register" | "forgot" | "reset" | "sent";
 
@@ -30,6 +30,7 @@ export function AuthScreen({ onSignedIn }: { onSignedIn: () => Promise<void> }) 
             {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
           </select>
         </div>
+        <p className="slogan authslogan">{SLOGAN}</p>
         <div className="box">
           {view === "login" ? <Login onSignedIn={onSignedIn} setView={setView} /> : null}
           {view === "register" ? <Register setView={setView} /> : null}

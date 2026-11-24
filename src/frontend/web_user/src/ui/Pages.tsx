@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { Avatar, Icon, convTitle, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel } from "./common";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
 
@@ -504,6 +504,7 @@ export function AccountPage() {
           ) : null}
           <BlockedPeople />
           <DeleteAccount />
+          <AboutButton />
         </div>
       ) : null}
     </PageShell>
@@ -704,6 +705,16 @@ function DeleteAccount() {
 }
 
 /** The text size of the whole app on this device: small, normal or large, with a preview. */
+function AboutButton() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button id="acc-about" className="btn aboutbtn" onClick={() => setOpen(true)}><Icon name="info" size="sm" />{t("ui_about_title")}</button>
+      {open ? <AboutModal onClose={() => setOpen(false)} /> : null}
+    </>
+  );
+}
+
 function ChatSizePicker() {
   const [size, setSize] = useState(() => document.documentElement.dataset.chatsize || "normal");
   const pick = (v: string) => {

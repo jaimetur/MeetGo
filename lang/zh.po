@@ -2912,6 +2912,21 @@ msgstr "所有会话,一目了然"
 msgid "ui_splash_tagline"
 msgstr "和身边的人聊天。然后见面。"
 
+msgid "ui_about_title"
+msgstr "关于 MeetGo"
+
+msgid "ui_about_version"
+msgstr "版本 {version}"
+
+msgid "ui_about_terms"
+msgstr "条款"
+
+msgid "ui_about_privacy"
+msgstr "隐私"
+
+msgid "ui_about_rights"
+msgstr "保留所有权利。"
+
 msgid "ui_install_title"
 msgstr "安装 MeetGo"
 

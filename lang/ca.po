@@ -2912,6 +2912,21 @@ msgstr "Totes les teves converses d'un cop d'ull"
 msgid "ui_splash_tagline"
 msgstr "Parla amb gent de la teva zona. I queda amb ells!"
 
+msgid "ui_about_title"
+msgstr "Quant a MeetGo"
+
+msgid "ui_about_version"
+msgstr "Versió {version}"
+
+msgid "ui_about_terms"
+msgstr "Termes"
+
+msgid "ui_about_privacy"
+msgstr "Privadesa"
+
+msgid "ui_about_rights"
+msgstr "Tots els drets reservats."
+
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"
 

@@ -10,6 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, "..", "..");
 const brandingDir = path.join(repoRoot, "assets", "branding");
 const langDir = path.join(repoRoot, "lang");
+const appVersion: string = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), "utf-8")).version;
 
 // VITE_ROOT picks the site: ./web_user (landing at "/", app at "/app/") or ./web_admin.
 const root = path.resolve(__dirname, process.env.VITE_ROOT || "web_user");
@@ -75,6 +76,7 @@ export default defineConfig({
   root,
   appType: "mpa",
   publicDir: path.join(__dirname, "assets"),
+  define: { __APP_VERSION__: JSON.stringify(appVersion) },
   plugins: [react(), branding(), ...(site === "web_user" ? [appRoutes()] : [])],
   resolve: {
     alias: {

@@ -1092,3 +1092,15 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 /* Settings: the field titles and the language list at the size of the rest of the page */
 .fld.setfld { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--fg); align-self: start; }
 .fld.setfld select.inp { font-size: 15px; padding: 11px 12px; min-height: 46px; max-width: 420px; }
+
+/* the brand slogan (login and About) */
+.slogan { margin: 0; font-family: var(--display); font-weight: 650; text-align: center; background: linear-gradient(90deg, var(--blue), #00c2ff 55%, #18d7c8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.authslogan { font-size: 18px; }
+.about { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 18px 18px; text-align: center; }
+.about .muted { margin: 0; }
+.about-icon { width: 76px; height: 76px; border-radius: 18px; box-shadow: 0 10px 26px rgba(30, 144, 255, 0.3); }
+.about .slogan { font-size: 20px; }
+.about-ver { margin: 4px 0 0; font-size: 13px; padding: 3px 12px; border-radius: 999px; background: var(--line); }
+.about-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 14px; }
+.about-copy { font-size: 12px; }
+.aboutbtn { align-self: flex-start; }

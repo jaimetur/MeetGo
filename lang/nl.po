@@ -2912,6 +2912,21 @@ msgstr "Al je gesprekken in één oogopslag"
 msgid "ui_splash_tagline"
 msgstr "Praat met mensen bij jou in de buurt. En spreek dan af."
 
+msgid "ui_about_title"
+msgstr "Over MeetGo"
+
+msgid "ui_about_version"
+msgstr "Versie {version}"
+
+msgid "ui_about_terms"
+msgstr "Voorwaarden"
+
+msgid "ui_about_privacy"
+msgstr "Privacy"
+
+msgid "ui_about_rights"
+msgstr "Alle rechten voorbehouden."
+
 msgid "ui_install_title"
 msgstr "MeetGo installeren"
 
