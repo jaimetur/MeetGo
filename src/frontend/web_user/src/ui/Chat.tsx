@@ -846,7 +846,7 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
         </div>
       ) : null}
       {replyTo ? (
-        <div className="rprev"><Icon name="reply" size="sm" /><span>{t("ui_replying_to")} <b>{replyTo.sender?.display_name}</b> · {replyTo.body}</span><button className="iconbtn" onClick={onCancelReply} aria-label={t("ui_cancel")}><Icon name="x" size="sm" /></button></div>
+        <div className="rprev"><Icon name="reply" size="sm" /><span>{t("ui_replying_to")} <b>{replyTo.sender?.display_name}</b> · {replyTo.body}</span><button type="button" className="iconbtn" onPointerDown={(e) => e.preventDefault()} onMouseDown={(e) => e.preventDefault()} onClick={onCancelReply} aria-label={t("ui_cancel")}><Icon name="x" size="sm" /></button></div>
       ) : null}
       {atts.length ? (
         <div className="pending-atts">

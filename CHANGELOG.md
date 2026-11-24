@@ -101,6 +101,7 @@ All notable changes to this project will be documented in this file.
 
 #### 🐛 Bug fixes:
 - iPhone: a long press on a message opened its menu but iOS then selected the menu's text and swallowed every tap; text can no longer be selected outside fields on touch screens (Copy is in the menu).
+- Phones: replying to a message can be cancelled again; a long quoted message pushed the cancel button off the screen, and tapping it moved the composer away from the finger.
 - Fixed translations whose text ends in quotes losing the last quote.
 - Fixed the empty band under the phone tab bar in Safari: the app fills the whole screen and only fits the visible area while the keyboard is open.
 - Sign-up now checks that the email is a real address (name@domain.tld).

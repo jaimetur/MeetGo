@@ -471,7 +471,8 @@ a.logo { text-decoration: none; }
   .composer, .composer.compact { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 2px; margin: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px)); padding: 4px; border-radius: 24px; }
   .kb .composer, .kb .composer.compact { margin-bottom: 6px; }
   .composer > .rprev, .composer > .pending-atts { flex-basis: 100%; }
-  .composer > .rprev { border-radius: 18px 18px 0 0; }
+  .composer > .rprev { border-radius: 18px 18px 0 0; min-width: 0; }
+  .composer > .rprev .iconbtn { width: 36px; height: 36px; border-radius: 50%; color: var(--fg); background: var(--line); }
   .composer .ctools { display: contents; }
   .composer .ctools .iconbtn { order: 1; width: 38px; height: 38px; border-radius: 50%; }
   .composer textarea { order: 2; flex: 1 1 0; min-width: 0; width: auto; padding: 8px 6px; min-height: 38px; }
