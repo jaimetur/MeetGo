@@ -3224,6 +3224,18 @@ msgstr "Hola! Quedem aquest dissabte per a la ruta?"
 msgid "ui_cshow_mine_short"
 msgstr "Meves"
 
+msgid "ui_group_autonomous_community"
+msgstr "Comunitat autònoma"
+
+msgid "ui_zone_whole_country"
+msgstr "{country}: tot el país"
+
+msgid "ui_zone_whole_area"
+msgstr "{area}: totes"
+
+msgid "ui_zone_nobody"
+msgstr "Encara no hi ha gent a les comunitats de {zone} per a aquesta edat"
+
 msgid "ui_sec_communities"
 msgstr "Comunitats"
 

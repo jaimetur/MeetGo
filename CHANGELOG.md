@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Discover other zones at any level: a province (or state, region...), a group of them where the country has one (Spain's autonomous communities, Ireland's provinces, Japan's regions) or a whole country; over several provinces each community says which one it is in.
 - On computers your own messages show on the right in a blue bubble, with your avatar beside it.
 - Chat text a little bigger, and a text size in Settings for the whole app: Small, Normal (as designed) or Large, per device.
 - Right-click a chat in the list for its menu (notifications, mute, pin, leave...) and the new "Delete chat": just for you, your history is emptied and it leaves your list until someone writes again.
@@ -99,6 +100,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
+- iPhone: a long press on a message opened its menu but iOS then selected the menu's text and swallowed every tap; text can no longer be selected outside fields on touch screens (Copy is in the menu).
 - Fixed translations whose text ends in quotes losing the last quote.
 - Fixed the empty band under the phone tab bar in Safari: the app fills the whole screen and only fits the visible area while the keyboard is open.
 - Sign-up now checks that the email is a real address (name@domain.tld).

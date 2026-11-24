@@ -28,7 +28,8 @@ export type State = {
   // people I blocked: their messages are hidden from me
   blocked: number[];
   // another zone whose communities I am looking at (Communities), or null for mine
-  browseZone: { province: string; age_range: string } | null;
+  // country + area (a group of provinces, e.g. an autonomous community) + province: the narrowest one set is the zone
+  browseZone: { country: string; area?: string; province?: string; age_range: string; label: string } | null;
 };
 
 const initial: State = {

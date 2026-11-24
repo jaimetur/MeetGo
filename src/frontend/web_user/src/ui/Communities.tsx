@@ -60,6 +60,8 @@ function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Communit
 }
 
 function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community) => void }) {
+  const browse = useStore((s) => s.browseZone);
+  const wide = !!browse && !browse.province;  // several provinces: say which one each community is in
   return (
     <article className={"ccard" + (c.my_zone === false ? " otherzone" : "")} role="link" tabIndex={0}
       onClick={() => c.my_zone !== false && navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && c.my_zone !== false && navigate(communityPath(c.id))}>
@@ -71,7 +73,7 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
           <div style={{ minWidth: 0 }}>
             <div className="ctitle">{c.title}</div>
             <div className="cstats">
-              <span>{t("ui_members_n", { n: c.member_count })}</span>
+              <span>{wide ? `${c.province} · ` : ""}{t("ui_members_n", { n: c.member_count })}</span>
               {c.online_count ? <span><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</span> : null}
               {c.upcoming_count ? <span>{t("ui_community_plans_n", { n: c.upcoming_count })}</span> : null}
             </div>
@@ -147,7 +149,7 @@ export function CommunitiesPage() {
   const browse = useStore((s) => s.browseZone);
   const load = useCallback((query: string) => {
     setError(null);
-    api.communities({ q: query || undefined, ...(browse || {}) }).then(setList).catch((e) => {
+    api.communities({ q: query || undefined, ...(browse ? { country: browse.country, area: browse.area, province: browse.province, age_range: browse.age_range } : {}) }).then(setList).catch((e) => {
       setList([]);
       if (e?.status !== 404) setError(e.message);
     });
@@ -189,7 +191,7 @@ export function CommunitiesPage() {
         <header className="shead">
           <div className="grow">
             <h1 className="deskonly">{t("ui_community_title")}</h1>
-            <p className="muted">{me ? t("ui_community_lead", { zone: browse?.province || me.province }) : null}</p>
+            <p className="muted">{me ? t("ui_community_lead", { zone: browse?.label || me.province }) : null}</p>
           </div>
           <button className="btn go" onClick={() => setCreate(true)}><Icon name="plus" size="sm" />{t("ui_community_create")}</button>
         </header>
@@ -201,7 +203,7 @@ export function CommunitiesPage() {
         {browse ? (
           <div className="zonebar">
             <Icon name="place" size="sm" />
-            <span className="grow">{t("ui_zone_browsing", { zone: `${browse.province} · ${browse.age_range.replace("_plus", "+").replace("_", "-")}` })}</span>
+            <span className="grow">{t("ui_zone_browsing", { zone: `${browse.label} · ${browse.age_range.replace("_plus", "+").replace("_", "-")}` })}</span>
             <button className="btn sm" onClick={() => setState({ browseZone: null })}>{t("ui_zone_back_mine")}</button>
           </div>
         ) : null}
@@ -220,6 +222,8 @@ export function CommunitiesPage() {
           <div className="cgrid">{[0, 1, 2, 3].map((i) => <div key={i} className="ccard skel"><div className="ccover shimmer" /><div className="cbody"><span className="sk w60 h18" /><span className="sk w80" /></div></div>)}</div>
         ) : error ? (
           <EmptyState icon="info" title={t("ui_board_error")} body={error} action={t("ui_board_retry")} onAction={() => load(q.trim())} />
+        ) : !list.length && browse ? (
+          <EmptyState icon="compass" title={q ? t("ui_no_results") : t("ui_zone_nobody", { zone: browse.label })} action={t("ui_zone_back_mine")} onAction={() => setState({ browseZone: null })} />
         ) : !list.length ? (
           q ? <EmptyState icon="search" title={t("ui_no_results")} body={t("ui_community_no_match")} action={t("ui_community_create")} onAction={() => setCreate(true)} />
             : <EmptyState icon="compass" title={t("ui_community_empty_title")} body={t("ui_community_empty_body")} action={t("ui_community_create")} onAction={() => setCreate(true)} />

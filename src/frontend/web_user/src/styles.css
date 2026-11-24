@@ -496,6 +496,10 @@ a.logo { text-decoration: none; }
   .chip { padding: 6px 12px; font-size: 13px; }
   .msg { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
   .msg textarea { -webkit-user-select: text; user-select: text; }
+  /* iOS keeps a long press going after our sheet opens under the finger: without this it selects the sheet's text
+     and stays in selection mode, swallowing taps. Like a native app, only fields can be selected. */
+  body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea, select, [contenteditable="true"] { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
 }
 @media (prefers-reduced-motion: reduce) {
   .splash-icon, .splash .wordmark, .splash-tag, .splash-glow { animation: none; }

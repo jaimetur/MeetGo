@@ -4084,6 +4084,18 @@ msgstr "Salut ! On se retrouve samedi pour la rando ?"
 msgid "ui_cshow_mine_short"
 msgstr "Les miennes"
 
+msgid "ui_group_autonomous_community"
+msgstr "Communauté autonome"
+
+msgid "ui_zone_whole_country"
+msgstr "Tout le pays : {country}"
+
+msgid "ui_zone_whole_area"
+msgstr "Toute la zone : {area}"
+
+msgid "ui_zone_nobody"
+msgstr "Personne n’est encore dans les communautés de {zone} pour cet âge"
+
 msgid "ui_sec_communities"
 msgstr "Communautés"
 

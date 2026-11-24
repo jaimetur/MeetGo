@@ -18,3 +18,12 @@ def test_merge_keeps_what_an_administrator_added():
     assert next(c for c in data["countries"] if c["code"] == "ES")["name"] == "España"
     assert {"value": "Mi zona", "name": "Mi zona"} in data["provinces_by_country"]["ES"]
     assert merge_geography(data) is False  # nothing more to add
+
+
+def test_groups_name_existing_regions_and_cover_spain():
+    from app.core.geo import GROUPS
+    for code, groups in GROUPS.items():
+        values = {r["value"] for r in GEO_REGIONS[code]}
+        grouped = [r for _, _, regions in groups for r in regions]
+        assert set(grouped) <= values and len(grouped) == len(set(grouped)), code
+    assert {r for _, _, regions in GROUPS["ES"] for r in regions} == {r["value"] for r in GEO_REGIONS["ES"]}

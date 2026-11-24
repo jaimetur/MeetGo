@@ -3225,6 +3225,18 @@ msgstr "Hi! Shall we meet on Saturday for the hike?"
 msgid "ui_cshow_mine_short"
 msgstr "Mine"
 
+msgid "ui_group_autonomous_community"
+msgstr "Autonomous community"
+
+msgid "ui_zone_whole_country"
+msgstr "All of {country}"
+
+msgid "ui_zone_whole_area"
+msgstr "All of {area}"
+
+msgid "ui_zone_nobody"
+msgstr "Nobody is in the communities of {zone} for this age yet"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 

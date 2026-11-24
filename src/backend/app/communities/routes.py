@@ -66,10 +66,12 @@ async def _join_member(db: AsyncSession, conv: Conversation, user: User) -> None
 
 @router.get("/communities", response_model=list[dict])
 async def communities(q: str = "", mine: int = 0, province: str | None = None, age_range: str | None = None,
+                      country: str | None = None, area: str | None = None,
                       db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    """My zone's communities, or with province and age_range those of another zone, to discover them."""
-    zone = await valid_zone(db, province, age_range)
-    if (province or age_range) and not zone:
+    """My zone's communities, or those of another zone to discover them: a province, a group of provinces of a country
+    (area, e.g. an autonomous community) or a whole country, with an age range."""
+    zone = await valid_zone(db, province, age_range, country, area)
+    if (province or age_range or country or area) and not zone:
         raise HTTPException(400, t("err_invalid_zone"))
     return await list_communities(db, user, q, bool(mine), zone)
 

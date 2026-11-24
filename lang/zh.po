@@ -3224,6 +3224,18 @@ msgstr "你好!周六一起去徒步吗?"
 msgid "ui_cshow_mine_short"
 msgstr "我的"
 
+msgid "ui_group_autonomous_community"
+msgstr "自治区"
+
+msgid "ui_zone_whole_country"
+msgstr "{country}全国"
+
+msgid "ui_zone_whole_area"
+msgstr "{area}全部"
+
+msgid "ui_zone_nobody"
+msgstr "{zone}该年龄段的社区里还没有人"
+
 msgid "ui_sec_communities"
 msgstr "社区"
 

@@ -3224,6 +3224,18 @@ msgstr "Ciao! Ci vediamo sabato per l'escursione?"
 msgid "ui_cshow_mine_short"
 msgstr "Mie"
 
+msgid "ui_group_autonomous_community"
+msgstr "Comunità autonoma"
+
+msgid "ui_zone_whole_country"
+msgstr "Tutto il paese: {country}"
+
+msgid "ui_zone_whole_area"
+msgstr "Tutta l'area: {area}"
+
+msgid "ui_zone_nobody"
+msgstr "Non c'è ancora nessuno nelle community di {zone} per questa età"
+
 msgid "ui_sec_communities"
 msgstr "Comunità"
 

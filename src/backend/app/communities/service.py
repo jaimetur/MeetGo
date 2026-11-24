@@ -188,31 +188,52 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
 AGE_KEYS = ("18_30", "31_60", "61_plus")
 
 
-async def valid_zone(db: AsyncSession, province: str | None, age_range: str | None) -> tuple[str, str] | None:
-    """A zone to look at (a province of the configured countries and an age range), or None."""
+async def valid_zone(db: AsyncSession, province: str | None, age_range: str | None, country: str | None = None,
+                     area: str | None = None) -> tuple[tuple[str, ...], str] | None:
+    """A zone to look at: one province (region), a group of them (an autonomous community...) or a whole country,
+    with an age range. Its regions and the age range, or None."""
     from app.core.app_settings import get_settings_row
-    if not province or age_range not in AGE_KEYS:
+    if age_range not in AGE_KEYS or not (province or country):
         return None
     data = (await get_settings_row(db)).data or {}
-    provinces = {p.get("value") for ps in (data.get("provinces_by_country") or {}).values() for p in ps}
-    return (province, age_range) if province in provinces else None
+    by_country = data.get("provinces_by_country") or {}
+    if province:
+        provinces = {p.get("value") for ps in by_country.values() for p in ps}
+        return ((province,), age_range) if province in provinces else None
+    regions = [p.get("value") for p in by_country.get(country or "", [])]
+    if not regions:
+        return None
+    if area:
+        group = next((g for g in (data.get("region_groups") or {}).get(country, []) if g.get("value") == area), None)
+        if not group:
+            return None
+        regions = [r for r in group.get("regions") or [] if r in regions]
+    return (tuple(regions), age_range) if regions else None
 
 
 async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool = False,
-                           zone: tuple[str, str] | None = None) -> list[dict]:
-    """My zone's communities; with `zone`, another zone's, to discover them (only my zone's can be joined)."""
-    if zone and zone == (user.province, user_age_key(user)):
+                           zone: tuple[tuple[str, ...], str] | None = None) -> list[dict]:
+    """My zone's communities; with `zone`, those of another province, of a group of provinces or of a whole country,
+    to discover them (only my zone's can be joined). Over several provinces, only communities with people in them."""
+    if zone and zone == ((user.province,), user_age_key(user)):
         zone = None
     if zone:
-        await ensure_interest_channels(db, user, zone)
+        provinces, age = zone
         query = select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(
-            Conversation.kind == "channel", Conversation.province == zone[0], Conversation.age_range == zone[1],
+            Conversation.kind == "channel", Conversation.province.in_(provinces), Conversation.age_range == age,
             Conversation.access_mode != "invite")
+        if len(provinces) == 1:
+            await ensure_interest_channels(db, user, (provinces[0], age))
+        else:
+            bots = set((await bot_ids(db)).values())
+            query = query.where(Conversation.id.in_(select(ConversationMember.conversation_id).where(
+                ConversationMember.away.is_(False), ConversationMember.banned.is_(False),
+                ConversationMember.user_id.not_in(bots or {0}))))
         if q.strip():
             like = f"%{q.strip()}%"
             query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), Conversation.description.ilike(like)))
-        out = await communities_out(db, user, list((await db.execute(query)).scalars().all()))
-        out.sort(key=lambda c: c["title"].lower())
+        out = await communities_out(db, user, list((await db.execute(query.limit(400))).scalars().all()))
+        out.sort(key=lambda c: (c["title"].lower(), -c["member_count"]) if len(provinces) == 1 else (-c["member_count"], c["title"].lower()))
         return out
     if not user.bot_role:
         await ensure_interest_channels(db, user)

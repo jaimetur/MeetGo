@@ -1,5 +1,6 @@
 // The board: home feed, post cards, the post page and the publish screen.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { t } from "@lang";
 import { api, fileUrl } from "../api";
 import {
@@ -1039,58 +1040,80 @@ export function ZoneTag() {
   const browse = useStore((s) => s.browseZone);
   const [open, setOpen] = useState(false);
   if (!me) return null;
-  const zone = browse || { province: me.province, age_range: me.age_range };
+  const label = browse ? browse.label : me.province;
+  const age = browse ? browse.age_range : me.age_range;
   return (
     <>
       <button className={"zonetag" + (browse ? " other" : "")} onClick={() => setOpen(true)} title={t("ui_zone_change")} aria-label={t("ui_zone_change")}>
-        <Icon name="place" size="sm" /><span>{zone.province} · {ageText(zone.age_range)}</span>
+        <Icon name="place" size="sm" /><span>{label} · {ageText(age)}</span>
       </button>
-      {open ? <ZoneModal onClose={() => setOpen(false)} /> : null}
+      {/* out of the phone's top bar: its glass effect would trap a fixed dialog inside it */}
+      {open ? createPortal(<ZoneModal onClose={() => setOpen(false)} />, document.body) : null}
     </>
   );
 }
 
+/** Another zone to look at: a whole country, a group of its provinces (an autonomous community, a region...) where the
+ *  country has them, or one province (state, region...), with an age range. */
 function ZoneModal({ onClose }: { onClose: () => void }) {
   const me = useStore((s) => s.me)!;
   const browse = useStore((s) => s.browseZone);
   const [geo, setGeo] = useState<any>(null);
-  const start = browse || { province: me.province, age_range: me.age_range };
-  const [country, setCountry] = useState(me.country || "ES");
-  const [province, setProvince] = useState(start.province);
-  const [age, setAge] = useState(start.age_range);
+  const [country, setCountry] = useState(browse?.country || me.country || "ES");
+  const [area, setArea] = useState(browse ? browse.area || "" : "");
+  const [province, setProvince] = useState(browse ? browse.province || "" : me.province);
+  const [age, setAge] = useState(browse?.age_range || me.age_range);
   useEffect(() => {
     api.publicSettings().then(setGeo).catch(() => setGeo({}));
   }, []);
-  const provinces: { value: string; name: string }[] = geo?.provinces_by_country?.[country] || [];
-  const mine = (p: string, a: string) => p === me.province && a === me.age_range;
+  const all: { value: string; name: string }[] = geo?.provinces_by_country?.[country] || [];
+  const groups: { value: string; name: string; regions: string[] }[] = geo?.region_groups?.[country] || [];
+  const group = groups.find((g) => g.value === area);
+  const provinces = group ? all.filter((p) => group.regions.includes(p.value)) : all;
+  // the province of my own zone starts chosen: show its group too
+  useEffect(() => {
+    if (!browse && groups.length && province && !area) setArea(groups.find((g) => g.regions.includes(province))?.value || "");
+  }, [geo]); // eslint-disable-line react-hooks/exhaustive-deps
+  const countryName = countryOptions(geo?.countries).find((c) => c.code === country)?.name || country;
+  const groupKind = geo?.group_kinds?.[country];
+  const groupLabel = groupKind === "autonomous_community" ? t("ui_group_autonomous_community") : groupKind === "province" ? t("ui_province") : t("ui_region_region");
+
   function look() {
-    setState({ browseZone: mine(province, age) ? null : { province, age_range: age } });
+    const label = province ? provinces.find((p) => p.value === province)?.name || province : group ? group.name : countryName;
+    const mine = province === me.province && age === me.age_range;
+    setState({ browseZone: mine ? null : { country, area: area || undefined, province: province || undefined, age_range: age, label } });
     onClose();
     navigate("/communities");
   }
   return (
     <Modal title={t("ui_zone_title")} onClose={onClose}>
       <p className="muted" style={{ marginTop: 0 }}>{t("ui_zone_lead", { zone: `${me.province} · ${ageText(me.age_range)}` })}</p>
-      <div className="grid2">
-        <label className="fld">{t("ui_country")}
-          <select id="zone-country" className="inp" value={country} onChange={(e) => { setCountry(e.target.value); setProvince(""); }}>
-            {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
+      <label className="fld">{t("ui_country")}
+        <select id="zone-country" className="inp" value={country} onChange={(e) => { setCountry(e.target.value); setArea(""); setProvince(""); }}>
+          {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
+        </select>
+      </label>
+      {groups.length ? (
+        <label className="fld">{groupLabel}
+          <select id="zone-area" className="inp" value={area} onChange={(e) => { setArea(e.target.value); setProvince(""); }}>
+            <option value="">{t("ui_zone_whole_country", { country: countryName })}</option>
+            {groups.map((g) => <option key={g.value} value={g.value}>{g.name}</option>)}
           </select>
         </label>
-        <label className="fld">{regionLabel(geo, country)}
-          <select id="zone-province" className="inp" value={province} onChange={(e) => setProvince(e.target.value)}>
-            <option value="">{t("ui_choose")}</option>
-            {provinces.map((p) => <option key={p.value} value={p.value}>{p.name}</option>)}
-          </select>
-        </label>
-      </div>
+      ) : null}
+      <label className="fld">{regionLabel(geo, country)}
+        <select id="zone-province" className="inp" value={province} onChange={(e) => setProvince(e.target.value)}>
+          <option value="">{group ? t("ui_zone_whole_area", { area: group.name }) : t("ui_zone_whole_country", { country: countryName })}</option>
+          {provinces.map((p) => <option key={p.value} value={p.value}>{p.name}</option>)}
+        </select>
+      </label>
       <label className="fld">{t("ui_zone_age")}
         <select id="zone-age" className="inp" value={age} onChange={(e) => setAge(e.target.value)}>
           {["18_30", "31_60", "61_plus"].map((a) => <option key={a} value={a}>{ageText(a)}</option>)}
         </select>
       </label>
       <div className="stack" style={{ gap: 8, marginTop: 6 }}>
-        <button className="btn pri block" disabled={!province} onClick={look}><Icon name="compass" size="sm" />{t("ui_zone_look")}</button>
+        <button className="btn pri block" disabled={!geo} onClick={look}><Icon name="compass" size="sm" />{t("ui_zone_look")}</button>
         {browse ? <button className="btn block" onClick={() => { setState({ browseZone: null }); onClose(); navigate("/communities"); }}>{t("ui_zone_back_mine")}</button> : null}
         <button className="linkbtn" onClick={() => { onClose(); navigate("/account"); }}>{t("ui_zone_move")}</button>
       </div>

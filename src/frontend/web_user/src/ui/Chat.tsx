@@ -172,7 +172,10 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
     pin: (m) => api.updateConversation(conversationId, { pinned_message_id: conv.pinned_message_id === m.id ? 0 : m.id }).then(() => refreshConversation(conversationId)).catch((e) => toast(e.message, "error")),
     copy: (m) => navigator.clipboard?.writeText(m.body).then(() => toast(t("ui_copied"))).catch(() => undefined),
     openMenu: (m) => setMenuFor(menuFor === m.id ? null : m.id),
-    openSheet: (m) => setSheetFor(m),
+    openSheet: (m) => {
+      window.getSelection()?.removeAllRanges();
+      setSheetFor(m);
+    },
     jump: jumpTo,
     retry: (m) => retrySend(m),
     profile: (userId) => navigate(chatPath(conversationId, { panel: "members" }) + `&user=${userId}`),

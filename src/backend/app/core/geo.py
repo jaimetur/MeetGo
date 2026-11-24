@@ -203,6 +203,52 @@ REGION_KINDS = {
 }
 
 
+# Where regions group into a bigger level (Spain's provinces into autonomous communities...): (value, name, regions).
+GROUP_KINDS = {"ES": "autonomous_community", "IE": "province", "JP": "region"}
+GROUPS: dict[str, list[tuple[str, str, list[str]]]] = {
+    "ES": [
+        ("andalucia", "Andalucía", ["Almeria", "Cadiz", "Cordoba", "Granada", "Huelva", "Jaen", "Malaga", "Sevilla"]),
+        ("aragon", "Aragón", ["Huesca", "Teruel", "Zaragoza"]),
+        ("asturias", "Asturias", ["Asturias"]),
+        ("baleares", "Illes Balears", ["Illes Balears"]),
+        ("canarias", "Canarias", ["Las Palmas", "Santa Cruz de Tenerife"]),
+        ("cantabria", "Cantabria", ["Cantabria"]),
+        ("castilla_la_mancha", "Castilla-La Mancha", ["Albacete", "Ciudad Real", "Cuenca", "Guadalajara", "Toledo"]),
+        ("castilla_y_leon", "Castilla y León", ["Avila", "Burgos", "Leon", "Palencia", "Salamanca", "Segovia", "Soria",
+                                                "Valladolid", "Zamora"]),
+        ("cataluna", "Cataluña", ["Barcelona", "Girona", "Lleida", "Tarragona"]),
+        ("ceuta", "Ceuta", ["Ceuta"]),
+        ("valenciana", "Comunitat Valenciana", ["Alicante", "Castellon", "Valencia"]),
+        ("extremadura", "Extremadura", ["Badajoz", "Caceres"]),
+        ("galicia", "Galicia", ["A Coruna", "Lugo", "Ourense", "Pontevedra"]),
+        ("madrid", "Comunidad de Madrid", ["Madrid"]),
+        ("melilla", "Melilla", ["Melilla"]),
+        ("murcia", "Región de Murcia", ["Murcia"]),
+        ("navarra", "Navarra", ["Navarra"]),
+        ("pais_vasco", "País Vasco", ["Alava", "Bizkaia", "Gipuzkoa"]),
+        ("la_rioja", "La Rioja", ["La Rioja"]),
+    ],
+    "IE": [
+        ("connacht", "Connacht", ["Galway", "Leitrim", "Mayo", "Roscommon", "Sligo"]),
+        ("leinster", "Leinster", ["Carlow", "Dublin", "Kildare", "Kilkenny", "Laois", "Longford", "Louth", "Meath", "Offaly",
+                                  "Westmeath", "Wexford", "Wicklow"]),
+        ("munster", "Munster", ["Clare", "Cork", "Kerry", "Limerick", "Tipperary", "Waterford"]),
+        ("ulster", "Ulster", ["Cavan", "Donegal", "Monaghan"]),
+    ],
+    "JP": [
+        ("hokkaido", "Hokkaido", ["Hokkaido"]),
+        ("tohoku", "Tohoku", ["Aomori", "Iwate", "Miyagi", "Akita", "Yamagata", "Fukushima"]),
+        ("kanto", "Kanto", ["Ibaraki", "Tochigi", "Gunma", "Saitama", "Chiba", "Tokyo", "Kanagawa"]),
+        ("chubu", "Chubu", ["Niigata", "Toyama", "Ishikawa", "Fukui", "Yamanashi", "Nagano", "Gifu", "Shizuoka", "Aichi"]),
+        ("kansai", "Kansai", ["Mie", "Shiga", "Kyoto", "Osaka", "Hyogo", "Nara", "Wakayama"]),
+        ("chugoku", "Chugoku", ["Tottori", "Shimane", "Okayama", "Hiroshima", "Yamaguchi"]),
+        ("shikoku", "Shikoku", ["Tokushima", "Kagawa", "Ehime", "Kochi"]),
+        ("kyushu", "Kyushu y Okinawa", ["Fukuoka", "Saga", "Nagasaki", "Kumamoto", "Oita", "Miyazaki", "Kagoshima", "Okinawa"]),
+    ],
+}
+GEO_GROUPS = {code: [{"value": v, "name": n, "regions": r} for v, n, r in groups] for code, groups in GROUPS.items()}
+
+
 def _key(s: str) -> str:
     return "".join(ch for ch in unicodedata.normalize("NFD", s.lower()) if unicodedata.category(ch) != "Mn")
 
@@ -242,7 +288,8 @@ def merge_geography(data: dict) -> bool:
         provinces[code] = regions + [r for r in provinces.get(code) or [] if r.get("value") not in values]
     data["provinces_by_country"] = provinces
     changed = repr((data.get("countries"), data.get("calling_codes"), data.get("provinces_by_country"))) != before
-    if data.get("region_kinds") != REGION_KINDS:
-        data["region_kinds"] = dict(REGION_KINDS)
-        changed = True
+    for key, value in (("region_kinds", REGION_KINDS), ("group_kinds", GROUP_KINDS), ("region_groups", GEO_GROUPS)):
+        if data.get(key) != value:
+            data[key] = value
+            changed = True
     return changed

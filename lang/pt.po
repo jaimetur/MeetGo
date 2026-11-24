@@ -3223,6 +3223,18 @@ msgstr "Olá! Encontramo-nos no sábado para a caminhada?"
 msgid "ui_cshow_mine_short"
 msgstr "Minhas"
 
+msgid "ui_group_autonomous_community"
+msgstr "Comunidade autónoma"
+
+msgid "ui_zone_whole_country"
+msgstr "Todo o país: {country}"
+
+msgid "ui_zone_whole_area"
+msgstr "Toda a zona: {area}"
+
+msgid "ui_zone_nobody"
+msgstr "Ainda não há ninguém nas comunidades de {zone} para esta idade"
+
 msgid "ui_sec_communities"
 msgstr "Comunidades"
 
