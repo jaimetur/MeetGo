@@ -1817,6 +1817,9 @@ msgstr "Acoso"
 msgid "ui_reason_hate"
 msgstr "Odio o discriminación"
 
+msgid "ui_reason_child_safety"
+msgstr "Seguridad infantil (abuso o explotación de menores)"
+
 msgid "ui_reason_sexual"
 msgstr "Contenido sexual"
 

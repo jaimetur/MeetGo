@@ -776,7 +776,7 @@ function AttendeesModal({ post, manage, onClose, onChanged }: { post: Post; mana
   );
 }
 
-const REASONS = ["spam", "harassment", "hate", "sexual", "violence", "other"];
+const REASONS = ["child_safety", "spam", "harassment", "hate", "sexual", "violence", "other"];
 
 function ReportPostModal({ postId, onClose }: { postId: number; onClose: () => void }) {
   const [reason, setReason] = useState("spam");

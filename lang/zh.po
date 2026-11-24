@@ -1817,6 +1817,9 @@ msgstr "骚扰"
 msgid "ui_reason_hate"
 msgstr "仇恨或歧视"
 
+msgid "ui_reason_child_safety"
+msgstr "儿童安全（虐待或剥削未成年人）"
+
 msgid "ui_reason_sexual"
 msgstr "色情内容"
 

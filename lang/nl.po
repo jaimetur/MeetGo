@@ -1817,6 +1817,9 @@ msgstr "Intimidatie"
 msgid "ui_reason_hate"
 msgstr "Haat of discriminatie"
 
+msgid "ui_reason_child_safety"
+msgstr "Kinderveiligheid (misbruik of uitbuiting van minderjarigen)"
+
 msgid "ui_reason_sexual"
 msgstr "Seksuele inhoud"
 

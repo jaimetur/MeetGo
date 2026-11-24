@@ -1817,6 +1817,9 @@ msgstr "Assetjament"
 msgid "ui_reason_hate"
 msgstr "Odi o discriminació"
 
+msgid "ui_reason_child_safety"
+msgstr "Seguretat infantil (abús o explotació de menors)"
+
 msgid "ui_reason_sexual"
 msgstr "Contingut sexual"
 

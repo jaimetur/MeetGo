@@ -649,7 +649,7 @@ function ReportModal({ m, onClose }: { m: Message; onClose: () => void }) {
       <div className="quote" style={{ whiteSpace: "normal" }}><b>{m.sender?.display_name}</b> · {m.body}</div>
       <label className="fld">{t("ui_reason")}
         <select id="report-reason" className="inp" value={reason} onChange={(e) => setReason(e.target.value)}>
-          {["spam", "harassment", "hate", "sexual", "violence", "other"].map((r) => <option key={r} value={r}>{t("ui_reason_" + r)}</option>)}
+          {["child_safety", "spam", "harassment", "hate", "sexual", "violence", "other"].map((r) => <option key={r} value={r}>{t("ui_reason_" + r)}</option>)}
         </select>
       </label>
       <label className="fld">{t("ui_details_optional")}<textarea id="report-details" className="inp" rows={3} maxLength={1000} value={details} onChange={(e) => setDetails(e.target.value)} /></label>

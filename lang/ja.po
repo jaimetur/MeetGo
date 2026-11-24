@@ -1817,6 +1817,9 @@ msgstr "嫌がらせ"
 msgid "ui_reason_hate"
 msgstr "ヘイトまたは差別"
 
+msgid "ui_reason_child_safety"
+msgstr "子どもの安全（未成年者への虐待・搾取）"
+
 msgid "ui_reason_sexual"
 msgstr "性的な内容"
 

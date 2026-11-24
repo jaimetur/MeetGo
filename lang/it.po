@@ -1817,6 +1817,9 @@ msgstr "Molestie"
 msgid "ui_reason_hate"
 msgstr "Odio o discriminazione"
 
+msgid "ui_reason_child_safety"
+msgstr "Sicurezza dei minori (abuso o sfruttamento di minori)"
+
 msgid "ui_reason_sexual"
 msgstr "Contenuti sessuali"
 

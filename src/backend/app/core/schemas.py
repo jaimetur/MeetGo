@@ -292,7 +292,7 @@ class ReadIn(BaseModel):
 
 
 class ReportIn(BaseModel):
-    reason: str = Field(pattern="^(spam|harassment|hate|sexual|violence|other)$")
+    reason: str = Field(pattern="^(child_safety|spam|harassment|hate|sexual|violence|other)$")
     details: str | None = Field(default=None, max_length=1000)
 
 

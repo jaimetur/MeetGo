@@ -268,7 +268,9 @@ async def bot_session(user_id: int, db: AsyncSession = Depends(get_db), admin: U
 
 @router.get("/reports", response_model=list[dict])
 async def list_reports(status: str = "open", db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
-    rows = (await db.execute(select(Report).where(Report.status == status).order_by(Report.id.desc()).limit(200))).scalars().all()
+    # child safety reports first, then the newest
+    rows = (await db.execute(select(Report).where(Report.status == status).order_by(
+        (Report.reason == "child_safety").desc(), Report.id.desc()).limit(200))).scalars().all()
     msgs = {m.id: m for m in (await db.execute(select(Message).where(Message.id.in_([r.message_id for r in rows if r.message_id])))).scalars().all()}
     posts = {p.id: p for p in (await db.execute(select(BoardPost).where(BoardPost.id.in_([r.post_id for r in rows if r.post_id])))).scalars().all()}
     user_ids = {r.reporter_id for r in rows} | {p.author_id for p in posts.values() if p.author_id}

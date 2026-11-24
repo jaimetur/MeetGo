@@ -1816,6 +1816,9 @@ msgstr "Harcèlement"
 msgid "ui_reason_hate"
 msgstr "Haine ou discrimination"
 
+msgid "ui_reason_child_safety"
+msgstr "Sécurité des enfants (abus ou exploitation de mineurs)"
+
 msgid "ui_reason_sexual"
 msgstr "Contenu sexuel"
 
