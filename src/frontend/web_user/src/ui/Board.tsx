@@ -9,6 +9,7 @@ import {
 import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
+import { signOut } from "./App";
 import { Avatar, Icon, Modal, Wordmark, useClickOutside } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
@@ -367,24 +368,44 @@ function matchesFilter(p: Post, f: FeedFilter) {
 // ---------- Home ----------
 /** Phone header: the icon and the wordmark over the brand glow, with shortcuts. */
 export function PhoneTop({ title }: { title?: string }) {
-  const requests = useStore((s) => s.requests);
-  const me = useStore((s) => s.me);
   const conversations = useStore((s) => s.conversations);
   const mentions = Object.values(conversations).reduce((n, c) => n + c.mention_count, 0);
-  const req = requests.friends + requests.dms;
   return (
     <div className="phonetop">
       <img className="appicon" src="/apple-touch-icon.png" alt="" />
       {title ? <span className="phonetitle">{title}</span> : <Wordmark size={24} />}
       <span className="grow" />
-      {me?.role === "admin" ? <button className="iconbtn glass" aria-label={t("ui_nav_admin")} title={t("ui_nav_admin")} onClick={() => navigate("/admin")}><Icon name="shield" /></button> : null}
-      <button className="iconbtn glass" aria-label={t("ui_nav_communities")} title={t("ui_nav_communities")} onClick={() => navigate("/communities")}><Icon name="compass" /></button>
-      <button className="iconbtn glass" aria-label={t("ui_nav_people")} title={t("ui_nav_people")} onClick={() => navigate("/people")}>
-        <Icon name="users" />{req ? <span className="bdg dotbdg">{req > 9 ? "9+" : req}</span> : null}
-      </button>
       <button className="iconbtn glass" aria-label={t("ui_nav_mentions")} title={t("ui_nav_mentions")} onClick={() => navigate("/mentions")}>
         <Icon name="at" />{mentions ? <span className="bdg at dotbdg">{mentions > 9 ? "9+" : mentions}</span> : null}
       </button>
+      <AvatarMenu />
+    </div>
+  );
+}
+
+/** My avatar at the top of the phone screens: my profile, settings, the administration and signing out. */
+export function AvatarMenu() {
+  const me = useStore((s) => s.me);
+  const [open, setOpen] = useState(false);
+  if (!me) return null;
+  const go = (path: string) => { setOpen(false); navigate(path); };
+  return (
+    <div className="avmenu-wrap">
+      <button className="avmenu-btn" aria-label={t("ui_nav_profile")} aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        <Avatar user={me} size={36} />
+      </button>
+      {open ? (
+        <>
+          <div className="avmenu-bg" onClick={() => setOpen(false)} />
+          <div className="avmenu" role="menu">
+            <div className="avmenu-who"><b>{me.display_name}</b><span className="muted">{me.email}</span></div>
+            <button role="menuitem" onClick={() => go("/account")}><Icon name="user" size="sm" />{t("ui_avatar_profile")}</button>
+            <button role="menuitem" onClick={() => go("/account?section=settings")}><Icon name="sliders" size="sm" />{t("ui_avatar_settings")}</button>
+            {me.role === "admin" ? <button role="menuitem" onClick={() => go("/admin")}><Icon name="shield" size="sm" />{t("ui_nav_admin")}</button> : null}
+            <button role="menuitem" className="danger" onClick={() => { setOpen(false); signOut(); }}><Icon name="logout" size="sm" />{t("ui_logout")}</button>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

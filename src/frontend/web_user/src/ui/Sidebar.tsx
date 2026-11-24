@@ -5,6 +5,7 @@ import { chatPath, navigate } from "../router";
 import { loadConversations, sortedConversations, toast, useStore } from "../store";
 import type { Conversation, Message, UserSummary } from "../types";
 import { shortWhen } from "../util";
+import { AvatarMenu } from "./Board";
 import { Avatar, ConvIcon, Icon, Modal, Wordmark, convTitle } from "./common";
 
 type Filter = "all" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
@@ -58,6 +59,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
           <Wordmark size={26} />
           <span className="grow" />
           <button className="iconbtn compose" title={t("ui_new_chat")} aria-label={t("ui_new_chat")} onClick={() => setNewChat(true)}><Icon name="edit" /></button>
+          <span className="phoneonly"><AvatarMenu /></span>
         </div>
         <div className="row titlerow">
           <div className="ltitle grow">{t("ui_nav_chats")}</div>

@@ -3704,6 +3704,12 @@ msgstr "予定されているプランはありません"
 msgid "ui_agenda_empty_body"
 msgstr "このコミュニティのオフ会やイベントが日ごとにここに表示されます。"
 
+msgid "ui_avatar_profile"
+msgstr "マイプロフィール"
+
+msgid "ui_avatar_settings"
+msgstr "設定"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

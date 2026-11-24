@@ -3703,6 +3703,12 @@ msgstr "Não há planos à vista"
 msgid "ui_agenda_empty_body"
 msgstr "Aqui vais ver os encontros e eventos desta comunidade, dia a dia."
 
+msgid "ui_avatar_profile"
+msgstr "O meu perfil"
+
+msgid "ui_avatar_settings"
+msgstr "Definições"
+
 msgid "ui_community_tab_members"
 msgstr "Membros"
 

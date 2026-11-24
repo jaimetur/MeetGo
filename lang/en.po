@@ -3705,6 +3705,12 @@ msgstr "No plans coming up"
 msgid "ui_agenda_empty_body"
 msgstr "Meetups and events of this community will show here, day by day."
 
+msgid "ui_avatar_profile"
+msgstr "My profile"
+
+msgid "ui_avatar_settings"
+msgstr "Settings"
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 

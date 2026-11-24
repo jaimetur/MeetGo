@@ -3,7 +3,7 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api } from "../api";
 import { isNativeApp, native } from "../native";
 import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
-import { chatPath, communityPath, navigate } from "../router";
+import { chatPath, communityPath, navigate, queryParam } from "../router";
 import { loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { Interest, Message } from "../types";
 import { dayLabel, timeOf } from "../util";
@@ -11,12 +11,15 @@ import { applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
 import { Avatar, Icon, convTitle } from "./common";
 import { PlanPicker, describeBilling } from "./Paywall";
+import { PhoneTop } from "./Board";
 
-function PageShell({ title, lead, children }: { title: string; lead?: string; children: React.ReactNode }) {
+function PageShell({ title, lead, children, tab }: { title: string; lead?: string; children: React.ReactNode; tab?: boolean }) {
+  // `tab`: a screen of the phone's tab bar (People): the usual top bar instead of a back button
   return (
     <main className="page">
+      {tab ? <PhoneTop title={title} /> : null}
       <div className="wrapw">
-        <div className="row">
+        <div className={"row" + (tab ? " deskonly" : "")}>
           <button className="iconbtn back" onClick={() => navigate("/")} aria-label={t("ui_back")}><Icon name="back" /></button>
           <h1 className="grow">{title}</h1>
         </div>
@@ -31,7 +34,7 @@ export function PeoplePage() {
   const [tab, setTab] = useState<"friends" | "requests" | "search" | "feed">("friends");
   const requests = useStore((s) => s.requests);
   return (
-    <PageShell title={t("ui_people_title")}>
+    <PageShell title={t("ui_people_title")} tab>
       <div className="tabs" role="tablist">
         {([["friends", t("ui_friends")], ["requests", t("ui_requests") + (requests.friends + requests.dms ? ` (${requests.friends + requests.dms})` : "")], ["search", t("ui_find_people")], ["feed", t("ui_activity")]] as const).map(([k, label]) => (
           <button key={k} role="tab" aria-selected={tab === k} className={"chip" + (tab === k ? " on" : "")} onClick={() => setTab(k)}>{label}</button>
@@ -241,7 +244,11 @@ export function AccountPage() {
     }
   });
   const [lang, setLangState] = useState(getLang());
-  const [section, setSection] = useState<"profile" | "interests" | "notifications" | "plan" | "settings">("profile");
+  // the avatar's menu opens Settings with ?section=settings
+  const [section, setSection] = useState<"profile" | "interests" | "notifications" | "plan" | "settings">(() => {
+    const s = queryParam("section");
+    return s === "interests" || s === "notifications" || s === "plan" || s === "settings" ? s : "profile";
+  });
 
   useEffect(() => {
     api.interests().then(setInterests).catch(() => undefined);

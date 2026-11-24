@@ -3704,6 +3704,12 @@ msgstr "暂无即将到来的计划"
 msgid "ui_agenda_empty_body"
 msgstr "这里会按天显示本社区的聚会和活动。"
 
+msgid "ui_avatar_profile"
+msgstr "我的资料"
+
+msgid "ui_avatar_settings"
+msgstr "设置"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

@@ -3704,6 +3704,12 @@ msgstr "Nessun piano in arrivo"
 msgid "ui_agenda_empty_body"
 msgstr "Qui vedrai gli incontri e gli eventi di questa community, giorno per giorno."
 
+msgid "ui_avatar_profile"
+msgstr "Il mio profilo"
+
+msgid "ui_avatar_settings"
+msgstr "Impostazioni"
+
 msgid "ui_community_tab_members"
 msgstr "Membri"
 

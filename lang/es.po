@@ -3705,6 +3705,12 @@ msgstr "No hay planes a la vista"
 msgid "ui_agenda_empty_body"
 msgstr "Aquí verás las quedadas y eventos de esta comunidad, día a día."
 
+msgid "ui_avatar_profile"
+msgstr "Mi perfil"
+
+msgid "ui_avatar_settings"
+msgstr "Ajustes"
+
 msgid "ui_community_tab_members"
 msgstr "Miembros"
 

@@ -3704,6 +3704,12 @@ msgstr "Geen plannen in zicht"
 msgid "ui_agenda_empty_body"
 msgstr "Hier zie je de meetups en evenementen van deze community, dag voor dag."
 
+msgid "ui_avatar_profile"
+msgstr "Mijn profiel"
+
+msgid "ui_avatar_settings"
+msgstr "Instellingen"
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

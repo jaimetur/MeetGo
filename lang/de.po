@@ -3335,6 +3335,12 @@ msgstr "Keine Pläne in Sicht"
 msgid "ui_agenda_empty_body"
 msgstr "Hier siehst du die Treffen und Events dieser Community, Tag für Tag."
 
+msgid "ui_avatar_profile"
+msgstr "Mein Profil"
+
+msgid "ui_avatar_settings"
+msgstr "Einstellungen"
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 
