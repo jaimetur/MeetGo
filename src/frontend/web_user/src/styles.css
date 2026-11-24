@@ -1068,3 +1068,10 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   .msg.mine .mbody:has(> .mt.big) .mt, .msg.mine .mbody:has(> .mt.big) .when { color: inherit; }
   .msg.mine.mention { background: none; box-shadow: none; }
 }
+
+/* phones: the zone tag sits small under the screen's title, so the @ and the avatar always fit */
+.ptitle { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; flex: 0 1 auto; }
+.ptitle .phonetitle { line-height: 1.1; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ptitle .zonetag { max-width: 100%; padding: 1px 8px 1px 6px; gap: 3px; font-size: 11.5px; line-height: 1.5; }
+.ptitle .zonetag .ic { width: 12px; height: 12px; }
+.phonetop .appicon, .phonetop .iconbtn, .phonetop .avmenu-wrap { flex: none; }

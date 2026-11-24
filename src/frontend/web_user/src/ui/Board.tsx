@@ -373,9 +373,11 @@ export function PhoneTop({ title }: { title?: string }) {
   return (
     <div className="phonetop">
       <img className="appicon" src="/apple-touch-icon.png" alt="" />
-      {title ? <span className="phonetitle">{title}</span> : <Wordmark size={24} />}
+      <div className="ptitle">
+        {title ? <span className="phonetitle">{title}</span> : <Wordmark size={24} />}
+        <ZoneTag />
+      </div>
       <span className="grow" />
-      <ZoneTag />
       <button className="iconbtn glass" aria-label={t("ui_nav_mentions")} title={t("ui_nav_mentions")} onClick={() => navigate("/mentions")}>
         <Icon name="at" />{mentions ? <span className="bdg at dotbdg">{mentions > 9 ? "9+" : mentions}</span> : null}
       </button>
