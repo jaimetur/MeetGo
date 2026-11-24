@@ -199,24 +199,24 @@ function Shell() {
 
   const menu = [
     { name: "home", icon: "home", label: t("ui_nav_home"), badge: 0 },
-    { name: "plans", icon: "calendar", label: t("ui_nav_plans"), badge: 0 },
     { name: "communities", icon: "compass", label: t("ui_nav_communities"), badge: 0 },
     { name: "chats", icon: "chat", label: t("ui_nav_chats"), badge: unread },
+    { name: "plans", icon: "calendar", label: t("ui_nav_plans"), badge: 0 },
     { name: "people", icon: "users", label: t("ui_nav_people"), badge: requestsTotal },
     { name: "mentions", icon: "at", label: t("ui_nav_mentions"), badge: mentions, at: true },
     { name: "account", icon: "user", label: t("ui_nav_profile"), badge: 0 },
     ...(me?.role === "admin" ? [{ name: "admin", icon: "shield", label: t("ui_nav_admin"), badge: 0 }] : []),
   ];
-  // Phones: Home · Plans · Communities · Chats · Profile, and a round ＋ to publish at the side. Swiping moves
+  // Phones: Home · Communities · Chats · Plans · Profile, and a round ＋ to publish at the side. Swiping moves
   // between the tabs.
   const tabs = [
     { name: "home", icon: "home", label: t("ui_nav_home"), badge: 0 },
-    { name: "plans", icon: "calendar", label: t("ui_nav_plans"), badge: 0 },
     { name: "communities", icon: "compass", label: t("ui_nav_communities"), badge: 0 },
     { name: "chats", icon: "chat", label: t("ui_nav_chats"), badge: unread },
+    { name: "plans", icon: "calendar", label: t("ui_nav_plans"), badge: 0 },
     { name: "account", icon: "user", label: t("ui_nav_profile"), badge: 0 },
   ];
-  const swipeOrder = ["home", "plans", "communities", "chats", "account"];
+  const swipeOrder = ["home", "communities", "chats", "plans", "account"];
   const showFab = ["home", "plans", "communities"].includes(route.name) || (route.name === "community" && route.tab !== "chat");
   const publish = () => navigate(route.name === "community" ? `/publish?community=${route.id}` : "/publish");
 
