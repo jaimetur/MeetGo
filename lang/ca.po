@@ -3207,7 +3207,7 @@ msgid "ui_delete_chat_done"
 msgstr "Xat esborrat"
 
 msgid "ui_chat_size"
-msgstr "Mida de la lletra del xat"
+msgstr "Mida del text"
 
 msgid "ui_chat_size_small"
 msgstr "Petita"

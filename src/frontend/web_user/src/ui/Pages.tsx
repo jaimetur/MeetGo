@@ -702,7 +702,7 @@ function DeleteAccount() {
   );
 }
 
-/** The chat's text size on this device: small (the earlier size), normal or large, with a preview. */
+/** The text size of the whole app on this device: small, normal or large, with a preview. */
 function ChatSizePicker() {
   const [size, setSize] = useState(() => document.documentElement.dataset.chatsize || "normal");
   const pick = (v: string) => {

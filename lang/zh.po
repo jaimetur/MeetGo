@@ -3207,7 +3207,7 @@ msgid "ui_delete_chat_done"
 msgstr "聊天已删除"
 
 msgid "ui_chat_size"
-msgstr "聊天文字大小"
+msgstr "文字大小"
 
 msgid "ui_chat_size_small"
 msgstr "小"
