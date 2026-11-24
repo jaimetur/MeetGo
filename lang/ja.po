@@ -3884,6 +3884,9 @@ msgstr "チャットを申請"
 msgid "ui_ask_dm_hint"
 msgstr "個別チャットを申請：相手が承認すると話せます"
 
+msgid "ui_community_only_mine"
+msgstr "自分のコミュニティのみ"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

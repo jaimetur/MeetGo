@@ -3884,6 +3884,9 @@ msgstr "Chat vragen"
 msgid "ui_ask_dm_hint"
 msgstr "Vraag om een privéchat: jullie kunnen praten zodra die wordt geaccepteerd"
 
+msgid "ui_community_only_mine"
+msgstr "Alleen mijn community's"
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

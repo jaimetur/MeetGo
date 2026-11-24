@@ -3884,6 +3884,9 @@ msgstr "Demana xat"
 msgid "ui_ask_dm_hint"
 msgstr "Demana-li un xat privat: podreu parlar quan l'accepti"
 
+msgid "ui_community_only_mine"
+msgstr "Només les meves comunitats"
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

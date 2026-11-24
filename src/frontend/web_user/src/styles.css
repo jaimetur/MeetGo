@@ -904,17 +904,23 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 
 /* the theme swatches in Settings */
 .themefld { display: flex; flex-direction: column; gap: 8px; grid-column: 1 / -1; }
-.themepick { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+.themepick { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
 .themegroup { grid-column: 1 / -1; font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 .themesw { display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 6px; border-radius: 14px; border: 2px solid transparent; background: var(--panel2); }
-.themesw.on { border-color: var(--blue); }
-.themesw-prev { position: relative; height: 46px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
-.themesw-prev > span { position: absolute; left: 8px; right: 8px; bottom: 0; height: 26px; border-radius: 7px 7px 0 0; }
-.themesw-prev > i { position: absolute; right: 12px; top: 8px; width: 14px; height: 14px; border-radius: 50%; }
-.themesw-prev.half { background: linear-gradient(135deg, #f4f6fa 50%, #0b1220 50%); }
-.themesw-prev.half > span { background: linear-gradient(135deg, #ffffff 50%, #0f192b 50%); }
-.themesw-prev.half > i { background: #1e90ff; }
-.themesw-name { font-size: 12.5px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.themesw.on { border-color: var(--blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 25%, transparent); }
+.themesw-prev { display: block; position: relative; height: 68px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+.themesw-prev.split { display: grid; grid-template-columns: 1fr 1fr; }
+.themesw-prev.split .half { position: relative; overflow: hidden; }
+.themesw-prev.split .half:last-child .tp { left: -100%; }
+/* the tiny window: side panel, top bar, a message from someone, mine and a button */
+.tp { position: absolute; inset: 0; width: 100%; }
+.themesw-prev.split .tp { width: 200%; }
+.tp-side { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; }
+.tp-bar { position: absolute; left: 26%; right: 6%; top: 8px; height: 9px; border-radius: 5px; }
+.tp-msg { position: absolute; left: 26%; width: 44%; top: 25px; height: 12px; border-radius: 6px 6px 6px 2px; border: 1px solid currentColor; border-color: color-mix(in srgb, currentColor 30%, transparent); }
+.tp-msg.me { left: auto; right: 6%; width: 40%; top: 41px; border: 0; border-radius: 6px 6px 2px 6px; }
+.tp-btn { position: absolute; left: 4%; bottom: 8px; width: 14%; height: 8px; border-radius: 4px; }
+.themesw-name { font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.2; }
 
 /* account tabs: an icon above a short name, all of them fit */
 .acctabs { display: flex; gap: 4px; margin: 0 0 14px; padding: 4px; border-radius: 16px; background: var(--panel2); }
@@ -935,17 +941,27 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 /* blocked people and deleting my account */
 .sysmsg.blockedmsg span { font-style: italic; opacity: 0.75; }
 .dangerbox { border-color: color-mix(in srgb, var(--red) 40%, var(--line)); }
-.csec-head { align-items: center; gap: 10px; margin-top: 22px; }
-.csec-head .csec-discover { margin: 0; }
 
 /* ---- computers: use the room. Everything but the chat a little bigger, and a wider list of communities ---- */
 @media (min-width: 821px) {
   .shell { --menuw: 250px; }
   .shell.has-right { grid-template-columns: var(--menuw) minmax(0, 1fr) 340px; }
-  .dnav, .screen, .page, .rcol { zoom: 1.12; }
-  .swrap.wide { max-width: 1180px; }
-  .swrap.wide .cgrid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+  .dnav, .screen, .page, .rcol { zoom: 1.16; }
+  /* every page fills the middle column instead of a narrow strip */
+  .swrap { max-width: 1180px; }
+  .wrapw { max-width: 1040px; }
+  .swrap .cgrid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+  /* the board: posts side by side when there is room */
+  .swrap .plist2 { grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); align-items: start; }
 }
 @media (min-width: 1600px) {
-  .dnav, .screen, .page, .rcol { zoom: 1.2; }
+  .dnav, .screen, .page, .rcol { zoom: 1.28; }
 }
+/* communities: "only mine" switch */
+.cswitch { display: inline-flex; align-items: center; gap: 10px; margin: 4px 0 6px; font-weight: 600; font-size: 14px; cursor: pointer; user-select: none; }
+.cswitch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.cswitch-track { width: 42px; height: 24px; border-radius: 999px; background: var(--panel2); border: 1px solid var(--line2); position: relative; transition: background 0.2s; flex: none; }
+.cswitch-track i { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--muted); transition: transform 0.2s, background 0.2s; }
+.cswitch input:checked + .cswitch-track { background: var(--grad); border-color: transparent; }
+.cswitch input:checked + .cswitch-track i { transform: translateX(18px); background: #fff; }
+.cswitch input:focus-visible + .cswitch-track { outline: 2px solid var(--blue); outline-offset: 2px; }

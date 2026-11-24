@@ -568,22 +568,27 @@ export function JoinPage({ code }: { code: string }) {
 
 /** The colour themes as swatches: the system's, then the light ones and the dark ones (see THEMES in App.tsx). */
 function ThemePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  const swatch = (id: string) => {
-    const th = THEMES[id];
-    return (
-      <button key={id} type="button" className={"themesw" + (value === id ? " on" : "")} aria-pressed={value === id} onClick={() => onChange(id)}>
-        <span className="themesw-prev" style={{ background: th.bg }}>
-          <span style={{ background: th.panel }} /><i style={{ background: th.accent }} />
-        </span>
-        <span className="themesw-name">{t(th.label)}</span>
-      </button>
-    );
-  };
+  // a tiny window of the app in each theme: its background, side panel, top bar, two messages and a button
+  const mini = (th: (typeof THEMES)[string]) => (
+    <span className="tp" style={{ background: th.bg, color: th.dark ? "rgba(255,255,255,.55)" : "rgba(15,26,46,.45)" }}>
+      <span className="tp-side" style={{ background: th.panel }} />
+      <span className="tp-bar" style={{ background: `linear-gradient(90deg, ${th.accent}, ${th.accent2})` }} />
+      <span className="tp-msg" style={{ background: th.panel }} />
+      <span className="tp-msg me" style={{ background: `linear-gradient(135deg, ${th.accent}, ${th.accent2})` }} />
+      <span className="tp-btn" style={{ background: th.accent }} />
+    </span>
+  );
+  const swatch = (id: string) => (
+    <button key={id} type="button" className={"themesw" + (value === id ? " on" : "")} aria-pressed={value === id} onClick={() => onChange(id)}>
+      <span className="themesw-prev">{mini(THEMES[id])}</span>
+      <span className="themesw-name">{t(THEMES[id].label)}</span>
+    </button>
+  );
   const ids = Object.keys(THEMES);
   return (
     <div className="themepick">
       <button type="button" className={"themesw sys" + (value === "system" ? " on" : "")} aria-pressed={value === "system"} onClick={() => onChange("system")}>
-        <span className="themesw-prev half"><span /><i /></span>
+        <span className="themesw-prev split"><span className="half">{mini(THEMES.light)}</span><span className="half">{mini(THEMES.dark)}</span></span>
         <span className="themesw-name">{t("ui_theme_system")}</span>
       </button>
       <div className="themegroup">{t("ui_theme_light_group")}</div>

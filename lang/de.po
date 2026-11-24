@@ -3515,6 +3515,9 @@ msgstr "Chat anfragen"
 msgid "ui_ask_dm_hint"
 msgstr "Frag nach einem privaten Chat: Ihr könnt schreiben, sobald die Person annimmt"
 
+msgid "ui_community_only_mine"
+msgstr "Nur meine Communities"
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 

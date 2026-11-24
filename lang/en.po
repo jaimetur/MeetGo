@@ -3885,6 +3885,9 @@ msgstr "Ask to chat"
 msgid "ui_ask_dm_hint"
 msgstr "Ask for a private chat: you can talk once they accept"
 
+msgid "ui_community_only_mine"
+msgstr "Only my communities"
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 

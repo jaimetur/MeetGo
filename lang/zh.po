@@ -3884,6 +3884,9 @@ msgstr "请求聊天"
 msgid "ui_ask_dm_hint"
 msgstr "请求私聊：对方接受后即可聊天"
 
+msgid "ui_community_only_mine"
+msgstr "只看我的社区"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

@@ -3514,6 +3514,9 @@ msgstr "Demander un chat"
 msgid "ui_ask_dm_hint"
 msgstr "Demandez un chat privé : vous pourrez parler quand la personne l'acceptera"
 
+msgid "ui_community_only_mine"
+msgstr "Seulement mes communautés"
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

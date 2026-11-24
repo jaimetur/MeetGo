@@ -48,7 +48,7 @@ async function joinCommunity(c: Community): Promise<Community | null> {
 function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Community) => void; big?: boolean }) {
   const [busy, setBusy] = useState(false);
   const cls = "btn " + (big ? "" : "sm ");
-  if (c.joined) return <button className={cls} onClick={(e) => { e.stopPropagation(); navigate(communityPath(c.id)); }}>{t("ui_open")}</button>;
+  if (c.joined) return <button className={cls + "pri"} onClick={(e) => { e.stopPropagation(); navigate(communityPath(c.id)); }}>{t("ui_open")}</button>;
   if (c.request_pending) return <span className="spill wait">{t("ui_community_requested")}</span>;
   if (c.access_mode === "invite") return <span className="spill"><Icon name="lock" size="sm" />{t("ui_community_access_invite")}</span>;
   return (
@@ -157,8 +157,7 @@ export function CommunitiesPage() {
   }, [q, load]);
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
-  const mine = byCategory((list || []).filter((c) => c.joined));
-  const others = byCategory((list || []).filter((c) => !c.joined));
+  const notMine = (list || []).filter((c) => !c.joined).length;
   // Show or hide the communities I do not follow (remembered on this device); a search always shows them.
   const [showOthers, setShowOthers] = useState(() => {
     try {
@@ -175,7 +174,8 @@ export function CommunitiesPage() {
     }
     return !v;
   });
-  const othersVisible = showOthers || !!q.trim();
+  // one list by category: mine (Open, blue) and the rest (Join, green); the switch keeps only mine
+  const groups = byCategory((list || []).filter((c) => c.joined || showOthers || !!q.trim()));
 
   return (
     <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
@@ -193,6 +193,13 @@ export function CommunitiesPage() {
           <input id="community-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_community_search_ph")} aria-label={t("ui_community_search_ph")} />
           {q ? <button className="iconbtn" style={{ width: 26, height: 26 }} onClick={() => setQ("")} aria-label={t("ui_clear")}><Icon name="x" size="sm" /></button> : null}
         </div>
+        {list && notMine ? (
+          <label className="cswitch">
+            <input id="communities-only-mine" type="checkbox" checked={!showOthers} onChange={toggleOthers} />
+            <span className="cswitch-track" aria-hidden="true"><i /></span>
+            <span>{t("ui_community_only_mine")}</span>
+          </label>
+        ) : null}
 
         {list === null ? (
           <div className="cgrid">{[0, 1, 2, 3].map((i) => <div key={i} className="ccard skel"><div className="ccover shimmer" /><div className="cbody"><span className="sk w60 h18" /><span className="sk w80" /></div></div>)}</div>
@@ -203,25 +210,13 @@ export function CommunitiesPage() {
             : <EmptyState icon="compass" title={t("ui_community_empty_title")} body={t("ui_community_empty_body")} action={t("ui_community_create")} onAction={() => setCreate(true)} />
         ) : (
           <>
-            {mine.length ? <h2 className="lsec csec-discover">{t("ui_community_yours")}</h2> : null}
-            {mine.map(([cat, items]) => (
-              <section key={"m" + cat} className="ccat">
-                <div className="lsec ccat-title">{t(cat)} <span className="muted">· {items.length}</span></div>
-                <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
-              </section>
-            ))}
-            {others.length ? (
-              <div className="row csec-head">
-                <h2 className="lsec csec-discover grow">{t("ui_community_discover")}</h2>
-                {!q.trim() ? <button className="btn sm" onClick={toggleOthers} aria-expanded={showOthers}><Icon name={showOthers ? "x" : "plus"} size="sm" />{showOthers ? t("ui_community_hide_others") : t("ui_community_show_others", { n: others.reduce((n, [, items]) => n + items.length, 0) })}</button> : null}
-              </div>
-            ) : null}
-            {othersVisible && others.map(([cat, items]) => (
+            {groups.map(([cat, items]) => (
               <section key={cat} className="ccat">
                 <div className="lsec ccat-title">{t(cat)} <span className="muted">· {items.length}</span></div>
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
               </section>
             ))}
+            {!groups.length ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={toggleOthers} /> : null}
           </>
         )}
       </div>
