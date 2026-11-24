@@ -18,7 +18,7 @@ from app.core.utils import age_range_from_dob, normalize_age_range, can_access_a
 from app.realtime.service import online_ids
 from app.messaging.storage import attachment_out
 
-AGE_LABELS = {"18_30": "18-30", "31_50": "31-50", "51_plus": "51+"}
+AGE_LABELS = {"18_30": "18-30", "31_60": "31-60", "61_plus": "61+"}
 SNIPPET = 140
 
 
@@ -254,7 +254,7 @@ def _ts(value: str | None) -> float:
 def conversation_base(conv: Conversation, member: ConversationMember, interest: Interest | None,
                       other: User | None, online: set[int]) -> dict:
     if conv.kind == "channel":
-        title = interest.name if interest else (conv.title or "canal")
+        title = interest.name if interest else (conv.title or "chat")
         slug = interest.slug if interest else None
         subtitle = f"{conv.province} · {AGE_LABELS.get(conv.age_range or '', conv.age_range or '')}"
     elif conv.kind == "dm":

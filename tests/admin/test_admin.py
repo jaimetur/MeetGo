@@ -15,7 +15,7 @@ async def test_deleting_a_channel_in_use_is_refused_cleanly(client, db_session):
     headers = {"Authorization": f"Bearer {admin.json()['access_token']}"}
     async with db_session() as db:
         interest = (await db.execute(select(Interest).where(Interest.slug == "cine"))).scalar_one()
-        db.add(Conversation(kind="channel", province="Madrid", age_range="31_50", interest_id=interest.id,
+        db.add(Conversation(kind="channel", province="Madrid", age_range="31_60", interest_id=interest.id,
                             slow_mode_seconds=0, rules_markdown="", policy_json={}))
         await db.commit()
         interest_id = interest.id

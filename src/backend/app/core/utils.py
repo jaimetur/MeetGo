@@ -12,44 +12,37 @@ def age_range_from_dob(dob_yyyy_mm_dd: str) -> AgeRange:
         raise ValueError("User must be 18+")
     if age <= 30:
         return AgeRange.R18_30
-    if age <= 50:
-        return AgeRange.R31_50
-    return AgeRange.R51_PLUS
+    if age <= 60:
+        return AgeRange.R31_60
+    return AgeRange.R61_PLUS
+
+# Earlier values, used only when a date of birth cannot be read.
+_OLD = {
+    AgeRange.R18_30_LEGACY: AgeRange.R18_30,
+    AgeRange.R31_50: AgeRange.R31_60, AgeRange.R31_55: AgeRange.R31_60,
+    AgeRange.R31_50_LEGACY: AgeRange.R31_60, AgeRange.R31_55_LEGACY: AgeRange.R31_60,
+    AgeRange.R51_PLUS: AgeRange.R61_PLUS, AgeRange.R55_PLUS: AgeRange.R61_PLUS,
+    AgeRange.R51_PLUS_LEGACY: AgeRange.R61_PLUS, AgeRange.R55_PLUS_LEGACY: AgeRange.R61_PLUS,
+}
 
 def normalize_age_range(ar: AgeRange) -> AgeRange:
-    if ar in (AgeRange.R31_55, AgeRange.R31_55_LEGACY):
-        return AgeRange.R31_50
-    if ar in (AgeRange.R55_PLUS, AgeRange.R55_PLUS_LEGACY):
-        return AgeRange.R51_PLUS
-    if ar == AgeRange.R18_30_LEGACY:
-        return AgeRange.R18_30
-    if ar == AgeRange.R31_50_LEGACY:
-        return AgeRange.R31_50
-    if ar == AgeRange.R51_PLUS_LEGACY:
-        return AgeRange.R51_PLUS
-    return ar
+    return _OLD.get(AgeRange(ar), AgeRange(ar))
 
 def age_range_aliases(ar: AgeRange) -> list[AgeRange]:
     ar = normalize_age_range(ar)
-    if ar == AgeRange.R31_50:
-        return [AgeRange.R31_50, AgeRange.R31_55, AgeRange.R31_50_LEGACY, AgeRange.R31_55_LEGACY]
-    if ar == AgeRange.R51_PLUS:
-        return [AgeRange.R51_PLUS, AgeRange.R55_PLUS, AgeRange.R51_PLUS_LEGACY, AgeRange.R55_PLUS_LEGACY]
-    if ar == AgeRange.R18_30:
-        return [AgeRange.R18_30, AgeRange.R18_30_LEGACY]
-    return [ar]
+    return [ar] + [old for old, new in _OLD.items() if new == ar]
 
 def can_access_age_range(user_age: int, user_range: AgeRange, room_range: AgeRange) -> bool:
     user_range = normalize_age_range(user_range)
     room_range = normalize_age_range(room_range)
     if user_range == room_range:
         return True
-    if user_range == AgeRange.R18_30 and room_range == AgeRange.R31_50:
+    if user_range == AgeRange.R18_30 and room_range == AgeRange.R31_60:
         return user_age >= 30
-    if user_range == AgeRange.R31_50 and room_range == AgeRange.R18_30:
+    if user_range == AgeRange.R31_60 and room_range == AgeRange.R18_30:
         return user_age <= 31
-    if user_range == AgeRange.R31_50 and room_range == AgeRange.R51_PLUS:
-        return user_age >= 50
-    if user_range == AgeRange.R51_PLUS and room_range == AgeRange.R31_50:
-        return user_age <= 51
+    if user_range == AgeRange.R31_60 and room_range == AgeRange.R61_PLUS:
+        return user_age >= 60
+    if user_range == AgeRange.R61_PLUS and room_range == AgeRange.R31_60:
+        return user_age <= 61
     return False

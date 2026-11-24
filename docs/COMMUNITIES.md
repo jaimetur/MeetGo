@@ -59,7 +59,7 @@ Administrators: `GET /admin/bots`, `POST /admin/bots/{id}/session` (a session as
 `Community`:
 ```json
 {"id": 12, "kind": "interest", "title": "Senderismo", "slug": "senderismo", "description": "…", "avatar_url": null,
- "province": "Madrid", "age_range": "31_50", "access_mode": "open", "board_mode": "open", "member_count": 37,
+ "province": "Madrid", "age_range": "31_60", "access_mode": "open", "board_mode": "open", "member_count": 37,
  "online_count": 5, "joined": true, "role": "member", "request_pending": false, "upcoming_count": 3,
  "conversation_id": 12, "rules": "…", "invite_code": null, "created_at": "…"}
 ```

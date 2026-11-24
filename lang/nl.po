@@ -816,7 +816,7 @@ msgid "admin_users_delete_button"
 msgstr "Verwijderen"
 
 msgid "admin_channels_title"
-msgstr "Kanalen"
+msgstr "Chats"
 
 msgid "admin_channels_edit_button"
 msgstr "Bewerken"
@@ -825,25 +825,25 @@ msgid "admin_channels_delete_button"
 msgstr "Verwijderen"
 
 msgid "admin_channels_form_title"
-msgstr "Kanaal toevoegen / bewerken"
+msgstr "Chat toevoegen / bewerken"
 
 msgid "admin_channels_name_placeholder"
-msgstr "Kanaalnaam"
+msgstr "Chatnaam"
 
 msgid "admin_channels_slug_label"
 msgstr "Slug: {slug}"
 
 msgid "admin_channels_name_required"
-msgstr "Kanaalnaam is verplicht."
+msgstr "Chatnaam is verplicht."
 
 msgid "admin_channels_updated"
-msgstr "Kanaal bijgewerkt."
+msgstr "Chat bijgewerkt."
 
 msgid "admin_channels_created"
-msgstr "Kanaal aangemaakt."
+msgstr "Chat aangemaakt."
 
 msgid "admin_channels_save_error"
-msgstr "Het kanaal kon niet worden opgeslagen."
+msgstr "De chat kon niet worden opgeslagen."
 
 msgid "admin_channels_save_button"
 msgstr "Opslaan"
@@ -1056,7 +1056,7 @@ msgid "svc_prefix"
 msgstr "MeetGo-{service}"
 
 msgid "err_interest_in_use"
-msgstr "Dit kanaal heeft kamers met berichten; geef het een nieuwe naam in plaats van het te verwijderen"
+msgstr "Deze chat heeft kamers met berichten; geef hem een nieuwe naam in plaats van hem te verwijderen"
 
 msgid "err_empty_message"
 msgstr "Het bericht is leeg"
@@ -1290,7 +1290,7 @@ msgid "ui_change_server"
 msgstr "Server wijzigen"
 
 msgid "ui_channel_start"
-msgstr "Dit is het begin van het kanaal. Hier praten mensen uit {zone} met dezelfde interesses als jij."
+msgstr "Dit is het begin van de chat. Hier praten mensen uit {zone} met dezelfde interesses als jij."
 
 msgid "ui_check_email_body"
 msgstr "We hebben je een link gestuurd om je e-mailadres te bevestigen. Open hem en log dan in met je wachtwoord."
@@ -1392,7 +1392,7 @@ msgid "ui_emoji"
 msgstr "Emoji"
 
 msgid "ui_empty_body"
-msgstr "Kies je interesses om je aan te sluiten bij de kanalen in jouw buurt, of maak een groep met je vrienden."
+msgstr "Kies je interesses om je aan te sluiten bij de chats in jouw buurt, of maak een groep met je vrienden."
 
 msgid "ui_empty_title"
 msgstr "Je hebt nog geen gesprekken"
@@ -1413,19 +1413,19 @@ msgid "ui_err_network"
 msgstr "Kan de server niet bereiken. Controleer je internetverbinding."
 
 msgid "ui_explore_channels"
-msgstr "Kanalen ontdekken"
+msgstr "Chats ontdekken"
 
 msgid "ui_explore_lead"
-msgstr "Kanalen in {zone}. Sluit je aan bij de kanalen die je leuk vindt."
+msgstr "Chats in {zone}. Sluit je aan bij de chats die je leuk vindt."
 
 msgid "ui_explore_title"
-msgstr "Kanalen"
+msgstr "Chats"
 
 msgid "ui_f_all"
 msgstr "Alles"
 
 msgid "ui_f_channels"
-msgstr "Kanalen"
+msgstr "Chats"
 
 msgid "ui_f_direct"
 msgstr "Direct"
@@ -1509,7 +1509,7 @@ msgid "ui_interests"
 msgstr "Interesses"
 
 msgid "ui_interests_lead"
-msgstr "Elke interesse brengt je naar het bijbehorende kanaal in {zone} voor jouw leeftijdsgroep."
+msgstr "Elke interesse brengt je naar de bijbehorende chat in {zone} voor jouw leeftijdsgroep."
 
 msgid "ui_invite_link"
 msgstr "Uitnodigingslink"
@@ -1527,7 +1527,7 @@ msgid "ui_last_at"
 msgstr "laatst om {time}"
 
 msgid "ui_leave_channel"
-msgstr "Kanaal verlaten"
+msgstr "Chat verlaten"
 
 msgid "ui_leave_group"
 msgstr "Groep verlaten"
@@ -1584,10 +1584,10 @@ msgid "ui_mod_generic"
 msgstr "Verwijderd door moderatie"
 
 msgid "ui_mod_links"
-msgstr "Verwijderd door moderatie: links zijn niet toegestaan in dit kanaal"
+msgstr "Verwijderd door moderatie: links zijn niet toegestaan in deze chat"
 
 msgid "ui_mod_phone"
-msgstr "Verwijderd door moderatie: deel geen telefoonnummers in het kanaal"
+msgstr "Verwijderd door moderatie: deel geen telefoonnummers in de chat"
 
 msgid "ui_mod_removed"
 msgstr "Verwijderd door een moderator"
@@ -1620,7 +1620,7 @@ msgid "ui_nav_account"
 msgstr "Account"
 
 msgid "ui_nav_channels"
-msgstr "Kanalen"
+msgstr "Chats"
 
 msgid "ui_nav_chats"
 msgstr "Chats"
@@ -1653,7 +1653,7 @@ msgid "ui_no_dms"
 msgstr "Accepteert geen directe berichten"
 
 msgid "ui_no_friends_hint"
-msgstr "Voeg vrienden toe vanuit een kanaal door op hun naam te tikken, of vind ze via «Mensen zoeken»."
+msgstr "Voeg vrienden toe vanuit een chat door op hun naam te tikken, of vind ze via «Mensen zoeken»."
 
 msgid "ui_no_friends_yet"
 msgstr "Je hebt nog geen vrienden op MeetGo"
@@ -1671,7 +1671,7 @@ msgid "ui_notifications"
 msgstr "Meldingen"
 
 msgid "ui_notifications_hint"
-msgstr "Groepen en directe berichten melden elk bericht; kanalen alleen als je wordt vermeld. Pas het aan in het menu van elk gesprek."
+msgstr "Groepen en directe berichten melden elk bericht; chats alleen als je wordt vermeld. Pas het aan in het menu van elk gesprek."
 
 msgid "ui_notify_all"
 msgstr "Elk bericht melden"
@@ -1731,7 +1731,7 @@ msgid "ui_payments_soon"
 msgstr "Betalingen zijn op deze server nog niet actief."
 
 msgid "ui_paywall_lead"
-msgstr "Met je account kun je lezen maar niet schrijven. Neem een abonnement om mee te doen in kanalen, groepen en directe berichten."
+msgstr "Met je account kun je lezen maar niet schrijven. Neem een abonnement om mee te doen in chats, groepen en directe berichten."
 
 msgid "ui_paywall_title"
 msgstr "Abonneer je op MeetGo"
@@ -1944,10 +1944,10 @@ msgid "ui_search_placeholder"
 msgstr "Zoek gesprekken of berichten"
 
 msgid "ui_sec_channels"
-msgstr "Kanalen"
+msgstr "Chats"
 
 msgid "ui_sec_channels_zone"
-msgstr "Kanalen · {zone}"
+msgstr "Chats · {zone}"
 
 msgid "ui_sec_direct"
 msgstr "Direct"
@@ -2247,7 +2247,7 @@ msgid "admin_smtp_username"
 msgstr "SMTP-gebruikersnaam"
 
 msgid "admin_tab_channels"
-msgstr "Kanalen"
+msgstr "Chats"
 
 msgid "admin_tab_settings"
 msgstr "Instellingen"
@@ -2502,7 +2502,7 @@ msgid "ui_dob_locked"
 msgstr "Je hebt je geboortedatum al één keer gecorrigeerd."
 
 msgid "ui_zone_hint"
-msgstr "Je kanalen zijn die van je provincie en leeftijdsgroep. Als je van provincie of geboortedatum verandert, ga je naar de kanalen van de nieuwe zone."
+msgstr "Je chats zijn die van je provincie en leeftijdsgroep. Als je van provincie of geboortedatum verandert, ga je naar de chats van de nieuwe zone."
 
 msgid "landing_a0"
 msgstr "Niets. MeetGo is gratis: maak je account aan en gebruik het zonder beperkingen, geen kaart nodig."
@@ -2517,13 +2517,13 @@ msgid "landing_a3"
 msgstr "Je account wordt alleen-lezen totdat je een abonnement neemt: je kunt je gesprekken lezen maar niet schrijven. Er wordt niets verwijderd."
 
 msgid "landing_a4"
-msgstr "Niemand. Je nummer staat niet op je profiel en berichten waarin nummers worden gedeeld in kanalen worden automatisch verwijderd."
+msgstr "Niemand. Je nummer staat niet op je profiel en berichten waarin nummers worden gedeeld in chats worden automatisch verwijderd."
 
 msgid "landing_a5"
-msgstr "Ja, MeetGo is voor mensen boven de 18. Kanalen zijn ingedeeld per leeftijdsgroep: 18-30, 31-50 en ouder dan 50."
+msgstr "Ja, MeetGo is voor mensen boven de 18. Chats zijn ingedeeld per leeftijdsgroep: 18-30, 31-60 en ouder dan 60."
 
 msgid "landing_a6"
-msgstr "Elke provincie in Spanje. Je kanalen zijn die van je provincie en leeftijdsgroep, één voor elke hobby die je kiest."
+msgstr "Elke provincie in Spanje. Je chats zijn die van je provincie en leeftijdsgroep, één voor elke hobby die je kiest."
 
 msgid "landing_a7"
 msgstr "Vanuit je MeetGo-account als je met kaart betaalt, of via Google Play als je je in de app hebt geabonneerd. Je houdt toegang tot het einde van de betaalde periode."
@@ -2577,7 +2577,7 @@ msgid "landing_eyebrow"
 msgstr "Chat per provincie, leeftijd en interesses"
 
 msgid "landing_f1_k"
-msgstr "Lokale kanalen"
+msgstr "Lokale chats"
 
 msgid "landing_f1_l1"
 msgstr "Threads met een overzicht van reacties en deelnemers"
@@ -2613,7 +2613,7 @@ msgid "landing_f2_l4"
 msgstr "Demp of maak elke groep vast"
 
 msgid "landing_f2_p"
-msgstr "Maak een groep met je vrienden of deel een uitnodigingslink met wie zich in het kanaal heeft aangemeld."
+msgstr "Maak een groep met je vrienden of deel een uitnodigingslink met wie zich in de chat heeft aangemeld."
 
 msgid "landing_f2_t"
 msgstr "Van “ik doe mee” tot afgesproken"
@@ -2658,7 +2658,7 @@ msgid "landing_feat_k"
 msgstr "Functies"
 
 msgid "landing_feat_p"
-msgstr "Grote kanalen blijven leesbaar, groepen zijn van jou en directe berichten komen meteen aan."
+msgstr "Grote chats blijven leesbaar, groepen zijn van jou en directe berichten komen meteen aan."
 
 msgid "landing_feat_title"
 msgstr "Gemaakt om met veel mensen te chatten zonder de weg kwijt te raken"
@@ -2670,7 +2670,7 @@ msgid "landing_final_title"
 msgstr "Je volgende plan <span class=\"go\">is al aan het praten</span>"
 
 msgid "landing_hero_lead"
-msgstr "Kanalen met mensen uit je provincie, je leeftijdsgroep en je hobby's. Als er een plan komt, start je een groep en regel je het privé."
+msgstr "Chats met mensen uit je provincie, je leeftijdsgroep en je hobby's. Als er een plan komt, start je een groep en regel je het privé."
 
 msgid "landing_hero_title"
 msgstr "Praat met mensen <span class=\"meet\">bij jou in de buurt.</span> <span class=\"go\">En spreek dan af.</span>"
@@ -2715,7 +2715,7 @@ msgid "landing_pr_l1"
 msgstr "7 dagen gratis proberen"
 
 msgid "landing_pr_l2"
-msgstr "Kanalen, groepen en directe berichten"
+msgstr "Chats, groepen en directe berichten"
 
 msgid "landing_pr_l3"
 msgstr "Altijd opzegbaar"
@@ -2802,7 +2802,7 @@ msgid "landing_q8"
 msgstr "Is er een app voor Android en iPhone?"
 
 msgid "landing_s1_p"
-msgstr "Wandelen, padel, bioscoop, koffie… Elke hobby is een kanaal met mensen uit je provincie en leeftijdsgroep."
+msgstr "Wandelen, padel, bioscoop, koffie… Elke hobby is een chat met mensen uit je provincie en leeftijdsgroep."
 
 msgid "landing_s1_t"
 msgstr "Kies je hobby's"
@@ -2811,7 +2811,7 @@ msgid "landing_s2_p"
 msgstr "Reageer in threads om het netjes te houden, vermeld wie je wilt en reageer met emoji zonder de chat te overspoelen."
 
 msgid "landing_s2_t"
-msgstr "Chat in je kanalen"
+msgstr "Chat in je chats"
 
 msgid "landing_s3_p"
 msgstr "Maak een privégroep, nodig uit wie meedoet en regel auto's, tijden en foto's zonder ruis."
@@ -2850,7 +2850,7 @@ msgid "landing_t2_t"
 msgstr "Meldingen en moderators"
 
 msgid "landing_t3_p"
-msgstr "Als een kanaal te druk wordt, bepalen de moderators het tempo."
+msgstr "Als een chat te druk wordt, bepalen de moderators het tempo."
 
 msgid "landing_t3_t"
 msgstr "Langzame modus"
@@ -2877,7 +2877,7 @@ msgid "landing_web_k"
 msgstr "Ook op je computer"
 
 msgid "landing_web_p"
-msgstr "Op een groot scherm zie je tegelijk de lijst, het kanaal en de thread of de leden."
+msgstr "Op een groot scherm zie je tegelijk de lijst, de chat en de thread of de leden."
 
 msgid "landing_web_title"
 msgstr "Al je gesprekken in één oogopslag"
@@ -3828,7 +3828,7 @@ msgid "ui_avatar_remove"
 msgstr "Foto verwijderen"
 
 msgid "ui_cat_social"
-msgstr "Uitgaan en mensen leren kennen"
+msgstr "Socializen"
 
 msgid "ui_cat_sports"
 msgstr "Sport"
@@ -3839,8 +3839,11 @@ msgstr "Natuur en reizen"
 msgid "ui_cat_culture"
 msgstr "Muziek en cultuur"
 
-msgid "ui_cat_languages"
-msgstr "Talen"
+msgid "ui_cat_education"
+msgstr "Onderwijs"
+
+msgid "ui_cat_skills"
+msgstr "Vaardigheden"
 
 msgid "ui_cat_motor"
 msgstr "Motor"

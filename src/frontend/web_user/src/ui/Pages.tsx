@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { THEMES, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { Avatar, Icon, convTitle } from "./common";
+import { Avatar, Icon, convTitle, countryOptions } from "./common";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
 
@@ -417,7 +417,7 @@ export function AccountPage() {
             <div className="grid2">
               <label className="fld">{t("ui_country")}
                 <select id="acc-country" className="inp" value={zone.country} onChange={(e) => setZone({ ...zone, country: e.target.value, province: "" })}>
-                  {(geo?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
+                  {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
                 </select>
               </label>
               <label className="fld">{t("ui_province")}

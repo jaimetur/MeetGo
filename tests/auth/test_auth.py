@@ -29,7 +29,7 @@ async def test_failed_admin_login_never_promotes_a_regular_account(client, db_se
 async def test_login_refuses_accounts_without_a_password(client, db_session):
     async with db_session() as db:
         db.add(User(email="legacy@example.com", phone="+34600000001", display_name="Legacy", dob="1985-01-01",
-                    age_range="31_50", province="Madrid", email_verified=True, password_hash=None))
+                    age_range="31_60", province="Madrid", email_verified=True, password_hash=None))
         await db.commit()
     res = await client.post("/auth/login", json={"email": "legacy@example.com", "password": "anything"})
     assert res.status_code == 401

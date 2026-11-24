@@ -3,6 +3,7 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api, setToken } from "../api";
 import { isNativeApp } from "../native";
 import { queryParam } from "../router";
+import { countryOptions } from "./common";
 
 type View = "login" | "register" | "forgot" | "reset" | "sent";
 
@@ -137,7 +138,7 @@ function Register({ setView }: { setView: (v: View) => void }) {
         <label className="fld">{t("ui_dob")}<input id="reg-dob" className="inp" type="date" required value={form.dob} onChange={(e) => set("dob", e.target.value)} /></label>
         <label className="fld">{t("ui_country")}
           <select id="reg-country" className="inp" value={form.country} onChange={(e) => { set("country", e.target.value); set("province", ""); }}>
-            {(settings?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
+            {countryOptions(settings?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
           </select>
         </label>
       </div>

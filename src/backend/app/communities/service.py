@@ -185,7 +185,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
     return out
 
 
-AGE_KEYS = ("18_30", "31_50", "51_plus")
+AGE_KEYS = ("18_30", "31_60", "61_plus")
 
 
 async def valid_zone(db: AsyncSession, province: str | None, age_range: str | None) -> tuple[str, str] | None:

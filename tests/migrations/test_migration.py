@@ -40,7 +40,7 @@ async def _check():
     async with engine.connect() as conn:
         channels = (await conn.execute(text(
             "SELECT id, province, age_range, interest_id, rules_markdown, policy_json FROM conversations WHERE kind='channel' ORDER BY interest_id"))).all()
-        assert [(c.province, c.age_range, c.interest_id) for c in channels] == [("Madrid", "31_50", 1), ("Madrid", "31_50", 2)]
+        assert [(c.province, c.age_range, c.interest_id) for c in channels] == [("Madrid", "31_60", 1), ("Madrid", "31_60", 2)]
         assert channels[0].rules_markdown == "Normas" and channels[0].policy_json == {"block_links": False}
         msgs = (await conn.execute(text(
             "SELECT body, deleted_at IS NOT NULL AS deleted, moderation_reason, created_at FROM messages WHERE conversation_id=:c ORDER BY id"),
@@ -57,3 +57,29 @@ async def _check():
         assert (await conn.execute(text("SELECT body FROM messages WHERE conversation_id=:c"), {"c": dm.id})).scalar() == "Privado"
         # The old tables stay untouched.
         assert (await conn.execute(text("SELECT count(*) FROM room_messages"))).scalar() == 2
+
+
+async def test_age_ranges_31_60_and_61_plus():
+    """31-50 communities become 31-60; someone of 55 in a 51+ community moves to its 31-60 twin (the old one stays away)."""
+    async with engine.begin() as conn:
+        await conn.execute(text("DROP SCHEMA public CASCADE"))
+        await conn.execute(text("CREATE SCHEMA public"))
+    await run_migrations(engine, "0007_user_blocks")
+    dob55 = f"{__import__('datetime').date.today().year - 55}-01-01"
+    async with engine.begin() as conn:
+        await conn.execute(text(
+            "INSERT INTO users (id, email, password_hash, display_name, dob, age_range, province, created_at) "
+            "VALUES (1, 'a@x.es', 'x', 'Ana', :d, '51_plus', 'Madrid', now())"), {"d": dob55})
+        await conn.execute(text("INSERT INTO interests (id, slug, name) VALUES (1, 'cine', 'Cine')"))
+        await conn.execute(text("INSERT INTO conversations (id, kind, province, age_range, interest_id) VALUES "
+                                "(10, 'channel', 'Madrid', '51_plus', 1), (11, 'channel', 'Sevilla', '31_50', 1)"))
+        await conn.execute(text("INSERT INTO conversation_members (conversation_id, user_id) VALUES (10, 1)"))
+    await run_migrations(engine)
+    async with engine.connect() as conn:
+        zones = dict((await conn.execute(text(
+            "SELECT id, province || ' ' || age_range FROM conversations WHERE kind = 'channel'"))).all())
+        assert zones[10] == "Madrid 61_plus" and zones[11] == "Sevilla 31_60"
+        twin = next(i for i, z in zones.items() if z == "Madrid 31_60")
+        rows = dict((await conn.execute(text(
+            "SELECT conversation_id, away FROM conversation_members WHERE user_id = 1"))).all())
+        assert rows == {10: True, twin: False}

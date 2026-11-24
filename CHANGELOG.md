@@ -13,7 +13,11 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
-- New communities: "Salir de Fiesta", "Hacer Amigos", "Aprender Inglés", "Aprender Alemán" and "Aprender Francés" (in a new "Languages" category); "Quedar para tomar algo" is now "Tomar algo". "Deporte" and "Deportes (general)" are now one community, "Deportes" (members, messages and plans move into it).
+- "Channels" are called "chats" everywhere (app, emails, public pages) in every language.
+- Age ranges are now 18-30, 31-60 and 61+: 31-50 communities become 31-60 and 51+ ones become 61+ (people aged 51 to 60 move to the 31-60 one).
+- 36 countries with all their provinces, regions or states (all 52 Spanish provinces, including Ceuta and Melilla), shown in each person's language; an administrator's additions are kept.
+- New communities: Cocina, Guitarra, Batería, Teclado and Bailes (new "Skills" category) and Baloncesto. Categories: "Socialise" (was "Go out and meet people") and "Education" for the language ones. "Salir de Fiesta" has a party icon.
+- New communities: "Salir de Fiesta", "Hacer Amigos", "Aprender Inglés", "Aprender Alemán" and "Aprender Francés"; "Quedar para tomar algo" is now "Tomar algo". "Deporte" and "Deportes (general)" are now one community, "Deportes" (members, messages and plans move into it).
 - New conversation: on phones the pencil is a round button above the tab bar, and its panel is clearer (direct message or group as two big choices, your friends or the search results with what each button will do, chosen people as chips).
 - Your zone (province and age range) always in view as a tag at the top; tapping it lets you look at the communities of another country, province or age range (only your own zone can be joined), go back to your zone or change your province in your profile. Channels, chats and community pages no longer repeat the zone.
 - Communities: themed areas of each zone with a board and a chat room. Anyone can create one, open to all, by request (an admin approves) or by invitation link; owners name admins and admins name moderators; the board can be open to members or read-only with only admins publishing. Changing province or age range leaves the old zone's communities and brings them back, as they were, on return.

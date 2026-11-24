@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { t } from "@lang";
+import { t, getLang } from "@lang";
 import { fileUrl } from "../api";
 import type { Conversation, UserSummary } from "../types";
 import { colorFor, initials } from "../util";
@@ -61,6 +61,10 @@ const PATHS: Record<string, string> = {
   file: "M6 3h8l4 4v14H6zM14 3v4h4",
   down: "m6 9 6 6 6-6",
   logout: "M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10",
+  party: "M4 20l4-11 7 7zM8 9l7 7M13 3c.5 1.5 0 3-1.5 4M21 11c-1.5-.5-3 0-4 1.5M17 3l.01 0M20 6l.01 0M21 3l.01 0M16 8c1-1.5 2-2 3.5-2",
+  dance: "M13 3.5a1.5 1.5 0 1 0 0 .01M8 21l3-6 3 2v4M5 11l4-3h5l3 4 3-1M11 15l1.5-7",
+  drum: "M3 9c0-1.7 4-3 9-3s9 1.3 9 3v6c0 1.7-4 3-9 3s-9-1.3-9-3zM3 9c0 1.7 4 3 9 3s9-1.3 9-3M6 2l4 6M18 2l-4 6",
+  keys: "M3 5h18v14H3zM8 12v7M13 12v7M18 12v7M6.5 5v7h3V5M11.5 5v7h3V5M16.5 5v7h3V5",
   star: "m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.5 2.9 1-6.1L3.2 9.5l6.1-.9z",
   sliders: "M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1",
   home: "M4 11 12 4l8 7M6 9.5V20h12V9.5M10 20v-5h4v5",
@@ -210,10 +214,11 @@ export function InstallHint() {
 
 /** The icon that represents a community's hobby, from its slug or title (any language). */
 const HOBBY_ICONS: [RegExp, string][] = [
-  [/aprend|idioma|ingl[eé]s|alem[aá]n|franc[eé]s|learn|language/, "chat"], [/fiesta|party|f[eê]te|festa|feest/, "star"], [/amig|friend/, "users"],
+  [/aprend|idioma|ingl[eé]s|alem[aá]n|franc[eé]s|learn|language/, "chat"], [/fiesta|party|f[eê]te|festa|feest/, "party"], [/amig|friend/, "users"],
+  [/bater[ií]a|drum/, "drum"], [/teclado|keyboard|piano/, "keys"], [/baile|danc|tanz|dans/, "dance"],
   [/sender|hik|trek|monta|mountain|randonn|wander/, "mountain"], [/cicl|bici|bike|cycl|mtb|velo|rad/, "bike"],
   [/lect|libro|book|read|lectur|livre|lettur/, "book"], [/cine|film|movie|pel/, "film"], [/coche|car|auto/, "car"],
-  [/moto/, "moto"], [/fitness|crossfit|gym|gimnas|muscul/, "dumbbell"], [/futbol|fútbol|football|soccer|calcio/, "ball"],
+  [/moto/, "moto"], [/fitness|crossfit|gym|gimnas|muscul/, "dumbbell"], [/futbol|fútbol|football|soccer|calcio|balonc|basket/, "ball"],
   [/tenis|tennis|padel|pádel/, "racket"], [/playa|beach|plage|spiaggia/, "umbrella"], [/cerveza|beer|bière|birra|bier/, "beer"],
   [/caf[eé]|coffee/, "coffee"], [/copa|cocktail|drink|vino|wine|tomar/, "cocktail"], [/viaj|travel|voyage|viagg|reis/, "plane"],
   [/network|negocio|business|emprend/, "network"], [/picnic|pícnic/, "basket"], [/acuat|acuát|nata|surf|swim|water|kayak|vela/, "waves"],
@@ -221,6 +226,26 @@ const HOBBY_ICONS: [RegExp, string][] = [
   [/arte|art|pint|paint|dibuj/, "palette"], [/perro|mascot|dog|pet|gato/, "paw"], [/juego|game|videojue|gaming/, "gamepad"],
   [/cocina|comida|food|cook|gastro|tapas|cena/, "food"], [/deporte|sport/, "trophy"],
 ];
+
+/** Countries in the reader's language (the name from the settings when the browser cannot say), alphabetically. */
+export function countryOptions(list?: { code: string; name: string }[]): { code: string; name: string }[] {
+  let names: Intl.DisplayNames | null = null;
+  try {
+    names = new Intl.DisplayNames([getLang()], { type: "region" });
+  } catch {
+    names = null;
+  }
+  const out = (list && list.length ? list : [{ code: "ES", name: "España" }]).map((c) => {
+    let name = c.name;
+    try {
+      name = (names && c.code && names.of(c.code)) || c.name;
+    } catch {
+      name = c.name;
+    }
+    return { code: c.code, name };
+  });
+  return out.sort((a, b) => a.name.localeCompare(b.name, getLang(), { sensitivity: "base" }));
+}
 
 export function hobbyIcon(slug?: string | null, title?: string | null): string {
   const text = `${slug || ""} ${title || ""}`.toLowerCase();

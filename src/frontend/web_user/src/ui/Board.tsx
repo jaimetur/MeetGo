@@ -10,7 +10,7 @@ import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
-import { Avatar, Icon, Modal, Wordmark, useClickOutside } from "./common";
+import { Avatar, Icon, Modal, Wordmark, useClickOutside, countryOptions } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -1072,7 +1072,7 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
       <div className="grid2">
         <label className="fld">{t("ui_country")}
           <select id="zone-country" className="inp" value={country} onChange={(e) => { setCountry(e.target.value); setProvince(""); }}>
-            {(geo?.countries || [{ code: "ES", name: "España" }]).map((c: any) => <option key={c.code} value={c.code}>{c.name}</option>)}
+            {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
           </select>
         </label>
         <label className="fld">{t("ui_province")}
@@ -1084,7 +1084,7 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
       </div>
       <label className="fld">{t("ui_zone_age")}
         <select id="zone-age" className="inp" value={age} onChange={(e) => setAge(e.target.value)}>
-          {["18_30", "31_50", "51_plus"].map((a) => <option key={a} value={a}>{ageText(a)}</option>)}
+          {["18_30", "31_60", "61_plus"].map((a) => <option key={a} value={a}>{ageText(a)}</option>)}
         </select>
       </label>
       <div className="stack" style={{ gap: 8, marginTop: 6 }}>

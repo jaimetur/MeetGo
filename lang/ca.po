@@ -816,7 +816,7 @@ msgid "admin_users_delete_button"
 msgstr "Elimina"
 
 msgid "admin_channels_title"
-msgstr "Canals"
+msgstr "Xats"
 
 msgid "admin_channels_edit_button"
 msgstr "Edita"
@@ -825,25 +825,25 @@ msgid "admin_channels_delete_button"
 msgstr "Elimina"
 
 msgid "admin_channels_form_title"
-msgstr "Afegeix / Edita un canal"
+msgstr "Afegeix / Edita un xat"
 
 msgid "admin_channels_name_placeholder"
-msgstr "Nom del canal"
+msgstr "Nom del xat"
 
 msgid "admin_channels_slug_label"
 msgstr "Slug: {slug}"
 
 msgid "admin_channels_name_required"
-msgstr "Cal un nom de canal."
+msgstr "Cal un nom de xat."
 
 msgid "admin_channels_updated"
-msgstr "Canal actualitzat."
+msgstr "Xat actualitzat."
 
 msgid "admin_channels_created"
-msgstr "Canal creat."
+msgstr "Xat creat."
 
 msgid "admin_channels_save_error"
-msgstr "No s'ha pogut desar el canal."
+msgstr "No s'ha pogut desar el xat."
 
 msgid "admin_channels_save_button"
 msgstr "Desa"
@@ -1056,7 +1056,7 @@ msgid "svc_prefix"
 msgstr "MeetGo-{service}"
 
 msgid "err_interest_in_use"
-msgstr "Aquest canal té sales amb missatges; canvia-li el nom en lloc d'eliminar-lo"
+msgstr "Aquest xat té sales amb missatges; canvia-li el nom en lloc d'eliminar-lo"
 
 msgid "err_empty_message"
 msgstr "El missatge és buit"
@@ -1290,7 +1290,7 @@ msgid "ui_change_server"
 msgstr "Canvia de servidor"
 
 msgid "ui_channel_start"
-msgstr "Aquest és l'inici del canal. Aquí parla la gent de {zone} amb els teus interessos."
+msgstr "Aquest és l'inici del xat. Aquí parla la gent de {zone} amb els teus interessos."
 
 msgid "ui_check_email_body"
 msgstr "T'hem enviat un enllaç per confirmar el teu correu. Obre'l i després inicia la sessió amb la teva contrasenya."
@@ -1392,7 +1392,7 @@ msgid "ui_emoji"
 msgstr "Emoji"
 
 msgid "ui_empty_body"
-msgstr "Tria els teus interessos per unir-te als canals de la teva zona, o crea un grup amb els teus amics."
+msgstr "Tria els teus interessos per unir-te als xats de la teva zona, o crea un grup amb els teus amics."
 
 msgid "ui_empty_title"
 msgstr "Encara no tens cap conversa"
@@ -1413,19 +1413,19 @@ msgid "ui_err_network"
 msgstr "No s'ha pogut connectar amb el servidor. Revisa la connexió a internet."
 
 msgid "ui_explore_channels"
-msgstr "Explora canals"
+msgstr "Explora xats"
 
 msgid "ui_explore_lead"
-msgstr "Canals de {zone}. Uneix-te als que t'agradin."
+msgstr "Xats de {zone}. Uneix-te als que t'agradin."
 
 msgid "ui_explore_title"
-msgstr "Canals"
+msgstr "Xats"
 
 msgid "ui_f_all"
 msgstr "Tot"
 
 msgid "ui_f_channels"
-msgstr "Canals"
+msgstr "Xats"
 
 msgid "ui_f_direct"
 msgstr "Directes"
@@ -1509,7 +1509,7 @@ msgid "ui_interests"
 msgstr "Interessos"
 
 msgid "ui_interests_lead"
-msgstr "Cada interès t'uneix al seu canal de {zone} per al teu rang d'edat."
+msgstr "Cada interès t'uneix al seu xat de {zone} per al teu rang d'edat."
 
 msgid "ui_invite_link"
 msgstr "Enllaç d'invitació"
@@ -1527,7 +1527,7 @@ msgid "ui_last_at"
 msgstr "últim cop a les {time}"
 
 msgid "ui_leave_channel"
-msgstr "Surt del canal"
+msgstr "Surt del xat"
 
 msgid "ui_leave_group"
 msgstr "Surt del grup"
@@ -1584,10 +1584,10 @@ msgid "ui_mod_generic"
 msgstr "Eliminat per moderació"
 
 msgid "ui_mod_links"
-msgstr "Eliminat per moderació: en aquest canal no es permeten enllaços"
+msgstr "Eliminat per moderació: en aquest xat no es permeten enllaços"
 
 msgid "ui_mod_phone"
-msgstr "Eliminat per moderació: no comparteixis telèfons al canal"
+msgstr "Eliminat per moderació: no comparteixis telèfons al xat"
 
 msgid "ui_mod_removed"
 msgstr "Eliminat per un moderador"
@@ -1620,7 +1620,7 @@ msgid "ui_nav_account"
 msgstr "Compte"
 
 msgid "ui_nav_channels"
-msgstr "Canals"
+msgstr "Xats"
 
 msgid "ui_nav_chats"
 msgstr "Xats"
@@ -1653,7 +1653,7 @@ msgid "ui_no_dms"
 msgstr "No accepta missatges directes"
 
 msgid "ui_no_friends_hint"
-msgstr "Afegeix amics des d'un canal tocant el seu nom, o troba'ls a «Troba gent»."
+msgstr "Afegeix amics des d'un xat tocant el seu nom, o troba'ls a «Troba gent»."
 
 msgid "ui_no_friends_yet"
 msgstr "Encara no tens amics a MeetGo"
@@ -1671,7 +1671,7 @@ msgid "ui_notifications"
 msgstr "Notificacions"
 
 msgid "ui_notifications_hint"
-msgstr "Als grups i als missatges directes se't notifica cada missatge; als canals, només quan et mencionen. Canvia-ho al menú de cada conversa."
+msgstr "Als grups i als missatges directes se't notifica cada missatge; als xats, només quan et mencionen. Canvia-ho al menú de cada conversa."
 
 msgid "ui_notify_all"
 msgstr "Notifica cada missatge"
@@ -1731,7 +1731,7 @@ msgid "ui_payments_soon"
 msgstr "Els pagaments encara no estan activats en aquest servidor."
 
 msgid "ui_paywall_lead"
-msgstr "El teu compte pot llegir però no escriure. Subscriu-te per participar als canals, grups i missatges directes."
+msgstr "El teu compte pot llegir però no escriure. Subscriu-te per participar als xats, grups i missatges directes."
 
 msgid "ui_paywall_title"
 msgstr "Subscriu-te a MeetGo"
@@ -1944,10 +1944,10 @@ msgid "ui_search_placeholder"
 msgstr "Cerca converses o missatges"
 
 msgid "ui_sec_channels"
-msgstr "Canals"
+msgstr "Xats"
 
 msgid "ui_sec_channels_zone"
-msgstr "Canals · {zone}"
+msgstr "Xats · {zone}"
 
 msgid "ui_sec_direct"
 msgstr "Directes"
@@ -2247,7 +2247,7 @@ msgid "admin_smtp_username"
 msgstr "Usuari SMTP"
 
 msgid "admin_tab_channels"
-msgstr "Canals"
+msgstr "Xats"
 
 msgid "admin_tab_settings"
 msgstr "Configuració"
@@ -2502,7 +2502,7 @@ msgid "ui_dob_locked"
 msgstr "Ja has corregit la teva data de naixement una vegada."
 
 msgid "ui_zone_hint"
-msgstr "Els teus canals són els de la teva província i rang d'edat. Si canvies de província o de data de naixement, passes als canals de la zona nova."
+msgstr "Els teus xats són els de la teva província i rang d'edat. Si canvies de província o de data de naixement, passes als xats de la zona nova."
 
 msgid "landing_a0"
 msgstr "Res. MeetGo és gratis: crea el teu compte i fes-lo servir sense límits, sense targeta."
@@ -2517,13 +2517,13 @@ msgid "landing_a3"
 msgstr "El teu compte passa a ser de només lectura fins que et subscriguis: pots llegir les converses però no escriure. No s'esborra res."
 
 msgid "landing_a4"
-msgstr "Ningú. El teu número no surt al perfil, i els missatges que comparteixen números als canals s'eliminen automàticament."
+msgstr "Ningú. El teu número no surt al perfil, i els missatges que comparteixen números als xats s'eliminen automàticament."
 
 msgid "landing_a5"
-msgstr "Sí, MeetGo és per a majors de 18 anys. Els canals s'agrupen per rang d'edat: 18-30, 31-50 i més de 50."
+msgstr "Sí, MeetGo és per a majors de 18 anys. Els xats s'agrupen per rang d'edat: 18-30, 31-60 i més de 60."
 
 msgid "landing_a6"
-msgstr "Totes les províncies d'Espanya. Els teus canals són els de la teva província i rang d'edat, un per cada afició que triïs."
+msgstr "Totes les províncies d'Espanya. Els teus xats són els de la teva província i rang d'edat, un per cada afició que triïs."
 
 msgid "landing_a7"
 msgstr "Des del teu compte de MeetGo si has pagat amb targeta, o des de Google Play si t'has subscrit a l'aplicació. Mantens l'accés fins al final del període pagat."
@@ -2577,7 +2577,7 @@ msgid "landing_eyebrow"
 msgstr "Xateja per província, edat i interessos"
 
 msgid "landing_f1_k"
-msgstr "Canals locals"
+msgstr "Xats locals"
 
 msgid "landing_f1_l1"
 msgstr "Fils amb un resum de respostes i participants"
@@ -2613,7 +2613,7 @@ msgid "landing_f2_l4"
 msgstr "Silencia o fixa qualsevol grup"
 
 msgid "landing_f2_p"
-msgstr "Crea un grup amb els teus amics o comparteix un enllaç d'invitació amb qui s'hagi apuntat al canal."
+msgstr "Crea un grup amb els teus amics o comparteix un enllaç d'invitació amb qui s'hagi apuntat al xat."
 
 msgid "landing_f2_t"
 msgstr "De «hi sóc» a pla tancat"
@@ -2658,7 +2658,7 @@ msgid "landing_feat_k"
 msgstr "Funcions"
 
 msgid "landing_feat_p"
-msgstr "Els canals grans es mantenen llegibles, els grups són teus i els missatges directes arriben a l'instant."
+msgstr "Els xats grans es mantenen llegibles, els grups són teus i els missatges directes arriben a l'instant."
 
 msgid "landing_feat_title"
 msgstr "Fet per xatejar amb molta gent sense perdre't"
@@ -2670,7 +2670,7 @@ msgid "landing_final_title"
 msgstr "El teu proper pla <span class=\"go\">ja està parlant</span>"
 
 msgid "landing_hero_lead"
-msgstr "Canals amb gent de la teva província, del teu rang d'edat i de les teves aficions. Quan sorgeix un pla, crea un grup i organitzeu-lo en privat."
+msgstr "Xats amb gent de la teva província, del teu rang d'edat i de les teves aficions. Quan sorgeix un pla, crea un grup i organitzeu-lo en privat."
 
 msgid "landing_hero_title"
 msgstr "Parla amb gent <span class=\"meet\">de la teva zona.</span> <span class=\"go\">I queda amb ells!</span>"
@@ -2715,7 +2715,7 @@ msgid "landing_pr_l1"
 msgstr "7 dies de prova gratuïta"
 
 msgid "landing_pr_l2"
-msgstr "Canals, grups i missatges directes"
+msgstr "Xats, grups i missatges directes"
 
 msgid "landing_pr_l3"
 msgstr "Cancel·la quan vulguis"
@@ -2802,7 +2802,7 @@ msgid "landing_q8"
 msgstr "Hi ha aplicació per a Android i iPhone?"
 
 msgid "landing_s1_p"
-msgstr "Senderisme, pàdel, cinema, cafè… Cada afició és un canal amb gent de la teva província i rang d'edat."
+msgstr "Senderisme, pàdel, cinema, cafè… Cada afició és un xat amb gent de la teva província i rang d'edat."
 
 msgid "landing_s1_t"
 msgstr "Tria les teves aficions"
@@ -2811,7 +2811,7 @@ msgid "landing_s2_p"
 msgstr "Respon en fils per mantenir l'ordre, menciona qui vulguis i reacciona sense inundar el xat."
 
 msgid "landing_s2_t"
-msgstr "Xateja als teus canals"
+msgstr "Xateja als teus xats"
 
 msgid "landing_s3_p"
 msgstr "Crea un grup privat, convida qui s'hi apunti i organitzeu cotxes, hores i fotos sense soroll."
@@ -2850,7 +2850,7 @@ msgid "landing_t2_t"
 msgstr "Denúncies i moderadors"
 
 msgid "landing_t3_p"
-msgstr "Quan un canal s'embolica massa, els seus moderadors marquen el ritme."
+msgstr "Quan un xat s'embolica massa, els seus moderadors marquen el ritme."
 
 msgid "landing_t3_t"
 msgstr "Mode lent"
@@ -2877,7 +2877,7 @@ msgid "landing_web_k"
 msgstr "També a l'ordinador"
 
 msgid "landing_web_p"
-msgstr "En una pantalla gran veus alhora la llista, el canal i el fil o els membres."
+msgstr "En una pantalla gran veus alhora la llista, el xat i el fil o els membres."
 
 msgid "landing_web_title"
 msgstr "Totes les teves converses d'un cop d'ull"
@@ -3828,7 +3828,7 @@ msgid "ui_avatar_remove"
 msgstr "Treu la foto"
 
 msgid "ui_cat_social"
-msgstr "Sortir i conèixer gent"
+msgstr "Socialitzar"
 
 msgid "ui_cat_sports"
 msgstr "Esports"
@@ -3839,8 +3839,11 @@ msgstr "Natura i viatges"
 msgid "ui_cat_culture"
 msgstr "Música i cultura"
 
-msgid "ui_cat_languages"
-msgstr "Idiomes"
+msgid "ui_cat_education"
+msgstr "Educació"
+
+msgid "ui_cat_skills"
+msgstr "Habilitats"
 
 msgid "ui_cat_motor"
 msgstr "Motor"

@@ -92,10 +92,11 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
 /** Categories of communities, from the interest's slug or the title (any language); the rest go to "Other". */
 const CATEGORIES: [string, RegExp][] = [
   ["ui_cat_social", /tomar|caf[eé]|cerve|beer|copa|drink|picnic|network|gastro|comida|cena|food|tapas|fiesta|party|amig|friend/],
-  ["ui_cat_sports", /deport|sport|futbol|fútbol|football|soccer|tenis|tennis|padel|pádel|fitness|crossfit|gym|cicl|bici|bike|mtb|run|correr|nata|swim|surf|yoga/],
+  ["ui_cat_sports", /deport|sport|balonc|basket|futbol|fútbol|football|soccer|tenis|tennis|padel|pádel|fitness|crossfit|gym|cicl|bici|bike|mtb|run|correr|nata|swim|surf|yoga/],
   ["ui_cat_nature", /sender|hik|trek|monta|mountain|playa|beach|viaj|travel|natur|camp/],
   ["ui_cat_culture", /cine|film|movie|lect|libro|book|read|m[uú]sic|music|concier|concert|rock|flamenc|arte|art|foto|photo|teatro|theat/],
-  ["ui_cat_languages", /aprend|idioma|ingl[eé]s|alem[aá]n|franc[eé]s|learn|language/],
+  ["ui_cat_education", /aprend|idioma|ingl[eé]s|alem[aá]n|franc[eé]s|learn|language|educa|curso|course/],
+  ["ui_cat_skills", /cocina|cook|guitar|bater[ií]a|drum|teclado|keyboard|piano|baile|danc/],
   ["ui_cat_motor", /coche|car\b|auto|moto/],
 ];
 

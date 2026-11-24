@@ -27,7 +27,7 @@ async def test_choosing_an_interest_joins_the_zone_channel(client, db_session):
     b = await _channel(client, bea[0])
     c = await _channel(client, leo[0])
     assert a["id"] == b["id"] != c["id"]
-    assert a["title"] == "Senderismo" and a["subtitle"] == "Madrid · 31-50"
+    assert a["title"] == "Senderismo" and a["subtitle"] == "Madrid · 31-60"
     a = next(x for x in (await client.get("/conversations", headers=ana[0])).json() if x["id"] == a["id"])
     assert a["notify"] == "mentions" and a["member_count"] == 2
 

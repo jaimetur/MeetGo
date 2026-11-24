@@ -816,7 +816,7 @@ msgid "admin_users_delete_button"
 msgstr "Löschen"
 
 msgid "admin_channels_title"
-msgstr "Kanäle"
+msgstr "Chats"
 
 msgid "admin_channels_edit_button"
 msgstr "Bearbeiten"
@@ -825,25 +825,25 @@ msgid "admin_channels_delete_button"
 msgstr "Löschen"
 
 msgid "admin_channels_form_title"
-msgstr "Kanal hinzufügen / bearbeiten"
+msgstr "Chat hinzufügen / bearbeiten"
 
 msgid "admin_channels_name_placeholder"
-msgstr "Kanalname"
+msgstr "Chatname"
 
 msgid "admin_channels_slug_label"
 msgstr "Slug: {slug}"
 
 msgid "admin_channels_name_required"
-msgstr "Kanalname erforderlich."
+msgstr "Chatname erforderlich."
 
 msgid "admin_channels_updated"
-msgstr "Kanal aktualisiert."
+msgstr "Chat aktualisiert."
 
 msgid "admin_channels_created"
-msgstr "Kanal erstellt."
+msgstr "Chat erstellt."
 
 msgid "admin_channels_save_error"
-msgstr "Der Kanal konnte nicht gespeichert werden."
+msgstr "Der Chat konnte nicht gespeichert werden."
 
 msgid "admin_channels_save_button"
 msgstr "Speichern"
@@ -1056,7 +1056,7 @@ msgid "svc_prefix"
 msgstr "MeetGo-{service}"
 
 msgid "err_interest_in_use"
-msgstr "Dieser Kanal hat Räume mit Nachrichten; benenne ihn um, statt ihn zu löschen"
+msgstr "Dieser Chat hat Räume mit Nachrichten; benenne ihn um, statt ihn zu löschen"
 
 msgid "err_empty_message"
 msgstr "Die Nachricht ist leer"
@@ -1290,7 +1290,7 @@ msgid "ui_change_server"
 msgstr "Server wechseln"
 
 msgid "ui_channel_start"
-msgstr "Das ist der Anfang des Kanals. Hier unterhalten sich Leute aus {zone} mit gleichen Interessen wie du."
+msgstr "Das ist der Anfang des Chats. Hier unterhalten sich Leute aus {zone} mit gleichen Interessen wie du."
 
 msgid "ui_check_email_body"
 msgstr "Wir haben dir einen Link zur Bestätigung deiner E-Mail-Adresse geschickt. Öffne ihn und melde dich dann mit deinem Passwort an."
@@ -1392,7 +1392,7 @@ msgid "ui_emoji"
 msgstr "Emoji"
 
 msgid "ui_empty_body"
-msgstr "Wähle deine Interessen, um den Kanälen in deiner Gegend beizutreten, oder erstelle eine Gruppe mit deinen Freunden."
+msgstr "Wähle deine Interessen, um den Chats in deiner Gegend beizutreten, oder erstelle eine Gruppe mit deinen Freunden."
 
 msgid "ui_empty_title"
 msgstr "Du hast noch keine Unterhaltungen"
@@ -1413,19 +1413,19 @@ msgid "ui_err_network"
 msgstr "Server nicht erreichbar. Prüfe deine Internetverbindung."
 
 msgid "ui_explore_channels"
-msgstr "Kanäle entdecken"
+msgstr "Chats entdecken"
 
 msgid "ui_explore_lead"
-msgstr "Kanäle in {zone}. Tritt denen bei, die dir gefallen."
+msgstr "Chats in {zone}. Tritt denen bei, die dir gefallen."
 
 msgid "ui_explore_title"
-msgstr "Kanäle"
+msgstr "Chats"
 
 msgid "ui_f_all"
 msgstr "Alle"
 
 msgid "ui_f_channels"
-msgstr "Kanäle"
+msgstr "Chats"
 
 msgid "ui_f_direct"
 msgstr "Direkt"
@@ -1509,7 +1509,7 @@ msgid "ui_interests"
 msgstr "Interessen"
 
 msgid "ui_interests_lead"
-msgstr "Mit jedem Interesse trittst du dem passenden Kanal in {zone} für deine Altersgruppe bei."
+msgstr "Mit jedem Interesse trittst du dem passenden Chat in {zone} für deine Altersgruppe bei."
 
 msgid "ui_invite_link"
 msgstr "Einladungslink"
@@ -1527,7 +1527,7 @@ msgid "ui_last_at"
 msgstr "zuletzt um {time}"
 
 msgid "ui_leave_channel"
-msgstr "Kanal verlassen"
+msgstr "Chat verlassen"
 
 msgid "ui_leave_group"
 msgstr "Gruppe verlassen"
@@ -1584,10 +1584,10 @@ msgid "ui_mod_generic"
 msgstr "Von der Moderation entfernt"
 
 msgid "ui_mod_links"
-msgstr "Von der Moderation entfernt: Links sind in diesem Kanal nicht erlaubt"
+msgstr "Von der Moderation entfernt: Links sind in diesem Chat nicht erlaubt"
 
 msgid "ui_mod_phone"
-msgstr "Von der Moderation entfernt: Teile im Kanal keine Telefonnummern"
+msgstr "Von der Moderation entfernt: Teile im Chat keine Telefonnummern"
 
 msgid "ui_mod_removed"
 msgstr "Von einem Moderator entfernt"
@@ -1620,7 +1620,7 @@ msgid "ui_nav_account"
 msgstr "Konto"
 
 msgid "ui_nav_channels"
-msgstr "Kanäle"
+msgstr "Chats"
 
 msgid "ui_nav_chats"
 msgstr "Chats"
@@ -1653,7 +1653,7 @@ msgid "ui_no_dms"
 msgstr "Nimmt keine Direktnachrichten an"
 
 msgid "ui_no_friends_hint"
-msgstr "Füge Freunde hinzu, indem du in einem Kanal auf ihren Namen tippst, oder finde sie unter „Leute finden“."
+msgstr "Füge Freunde hinzu, indem du in einem Chat auf ihren Namen tippst, oder finde sie unter „Leute finden“."
 
 msgid "ui_no_friends_yet"
 msgstr "Du hast noch keine Freunde auf MeetGo"
@@ -1671,7 +1671,7 @@ msgid "ui_notifications"
 msgstr "Benachrichtigungen"
 
 msgid "ui_notifications_hint"
-msgstr "Gruppen und Direktnachrichten melden jede Nachricht; Kanäle nur, wenn du erwähnt wirst. Ändere das im Menü der jeweiligen Unterhaltung."
+msgstr "Gruppen und Direktnachrichten melden jede Nachricht; Chats nur, wenn du erwähnt wirst. Ändere das im Menü der jeweiligen Unterhaltung."
 
 msgid "ui_notify_all"
 msgstr "Bei jeder Nachricht benachrichtigen"
@@ -1731,7 +1731,7 @@ msgid "ui_payments_soon"
 msgstr "Zahlungen sind auf diesem Server noch nicht aktiv."
 
 msgid "ui_paywall_lead"
-msgstr "Dein Konto kann lesen, aber nicht schreiben. Schließe ein Abo ab, um bei Kanälen, Gruppen und Direktnachrichten mitzumachen."
+msgstr "Dein Konto kann lesen, aber nicht schreiben. Schließe ein Abo ab, um bei Chats, Gruppen und Direktnachrichten mitzumachen."
 
 msgid "ui_paywall_title"
 msgstr "MeetGo abonnieren"
@@ -1944,10 +1944,10 @@ msgid "ui_search_placeholder"
 msgstr "Unterhaltungen oder Nachrichten suchen"
 
 msgid "ui_sec_channels"
-msgstr "Kanäle"
+msgstr "Chats"
 
 msgid "ui_sec_channels_zone"
-msgstr "Kanäle · {zone}"
+msgstr "Chats · {zone}"
 
 msgid "ui_sec_direct"
 msgstr "Direkt"
@@ -2247,7 +2247,7 @@ msgid "admin_smtp_username"
 msgstr "SMTP-Benutzername"
 
 msgid "admin_tab_channels"
-msgstr "Kanäle"
+msgstr "Chats"
 
 msgid "admin_tab_settings"
 msgstr "Einstellungen"
@@ -2502,7 +2502,7 @@ msgid "ui_dob_locked"
 msgstr "Du hast dein Geburtsdatum bereits einmal korrigiert."
 
 msgid "ui_zone_hint"
-msgstr "Deine Kanäle sind die deiner Provinz und Altersgruppe. Wenn du deine Provinz oder dein Geburtsdatum änderst, wechselst du in die Kanäle der neuen Zone."
+msgstr "Deine Chats sind die deiner Provinz und Altersgruppe. Wenn du deine Provinz oder dein Geburtsdatum änderst, wechselst du in die Chats der neuen Zone."
 
 msgid "landing_a0"
 msgstr "Nichts. MeetGo ist kostenlos: Erstelle dein Konto und nutze es ohne Einschränkungen, ganz ohne Karte."
@@ -2517,13 +2517,13 @@ msgid "landing_a3"
 msgstr "Dein Konto wird schreibgeschützt, bis du ein Abo abschließt: Du kannst deine Unterhaltungen lesen, aber nicht schreiben. Nichts wird gelöscht."
 
 msgid "landing_a4"
-msgstr "Niemand. Deine Nummer steht nicht in deinem Profil, und Nachrichten mit Telefonnummern in Kanälen werden automatisch entfernt."
+msgstr "Niemand. Deine Nummer steht nicht in deinem Profil, und Nachrichten mit Telefonnummern in Chats werden automatisch entfernt."
 
 msgid "landing_a5"
-msgstr "Ja, MeetGo ist für Leute ab 18. Die Kanäle sind nach Altersgruppen aufgeteilt: 18-30, 31-50 und über 50."
+msgstr "Ja, MeetGo ist für Leute ab 18. Die Chats sind nach Altersgruppen aufgeteilt: 18-30, 31-60 und über 60."
 
 msgid "landing_a6"
-msgstr "Jede Provinz in Spanien. Deine Kanäle sind die deiner Provinz und Altersgruppe, einer für jedes Hobby, das du wählst."
+msgstr "Jede Provinz in Spanien. Deine Chats sind die deiner Provinz und Altersgruppe, einer für jedes Hobby, das du wählst."
 
 msgid "landing_a7"
 msgstr "In deinem MeetGo-Konto, wenn du mit Karte zahlst, oder bei Google Play, wenn du in der App abonniert hast. Du behältst den Zugang bis zum Ende des bezahlten Zeitraums."
@@ -2577,7 +2577,7 @@ msgid "landing_eyebrow"
 msgstr "Chatte nach Provinz, Alter und Interessen"
 
 msgid "landing_f1_k"
-msgstr "Lokale Kanäle"
+msgstr "Lokale Chats"
 
 msgid "landing_f1_l1"
 msgstr "Threads mit einer Übersicht der Antworten und Teilnehmenden"
@@ -2613,7 +2613,7 @@ msgid "landing_f2_l4"
 msgstr "Jede Gruppe stummschalten oder anheften"
 
 msgid "landing_f2_p"
-msgstr "Erstelle eine Gruppe mit deinen Freunden oder teile einen Einladungslink mit jedem, der sich im Kanal angemeldet hat."
+msgstr "Erstelle eine Gruppe mit deinen Freunden oder teile einen Einladungslink mit jedem, der sich im Chat angemeldet hat."
 
 msgid "landing_f2_t"
 msgstr "Von „Ich bin dabei“ bis zur festen Sache"
@@ -2658,7 +2658,7 @@ msgid "landing_feat_k"
 msgstr "Funktionen"
 
 msgid "landing_feat_p"
-msgstr "Große Kanäle bleiben lesbar, Gruppen gehören dir und Direktnachrichten kommen sofort an."
+msgstr "Große Chats bleiben lesbar, Gruppen gehören dir und Direktnachrichten kommen sofort an."
 
 msgid "landing_feat_title"
 msgstr "Gemacht, um mit vielen Leuten zu chatten, ohne den Überblick zu verlieren"
@@ -2670,7 +2670,7 @@ msgid "landing_final_title"
 msgstr "Dein nächster Plan <span class=\"go\">redet schon</span>"
 
 msgid "landing_hero_lead"
-msgstr "Kanäle mit Leuten aus deiner Provinz, deiner Altersgruppe und mit deinen Hobbys. Wenn sich ein Plan ergibt, gründe eine Gruppe und klärt alles privat."
+msgstr "Chats mit Leuten aus deiner Provinz, deiner Altersgruppe und mit deinen Hobbys. Wenn sich ein Plan ergibt, gründe eine Gruppe und klärt alles privat."
 
 msgid "landing_hero_title"
 msgstr "Sprich mit Leuten <span class=\"meet\">in deiner Nähe.</span> <span class=\"go\">Und triff dich mit ihnen.</span>"
@@ -2715,7 +2715,7 @@ msgid "landing_pr_l1"
 msgstr "7 Tage kostenlos testen"
 
 msgid "landing_pr_l2"
-msgstr "Kanäle, Gruppen und Direktnachrichten"
+msgstr "Chats, Gruppen und Direktnachrichten"
 
 msgid "landing_pr_l3"
 msgstr "Jederzeit kündbar"
@@ -2802,7 +2802,7 @@ msgid "landing_q8"
 msgstr "Gibt es eine App für Android und iPhone?"
 
 msgid "landing_s1_p"
-msgstr "Wandern, Padel, Kino, Kaffee… Jedes Hobby ist ein Kanal mit Leuten aus deiner Provinz und Altersgruppe."
+msgstr "Wandern, Padel, Kino, Kaffee… Jedes Hobby ist ein Chat mit Leuten aus deiner Provinz und Altersgruppe."
 
 msgid "landing_s1_t"
 msgstr "Such dir deine Hobbys aus"
@@ -2811,7 +2811,7 @@ msgid "landing_s2_p"
 msgstr "Antworte in Threads, damit es aufgeräumt bleibt, erwähne wen du willst und reagiere, ohne den Chat zu fluten."
 
 msgid "landing_s2_t"
-msgstr "Chatte in deinen Kanälen"
+msgstr "Chatte in deinen Chats"
 
 msgid "landing_s3_p"
 msgstr "Erstelle eine private Gruppe, lade ein, wer dabei ist, und klärt Autos, Uhrzeiten und Fotos ohne den Lärm."
@@ -2850,7 +2850,7 @@ msgid "landing_t2_t"
 msgstr "Meldungen und Moderatoren"
 
 msgid "landing_t3_p"
-msgstr "Wenn ein Kanal zu voll wird, bestimmen seine Moderatoren das Tempo."
+msgstr "Wenn ein Chat zu voll wird, bestimmen seine Moderatoren das Tempo."
 
 msgid "landing_t3_t"
 msgstr "Langsammodus"
@@ -2877,7 +2877,7 @@ msgid "landing_web_k"
 msgstr "Auch auf dem Computer"
 
 msgid "landing_web_p"
-msgstr "Auf einem großen Bildschirm siehst du die Liste, den Kanal und den Thread oder die Mitglieder gleichzeitig."
+msgstr "Auf einem großen Bildschirm siehst du die Liste, den Chat und den Thread oder die Mitglieder gleichzeitig."
 
 msgid "landing_web_title"
 msgstr "Alle deine Unterhaltungen auf einen Blick"
@@ -3402,7 +3402,7 @@ msgid "ui_avatar_remove"
 msgstr "Foto entfernen"
 
 msgid "ui_cat_social"
-msgstr "Ausgehen und Leute kennenlernen"
+msgstr "Leute treffen"
 
 msgid "ui_cat_sports"
 msgstr "Sport"
@@ -3413,8 +3413,11 @@ msgstr "Natur und Reisen"
 msgid "ui_cat_culture"
 msgstr "Musik und Kultur"
 
-msgid "ui_cat_languages"
-msgstr "Sprachen"
+msgid "ui_cat_education"
+msgstr "Bildung"
+
+msgid "ui_cat_skills"
+msgstr "Fähigkeiten"
 
 msgid "ui_cat_motor"
 msgstr "Motor"

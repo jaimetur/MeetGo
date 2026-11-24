@@ -26,7 +26,7 @@ async def test_create_and_join_an_open_community(client, db_session):
     far = await make_user(client, db_session, "far@example.com", "Far", province="Barcelona")
     com = await _create(client, ana[0], description="Rutas")
     assert com["kind"] == "custom" and com["role"] == "owner" and com["joined"] is True
-    assert com["province"] == "Madrid" and com["age_range"] == "31_50" and com["member_count"] == 1
+    assert com["province"] == "Madrid" and com["age_range"] == "31_60" and com["member_count"] == 1
     assert com["invite_code"] and com["conversation_id"] == com["id"]
 
     listed = (await client.get("/communities", headers=bea[0])).json()
@@ -189,7 +189,7 @@ async def test_remove_lets_rejoin_but_expel_does_not(client, db_session):
 
 
 async def test_discovering_another_zone(client, db_session):
-    ana = await make_user(client, db_session, "ana@example.com", "Ana")  # Madrid, 31_50
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")  # Madrid, 31_60
     res = await client.get("/communities", params={"province": "Barcelona", "age_range": "18_30"}, headers=ana[0])
     assert res.status_code == 200, res.text
     other = res.json()

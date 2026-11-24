@@ -21,6 +21,9 @@ def naive_utcnow() -> datetime:
 
 class AgeRange(str, enum.Enum):
     R18_30 = "18_30"
+    R31_60 = "31_60"
+    R61_PLUS = "61_plus"
+    # Earlier ranges (18-30, 31-50, 51+).
     R31_50 = "31_50"
     R51_PLUS = "51_plus"
     # Backwards compatibility with existing DB values.

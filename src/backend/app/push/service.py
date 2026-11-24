@@ -108,7 +108,7 @@ async def _notify(db: AsyncSession, conversation_id: int, message_id: int) -> No
 
     if conv.kind == "channel":
         interest = await db.get(Interest, conv.interest_id) if conv.interest_id else None
-        title = f"#{interest.slug if interest else 'canal'}"
+        title = f"#{interest.slug if interest else 'chat'}"
     elif conv.kind == "group":
         title = conv.title or "Grupo"
     else:

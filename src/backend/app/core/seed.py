@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
 from app.core.models import Interest, User
 from app.core.security import hash_password
+from app.core.geo import merge_geography
 from app.core.utils import age_range_from_dob
 from app.core.app_settings import get_settings_row
 
@@ -37,8 +38,8 @@ DEFAULT_SETTINGS = {
     ],
     "age_ranges": [
         {"key": "18_30", "label": "18-30", "min": 18, "max": 30},
-        {"key": "31_50", "label": "31-50", "min": 31, "max": 50},
-        {"key": "51_plus", "label": "51+", "min": 51, "max": None},
+        {"key": "31_60", "label": "31-60", "min": 31, "max": 60},
+        {"key": "61_plus", "label": "61+", "min": 61, "max": None},
     ],
     "countries": [
         {"code": "ES", "name": "Espana"},
@@ -171,6 +172,12 @@ DEFAULT_INTERESTS = [
     ("aprender_ingles", "Aprender Inglés"),
     ("aprender_aleman", "Aprender Alemán"),
     ("aprender_frances", "Aprender Francés"),
+    ("cocina", "Cocina"),
+    ("guitarra", "Guitarra"),
+    ("bateria", "Batería"),
+    ("teclado", "Teclado"),
+    ("bailes", "Bailes"),
+    ("baloncesto", "Baloncesto"),
 ]
 
 # Interests whose name changed: (old name, new name). Only a name still as it was is changed (not one an administrator
@@ -183,6 +190,10 @@ async def seed(db: AsyncSession) -> None:
     if not st.data:
         st.data = DEFAULT_SETTINGS
         await db.commit()
+    data = dict(st.data)
+    if merge_geography(data):
+        st.data = data
+        await db.commit()
     existing = set((await db.execute(select(Interest.slug))).scalars().all())
     for slug, name in DEFAULT_INTERESTS:
         if slug not in existing:
@@ -193,6 +204,7 @@ async def seed(db: AsyncSession) -> None:
     for slug, (old, new) in RENAMED_INTERESTS.items():
         await db.execute(update(Interest).where(Interest.slug == slug, Interest.name == old).values(name=new))
     await db.commit()
+    await update_age_ranges(db)
     await ensure_admin(db)
     await ensure_bots(db)
 
@@ -257,6 +269,16 @@ async def merge_interests(db: AsyncSession, old_slugs: tuple[str, ...], new_slug
     await db.execute(text("DELETE FROM interests WHERE id = ANY(:ids)"), {"ids": old_ids})
     await db.commit()
     logger.info("Merged the interests %s into %s", ", ".join(old), new_slug)
+
+
+async def update_age_ranges(db: AsyncSession) -> None:
+    """The stored age range of each person follows the current ranges (18-30, 31-60, 61+) and their age."""
+    age = "date_part('year', age(current_date, dob::date))"
+    await db.execute(text(f"""
+        UPDATE users SET age_range = (CASE WHEN {age} <= 30 THEN '18_30' WHEN {age} <= 60 THEN '31_60' ELSE '61_plus' END)::agerange
+        WHERE dob ~ '^[0-9]{{4}}-[0-9]{{2}}-[0-9]{{2}}$' AND {age} >= 18
+          AND age_range::text <> (CASE WHEN {age} <= 30 THEN '18_30' WHEN {age} <= 60 THEN '31_60' ELSE '61_plus' END)"""))
+    await db.commit()
 
 
 BOTS = {"admin": "bot-admin", "moderator": "bot-moderator"}

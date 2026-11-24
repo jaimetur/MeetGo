@@ -816,7 +816,7 @@ msgid "admin_users_delete_button"
 msgstr "削除"
 
 msgid "admin_channels_title"
-msgstr "チャンネル"
+msgstr "チャット"
 
 msgid "admin_channels_edit_button"
 msgstr "編集"
@@ -825,25 +825,25 @@ msgid "admin_channels_delete_button"
 msgstr "削除"
 
 msgid "admin_channels_form_title"
-msgstr "チャンネルを追加／編集"
+msgstr "チャットを追加／編集"
 
 msgid "admin_channels_name_placeholder"
-msgstr "チャンネル名"
+msgstr "チャット名"
 
 msgid "admin_channels_slug_label"
 msgstr "スラッグ: {slug}"
 
 msgid "admin_channels_name_required"
-msgstr "チャンネル名は必須です。"
+msgstr "チャット名は必須です。"
 
 msgid "admin_channels_updated"
-msgstr "チャンネルを更新しました。"
+msgstr "チャットを更新しました。"
 
 msgid "admin_channels_created"
-msgstr "チャンネルを作成しました。"
+msgstr "チャットを作成しました。"
 
 msgid "admin_channels_save_error"
-msgstr "チャンネルを保存できませんでした。"
+msgstr "チャットを保存できませんでした。"
 
 msgid "admin_channels_save_button"
 msgstr "保存"
@@ -1056,7 +1056,7 @@ msgid "svc_prefix"
 msgstr "MeetGo-{service}"
 
 msgid "err_interest_in_use"
-msgstr "このチャンネルにはメッセージのあるルームがあります。削除せず、名前を変更してください"
+msgstr "このチャットにはメッセージのあるルームがあります。削除せず、名前を変更してください"
 
 msgid "err_empty_message"
 msgstr "メッセージが空です"
@@ -1290,7 +1290,7 @@ msgid "ui_change_server"
 msgstr "サーバーを変更"
 
 msgid "ui_channel_start"
-msgstr "ここがチャンネルの始まりです。{zone}で同じ興味を持つ人たちがここで話しています。"
+msgstr "ここがチャットの始まりです。{zone}で同じ興味を持つ人たちがここで話しています。"
 
 msgid "ui_check_email_body"
 msgstr "メールアドレス確認用のリンクを送信しました。リンクを開いてから、パスワードでログインしてください。"
@@ -1392,7 +1392,7 @@ msgid "ui_emoji"
 msgstr "絵文字"
 
 msgid "ui_empty_body"
-msgstr "興味を選んで地域のチャンネルに参加するか、友だちとグループを作りましょう。"
+msgstr "興味を選んで地域のチャットに参加するか、友だちとグループを作りましょう。"
 
 msgid "ui_empty_title"
 msgstr "まだ会話がありません"
@@ -1413,19 +1413,19 @@ msgid "ui_err_network"
 msgstr "サーバーに接続できません。インターネット接続を確認してください。"
 
 msgid "ui_explore_channels"
-msgstr "チャンネルを探す"
+msgstr "チャットを探す"
 
 msgid "ui_explore_lead"
-msgstr "{zone}のチャンネルです。気に入ったものに参加しましょう。"
+msgstr "{zone}のチャットです。気に入ったものに参加しましょう。"
 
 msgid "ui_explore_title"
-msgstr "チャンネル"
+msgstr "チャット"
 
 msgid "ui_f_all"
 msgstr "すべて"
 
 msgid "ui_f_channels"
-msgstr "チャンネル"
+msgstr "チャット"
 
 msgid "ui_f_direct"
 msgstr "ダイレクト"
@@ -1509,7 +1509,7 @@ msgid "ui_interests"
 msgstr "興味"
 
 msgid "ui_interests_lead"
-msgstr "興味を選ぶと、{zone}のあなたの年齢層のチャンネルに参加できます。"
+msgstr "興味を選ぶと、{zone}のあなたの年齢層のチャットに参加できます。"
 
 msgid "ui_invite_link"
 msgstr "招待リンク"
@@ -1527,7 +1527,7 @@ msgid "ui_last_at"
 msgstr "最終: {time}"
 
 msgid "ui_leave_channel"
-msgstr "チャンネルを退出"
+msgstr "チャットを退出"
 
 msgid "ui_leave_group"
 msgstr "グループを退出"
@@ -1584,10 +1584,10 @@ msgid "ui_mod_generic"
 msgstr "モデレーションにより削除"
 
 msgid "ui_mod_links"
-msgstr "モデレーションにより削除: このチャンネルではリンクは使えません"
+msgstr "モデレーションにより削除: このチャットではリンクは使えません"
 
 msgid "ui_mod_phone"
-msgstr "モデレーションにより削除: チャンネルで電話番号を共有しないでください"
+msgstr "モデレーションにより削除: チャットで電話番号を共有しないでください"
 
 msgid "ui_mod_removed"
 msgstr "モデレーターにより削除"
@@ -1620,7 +1620,7 @@ msgid "ui_nav_account"
 msgstr "アカウント"
 
 msgid "ui_nav_channels"
-msgstr "チャンネル"
+msgstr "チャット"
 
 msgid "ui_nav_chats"
 msgstr "チャット"
@@ -1653,7 +1653,7 @@ msgid "ui_no_dms"
 msgstr "ダイレクトメッセージを受け付けていません"
 
 msgid "ui_no_friends_hint"
-msgstr "チャンネルで名前をタップして友だちを追加するか、「人を探す」から見つけましょう。"
+msgstr "チャットで名前をタップして友だちを追加するか、「人を探す」から見つけましょう。"
 
 msgid "ui_no_friends_yet"
 msgstr "MeetGoにはまだ友だちがいません"
@@ -1671,7 +1671,7 @@ msgid "ui_notifications"
 msgstr "通知"
 
 msgid "ui_notifications_hint"
-msgstr "グループとダイレクトメッセージはすべてのメッセージを通知し、チャンネルはメンションされたときだけ通知します。各会話のメニューで変更できます。"
+msgstr "グループとダイレクトメッセージはすべてのメッセージを通知し、チャットはメンションされたときだけ通知します。各会話のメニューで変更できます。"
 
 msgid "ui_notify_all"
 msgstr "すべてのメッセージを通知"
@@ -1731,7 +1731,7 @@ msgid "ui_payments_soon"
 msgstr "このサーバーではまだお支払いを利用できません。"
 
 msgid "ui_paywall_lead"
-msgstr "このアカウントは閲覧のみで、書き込みはできません。チャンネル、グループ、ダイレクトメッセージに参加するには購読してください。"
+msgstr "このアカウントは閲覧のみで、書き込みはできません。チャット、グループ、ダイレクトメッセージに参加するには購読してください。"
 
 msgid "ui_paywall_title"
 msgstr "MeetGoを購読"
@@ -1944,10 +1944,10 @@ msgid "ui_search_placeholder"
 msgstr "会話やメッセージを検索"
 
 msgid "ui_sec_channels"
-msgstr "チャンネル"
+msgstr "チャット"
 
 msgid "ui_sec_channels_zone"
-msgstr "チャンネル · {zone}"
+msgstr "チャット · {zone}"
 
 msgid "ui_sec_direct"
 msgstr "ダイレクト"
@@ -2247,7 +2247,7 @@ msgid "admin_smtp_username"
 msgstr "SMTPユーザー名"
 
 msgid "admin_tab_channels"
-msgstr "チャンネル"
+msgstr "チャット"
 
 msgid "admin_tab_settings"
 msgstr "設定"
@@ -2502,7 +2502,7 @@ msgid "ui_dob_locked"
 msgstr "生年月日はすでに1回訂正済みです。"
 
 msgid "ui_zone_hint"
-msgstr "チャンネルは、都道府県／州と年齢層に応じたものになります。都道府県／州や生年月日を変更すると、新しい地域のチャンネルに移動します。"
+msgstr "チャットは、都道府県／州と年齢層に応じたものになります。都道府県／州や生年月日を変更すると、新しい地域のチャットに移動します。"
 
 msgid "landing_a0"
 msgstr "無料です。MeetGoはアカウントを作成するだけで、制限なく使えます。カードは不要です。"
@@ -2517,13 +2517,13 @@ msgid "landing_a3"
 msgstr "購読するまで、アカウントは閲覧のみになります。会話は読めますが、書き込みはできません。削除されるものはありません。"
 
 msgid "landing_a4"
-msgstr "誰にも見えません。電話番号はプロフィールに表示されず、チャンネルで番号を共有したメッセージは自動的に削除されます。"
+msgstr "誰にも見えません。電話番号はプロフィールに表示されず、チャットで番号を共有したメッセージは自動的に削除されます。"
 
 msgid "landing_a5"
-msgstr "はい、MeetGoは18歳以上の方向けです。チャンネルは年齢層（18〜30歳、31〜50歳、50歳以上）に分かれています。"
+msgstr "はい、MeetGoは18歳以上の方向けです。チャットは年齢層（18〜30歳、31〜60歳、60歳以上）に分かれています。"
 
 msgid "landing_a6"
-msgstr "スペインのすべての県で使えます。チャンネルはお住まいの県と年齢層ごとに、選んだ趣味ごとに1つずつ用意されます。"
+msgstr "スペインのすべての県で使えます。チャットはお住まいの県と年齢層ごとに、選んだ趣味ごとに1つずつ用意されます。"
 
 msgid "landing_a7"
 msgstr "カードで支払った場合はMeetGoのアカウントから、アプリで購読した場合はGoogle Playから解約できます。支払い済みの期間の終わりまでは利用できます。"
@@ -2577,7 +2577,7 @@ msgid "landing_eyebrow"
 msgstr "地域・年齢・興味でおしゃべり"
 
 msgid "landing_f1_k"
-msgstr "地域のチャンネル"
+msgstr "地域のチャット"
 
 msgid "landing_f1_l1"
 msgstr "返信や参加者のまとめが見えるスレッド"
@@ -2613,7 +2613,7 @@ msgid "landing_f2_l4"
 msgstr "グループごとにミュートやピン留め"
 
 msgid "landing_f2_p"
-msgstr "友だちとグループを作ったり、チャンネルで知り合った人に招待リンクを共有したりできます。"
+msgstr "友だちとグループを作ったり、チャットで知り合った人に招待リンクを共有したりできます。"
 
 msgid "landing_f2_t"
 msgstr "「行きたい！」から「決まり！」まで"
@@ -2658,7 +2658,7 @@ msgid "landing_feat_k"
 msgstr "機能"
 
 msgid "landing_feat_p"
-msgstr "大きなチャンネルも読みやすく、グループは自分たちだけの場所、ダイレクトメッセージはすぐに届きます。"
+msgstr "大きなチャットも読みやすく、グループは自分たちだけの場所、ダイレクトメッセージはすぐに届きます。"
 
 msgid "landing_feat_title"
 msgstr "大勢とおしゃべりしても迷わないように"
@@ -2670,7 +2670,7 @@ msgid "landing_final_title"
 msgstr "次の予定は、<span class=\"go\">もう話し始めています</span>"
 
 msgid "landing_hero_lead"
-msgstr "同じ地域、同じ年齢層、同じ趣味の人たちとつながるチャンネル。予定が決まりそうになったら、グループを作ってプライベートで相談しましょう。"
+msgstr "同じ地域、同じ年齢層、同じ趣味の人たちとつながるチャット。予定が決まりそうになったら、グループを作ってプライベートで相談しましょう。"
 
 msgid "landing_hero_title"
 msgstr "近くの人と<span class=\"meet\">話そう。</span><span class=\"go\">そして会おう。</span>"
@@ -2715,7 +2715,7 @@ msgid "landing_pr_l1"
 msgstr "7日間の無料トライアル"
 
 msgid "landing_pr_l2"
-msgstr "チャンネル、グループ、ダイレクトメッセージ"
+msgstr "チャット、グループ、ダイレクトメッセージ"
 
 msgid "landing_pr_l3"
 msgstr "いつでも解約OK"
@@ -2802,7 +2802,7 @@ msgid "landing_q8"
 msgstr "AndroidとiPhoneのアプリはありますか？"
 
 msgid "landing_s1_p"
-msgstr "ハイキング、パデル、映画、カフェ…。趣味ごとに、同じ地域・年齢層の人たちのチャンネルがあります。"
+msgstr "ハイキング、パデル、映画、カフェ…。趣味ごとに、同じ地域・年齢層の人たちのチャットがあります。"
 
 msgid "landing_s1_t"
 msgstr "趣味を選ぼう"
@@ -2811,7 +2811,7 @@ msgid "landing_s2_p"
 msgstr "スレッドで返信すればすっきり。誰かをメンションしたり、チャットをにぎやかにしすぎずにリアクションしたりできます。"
 
 msgid "landing_s2_t"
-msgstr "チャンネルでおしゃべり"
+msgstr "チャットでおしゃべり"
 
 msgid "landing_s3_p"
 msgstr "プライベートグループを作って、参加したい人を招待し、車や時間や写真のことを静かに相談しましょう。"
@@ -2850,7 +2850,7 @@ msgid "landing_t2_t"
 msgstr "報告とモデレーター"
 
 msgid "landing_t3_p"
-msgstr "チャンネルがにぎやかになりすぎたら、モデレーターがペースを調整します。"
+msgstr "チャットがにぎやかになりすぎたら、モデレーターがペースを調整します。"
 
 msgid "landing_t3_t"
 msgstr "スローモード"
@@ -2877,7 +2877,7 @@ msgid "landing_web_k"
 msgstr "パソコンでも"
 
 msgid "landing_web_p"
-msgstr "大きな画面なら、リスト、チャンネル、スレッドやメンバーを同時に見渡せます。"
+msgstr "大きな画面なら、リスト、チャット、スレッドやメンバーを同時に見渡せます。"
 
 msgid "landing_web_title"
 msgstr "すべての会話をひと目で"
@@ -3828,7 +3828,7 @@ msgid "ui_avatar_remove"
 msgstr "写真を削除"
 
 msgid "ui_cat_social"
-msgstr "お出かけ・出会い"
+msgstr "交流"
 
 msgid "ui_cat_sports"
 msgstr "スポーツ"
@@ -3839,8 +3839,11 @@ msgstr "自然・旅行"
 msgid "ui_cat_culture"
 msgstr "音楽・カルチャー"
 
-msgid "ui_cat_languages"
-msgstr "語学"
+msgid "ui_cat_education"
+msgstr "学び"
+
+msgid "ui_cat_skills"
+msgstr "スキル"
 
 msgid "ui_cat_motor"
 msgstr "モーター"
