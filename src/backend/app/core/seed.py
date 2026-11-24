@@ -3,7 +3,7 @@
 import logging
 import secrets
 
-from sqlalchemy import text, func, select
+from sqlalchemy import text, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
@@ -141,10 +141,10 @@ DEFAULT_SETTINGS = {
 }
 
 DEFAULT_INTERESTS = [
-    ("tomar_algo", "Quedar para tomar algo"),
+    ("tomar_algo", "Tomar algo"),
     ("senderismo", "Senderismo"),
     ("cine", "Cine"),
-    ("deporte", "Deporte"),
+    ("deporte", "Deportes"),
     ("networking", "Networking"),
     ("ciclismo", "Ciclismo"),
     ("mtb", "MTB"),
@@ -154,7 +154,6 @@ DEFAULT_INTERESTS = [
     ("viajes", "Viajes"),
     ("lectura", "Lectura"),
     ("picnics", "Picnics"),
-    ("deportes", "Deportes (general)"),
     ("deportes_aire_libre", "Deportes al aire libre"),
     ("deportes_acuaticos", "Deportes acuaticos"),
     ("futbol", "Futbol"),
@@ -167,7 +166,16 @@ DEFAULT_INTERESTS = [
     ("musica_80", "Música de los 80"),
     ("musica_rock", "Música Rock"),
     ("musica_flamenca", "Música Flamenca"),
+    ("salir_de_fiesta", "Salir de Fiesta"),
+    ("hacer_amigos", "Hacer Amigos"),
+    ("aprender_ingles", "Aprender Inglés"),
+    ("aprender_aleman", "Aprender Alemán"),
+    ("aprender_frances", "Aprender Francés"),
 ]
+
+# Interests whose name changed: (old name, new name). Only a name still as it was is changed (not one an administrator
+# renamed); the communities show the interest's name, so they follow.
+RENAMED_INTERESTS = {"tomar_algo": ("Quedar para tomar algo", "Tomar algo"), "deporte": ("Deporte", "Deportes")}
 
 
 async def seed(db: AsyncSession) -> None:
@@ -181,12 +189,18 @@ async def seed(db: AsyncSession) -> None:
             db.add(Interest(slug=slug, name=name))
     await db.commit()
     await merge_interests(db, MERGED_INTERESTS, "tomar_algo")
+    await merge_interests(db, MERGED_SPORTS, "deporte")
+    for slug, (old, new) in RENAMED_INTERESTS.items():
+        await db.execute(update(Interest).where(Interest.slug == slug, Interest.name == old).values(name=new))
+    await db.commit()
     await ensure_admin(db)
     await ensure_bots(db)
 
 
-# Interests that became one: a coffee, a beer and drinks are now "Quedar para tomar algo".
+# Interests that became one: a coffee, a beer and drinks are now "Tomar algo".
 MERGED_INTERESTS = ("cafe", "cerveza", "copas")
+# "Deporte" and "Deportes (general)" were the same: one community, "Deportes".
+MERGED_SPORTS = ("deportes",)
 
 
 async def merge_interests(db: AsyncSession, old_slugs: tuple[str, ...], new_slug: str) -> None:

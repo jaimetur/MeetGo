@@ -3128,6 +3128,36 @@ msgstr "{zone} のコミュニティを表示中です。参加できるのは�
 msgid "ui_zone_other"
 msgstr "別のエリア"
 
+msgid "ui_nc_dm_hint"
+msgstr "1人と非公開で"
+
+msgid "ui_nc_group_hint"
+msgstr "複数人でチャット"
+
+msgid "ui_nc_friends"
+msgstr "友達"
+
+msgid "ui_nc_results"
+msgstr "検索結果"
+
+msgid "ui_nc_asked"
+msgstr "リクエスト済み ✓"
+
+msgid "ui_nc_no_friends"
+msgstr "まだ友達がいません。名前で検索してみましょう。"
+
+msgid "ui_nc_step_name"
+msgstr "グループ名"
+
+msgid "ui_nc_step_people"
+msgstr "メンバー(任意)"
+
+msgid "ui_nc_remove"
+msgstr "{name} を外す"
+
+msgid "ui_nc_create_n"
+msgstr "{n}人のグループを作成"
+
 msgid "ui_sec_communities"
 msgstr "コミュニティ"
 
@@ -3808,6 +3838,9 @@ msgstr "自然・旅行"
 
 msgid "ui_cat_culture"
 msgstr "音楽・カルチャー"
+
+msgid "ui_cat_languages"
+msgstr "語学"
 
 msgid "ui_cat_motor"
 msgstr "モーター"

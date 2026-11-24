@@ -3128,6 +3128,36 @@ msgstr "Estàs veient les comunitats de {zone}. Només pots entrar a les de la t
 msgid "ui_zone_other"
 msgstr "Una altra zona"
 
+msgid "ui_nc_dm_hint"
+msgstr "En privat amb una persona"
+
+msgid "ui_nc_group_hint"
+msgstr "Un xat amb diverses persones"
+
+msgid "ui_nc_friends"
+msgstr "Els teus amics"
+
+msgid "ui_nc_results"
+msgstr "Resultats"
+
+msgid "ui_nc_asked"
+msgstr "Demanat ✓"
+
+msgid "ui_nc_no_friends"
+msgstr "Encara no tens amics. Busca algú pel nom."
+
+msgid "ui_nc_step_name"
+msgstr "Nom del grup"
+
+msgid "ui_nc_step_people"
+msgstr "Qui hi entra (opcional)"
+
+msgid "ui_nc_remove"
+msgstr "Treure {name}"
+
+msgid "ui_nc_create_n"
+msgstr "Crear un grup de {n}"
+
 msgid "ui_sec_communities"
 msgstr "Comunitats"
 
@@ -3808,6 +3838,9 @@ msgstr "Natura i viatges"
 
 msgid "ui_cat_culture"
 msgstr "Música i cultura"
+
+msgid "ui_cat_languages"
+msgstr "Idiomes"
 
 msgid "ui_cat_motor"
 msgstr "Motor"

@@ -43,4 +43,15 @@ async def test_merges_communities_members_messages_and_interests(client, db_sess
         assert chosen == {ana[1]["id"], bea[1]["id"]}
         assert (await db.execute(text("SELECT count(*) FROM conversations WHERE id = ANY(:o)"), {"o": [c for c in convs.values() if c != target.id]})).scalar() == 0
     mine = (await client.get("/communities", params={"mine": 1}, headers=bea[0])).json()
-    assert [c["slug"] for c in mine] == ["tomar_algo"] and mine[0]["title"] == "Quedar para tomar algo"
+    assert [c["slug"] for c in mine] == ["tomar_algo"] and mine[0]["title"] == "Tomar algo"
+
+
+async def test_one_sports_community(client, db_session):
+    from app.core.seed import seed
+    async with db_session() as db:
+        db.add(Interest(slug="deportes", name="Deportes (general)"))
+        await db.execute(text("UPDATE interests SET name = 'Deporte' WHERE slug = 'deporte'"))
+        await db.commit()
+        await seed(db)
+        rows = dict((await db.execute(select(Interest.slug, Interest.name).where(Interest.slug.in_(["deporte", "deportes"])))).all())
+    assert rows == {"deporte": "Deportes"}

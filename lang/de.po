@@ -3413,6 +3413,9 @@ msgstr "Natur und Reisen"
 msgid "ui_cat_culture"
 msgstr "Musik und Kultur"
 
+msgid "ui_cat_languages"
+msgstr "Sprachen"
+
 msgid "ui_cat_motor"
 msgstr "Motor"
 
@@ -3982,6 +3985,36 @@ msgstr "Du siehst die Communities von {zone}. Beitreten kannst du nur denen dein
 
 msgid "ui_zone_other"
 msgstr "Andere Zone"
+
+msgid "ui_nc_dm_hint"
+msgstr "Privat mit einer Person"
+
+msgid "ui_nc_group_hint"
+msgstr "Ein Chat mit mehreren Personen"
+
+msgid "ui_nc_friends"
+msgstr "Deine Freunde"
+
+msgid "ui_nc_results"
+msgstr "Ergebnisse"
+
+msgid "ui_nc_asked"
+msgstr "Angefragt ✓"
+
+msgid "ui_nc_no_friends"
+msgstr "Noch keine Freunde. Suche jemanden nach Namen."
+
+msgid "ui_nc_step_name"
+msgstr "Gruppenname"
+
+msgid "ui_nc_step_people"
+msgstr "Wer ist dabei (optional)"
+
+msgid "ui_nc_remove"
+msgstr "{name} entfernen"
+
+msgid "ui_nc_create_n"
+msgstr "Gruppe mit {n} erstellen"
 
 msgid "ui_sec_communities"
 msgstr "Communities"

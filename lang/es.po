@@ -3129,6 +3129,36 @@ msgstr "Estás viendo las comunidades de {zone}. Solo puedes entrar en las de tu
 msgid "ui_zone_other"
 msgstr "Otra zona"
 
+msgid "ui_nc_dm_hint"
+msgstr "En privado con una persona"
+
+msgid "ui_nc_group_hint"
+msgstr "Un chat con varias personas"
+
+msgid "ui_nc_friends"
+msgstr "Tus amigos"
+
+msgid "ui_nc_results"
+msgstr "Resultados"
+
+msgid "ui_nc_asked"
+msgstr "Pedido ✓"
+
+msgid "ui_nc_no_friends"
+msgstr "Aún no tienes amigos. Busca a alguien por su nombre."
+
+msgid "ui_nc_step_name"
+msgstr "Nombre del grupo"
+
+msgid "ui_nc_step_people"
+msgstr "Quién entra (opcional)"
+
+msgid "ui_nc_remove"
+msgstr "Quitar a {name}"
+
+msgid "ui_nc_create_n"
+msgstr "Crear grupo de {n}"
+
 msgid "ui_sec_communities"
 msgstr "Comunidades"
 
@@ -3809,6 +3839,9 @@ msgstr "Naturaleza y viajes"
 
 msgid "ui_cat_culture"
 msgstr "Música y cultura"
+
+msgid "ui_cat_languages"
+msgstr "Idiomas"
 
 msgid "ui_cat_motor"
 msgstr "Motor"

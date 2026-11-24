@@ -17,7 +17,7 @@ import { PlansPage, RightColumn } from "./Plans";
 import { ActingAsBar, AdminPage } from "./Admin";
 import { ZoneTag } from "./Board";
 import { Paywall } from "./Paywall";
-import { Sidebar } from "./Sidebar";
+import { NewChatModal, Sidebar } from "./Sidebar";
 
 /** Colour themes: six light and four dark (the colours are in styles.css, :root[data-palette=…]); `bg`, `panel` and
  *  `accent` are only for the swatches in Settings. "system" follows the device: Light or Night. */
@@ -239,6 +239,7 @@ function Shell() {
   const swipeOrder = ["home", "communities", "chats", "plans", "people"];
   const showFab = ["home", "plans", "communities"].includes(route.name) || (route.name === "community" && route.tab !== "chat");
   const publish = () => navigate(route.name === "community" ? `/publish?community=${route.id}` : "/publish");
+  const [newChat, setNewChat] = useState(false);
 
   const swipe = React.useRef<{ x: number; y: number; t: number } | null>(null);
   const tabIndex = swipeOrder.indexOf(route.name);
@@ -316,6 +317,8 @@ function Shell() {
           </button>
         ))}
       </nav>
+      {route.name === "chats" ? <button className="mfab chatfab" aria-label={t("ui_new_chat")} title={t("ui_new_chat")} onClick={() => setNewChat(true)}><Icon name="edit" /></button> : null}
+      {newChat ? <NewChatModal onClose={() => setNewChat(false)} /> : null}
       {showFab ? <button className="mfab" aria-label={t("ui_nav_publish")} title={t("ui_nav_publish")} onClick={publish}><Icon name="plus" /></button> : null}
 
       {route.name !== "chat" && !detail ? <InstallHint /> : null}

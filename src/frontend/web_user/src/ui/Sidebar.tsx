@@ -57,7 +57,6 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
           <img className="appicon" src="/apple-touch-icon.png" alt="" />
           <Wordmark size={26} />
           <span className="grow" />
-          <button className="iconbtn compose" title={t("ui_new_chat")} aria-label={t("ui_new_chat")} onClick={() => setNewChat(true)}><Icon name="edit" /></button>
           <span className="phoneonly"><AvatarMenu /></span>
         </div>
         <div className="row titlerow">
@@ -149,13 +148,14 @@ export function NewChatModal({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<"dm" | "group">("dm");
   const [q, setQ] = useState("");
   const [people, setPeople] = useState<any[]>([]);
-  const [friends, setFriends] = useState<(UserSummary & { online: boolean })[]>([]);
+  const [friends, setFriends] = useState<(UserSummary & { online: boolean })[] | null>(null);
   const [title, setTitle] = useState("");
   const [picked, setPicked] = useState<number[]>([]);
   const [busy, setBusy] = useState(false);
+  const [asked, setAsked] = useState<number[]>([]);
 
   useEffect(() => {
-    api.friends().then(setFriends).catch(() => undefined);
+    api.friends().then(setFriends).catch(() => setFriends([]));
   }, []);
   useEffect(() => {
     if (q.trim().length < 2) return setPeople([]);
@@ -163,7 +163,8 @@ export function NewChatModal({ onClose }: { onClose: () => void }) {
     return () => window.clearTimeout(id);
   }, [q]);
 
-  const candidates = useMemo(() => (q.trim().length >= 2 ? people : friends.map((f) => ({ ...f, friend: true, accept_dm: true }))), [q, people, friends]);
+  const searching = q.trim().length >= 2;
+  const candidates = useMemo(() => (searching ? people : (friends || []).map((f) => ({ ...f, friend: true, accept_dm: true }))), [searching, people, friends]);
 
   async function openDm(id: number) {
     setBusy(true);
@@ -174,8 +175,8 @@ export function NewChatModal({ onClose }: { onClose: () => void }) {
         navigate(chatPath(res.conversation_id));
         onClose();
       } else {
+        setAsked((a) => [...a, id]);
         toast(t("ui_dm_request_sent"));
-        onClose();
       }
     } catch (e: any) {
       toast(e.message, "error");
@@ -198,44 +199,90 @@ export function NewChatModal({ onClose }: { onClose: () => void }) {
     }
   }
 
+  const toggle = (id: number) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+  const chosen = (friends || []).filter((f) => picked.includes(f.id));
+
   return (
     <Modal title={t("ui_new_chat")} onClose={onClose} footer={tab === "group" ? (
-      <button className="btn pri" disabled={busy || !title.trim()} onClick={createGroup}>{t("ui_create_group")}</button>
+      <button className="btn pri block" disabled={busy || !title.trim()} onClick={createGroup}>
+        <Icon name="users" size="sm" />{picked.length ? t("ui_nc_create_n", { n: picked.length + 1 }) : t("ui_create_group")}
+      </button>
     ) : undefined}>
-      <div className="tabs">
-        <button className={"chip" + (tab === "dm" ? " on" : "")} onClick={() => setTab("dm")}>{t("ui_direct_message")}</button>
-        <button className={"chip" + (tab === "group" ? " on" : "")} onClick={() => setTab("group")}>{t("ui_new_group")}</button>
+      <div className="ncmode" role="tablist">
+        <button role="tab" aria-selected={tab === "dm"} className={tab === "dm" ? "on" : ""} onClick={() => setTab("dm")}>
+          <span className="ncico"><Icon name="user" /></span>
+          <span className="nctx"><b>{t("ui_direct_message")}</b><small>{t("ui_nc_dm_hint")}</small></span>
+        </button>
+        <button role="tab" aria-selected={tab === "group"} className={tab === "group" ? "on" : ""} onClick={() => setTab("group")}>
+          <span className="ncico"><Icon name="users" /></span>
+          <span className="nctx"><b>{t("ui_new_group")}</b><small>{t("ui_nc_group_hint")}</small></span>
+        </button>
       </div>
-      {tab === "group" ? (
+
+      {tab === "dm" ? (
         <>
-          <label className="fld">{t("ui_group_name")}<input id="group-title" className="inp" maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t("ui_group_name_ph")} /></label>
-          <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_group_members_hint")}</div>
-          <div className="plist">
-            {friends.length ? friends.map((f) => (
-              <label key={f.id} className="item check">
-                <input type="checkbox" checked={picked.includes(f.id)} onChange={(e) => setPicked((p) => (e.target.checked ? [...p, f.id] : p.filter((x) => x !== f.id)))} />
-                <Avatar user={f} size={30} online={f.online} />
-                <span className="grow">{f.display_name}</span>
-              </label>
-            )) : <div className="muted">{t("ui_no_friends_yet")}</div>}
+          <div className="search"><Icon name="search" size="sm" /><input id="dm-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_search_people")} />
+            {q ? <button className="iconbtn" style={{ width: 24, height: 24 }} onClick={() => setQ("")} aria-label={t("ui_clear")}><Icon name="x" size="sm" /></button> : null}
+          </div>
+          <div className="ncsec">{searching ? t("ui_nc_results") : t("ui_nc_friends")}</div>
+          <div className="nclist">
+            {candidates.map((p) => {
+              const can = p.friend || p.accept_dm;
+              const done = asked.includes(p.id) || p.dm_requested;
+              return (
+                <button key={p.id} className="ncrow" disabled={busy || !can || done} onClick={() => openDm(p.id)}>
+                  <Avatar user={p} size={40} online={p.online} />
+                  <span className="nctx grow">
+                    <b>{p.display_name}</b>
+                    <small>{p.friend ? t("ui_friend") : p.accept_dm ? t("ui_needs_request") : t("ui_no_dms")}</small>
+                  </span>
+                  {done ? <span className="ncact wait">{t("ui_nc_asked")}</span>
+                    : !can ? <span className="ncact off"><Icon name="lock" size="sm" /></span>
+                    : p.friend ? <span className="ncact go"><Icon name="chat" size="sm" />{t("ui_write")}</span>
+                    : <span className="ncact">{t("ui_ask_dm")}</span>}
+                </button>
+              );
+            })}
+            {friends === null && !searching ? <div className="ncempty muted">…</div> : null}
+            {friends !== null && !candidates.length ? (
+              <div className="ncempty">
+                <Icon name={searching ? "search" : "users"} />
+                <div className="muted">{searching ? t("ui_no_results") : t("ui_nc_no_friends")}</div>
+              </div>
+            ) : null}
           </div>
         </>
       ) : (
         <>
-          <div className="search"><Icon name="search" size="sm" /><input id="dm-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_search_people")} /></div>
-          <div className="plist">
-            {candidates.map((p) => (
-              <div key={p.id} className="item">
-                <Avatar user={p} size={34} online={p.online} />
-                <div className="grow" style={{ minWidth: 0 }}>
-                  <div>{p.display_name}</div>
-                  <div className="muted" style={{ fontSize: 12 }}>{p.friend ? t("ui_friend") : p.accept_dm ? t("ui_needs_request") : t("ui_no_dms")}</div>
-                </div>
-                <button className="btn sm" disabled={busy || (!p.friend && !p.accept_dm)} onClick={() => openDm(p.id)}>{p.friend ? t("ui_write") : t("ui_request")}</button>
-              </div>
-            ))}
-            {!candidates.length ? <div className="muted">{q.trim().length >= 2 ? t("ui_no_results") : t("ui_search_people_hint")}</div> : null}
+          <label className="fld"><span className="ncsec">{t("ui_nc_step_name")}</span>
+            <input id="group-title" className="inp" maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t("ui_group_name_ph")} />
+          </label>
+          <div className="ncsec">{t("ui_nc_step_people")}</div>
+          {chosen.length ? (
+            <div className="ncchosen">
+              {chosen.map((f) => (
+                <button key={f.id} className="ncchip" onClick={() => toggle(f.id)} aria-label={t("ui_nc_remove", { name: f.display_name })}>
+                  <Avatar user={f} size={22} /><span>{f.display_name}</span><Icon name="x" size="sm" />
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <div className="nclist">
+            {(friends || []).map((f) => {
+              const on = picked.includes(f.id);
+              return (
+                <button key={f.id} className={"ncrow" + (on ? " picked" : "")} aria-pressed={on} onClick={() => toggle(f.id)}>
+                  <Avatar user={f} size={40} online={f.online} />
+                  <span className="nctx grow"><b>{f.display_name}</b><small>{t("ui_friend")}</small></span>
+                  <span className={"nccheck" + (on ? " on" : "")}>{on ? <Icon name="check" size="sm" /> : null}</span>
+                </button>
+              );
+            })}
+            {friends !== null && !friends.length ? (
+              <div className="ncempty"><Icon name="users" /><div className="muted">{t("ui_no_friends_yet")}</div></div>
+            ) : null}
           </div>
+          <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_group_members_hint")}</div>
         </>
       )}
     </Modal>

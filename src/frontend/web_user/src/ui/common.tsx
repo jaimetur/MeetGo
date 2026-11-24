@@ -210,6 +210,7 @@ export function InstallHint() {
 
 /** The icon that represents a community's hobby, from its slug or title (any language). */
 const HOBBY_ICONS: [RegExp, string][] = [
+  [/aprend|idioma|ingl[eé]s|alem[aá]n|franc[eé]s|learn|language/, "chat"], [/fiesta|party|f[eê]te|festa|feest/, "star"], [/amig|friend/, "users"],
   [/sender|hik|trek|monta|mountain|randonn|wander/, "mountain"], [/cicl|bici|bike|cycl|mtb|velo|rad/, "bike"],
   [/lect|libro|book|read|lectur|livre|lettur/, "book"], [/cine|film|movie|pel/, "film"], [/coche|car|auto/, "car"],
   [/moto/, "moto"], [/fitness|crossfit|gym|gimnas|muscul/, "dumbbell"], [/futbol|fútbol|football|soccer|calcio/, "ball"],

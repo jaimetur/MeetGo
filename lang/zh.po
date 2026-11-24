@@ -3128,6 +3128,36 @@ msgstr "你正在查看 {zone} 的社区。你只能加入自己区域的社区�
 msgid "ui_zone_other"
 msgstr "其他区域"
 
+msgid "ui_nc_dm_hint"
+msgstr "与一个人私聊"
+
+msgid "ui_nc_group_hint"
+msgstr "多人聊天"
+
+msgid "ui_nc_friends"
+msgstr "你的好友"
+
+msgid "ui_nc_results"
+msgstr "搜索结果"
+
+msgid "ui_nc_asked"
+msgstr "已请求 ✓"
+
+msgid "ui_nc_no_friends"
+msgstr "还没有好友。按名字搜索一下吧。"
+
+msgid "ui_nc_step_name"
+msgstr "群组名称"
+
+msgid "ui_nc_step_people"
+msgstr "成员(可选)"
+
+msgid "ui_nc_remove"
+msgstr "移除 {name}"
+
+msgid "ui_nc_create_n"
+msgstr "创建 {n} 人群组"
+
 msgid "ui_sec_communities"
 msgstr "社区"
 
@@ -3808,6 +3838,9 @@ msgstr "自然与旅行"
 
 msgid "ui_cat_culture"
 msgstr "音乐与文化"
+
+msgid "ui_cat_languages"
+msgstr "语言"
 
 msgid "ui_cat_motor"
 msgstr "汽车摩托"

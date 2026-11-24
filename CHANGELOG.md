@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- New communities: "Salir de Fiesta", "Hacer Amigos", "Aprender Inglés", "Aprender Alemán" and "Aprender Francés" (in a new "Languages" category); "Quedar para tomar algo" is now "Tomar algo". "Deporte" and "Deportes (general)" are now one community, "Deportes" (members, messages and plans move into it).
+- New conversation: on phones the pencil is a round button above the tab bar, and its panel is clearer (direct message or group as two big choices, your friends or the search results with what each button will do, chosen people as chips).
 - Your zone (province and age range) always in view as a tag at the top; tapping it lets you look at the communities of another country, province or age range (only your own zone can be joined), go back to your zone or change your province in your profile. Channels, chats and community pages no longer repeat the zone.
 - Communities: themed areas of each zone with a board and a chat room. Anyone can create one, open to all, by request (an admin approves) or by invitation link; owners name admins and admins name moderators; the board can be open to members or read-only with only admins publishing. Changing province or age range leaves the old zone's communities and brings them back, as they were, on return.
 - Community staff, and the administrators of MeetGo, expel someone with the Expel button next to each member, or by tapping their name in the community chat (take out: they can join again; expel: they cannot come back); the settings button next to each member also changes their role.
@@ -39,7 +41,7 @@ All notable changes to this project will be documented in this file.
 - Profile photo: choose one from the gallery or the camera (Profile → Change photo); it is cropped square, kept small and shown everywhere, and can be removed. It replaces the old photo address field.
 - Delete my account from the app (Settings → Delete my account, with the password) and a public page, /delete-account, with the steps and what is deleted (also for deleting only some data), as Google Play requires; administrators delete accounts the same way.
 - Block people: from their card in a chat; neither of you can then message, follow or send requests to the other, you get no notifications of them and their messages are hidden from you; Settings lists the people you blocked.
-- "Quedar para un café", "Quedar para una cerveza" and "Quedar para unas copas" are now one community, "Quedar para tomar algo": in each zone their members, messages, posts and requests move into it.
+- "Quedar para un café", "Quedar para una cerveza" and "Quedar para unas copas" are now one community, "Tomar algo": in each zone their members, messages, posts and requests move into it.
 - Communities grouped by category (going out, sports, nature and travel, music and culture, motor, other), alphabetical in each; back from a community, the list is where you left it.
 - In a chat, the message just sent (and the last one when the keyboard opens) stays fully in view.
 - The privacy policy is no longer marked as a draft and links to the account deletion page.

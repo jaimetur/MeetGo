@@ -3128,6 +3128,36 @@ msgstr "Je bekijkt de communities van {zone}. Je kunt alleen lid worden van die 
 msgid "ui_zone_other"
 msgstr "Andere zone"
 
+msgid "ui_nc_dm_hint"
+msgstr "Privé met één persoon"
+
+msgid "ui_nc_group_hint"
+msgstr "Een chat met meerdere mensen"
+
+msgid "ui_nc_friends"
+msgstr "Je vrienden"
+
+msgid "ui_nc_results"
+msgstr "Resultaten"
+
+msgid "ui_nc_asked"
+msgstr "Gevraagd ✓"
+
+msgid "ui_nc_no_friends"
+msgstr "Nog geen vrienden. Zoek iemand op naam."
+
+msgid "ui_nc_step_name"
+msgstr "Groepsnaam"
+
+msgid "ui_nc_step_people"
+msgstr "Wie doet mee (optioneel)"
+
+msgid "ui_nc_remove"
+msgstr "{name} verwijderen"
+
+msgid "ui_nc_create_n"
+msgstr "Groep van {n} maken"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 
@@ -3808,6 +3838,9 @@ msgstr "Natuur en reizen"
 
 msgid "ui_cat_culture"
 msgstr "Muziek en cultuur"
+
+msgid "ui_cat_languages"
+msgstr "Talen"
 
 msgid "ui_cat_motor"
 msgstr "Motor"
