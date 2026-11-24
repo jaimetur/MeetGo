@@ -3341,6 +3341,51 @@ msgstr "Mein Profil"
 msgid "ui_avatar_settings"
 msgstr "Einstellungen"
 
+msgid "ui_acc_tab_profile"
+msgstr "Profil"
+
+msgid "ui_acc_tab_interests"
+msgstr "Interessen"
+
+msgid "ui_acc_tab_notifications"
+msgstr "Hinweise"
+
+msgid "ui_acc_tab_plan"
+msgstr "Abo"
+
+msgid "ui_acc_tab_settings"
+msgstr "Einstellungen"
+
+msgid "ui_theme_sand"
+msgstr "Sand"
+
+msgid "ui_theme_mint"
+msgstr "Minze"
+
+msgid "ui_theme_lavender"
+msgstr "Lavendel"
+
+msgid "ui_theme_peach"
+msgstr "Pfirsich"
+
+msgid "ui_theme_sky"
+msgstr "Himmel"
+
+msgid "ui_theme_oled"
+msgstr "OLED-Schwarz"
+
+msgid "ui_theme_forest"
+msgstr "Wald"
+
+msgid "ui_theme_plum"
+msgstr "Pflaume"
+
+msgid "ui_theme_light_group"
+msgstr "Hell"
+
+msgid "ui_theme_dark_group"
+msgstr "Dunkel"
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 

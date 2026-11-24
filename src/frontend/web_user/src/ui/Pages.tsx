@@ -3,11 +3,11 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api } from "../api";
 import { isNativeApp, native } from "../native";
 import { disableWebPush, enableWebPush, webPushPermission, webPushSubscribed, webPushSupported } from "../push";
-import { chatPath, communityPath, navigate, queryParam } from "../router";
+import { chatPath, communityPath, navigate, queryParam, useRoute } from "../router";
 import { loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { Interest, Message } from "../types";
 import { dayLabel, timeOf } from "../util";
-import { applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
+import { THEMES, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
 import { Avatar, Icon, convTitle } from "./common";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -244,11 +244,19 @@ export function AccountPage() {
     }
   });
   const [lang, setLangState] = useState(getLang());
-  // the avatar's menu opens Settings with ?section=settings
-  const [section, setSection] = useState<"profile" | "interests" | "notifications" | "plan" | "settings">(() => {
+  // The tab is in the address (?section=…): the avatar's menu opens My profile or Settings, also from this page.
+  type Section = "profile" | "interests" | "notifications" | "plan" | "settings";
+  const route = useRoute();
+  const fromUrl = (): Section => {
     const s = queryParam("section");
     return s === "interests" || s === "notifications" || s === "plan" || s === "settings" ? s : "profile";
-  });
+  };
+  const [section, setSectionState] = useState<Section>(fromUrl);
+  useEffect(() => setSectionState(fromUrl()), [route]);
+  const setSection = (s: Section) => {
+    setSectionState(s);
+    navigate(s === "profile" ? "/account" : `/account?section=${s}`, true);
+  };
 
   useEffect(() => {
     api.interests().then(setInterests).catch(() => undefined);
@@ -331,9 +339,9 @@ export function AccountPage() {
   }
 
   const ageLabel = (me.age_range || "").replace("_plus", "+").replace("_", "-");
-  const tabs: [typeof section, string][] = [
-    ["profile", t("ui_profile")], ["interests", t("ui_interests")], ["notifications", t("ui_notifications")],
-    ...(showPlans ? [["plan", t("ui_subscription")] as [typeof section, string]] : []), ["settings", t("ui_settings")],
+  const tabs: [Section, string, string][] = [
+    ["profile", "user", t("ui_acc_tab_profile")], ["interests", "star", t("ui_acc_tab_interests")], ["notifications", "bell", t("ui_acc_tab_notifications")],
+    ...(showPlans ? [["plan", "ticket", t("ui_acc_tab_plan")] as [Section, string, string]] : []), ["settings", "sliders", t("ui_acc_tab_settings")],
   ];
 
   return (
@@ -353,9 +361,12 @@ export function AccountPage() {
         </div>
       </div>
 
-      <div className="segtabs" role="tablist">
-        {tabs.map(([key, label]) => (
-          <button key={key} role="tab" aria-selected={section === key} className={section === key ? "on" : ""} onClick={() => setSection(key)}>{label}</button>
+      {/* an icon above a short name: every tab fits on a phone */}
+      <div className="acctabs" role="tablist">
+        {tabs.map(([key, icon, label]) => (
+          <button key={key} role="tab" aria-selected={section === key} className={section === key ? "on" : ""} onClick={() => setSection(key)}>
+            <Icon name={icon} /><span>{label}</span>
+          </button>
         ))}
       </div>
 
@@ -459,11 +470,9 @@ export function AccountPage() {
       {section === "settings" ? (
         <div className="stack" style={{ gap: 14 }}>
           <div className="box grid2">
-            <label className="fld">{t("ui_theme")}
-              <select id="acc-theme" className="inp" value={theme} onChange={(e) => changeTheme(e.target.value)}>
-                <option value="system">{t("ui_theme_system")}</option><option value="dark">{t("ui_theme_dark")}</option><option value="light">{t("ui_theme_light")}</option>
-              </select>
-            </label>
+            <div className="fld themefld">{t("ui_theme")}
+              <ThemePicker value={theme} onChange={changeTheme} />
+            </div>
             <label className="fld">{t("ui_language")}
               <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value)}>
                 {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
@@ -536,4 +545,32 @@ export function JoinPage({ code }: { code: string }) {
     });
   }, [code]);
   return <PageShell title={t("ui_join_group")}>{error ? <div className="err">{error}</div> : <div className="empty">{t("ui_loading")}</div>}</PageShell>;
+}
+
+/** The colour themes as swatches: the system's, then the light ones and the dark ones (see THEMES in App.tsx). */
+function ThemePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const swatch = (id: string) => {
+    const th = THEMES[id];
+    return (
+      <button key={id} type="button" className={"themesw" + (value === id ? " on" : "")} aria-pressed={value === id} onClick={() => onChange(id)}>
+        <span className="themesw-prev" style={{ background: th.bg }}>
+          <span style={{ background: th.panel }} /><i style={{ background: th.accent }} />
+        </span>
+        <span className="themesw-name">{t(th.label)}</span>
+      </button>
+    );
+  };
+  const ids = Object.keys(THEMES);
+  return (
+    <div className="themepick">
+      <button type="button" className={"themesw sys" + (value === "system" ? " on" : "")} aria-pressed={value === "system"} onClick={() => onChange("system")}>
+        <span className="themesw-prev half"><span /><i /></span>
+        <span className="themesw-name">{t("ui_theme_system")}</span>
+      </button>
+      <div className="themegroup">{t("ui_theme_light_group")}</div>
+      {ids.filter((id) => !THEMES[id].dark).map(swatch)}
+      <div className="themegroup">{t("ui_theme_dark_group")}</div>
+      {ids.filter((id) => THEMES[id].dark).map(swatch)}
+    </div>
+  );
 }

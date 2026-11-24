@@ -3710,6 +3710,51 @@ msgstr "我的资料"
 msgid "ui_avatar_settings"
 msgstr "设置"
 
+msgid "ui_acc_tab_profile"
+msgstr "资料"
+
+msgid "ui_acc_tab_interests"
+msgstr "兴趣"
+
+msgid "ui_acc_tab_notifications"
+msgstr "通知"
+
+msgid "ui_acc_tab_plan"
+msgstr "套餐"
+
+msgid "ui_acc_tab_settings"
+msgstr "设置"
+
+msgid "ui_theme_sand"
+msgstr "沙色"
+
+msgid "ui_theme_mint"
+msgstr "薄荷"
+
+msgid "ui_theme_lavender"
+msgstr "薰衣草"
+
+msgid "ui_theme_peach"
+msgstr "蜜桃"
+
+msgid "ui_theme_sky"
+msgstr "天空"
+
+msgid "ui_theme_oled"
+msgstr "OLED 纯黑"
+
+msgid "ui_theme_forest"
+msgstr "森林"
+
+msgid "ui_theme_plum"
+msgstr "梅紫"
+
+msgid "ui_theme_light_group"
+msgstr "浅色"
+
+msgid "ui_theme_dark_group"
+msgstr "深色"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

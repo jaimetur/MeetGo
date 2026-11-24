@@ -3710,6 +3710,51 @@ msgstr "Mijn profiel"
 msgid "ui_avatar_settings"
 msgstr "Instellingen"
 
+msgid "ui_acc_tab_profile"
+msgstr "Profiel"
+
+msgid "ui_acc_tab_interests"
+msgstr "Interesses"
+
+msgid "ui_acc_tab_notifications"
+msgstr "Meldingen"
+
+msgid "ui_acc_tab_plan"
+msgstr "Abonnement"
+
+msgid "ui_acc_tab_settings"
+msgstr "Instellingen"
+
+msgid "ui_theme_sand"
+msgstr "Zand"
+
+msgid "ui_theme_mint"
+msgstr "Munt"
+
+msgid "ui_theme_lavender"
+msgstr "Lavendel"
+
+msgid "ui_theme_peach"
+msgstr "Perzik"
+
+msgid "ui_theme_sky"
+msgstr "Lucht"
+
+msgid "ui_theme_oled"
+msgstr "OLED-zwart"
+
+msgid "ui_theme_forest"
+msgstr "Bos"
+
+msgid "ui_theme_plum"
+msgstr "Pruim"
+
+msgid "ui_theme_light_group"
+msgstr "Licht"
+
+msgid "ui_theme_dark_group"
+msgstr "Donker"
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

@@ -18,6 +18,21 @@ import { ActingAsBar, AdminPage } from "./Admin";
 import { Paywall } from "./Paywall";
 import { Sidebar } from "./Sidebar";
 
+/** Colour themes: six light and four dark (the colours are in styles.css, :root[data-palette=…]); `bg`, `panel` and
+ *  `accent` are only for the swatches in Settings. "system" follows the device: Light or Night. */
+export const THEMES: Record<string, { dark: boolean; label: string; bg: string; panel: string; accent: string }> = {
+  light: { dark: false, label: "ui_theme_light", bg: "#f4f6fa", panel: "#ffffff", accent: "#1670e0" },
+  sand: { dark: false, label: "ui_theme_sand", bg: "#f6f0e6", panel: "#fffdf8", accent: "#b8651c" },
+  mint: { dark: false, label: "ui_theme_mint", bg: "#ecf7f2", panel: "#ffffff", accent: "#0e9f7a" },
+  lavender: { dark: false, label: "ui_theme_lavender", bg: "#f3f1fb", panel: "#ffffff", accent: "#6d4ae0" },
+  peach: { dark: false, label: "ui_theme_peach", bg: "#fcf1ec", panel: "#ffffff", accent: "#e0563b" },
+  sky: { dark: false, label: "ui_theme_sky", bg: "#e9f4fd", panel: "#ffffff", accent: "#1286d6" },
+  dark: { dark: true, label: "ui_theme_dark", bg: "#0b1220", panel: "#0f192b", accent: "#1e90ff" },
+  oled: { dark: true, label: "ui_theme_oled", bg: "#000000", panel: "#0b0b0b", accent: "#1e90ff" },
+  forest: { dark: true, label: "ui_theme_forest", bg: "#0b1712", panel: "#0f1f18", accent: "#2fbf71" },
+  plum: { dark: true, label: "ui_theme_plum", bg: "#150e1e", panel: "#1d1429", accent: "#a66cff" },
+};
+
 export function applyTheme(theme?: string) {
   let value = theme;
   if (!value) {
@@ -27,8 +42,11 @@ export function applyTheme(theme?: string) {
       value = "system";
     }
   }
-  const dark = value === "dark" || (value === "system" && !window.matchMedia("(prefers-color-scheme: light)").matches);
-  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  if (value === "system" || !THEMES[value]) value = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  const root = document.documentElement;
+  root.dataset.theme = THEMES[value].dark ? "dark" : "light";
+  root.dataset.palette = value;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", THEMES[value].bg);
 }
 
 export async function refreshRequests() {

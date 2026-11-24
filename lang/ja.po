@@ -3710,6 +3710,51 @@ msgstr "マイプロフィール"
 msgid "ui_avatar_settings"
 msgstr "設定"
 
+msgid "ui_acc_tab_profile"
+msgstr "プロフィール"
+
+msgid "ui_acc_tab_interests"
+msgstr "興味"
+
+msgid "ui_acc_tab_notifications"
+msgstr "通知"
+
+msgid "ui_acc_tab_plan"
+msgstr "プラン"
+
+msgid "ui_acc_tab_settings"
+msgstr "設定"
+
+msgid "ui_theme_sand"
+msgstr "サンド"
+
+msgid "ui_theme_mint"
+msgstr "ミント"
+
+msgid "ui_theme_lavender"
+msgstr "ラベンダー"
+
+msgid "ui_theme_peach"
+msgstr "ピーチ"
+
+msgid "ui_theme_sky"
+msgstr "スカイ"
+
+msgid "ui_theme_oled"
+msgstr "OLED ブラック"
+
+msgid "ui_theme_forest"
+msgstr "フォレスト"
+
+msgid "ui_theme_plum"
+msgstr "プラム"
+
+msgid "ui_theme_light_group"
+msgstr "ライト"
+
+msgid "ui_theme_dark_group"
+msgstr "ダーク"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

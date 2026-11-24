@@ -3710,6 +3710,51 @@ msgstr "El meu perfil"
 msgid "ui_avatar_settings"
 msgstr "Configuració"
 
+msgid "ui_acc_tab_profile"
+msgstr "Perfil"
+
+msgid "ui_acc_tab_interests"
+msgstr "Interessos"
+
+msgid "ui_acc_tab_notifications"
+msgstr "Avisos"
+
+msgid "ui_acc_tab_plan"
+msgstr "Pla"
+
+msgid "ui_acc_tab_settings"
+msgstr "Configuració"
+
+msgid "ui_theme_sand"
+msgstr "Sorra"
+
+msgid "ui_theme_mint"
+msgstr "Menta"
+
+msgid "ui_theme_lavender"
+msgstr "Lavanda"
+
+msgid "ui_theme_peach"
+msgstr "Préssec"
+
+msgid "ui_theme_sky"
+msgstr "Cel"
+
+msgid "ui_theme_oled"
+msgstr "Negre OLED"
+
+msgid "ui_theme_forest"
+msgstr "Bosc"
+
+msgid "ui_theme_plum"
+msgstr "Pruna"
+
+msgid "ui_theme_light_group"
+msgstr "Clars"
+
+msgid "ui_theme_dark_group"
+msgstr "Foscos"
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 
