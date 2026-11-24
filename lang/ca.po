@@ -3206,6 +3206,21 @@ msgstr "Vols esborrar aquest xat només per a tu? El teu historial es buida i de
 msgid "ui_delete_chat_done"
 msgstr "Xat esborrat"
 
+msgid "ui_chat_size"
+msgstr "Mida de la lletra del xat"
+
+msgid "ui_chat_size_small"
+msgstr "Petita"
+
+msgid "ui_chat_size_normal"
+msgstr "Normal"
+
+msgid "ui_chat_size_large"
+msgstr "Gran"
+
+msgid "ui_chat_size_preview"
+msgstr "Hola! Quedem aquest dissabte per a la ruta?"
+
 msgid "ui_sec_communities"
 msgstr "Comunitats"
 

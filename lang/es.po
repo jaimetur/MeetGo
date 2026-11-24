@@ -3207,6 +3207,21 @@ msgstr "¿Borrar este chat solo para ti? Se vacía tu historial y desaparece de 
 msgid "ui_delete_chat_done"
 msgstr "Chat borrado"
 
+msgid "ui_chat_size"
+msgstr "Tamaño de letra del chat"
+
+msgid "ui_chat_size_small"
+msgstr "Pequeño"
+
+msgid "ui_chat_size_normal"
+msgstr "Normal"
+
+msgid "ui_chat_size_large"
+msgstr "Grande"
+
+msgid "ui_chat_size_preview"
+msgstr "¡Hola! ¿Quedamos este sábado para la ruta?"
+
 msgid "ui_sec_communities"
 msgstr "Comunidades"
 

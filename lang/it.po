@@ -3206,6 +3206,21 @@ msgstr "Eliminare questa chat solo per te? La tua cronologia viene svuotata e la
 msgid "ui_delete_chat_done"
 msgstr "Chat eliminata"
 
+msgid "ui_chat_size"
+msgstr "Dimensione del testo della chat"
+
+msgid "ui_chat_size_small"
+msgstr "Piccolo"
+
+msgid "ui_chat_size_normal"
+msgstr "Normale"
+
+msgid "ui_chat_size_large"
+msgstr "Grande"
+
+msgid "ui_chat_size_preview"
+msgstr "Ciao! Ci vediamo sabato per l'escursione?"
+
 msgid "ui_sec_communities"
 msgstr "Comunità"
 

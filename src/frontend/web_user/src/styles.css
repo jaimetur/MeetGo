@@ -1022,3 +1022,22 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 /* right-click menu of a chat in the list */
 .menu.ctxmenu { z-index: 60; min-width: 230px; max-height: calc(100vh - 16px); overflow-y: auto; }
 .crow.ctx { background: var(--line); }
+
+/* chat text size (Settings): normal is a little bigger than before; small is the earlier size */
+:root { --chatfs: 15.5px; }
+:root[data-chatsize="small"] { --chatfs: 14px; }
+:root[data-chatsize="large"] { --chatfs: 17.5px; }
+.msgs { font-size: var(--chatfs); }
+.msgs .quote, .msgs .tsum { font-size: calc(var(--chatfs) - 1.5px); }
+.msgs .when { font-size: calc(var(--chatfs) - 3.5px); }
+.composer textarea { font-size: var(--chatfs); }
+@media (max-width: 820px) { .msgs .who { font-size: calc(var(--chatfs) - 1px); } .msg.mine .when { font-size: calc(var(--chatfs) - 4px); } }
+@media (pointer: coarse) { .composer textarea { font-size: max(16px, var(--chatfs)); } }
+.sizepick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 4px; }
+.sizepick button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 6px; border-radius: 12px;
+  border: 1.5px solid var(--line2); background: var(--bg); color: var(--fg); font: inherit; font-size: 12.5px; cursor: pointer; }
+.sizepick button.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--panel)); }
+.sizepick .aa { font-weight: 700; line-height: 1; height: 26px; display: flex; align-items: flex-end; }
+.sizepick .sz-small .aa { font-size: 15px; } .sizepick .sz-normal .aa { font-size: 18px; } .sizepick .sz-large .aa { font-size: 22px; }
+.sizeprev { margin-top: 8px; padding: 8px 12px; border-radius: 14px; background: var(--bubble); border: 1px solid var(--line); color: var(--fg); }
+.sizeprev[data-size="small"] { font-size: 14px; } .sizeprev[data-size="normal"] { font-size: 15.5px; } .sizeprev[data-size="large"] { font-size: 17.5px; }

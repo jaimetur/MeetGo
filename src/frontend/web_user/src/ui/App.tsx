@@ -34,6 +34,20 @@ export const THEMES: Record<string, { dark: boolean; label: string; bg: string; 
   plum: { dark: true, label: "ui_theme_plum", bg: "#150e1e", panel: "#1d1429", accent: "#a66cff", accent2: "#e070d8" },
 };
 
+/** Size of the chat's text (this device): small (the earlier size), normal or large. */
+export const CHAT_SIZES = ["small", "normal", "large"] as const;
+export function applyChatSize(size?: string) {
+  let value = size;
+  if (!value) {
+    try {
+      value = localStorage.getItem("chatSize") || "normal";
+    } catch {
+      value = "normal";
+    }
+  }
+  document.documentElement.dataset.chatsize = (CHAT_SIZES as readonly string[]).includes(value) ? value : "normal";
+}
+
 export function applyTheme(theme?: string) {
   let value = theme;
   if (!value) {
@@ -87,6 +101,7 @@ export default function App() {
 
   useEffect(() => {
     applyTheme();
+    applyChatSize();
     const mq = window.matchMedia("(prefers-color-scheme: light)");
     const onChange = () => applyTheme();
     mq.addEventListener?.("change", onChange);

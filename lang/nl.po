@@ -3206,6 +3206,21 @@ msgstr "Deze chat alleen voor jou verwijderen? Je geschiedenis wordt leeggemaakt
 msgid "ui_delete_chat_done"
 msgstr "Chat verwijderd"
 
+msgid "ui_chat_size"
+msgstr "Tekstgrootte in de chat"
+
+msgid "ui_chat_size_small"
+msgstr "Klein"
+
+msgid "ui_chat_size_normal"
+msgstr "Normaal"
+
+msgid "ui_chat_size_large"
+msgstr "Groot"
+
+msgid "ui_chat_size_preview"
+msgstr "Hoi! Spreken we zaterdag af voor de wandeling?"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 

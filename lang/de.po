@@ -4067,6 +4067,21 @@ msgstr "Diesen Chat nur für dich löschen? Dein Verlauf wird geleert und er ver
 msgid "ui_delete_chat_done"
 msgstr "Chat gelöscht"
 
+msgid "ui_chat_size"
+msgstr "Schriftgröße im Chat"
+
+msgid "ui_chat_size_small"
+msgstr "Klein"
+
+msgid "ui_chat_size_normal"
+msgstr "Normal"
+
+msgid "ui_chat_size_large"
+msgstr "Groß"
+
+msgid "ui_chat_size_preview"
+msgstr "Hallo! Treffen wir uns am Samstag zur Wanderung?"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 

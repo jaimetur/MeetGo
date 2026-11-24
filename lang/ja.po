@@ -3206,6 +3206,21 @@ msgstr "このチャットを自分だけ削除しますか?履歴が消え、�
 msgid "ui_delete_chat_done"
 msgstr "チャットを削除しました"
 
+msgid "ui_chat_size"
+msgstr "チャットの文字サイズ"
+
+msgid "ui_chat_size_small"
+msgstr "小"
+
+msgid "ui_chat_size_normal"
+msgstr "標準"
+
+msgid "ui_chat_size_large"
+msgstr "大"
+
+msgid "ui_chat_size_preview"
+msgstr "こんにちは!土曜日にハイキングしませんか?"
+
 msgid "ui_sec_communities"
 msgstr "コミュニティ"
 

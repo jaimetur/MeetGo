@@ -7,7 +7,7 @@ import { chatPath, communityPath, navigate, queryParam, useRoute } from "../rout
 import { loadBlocks, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
-import { THEMES, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
+import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
 import { Avatar, Icon, convTitle, countryOptions, regionLabel } from "./common";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -490,6 +490,7 @@ export function AccountPage() {
             <div className="fld themefld">{t("ui_theme")}
               <ThemePicker value={theme} onChange={changeTheme} />
             </div>
+            <ChatSizePicker />
             <label className="fld">{t("ui_language")}
               <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value)}>
                 {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
@@ -697,6 +698,33 @@ function DeleteAccount() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/** The chat's text size on this device: small (the earlier size), normal or large, with a preview. */
+function ChatSizePicker() {
+  const [size, setSize] = useState(() => document.documentElement.dataset.chatsize || "normal");
+  const pick = (v: string) => {
+    setSize(v);
+    try {
+      localStorage.setItem("chatSize", v);
+    } catch {
+      /* per-device preference */
+    }
+    applyChatSize(v);
+  };
+  const labels: Record<string, string> = { small: t("ui_chat_size_small"), normal: t("ui_chat_size_normal"), large: t("ui_chat_size_large") };
+  return (
+    <div className="fld">{t("ui_chat_size")}
+      <div className="sizepick" role="radiogroup" aria-label={t("ui_chat_size")}>
+        {CHAT_SIZES.map((k) => (
+          <button key={k} id={`chat-size-${k}`} role="radio" aria-checked={size === k} className={"sz-" + k + (size === k ? " on" : "")} onClick={() => pick(k)}>
+            <span className="aa">Aa</span><span>{labels[k]}</span>
+          </button>
+        ))}
+      </div>
+      <div className="sizeprev" data-size={size}>{t("ui_chat_size_preview")}</div>
     </div>
   );
 }

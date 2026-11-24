@@ -3206,6 +3206,21 @@ msgstr "仅为你删除此聊天?你的记录将被清空,在有人再次发言�
 msgid "ui_delete_chat_done"
 msgstr "聊天已删除"
 
+msgid "ui_chat_size"
+msgstr "聊天文字大小"
+
+msgid "ui_chat_size_small"
+msgstr "小"
+
+msgid "ui_chat_size_normal"
+msgstr "标准"
+
+msgid "ui_chat_size_large"
+msgstr "大"
+
+msgid "ui_chat_size_preview"
+msgstr "你好!周六一起去徒步吗?"
+
 msgid "ui_sec_communities"
 msgstr "社区"
 

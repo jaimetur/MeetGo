@@ -4066,6 +4066,21 @@ msgstr "Supprimer ce chat seulement pour toi ? Ton historique est vidé et il qu
 msgid "ui_delete_chat_done"
 msgstr "Chat supprimé"
 
+msgid "ui_chat_size"
+msgstr "Taille du texte du chat"
+
+msgid "ui_chat_size_small"
+msgstr "Petite"
+
+msgid "ui_chat_size_normal"
+msgstr "Normale"
+
+msgid "ui_chat_size_large"
+msgstr "Grande"
+
+msgid "ui_chat_size_preview"
+msgstr "Salut ! On se retrouve samedi pour la rando ?"
+
 msgid "ui_sec_communities"
 msgstr "Communautés"
 

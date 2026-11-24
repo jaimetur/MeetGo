@@ -3207,6 +3207,21 @@ msgstr "Delete this chat just for you? Your history is emptied and it leaves you
 msgid "ui_delete_chat_done"
 msgstr "Chat deleted"
 
+msgid "ui_chat_size"
+msgstr "Chat text size"
+
+msgid "ui_chat_size_small"
+msgstr "Small"
+
+msgid "ui_chat_size_normal"
+msgstr "Normal"
+
+msgid "ui_chat_size_large"
+msgstr "Large"
+
+msgid "ui_chat_size_preview"
+msgstr "Hi! Shall we meet on Saturday for the hike?"
+
 msgid "ui_sec_communities"
 msgstr "Communities"
 
