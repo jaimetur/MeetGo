@@ -3830,6 +3830,24 @@ msgstr "你不能屏蔽自己。"
 msgid "err_wrong_password"
 msgstr "密码不正确。"
 
+msgid "ui_members_n_one"
+msgstr "1 位成员"
+
+msgid "ui_new_messages_n_one"
+msgstr "1 条新消息"
+
+msgid "ui_replies_n_one"
+msgstr "1 条回复"
+
+msgid "ui_post_going_n_one"
+msgstr "1 人参加"
+
+msgid "ui_post_free_n_one"
+msgstr "1 个空位"
+
+msgid "ui_community_plans_n_one"
+msgstr "1 个计划"
+
 msgid "ui_community_tab_members"
 msgstr "成员"
 

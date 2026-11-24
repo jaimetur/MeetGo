@@ -42,6 +42,8 @@ All notable changes to this project will be documented in this file.
 - Communities grouped by category (going out, sports, nature and travel, music and culture, motor, other), alphabetical in each; back from a community, the list is where you left it.
 - In a chat, the message just sent (and the last one when the keyboard opens) stays fully in view.
 - The privacy policy is no longer marked as a draft and links to the account deletion page.
+- Google Play listing images in docs/play-store: icon, feature graphic (en/es) and screenshots for phone, tablet and Chromebook (en/es), taken from a demo account.
+- Counts in the singular when there is one ("1 member", "1 plan"), in every language; the tab labels fit on 360 px phones; the agenda's dates no longer capitalise every word.
 - Board of meetups, events, notices and threads: places and waiting list, sign-up open or with approval, comments for everyone, only for people going or off, a plan chat that people going join automatically, pin and close, reports to the moderation queue, and a reminder the day before.
 - Full redesign of the web and phone app: Home board with filters (today, weekend, this week, meetups, events, notices), Plans (going, organising, past, with repeat), Publish, Chats and Profile; communities with board, chat and members; three columns on the desktop. Translated into the ten languages.
 - Ten languages, translated from English: English, Spanish, Catalan, French, Italian, German, Portuguese, Dutch, Chinese and Japanese. The app, the landing page and the emails follow each person's language, the browser's language picks it the first time, and every `lang/<code>.po` added is a new language.

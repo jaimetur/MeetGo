@@ -3831,6 +3831,24 @@ msgstr "You cannot block yourself."
 msgid "err_wrong_password"
 msgstr "The password is not right."
 
+msgid "ui_members_n_one"
+msgstr "1 member"
+
+msgid "ui_new_messages_n_one"
+msgstr "1 new message"
+
+msgid "ui_replies_n_one"
+msgstr "1 reply"
+
+msgid "ui_post_going_n_one"
+msgstr "1 going"
+
+msgid "ui_post_free_n_one"
+msgstr "1 free"
+
+msgid "ui_community_plans_n_one"
+msgstr "1 plan"
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 

@@ -3831,6 +3831,24 @@ msgstr "No puedes bloquearte a ti mismo."
 msgid "err_wrong_password"
 msgstr "La contraseña no es correcta."
 
+msgid "ui_members_n_one"
+msgstr "1 miembro"
+
+msgid "ui_new_messages_n_one"
+msgstr "1 mensaje nuevo"
+
+msgid "ui_replies_n_one"
+msgstr "1 respuesta"
+
+msgid "ui_post_going_n_one"
+msgstr "1 apuntado"
+
+msgid "ui_post_free_n_one"
+msgstr "1 libre"
+
+msgid "ui_community_plans_n_one"
+msgstr "1 plan"
+
 msgid "ui_community_tab_members"
 msgstr "Miembros"
 

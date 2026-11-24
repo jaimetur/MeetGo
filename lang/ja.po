@@ -3830,6 +3830,24 @@ msgstr "自分をブロックすることはできません。"
 msgid "err_wrong_password"
 msgstr "パスワードが正しくありません。"
 
+msgid "ui_members_n_one"
+msgstr "メンバー1人"
+
+msgid "ui_new_messages_n_one"
+msgstr "新着メッセージ 1 件"
+
+msgid "ui_replies_n_one"
+msgstr "返信 1 件"
+
+msgid "ui_post_going_n_one"
+msgstr "参加 1 人"
+
+msgid "ui_post_free_n_one"
+msgstr "空き 1"
+
+msgid "ui_community_plans_n_one"
+msgstr "プラン 1 件"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

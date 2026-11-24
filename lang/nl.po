@@ -3830,6 +3830,24 @@ msgstr "Je kunt jezelf niet blokkeren."
 msgid "err_wrong_password"
 msgstr "Het wachtwoord klopt niet."
 
+msgid "ui_members_n_one"
+msgstr "1 lid"
+
+msgid "ui_new_messages_n_one"
+msgstr "1 nieuw bericht"
+
+msgid "ui_replies_n_one"
+msgstr "1 reactie"
+
+msgid "ui_post_going_n_one"
+msgstr "1 gaat"
+
+msgid "ui_post_free_n_one"
+msgstr "1 vrij"
+
+msgid "ui_community_plans_n_one"
+msgstr "1 plan"
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

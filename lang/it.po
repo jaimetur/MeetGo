@@ -3830,6 +3830,24 @@ msgstr "Non puoi bloccare te stesso."
 msgid "err_wrong_password"
 msgstr "La password non è corretta."
 
+msgid "ui_members_n_one"
+msgstr "1 membro"
+
+msgid "ui_new_messages_n_one"
+msgstr "1 nuovo messaggio"
+
+msgid "ui_replies_n_one"
+msgstr "1 risposta"
+
+msgid "ui_post_going_n_one"
+msgstr "1 iscritto"
+
+msgid "ui_post_free_n_one"
+msgstr "1 libero"
+
+msgid "ui_community_plans_n_one"
+msgstr "1 piano"
+
 msgid "ui_community_tab_members"
 msgstr "Membri"
 

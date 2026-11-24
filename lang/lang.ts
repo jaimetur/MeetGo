@@ -108,7 +108,9 @@ export function t(key: string, vars?: Record<string, string | number>) {
 /** The text of `key` in `lang` (the landing page keeps its own language choice). */
 export function translate(lang: Lang, key: string, vars?: Record<string, string | number>) {
   const dict = DICTS[lang] || DICTS.en;
-  let s = dict[key] || DICTS.en[key] || key;
+  // "1 member", not "1 members": a count of one uses <key>_one when the language has it.
+  const one = vars && Number(vars.n) === 1 ? dict[`${key}_one`] : undefined;
+  let s = one || dict[key] || DICTS.en[key] || key;
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.replaceAll(`{${k}}`, String(v));
