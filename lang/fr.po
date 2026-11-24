@@ -3325,6 +3325,15 @@ msgstr "Tableau"
 msgid "ui_community_tab_chat"
 msgstr "Chat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Agenda"
+
+msgid "ui_agenda_empty_title"
+msgstr "Aucun plan à venir"
+
+msgid "ui_agenda_empty_body"
+msgstr "Les sorties et événements de cette communauté s'afficheront ici, jour par jour."
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

@@ -3326,6 +3326,15 @@ msgstr "Pinnwand"
 msgid "ui_community_tab_chat"
 msgstr "Chat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Termine"
+
+msgid "ui_agenda_empty_title"
+msgstr "Keine Pläne in Sicht"
+
+msgid "ui_agenda_empty_body"
+msgstr "Hier siehst du die Treffen und Events dieser Community, Tag für Tag."
+
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"
 

@@ -3696,6 +3696,15 @@ msgstr "Tablón"
 msgid "ui_community_tab_chat"
 msgstr "Chat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Agenda"
+
+msgid "ui_agenda_empty_title"
+msgstr "No hay planes a la vista"
+
+msgid "ui_agenda_empty_body"
+msgstr "Aquí verás las quedadas y eventos de esta comunidad, día a día."
+
 msgid "ui_community_tab_members"
 msgstr "Miembros"
 

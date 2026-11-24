@@ -3695,6 +3695,15 @@ msgstr "ボード"
 msgid "ui_community_tab_chat"
 msgstr "チャット"
 
+msgid "ui_community_tab_agenda"
+msgstr "予定"
+
+msgid "ui_agenda_empty_title"
+msgstr "予定されているプランはありません"
+
+msgid "ui_agenda_empty_body"
+msgstr "このコミュニティのオフ会やイベントが日ごとにここに表示されます。"
+
 msgid "ui_community_tab_members"
 msgstr "メンバー"
 

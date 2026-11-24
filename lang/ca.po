@@ -3695,6 +3695,15 @@ msgstr "Tauler"
 msgid "ui_community_tab_chat"
 msgstr "Xat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Agenda"
+
+msgid "ui_agenda_empty_title"
+msgstr "No hi ha plans a la vista"
+
+msgid "ui_agenda_empty_body"
+msgstr "Aquí veuràs les quedades i esdeveniments d'aquesta comunitat, dia a dia."
+
 msgid "ui_community_tab_members"
 msgstr "Membres"
 

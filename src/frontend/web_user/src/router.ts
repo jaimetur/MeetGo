@@ -8,7 +8,7 @@ export type Route =
   | { name: "publish"; community: number | null; repeat: number | null; edit: number | null }
   | { name: "post"; id: number }
   | { name: "communities" }
-  | { name: "community"; id: number; tab: "board" | "chat" | "members" }
+  | { name: "community"; id: number; tab: "board" | "chat" | "agenda" | "members" }
   | { name: "people" }
   | { name: "mentions" }
   | { name: "account" }
@@ -40,7 +40,7 @@ function parse(): Route {
   const cm = rest.match(/^\/communities\/(\d+)$/);
   if (cm) {
     const tab = q.get("tab");
-    return { name: "community", id: Number(cm[1]), tab: tab === "chat" || tab === "members" ? tab : "board" };
+    return { name: "community", id: Number(cm[1]), tab: tab === "chat" || tab === "agenda" || tab === "members" ? tab : "board" };
   }
   const num = (k: string) => (q.get(k) ? Number(q.get(k)) || null : null);
   const j = rest.match(/^\/join\/([\w-]+)$/);
@@ -86,7 +86,7 @@ export function postPath(id: number) {
   return `/p/${id}`;
 }
 
-export function communityPath(id: number, tab?: "board" | "chat" | "members") {
+export function communityPath(id: number, tab?: "board" | "chat" | "agenda" | "members") {
   return `/communities/${id}${tab && tab !== "board" ? "?tab=" + tab : ""}`;
 }
 

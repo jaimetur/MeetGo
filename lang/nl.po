@@ -3695,6 +3695,15 @@ msgstr "Prikbord"
 msgid "ui_community_tab_chat"
 msgstr "Chat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Agenda"
+
+msgid "ui_agenda_empty_title"
+msgstr "Geen plannen in zicht"
+
+msgid "ui_agenda_empty_body"
+msgstr "Hier zie je de meetups en evenementen van deze community, dag voor dag."
+
 msgid "ui_community_tab_members"
 msgstr "Leden"
 

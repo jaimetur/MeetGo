@@ -3696,6 +3696,15 @@ msgstr "Board"
 msgid "ui_community_tab_chat"
 msgstr "Chat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Agenda"
+
+msgid "ui_agenda_empty_title"
+msgstr "No plans coming up"
+
+msgid "ui_agenda_empty_body"
+msgstr "Meetups and events of this community will show here, day by day."
+
 msgid "ui_community_tab_members"
 msgstr "Members"
 

@@ -3695,6 +3695,15 @@ msgstr "Bacheca"
 msgid "ui_community_tab_chat"
 msgstr "Chat"
 
+msgid "ui_community_tab_agenda"
+msgstr "Agenda"
+
+msgid "ui_agenda_empty_title"
+msgstr "Nessun piano in arrivo"
+
+msgid "ui_agenda_empty_body"
+msgstr "Qui vedrai gli incontri e gli eventi di questa community, giorno per giorno."
+
 msgid "ui_community_tab_members"
 msgstr "Membri"
 

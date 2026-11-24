@@ -5,11 +5,10 @@ import { api, fileUrl } from "../api";
 import { coverGradient } from "../board";
 import { chatPath, communityPath, goBack, navigate } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
-import type { AccessMode, BoardMode, Community, CommunityMember, UserSummary } from "../types";
-import { ChatView } from "./Chat";
+import type { AccessMode, BoardMode, Community, CommunityMember, Post, UserSummary } from "../types";
 import { Avatar, Icon, Modal, hobbyIcon } from "./common";
 import { RichEditor, RichText } from "./RichText";
-import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostList, STAFF_ROLES, Seg, usePostFeed } from "./Board";
+import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, usePostFeed } from "./Board";
 
 const ACCESS_KEYS: Record<AccessMode, string> = { open: "ui_community_access_open", request: "ui_community_access_request", invite: "ui_community_access_invite" };
 const ROLE_KEYS: Record<string, string> = { owner: "ui_role_owner", admin: "ui_role_admin", moderator: "ui_role_moderator", member: "ui_role_member" };
@@ -212,8 +211,9 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
 }
 
 // ---------- a community ----------
-export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" | "members" }) {
+export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" | "agenda" | "members" }) {
   const [c, setC] = useState<Community | null>(null);
+  const unread = useStore((s) => (c ? s.conversations[c.conversation_id]?.unread_count ?? 0 : 0));
   const [error, setError] = useState<string | null>(null);
   const [leave, setLeave] = useState(false);
   const [settings, setSettings] = useState(false);
@@ -236,7 +236,10 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
   const globalAdmin = getState().me?.role === "admin";
   const staff = globalAdmin || (!!c.role && STAFF_ROLES.includes(c.role));
   const manager = globalAdmin || c.role === "owner" || c.role === "admin";
-  const tabs: ["board" | "chat" | "members", string][] = [["board", t("ui_community_tab_board")], ["chat", t("ui_community_tab_chat")], ["members", t("ui_community_tab_members")]];
+  // Board, the community's agenda of plans, and its people; the chat is the real conversation, one button away.
+  const tabs: ["board" | "agenda" | "members", string][] = [["board", t("ui_community_tab_board")], ["agenda", t("ui_community_tab_agenda")], ["members", t("ui_community_tab_members")]];
+  const openChat = () => navigate(chatPath(c.conversation_id));
+  const chatButton = <button className="btn go cchatbtn" onClick={openChat}><Icon name="chat" size="sm" />{t("ui_community_tab_chat")}{unread ? <span className="bdg">{unread > 99 ? "99+" : unread}</span> : null}</button>;
 
   async function doLeave() {
     try {
@@ -251,27 +254,15 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
   }
 
   return (
-    <main className={"screen community" + (tab === "chat" && c.joined ? " withchat" : "")}>
+    <main className="screen community">
       <div className="chero" style={{ background: coverGradient("c" + c.id, 120) }}>
-        <span className="chero-art" aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /><Icon name={hobbyIcon(c.slug, c.title)} /><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+        <HeroArt c={c} />
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
           <span className="grow" />
           {manager ? <button className="iconbtn glass" onClick={() => setSettings(true)} aria-label={t("ui_community_settings")} title={t("ui_community_settings")}><Icon name="sliders" /></button> : null}
           {c.joined ? <button className="iconbtn glass" onClick={() => setLeave(true)} aria-label={t("ui_community_leave")} title={t("ui_community_leave")}><Icon name="door" /></button> : null}
         </div>
-      </div>
-      {/* phones, in the chat: one slim bar instead of the cover and the big header, so the messages get the room */}
-      <div className="cchatbar">
-        <button className="iconbtn" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
-        <CommunityBadge c={c} size={34} />
-        <div className="grow" style={{ minWidth: 0 }}>
-          <div className="cchatbar-title">{c.title}</div>
-          <div className="muted cchatbar-meta">{t("ui_members_n", { n: c.member_count })}{c.online_count ? <> · <span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</> : null}</div>
-        </div>
-        {c.rules ? <button className="iconbtn" onClick={() => setRules(true)} aria-label={t("ui_community_rules")} title={t("ui_community_rules")}><Icon name="shield" /></button> : null}
-        <button className="iconbtn" onClick={() => navigate(chatPath(c.conversation_id))} aria-label={t("ui_community_chat_full")} title={t("ui_community_chat_full")}><Icon name="chat" /></button>
-        {manager ? <button className="iconbtn" onClick={() => setSettings(true)} aria-label={t("ui_community_settings")} title={t("ui_community_settings")}><Icon name="sliders" /></button> : null}
       </div>
       <div className="swrap chead2">
         <div className="row chead2-main" style={{ alignItems: "flex-end", gap: 14 }}>
@@ -283,7 +274,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
               {c.online_count ? <> · <span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</> : null}
             </div>
           </div>
-          <span className="deskonly"><JoinButton c={c} onChange={setC} big /></span>
+          <span className="deskonly">{c.joined ? chatButton : <JoinButton c={c} onChange={setC} big />}</span>
         </div>
         {c.description ? <p className="cdescfull">{c.description}</p> : null}
         <div className="row chead2-tags" style={{ flexWrap: "wrap" }}>
@@ -292,7 +283,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           {c.role ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role] || "ui_role_member")}</span> : null}
           {c.rules ? <button className="ktag link" onClick={() => setRules(true)}><Icon name="shield" size="sm" />{t("ui_community_rules")}</button> : null}
           <span className="grow" />
-          {!c.joined ? <span className="phoneonly"><JoinButton c={c} onChange={setC} big /></span> : null}
+          <span className="phoneonly">{c.joined ? chatButton : <JoinButton c={c} onChange={setC} big />}</span>
         </div>
         {c.ban_until ? <div className="bannedbar"><Icon name="shield" size="sm" />{t("ui_you_are_banned", { until: fmtUntil(c.ban_until) })}</div> : null}
         <div className="segtabs ctabs" role="tablist">
@@ -303,6 +294,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
       </div>
 
       {tab === "board" ? <CommunityBoard c={c} staff={staff} /> : null}
+      {tab === "agenda" ? <Agenda c={c} /> : null}
       {tab === "chat" ? <CommunityChat c={c} onJoined={setC} /> : null}
       {tab === "members" ? <Members c={c} onChange={load} /> : null}
 
@@ -342,38 +334,88 @@ function CommunityBoard({ c, staff }: { c: Community; staff: boolean }) {
   );
 }
 
+/** An old link to a community's chat: members go to the conversation itself; others are asked to join first. */
 function CommunityChat({ c, onJoined }: { c: Community; onJoined: (c: Community) => void }) {
-  const known = useStore((s) => !!s.conversations[c.conversation_id]);
   const [busy, setBusy] = useState(false);
-  // The chat room counts as open (no unread badge) while it is on screen.
   useEffect(() => {
-    if (!c.joined) return;
-    setState({ activeConversation: c.conversation_id });
-    return () => {
-      if (getState().activeConversation === c.conversation_id) setState({ activeConversation: null });
-    };
+    if (c.joined) navigate(chatPath(c.conversation_id), true);
   }, [c.joined, c.conversation_id]);
-  useEffect(() => {
-    if (c.joined && !known) loadConversations().catch(() => undefined);
-  }, [c.joined, known]);
+  if (c.joined) return null;
+  return (
+    <div className="swrap">
+      <EmptyState icon="chat" title={t("ui_community_chat_join_title")} body={t("ui_community_chat_join_body")}
+        action={c.access_mode === "open" ? t("ui_join") : c.access_mode === "request" && !c.request_pending ? t("ui_community_ask_join") : undefined}
+        onAction={async () => {
+          if (busy) return;
+          setBusy(true);
+          const next = await joinCommunity(c);
+          setBusy(false);
+          if (next) onJoined(next);
+        }} />
+    </div>
+  );
+}
 
-  if (!c.joined) {
+/** The community's agenda: its coming meetups and events, day by day. */
+function Agenda({ c }: { c: Community }) {
+  const [posts, setPosts] = useState<Post[] | null>(null);
+  useEffect(() => {
+    setPosts(null);
+    api.communityPosts(c.id, { when: "upcoming", limit: 50 }).then((r) => setPosts(r.posts.filter((p) => p.starts_at))).catch(() => setPosts([]));
+  }, [c.id]);
+  if (posts === null) return <div className="swrap"><div className="muted">{t("ui_loading")}</div></div>;
+  if (!posts.length) {
     return (
       <div className="swrap">
-        <EmptyState icon="chat" title={t("ui_community_chat_join_title")} body={t("ui_community_chat_join_body")}
-          action={c.access_mode === "open" ? t("ui_join") : c.access_mode === "request" && !c.request_pending ? t("ui_community_ask_join") : undefined}
-          onAction={async () => {
-            if (busy) return;
-            setBusy(true);
-            const next = await joinCommunity(c);
-            setBusy(false);
-            if (next) onJoined(next);
-          }} />
+        <EmptyState icon="calendar" title={t("ui_agenda_empty_title")} body={t("ui_agenda_empty_body")}
+          action={c.joined ? t("ui_board_publish_plan") : undefined} onAction={() => navigate(`/publish?community=${c.id}`)} />
       </div>
     );
   }
-  if (!known) return <div className="swrap"><div className="muted">{t("ui_loading")}</div></div>;
-  return <div className="embedchat"><ChatView key={c.conversation_id} conversationId={c.conversation_id} around={null} embedded /></div>;
+  const days: { key: string; label: string; items: Post[] }[] = [];
+  for (const p of posts) {
+    const d = new Date(p.starts_at!);
+    const key = d.toDateString();
+    let day = days.find((x) => x.key === key);
+    if (!day) {
+      day = { key, label: d.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" }), items: [] };
+      days.push(day);
+    }
+    day.items.push(p);
+  }
+  return (
+    <div className="swrap agenda">
+      {days.map((day) => (
+        <section key={day.key} className="agenda-day">
+          <h3 className="agenda-date">{day.label}</h3>
+          <div className="stack" style={{ gap: 10 }}>
+            {day.items.map((p) => <PostCard key={p.id} post={p} showCommunity={false} />)}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+/** The cover: the hobby's icon scattered over the community's colours, with soft light. Always the same per community. */
+function HeroArt({ c }: { c: Community }) {
+  const icon = hobbyIcon(c.slug, c.title);
+  let seed = c.id * 9301 + 49297;
+  const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  const marks = Array.from({ length: 26 }, (_, i) => {
+    const col = i % 13;
+    const row = Math.floor(i / 13);
+    return { left: col * 7.8 + rnd() * 4 - 1, top: row * 50 + rnd() * 30 - 6, size: 26 + rnd() * 40, rot: rnd() * 50 - 25, op: 0.1 + rnd() * 0.22 };
+  });
+  return (
+    <span className="chero-art" aria-hidden="true">
+      {marks.map((m, i) => (
+        <span key={i} className="chero-mark" style={{ left: `${m.left}%`, top: `${m.top}%`, width: m.size, height: m.size, transform: `rotate(${m.rot}deg)`, opacity: m.op }}>
+          <Icon name={icon} />
+        </span>
+      ))}
+    </span>
+  );
 }
 
 /** "Mon 24, 18:30" in the person's language, for the end of a ban. */
