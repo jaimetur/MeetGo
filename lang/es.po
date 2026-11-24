@@ -1097,6 +1097,9 @@ msgstr "Te han baneado de una comunidad"
 msgid "email_banned_forever_body"
 msgstr "Has vuelto a incumplir las normas de la comunidad ({rule}) y te han baneado definitivamente. Solo un admin de la comunidad puede quitar el baneo."
 
+msgid "err_avatar_not_image"
+msgstr "Ese archivo no es una foto que podamos leer (usa JPG, PNG o WebP)."
+
 msgid "err_banned_here"
 msgstr "No puedes escribir en esta conversación"
 
@@ -3755,6 +3758,12 @@ msgstr "Claros"
 
 msgid "ui_theme_dark_group"
 msgstr "Oscuros"
+
+msgid "ui_avatar_change"
+msgstr "Cambiar foto"
+
+msgid "ui_avatar_remove"
+msgstr "Quitar foto"
 
 msgid "ui_community_tab_members"
 msgstr "Miembros"

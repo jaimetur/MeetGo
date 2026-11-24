@@ -16,7 +16,7 @@ from app.board import routes as board
 from app.communities import routes as communities
 from app.conversations import routes as conversations
 from app.push import routes as devices
-from app.accounts import routes as me
+from app.accounts import avatar, routes as me
 from app.messaging import routes as messages
 from app.public import routes as public
 from app.realtime import routes as realtime
@@ -48,7 +48,7 @@ async def i18n_middleware(request: Request, call_next):
     return await call_next(request)
 
 
-for module in (public, auth, me, conversations, messages, realtime, devices, social, billing, admin, communities, board):
+for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, billing, admin, communities, board):
     app.include_router(module.router)
 
 

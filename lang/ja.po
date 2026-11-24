@@ -1097,6 +1097,9 @@ msgstr "コミュニティから永久BANされました"
 msgid "email_banned_forever_body"
 msgstr "コミュニティのルール（{rule}）に再度違反したため、永久BANされました。BANを解除できるのはコミュニティの管理者だけです。"
 
+msgid "err_avatar_not_image"
+msgstr "読み込める写真ではありません（JPG、PNG、WebP を使ってください）。"
+
 msgid "err_banned_here"
 msgstr "この会話には書き込めません"
 
@@ -3754,6 +3757,12 @@ msgstr "ライト"
 
 msgid "ui_theme_dark_group"
 msgstr "ダーク"
+
+msgid "ui_avatar_change"
+msgstr "写真を変更"
+
+msgid "ui_avatar_remove"
+msgstr "写真を削除"
 
 msgid "ui_community_tab_members"
 msgstr "メンバー"

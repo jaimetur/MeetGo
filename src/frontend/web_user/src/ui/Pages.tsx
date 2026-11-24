@@ -223,7 +223,7 @@ export function AccountPage() {
   const subscriptions = useStore((s) => s.subscriptions);
   // Plans only show while subscriptions are on, or for someone who already pays.
   const showPlans = subscriptions || !!billing?.stripe || !!billing?.play;
-  const [form, setForm] = useState({ display_name: me.display_name, bio: me.bio || "", accept_dm: me.accept_dm, avatar_url: me.avatar_url || "" });
+  const [form, setForm] = useState({ display_name: me.display_name, bio: me.bio || "", accept_dm: me.accept_dm });
   // Zone: province (any time) and date of birth (once); together they decide your channels.
   const [zone, setZone] = useState({ country: me.country || "ES", province: me.province, dob: me.dob });
   const [geo, setGeo] = useState<any>(null);
@@ -390,9 +390,9 @@ export function AccountPage() {
         <div className="stack" style={{ gap: 14 }}>
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_section_about")}</h3>
+            <AvatarPicker />
             <label className="fld">{t("ui_display_name")}<input id="acc-name" className="inp" maxLength={64} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} /></label>
             <label className="fld">{t("ui_bio")}<textarea id="acc-bio" className="inp" rows={3} maxLength={500} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></label>
-            <label className="fld">{t("ui_avatar_url")}<input id="acc-avatar" className="inp" value={form.avatar_url} onChange={(e) => setForm({ ...form, avatar_url: e.target.value })} placeholder="https://…" /></label>
           </div>
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_section_zone")}</h3>
@@ -571,6 +571,42 @@ function ThemePicker({ value, onChange }: { value: string; onChange: (v: string)
       {ids.filter((id) => !THEMES[id].dark).map(swatch)}
       <div className="themegroup">{t("ui_theme_dark_group")}</div>
       {ids.filter((id) => THEMES[id].dark).map(swatch)}
+    </div>
+  );
+}
+
+/** My photo: choose one (camera or gallery on a phone), or remove it; the server crops it square. */
+function AvatarPicker() {
+  const me = useStore((s) => s.me);
+  const input = React.useRef<HTMLInputElement>(null);
+  const [busy, setBusy] = useState(false);
+  if (!me) return null;
+  async function run(fn: () => Promise<any>) {
+    setBusy(true);
+    try {
+      setState({ me: await fn() });
+      toast(t("ui_saved"));
+    } catch (e: any) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="avpick">
+      <button type="button" className="avpick-photo" onClick={() => input.current?.click()} aria-label={t("ui_avatar_change")} disabled={busy}>
+        <Avatar user={me} size={88} />
+        <span className="avpick-cam"><Icon name="camera" size="sm" /></span>
+      </button>
+      <div className="stack" style={{ gap: 6 }}>
+        <button type="button" className="btn sm pri" disabled={busy} onClick={() => input.current?.click()}>{busy ? t("ui_uploading") : t("ui_avatar_change")}</button>
+        {me.avatar_url ? <button type="button" className="btn sm" disabled={busy} onClick={() => run(() => api.deleteAvatar())}>{t("ui_avatar_remove")}</button> : null}
+      </div>
+      <input ref={input} type="file" accept="image/*" hidden onChange={(e) => {
+        const f = e.target.files?.[0];
+        e.target.value = "";
+        if (f) run(() => api.uploadAvatar(f));
+      }} />
     </div>
   );
 }

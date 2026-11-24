@@ -1097,6 +1097,9 @@ msgstr "你已被社区封禁"
 msgid "email_banned_forever_body"
 msgstr "你再次违反了社区规则（{rule}），已被永久封禁。只有社区管理员可以解除封禁。"
 
+msgid "err_avatar_not_image"
+msgstr "无法读取该照片（请使用 JPG、PNG 或 WebP）。"
+
 msgid "err_banned_here"
 msgstr "你不能在此会话中发言"
 
@@ -3754,6 +3757,12 @@ msgstr "浅色"
 
 msgid "ui_theme_dark_group"
 msgstr "深色"
+
+msgid "ui_avatar_change"
+msgstr "更换照片"
+
+msgid "ui_avatar_remove"
+msgstr "移除照片"
 
 msgid "ui_community_tab_members"
 msgstr "成员"

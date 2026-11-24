@@ -1097,6 +1097,9 @@ msgstr "You have been banned from a community"
 msgid "email_banned_forever_body"
 msgstr "You broke the community rules again ({rule}) and you have been banned for good. Only an admin of the community can lift it."
 
+msgid "err_avatar_not_image"
+msgstr "That file is not a photo we can read (use JPG, PNG or WebP)."
+
 msgid "err_banned_here"
 msgstr "You can't write in this conversation"
 
@@ -3755,6 +3758,12 @@ msgstr "Light"
 
 msgid "ui_theme_dark_group"
 msgstr "Dark"
+
+msgid "ui_avatar_change"
+msgstr "Change photo"
+
+msgid "ui_avatar_remove"
+msgstr "Remove photo"
 
 msgid "ui_community_tab_members"
 msgstr "Members"

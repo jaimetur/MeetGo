@@ -1097,6 +1097,9 @@ msgstr "Du wurdest aus einer Community gesperrt"
 msgid "email_banned_forever_body"
 msgstr "Du hast erneut gegen die Regeln der Community verstoßen ({rule}) und wurdest dauerhaft gesperrt. Nur ein Admin der Community kann die Sperre aufheben."
 
+msgid "err_avatar_not_image"
+msgstr "Diese Datei ist kein lesbares Foto (nutze JPG, PNG oder WebP)."
+
 msgid "err_banned_here"
 msgstr "Du kannst in dieser Unterhaltung nicht schreiben"
 
@@ -3385,6 +3388,12 @@ msgstr "Hell"
 
 msgid "ui_theme_dark_group"
 msgstr "Dunkel"
+
+msgid "ui_avatar_change"
+msgstr "Foto ändern"
+
+msgid "ui_avatar_remove"
+msgstr "Foto entfernen"
 
 msgid "ui_community_tab_members"
 msgstr "Mitglieder"

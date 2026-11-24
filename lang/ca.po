@@ -1097,6 +1097,9 @@ msgstr "T'han bandejat d'una comunitat"
 msgid "email_banned_forever_body"
 msgstr "Has tornat a incomplir les normes de la comunitat ({rule}) i t'han bandejat definitivament. Només un admin de la comunitat pot treure el bandeig."
 
+msgid "err_avatar_not_image"
+msgstr "Aquest fitxer no és una foto que puguem llegir (fes servir JPG, PNG o WebP)."
+
 msgid "err_banned_here"
 msgstr "No pots escriure en aquesta conversa"
 
@@ -3754,6 +3757,12 @@ msgstr "Clars"
 
 msgid "ui_theme_dark_group"
 msgstr "Foscos"
+
+msgid "ui_avatar_change"
+msgstr "Canvia la foto"
+
+msgid "ui_avatar_remove"
+msgstr "Treu la foto"
 
 msgid "ui_community_tab_members"
 msgstr "Membres"

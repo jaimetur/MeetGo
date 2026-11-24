@@ -1097,6 +1097,9 @@ msgstr "Je bent geblokkeerd in een community"
 msgid "email_banned_forever_body"
 msgstr "Je hebt de regels van de community opnieuw overtreden ({rule}) en bent definitief geblokkeerd. Alleen een admin van de community kan de blokkade opheffen."
 
+msgid "err_avatar_not_image"
+msgstr "Dat bestand is geen leesbare foto (gebruik JPG, PNG of WebP)."
+
 msgid "err_banned_here"
 msgstr "Je kunt niet schrijven in dit gesprek"
 
@@ -3754,6 +3757,12 @@ msgstr "Licht"
 
 msgid "ui_theme_dark_group"
 msgstr "Donker"
+
+msgid "ui_avatar_change"
+msgstr "Foto wijzigen"
+
+msgid "ui_avatar_remove"
+msgstr "Foto verwijderen"
 
 msgid "ui_community_tab_members"
 msgstr "Leden"

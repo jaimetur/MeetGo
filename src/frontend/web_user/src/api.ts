@@ -183,6 +183,13 @@ export const api = {
     form.append("file", file, name || (file as File).name || "fichero");
     return req<any>("/uploads", { method: "POST", body: form });
   },
+  // my photo: cropped square by the server, at a fixed address
+  uploadAvatar: (file: File) => {
+    const form = new FormData();
+    form.append("file", file, file.name || "avatar.jpg");
+    return req<Me>("/me/avatar", { method: "POST", body: form });
+  },
+  deleteAvatar: () => req<Me>("/me/avatar", { method: "DELETE" }),
   ticket: () => req<{ ticket: string }>("/realtime/ticket", { method: "POST" }),
 
   // social

@@ -1097,6 +1097,9 @@ msgstr "Sei stato bannato da una community"
 msgid "email_banned_forever_body"
 msgstr "Hai violato di nuovo le regole della community ({rule}) e sei stato bannato definitivamente. Solo un admin della community può togliere il ban."
 
+msgid "err_avatar_not_image"
+msgstr "Questo file non è una foto leggibile (usa JPG, PNG o WebP)."
+
 msgid "err_banned_here"
 msgstr "Non puoi scrivere in questa conversazione"
 
@@ -3754,6 +3757,12 @@ msgstr "Chiari"
 
 msgid "ui_theme_dark_group"
 msgstr "Scuri"
+
+msgid "ui_avatar_change"
+msgstr "Cambia foto"
+
+msgid "ui_avatar_remove"
+msgstr "Rimuovi foto"
 
 msgid "ui_community_tab_members"
 msgstr "Membri"
