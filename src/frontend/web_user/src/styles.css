@@ -1075,3 +1075,6 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .ptitle .zonetag { max-width: 100%; padding: 1px 8px 1px 6px; gap: 3px; font-size: 11.5px; line-height: 1.5; }
 .ptitle .zonetag .ic { width: 12px; height: 12px; }
 .phonetop .appicon, .phonetop .iconbtn, .phonetop .avmenu-wrap { flex: none; }
+
+/* phones: the chats list has the same top bar as the other screens (its big title is for computers) */
+@media (max-width: 820px) { .list .lhead .titlerow { display: none; } }

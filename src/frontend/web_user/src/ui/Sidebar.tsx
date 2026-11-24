@@ -6,9 +6,9 @@ import { chatPath, navigate } from "../router";
 import { loadConversations, sortedConversations, toast, useStore } from "../store";
 import type { Conversation, Message, UserSummary } from "../types";
 import { shortWhen } from "../util";
-import { AvatarMenu } from "./Board";
+import { PhoneTop } from "./Board";
 import { ConvMenuItems } from "./Chat";
-import { Avatar, ConvIcon, Icon, Modal, Wordmark, convTitle } from "./common";
+import { Avatar, ConvIcon, Icon, Modal, convTitle } from "./common";
 
 type Filter = "all" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
 
@@ -54,13 +54,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
 
   return (
     <aside className="list" aria-label={t("ui_nav_chats")}>
+      <PhoneTop title={t("ui_nav_chats")} />
       <div className="lhead">
-        <div className="brandbar">
-          <img className="appicon" src="/apple-touch-icon.png" alt="" />
-          <Wordmark size={26} />
-          <span className="grow" />
-          <span className="phoneonly"><AvatarMenu /></span>
-        </div>
         <div className="row titlerow">
           <div className="ltitle grow">{t("ui_nav_chats")}</div>
           <button className="iconbtn compose" title={t("ui_new_chat")} aria-label={t("ui_new_chat")} onClick={() => setNewChat(true)}><Icon name="edit" /></button>
