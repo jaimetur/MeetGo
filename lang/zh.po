@@ -4181,6 +4181,9 @@ msgstr "计划（{n}）"
 msgid "ui_sub_events"
 msgstr "活动（{n}）"
 
+msgid "ui_publish_plan_type"
+msgstr "类型"
+
 msgid "ui_sec_plans"
 msgstr "计划聊天"
 

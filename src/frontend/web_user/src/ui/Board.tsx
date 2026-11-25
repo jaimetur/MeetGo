@@ -341,14 +341,14 @@ export function PostList({ feed, showCommunity = true, empty }: { feed: ReturnTy
 }
 
 // ---------- feed filters ----------
-export type FilterKey = "all" | "today" | "weekend" | "week" | "meetup" | "event" | "notice";
+export type FilterKey = "all" | "today" | "weekend" | "week" | "plan" | "notice";
 export const FILTERS: [FilterKey, string, FeedFilter][] = [
   ["all", "ui_board_f_all", {}],
   ["today", "ui_board_f_today", { when: "today" }],
   ["weekend", "ui_board_f_weekend", { when: "weekend" }],
   ["week", "ui_board_f_week", { when: "week" }],
-  ["meetup", "ui_board_f_meetups", { kind: "meetup" }],
-  ["event", "ui_board_f_events", { kind: "event" }],
+  // plans and events together: one kind of post with a type
+  ["plan", "ui_board_f_meetups", { kind: "plan" }],
   ["notice", "ui_board_f_notices", { kind: "notice" }],
 ];
 
@@ -1187,7 +1187,9 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
     }
   }
 
-  const kinds: [PostKind, string][] = [["meetup", t("ui_post_kind_meetup")], ["event", t("ui_post_kind_event")], ["notice", t("ui_post_kind_notice")], ["thread", t("ui_post_kind_thread")]];
+  // one tab for plans and events (an event is a plan with an end time and a tickets link), chosen with its type below
+  const tab: PostKind = form.kind === "event" ? "meetup" : form.kind;
+  const kinds: [PostKind, string][] = [["meetup", t("ui_post_kind_meetup")], ["notice", t("ui_post_kind_notice")], ["thread", t("ui_post_kind_thread")]];
   const commentOptions: ["all" | "attendees" | "off", string][] = dated
     ? [["all", t("ui_publish_comments_all")], ["attendees", t("ui_publish_comments_attendees")], ["off", t("ui_publish_comments_off")]]
     : [["all", t("ui_publish_comments_all")], ["off", t("ui_publish_comments_off")]];
@@ -1214,7 +1216,12 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
       <div className="swrap pform">
         {loading ? <Skeletons n={1} /> : (
           <>
-            {!edit ? <Seg label={t("ui_publish_kind")} value={form.kind} options={kinds} onChange={(kind) => set({ kind })} /> : null}
+            {!edit ? <Seg label={t("ui_publish_kind")} value={tab} options={kinds} onChange={(kind) => set({ kind })} /> : null}
+            {dated ? (
+              <div className="fld"><span>{t("ui_publish_plan_type")}</span>
+                <Seg label={t("ui_publish_plan_type")} value={form.kind} options={[["meetup", t("ui_post_kind_meetup")], ["event", t("ui_post_kind_event")]]} onChange={(kind) => set({ kind })} />
+              </div>
+            ) : null}
             <p className="muted hint">{kindHint[form.kind]}</p>
 
             {!edit ? (

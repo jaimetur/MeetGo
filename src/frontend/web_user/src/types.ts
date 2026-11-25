@@ -222,4 +222,4 @@ export type Post = {
 export type PostPage = { posts: Post[]; has_more: boolean };
 export type Attendee = UserSummary & { status: AttendStatus; guests?: number; attended?: boolean | null };
 export type Comment = { id: number; post_id: number; author: UserSummary; body: string; created_at: string; can_delete: boolean };
-export type FeedFilter = { kind?: PostKind; when?: "all" | "today" | "weekend" | "week" | "upcoming" | "past"; community_id?: number; before_id?: number; limit?: number };
+export type FeedFilter = { kind?: PostKind | "plan"; when?: "all" | "today" | "weekend" | "week" | "upcoming" | "past"; community_id?: number; before_id?: number; limit?: number };

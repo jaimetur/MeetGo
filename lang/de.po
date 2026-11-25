@@ -5042,6 +5042,9 @@ msgstr "Pläne ({n})"
 msgid "ui_sub_events"
 msgstr "Events ({n})"
 
+msgid "ui_publish_plan_type"
+msgstr "Art"
+
 msgid "ui_sec_plans"
 msgstr "Plan-Chats"
 

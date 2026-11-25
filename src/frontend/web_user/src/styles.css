@@ -1681,3 +1681,4 @@ a.btn { text-decoration: none; }
 .csubtoggle:hover { background: var(--hover, rgba(127, 127, 127, 0.08)); }
 .csubtoggle .chev { font-size: 15px; line-height: 1; transition: transform .15s ease; }
 .csubtoggle .chev.open { transform: rotate(90deg); }
+.cname .cmark { margin-right: 4px; color: var(--muted); vertical-align: -2px; }

@@ -5041,6 +5041,9 @@ msgstr "Plans ({n})"
 msgid "ui_sub_events"
 msgstr "Événements ({n})"
 
+msgid "ui_publish_plan_type"
+msgstr "Type"
+
 msgid "ui_sec_plans"
 msgstr "Chats des plans"
 

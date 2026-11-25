@@ -125,10 +125,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
             {items.map((c) => {
               const isTyping = (id: number) => Object.entries(typing[id] || {}).some(([uid, v]) => +uid !== meId && v.until > Date.now() && !v.thread);
               const kids = c.kind === "channel" && !c.pinned ? childrenOf(c.id) : [];
-              const groups: [string, string, string, Conversation[]][] = [
-                ["meetup", "calendar", "ui_sub_plans", kids.filter((k) => kindOfChat.get(k.id) !== "event")],
-                ["event", "ticket", "ui_sub_events", kids.filter((k) => kindOfChat.get(k.id) === "event")],
-              ];
+              // plans and events together, each with its own mark
+              const groups: [string, string, string, Conversation[]][] = [["meetup", "calendar", "ui_sub_plans", kids]];
               return (
                 <React.Fragment key={c.id}>
                   <ConvRow c={c} active={c.id === activeId} typing={isTyping(c.id)} />
@@ -144,7 +142,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
                           {!open && unread ? <span className="bdg">{unread > 99 ? "99+" : unread}</span> : null}
                           <span className={"chev" + (open ? " open" : "")} aria-hidden="true">›</span>
                         </button>
-                        {open ? list.map((k) => <ConvRow key={k.id} c={k} active={k.id === activeId} typing={isTyping(k.id)} />) : null}
+                        {open ? list.map((k) => <ConvRow key={k.id} c={k} active={k.id === activeId} typing={isTyping(k.id)} mark={kindOfChat.get(k.id) === "event" ? "ticket" : "calendar"} />) : null}
                       </div>
                     );
                   })}
@@ -176,7 +174,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
   );
 }
 
-function ConvRow({ c, active, typing }: { c: Conversation; active: boolean; typing: boolean }) {
+function ConvRow({ c, active, typing, mark }: { c: Conversation; active: boolean; typing: boolean; mark?: string }) {
   const muted = c.notify === "none" || (c.muted_until && new Date(c.muted_until) > new Date());
   const last = c.last_message;
   let preview = "";
@@ -191,7 +189,7 @@ function ConvRow({ c, active, typing }: { c: Conversation; active: boolean; typi
       onContextMenu={(e) => { e.preventDefault(); setMenuAt({ x: e.clientX, y: e.clientY }); }}>
       <ConvIcon conv={c} />
       <div style={{ minWidth: 0 }}>
-        <div className="cname">{convTitle(c)}{muted ? <Icon name="belloff" size="sm" /> : null}{c.pinned ? <Icon name="pin" size="sm" /> : null}</div>
+        <div className="cname">{mark ? <Icon name={mark} size="sm" className="cmark" /> : null}{convTitle(c)}{muted ? <Icon name="belloff" size="sm" /> : null}{c.pinned ? <Icon name="pin" size="sm" /> : null}</div>
         <div className="cprev">{typing ? <span className="typ">{t("ui_typing_short")}</span> : preview || <span>{c.kind === "channel" ? "" : c.subtitle || ""}</span>}</div>
       </div>
       <div className="cmeta">

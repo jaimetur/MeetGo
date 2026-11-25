@@ -243,11 +243,13 @@ async def feed(db: AsyncSession, user: User, community_ids, *, kind: str | None 
     limit = max(1, min(limit, 50))
     if when not in WHENS:
         raise HTTPException(400, t("err_invalid_filter"))
-    if kind and kind not in KINDS:
+    if kind and kind not in KINDS and kind != "plan":
         raise HTTPException(400, t("err_invalid_filter"))
     now = utcnow()
     q = select(BoardPost).where(BoardPost.deleted_at.is_(None), BoardPost.conversation_id.in_(community_ids))
-    if kind:
+    if kind == "plan":  # plans and events together (they differ only in their end time and tickets link)
+        q = q.where(BoardPost.kind.in_(PLAN_KINDS))
+    elif kind:
         q = q.where(BoardPost.kind == kind)
     cursor = await db.get(BoardPost, before_id) if before_id else None
 
