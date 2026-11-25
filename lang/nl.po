@@ -1637,6 +1637,72 @@ msgstr "Vul je voornaam in"
 msgid "err_last_name"
 msgstr "Vul je achternaam in"
 
+msgid "ui_age_no_limit"
+msgstr "Geen grens"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Laat leeg om elke leeftijd vanaf de minimumleeftijd toe te laten."
+
+msgid "ui_community_invite"
+msgstr "Uitnodigen"
+
+msgid "ui_community_invite_lead"
+msgstr "Nodig mensen op MeetGo uit of deel de uitnodigingslink."
+
+msgid "ui_community_invite_title"
+msgstr "Uitnodigen voor {community}"
+
+msgid "ui_community_invite_people"
+msgstr "Mensen op MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "Je vrienden en de mensen uit {zone} van wie de leeftijd bij de community past. Ze krijgen de uitnodiging en kunnen die accepteren."
+
+msgid "ui_community_invite_search"
+msgstr "Zoek op naam of gebruikersnaam"
+
+msgid "ui_community_invite_none"
+msgstr "Niemand anders om uit te nodigen"
+
+msgid "ui_community_invite_already"
+msgstr "Uitgenodigd"
+
+msgid "ui_community_invite_send"
+msgstr "Uitnodigingen sturen ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Uitnodigingen verstuurd: {n}"
+
+msgid "ui_community_invites"
+msgstr "Uitnodigingen voor community's"
+
+msgid "ui_invited_you"
+msgstr "{name} nodigt je uit voor {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} nodigt je uit voor {community}"
+
+msgid "email_community_invite_title"
+msgstr "Uitnodiging voor een community"
+
+msgid "email_community_invite_body"
+msgstr "{name} nodigt je uit voor de community {community}. Accepteer of weiger de uitnodiging bij Mensen → Verzoeken."
+
+msgid "email_community_invite_button"
+msgstr "Uitnodiging bekijken"
+
+msgid "ui_avatar_crop_title"
+msgstr "Pas je foto aan"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Sleep de foto om hem te verplaatsen en gebruik de zoom om dichterbij te komen. Wat binnen de cirkel valt, wordt je avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Foto gebruiken"
+
 msgid "ui_info"
 msgstr "Info"
 
@@ -4344,7 +4410,7 @@ msgid "ui_community_access_request_hint"
 msgstr "Mensen vragen om mee te doen en een admin of moderator accepteert ze."
 
 msgid "ui_community_access_invite_hint"
-msgstr "Alleen met de uitnodigingslink. Hij is niet zichtbaar voor anderen."
+msgstr "Alleen op uitnodiging (link of mensen op MeetGo uitnodigen). Anderen zien hem niet."
 
 msgid "ui_community_f_board"
 msgstr "Wie plaatst op het prikbord"

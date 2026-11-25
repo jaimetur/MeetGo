@@ -295,6 +295,19 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .aliasinp > span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 .aliasinp .inp { padding-left: 28px; width: 100%; }
 .fldhint { font-size: 12px; font-weight: 400; }
+.invpick { display: flex; flex-direction: column; gap: 4px; }
+.invlist { border: 1px solid var(--line); border-radius: 12px; max-height: 260px; overflow-y: auto; background: var(--raise); }
+.invopt { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; text-align: left; }
+.invopt:disabled { opacity: 0.6; }
+@media (hover: hover) { .invopt:not(:disabled):hover { background: var(--hover); } }
+.invnone { padding: 12px; font-size: 13px; }
+.herobar .cinvite { gap: 6px; }
+.avcrop { position: relative; margin: 0 auto; overflow: hidden; border-radius: 16px; background: #111; touch-action: none; cursor: grab; user-select: none; max-width: 100%; }
+.avcrop:active { cursor: grabbing; }
+.avcrop img { position: absolute; left: 0; top: 0; max-width: none; pointer-events: none; transform-origin: 0 0; }
+/* darkened outside the circle: what stays is the avatar */
+.avcrop-ring { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.55); border: 2px solid rgba(255, 255, 255, 0.9); pointer-events: none; }
+.avcrop-zoom input { width: 100%; }
 .toasts { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 8px; z-index: 50; width: min(440px, calc(100% - 32px)); }
 /* a new version was deployed: reload to apply it (bottom centre; on phones above the tab bar) */
 .updnote { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 60;
@@ -595,6 +608,7 @@ a.logo { text-decoration: none; }
 .dotbdg { position: absolute; top: 0; right: -2px; transform: scale(0.85); box-shadow: 0 0 0 2px var(--bg); }
 .iconbtn { position: relative; }
 .iconbtn.glass { background: rgba(0, 0, 0, 0.28); color: #fff; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-radius: 50%; }
+.btn.glass { background: rgba(0, 0, 0, 0.28); color: #fff; border-color: transparent; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .phonetop .iconbtn.glass { background: color-mix(in srgb, var(--fg) 8%, transparent); color: var(--fg); }
 .odot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 5px; vertical-align: 1px; }
 

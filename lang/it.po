@@ -1637,6 +1637,72 @@ msgstr "Scrivi il tuo nome"
 msgid "err_last_name"
 msgstr "Scrivi il tuo cognome"
 
+msgid "ui_age_no_limit"
+msgstr "Senza limite"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Lasciala vuota per accettare qualsiasi età dalla minima in su."
+
+msgid "ui_community_invite"
+msgstr "Invita"
+
+msgid "ui_community_invite_lead"
+msgstr "Invita persone di MeetGo o condividi il link di invito."
+
+msgid "ui_community_invite_title"
+msgstr "Invita in {community}"
+
+msgid "ui_community_invite_people"
+msgstr "Persone su MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "I tuoi amici e le persone di {zone} con l’età adatta alla comunità. Riceveranno l’invito e potranno accettarlo."
+
+msgid "ui_community_invite_search"
+msgstr "Cerca per nome o nome utente"
+
+msgid "ui_community_invite_none"
+msgstr "Nessun altro da invitare"
+
+msgid "ui_community_invite_already"
+msgstr "Invitato"
+
+msgid "ui_community_invite_send"
+msgstr "Invia inviti ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Inviti inviati: {n}"
+
+msgid "ui_community_invites"
+msgstr "Inviti alle comunità"
+
+msgid "ui_invited_you"
+msgstr "{name} ti invita a unirti a {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} ti invita in {community}"
+
+msgid "email_community_invite_title"
+msgstr "Invito a una comunità"
+
+msgid "email_community_invite_body"
+msgstr "{name} ti invita a unirti alla comunità {community}. Accetta o rifiuta l’invito in Persone → Richieste."
+
+msgid "email_community_invite_button"
+msgstr "Vedi l’invito"
+
+msgid "ui_avatar_crop_title"
+msgstr "Sistema la tua foto"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Trascina la foto per spostarla e usa lo zoom per avvicinarla. Ciò che resta nel cerchio sarà il tuo avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Usa la foto"
+
 msgid "ui_info"
 msgstr "Info"
 
@@ -4344,7 +4410,7 @@ msgid "ui_community_access_request_hint"
 msgstr "Le persone chiedono di entrare e un admin o un moderatore le accetta."
 
 msgid "ui_community_access_invite_hint"
-msgstr "Solo con il link d'invito. Non compare agli altri."
+msgstr "Solo su invito (link o invitando persone di MeetGo). Gli altri non la vedono."
 
 msgid "ui_community_f_board"
 msgstr "Chi pubblica in bacheca"

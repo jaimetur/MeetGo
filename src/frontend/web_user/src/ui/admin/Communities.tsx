@@ -94,8 +94,9 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
   const [ages, setAges] = useState<string[]>(interest?.age_ranges || []);
   const [active, setActive] = useState(interest?.active ?? true);
   const [ageMode, setAgeMode] = useState<"ranges" | "span">(interest && (interest.min_age != null || interest.max_age != null) ? "span" : "ranges");
-  const [minAge, setMinAge] = useState(interest?.min_age ?? 25);
-  const [maxAge, setMaxAge] = useState(interest?.max_age ?? 45);
+  // as typed (they can be emptied while editing); an empty maximum is "no upper limit"
+  const [minAge, setMinAge] = useState(String(interest?.min_age ?? 25));
+  const [maxAge, setMaxAge] = useState(interest && (interest.min_age != null || interest.max_age != null) ? (interest.max_age != null ? String(interest.max_age) : "") : "45");
   const [access, setAccess] = useState<"open" | "request">(interest?.access_mode || "open");
   const [board, setBoard] = useState<"open" | "admins">(interest?.board_mode || "open");
   const [retention, setRetention] = useState(interest?.retention_days || 365);
@@ -115,7 +116,7 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
     setBusy(true);
     const payload = {
       slug, name: name.trim(), category, icon, color, active, age_mode: ageMode,
-      age_ranges: ageMode === "ranges" ? ages : [], ...(ageMode === "span" ? { min_age: minAge, max_age: maxAge } : {}),
+      age_ranges: ageMode === "ranges" ? ages : [], ...(ageMode === "span" ? { min_age: Number(minAge) || 18, max_age: maxAge.trim() ? Number(maxAge) : null } : {}),
       access_mode: access, board_mode: board, retention_days: retention,
       join_questions: access === "request" ? questions.map((q) => q.trim()).filter(Boolean) : [],
       tags: [slug, ...tags.filter((x) => x !== slug)].slice(0, 5),
@@ -177,8 +178,8 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
         </div>
         {ageMode === "span" ? (
           <div className="adm-grid">
-            <Field label={a("co_min_age")}><input className="inp" type="number" min={18} max={120} value={minAge} onChange={(e) => setMinAge(Number(e.target.value) || 18)} /></Field>
-            <Field label={a("co_max_age")}><input className="inp" type="number" min={18} max={120} value={maxAge} onChange={(e) => setMaxAge(Number(e.target.value) || 18)} /></Field>
+            <Field label={a("co_min_age")}><input className="inp" type="number" inputMode="numeric" min={18} max={120} placeholder="18" value={minAge} onChange={(e) => setMinAge(e.target.value)} /></Field>
+            <Field label={a("co_max_age")}><input className="inp" type="number" inputMode="numeric" min={18} max={120} placeholder={a("co_age_no_limit")} value={maxAge} onChange={(e) => setMaxAge(e.target.value)} /></Field>
             <small className="muted" style={{ gridColumn: "1 / -1" }}>{a("co_age_span_hint")}</small>
           </div>
         ) : (

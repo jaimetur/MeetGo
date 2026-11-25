@@ -379,6 +379,18 @@ class Report(Base):
 
 # ---------------- Communities and board ----------------
 
+class CommunityInvite(Base):
+    """An owner or administrator of a community inviting someone registered in MeetGo; they accept or decline it."""
+    __tablename__ = "community_invites"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    invited_by: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    status: Mapped[str] = mapped_column(String(16), default="pending", index=True)  # pending | accepted | declined
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
 class CommunityRequest(Base):
     """Someone asking to join a community in "request" mode."""
     __tablename__ = "community_requests"

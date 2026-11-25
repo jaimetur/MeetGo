@@ -1636,6 +1636,72 @@ msgstr "Saisis ton prénom"
 msgid "err_last_name"
 msgstr "Saisis ton nom"
 
+msgid "ui_age_no_limit"
+msgstr "Sans limite"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Laisse vide pour accepter tout âge à partir du minimum."
+
+msgid "ui_community_invite"
+msgstr "Inviter"
+
+msgid "ui_community_invite_lead"
+msgstr "Invite des personnes de MeetGo ou partage le lien d’invitation."
+
+msgid "ui_community_invite_title"
+msgstr "Inviter dans {community}"
+
+msgid "ui_community_invite_people"
+msgstr "Personnes sur MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "Tes amis et les personnes de {zone} dont l’âge convient à la communauté. Ils recevront l’invitation et pourront l’accepter."
+
+msgid "ui_community_invite_search"
+msgstr "Chercher par nom ou nom d’utilisateur"
+
+msgid "ui_community_invite_none"
+msgstr "Personne d’autre à inviter"
+
+msgid "ui_community_invite_already"
+msgstr "Invité"
+
+msgid "ui_community_invite_send"
+msgstr "Envoyer les invitations ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Invitations envoyées : {n}"
+
+msgid "ui_community_invites"
+msgstr "Invitations à des communautés"
+
+msgid "ui_invited_you"
+msgstr "{name} t’invite à rejoindre {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} t’invite dans {community}"
+
+msgid "email_community_invite_title"
+msgstr "Invitation à une communauté"
+
+msgid "email_community_invite_body"
+msgstr "{name} t’invite à rejoindre la communauté {community}. Accepte ou refuse l’invitation dans Personnes → Demandes."
+
+msgid "email_community_invite_button"
+msgstr "Voir l’invitation"
+
+msgid "ui_avatar_crop_title"
+msgstr "Ajuste ta photo"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Fais glisser la photo pour la déplacer et utilise le zoom pour t’approcher. Ce qui est dans le cercle sera ton avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Utiliser la photo"
+
 msgid "ui_info"
 msgstr "Infos"
 
@@ -3737,7 +3803,7 @@ msgid "ui_community_access_invite"
 msgstr "Sur invitation"
 
 msgid "ui_community_access_invite_hint"
-msgstr "Uniquement avec le lien d’invitation. Elle n’apparaît pas pour les autres."
+msgstr "Sur invitation uniquement (lien ou en invitant des personnes de MeetGo). Les autres ne la voient pas."
 
 msgid "ui_community_access_open"
 msgstr "Ouverte"

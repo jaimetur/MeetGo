@@ -1637,6 +1637,72 @@ msgstr "名を入力してください"
 msgid "err_last_name"
 msgstr "姓を入力してください"
 
+msgid "ui_age_no_limit"
+msgstr "上限なし"
+
+msgid "ui_age_no_limit_hint"
+msgstr "空欄にすると最低年齢以上のすべての年齢を受け入れます。"
+
+msgid "ui_community_invite"
+msgstr "招待"
+
+msgid "ui_community_invite_lead"
+msgstr "MeetGoのユーザーを招待するか、招待リンクを共有します。"
+
+msgid "ui_community_invite_title"
+msgstr "{community}に招待"
+
+msgid "ui_community_invite_people"
+msgstr "MeetGoのユーザー"
+
+msgid "ui_community_invite_people_hint"
+msgstr "あなたの友達と、{zone}に住みコミュニティの年齢条件に合う人。招待が届き、承認できます。"
+
+msgid "ui_community_invite_search"
+msgstr "名前またはユーザー名で検索"
+
+msgid "ui_community_invite_none"
+msgstr "他に招待できる人はいません"
+
+msgid "ui_community_invite_already"
+msgstr "招待済み"
+
+msgid "ui_community_invite_send"
+msgstr "招待を送る（{n}）"
+
+msgid "ui_community_invite_sent"
+msgstr "招待を送信しました：{n}"
+
+msgid "ui_community_invites"
+msgstr "コミュニティへの招待"
+
+msgid "ui_invited_you"
+msgstr "{name}さんが{community}に招待しています"
+
+msgid "email_community_invite_subject"
+msgstr "{name}さんが{community}に招待しています"
+
+msgid "email_community_invite_title"
+msgstr "コミュニティへの招待"
+
+msgid "email_community_invite_body"
+msgstr "{name}さんがコミュニティ{community}に招待しています。「人」→「リクエスト」で承認または拒否してください。"
+
+msgid "email_community_invite_button"
+msgstr "招待を見る"
+
+msgid "ui_avatar_crop_title"
+msgstr "写真を調整"
+
+msgid "ui_avatar_crop_hint"
+msgstr "写真をドラッグして動かし、ズームで拡大します。円の中がアバターになります。"
+
+msgid "ui_avatar_crop_zoom"
+msgstr "ズーム"
+
+msgid "ui_avatar_crop_use"
+msgstr "この写真を使う"
+
 msgid "ui_info"
 msgstr "情報"
 
@@ -4344,7 +4410,7 @@ msgid "ui_community_access_request_hint"
 msgstr "参加希望者がリクエストし、管理者かモデレーターが承認します。"
 
 msgid "ui_community_access_invite_hint"
-msgstr "招待リンクからのみ参加できます。他の人には表示されません。"
+msgstr "招待のみ（リンク、またはMeetGoのユーザーを招待）。他の人には表示されません。"
 
 msgid "ui_community_f_board"
 msgstr "ボードに投稿できる人"

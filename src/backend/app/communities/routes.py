@@ -9,8 +9,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.app_settings import app_base_url
 from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
-from app.core.models import CommunityRequest, Conversation, ConversationMember, User, UserInterest, utcnow
-from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn
+from app.core.models import (
+    CommunityInvite, CommunityRequest, Conversation, ConversationMember, Friendship, User, UserBlock, UserInterest, utcnow)
+from app.core.schemas import BanIn, CommunityCreateIn, CommunityInviteIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
     NEW_COMMUNITY_RETENTION, RETENTION_CHOICES, clean_interest_tags, clean_questions, suggested_communities, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
@@ -449,3 +450,113 @@ async def community_stats(community_id: int, db: AsyncSession = Depends(get_db),
         "rating": {"average": round(float(rating[0]), 1) if rating[0] is not None else None, "count": int(rating[1] or 0)},
         "top_organisers": organisers,
     }
+
+
+# ---------- inviting people registered in MeetGo (besides the link) ----------
+
+async def _blocked_between(db: AsyncSession, me_id: int) -> set[int]:
+    rows = (await db.execute(select(UserBlock.blocker_id, UserBlock.blocked_id).where(
+        or_(UserBlock.blocker_id == me_id, UserBlock.blocked_id == me_id)))).all()
+    return {b if a == me_id else a for a, b in rows}
+
+
+@router.get("/communities/{community_id}/invite-candidates", response_model=list[dict])
+async def invite_candidates(community_id: int, q: str = "", db: AsyncSession = Depends(get_db),
+                            user: User = Depends(get_current_user)):
+    """Whom I can invite, by alias or name: my friends and the people of the community's zone whose age fits (only
+    they can join), not members yet. Friends first."""
+    conv, member = await get_community(db, community_id, user)
+    _require_admin(member, user)
+    q = q.strip().lstrip("@")
+    friend_ids = set((await db.execute(select(Friendship.friend_id).where(Friendship.user_id == user.id))).scalars().all())
+    query = select(User).where(User.id != user.id, User.bot_role.is_(None), User.is_banned.is_(False),
+                               or_(User.id.in_(friend_ids or {0}), User.province == conv.province))
+    if q:
+        like = f"%{q}%"
+        query = query.where(or_(User.display_name.ilike(like), func.concat_ws(" ", User.first_name, User.last_name).ilike(like)))
+    people = list((await db.execute(query.order_by(User.display_name).limit(200))).scalars().all())
+    members = {m.user_id: m for m in (await db.execute(select(ConversationMember).where(
+        ConversationMember.conversation_id == conv.id, ConversationMember.user_id.in_([u.id for u in people] or [0])))).scalars().all()}
+    invited = set((await db.execute(select(CommunityInvite.user_id).where(
+        CommunityInvite.conversation_id == conv.id, CommunityInvite.status == "pending"))).scalars().all())
+    blocked = await _blocked_between(db, user.id)
+    out = []
+    for u in people:
+        m = members.get(u.id)
+        if u.id in blocked or active(m) or (m and m.banned) or not in_zone(u, conv):
+            continue
+        out.append({**user_summary(u), "friend": u.id in friend_ids, "invited": u.id in invited})
+    out.sort(key=lambda x: (not x["friend"], x["display_name"].lower()))
+    return out[:20]
+
+
+@router.post("/communities/{community_id}/invites", response_model=dict)
+async def invite_people(community_id: int, payload: CommunityInviteIn, db: AsyncSession = Depends(get_db),
+                        user: User = Depends(require_write_access)):
+    """Invite people: each gets the invitation in their requests (and a notice), to accept or decline."""
+    conv, member = await get_community(db, community_id, user)
+    _require_admin(member, user)
+    blocked = await _blocked_between(db, user.id)
+    title = (await communities_out(db, user, [conv]))[0]["title"]
+    sent: list[User] = []
+    for uid in dict.fromkeys(payload.user_ids):
+        target = await db.get(User, uid)
+        if not target or target.bot_role or target.is_banned or uid == user.id or uid in blocked:
+            continue
+        m = await get_membership(db, conv.id, uid)
+        if active(m) or (m and m.banned) or not in_zone(target, conv):
+            continue
+        if (await db.execute(select(CommunityInvite.id).where(CommunityInvite.conversation_id == conv.id,
+                CommunityInvite.user_id == uid, CommunityInvite.status == "pending"))).first():
+            continue
+        db.add(CommunityInvite(conversation_id=conv.id, user_id=uid, invited_by=user.id))
+        sent.append(target)
+    await db.commit()
+    if sent:
+        params = {"name": user.shown_name, "community": title}
+        path = "/app/people?tab=requests"
+        push_notice(sent, "community.invite", "email_community_invite", params, path)
+        for u in sent:
+            await notify_email.notify(db, u, "requests", "email_community_invite", params, path)
+        await realtime.publish([u.id for u in sent], {"type": "requests.changed"})
+    return {"invited": len(sent)}
+
+
+@router.get("/community-invites", response_model=list[dict])
+async def my_invites(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """The invitations to communities waiting for my answer."""
+    rows = (await db.execute(select(CommunityInvite, Conversation).join(Conversation, Conversation.id == CommunityInvite.conversation_id).where(
+        CommunityInvite.user_id == user.id, CommunityInvite.status == "pending").order_by(CommunityInvite.created_at.desc()))).all()
+    if not rows:
+        return []
+    communities = {c["id"]: c for c in await communities_out(db, user, [c for _, c in rows])}
+    by = {u.id: u for u in (await db.execute(select(User).where(User.id.in_([i.invited_by for i, _ in rows if i.invited_by])))).scalars().all()}
+    return [{"id": i.id, "community": communities.get(c.id), "from_user": user_summary(by.get(i.invited_by)),
+             "created_at": i.created_at.isoformat()} for i, c in rows]
+
+
+@router.post("/community-invites/{invite_id}/resolve", response_model=dict)
+async def resolve_invite(invite_id: int, payload: ResolveIn, db: AsyncSession = Depends(get_db),
+                         user: User = Depends(require_write_access)):
+    inv = await db.get(CommunityInvite, invite_id)
+    if not inv or inv.user_id != user.id or inv.status != "pending":
+        raise HTTPException(404, t("err_invite_invalid"))
+    conv = await db.get(Conversation, inv.conversation_id)
+    if not payload.accept or not conv:
+        inv.status, inv.resolved_at = "declined", utcnow()
+        await db.commit()
+        return {"status": "declined"}
+    member = await get_membership(db, conv.id, user.id)
+    if member and member.banned:
+        raise HTTPException(403, t("err_banned_here"))
+    if not in_zone(user, conv):
+        raise HTTPException(403, t("err_community_other_zone"))
+    inv.status, inv.resolved_at = "accepted", utcnow()
+    if not active(member):
+        await _join_member(db, conv, user)
+        req = await pending_request(db, conv.id, user.id)
+        if req:
+            req.status, req.resolved_at = "accepted", utcnow()
+    await db.commit()
+    await _changed(db, conv.id, extra=[user.id])
+    return {"status": "joined", "community_id": conv.id}

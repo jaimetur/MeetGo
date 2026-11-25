@@ -11,6 +11,7 @@ import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshR
 import { sendMessage } from "./Chat";
 import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
+import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
 
@@ -32,12 +33,13 @@ function PageShell({ title, lead, children, tab }: { title: string; lead?: strin
 }
 
 export function PeoplePage() {
-  const [tab, setTab] = useState<"friends" | "requests" | "search" | "feed">("friends");
+  // a notice can open a tab directly (?tab=requests: an invitation to a community)
+  const [tab, setTab] = useState<"friends" | "requests" | "search" | "feed">(() => (["friends", "requests", "search", "feed"] as const).find((k) => k === queryParam("tab")) || "friends");
   const requests = useStore((s) => s.requests);
   return (
     <PageShell title={t("ui_people_title")} tab>
       <div className="tabs" role="tablist">
-        {([["friends", t("ui_friends")], ["requests", t("ui_requests") + (requests.friends + requests.dms ? ` (${requests.friends + requests.dms})` : "")], ["search", t("ui_find_people")], ["feed", t("ui_activity")]] as const).map(([k, label]) => (
+        {([["friends", t("ui_friends")], ["requests", t("ui_requests") + (requests.friends + requests.dms + (requests.communities || 0) ? ` (${requests.friends + requests.dms + (requests.communities || 0)})` : "")], ["search", t("ui_find_people")], ["feed", t("ui_activity")]] as const).map(([k, label]) => (
           <button key={k} role="tab" aria-selected={tab === k} className={"chip" + (tab === k ? " on" : "")} onClick={() => setTab(k)}>{label}</button>
         ))}
       </div>
@@ -89,9 +91,11 @@ function Friends() {
 function Requests() {
   const [friendReqs, setFriendReqs] = useState<any[]>([]);
   const [dmReqs, setDmReqs] = useState<any[]>([]);
+  const [invites, setInvites] = useState<Awaited<ReturnType<typeof api.communityInvites>>>([]);
   const load = () => {
     api.friendRequests().then(setFriendReqs).catch(() => undefined);
     api.dmRequests().then(setDmReqs).catch(() => undefined);
+    api.communityInvites().then(setInvites).catch(() => undefined);
     refreshRequests();
   };
   useEffect(load, []);
@@ -111,9 +115,31 @@ function Requests() {
       toast(e.message, "error");
     }
   }
-  if (!friendReqs.length && !dmReqs.length) return <div className="empty">{t("ui_no_requests")}</div>;
+  async function invite(id: number, accept: boolean) {
+    try {
+      const res = await api.resolveCommunityInvite(id, accept);
+      load();
+      if (res.community_id) {
+        loadMyCommunities();
+        await loadConversations().catch(() => undefined);
+        navigate(communityPath(res.community_id));
+      }
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
+  if (!friendReqs.length && !dmReqs.length && !invites.length) return <div className="empty">{t("ui_no_requests")}</div>;
   return (
     <div className="stack">
+      {invites.length ? <h2>{t("ui_community_invites")}</h2> : null}
+      {invites.map((r) => (
+        <div key={r.id} className="box row">
+          <Avatar user={r.from_user} size={36} />
+          <div className="grow">{t("ui_invited_you", { name: r.from_user?.display_name || "—", community: r.community?.title || "—" })}</div>
+          <button className="btn sm pri" onClick={() => invite(r.id, true)}>{t("ui_accept")}</button>
+          <button className="btn sm" onClick={() => invite(r.id, false)}>{t("ui_decline")}</button>
+        </div>
+      ))}
       {dmReqs.length ? <h2>{t("ui_dm_requests")}</h2> : null}
       {dmReqs.map((r) => (
         <div key={r.id} className="box row">
@@ -615,6 +641,7 @@ function AvatarPicker() {
   const me = useStore((s) => s.me);
   const input = React.useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  const [crop, setCrop] = useState<File | null>(null);  // the photo chosen, to frame before uploading it
   if (!me) return null;
   async function run(fn: () => Promise<any>) {
     setBusy(true);
@@ -640,8 +667,9 @@ function AvatarPicker() {
       <input ref={input} type="file" accept="image/*" hidden onChange={(e) => {
         const f = e.target.files?.[0];
         e.target.value = "";
-        if (f) run(() => api.uploadAvatar(f));
+        if (f) setCrop(f);
       }} />
+      {crop ? <AvatarCrop file={crop} onCancel={() => setCrop(null)} onDone={(cut) => { setCrop(null); run(() => api.uploadAvatar(cut)); }} /> : null}
     </div>
   );
 }

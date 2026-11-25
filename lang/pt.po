@@ -1636,6 +1636,72 @@ msgstr "Escreve o teu nome"
 msgid "err_last_name"
 msgstr "Escreve os teus apelidos"
 
+msgid "ui_age_no_limit"
+msgstr "Sem limite"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Deixa-a vazia para aceitar qualquer idade a partir da mínima."
+
+msgid "ui_community_invite"
+msgstr "Convidar"
+
+msgid "ui_community_invite_lead"
+msgstr "Convida pessoas do MeetGo ou partilha o link de convite."
+
+msgid "ui_community_invite_title"
+msgstr "Convidar para {community}"
+
+msgid "ui_community_invite_people"
+msgstr "Pessoas do MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "Os teus amigos e as pessoas de {zone} cuja idade se ajusta à comunidade. Recebem o convite e podem aceitá-lo."
+
+msgid "ui_community_invite_search"
+msgstr "Procura por nome ou utilizador"
+
+msgid "ui_community_invite_none"
+msgstr "Não há mais ninguém para convidar"
+
+msgid "ui_community_invite_already"
+msgstr "Convidado"
+
+msgid "ui_community_invite_send"
+msgstr "Enviar convites ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Convites enviados: {n}"
+
+msgid "ui_community_invites"
+msgstr "Convites para comunidades"
+
+msgid "ui_invited_you"
+msgstr "{name} convida-te a aderir a {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} convida-te para {community}"
+
+msgid "email_community_invite_title"
+msgstr "Convite para uma comunidade"
+
+msgid "email_community_invite_body"
+msgstr "{name} convida-te a aderir à comunidade {community}. Aceita ou recusa o convite em Pessoas → Pedidos."
+
+msgid "email_community_invite_button"
+msgstr "Ver o convite"
+
+msgid "ui_avatar_crop_title"
+msgstr "Ajusta a tua foto"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Arrasta a foto para a mover e usa o zoom para a aproximar. O que ficar dentro do círculo será o teu avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Usar foto"
+
 msgid "ui_info"
 msgstr "Info"
 
@@ -4343,7 +4409,7 @@ msgid "ui_community_access_request_hint"
 msgstr "As pessoas pedem para entrar e um admin ou moderador aceita."
 
 msgid "ui_community_access_invite_hint"
-msgstr "Só com o link de convite. Não aparece para os outros."
+msgstr "Só por convite (link ou convidando pessoas do MeetGo). Os outros não a veem."
 
 msgid "ui_community_f_board"
 msgstr "Quem publica no mural"

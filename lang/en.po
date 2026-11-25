@@ -1637,6 +1637,72 @@ msgstr "Enter your first name"
 msgid "err_last_name"
 msgstr "Enter your surname"
 
+msgid "ui_age_no_limit"
+msgstr "No limit"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Leave it empty to accept any age from the minimum."
+
+msgid "ui_community_invite"
+msgstr "Invite"
+
+msgid "ui_community_invite_lead"
+msgstr "Invite people on MeetGo or share the invitation link."
+
+msgid "ui_community_invite_title"
+msgstr "Invite to {community}"
+
+msgid "ui_community_invite_people"
+msgstr "People on MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "Your friends and the people of {zone} whose age fits the community. They get the invitation and can accept it."
+
+msgid "ui_community_invite_search"
+msgstr "Search by name or username"
+
+msgid "ui_community_invite_none"
+msgstr "Nobody else to invite"
+
+msgid "ui_community_invite_already"
+msgstr "Invited"
+
+msgid "ui_community_invite_send"
+msgstr "Send invitations ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Invitations sent: {n}"
+
+msgid "ui_community_invites"
+msgstr "Invitations to communities"
+
+msgid "ui_invited_you"
+msgstr "{name} invites you to join {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} invites you to {community}"
+
+msgid "email_community_invite_title"
+msgstr "Invitation to a community"
+
+msgid "email_community_invite_body"
+msgstr "{name} invites you to join the community {community}. Accept or decline it in People → Requests."
+
+msgid "email_community_invite_button"
+msgstr "See the invitation"
+
+msgid "ui_avatar_crop_title"
+msgstr "Adjust your photo"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Drag the photo to move it and use the zoom to get closer. What is inside the circle will be your avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Use photo"
+
 msgid "ui_info"
 msgstr "Info"
 
@@ -4345,7 +4411,7 @@ msgid "ui_community_access_request_hint"
 msgstr "People ask to join and an admin or moderator accepts them."
 
 msgid "ui_community_access_invite_hint"
-msgstr "Only with the invitation link. It isn't listed to others."
+msgstr "By invitation only (link or inviting people on MeetGo). Others do not see it."
 
 msgid "ui_community_f_board"
 msgstr "Who publishes on the board"

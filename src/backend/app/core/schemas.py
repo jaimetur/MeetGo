@@ -274,6 +274,10 @@ class AdminInterestIn(BaseModel):
     retention_days: int | None = None
     join_questions: list[str] | None = Field(default=None, max_length=3)
 
+class CommunityInviteIn(BaseModel):
+    user_ids: list[int] = Field(min_length=1, max_length=50)
+
+
 class AdminSmtpTestIn(BaseModel):
     to_email: str
 

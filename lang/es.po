@@ -1637,6 +1637,72 @@ msgstr "Escribe tu nombre"
 msgid "err_last_name"
 msgstr "Escribe tus apellidos"
 
+msgid "ui_age_no_limit"
+msgstr "Sin límite"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Déjala vacía para aceptar cualquier edad desde la mínima."
+
+msgid "ui_community_invite"
+msgstr "Invitar"
+
+msgid "ui_community_invite_lead"
+msgstr "Invita a personas de MeetGo o comparte el enlace de invitación."
+
+msgid "ui_community_invite_title"
+msgstr "Invitar a {community}"
+
+msgid "ui_community_invite_people"
+msgstr "Personas de MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "Tus amigos y la gente de {zone} que cumple la edad de la comunidad. Les llegará la invitación y podrán aceptarla."
+
+msgid "ui_community_invite_search"
+msgstr "Busca por nombre o usuario"
+
+msgid "ui_community_invite_none"
+msgstr "No hay nadie más a quien invitar"
+
+msgid "ui_community_invite_already"
+msgstr "Invitado"
+
+msgid "ui_community_invite_send"
+msgstr "Enviar invitaciones ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Invitaciones enviadas: {n}"
+
+msgid "ui_community_invites"
+msgstr "Invitaciones a comunidades"
+
+msgid "ui_invited_you"
+msgstr "{name} te invita a unirte a {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} te invita a {community}"
+
+msgid "email_community_invite_title"
+msgstr "Invitación a una comunidad"
+
+msgid "email_community_invite_body"
+msgstr "{name} te invita a unirte a la comunidad {community}. Acepta o rechaza la invitación en Personas → Solicitudes."
+
+msgid "email_community_invite_button"
+msgstr "Ver la invitación"
+
+msgid "ui_avatar_crop_title"
+msgstr "Ajusta tu foto"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Arrastra la foto para moverla y usa el zoom para acercarla. Lo que queda dentro del círculo será tu avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Usar foto"
+
 msgid "ui_info"
 msgstr "Información"
 
@@ -4345,7 +4411,7 @@ msgid "ui_community_access_request_hint"
 msgstr "Piden unirse y un administrador o moderador les acepta."
 
 msgid "ui_community_access_invite_hint"
-msgstr "Solo con el enlace de invitación. No aparece a los demás."
+msgstr "Solo por invitación (enlace o invitando a personas de MeetGo). No aparece a los demás."
 
 msgid "ui_community_f_board"
 msgstr "Quién publica en el tablón"

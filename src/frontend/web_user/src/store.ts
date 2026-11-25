@@ -16,7 +16,7 @@ export type State = {
   // per chat and person: up to which message their app has it (delivered, ✓✓) and up to which they read it (blue)
   readStates: Record<number, Record<number, { read: number; delivered: number }>>;
   billing: BillingStatus | null;
-  requests: { friends: number; dms: number };
+  requests: { friends: number; dms: number; communities?: number };
   connected: boolean;
   activeConversation: number | null;
   toasts: Toast[];

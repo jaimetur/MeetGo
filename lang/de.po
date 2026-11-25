@@ -1637,6 +1637,72 @@ msgstr "Gib deinen Vornamen ein"
 msgid "err_last_name"
 msgstr "Gib deinen Nachnamen ein"
 
+msgid "ui_age_no_limit"
+msgstr "Ohne Grenze"
+
+msgid "ui_age_no_limit_hint"
+msgstr "Leer lassen, um jedes Alter ab dem Mindestalter zuzulassen."
+
+msgid "ui_community_invite"
+msgstr "Einladen"
+
+msgid "ui_community_invite_lead"
+msgstr "Lade Leute bei MeetGo ein oder teile den Einladungslink."
+
+msgid "ui_community_invite_title"
+msgstr "In {community} einladen"
+
+msgid "ui_community_invite_people"
+msgstr "Leute bei MeetGo"
+
+msgid "ui_community_invite_people_hint"
+msgstr "Deine Freunde und die Leute aus {zone}, deren Alter zur Community passt. Sie erhalten die Einladung und können sie annehmen."
+
+msgid "ui_community_invite_search"
+msgstr "Nach Name oder Benutzername suchen"
+
+msgid "ui_community_invite_none"
+msgstr "Niemand sonst zum Einladen"
+
+msgid "ui_community_invite_already"
+msgstr "Eingeladen"
+
+msgid "ui_community_invite_send"
+msgstr "Einladungen senden ({n})"
+
+msgid "ui_community_invite_sent"
+msgstr "Einladungen gesendet: {n}"
+
+msgid "ui_community_invites"
+msgstr "Einladungen in Communitys"
+
+msgid "ui_invited_you"
+msgstr "{name} lädt dich in {community} ein"
+
+msgid "email_community_invite_subject"
+msgstr "{name} lädt dich in {community} ein"
+
+msgid "email_community_invite_title"
+msgstr "Einladung in eine Community"
+
+msgid "email_community_invite_body"
+msgstr "{name} lädt dich in die Community {community} ein. Nimm sie unter Leute → Anfragen an oder lehne sie ab."
+
+msgid "email_community_invite_button"
+msgstr "Einladung ansehen"
+
+msgid "ui_avatar_crop_title"
+msgstr "Foto anpassen"
+
+msgid "ui_avatar_crop_hint"
+msgstr "Ziehe das Foto, um es zu verschieben, und nutze den Zoom, um näher heranzugehen. Was im Kreis ist, wird dein Avatar."
+
+msgid "ui_avatar_crop_zoom"
+msgstr "Zoom"
+
+msgid "ui_avatar_crop_use"
+msgstr "Foto verwenden"
+
 msgid "ui_info"
 msgstr "Info"
 
@@ -3738,7 +3804,7 @@ msgid "ui_community_access_invite"
 msgstr "Nur mit Einladung"
 
 msgid "ui_community_access_invite_hint"
-msgstr "Nur mit dem Einladungslink. Für andere wird sie nicht aufgelistet."
+msgstr "Nur auf Einladung (Link oder Leute bei MeetGo einladen). Andere sehen sie nicht."
 
 msgid "ui_community_access_open"
 msgstr "Offen"

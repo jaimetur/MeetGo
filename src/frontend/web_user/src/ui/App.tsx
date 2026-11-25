@@ -67,8 +67,8 @@ export function applyTheme(theme?: string) {
 
 export async function refreshRequests() {
   try {
-    const [friends, dms] = await Promise.all([api.friendRequests(), api.dmRequests()]);
-    setState({ requests: { friends: friends.length, dms: dms.length } });
+    const [friends, dms, communities] = await Promise.all([api.friendRequests(), api.dmRequests(), api.communityInvites().catch(() => [])]);
+    setState({ requests: { friends: friends.length, dms: dms.length, communities: communities.length } });
   } catch {
     /* not critical */
   }
@@ -242,7 +242,7 @@ function Shell() {
     "shell", chatsMode ? "chats" : "pages", panelOpen ? "with-panel" : "", withRight ? "has-right" : "",
     route.name === "chat" ? "chat-open conv" : "", detail ? "conv detail" : "",
   ].join(" ");
-  const requestsTotal = requests.friends + requests.dms;
+  const requestsTotal = requests.friends + requests.dms + (requests.communities || 0);
 
   // Which tab is lit for the current screen.
   const current = ({ chat: "chats", post: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;

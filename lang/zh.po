@@ -1637,6 +1637,72 @@ msgstr "请输入你的名"
 msgid "err_last_name"
 msgstr "请输入你的姓"
 
+msgid "ui_age_no_limit"
+msgstr "不限"
+
+msgid "ui_age_no_limit_hint"
+msgstr "留空则接受最低年龄以上的任何年龄。"
+
+msgid "ui_community_invite"
+msgstr "邀请"
+
+msgid "ui_community_invite_lead"
+msgstr "邀请 MeetGo 上的人，或分享邀请链接。"
+
+msgid "ui_community_invite_title"
+msgstr "邀请加入 {community}"
+
+msgid "ui_community_invite_people"
+msgstr "MeetGo 上的人"
+
+msgid "ui_community_invite_people_hint"
+msgstr "你的好友以及 {zone} 中年龄符合该社区的人。他们会收到邀请并可以接受。"
+
+msgid "ui_community_invite_search"
+msgstr "按姓名或用户名搜索"
+
+msgid "ui_community_invite_none"
+msgstr "没有其他可邀请的人"
+
+msgid "ui_community_invite_already"
+msgstr "已邀请"
+
+msgid "ui_community_invite_send"
+msgstr "发送邀请（{n}）"
+
+msgid "ui_community_invite_sent"
+msgstr "已发送邀请：{n}"
+
+msgid "ui_community_invites"
+msgstr "社区邀请"
+
+msgid "ui_invited_you"
+msgstr "{name} 邀请你加入 {community}"
+
+msgid "email_community_invite_subject"
+msgstr "{name} 邀请你加入 {community}"
+
+msgid "email_community_invite_title"
+msgstr "社区邀请"
+
+msgid "email_community_invite_body"
+msgstr "{name} 邀请你加入社区 {community}。请在“人”→“请求”中接受或拒绝。"
+
+msgid "email_community_invite_button"
+msgstr "查看邀请"
+
+msgid "ui_avatar_crop_title"
+msgstr "调整你的照片"
+
+msgid "ui_avatar_crop_hint"
+msgstr "拖动照片来移动，使用缩放来放大。圆圈内的部分将成为你的头像。"
+
+msgid "ui_avatar_crop_zoom"
+msgstr "缩放"
+
+msgid "ui_avatar_crop_use"
+msgstr "使用照片"
+
 msgid "ui_info"
 msgstr "信息"
 
@@ -4344,7 +4410,7 @@ msgid "ui_community_access_request_hint"
 msgstr "大家申请加入,由管理员或版主接受。"
 
 msgid "ui_community_access_invite_hint"
-msgstr "只能通过邀请链接加入,不会向其他人展示。"
+msgstr "仅限邀请（链接或邀请 MeetGo 上的人）。其他人看不到。"
 
 msgid "ui_community_f_board"
 msgstr "谁可以在公告板发布"

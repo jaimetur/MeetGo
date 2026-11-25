@@ -297,7 +297,8 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
   const [form, setForm] = useState({
     title: community?.title || "", description: community?.description || "", rules: community?.rules || "",
     access_mode: (community?.access_mode || "open") as AccessMode, board_mode: (community?.board_mode || "open") as BoardMode,
-    ageLimit: false, min_age: Math.max(18, myAge - 5), max_age: myAge + 5,
+    // as typed (they can be emptied while editing); an empty maximum is "no upper limit"
+    ageLimit: false, min_age: String(Math.max(18, myAge - 5)), max_age: String(myAge + 5),
     questions: [...(community?.join_questions || []), "", "", ""].slice(0, 3),
     retention: community?.retention_days || 30,
     tags: (community?.kind === "custom" ? community.tags : []) || [],
@@ -307,6 +308,9 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
   const interest = community?.kind === "interest";
   const [busy, setBusy] = useState(false);
   const set = (p: Partial<typeof form>) => setForm((f) => ({ ...f, ...p }));
+  const minAge = Number(form.min_age) || 18;
+  const maxAge = form.max_age.trim() ? Number(form.max_age) : null;
+  const ageWrong = form.ageLimit && (minAge > myAge || (maxAge != null && (maxAge < myAge || minAge > maxAge)));
   async function save() {
     setBusy(true);
     try {
@@ -320,7 +324,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         loadMyCommunities();
         onClose();
       } else {
-        const c = await api.createCommunity({ ...payload, ...(form.ageLimit ? { min_age: form.min_age, max_age: form.max_age } : {}) });
+        const c = await api.createCommunity({ ...payload, ...(form.ageLimit ? { min_age: minAge, max_age: maxAge } : {}) });
         toast(t("ui_community_created_toast"));
         loadMyCommunities();
         loadConversations().catch(() => undefined);
@@ -340,7 +344,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     <Modal title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
       <>
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
-        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || (!community && form.ageLimit && (form.min_age > myAge || form.max_age < myAge || form.min_age > form.max_age))} onClick={save}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
+        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || (!community && ageWrong)} onClick={save}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
       </>
     )}>
       {!community ? <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_create_lead")}</p> : null}
@@ -370,11 +374,12 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
           </label>
           {form.ageLimit ? (
             <div className="grid2c">
-              <label className="fld">{t("ui_community_min_age")}<input id="cm-min-age" className="inp" type="number" min={18} max={myAge} value={form.min_age} onChange={(e) => set({ min_age: Number(e.target.value) || 18 })} /></label>
-              <label className="fld">{t("ui_community_max_age")}<input id="cm-max-age" className="inp" type="number" min={myAge} max={120} value={form.max_age} onChange={(e) => set({ max_age: Number(e.target.value) || myAge })} /></label>
+              <label className="fld">{t("ui_community_min_age")}<input id="cm-min-age" className="inp" type="number" inputMode="numeric" min={18} max={myAge} placeholder="18" value={form.min_age} onChange={(e) => set({ min_age: e.target.value })} /></label>
+              <label className="fld">{t("ui_community_max_age")}<input id="cm-max-age" className="inp" type="number" inputMode="numeric" min={myAge} max={120} placeholder={t("ui_age_no_limit")} value={form.max_age} onChange={(e) => set({ max_age: e.target.value })} />
+                <small className="muted">{t("ui_age_no_limit_hint")}</small></label>
             </div>
           ) : null}
-          {form.ageLimit && (form.min_age > myAge || form.max_age < myAge) ? <small className="err">{t("ui_community_age_must_include", { age: myAge })}</small> : null}
+          {ageWrong ? <small className="err">{t("ui_community_age_must_include", { age: myAge })}</small> : null}
         </>
       ) : community.min_age != null || community.max_age != null ? (
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
@@ -416,6 +421,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
   const [leave, setLeave] = useState(false);
   const [settings, setSettings] = useState(false);
   const [rules, setRules] = useState(false);
+  const [inviting, setInviting] = useState(false);
 
   const load = useCallback(() => api.community(id).then((x) => {
     setC(x);
@@ -459,7 +465,9 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
           <span className="grow" />
-          {manager ? <button className="iconbtn glass" onClick={() => setSettings(true)} aria-label={t("ui_community_settings")} title={t("ui_community_settings")}><Icon name="sliders" /></button> : null}
+          {manager ? <button className="btn glass sm cinvite" onClick={() => setInviting(true)} title={t("ui_community_invite")}><Icon name="userplus" size="sm" />{t("ui_community_invite")}</button> : null}
+          {/* with its name: an icon alone was hard to find */}
+          {manager ? <button className="btn glass sm cinvite" onClick={() => setSettings(true)} title={t("ui_community_settings")}><Icon name="sliders" size="sm" />{t("ui_edit")}</button> : null}
           {c.joined ? <button className="iconbtn glass" onClick={() => setLeave(true)} aria-label={t("ui_community_leave")} title={t("ui_community_leave")}><Icon name="door" /></button> : null}
         </div>
       </div>
@@ -504,6 +512,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
         <ConfirmModal title={t("ui_community_leave")} body={c.role === "owner" ? t("ui_community_leave_owner_body") : t("ui_community_leave_body", { name: c.title })}
           confirm={t("ui_community_leave")} danger onConfirm={doLeave} onClose={() => setLeave(false)} />
       ) : null}
+      {inviting ? <InviteModal c={c} onClose={() => setInviting(false)} /> : null}
       {settings ? <CommunityFormModal community={c} onClose={() => setSettings(false)} onSaved={(x) => setC({ ...c, ...x })} /> : null}
       {rules ? <Modal title={t("ui_community_rules")} onClose={() => setRules(false)}><div className="rulescard"><RichText text={c.rules || ""} /></div></Modal> : null}
     </main>
@@ -635,7 +644,7 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
   const [q, setQ] = useState("");
   const [list, setList] = useState<CommunityMember[] | null>(null);
   const [requests, setRequests] = useState<{ user: UserSummary; created_at: string; answers?: { question: string; answer: string }[] }[]>([]);
-  const [invite, setInvite] = useState<string | null>(c.invite_code ? `${window.location.origin}/app/join/${c.invite_code}` : null);
+  const [inviting, setInviting] = useState(false);
   const [manage, setManage] = useState<CommunityMember | null>(null);
   // MeetGo's administrators manage every community as if they were its owner.
   const globalAdmin = me?.role === "admin";
@@ -695,15 +704,6 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
         load();
         onChange();
       }
-    } catch (e: any) {
-      toast(e.message, "error");
-    }
-  }
-  async function newInvite() {
-    try {
-      const r = await api.communityInvite(c.id);
-      setInvite(r.url || `${window.location.origin}/app/join/${r.code}`);
-      toast(t("ui_community_invite_new_toast"));
     } catch (e: any) {
       toast(e.message, "error");
     }
@@ -774,15 +774,10 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
       ) : null}
       {isAdmin ? (
         <section className="box stack">
-          <h3 className="boxtitle">{t("ui_invite_link")}</h3>
-          <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_invite_hint")}</p>
-          {invite ? (
-            <div className="copyrow">
-              <input id="cm-invite" className="inp" readOnly value={invite} onFocus={(e) => e.target.select()} />
-              <button className="btn" onClick={() => navigator.clipboard?.writeText(invite).then(() => toast(t("ui_copied"))).catch(() => undefined)}><Icon name="copy" size="sm" />{t("ui_copy")}</button>
-            </div>
-          ) : null}
-          <div><button className="btn sm" onClick={newInvite}><Icon name="repeat" size="sm" />{invite ? t("ui_community_invite_new") : t("ui_community_invite_create")}</button></div>
+          <h3 className="boxtitle">{t("ui_community_invite")}</h3>
+          <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_invite_lead")}</p>
+          <div><button className="btn pri sm" onClick={() => setInviting(true)}><Icon name="userplus" size="sm" />{t("ui_community_invite")}</button></div>
+          {inviting ? <InviteModal c={c} onClose={() => setInviting(false)} /> : null}
         </section>
       ) : null}
       <section className="box">
@@ -922,4 +917,92 @@ const RETENTION_DAYS = [1, 2, 3, 7, 30, 90, 180, 365];
 function retentionText(days: number): string {
   const keys: Record<number, string> = { 1: "ui_retention_1d", 2: "ui_retention_2d", 3: "ui_retention_3d", 7: "ui_retention_1w", 30: "ui_retention_1m", 90: "ui_retention_3m", 180: "ui_retention_6m", 365: "ui_retention_1y" };
   return keys[days] ? t(keys[days]) : t("ui_retention_days", { n: days });
+}
+
+/** Inviting: the invitation link (copy it, or make a new one that cancels the old), and people registered in MeetGo
+ * chosen from a list (my friends and the people of the community's zone whose age fits): they get the invitation in
+ * their requests and accept or decline it. */
+function InviteModal({ c, onClose }: { c: Community; onClose: () => void }) {
+  const [link, setLink] = useState<string | null>(c.invite_code ? `${window.location.origin}/app/join/${c.invite_code}` : null);
+  const [q, setQ] = useState("");
+  const [open, setOpen] = useState(false);
+  const [found, setFound] = useState<(UserSummary & { friend: boolean; invited: boolean })[] | null>(null);
+  const [chosen, setChosen] = useState<UserSummary[]>([]);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    const timer = window.setTimeout(() => api.inviteCandidates(c.id, q).then(setFound).catch(() => setFound([])), 200);
+    return () => window.clearTimeout(timer);
+  }, [c.id, q]);
+  async function newLink() {
+    try {
+      const r = await api.communityInvite(c.id);
+      setLink(r.url || `${window.location.origin}/app/join/${r.code}`);
+      toast(t("ui_community_invite_new_toast"));
+    } catch (e: any) {
+      toast(e.message, "error");
+    }
+  }
+  async function send() {
+    setBusy(true);
+    try {
+      const r = await api.invitePeople(c.id, chosen.map((u) => u.id));
+      toast(t("ui_community_invite_sent", { n: r.invited }));
+      onClose();
+    } catch (e: any) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
+  const options = (found || []).filter((u) => !chosen.some((x) => x.id === u.id));
+  return (
+    <Modal title={t("ui_community_invite_title", { community: c.title })} onClose={onClose}
+      footer={<button className="btn pri" disabled={busy || !chosen.length} onClick={send}>{t("ui_community_invite_send", { n: chosen.length })}</button>}>
+      <section className="stack" style={{ gap: 8 }}>
+        <b>{t("ui_community_invite_people")}</b>
+        <span className="muted" style={{ fontSize: 13 }}>{t("ui_community_invite_people_hint", { zone: c.province || "" })}</span>
+        {chosen.length ? (
+          <div className="chips wrapchips">
+            {chosen.map((u) => (
+              <button key={u.id} type="button" className="chip on" onClick={() => setChosen((l) => l.filter((x) => x.id !== u.id))} aria-label={t("ui_remove") + " " + u.display_name}>
+                {u.display_name} <Icon name="x" size="sm" />
+              </button>
+            ))}
+          </div>
+        ) : null}
+        <div className="invpick">
+          <div className="search">
+            <Icon name="search" size="sm" />
+            <input id="cm-invite-search" className="inp" value={q} placeholder={t("ui_community_invite_search")} autoComplete="off"
+              onFocus={() => setOpen(true)} onChange={(e) => { setQ(e.target.value); setOpen(true); }} />
+          </div>
+          {open ? (
+            <div className="invlist" role="listbox">
+              {found == null ? <div className="muted invnone">…</div>
+                : !options.length ? <div className="muted invnone">{t("ui_community_invite_none")}</div>
+                : options.map((u) => (
+                  <button key={u.id} type="button" role="option" aria-selected="false" className="invopt" disabled={u.invited}
+                    onClick={() => { setChosen((l) => [...l, u]); setQ(""); }}>
+                    <Avatar user={u} size={30} />
+                    <span className="grow">{u.display_name}</span>
+                    {u.invited ? <span className="muted">{t("ui_community_invite_already")}</span> : u.friend ? <span className="ktag">{t("ui_friend")}</span> : null}
+                  </button>
+                ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
+      <section className="stack" style={{ gap: 8 }}>
+        <b>{t("ui_invite_link")}</b>
+        <span className="muted" style={{ fontSize: 13 }}>{t("ui_community_invite_hint")}</span>
+        {link ? (
+          <div className="copyrow">
+            <input id="cm-invite" className="inp" readOnly value={link} onFocus={(e) => e.target.select()} />
+            <button className="btn" onClick={() => navigator.clipboard?.writeText(link).then(() => toast(t("ui_copied"))).catch(() => undefined)}><Icon name="copy" size="sm" />{t("ui_copy")}</button>
+          </div>
+        ) : null}
+        <div><button className="btn sm" onClick={newLink}><Icon name="repeat" size="sm" />{link ? t("ui_community_invite_new") : t("ui_community_invite_create")}</button></div>
+      </section>
+    </Modal>
+  );
 }
