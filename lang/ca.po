@@ -4073,6 +4073,18 @@ msgstr "Totes"
 msgid "ui_cshow_mine"
 msgstr "Les meves comunitats"
 
+msgid "ui_cshow_created"
+msgstr "Creades per mi"
+
+msgid "ui_cshow_created_short"
+msgstr "Creades"
+
+msgid "ui_cshow_joined"
+msgstr "Inscrites"
+
+msgid "ui_cshow_joined_short"
+msgstr "Inscrites"
+
 msgid "ui_cshow_new"
 msgstr "Noves"
 

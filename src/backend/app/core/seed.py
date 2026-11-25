@@ -180,6 +180,8 @@ DEFAULT_INTERESTS = [
     ("teclado", "Teclado"),
     ("bailes", "Bailes"),
     ("baloncesto", "Baloncesto"),
+    ("economia", "Economía"),
+    ("politica", "Política"),
 ]
 
 # Interests whose name changed: (old name, new name). Only a name still as it was is changed (not one an administrator
@@ -222,6 +224,8 @@ INTEREST_TAGS = {
     "teclado": ["teclado", "conciertos", "guitarra"],
     "bailes": ["bailes", "salir_de_fiesta", "musica_flamenca", "fitness"],
     "baloncesto": ["baloncesto", "deporte", "fitness"],
+    "economia": ["economia", "politica", "networking"],
+    "politica": ["politica", "economia", "lectura"],
 }
 
 RENAMED_INTERESTS = {"tomar_algo": ("Quedar para tomar algo", "Tomar algo"), "deporte": ("Deporte", "Deportes")}

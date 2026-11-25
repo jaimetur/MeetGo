@@ -206,12 +206,13 @@ export function CommunitiesPage() {
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
   const notMine = (list || []).filter((c) => !c.joined).length;
-  // All of them, only mine (Open, blue) or only new ones (Join, green); remembered on this device.
-  type Show = "all" | "mine" | "new";
+  // All of them, the ones I created (if any), the ones I joined (Open, blue) or only new ones (Join, green);
+  // remembered on this device.
+  type Show = "all" | "created" | "mine" | "new";
   const [show, setShowState] = useState<Show>(() => {
     try {
       const v = localStorage.getItem("communities.show");
-      if (v === "all" || v === "mine" || v === "new") return v;
+      if (v === "all" || v === "created" || v === "mine" || v === "new") return v;
       return localStorage.getItem("communities.showOthers") === "0" ? "mine" : "all";
     } catch {
       return "all";
@@ -225,8 +226,13 @@ export function CommunitiesPage() {
       /* per device */
     }
   };
-  const mineCount = (list || []).length - notMine;
-  const shown = (list || []).filter((c) => browse || show === "all" || (show === "mine" ? c.joined : !c.joined));
+  const created = (c: Community) => c.joined && c.kind === "custom" && c.role === "owner";
+  const createdCount = (list || []).filter(created).length;
+  const mineCount = (list || []).length - notMine - createdCount;
+  // without communities of my own, that tab is not there: its place goes back to all of them
+  const view: Show = show === "created" && !createdCount ? "all" : show;
+  const shown = (list || []).filter((c) => browse || view === "all"
+    || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined));
   const groups = byCategory(shown);
 
   return (
@@ -253,10 +259,12 @@ export function CommunitiesPage() {
           </div>
         ) : null}
         {list && list.length && !browse ? (
-          <div className="segtabs cfilter" role="tablist" aria-label={t("ui_nav_communities")}>
-            {([["all", t("ui_cshow_all"), t("ui_cshow_all"), list.length], ["mine", t("ui_cshow_mine"), t("ui_cshow_mine_short"), mineCount],
+          <div className={`segtabs cfilter${createdCount ? " c4" : ""}`} role="tablist" aria-label={t("ui_nav_communities")}>
+            {([["all", t("ui_cshow_all"), t("ui_cshow_all"), list.length],
+              ...(createdCount ? [["created", t("ui_cshow_created"), t("ui_cshow_created_short"), createdCount]] : []),
+              ["mine", t("ui_cshow_joined"), t("ui_cshow_joined_short"), mineCount],
               ["new", t("ui_cshow_new"), t("ui_cshow_new"), notMine]] as [Show, string, string, number][]).map(([k, label, short, n]) => (
-              <button key={k} id={`communities-show-${k}`} role="tab" aria-selected={show === k} aria-label={`${label} ${n}`} className={show === k ? "on" : ""} onClick={() => setShow(k)}>
+              <button key={k} id={`communities-show-${k}`} role="tab" aria-selected={view === k} aria-label={`${label} ${n}`} className={view === k ? "on" : ""} onClick={() => setShow(k)}>
                 <span className="cfl">{label}</span><span className="cfs">{short}</span> <span className="cfn">{n}</span>
               </button>
             ))}
@@ -280,8 +288,8 @@ export function CommunitiesPage() {
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
               </section>
             ))}
-            {!groups.length && show === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
-            {!groups.length && show === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
+            {!groups.length && view === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
+            {!groups.length && view === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
           </>
         )}
       </div>

@@ -4073,6 +4073,18 @@ msgstr "Alle"
 msgid "ui_cshow_mine"
 msgstr "Mijn communities"
 
+msgid "ui_cshow_created"
+msgstr "Door mij gemaakt"
+
+msgid "ui_cshow_created_short"
+msgstr "Gemaakt"
+
+msgid "ui_cshow_joined"
+msgstr "Lid van"
+
+msgid "ui_cshow_joined_short"
+msgstr "Lid"
+
 msgid "ui_cshow_new"
 msgstr "Nieuw"
 

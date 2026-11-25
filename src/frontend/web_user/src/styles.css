@@ -1167,6 +1167,9 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 
 /* communities: all / mine / new */
 .segtabs.cfilter { margin: 0 0 16px; max-width: 520px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.segtabs.cfilter.c4 { max-width: 640px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* four tabs on a phone: each as wide as its text, and the row scrolls sideways if they do not fit */
+@media (max-width: 520px) { .segtabs.cfilter.c4 { display: flex; overflow-x: auto; scrollbar-width: none; } .segtabs.cfilter.c4::-webkit-scrollbar { display: none; } .segtabs.cfilter.c4 button { flex: 1 0 auto; padding-inline: 8px; overflow: visible; } }
 .segtabs.cfilter button { min-width: 0; padding-inline: 6px; overflow: hidden; text-overflow: ellipsis; }
 .segtabs.cfilter .cfs { display: none; }
 @media (max-width: 520px) { .segtabs.cfilter .cfl { display: none; } .segtabs.cfilter .cfs { display: inline; } }

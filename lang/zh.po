@@ -4073,6 +4073,18 @@ msgstr "全部"
 msgid "ui_cshow_mine"
 msgstr "我的社区"
 
+msgid "ui_cshow_created"
+msgstr "我创建的"
+
+msgid "ui_cshow_created_short"
+msgstr "我创建的"
+
+msgid "ui_cshow_joined"
+msgstr "已加入"
+
+msgid "ui_cshow_joined_short"
+msgstr "已加入"
+
 msgid "ui_cshow_new"
 msgstr "新社区"
 

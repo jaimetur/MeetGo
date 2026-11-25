@@ -4074,6 +4074,18 @@ msgstr "All"
 msgid "ui_cshow_mine"
 msgstr "My communities"
 
+msgid "ui_cshow_created"
+msgstr "Created by me"
+
+msgid "ui_cshow_created_short"
+msgstr "Created"
+
+msgid "ui_cshow_joined"
+msgstr "Joined"
+
+msgid "ui_cshow_joined_short"
+msgstr "Joined"
+
 msgid "ui_cshow_new"
 msgstr "New"
 

@@ -35,6 +35,7 @@ const PATHS: Record<string, string> = {
   paw: "M12 13c-3 0-5.5 3-5.5 5.5 0 1.5 1.5 2.5 3 2l2.5-.8 2.5.8c1.5.5 3-.5 3-2C17.5 16 15 13 12 13zM5 9.5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M15 9.5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M8.5 5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0M11.5 5a2 2.5 0 1 0 4 0a2 2.5 0 1 0-4 0",
   gamepad: "M6 8h12a4 4 0 0 1 4 4v1.5a3.5 3.5 0 0 1-6.2 2.2L14.5 14h-5l-1.3 1.7A3.5 3.5 0 0 1 2 13.5V12a4 4 0 0 1 4-4zM7 10.5v3M5.5 12h3M15.5 11.5h.01M17.5 13h.01",
   food: "M5 3v8a3 3 0 0 0 6 0V3M8 3v18M18 21V3c-2.5 1-4 3.5-4 7v4h4",
+  chart: "M4 20h16M4 20V4M7.5 15l4-4.5 3 3L20 7.5M16 7.5h4v4",
   search: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM16.5 16.5 21 21",
   chat: "M4 5h16v11H10l-5 4v-4H4z",
   compass: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z",
@@ -272,7 +273,8 @@ const HOBBY_ICONS: [RegExp, string][] = [
   [/network|negocio|business|emprend/, "network"], [/picnic|pícnic/, "basket"], [/acuat|acuát|nata|surf|swim|water|kayak|vela/, "waves"],
   [/aire_libre|aire libre|outdoor|naturaleza|nature/, "trees"], [/foto|photo/, "camera"], [/concier|concert/, "ticket"], [/rock|flamenc|guitar/, "guitar"], [/m[uú]sic|music/, "music"],
   [/arte|art|pint|paint|dibuj/, "palette"], [/perro|mascot|dog|pet|gato/, "paw"], [/juego|game|videojue|gaming/, "gamepad"],
-  [/cocina|comida|food|cook|gastro|tapas|cena/, "food"], [/deporte|sport/, "trophy"],
+  [/cocina|comida|food|cook|gastro|tapas|cena/, "food"], [/econom|wirtschaft|経済|经济/, "chart"], [/pol[ií]ti|政治/, "megaphone"],
+  [/deporte|sport/, "trophy"],
 ];
 
 /** Countries in the reader's language (the name from the settings when the browser cannot say), alphabetically. */

@@ -108,6 +108,8 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Communities: a «Created by me» tab (when you have any) apart from the ones you joined.
+- New built-in interests: Economy and Politics, in the 10 languages and with their icons.
 - The Google Play listing in the 10 languages, updated on its own: its texts (`assets/play-store/listings/`), screenshots and feature graphic per language (`tools/play_listing.py`).
 - The landing's phone and computer screens follow the language chosen on the page, in the 10 languages.
 - The landing's language selector shows a globe and the language's code, as in BodyLens.

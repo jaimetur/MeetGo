@@ -38,4 +38,6 @@ BUILTIN_NAMES: dict[str, dict[str, str]] = {
     'teclado': {"en": "Keyboard", "ca": "Teclat", "de": "Keyboard", "fr": "Clavier", "it": "Tastiera", "pt": "Teclado", "nl": "Keyboard", "ja": "キーボード", "zh": "键盘"},
     'bailes': {"en": "Dancing", "ca": "Balls", "de": "Tanzen", "fr": "Danse", "it": "Ballo", "pt": "Dança", "nl": "Dansen", "ja": "ダンス", "zh": "跳舞"},
     'baloncesto': {"en": "Basketball", "ca": "Bàsquet", "de": "Basketball", "fr": "Basket", "it": "Basket", "pt": "Basquetebol", "nl": "Basketbal", "ja": "バスケットボール", "zh": "篮球"},
+    'economia': {"en": "Economy", "ca": "Economia", "de": "Wirtschaft", "fr": "Économie", "it": "Economia", "pt": "Economia", "nl": "Economie", "ja": "経済", "zh": "经济"},
+    'politica': {"en": "Politics", "ca": "Política", "de": "Politik", "fr": "Politique", "it": "Politica", "pt": "Política", "nl": "Politiek", "ja": "政治", "zh": "政治"},
 }

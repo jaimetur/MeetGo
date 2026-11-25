@@ -4933,6 +4933,18 @@ msgstr "Toutes"
 msgid "ui_cshow_mine"
 msgstr "Mes communautés"
 
+msgid "ui_cshow_created"
+msgstr "Créées par moi"
+
+msgid "ui_cshow_created_short"
+msgstr "Créées"
+
+msgid "ui_cshow_joined"
+msgstr "Rejointes"
+
+msgid "ui_cshow_joined_short"
+msgstr "Rejointes"
+
 msgid "ui_cshow_new"
 msgstr "Nouvelles"
 

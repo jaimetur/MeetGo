@@ -4073,6 +4073,18 @@ msgstr "すべて"
 msgid "ui_cshow_mine"
 msgstr "参加中"
 
+msgid "ui_cshow_created"
+msgstr "作成したもの"
+
+msgid "ui_cshow_created_short"
+msgstr "作成"
+
+msgid "ui_cshow_joined"
+msgstr "参加中"
+
+msgid "ui_cshow_joined_short"
+msgstr "参加中"
+
 msgid "ui_cshow_new"
 msgstr "新しい"
 

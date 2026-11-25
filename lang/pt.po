@@ -4072,6 +4072,18 @@ msgstr "Todas"
 msgid "ui_cshow_mine"
 msgstr "As minhas comunidades"
 
+msgid "ui_cshow_created"
+msgstr "Criadas por mim"
+
+msgid "ui_cshow_created_short"
+msgstr "Criadas"
+
+msgid "ui_cshow_joined"
+msgstr "Inscritas"
+
+msgid "ui_cshow_joined_short"
+msgstr "Inscritas"
+
 msgid "ui_cshow_new"
 msgstr "Novas"
 

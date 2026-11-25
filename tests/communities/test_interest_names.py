@@ -8,11 +8,12 @@ async def test_interest_names_follow_the_language(client, db_session):
     es = {i["slug"]: i["name"] for i in (await client.get("/interests", headers=h)).json()}
     en = {i["slug"]: i["name"] for i in (await client.get("/interests", headers={**h, "X-Lang": "en"})).json()}
     assert es["senderismo"] == "Senderismo" and en["senderismo"] == "Hiking"
+    assert (es["economia"], en["economia"], es["politica"], en["politica"]) == ("Economía", "Economy", "Política", "Politics")
 
     admin = await admin_headers(client)
-    created = (await client.post("/admin/interests", json={"slug": "economia", "name": "Economía", "names": {"en": "Economics", "fr": " "}},
+    created = (await client.post("/admin/interests", json={"slug": "astronomia", "name": "Astronomía", "names": {"en": "Astronomy", "fr": " "}},
                                  headers=admin)).json()
-    assert created["base_name"] == "Economía" and created["names"] == {"en": "Economics"}  # an empty one is not kept
+    assert created["base_name"] == "Astronomía" and created["names"] == {"en": "Astronomy"}  # an empty one is not kept
     fr = {i["slug"]: i["name"] for i in (await client.get("/interests", headers={**h, "X-Lang": "fr"})).json()}
     en = {i["slug"]: i["name"] for i in (await client.get("/interests", headers={**h, "X-Lang": "en"})).json()}
-    assert en["economia"] == "Economics" and fr["economia"] == "Economía"
+    assert en["astronomia"] == "Astronomy" and fr["astronomia"] == "Astronomía"
