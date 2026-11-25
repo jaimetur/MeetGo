@@ -1703,6 +1703,54 @@ msgstr "ズーム"
 msgid "ui_avatar_crop_use"
 msgstr "この写真を使う"
 
+msgid "ui_community_scope"
+msgstr "地域の範囲"
+
+msgid "ui_community_scope_hint"
+msgstr "見つけて参加できる人：あなたの県、地方、または国全体。"
+
+msgid "ui_community_filters_hint"
+msgstr "範囲と年齢を変更できるのは作成者だけです。条件に合わなくなった人はコミュニティから外れ、通知されます。"
+
+msgid "ui_community_filters_confirm_title"
+msgstr "一部の人が退出します"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "この変更で{n}人が条件に合わなくなり、コミュニティから外れます：{names}。通知が届き、以前のメッセージは閲覧のみ可能です。"
+
+msgid "ui_community_filters_confirm"
+msgstr "保存して退出させる"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "変更により{n}人が退出しました"
+
+msgid "ui_community_expelled_filters"
+msgstr "フィルター条件の変更により、このコミュニティから退出させられました。以前のメッセージは読めますが、書き込みはできません。"
+
+msgid "err_filters_interest"
+msgstr "このコミュニティは興味の設定に従います（管理）"
+
+msgid "err_filters_owner_only"
+msgstr "変更できるのはコミュニティの作成者だけです"
+
+msgid "err_filters_scope"
+msgstr "その範囲は利用できません"
+
+msgid "err_filters_exclude_owner"
+msgstr "その条件ではあなた自身が外れてしまいます"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "{community}から退出しました"
+
+msgid "email_community_filter_expelled_title"
+msgstr "コミュニティから退出"
+
+msgid "email_community_filter_expelled_body"
+msgstr "フィルター条件の変更により、コミュニティ{community}から退出させられました。以前のメッセージは引き続き読めますが、新しいメッセージは届かず、書き込みもできません。"
+
+msgid "email_community_filter_expelled_button"
+msgstr "チャットを見る"
+
 msgid "ui_info"
 msgstr "情報"
 

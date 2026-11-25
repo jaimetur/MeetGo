@@ -248,7 +248,9 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
       <div className="typing" aria-live="polite">
         {typingNames.length ? (<><span className="dots"><i /><i /><i /></span>{typingText(typingNames)}</>) : null}
       </div>
-      {conv.banned ? (
+      {conv.read_only ? (
+        <div className="readonly"><Icon name="shield" /><span>{t("ui_community_expelled_filters")}</span></div>
+      ) : conv.banned ? (
         <div className="readonly"><Icon name="shield" /><span>{t("err_banned_here")}</span></div>
       ) : readOnly ? (
         <div className="readonly"><Icon name="info" /><span className="grow">{t("ui_read_only")}</span><button className="btn pri sm" onClick={() => setState({ paywall: true })}>{t("ui_subscribe")}</button></div>

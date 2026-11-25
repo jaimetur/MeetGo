@@ -1702,6 +1702,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Utiliser la photo"
 
+msgid "ui_community_scope"
+msgstr "Zone géographique"
+
+msgid "ui_community_scope_hint"
+msgstr "Qui peut la trouver et la rejoindre : ta province, ta région ou tout le pays."
+
+msgid "ui_community_filters_hint"
+msgstr "Seul le créateur peut changer la zone et les âges. Qui ne correspond plus quitte la communauté et en est averti."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Certaines personnes vont partir"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "Avec ces changements, {n} personnes ne correspondent plus et quittent la communauté : {names}. Elles sont averties et gardent les messages précédents en lecture seule."
+
+msgid "ui_community_filters_confirm"
+msgstr "Enregistrer et exclure"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "{n} personnes sont parties après le changement"
+
+msgid "ui_community_expelled_filters"
+msgstr "Tu as été exclu de cette communauté à cause d’un changement de ses critères de filtrage. Tu peux lire les messages précédents, mais pas écrire."
+
+msgid "err_filters_interest"
+msgstr "Cette communauté suit les réglages de son centre d’intérêt (Administration)"
+
+msgid "err_filters_owner_only"
+msgstr "Seul le créateur de la communauté peut changer cela"
+
+msgid "err_filters_scope"
+msgstr "Cette zone n’est pas disponible"
+
+msgid "err_filters_exclude_owner"
+msgstr "Avec ces filtres, tu serais toi-même exclu"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "Tu as quitté {community}"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Exclu d’une communauté"
+
+msgid "email_community_filter_expelled_body"
+msgstr "Tu as été exclu de la communauté {community} à cause d’un changement de ses critères de filtrage. Tu peux encore lire les messages précédents, mais tu ne recevras plus les nouveaux et ne pourras plus écrire."
+
+msgid "email_community_filter_expelled_button"
+msgstr "Voir la discussion"
+
 msgid "ui_info"
 msgstr "Infos"
 

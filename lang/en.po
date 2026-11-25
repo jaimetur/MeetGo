@@ -1703,6 +1703,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Use photo"
 
+msgid "ui_community_scope"
+msgstr "Geographic scope"
+
+msgid "ui_community_scope_hint"
+msgstr "Who can find it and join: your province, your region or the whole country."
+
+msgid "ui_community_filters_hint"
+msgstr "Only the creator can change the scope and the ages. Whoever stops fitting leaves the community and is told."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Some people will leave"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "With these changes {n} people stop fitting and leave the community: {names}. They are told and keep the earlier messages, read only."
+
+msgid "ui_community_filters_confirm"
+msgstr "Save and expel"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "{n} people left after the change"
+
+msgid "ui_community_expelled_filters"
+msgstr "You were expelled from this community due to a change in its filter settings. You can read the earlier messages but not write."
+
+msgid "err_filters_interest"
+msgstr "This community follows its interest's settings (Administration)"
+
+msgid "err_filters_owner_only"
+msgstr "Only the community's creator can change this"
+
+msgid "err_filters_scope"
+msgstr "That scope is not available"
+
+msgid "err_filters_exclude_owner"
+msgstr "With those filters you would be left out yourself"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "You left {community}"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Expelled from a community"
+
+msgid "email_community_filter_expelled_body"
+msgstr "You were expelled from the community {community} due to a change in its filter settings. You can still read the earlier messages, but you will not get new ones or be able to write."
+
+msgid "email_community_filter_expelled_button"
+msgstr "See the chat"
+
 msgid "ui_info"
 msgstr "Info"
 

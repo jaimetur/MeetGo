@@ -6,14 +6,14 @@ from datetime import timedelta
 
 from fastapi import HTTPException
 from sqlalchemy import and_, func, or_, select
-from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy.dialects.postgresql import array, insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.i18n import t
 from app.core.models import (
     BoardPost, CommunityRequest, Conversation, ConversationMember, Interest, User, utcnow,
 )
-from app.conversations.service import DEFAULT_RULES, age_fits_sql, fits_age, get_membership, iso, user_age_key
+from app.conversations.service import DEFAULT_RULES, age_fits_sql, fits_age, get_membership, in_scope, iso, scope_sql, user_age_key
 from app.realtime.service import online_ids
 
 ROLE_RANK = {"owner": 0, "admin": 1, "moderator": 2, "member": 3}
@@ -40,7 +40,7 @@ def clean_questions(questions: list[str] | None) -> list[str]:
 
 def in_zone(user: User, conv: Conversation) -> bool:
     """My province, and my age fits (the zone's range, or the community's own age span)."""
-    return conv.province == user.province and fits_age(user, conv)
+    return in_scope(user, conv) and fits_age(user, conv)
 
 
 def active(member: ConversationMember | None) -> bool:
@@ -202,7 +202,8 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "slug": interest.slug if interest else slugify(title),
             "description": c.description,
             "avatar_url": c.avatar_url,
-            "province": c.province,
+            "province": c.scope_label or c.province,
+            "scope_kind": c.scope_kind or "province",
             "age_range": c.age_range,
             "my_zone": in_zone(user, c),
             "access_mode": c.access_mode,
@@ -267,7 +268,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
     if zone:
         provinces, age = zone
         query = select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(
-            Conversation.kind == "channel", Conversation.province.in_(provinces), age_fits_sql(user),
+            Conversation.kind == "channel", or_(Conversation.province.in_(provinces), Conversation.scope_provinces.has_any(array(list(provinces)))), age_fits_sql(user),
             Conversation.access_mode != "invite", interest_visible())
         if len(provinces) == 1:
             await ensure_interest_channels(db, user, (provinces[0], age))
@@ -290,7 +291,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
     if user.bot_role:  # the bots are in every community, of every zone
         query = query.where(Conversation.id.in_(my_ids)).limit(300)
     else:
-        query = query.where(Conversation.province == user.province, age_fits_sql(user))
+        query = query.where(scope_sql(user.province), age_fits_sql(user))
     if mine:
         query = query.where(Conversation.id.in_(my_ids))
     else:

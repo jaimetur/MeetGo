@@ -51,7 +51,7 @@ async def list_conversations(db: AsyncSession = Depends(get_db), user: User = De
 
 @router.get("/conversations/{conv_id}", response_model=dict)
 async def get_conversation(conv_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    conv, member = await require_member(db, conv_id, user)
+    conv, member = await require_member(db, conv_id, user, read_only_ok=True)
     items = await conversations_out(db, user, only_ids=[conv_id])
     if not items:  # hidden direct message: show it anyway when opened explicitly
         member.hidden = False
@@ -287,7 +287,7 @@ async def my_settings(conv_id: int, payload: MemberSettingsIn, db: AsyncSession 
 async def delete_for_me(conv_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     """Deletes the chat only for you: its messages so far are no longer shown to you and it leaves your list until
     someone writes again. The others keep everything, and you stay a member."""
-    conv, member = await require_member(db, conv_id, user)
+    conv, member = await require_member(db, conv_id, user, read_only_ok=True)
     last = conv.last_message_id or 0
     member.cleared_message_id = last
     member.last_read_message_id = max(member.last_read_message_id or 0, last)
@@ -300,7 +300,7 @@ async def delete_for_me(conv_id: int, db: AsyncSession = Depends(get_db), user: 
 
 @router.post("/conversations/{conv_id}/read", response_model=dict)
 async def read(conv_id: int, payload: ReadIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    conv, member = await require_member(db, conv_id, user)
+    conv, member = await require_member(db, conv_id, user, read_only_ok=True)
     return {"last_read_message_id": await mark_read(db, conv, member, payload.message_id)}
 
 

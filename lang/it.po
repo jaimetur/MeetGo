@@ -1703,6 +1703,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Usa la foto"
 
+msgid "ui_community_scope"
+msgstr "Ambito geografico"
+
+msgid "ui_community_scope_hint"
+msgstr "Chi può trovarla e unirsi: la tua provincia, la tua regione o tutto il paese."
+
+msgid "ui_community_filters_hint"
+msgstr "Solo il creatore può cambiare ambito ed età. Chi smette di rientrare esce dalla comunità e viene avvisato."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Alcune persone usciranno"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "Con queste modifiche {n} persone non rientrano più ed escono dalla comunità: {names}. Riceveranno un avviso e conserveranno i messaggi precedenti in sola lettura."
+
+msgid "ui_community_filters_confirm"
+msgstr "Salva ed espelli"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "{n} persone sono uscite dopo la modifica"
+
+msgid "ui_community_expelled_filters"
+msgstr "Sei stato espulso da questa comunità per una modifica dei parametri di filtro. Puoi leggere i messaggi precedenti, ma non scrivere."
+
+msgid "err_filters_interest"
+msgstr "Questa comunità segue le impostazioni del suo interesse (Amministrazione)"
+
+msgid "err_filters_owner_only"
+msgstr "Solo il creatore della comunità può cambiarlo"
+
+msgid "err_filters_scope"
+msgstr "Quell’ambito non è disponibile"
+
+msgid "err_filters_exclude_owner"
+msgstr "Con questi filtri resteresti fuori anche tu"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "Sei uscito da {community}"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Espulso da una comunità"
+
+msgid "email_community_filter_expelled_body"
+msgstr "Sei stato espulso dalla comunità {community} per una modifica dei parametri di filtro. Puoi ancora leggere i messaggi precedenti, ma non riceverai i nuovi né potrai scrivere."
+
+msgid "email_community_filter_expelled_button"
+msgstr "Vedi la chat"
+
 msgid "ui_info"
 msgstr "Info"
 

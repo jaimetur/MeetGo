@@ -415,6 +415,16 @@ class CommunityUpdateIn(BaseModel):
     interest_tags: list[str] | None = Field(default=None, max_length=5)
 
 
+class CommunityFiltersIn(BaseModel):
+    """Who a community made by people admits: where (its province, the group of provinces it is in, or the country)
+    and which ages (none: the creator's age range; or a span, the maximum may be open)."""
+    scope_kind: str = Field(pattern="^(province|region|country)$")
+    age_limit: bool = False
+    min_age: int | None = Field(default=None, ge=18, le=120)
+    max_age: int | None = Field(default=None, ge=18, le=120)
+    dry_run: bool = False
+
+
 class JoinIn(BaseModel):
     answers: list[str] = Field(default_factory=list, max_length=3)
 

@@ -100,7 +100,7 @@ function Login({ onSignedIn, setView }: { onSignedIn: () => Promise<void>; setVi
 function Register({ setView }: { setView: (v: View) => void }) {
   const [settings, setSettings] = useState<any>(null);
   const [form, setForm] = useState({
-    display_name: "", first_name: "", last_name: "", email: "", password: "", dob: "", country: "ES", province: "", cc: "+34", phone: "",
+    display_name: "", first_name: "", last_name: "", email: "", password: "", password2: "", dob: "", country: "ES", province: "", cc: "+34", phone: "",
     accept_dm: true, promo_code: queryParam("code") || "",
   });
   const [error, setError] = useState("");
@@ -113,6 +113,7 @@ function Register({ setView }: { setView: (v: View) => void }) {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.password !== form.password2) return setError(t("ui_password_mismatch"));  // typed twice: no typos
     setBusy(true);
     setError("");
     try {
@@ -141,6 +142,7 @@ function Register({ setView }: { setView: (v: View) => void }) {
       <AliasField id="reg-name" value={form.display_name} onChange={(v) => set("display_name", v)} />
       <label className="fld">{t("ui_email")}<input id="reg-email" className="inp" type="email" autoComplete="email" required value={form.email} onChange={(e) => set("email", e.target.value)} /></label>
       <label className="fld">{t("ui_password_new")}<input id="reg-password" className="inp" type="password" autoComplete="new-password" minLength={6} required value={form.password} onChange={(e) => set("password", e.target.value)} /></label>
+      <label className="fld">{t("ui_password_repeat")}<input id="reg-password2" className="inp" type="password" autoComplete="new-password" minLength={6} required value={form.password2} onChange={(e) => set("password2", e.target.value)} /></label>
       <div className="grid2">
         <label className="fld">{t("ui_dob")}<input id="reg-dob" className="inp" type="date" required value={form.dob} onChange={(e) => set("dob", e.target.value)} /></label>
         <label className="fld">{t("ui_country")}
@@ -203,8 +205,10 @@ function Reset({ token, setView }: { token: string; setView: (v: View) => void }
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
+  const [password2, setPassword2] = useState("");  // typed twice: a typo would lock me out
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (password !== password2) return setError(t("ui_password_mismatch"));
     try {
       await api.resetPassword(token, password);
       setDone(true);
@@ -217,7 +221,8 @@ function Reset({ token, setView }: { token: string; setView: (v: View) => void }
       <h1>{t("ui_reset_title")}</h1>
       {done ? <p className="ok">{t("ui_reset_done")}</p> : (
         <>
-          <label className="fld">{t("ui_password_new")}<input id="reset-password" className="inp" type="password" minLength={6} required value={password} onChange={(e) => setPassword(e.target.value)} /></label>
+          <label className="fld">{t("ui_password_new")}<input id="reset-password" className="inp" type="password" autoComplete="new-password" minLength={6} required value={password} onChange={(e) => setPassword(e.target.value)} /></label>
+          <label className="fld">{t("ui_password_repeat")}<input id="reset-password2" className="inp" type="password" autoComplete="new-password" minLength={6} required value={password2} onChange={(e) => setPassword2(e.target.value)} /></label>
           {error ? <div className="err">{error}</div> : null}
           <button className="btn pri block">{t("ui_save")}</button>
         </>

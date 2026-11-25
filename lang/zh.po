@@ -1703,6 +1703,54 @@ msgstr "缩放"
 msgid "ui_avatar_crop_use"
 msgstr "使用照片"
 
+msgid "ui_community_scope"
+msgstr "地理范围"
+
+msgid "ui_community_scope_hint"
+msgstr "谁可以找到并加入：你的省份、你的大区或整个国家。"
+
+msgid "ui_community_filters_hint"
+msgstr "只有创建者可以更改范围和年龄。不再符合条件的人将离开社区并收到通知。"
+
+msgid "ui_community_filters_confirm_title"
+msgstr "部分成员将离开"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "这些更改将使 {n} 人不再符合条件并离开社区：{names}。他们会收到通知，并可只读保留之前的消息。"
+
+msgid "ui_community_filters_confirm"
+msgstr "保存并移出"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "因更改已有 {n} 人离开"
+
+msgid "ui_community_expelled_filters"
+msgstr "由于筛选条件的更改，你已被移出该社区。你可以阅读之前的消息，但不能发言。"
+
+msgid "err_filters_interest"
+msgstr "该社区遵循其兴趣的设置（管理）"
+
+msgid "err_filters_owner_only"
+msgstr "只有社区创建者可以更改此项"
+
+msgid "err_filters_scope"
+msgstr "该范围不可用"
+
+msgid "err_filters_exclude_owner"
+msgstr "使用这些筛选条件你自己也会被排除"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "你已离开 {community}"
+
+msgid "email_community_filter_expelled_title"
+msgstr "被移出社区"
+
+msgid "email_community_filter_expelled_body"
+msgstr "由于筛选条件的更改，你已被移出社区 {community}。你仍可阅读之前的消息，但不会再收到新消息，也不能发言。"
+
+msgid "email_community_filter_expelled_button"
+msgstr "查看聊天"
+
 msgid "ui_info"
 msgstr "信息"
 

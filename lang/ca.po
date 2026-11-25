@@ -1703,6 +1703,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Fer servir la foto"
 
+msgid "ui_community_scope"
+msgstr "Àmbit geogràfic"
+
+msgid "ui_community_scope_hint"
+msgstr "Qui la pot trobar i unir-s'hi: la teva província, la teva comunitat autònoma o tot el país."
+
+msgid "ui_community_filters_hint"
+msgstr "Només el creador pot canviar l'àmbit i les edats. Qui deixi d'encaixar sortirà de la comunitat i se l'avisarà."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Algunes persones sortiran"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "Amb aquests canvis {n} persones deixaran d'encaixar i sortiran de la comunitat: {names}. Rebran un avís i conservaran els missatges anteriors només per llegir."
+
+msgid "ui_community_filters_confirm"
+msgstr "Desar i expulsar"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "Han sortit {n} persones pel canvi"
+
+msgid "ui_community_expelled_filters"
+msgstr "Has estat expulsat d'aquesta comunitat per un canvi en els paràmetres de filtratge. Pots llegir els missatges anteriors, però no escriure."
+
+msgid "err_filters_interest"
+msgstr "Aquesta comunitat segueix la configuració del seu interès (Administració)"
+
+msgid "err_filters_owner_only"
+msgstr "Només el creador de la comunitat pot canviar això"
+
+msgid "err_filters_scope"
+msgstr "Aquest àmbit no està disponible"
+
+msgid "err_filters_exclude_owner"
+msgstr "Amb aquests filtres tu mateix quedaries fora"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "Has sortit de {community}"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Expulsat d'una comunitat"
+
+msgid "email_community_filter_expelled_body"
+msgstr "Has estat expulsat de la comunitat {community} per un canvi en els paràmetres de filtratge. Pots continuar llegint els missatges anteriors, però ja no rebràs els nous ni podràs escriure."
+
+msgid "email_community_filter_expelled_button"
+msgstr "Veure el xat"
+
 msgid "ui_info"
 msgstr "Informació"
 

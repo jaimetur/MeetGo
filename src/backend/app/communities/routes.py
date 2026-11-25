@@ -11,7 +11,8 @@ from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
 from app.core.models import (
     CommunityInvite, CommunityRequest, Conversation, ConversationMember, Friendship, User, UserBlock, UserInterest, utcnow)
-from app.core.schemas import BanIn, CommunityCreateIn, CommunityInviteIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn
+from app.core.schemas import (
+    BanIn, CommunityCreateIn, CommunityFiltersIn, CommunityInviteIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn)
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
     NEW_COMMUNITY_RETENTION, RETENTION_CHOICES, clean_interest_tags, clean_questions, suggested_communities, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
@@ -560,3 +561,88 @@ async def resolve_invite(invite_id: int, payload: ResolveIn, db: AsyncSession = 
     await db.commit()
     await _changed(db, conv.id, extra=[user.id])
     return {"status": "joined", "community_id": conv.id}
+
+
+# ---------- the creator changes who the community admits (scope and ages) ----------
+
+async def _scope_options(db: AsyncSession, province: str, country: str | None) -> dict[str, dict]:
+    """The scopes a community can have around a province: the province, its group (an autonomous community...) and the
+    country, each with its name and the provinces it covers."""
+    from app.core.app_settings import get_settings_row
+    data = (await get_settings_row(db)).data or {}
+    country = country or "ES"
+    provinces = (data.get("provinces_by_country") or {}).get(country, [])
+    name_of = {p.get("value"): p.get("name") or p.get("value") for p in provinces}
+    out = {"province": {"kind": "province", "value": province, "label": name_of.get(province, province), "provinces": [province]}}
+    group = next((g for g in (data.get("region_groups") or {}).get(country, []) if province in (g.get("regions") or [])), None)
+    if group:
+        out["region"] = {"kind": "region", "value": group.get("value"), "label": group.get("name") or group.get("value"),
+                         "provinces": list(group.get("regions") or [])}
+    cname = next((c.get("name") for c in data.get("countries") or [] if c.get("code") == country), country)
+    if provinces:
+        out["country"] = {"kind": "country", "value": country, "label": cname, "provinces": list(name_of)}
+    return out
+
+
+async def _creator(db: AsyncSession, community_id: int, user: User):
+    conv, member = await get_community(db, community_id, user)
+    if conv.interest_id:  # interest communities follow the interest's settings (Administration)
+        raise HTTPException(400, t("err_filters_interest"))
+    if not (active(member) and member.role == "owner"):
+        raise HTTPException(403, t("err_filters_owner_only"))
+    return conv, member
+
+
+@router.get("/communities/{community_id}/filters", response_model=dict)
+async def get_filters(community_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    conv, _ = await _creator(db, community_id, user)
+    options = await _scope_options(db, user.province, user.country)
+    return {"scope_kind": conv.scope_kind or "province", "age_limit": conv.min_age is not None or conv.max_age is not None,
+            "min_age": conv.min_age, "max_age": conv.max_age, "age_range": conv.age_range,
+            "options": [{k: v for k, v in o.items() if k != "provinces"} for o in options.values()]}
+
+
+@router.post("/communities/{community_id}/filters", response_model=dict)
+async def set_filters(community_id: int, payload: CommunityFiltersIn, db: AsyncSession = Depends(get_db),
+                      user: User = Depends(require_write_access)):
+    """Change the scope and ages. Whoever no longer fits is expelled: they keep the chat read only up to now, get
+    nothing new and are told why. With dry_run, only who would be expelled."""
+    from types import SimpleNamespace
+    conv, _ = await _creator(db, community_id, user)
+    options = await _scope_options(db, user.province, user.country)
+    scope = options.get(payload.scope_kind)
+    if not scope:
+        raise HTTPException(400, t("err_filters_scope"))
+    min_age, max_age = (payload.min_age or 18, payload.max_age) if payload.age_limit else (None, None)
+    if min_age is not None and max_age is not None and min_age > max_age:
+        raise HTTPException(400, t("err_age_span"))
+    wide = payload.scope_kind != "province"
+    new = SimpleNamespace(province=conv.province, age_range=conv.age_range, min_age=min_age, max_age=max_age,
+                          scope_provinces=scope["provinces"] if wide else None)
+    if not in_zone(user, new):
+        raise HTTPException(400, t("err_filters_exclude_owner"))
+    rows = (await db.execute(select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
+        ConversationMember.conversation_id == conv.id, ConversationMember.banned.is_(False), User.bot_role.is_(None)))).all()
+    leaving = [(m, u) for m, u in rows if not m.away and not in_zone(u, new)]
+    if payload.dry_run:
+        return {"expelled": len(leaving), "names": [u.shown_name for _, u in leaving][:20]}
+    conv.min_age, conv.max_age = min_age, max_age
+    conv.scope_kind, conv.scope_value = (payload.scope_kind, scope["value"]) if wide else (None, None)
+    conv.scope_label, conv.scope_provinces = (scope["label"], scope["provinces"]) if wide else (None, None)
+    for m, u in rows:  # away because of a zone change, and fitting now: back (not those expelled by the filters)
+        if m.away and m.expelled_message_id is None and in_zone(u, conv):
+            m.away = False
+    for m, _ in leaving:
+        m.away, m.expelled_message_id = True, conv.last_message_id or 0
+    await db.commit()
+    if leaving:
+        title = (await communities_out(db, user, [conv]))[0]["title"]
+        people = [u for _, u in leaving]
+        params = {"community": title}
+        path = f"/app/c/{conv.id}"
+        push_notice(people, "community.expelled", "email_community_filter_expelled", params, path)
+        for u in people:
+            await notify_email.notify(db, u, None, "email_community_filter_expelled", params, path)
+        await realtime.publish([u.id for u in people], {"type": "conversation.changed", "conversation_id": conv.id})
+    await _changed(db, conv.id)
+    return {**await _out(db, user, conv), "expelled": len(leaving)}

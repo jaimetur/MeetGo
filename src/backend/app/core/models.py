@@ -257,6 +257,12 @@ class Conversation(Base):
     legacy_dm_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)
     # Communities (channels): who joins (open | request | invite) and who publishes on the board (open | admins).
     access_mode: Mapped[str] = mapped_column(String(16), default="open", server_default="open")
+    # Where a community made by people admits members (its creator chooses): its province (scope_kind None), a group
+    # of provinces (an autonomous community...) or the whole country; scope_provinces lists the provinces it covers.
+    scope_kind: Mapped[str | None] = mapped_column(String(16), nullable=True)  # province | region | country
+    scope_value: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    scope_label: Mapped[str | None] = mapped_column(String(96), nullable=True)
+    scope_provinces: Mapped[list | None] = mapped_column(JSONB, nullable=True)
     board_mode: Mapped[str] = mapped_column(String(16), default="open", server_default="open")
     __table_args__ = (UniqueConstraint("province", "age_range", "interest_id", name="uq_channel_key"),)
 
@@ -284,6 +290,9 @@ class ConversationMember(Base):
     email_notified_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
     # Channel of a zone the person has left: kept (with its role) but hidden, silent and read-only until they return.
     away: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    # Expelled because the community's filters (ages, scope) changed and no longer fit: the chat stays, read only, up to
+    # this message; nothing new reaches them.
+    expelled_message_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     # The person deleted the chat for themselves: messages up to this one are not shown to them.
     cleared_message_id: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
 

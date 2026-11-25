@@ -1703,6 +1703,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Foto verwenden"
 
+msgid "ui_community_scope"
+msgstr "Geografischer Bereich"
+
+msgid "ui_community_scope_hint"
+msgstr "Wer sie finden und beitreten kann: deine Provinz, deine Region oder das ganze Land."
+
+msgid "ui_community_filters_hint"
+msgstr "Nur der Ersteller kann Bereich und Alter ändern. Wer nicht mehr passt, verlässt die Community und wird benachrichtigt."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Einige Leute werden austreten"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "Mit diesen Änderungen passen {n} Personen nicht mehr und verlassen die Community: {names}. Sie werden benachrichtigt und behalten die früheren Nachrichten nur zum Lesen."
+
+msgid "ui_community_filters_confirm"
+msgstr "Speichern und ausschließen"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "{n} Personen sind nach der Änderung ausgetreten"
+
+msgid "ui_community_expelled_filters"
+msgstr "Du wurdest wegen einer Änderung der Filtereinstellungen aus dieser Community ausgeschlossen. Du kannst die früheren Nachrichten lesen, aber nicht schreiben."
+
+msgid "err_filters_interest"
+msgstr "Diese Community folgt den Einstellungen ihres Interesses (Verwaltung)"
+
+msgid "err_filters_owner_only"
+msgstr "Nur der Ersteller der Community kann das ändern"
+
+msgid "err_filters_scope"
+msgstr "Dieser Bereich ist nicht verfügbar"
+
+msgid "err_filters_exclude_owner"
+msgstr "Mit diesen Filtern wärst du selbst ausgeschlossen"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "Du hast {community} verlassen"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Aus einer Community ausgeschlossen"
+
+msgid "email_community_filter_expelled_body"
+msgstr "Du wurdest wegen einer Änderung der Filtereinstellungen aus der Community {community} ausgeschlossen. Du kannst die früheren Nachrichten weiter lesen, bekommst aber keine neuen und kannst nicht schreiben."
+
+msgid "email_community_filter_expelled_button"
+msgstr "Chat ansehen"
+
 msgid "ui_info"
 msgstr "Info"
 

@@ -1703,6 +1703,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Foto gebruiken"
 
+msgid "ui_community_scope"
+msgstr "Geografisch bereik"
+
+msgid "ui_community_scope_hint"
+msgstr "Wie hem kan vinden en lid kan worden: je provincie, je regio of het hele land."
+
+msgid "ui_community_filters_hint"
+msgstr "Alleen de maker kan bereik en leeftijden wijzigen. Wie niet meer past, verlaat de community en krijgt bericht."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Sommige mensen gaan eruit"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "Met deze wijzigingen passen {n} mensen niet meer en verlaten ze de community: {names}. Ze krijgen bericht en houden de eerdere berichten alleen-lezen."
+
+msgid "ui_community_filters_confirm"
+msgstr "Opslaan en verwijderen"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "{n} mensen zijn na de wijziging vertrokken"
+
+msgid "ui_community_expelled_filters"
+msgstr "Je bent uit deze community verwijderd door een wijziging van de filterinstellingen. Je kunt eerdere berichten lezen, maar niet schrijven."
+
+msgid "err_filters_interest"
+msgstr "Deze community volgt de instellingen van haar interesse (Beheer)"
+
+msgid "err_filters_owner_only"
+msgstr "Alleen de maker van de community kan dit wijzigen"
+
+msgid "err_filters_scope"
+msgstr "Dat bereik is niet beschikbaar"
+
+msgid "err_filters_exclude_owner"
+msgstr "Met die filters val je er zelf buiten"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "Je hebt {community} verlaten"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Verwijderd uit een community"
+
+msgid "email_community_filter_expelled_body"
+msgstr "Je bent uit de community {community} verwijderd door een wijziging van de filterinstellingen. Je kunt eerdere berichten nog lezen, maar krijgt geen nieuwe meer en kunt niet schrijven."
+
+msgid "email_community_filter_expelled_button"
+msgstr "Chat bekijken"
+
 msgid "ui_info"
 msgstr "Info"
 

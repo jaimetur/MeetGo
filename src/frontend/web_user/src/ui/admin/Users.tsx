@@ -177,6 +177,7 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
   const [freeDate, setFreeDate] = useState(() => (user?.plan?.kind === "gift" && user.plan.until ? madridYmd(user.plan.until) : ""));
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [password2, setPassword2] = useState("");  // the new password, typed again
   const isNew = !user;
   const self = !!user && user.id === me?.id;
 
@@ -209,6 +210,7 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
   });
 
   const saveData = () => run(async () => {
+    if (form.password !== password2) throw new Error(t("ui_password_mismatch"));  // typed twice: no typos
     const payload: Record<string, unknown> = { ...form };
     if (!form.password) delete payload.password;
     if (isNew) {
@@ -220,6 +222,7 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
     const updated = await api.updateUser(user!.id, payload);
     onChanged({ ...user!, ...updated });
     setForm((f) => ({ ...f, password: "" }));
+    setPassword2("");
     toast(a("ud_saved"));
   });
 
@@ -338,6 +341,11 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
               <Field label={a("ud_password")} hint={isNew ? undefined : a("ud_password_hint")}>
                 <input className="inp" type="password" autoComplete="new-password" value={form.password} onChange={(e) => set("password", e.target.value)} />
               </Field>
+              {form.password ? (
+                <Field label={t("ui_password_repeat")}>
+                  <input className="inp" type="password" autoComplete="new-password" value={password2} onChange={(e) => setPassword2(e.target.value)} />
+                </Field>
+              ) : null}
             </div>
             <button id="adm-u-save" className="btn pri" disabled={busy} onClick={saveData}>{isNew ? a("ud_create") : a("ud_save")}</button>
           </section>

@@ -73,8 +73,18 @@ def age_fits_sql(user: User):
     )
 
 
+def in_scope(user: User, conv: Conversation) -> bool:
+    """The person's province is in the community's scope: its province, or the provinces its creator widened it to."""
+    return user.province in (conv.scope_provinces or [conv.province])
+
+
+def scope_sql(province: str):
+    """SQL: communities whose scope includes this province."""
+    return or_(Conversation.province == province, Conversation.scope_provinces.contains([province]))
+
+
 def can_join_channel(user: User, conv: Conversation) -> bool:
-    if conv.province != user.province:
+    if not in_scope(user, conv):
         return False
     try:
         age = age_from_dob(user.dob)
@@ -91,10 +101,14 @@ async def get_membership(db: AsyncSession, conversation_id: int, user_id: int) -
     return res.scalar_one_or_none()
 
 
-async def require_member(db: AsyncSession, conversation_id: int, user: User) -> tuple[Conversation, ConversationMember]:
+async def require_member(db: AsyncSession, conversation_id: int, user: User,
+                         read_only_ok: bool = False) -> tuple[Conversation, ConversationMember]:
+    """The conversation and my membership. `read_only_ok`: also when I was expelled by a change of the community's
+    filters (I still read what was written until then)."""
     conv = await db.get(Conversation, conversation_id)
     member = await get_membership(db, conversation_id, user.id) if conv else None
-    if not conv or not member or member.away:  # away: a channel of a zone the person has left
+    expelled = bool(member and member.expelled_message_id is not None)
+    if not conv or not member or (member.away and not (read_only_ok and expelled)):  # away: a zone the person has left
         raise HTTPException(404, t("err_conversation_not_found"))
     return conv, member
 
@@ -138,6 +152,7 @@ async def join(db: AsyncSession, conv: Conversation, user_id: int, role: str = "
             member.hidden = False
         if member.away:  # back in that zone: the membership returns as it was
             member.away = False
+        member.expelled_message_id = None  # joining again after being expelled by a change of filters
         return member
     member = ConversationMember(
         conversation_id=conv.id, user_id=user_id, role=role,
@@ -178,7 +193,8 @@ async def move_channels_to_zone(db: AsyncSession, user: User, old_province: str,
         Conversation, Conversation.id == ConversationMember.conversation_id).where(
         ConversationMember.user_id == user.id, Conversation.kind == "channel"))
     for member, conv in res.all():
-        member.away = not (conv.province == user.province and fits_age(user, conv))
+        if member.expelled_message_id is None:  # expelled ones stay out (read only)
+            member.away = not (in_scope(user, conv) and fits_age(user, conv))
 
 
 # ---------- direct messages ----------
@@ -207,7 +223,8 @@ async def dm_between(db: AsyncSession, a: int, b: int, create: bool = True) -> C
 
 async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | None = None) -> list[dict]:
     q = select(ConversationMember, Conversation).join(Conversation, Conversation.id == ConversationMember.conversation_id).where(
-        ConversationMember.user_id == user.id, ConversationMember.hidden.is_(False), ConversationMember.away.is_(False))
+        ConversationMember.user_id == user.id, ConversationMember.hidden.is_(False),
+        or_(ConversationMember.away.is_(False), ConversationMember.expelled_message_id.is_not(None)))  # expelled: read only
     if only_ids is not None:
         q = q.where(Conversation.id.in_(only_ids))
     rows = (await db.execute(q)).all()
@@ -284,16 +301,21 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
         last = last_msgs.get(conv.last_message_id or 0)
         if last and last.id <= (member.cleared_message_id or 0):
             last = None
+        expelled = member.expelled_message_id is not None
+        if expelled and last and last.id > member.expelled_message_id:  # nothing written after the expulsion
+            last = None
         other = others.get(conv.id)
         item = conversation_base(conv, member, interests.get(conv.interest_id), other, online,
                                  last_seen_shown(user, other, bool(other and other.id in friends)))
         item.update({
             "member_count": counts.get(conv.id, 0),
-            "unread_count": min(unread.get(conv.id, 0), 999),
-            "mention_count": mentions.get(conv.id, 0),
+            "unread_count": 0 if expelled else min(unread.get(conv.id, 0), 999),
+            "mention_count": 0 if expelled else mentions.get(conv.id, 0),
             "last_message": {**last_message_out(last, senders.get(last.sender_id) if last else None,
                                                 bool(last and last.id in attach_ids)), "voice": last.id in voice_ids} if last else None,
         })
+        if expelled:
+            item["last_message_at"] = iso(last.created_at) if last else None
         out.append(item)
     out.sort(key=lambda c: (not c["pinned"], -(_ts(c["last_message_at"]))), reverse=False)
     return out
@@ -327,7 +349,7 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
             ages = f"{conv.min_age or 18}–{conv.max_age}" if conv.max_age is not None else f"{conv.min_age}+"
         else:
             ages = AGE_LABELS.get(conv.age_range or "", conv.age_range or "")
-        subtitle = f"{conv.province} · {ages}"
+        subtitle = f"{conv.scope_label or conv.province} · {ages}"
     elif conv.kind == "dm":
         title = other.shown_name if other else "—"
         slug = None
@@ -343,8 +365,10 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
         "slug": slug,
         "subtitle": subtitle,
         "avatar_url": conv.avatar_url if conv.kind != "dm" else (other.avatar_url if other else None),
-        "province": conv.province,
+        "province": conv.scope_label or conv.province,
         "age_range": conv.age_range,
+        # expelled by a change of the community's filters: the chat stays, read only
+        "read_only": member.expelled_message_id is not None,
         "min_age": conv.min_age,
         "max_age": conv.max_age,
         "interest": {"id": interest.id, "slug": interest.slug, "name": interest.name} if interest else None,

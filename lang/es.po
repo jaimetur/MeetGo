@@ -1703,6 +1703,54 @@ msgstr "Zoom"
 msgid "ui_avatar_crop_use"
 msgstr "Usar foto"
 
+msgid "ui_community_scope"
+msgstr "Ámbito geográfico"
+
+msgid "ui_community_scope_hint"
+msgstr "Quién puede encontrarla y unirse: tu provincia, tu comunidad autónoma o todo el país."
+
+msgid "ui_community_filters_hint"
+msgstr "Solo el creador puede cambiar el ámbito y las edades. Quien deje de encajar saldrá de la comunidad y se le avisará."
+
+msgid "ui_community_filters_confirm_title"
+msgstr "Algunas personas saldrán"
+
+msgid "ui_community_filters_confirm_body"
+msgstr "Con estos cambios {n} personas dejarán de encajar y saldrán de la comunidad: {names}. Recibirán un aviso y conservarán los mensajes anteriores solo para leer."
+
+msgid "ui_community_filters_confirm"
+msgstr "Guardar y expulsar"
+
+msgid "ui_community_filters_expelled_toast"
+msgstr "Han salido {n} personas por el cambio"
+
+msgid "ui_community_expelled_filters"
+msgstr "Fuiste expulsado de esta comunidad debido a un cambio en los parámetros de filtrado. Puedes leer los mensajes anteriores, pero no escribir."
+
+msgid "err_filters_interest"
+msgstr "Esta comunidad sigue la configuración de su interés (Administración)"
+
+msgid "err_filters_owner_only"
+msgstr "Solo el creador de la comunidad puede cambiar esto"
+
+msgid "err_filters_scope"
+msgstr "Ese ámbito no está disponible"
+
+msgid "err_filters_exclude_owner"
+msgstr "Con esos filtros tú mismo quedarías fuera"
+
+msgid "email_community_filter_expelled_subject"
+msgstr "Has salido de {community}"
+
+msgid "email_community_filter_expelled_title"
+msgstr "Expulsado de una comunidad"
+
+msgid "email_community_filter_expelled_body"
+msgstr "Has sido expulsado de la comunidad {community} debido a un cambio en los parámetros de filtrado. Puedes seguir leyendo los mensajes anteriores, pero ya no recibirás los nuevos ni podrás escribir."
+
+msgid "email_community_filter_expelled_button"
+msgstr "Ver el chat"
+
 msgid "ui_info"
 msgstr "Información"
 

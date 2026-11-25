@@ -308,17 +308,45 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
   const interest = community?.kind === "interest";
   const [busy, setBusy] = useState(false);
   const set = (p: Partial<typeof form>) => setForm((f) => ({ ...f, ...p }));
+  // Only the creator changes who the community admits (where and which ages); whoever stops fitting is expelled
+  const owner = !!community && !interest && community.role === "owner";
+  const [filters, setFilters] = useState<Awaited<ReturnType<typeof api.communityFilters>> | null>(null);
+  const [scope, setScope] = useState("province");
+  const [expel, setExpel] = useState<{ n: number; names: string[] } | null>(null);
+  useEffect(() => {
+    if (!owner || !community) return;
+    api.communityFilters(community.id).then((f) => {
+      setFilters(f);
+      setScope(f.scope_kind);
+      set({ ageLimit: f.age_limit, min_age: f.min_age != null ? String(f.min_age) : String(Math.max(18, myAge - 5)), max_age: f.age_limit ? (f.max_age != null ? String(f.max_age) : "") : String(myAge + 5) });
+    }).catch(() => undefined);
+  }, [owner, community?.id]);
   const minAge = Number(form.min_age) || 18;
   const maxAge = form.max_age.trim() ? Number(form.max_age) : null;
   const ageWrong = form.ageLimit && (minAge > myAge || (maxAge != null && (maxAge < myAge || minAge > maxAge)));
-  async function save() {
+  const filterBody = () => ({ scope_kind: scope, age_limit: form.ageLimit, min_age: form.ageLimit ? minAge : null, max_age: form.ageLimit ? maxAge : null });
+  const filtersChanged = () => !!filters && (scope !== filters.scope_kind || form.ageLimit !== filters.age_limit
+    || (form.ageLimit && (minAge !== (filters.min_age ?? 18) || maxAge !== filters.max_age)));
+  async function save(confirmed = false) {
     setBusy(true);
     try {
+      // a change of who it admits that leaves people out: say who first
+      if (owner && community && filtersChanged() && !confirmed) {
+        const dry = await api.setCommunityFilters(community.id, { ...filterBody(), dry_run: true });
+        if (dry.expelled > 0) {
+          setExpel({ n: dry.expelled, names: dry.names || [] });
+          return;
+        }
+      }
       const questions = form.access_mode === "request" ? form.questions.map((q) => q.trim()).filter(Boolean) : [];
       const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions,
         ...(interest ? {} : { retention_days: form.retention, interest_tags: form.tags }) };
       if (community) {
-        const c = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
+        let c: Community & { expelled?: number } = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
+        if (owner && filtersChanged()) {
+          c = await api.setCommunityFilters(community.id, filterBody());
+          if (c.expelled) toast(t("ui_community_filters_expelled_toast", { n: c.expelled }));
+        }
         toast(t("ui_saved"));
         onSaved?.(c);
         loadMyCommunities();
@@ -344,7 +372,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     <Modal title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
       <>
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
-        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || (!community && ageWrong)} onClick={save}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
+        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || ((!community || owner) && ageWrong)} onClick={() => save()}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
       </>
     )}>
       {!community ? <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_create_lead")}</p> : null}
@@ -365,7 +393,13 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
           <small className="muted">{t("ui_community_questions_hint")}</small>
         </div>
       ) : null}
-      {!community ? (
+      {owner && filters ? (
+        <div className="fld"><span>{t("ui_community_scope")}</span>
+          <Seg value={scope} onChange={setScope} label={t("ui_community_scope")} options={filters.options.map((o) => [o.kind, o.label] as [string, string])} />
+          <small className="muted">{t("ui_community_scope_hint")}</small>
+        </div>
+      ) : null}
+      {!community || (owner && filters) ? (
         <>
           <label className="tgl" htmlFor="cm-age-limit">
             <span className="grow">{t("ui_community_age_limit")}<small>{t("ui_community_age_limit_hint", { age: myAge })}</small></span>
@@ -383,6 +417,12 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         </>
       ) : community.min_age != null || community.max_age != null ? (
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
+      ) : null}
+      {owner ? <small className="muted">{t("ui_community_filters_hint")}</small> : null}
+      {expel ? (
+        <ConfirmModal title={t("ui_community_filters_confirm_title")} danger confirm={t("ui_community_filters_confirm")}
+          body={t("ui_community_filters_confirm_body", { n: expel.n, names: expel.names.join(", ") + (expel.n > expel.names.length ? "…" : "") })}
+          onClose={() => { setExpel(null); setBusy(false); }} onConfirm={() => { setExpel(null); return save(true); }} />
       ) : null}
       {!interest ? (
         <div className="fld"><span>{t("ui_community_interests")}</span>

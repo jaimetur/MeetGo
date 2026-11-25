@@ -21,9 +21,11 @@ async def list_messages(conv_id: int, before_id: int | None = None, after_id: in
                         around_id: int | None = None, thread_root_id: int | None = None, limit: int = 50,
                         db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     """A page of the main conversation, or of one thread. Pages go backwards with before_id."""
-    conv, member = await require_member(db, conv_id, user)
+    conv, member = await require_member(db, conv_id, user, read_only_ok=True)
     limit = max(1, min(limit, 100))
     base = select(Message).where(Message.conversation_id == conv.id)
+    if member.expelled_message_id is not None:  # expelled by a change of filters: what was written until then
+        base = base.where(Message.id <= member.expelled_message_id)
     if member.cleared_message_id:
         base = base.where(Message.id > member.cleared_message_id)
     if thread_root_id:

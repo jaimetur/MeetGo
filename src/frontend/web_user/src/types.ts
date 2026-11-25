@@ -47,6 +47,7 @@ export type Conversation = {
   age_range: string | null;
   min_age?: number | null;
   max_age?: number | null;
+  read_only?: boolean;  // expelled by a change of the community's filters: the chat stays, read only
   interest: { id: number; slug: string; name: string } | null;
   other_user: (UserSummary & { online: boolean; last_seen_at?: string | null }) | null;
   role: string;

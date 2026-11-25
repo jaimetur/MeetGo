@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
+- A new password is typed twice (sign-up, «Forgot your password» and a person's card in Administration), so a typo cannot lock anyone out.
+- The creator of a community can change, in «Edit», its geographic scope (its province, its autonomous community or the whole country) and its ages. Before saving they are told who would no longer fit; those people are expelled with a notice («expelled due to a change in the filter settings») and keep the earlier messages read only, with nothing new and without writing.
 - Uploading an avatar photo opens a frame to choose the part that is kept: drag the photo, zoom with the slider, the mouse wheel or two fingers.
 - Communities: an «Invite» button (owner and administrators) with the invitation link and a list to invite people registered in MeetGo (friends and people of the zone whose age fits); they get the invitation in People → Requests, with a notice and an email, and accept or decline it. The settings button now says «Edit».
 - An age span can leave the maximum empty («From 30»): any age from the minimum fits. The age fields can be emptied while typing.
