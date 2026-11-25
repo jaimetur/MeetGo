@@ -1,8 +1,10 @@
-"""Send the store screenshots in assets/play-store/<device>/<lang>/ to the Google Play listing, in every language.
+"""Send the store listing to Google Play in every language: its texts, its screenshots and its feature graphic.
 
-Uses the Google Play Developer API (one "edit": it replaces the phone, 7" and 10" tablet screenshots of each language
-whose translation the listing already has, then commits). The Chromebook ones have no slot in the API: upload them by
-hand. Needs the service account's JSON key (the PLAY_SERVICE_ACCOUNT_JSON secret, see docs/play-store/AUTO_UPLOAD.md)
+Uses the Google Play Developer API (one "edit"). For each language it creates or updates the listing with the texts in
+assets/play-store/listings/<locale>.json (title, shortDescription, fullDescription), replaces the phone, 7" and 10"
+tablet screenshots with those in assets/play-store/<device>/<lang>/ and the feature graphic with
+docs/play-store/feature-1024x500-<es|en>.png, then commits. The Chromebook screenshots have no slot in the API: upload
+them by hand. Needs the service account's JSON key (the PLAY_SERVICE_ACCOUNT_JSON secret, see docs/play-store/AUTO_UPLOAD.md)
 and `pip install google-api-python-client google-auth`:
 
     PLAY_SERVICE_ACCOUNT_JSON="$(cat key.json)" python tools/play_listing.py [--langs es,en] [--dry-run]
@@ -20,6 +22,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SHOTS = ROOT / "assets" / "play-store"
+LISTINGS = SHOTS / "listings"
+FEATURE = ROOT / "docs" / "play-store" / "feature-1024x500-{}.png"
 PACKAGE = "app.meetgo.android"
 # our folder → Play's language code
 LANGS = {"es": "es-ES", "en": "en-US", "ca": "ca", "de": "de-DE", "fr": "fr-FR", "it": "it-IT", "pt": "pt-PT",
@@ -37,7 +41,16 @@ def main() -> int:
 
     plan = {(lang, kind): sorted((SHOTS / folder / lang).glob("*.jpg"))[:8]
             for lang in langs for folder, kind in TYPES.items()}
+    texts = {}
+    for lang in langs:
+        f = LISTINGS / f"{LANGS[lang]}.json"
+        if f.exists():
+            t = json.loads(f.read_text(encoding="utf-8"))
+            assert len(t["title"]) <= 30 and len(t["shortDescription"]) <= 80 and len(t["fullDescription"]) <= 4000, f
+            texts[lang] = t
     if args.dry_run:
+        for lang in langs:
+            print(f"{LANGS[lang]:6} texts: {'yes' if lang in texts else 'NO'}")
         for (lang, kind), files in plan.items():
             print(f"{LANGS[lang]:6} {kind:22} {len(files)} images")
         return 0
@@ -56,23 +69,38 @@ def main() -> int:
     edit = edits.insert(packageName=PACKAGE, body={}).execute()["id"]
     have = {x["language"] for x in edits.listings().list(packageName=PACKAGE, editId=edit).execute().get("listings", [])}
 
+    # the texts first: updating a language that the listing does not have yet adds it
+    for lang, t in texts.items():
+        code = LANGS[lang]
+        edits.listings().update(packageName=PACKAGE, editId=edit, language=code, body={
+            "language": code, "title": t["title"], "shortDescription": t["shortDescription"],
+            "fullDescription": t["fullDescription"]}).execute()
+        have.add(code)
+        print(f"{code:6} texts")
+
     sent = 0
+    images = edits.images()
     for (lang, kind), files in plan.items():
         code = LANGS[lang]
         if code not in have:
-            print(f"{code}: the listing has no translation in this language yet (Play Console → Manage translations); skipped")
+            print(f"{code}: no texts in {LISTINGS.relative_to(ROOT)} and not in the listing yet; skipped")
             continue
         if not files:
             continue
-        images = edits.images()
         images.deleteall(packageName=PACKAGE, editId=edit, language=code, imageType=kind).execute()
         for f in files:
             images.upload(packageName=PACKAGE, editId=edit, language=code, imageType=kind,
                           media_body=MediaFileUpload(str(f), mimetype="image/jpeg")).execute()
         sent += len(files)
         print(f"{code:6} {kind:22} {len(files)} images")
+    for lang in langs:
+        code, graphic = LANGS[lang], FEATURE.format("es" if lang == "es" else "en")
+        if code in have and graphic.exists():
+            images.deleteall(packageName=PACKAGE, editId=edit, language=code, imageType="featureGraphic").execute()
+            images.upload(packageName=PACKAGE, editId=edit, language=code, imageType="featureGraphic",
+                          media_body=MediaFileUpload(str(graphic), mimetype="image/png")).execute()
     edits.commit(packageName=PACKAGE, editId=edit).execute()
-    print(f"Sent {sent} screenshots to the Play listing.")
+    print(f"Sent the texts of {len(texts)} languages and {sent} screenshots to the Play listing.")
     return 0
 
 

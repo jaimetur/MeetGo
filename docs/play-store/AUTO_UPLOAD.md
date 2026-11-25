@@ -53,23 +53,28 @@ Notas:
   se pueda, basta con crear la variable `PLAY_STABLE_TRACK` con `production` (sección 4).
 - Si Play responde que la app tiene cambios pendientes de revisión en la ficha, sube la versión a mano esa vez.
 
-## 3. Capturas de la ficha en cada idioma
+## 3. La ficha en cada idioma: textos y capturas
 
-Play muestra a cada persona las capturas del idioma de su tienda si la ficha tiene ese idioma:
+Play enseña a cada persona la ficha en el idioma de su tienda. La ficha de MeetGo tiene los 10 idiomas de la app y se
+actualiza sola, sin pasar por Play Console:
 
-1. **Las capturas.** Están en `assets/play-store/<dispositivo>/<idioma>/` (`phone`, `tablet7`, `tablet10`,
+1. **Los textos.** Están en `assets/play-store/listings/<idioma>.json` (`es-ES`, `en-US`, `ca`, `de-DE`, `fr-FR`,
+   `it-IT`, `pt-PT`, `nl-NL`, `ja-JP`, `zh-CN`): `title` (30 caracteres como máximo), `shortDescription` (80) y
+   `fullDescription` (4000). Para cambiar la ficha, se cambian ahí.
+2. **Las capturas.** Están en `assets/play-store/<dispositivo>/<idioma>/` (`phone`, `tablet7`, `tablet10`,
    `chromebook`; `es`, `en`, `ca`, `de`, `fr`, `it`, `pt`, `nl`, `ja`, `zh`), numeradas en el orden en que van.
    Se regeneran solas en GitHub en cada push a `main` o a una rama `X.Y.Z` que cambie la web, el contenido de
-   demostración o las traducciones (también a mano con **Actions → Play screenshots → Run workflow**), y se guardan
-   en la misma rama; con cada versión publicada se adjuntan además como `play-screenshots.zip` a su release.
-   Si existe el secreto `PLAY_SERVICE_ACCOUNT_JSON`, `tools/play_listing.py` las sube además a la ficha de Play en
-   cada idioma que ya tenga traducción (teléfono y tablets; las de Chromebook no tienen hueco en la API: a mano).
-2. **Los idiomas de la ficha.** Play Console → **Crecer → Presencia en Store → Ficha principal de Play Store →
-   Gestionar traducciones → Añadir tus propias traducciones**: marca los idiomas (inglés de EE. UU., catalán, alemán,
-   francés, italiano, portugués de Portugal, neerlandés, japonés y chino simplificado).
-3. **En cada idioma** (selector de idioma arriba de la ficha): escribe la descripción traducida y sube en «Gráficos»
-   las capturas de su carpeta: teléfono, tablet de 7", tablet de 10" y Chromebook.
-4. **Guardar**. Los idiomas sin capturas propias usan las del idioma predeterminado (español).
+   demostración, las traducciones o los textos de la ficha (también a mano con **Actions → Play screenshots → Run
+   workflow**), y se guardan en la misma rama; con cada versión publicada se adjuntan además como
+   `play-screenshots.zip` a su release.
+3. **La subida.** Después, con el secreto `PLAY_SERVICE_ACCOUNT_JSON`, `tools/play_listing.py` crea o actualiza cada
+   idioma de la ficha con sus textos, sus capturas de teléfono y de tablet de 7" y 10", y el gráfico de funciones
+   (`docs/play-store/feature-1024x500-es.png` para español, el de `-en` para el resto). Lo ves en el paso «Send them to
+   the Play listing» del workflow.
+4. **A mano solo queda** lo que la API no admite: las capturas de Chromebook (Play Console → Ficha principal →
+   selector de idioma → «Gráficos» → Chromebook, con las de `assets/play-store/chromebook/<idioma>/`).
+
+Para ver qué se mandaría sin conectar: `python tools/play_listing.py --dry-run`.
 
 ## 4. Release final, notas de versión y producción
 
@@ -91,8 +96,8 @@ subida a la prueba cerrada y al pasar a producción):
 - GitHub recibe el bloque entero.
 - Play admite como mucho 500 caracteres por idioma. Si el bloque tiene secciones `#### 📱 Google Play (<idioma>):`, una
   por idioma, se manda su texto tal cual. Si no, se mandan los títulos de sus novedades, mejoras y correcciones, en
-  inglés (el idioma del CHANGELOG). Solo van los idiomas que tiene la ficha, así que sin la traducción `en-US` de la
-  ficha (sección 3) las notas automáticas no llegan. Las secciones 📱 no salen en GitHub.
+  inglés (el idioma del CHANGELOG). Solo van los idiomas que tiene la ficha, y la sección 3 los crea todos. Las
+  secciones 📱 no salen en GitHub.
 
 ```markdown
 #### 📱 Google Play (es-ES):
