@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - Interest names in every language (the built-in ones translated; editable in Administration), and the interest chats titled in the language of whoever reads them.
 - Administration: groups of regions (autonomous communities, states…) can be created, renamed, deleted and assigned to each region.
 - A name equal to its alias shows once («Lucy», not «Lucy (Lucy)»).
-- Google Play store screenshots in all ten languages and for phone, 7" and 10" tablets and Chromebook, taken by tools/play_screenshots.py from a demo account with content in each language, in assets/play-store; a workflow takes them again on demand and attaches them to each release. The Android workflow uploads each build to Play's internal testing by itself once the PLAY_SERVICE_ACCOUNT_JSON secret exists (docs/play-store/AUTO_UPLOAD.md).
+- Google Play store screenshots in all ten languages and for phone, 7" and 10" tablets and Chromebook, taken by tools/play_screenshots.py from a demo account with content in each language, in assets/play-store; a workflow takes them again on demand and attaches them to each release. The Android workflow uploads each build of a release branch to Play by itself once the PLAY_SERVICE_ACCOUNT_JSON secret exists (docs/play-store/AUTO_UPLOAD.md).
 - Privacy policy and terms updated for the new data and features; «About MeetGo» shows © JTG Cloud Services.
 - The tables of version 0.1 (rooms and direct messages), kept for safety after their data moved, are removed.
 - A new password is typed twice (sign-up, «Forgot your password» and a person's card in Administration), so a typo cannot lock anyone out.
@@ -108,7 +108,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
-- Google Play shows the repository's version (versionName = the release X.Y.Z, versionCode = the build number), every Android build of main or a release branch is uploaded to the track in the `PLAY_TRACK` variable (closed testing by default), and the Play screenshots are taken again on every relevant push to main or a release branch and sent to the store listing in each language (`tools/play_listing.py`).
+- Google Play shows the repository's version (versionName = the release X.Y.Z, versionCode = the build number), every Android build of a release branch is uploaded to the track in the `PLAY_TRACK` variable (closed testing by default, production once Google allows it), and the Play screenshots are taken again on every relevant push to main or a release branch and sent to the store listing in each language (`tools/play_listing.py`).
 - Communities show an icon of their hobby (hiking, cycling, reading, cinema, football, padel, beach, coffee, travel…) on compact cards and on their cover, also in the chat list. Rules support headings, lists, highlight boxes, bold, italic, underline, colours and emojis, with a formatting toolbar and a preview, and the information panel is easier to read on phones.
 - Installed on the iPhone, the app fills the whole screen (iOS left a strip the height of the status bar empty at the bottom), and the tab bar sits just above the home indicator.
 - Account page reorganised: a card with your photo, name, email and area and the sign-out button always in view, and tabs for profile (about you, your area, privacy and security), interests, notifications and settings.
