@@ -73,7 +73,11 @@ class User(Base):
     phone: Mapped[str | None] = mapped_column(String(64), unique=True, index=True, nullable=True)
     password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
+    # The alias: one word, chosen by the person and unique (case aside); what the others see in chats and lists.
     display_name: Mapped[str] = mapped_column(String(64))
+    # First name and surname(s): asked of everyone (there can be thousands of Javiers); shown in the person's card.
+    first_name: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    last_name: Mapped[str | None] = mapped_column(String(96), nullable=True)
     dob: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD
     age_range: Mapped[AgeRange] = mapped_column(
         Enum(AgeRange, values_callable=lambda obj: [e.value for e in obj], name="agerange"),

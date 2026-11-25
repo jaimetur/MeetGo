@@ -5,7 +5,7 @@ import { chatPath, navigate, queryParam } from "../router";
 import { getState, loadBlocks, loadConversations, loadThread, refreshConversation, toast, useStore } from "../store";
 import type { Conversation, Member, Message } from "../types";
 import { ActionSheet, Composer, MessageItem, type MessageActions } from "./Chat";
-import { Avatar, Icon, convTitle } from "./common";
+import { Avatar, Icon, convTitle, fullName } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ScopeTags } from "./Communities";
 import { useSwipeDown } from "./swipeClose";
@@ -172,6 +172,7 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
         <Avatar user={user} size={48} online={user.online} />
         <div style={{ minWidth: 0 }} className="grow">
           <div className="nm">{user.display_name}</div>
+          {fullName(user) ? <div className="fullnm">{fullName(user)}</div> : null}
           <div className="meta">{[user.province, user.online ? t("ui_online") : t("ui_offline"), member && member.role !== "member" ? t("ui_role_" + member.role) : null].filter(Boolean).join(" · ")}</div>
         </div>
         {onClose ? <button className="iconbtn" onClick={onClose} aria-label={t("ui_close")}><Icon name="x" size="sm" /></button> : null}

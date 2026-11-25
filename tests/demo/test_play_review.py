@@ -9,7 +9,7 @@ from tests.helpers import make_user
 
 
 async def test_fills_the_reviewer_zone_and_runs_again(client, db_session):
-    rev = await make_user(client, db_session, "playreview@example.com", "Play Review")
+    rev = await make_user(client, db_session, "playreview@example.com", "PlayReview")
     out = await seed("playreview@example.com")
     assert out["people"] == 6 and out["communities"] == 3
     again = await seed("PlayReview@example.com")

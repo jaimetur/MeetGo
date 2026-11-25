@@ -12,7 +12,7 @@ from tests.helpers import make_user
 
 
 async def _people(client, db_session, n, dob="1990-05-01"):
-    return [await make_user(client, db_session, f"p{i}.{dob}@example.com", f"P{i}", dob=dob) for i in range(n)]
+    return [await make_user(client, db_session, f"p{i}.{dob}@example.com", f"Person{i}", dob=dob) for i in range(n)]
 
 
 async def test_companions_take_places_and_a_party_waits_whole(client, db_session):
@@ -28,7 +28,7 @@ async def test_companions_take_places_and_a_party_waits_whole(client, db_session
     # Ana brings one fewer: one place frees up, Bea's party of 2 does not fit, Cris goes up
     await client.put(f"/posts/{post['id']}/guests", json={"guests": 1}, headers=ana[0])
     statuses = {a["display_name"]: a["status"] for a in (await client.get(f"/posts/{post['id']}/attendees", headers=owner[0])).json()}
-    assert statuses["P3"] == "going" and statuses["P2"] == "waitlist"
+    assert statuses["Person3"] == "going" and statuses["Person2"] == "waitlist"
 
 
 async def test_online_link_only_for_people_going(client, db_session):

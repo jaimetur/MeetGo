@@ -1607,6 +1607,36 @@ msgstr "Neu laden"
 msgid "ui_update_later"
 msgstr "Später erinnern"
 
+msgid "ui_first_name"
+msgstr "Vorname"
+
+msgid "ui_last_name"
+msgstr "Nachname(n)"
+
+msgid "ui_alias"
+msgstr "Benutzername"
+
+msgid "ui_alias_hint"
+msgstr "Ein Wort (Buchstaben, Ziffern, „_“ oder „.“). Das sehen die anderen, und niemand sonst kann ihn haben."
+
+msgid "ui_complete_profile_title"
+msgstr "Vervollständige dein Profil"
+
+msgid "ui_complete_profile_lead"
+msgstr "Bei MeetGo haben jetzt alle Vor- und Nachnamen, denn es kann Tausende Javiers geben. Dein Nachname erscheint nur in deinem Profil; in Chats sieht man deinen Benutzernamen."
+
+msgid "err_alias_format"
+msgstr "Der Benutzername muss ein Wort mit 3 bis 30 Zeichen sein: Buchstaben, Ziffern, „_“ oder „.“"
+
+msgid "err_alias_taken"
+msgstr "Diesen Benutzernamen hat schon jemand anderes"
+
+msgid "err_first_name"
+msgstr "Gib deinen Vornamen ein"
+
+msgid "err_last_name"
+msgstr "Gib deinen Nachnamen ein"
+
 msgid "ui_info"
 msgstr "Info"
 

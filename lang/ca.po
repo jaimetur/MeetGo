@@ -1607,6 +1607,36 @@ msgstr "Recarregar"
 msgid "ui_update_later"
 msgstr "Recorda-m'ho després"
 
+msgid "ui_first_name"
+msgstr "Nom"
+
+msgid "ui_last_name"
+msgstr "Cognoms"
+
+msgid "ui_alias"
+msgstr "Nom d'usuari"
+
+msgid "ui_alias_hint"
+msgstr "Una sola paraula (lletres, números, «_» o «.»). És el que veuen els altres i ningú més no el pot tenir."
+
+msgid "ui_complete_profile_title"
+msgstr "Completa el teu perfil"
+
+msgid "ui_complete_profile_lead"
+msgstr "Ara a MeetGo tothom té nom i cognoms, perquè hi pot haver milers de Javiers. Els teus cognoms només es veuen a la teva fitxa; als xats es veu el teu nom d'usuari."
+
+msgid "err_alias_format"
+msgstr "El nom d'usuari ha de ser una sola paraula de 3 a 30 caràcters: lletres, números, «_» o «.»"
+
+msgid "err_alias_taken"
+msgstr "Aquest nom d'usuari ja el té una altra persona"
+
+msgid "err_first_name"
+msgstr "Escriu el teu nom"
+
+msgid "err_last_name"
+msgstr "Escriu els teus cognoms"
+
 msgid "ui_info"
 msgstr "Informació"
 

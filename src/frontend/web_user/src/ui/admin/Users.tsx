@@ -6,7 +6,7 @@ import { api as appApi } from "../../api";
 import { api, type Plan, type UserActivity } from "../../../../web_admin/api";
 import { madridYmd, planLabel } from "../../../../web_admin/strings";
 import { toast, useStore } from "../../store";
-import { Avatar, Icon, countryOptions, regionLabel } from "../common";
+import { Avatar, Icon, countryOptions, fullName, regionLabel } from "../common";
 import { SectionHead } from "./AdminPage";
 import { a, ago, duration, fmtDate, fmtDateTime } from "./i18n";
 import { Badge, Choice, Empty, Field, Switch } from "./kit";
@@ -14,6 +14,8 @@ import { Badge, Choice, Empty, Field, Switch } from "./kit";
 export type AdminUser = {
   id: number;
   display_name: string;
+  first_name?: string | null;
+  last_name?: string | null;
   avatar_url?: string | null;
   email?: string | null;
   phone?: string | null;
@@ -72,7 +74,7 @@ export function Users({ initialFilter }: { initialFilter?: string }) {
   const shown = useMemo(() => {
     const needle = q.trim().toLowerCase();
     const fn = FILTERS.find(([k]) => k === filter)![2];
-    const list = (users || []).filter(fn).filter((u) => !needle || [u.display_name, u.email, u.phone, u.province].some((v) => (v || "").toLowerCase().includes(needle)));
+    const list = (users || []).filter(fn).filter((u) => !needle || [u.display_name, fullName(u), u.email, u.phone, u.province].some((v) => (v || "").toLowerCase().includes(needle)));
     const time = (v?: string | null) => (v ? new Date(v).getTime() : 0);
     list.sort((x, y) => sort === "name" ? x.display_name.localeCompare(y.display_name, undefined, { sensitivity: "base" })
       : sort === "seen" ? (Number(!!y.online) - Number(!!x.online)) || time(y.last_seen_at) - time(x.last_seen_at)
@@ -142,7 +144,7 @@ function UserRow({ u, onOpen }: { u: AdminUser; onOpen: () => void }) {
     <button className={"adm-urow" + (blocked(u) ? " dim" : "")} onClick={onOpen}>
       <Avatar user={u} size={44} online={!!u.online} />
       <span className="adm-urow-main">
-        <span className="adm-urow-name"><b>{u.display_name}</b><UserBadges u={u} /></span>
+        <span className="adm-urow-name"><b>{u.display_name}</b>{fullName(u) ? <span className="muted">{fullName(u)}</span> : null}<UserBadges u={u} /></span>
         <span className="adm-urow-meta">{u.email || u.phone || `#${u.id}`}</span>
         {zone ? <span className="adm-urow-meta"><Icon name="place" size="sm" />{zone}</span> : null}
       </span>
@@ -154,11 +156,11 @@ function UserRow({ u, onOpen }: { u: AdminUser; onOpen: () => void }) {
   );
 }
 
-type Form = { display_name: string; email: string; phone: string; dob: string; country: string; province: string; city: string; password: string };
+type Form = { display_name: string; first_name: string; last_name: string; email: string; phone: string; dob: string; country: string; province: string; city: string; password: string };
 
 function formOf(u: AdminUser | null): Form {
   return {
-    display_name: u?.display_name || "", email: u?.email || "", phone: u?.phone || "", dob: u?.dob || "",
+    display_name: u?.display_name || "", first_name: u?.first_name || "", last_name: u?.last_name || "", email: u?.email || "", phone: u?.phone || "", dob: u?.dob || "",
     country: u?.country || "ES", province: u?.province || "", city: u?.city || "", password: "",
   };
 }
@@ -237,6 +239,7 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
           {user ? <Avatar user={user} size={56} online={!!user.online} /> : <span className="adm-stat-ic t-blue"><Icon name="plus" /></span>}
           <div className="grow" style={{ minWidth: 0 }}>
             <h2>{user ? user.display_name : a("us_new")}</h2>
+            {user && fullName(user) ? <div className="adm-sheet-sub"><span>{fullName(user)}</span></div> : null}
             {user ? <div className="adm-sheet-sub">{user.online ? <span className="adm-online">{a("us_online")}</span> : <span>{a("ud_last_seen")}: {ago(user.last_seen_at)}</span>}{z ? <span>{z}</span> : null}</div> : null}
             {user ? <div className="adm-sheet-badges"><UserBadges u={user} />{self ? <Badge tone="teal">{a("ud_self")}</Badge> : null}</div> : null}
           </div>
@@ -313,7 +316,9 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
           <section className="adm-block">
             <h3>{a("ud_data")}</h3>
             <div className="adm-grid">
-              <Field label={t("ui_display_name")}><input className="inp" value={form.display_name} onChange={(e) => set("display_name", e.target.value)} /></Field>
+              <Field label={t("ui_first_name")}><input className="inp" value={form.first_name} onChange={(e) => set("first_name", e.target.value)} /></Field>
+              <Field label={t("ui_last_name")}><input className="inp" value={form.last_name} onChange={(e) => set("last_name", e.target.value)} /></Field>
+              <Field label={t("ui_alias")}><input className="inp" value={form.display_name} autoCapitalize="off" onChange={(e) => set("display_name", e.target.value.replace(/[\s@]/g, ""))} /></Field>
               <Field label={t("ui_email")}><input className="inp" type="email" value={form.email} onChange={(e) => set("email", e.target.value)} /></Field>
               <Field label={t("ui_phone")}><input className="inp" type="tel" value={form.phone} onChange={(e) => set("phone", e.target.value)} /></Field>
               <Field label={t("ui_dob")}><input className="inp" type="date" value={form.dob} onChange={(e) => set("dob", e.target.value)} /></Field>

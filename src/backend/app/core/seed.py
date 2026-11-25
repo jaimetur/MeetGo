@@ -359,7 +359,7 @@ async def ensure_admin(db: AsyncSession) -> None:
     if generated:
         password = secrets.token_urlsafe(18)
     db.add(User(
-        email=email, phone=None, password_hash=hash_password(password), display_name="admin", dob="1980-01-01",
+        email=email, phone=None, password_hash=hash_password(password), display_name="admin", first_name="Admin", last_name="MeetGo", dob="1980-01-01",
         age_range=age_range_from_dob("1980-01-01"), country="ES", province="Madrid", accept_dm=False, bio="",
         role="admin", email_verified=True, password_temp=generated,
     ))

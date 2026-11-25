@@ -1607,6 +1607,36 @@ msgstr "重新加载"
 msgid "ui_update_later"
 msgstr "稍后提醒"
 
+msgid "ui_first_name"
+msgstr "名"
+
+msgid "ui_last_name"
+msgstr "姓"
+
+msgid "ui_alias"
+msgstr "用户名"
+
+msgid "ui_alias_hint"
+msgstr "一个词（字母、数字、“_”或“.”）。其他人看到的就是它，且不能与他人重复。"
+
+msgid "ui_complete_profile_title"
+msgstr "完善你的资料"
+
+msgid "ui_complete_profile_lead"
+msgstr "由于同名的人可能有很多，现在 MeetGo 上每个人都要填写姓名。你的姓氏只显示在个人卡片上；聊天中显示你的用户名。"
+
+msgid "err_alias_format"
+msgstr "用户名必须是 3 到 30 个字符的一个词：字母、数字、“_”或“.”"
+
+msgid "err_alias_taken"
+msgstr "该用户名已被他人使用"
+
+msgid "err_first_name"
+msgstr "请输入你的名"
+
+msgid "err_last_name"
+msgstr "请输入你的姓"
+
 msgid "ui_info"
 msgstr "信息"
 

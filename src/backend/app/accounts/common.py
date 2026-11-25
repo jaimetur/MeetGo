@@ -4,6 +4,8 @@ import re
 from datetime import date
 
 from fastapi import HTTPException
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.i18n import t
 from app.core.models import User
@@ -12,6 +14,31 @@ from app.mail.notify_email import prefs_of
 from app.core.utils import age_range_from_dob
 
 _CALLING_CODES = {"ES": "34", "PT": "351", "FR": "33", "IT": "39", "DE": "49", "GB": "44", "US": "1", "MX": "52", "AR": "54", "CO": "57"}
+
+
+# The alias is one word: letters (any language), digits, "_" and "."; 3 to 30 of them.
+ALIAS_RE = re.compile(r"^[^\W][\w.]{2,29}$")
+
+
+async def clean_alias(db: AsyncSession, value: str | None, user_id: int | None = None) -> str:
+    """The alias as typed (an "@" in front goes), or 400 when it is not one word, or 409 when someone has it."""
+    alias = (value or "").strip().lstrip("@")
+    if not ALIAS_RE.fullmatch(alias) or alias.endswith("."):
+        raise HTTPException(400, t("err_alias_format"))
+    q = select(User.id).where(func.lower(User.display_name) == alias.lower())
+    if user_id is not None:
+        q = q.where(User.id != user_id)
+    if (await db.execute(q)).first():
+        raise HTTPException(409, t("err_alias_taken"))
+    return alias
+
+
+def clean_person_name(value: str | None, max_len: int, err: str) -> str:
+    """A first name or surname(s): not empty, spaces tidied."""
+    name = " ".join((value or "").split())
+    if not name or len(name) > max_len:
+        raise HTTPException(400, t(err))
+    return name
 
 
 def normalize_phone(phone: str, country: str | None = "ES") -> str:
@@ -51,7 +78,7 @@ def user_out(u: User) -> UserOut:
     except Exception:
         ar = u.age_range
     return UserOut(
-        id=u.id, display_name=u.display_name, dob=u.dob, age_range=ar, country=u.country or "ES",
+        id=u.id, display_name=u.display_name, first_name=u.first_name, last_name=u.last_name, dob=u.dob, age_range=ar, country=u.country or "ES",
         province=u.province, city=u.city, accept_dm=u.accept_dm, avatar_url=u.avatar_url, bio=u.bio,
     )
 

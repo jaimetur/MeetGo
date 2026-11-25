@@ -1607,6 +1607,36 @@ msgstr "Reload"
 msgid "ui_update_later"
 msgstr "Remind me later"
 
+msgid "ui_first_name"
+msgstr "First name"
+
+msgid "ui_last_name"
+msgstr "Surname(s)"
+
+msgid "ui_alias"
+msgstr "Username"
+
+msgid "ui_alias_hint"
+msgstr "One word (letters, digits, “_” or “.”). It is what others see, and nobody else can have it."
+
+msgid "ui_complete_profile_title"
+msgstr "Complete your profile"
+
+msgid "ui_complete_profile_lead"
+msgstr "Everyone on MeetGo now has a first name and surname, as there can be thousands of Javiers. Your surname only shows in your card; chats show your username."
+
+msgid "err_alias_format"
+msgstr "The username must be one word of 3 to 30 characters: letters, digits, “_” or “.”"
+
+msgid "err_alias_taken"
+msgstr "Someone else already has that username"
+
+msgid "err_first_name"
+msgstr "Enter your first name"
+
+msgid "err_last_name"
+msgstr "Enter your surname"
+
 msgid "ui_info"
 msgstr "Info"
 

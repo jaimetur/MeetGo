@@ -18,7 +18,10 @@ async def test_admin_login_has_no_built_in_credentials(client):
 
 
 async def test_failed_admin_login_never_promotes_a_regular_account(client, db_session):
-    assert (await register(client, email="mallory@example.com", name="admin", phone="611111111")).status_code == 200
+    # the alias of the administration account cannot be taken (in any case)
+    for name in ("admin", "Admin"):
+        assert (await register(client, email="mallory@example.com", name=name, phone="611111111")).status_code == 409
+    assert (await register(client, email="mallory@example.com", name="mallory", phone="611111111")).status_code == 200
     res = await client.post("/admin/login", json={"username": "admin", "password": "admin"})
     assert res.status_code == 401
     async with db_session() as db:

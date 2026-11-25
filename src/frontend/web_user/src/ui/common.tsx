@@ -125,6 +125,11 @@ export function ConvIcon({ conv, size = 40 }: { conv: Conversation; size?: numbe
   );
 }
 
+/** "Jaime Tur": first name and surnames (shown in the person's card; the alias is what the others see elsewhere). */
+export function fullName(u: { first_name?: string | null; last_name?: string | null } | null | undefined): string {
+  return [u?.first_name, u?.last_name].filter(Boolean).join(" ");
+}
+
 export function convTitle(conv: Conversation): string {
   return conv.kind === "channel" ? `#${conv.slug || conv.title}` : conv.title;
 }

@@ -6,7 +6,7 @@ import { announceActiveConversation, registerServiceWorker, setupNativePush, sub
 import { startRealtime, stopRealtime, setRealtimeHooks } from "../realtime";
 import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } from "../router";
 import { getState, loadBlocks, loadConversations, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
-import { AuthScreen } from "./Auth";
+import { AuthScreen, CompleteProfile } from "./Auth";
 import { ChatView } from "./Chat";
 import { UpdateNotice } from "./UpdateNotice";
 import { HomePage, PostPage, PublishPage } from "./Board";
@@ -357,6 +357,7 @@ function Shell() {
 
       {route.name !== "chat" && !detail ? <InstallHint /> : null}
       {paywall ? <Paywall onClose={() => setState({ paywall: false })} /> : null}
+      {me && !me.bot_role && (!me.first_name || !me.last_name) ? <CompleteProfile me={me} onSaved={(u) => setState({ me: u })} /> : null}
       <ActingAsBar />
       <Toasts />
     </div>

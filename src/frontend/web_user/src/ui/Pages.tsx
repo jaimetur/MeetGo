@@ -9,7 +9,8 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, convTitle, countryOptions, fullName, regionLabel } from "./common";
+import { AliasField } from "./Auth";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
 
@@ -150,7 +151,7 @@ function FindPeople() {
         {res.map((p) => (
           <div key={p.id} className="item">
             <Avatar user={p} size={36} online={p.online} />
-            <div className="grow">{p.display_name}<div className="muted" style={{ fontSize: 12 }}>{p.province}</div></div>
+            <div className="grow">{p.display_name}<div className="muted" style={{ fontSize: 12 }}>{[fullName(p), p.province].filter(Boolean).join(" · ")}</div></div>
             {/* friendship, and a private chat: with friends at once; with others only if they accept private messages */}
             {!p.friend ? (
               p.friend_requested
@@ -240,7 +241,7 @@ export function AccountPage() {
   const subscriptions = useStore((s) => s.subscriptions);
   // Plans only show while subscriptions are on, or for someone who already pays.
   const showPlans = subscriptions || !!billing?.stripe || !!billing?.play;
-  const [form, setForm] = useState({ display_name: me.display_name, bio: me.bio || "", accept_dm: me.accept_dm });
+  const [form, setForm] = useState({ display_name: me.display_name, first_name: me.first_name || "", last_name: me.last_name || "", bio: me.bio || "", accept_dm: me.accept_dm });
   // Zone: province (any time) and date of birth (once); together they decide your channels.
   const [zone, setZone] = useState({ country: me.country || "ES", province: me.province, dob: me.dob });
   const [geo, setGeo] = useState<any>(null);
@@ -367,7 +368,8 @@ export function AccountPage() {
       <div className="acchero">
         <Avatar user={me} size={60} />
         <div className="grow" style={{ minWidth: 0 }}>
-          <div className="acchero-name">{me.display_name}</div>
+          <div className="acchero-name">@{me.display_name}</div>
+          {fullName(me) ? <div className="acchero-meta">{fullName(me)}</div> : null}
           <div className="acchero-meta">{me.email}</div>
           <div className="acchero-meta">{me.province}{ageLabel ? ` · ${ageLabel}` : ""}</div>
         </div>
@@ -408,7 +410,11 @@ export function AccountPage() {
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_section_about")}</h3>
             <AvatarPicker />
-            <label className="fld">{t("ui_display_name")}<input id="acc-name" className="inp" maxLength={64} value={form.display_name} onChange={(e) => setForm({ ...form, display_name: e.target.value })} /></label>
+            <div className="grid2">
+              <label className="fld">{t("ui_first_name")}<input id="acc-first" className="inp" maxLength={64} autoComplete="given-name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} /></label>
+              <label className="fld">{t("ui_last_name")}<input id="acc-last" className="inp" maxLength={96} autoComplete="family-name" value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} /></label>
+            </div>
+            <AliasField id="acc-name" value={form.display_name} onChange={(v) => setForm({ ...form, display_name: v })} />
             <label className="fld">{t("ui_bio")}<textarea id="acc-bio" className="inp" rows={3} maxLength={500} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} /></label>
           </div>
           <div className="box stack">

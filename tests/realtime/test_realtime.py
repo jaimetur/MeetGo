@@ -9,7 +9,7 @@ from app.main import app
 def _user(tc, email, name):
     from tests.helpers import _phone
     _phone[0] += 1
-    assert tc.post("/auth/register", json={"email": email, "phone": str(_phone[0]), "password": "secret123", "display_name": name,
+    assert tc.post("/auth/register", json={"email": email, "phone": str(_phone[0]), "password": "secret123", "display_name": name, "first_name": name, "last_name": "Prueba",
                                            "dob": "1990-01-01", "province": "Madrid"}).status_code == 200
     return email
 

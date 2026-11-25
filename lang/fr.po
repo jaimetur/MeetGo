@@ -1606,6 +1606,36 @@ msgstr "Recharger"
 msgid "ui_update_later"
 msgstr "Me le rappeler plus tard"
 
+msgid "ui_first_name"
+msgstr "Prénom"
+
+msgid "ui_last_name"
+msgstr "Nom(s)"
+
+msgid "ui_alias"
+msgstr "Nom d’utilisateur"
+
+msgid "ui_alias_hint"
+msgstr "Un seul mot (lettres, chiffres, « _ » ou « . »). C’est ce que voient les autres, et personne d’autre ne peut l’avoir."
+
+msgid "ui_complete_profile_title"
+msgstr "Complète ton profil"
+
+msgid "ui_complete_profile_lead"
+msgstr "Sur MeetGo, tout le monde a désormais un prénom et un nom, car il peut y avoir des milliers de Javier. Ton nom n’apparaît que sur ta fiche ; dans les discussions, on voit ton nom d’utilisateur."
+
+msgid "err_alias_format"
+msgstr "Le nom d’utilisateur doit être un seul mot de 3 à 30 caractères : lettres, chiffres, « _ » ou « . »"
+
+msgid "err_alias_taken"
+msgstr "Quelqu’un d’autre a déjà ce nom d’utilisateur"
+
+msgid "err_first_name"
+msgstr "Saisis ton prénom"
+
+msgid "err_last_name"
+msgstr "Saisis ton nom"
+
 msgid "ui_info"
 msgstr "Infos"
 

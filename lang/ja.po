@@ -1607,6 +1607,36 @@ msgstr "再読み込み"
 msgid "ui_update_later"
 msgstr "後で通知"
 
+msgid "ui_first_name"
+msgstr "名"
+
+msgid "ui_last_name"
+msgstr "姓"
+
+msgid "ui_alias"
+msgstr "ユーザー名"
+
+msgid "ui_alias_hint"
+msgstr "1語（文字、数字、「_」または「.」）。他の人に表示され、他の人は同じ名前を使えません。"
+
+msgid "ui_complete_profile_title"
+msgstr "プロフィールを完成させる"
+
+msgid "ui_complete_profile_lead"
+msgstr "同じ名前の人がたくさんいるため、MeetGoでは全員が姓名を登録します。姓はプロフィールカードにのみ表示され、チャットではユーザー名が表示されます。"
+
+msgid "err_alias_format"
+msgstr "ユーザー名は3〜30文字の1語にしてください：文字、数字、「_」または「.」"
+
+msgid "err_alias_taken"
+msgstr "そのユーザー名は既に使われています"
+
+msgid "err_first_name"
+msgstr "名を入力してください"
+
+msgid "err_last_name"
+msgstr "姓を入力してください"
+
 msgid "ui_info"
 msgstr "情報"
 

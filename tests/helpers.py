@@ -8,6 +8,7 @@ _phone = [600000000]
 async def make_user(client, db_session, email, name=None, province="Madrid", dob="1990-05-01", accept_dm=False, **extra):
     _phone[0] += 1
     payload = {"email": email, "phone": str(_phone[0]), "password": "secret123", "display_name": name or email.split("@")[0],
+               "first_name": (name or email.split("@")[0]).split(".")[0], "last_name": "Prueba",
                "dob": dob, "country": "ES", "province": province, "accept_dm": accept_dm, **extra}
     res = await client.post("/auth/register", json=payload)
     assert res.status_code == 200, res.text
@@ -36,7 +37,7 @@ async def befriend(client, a, b):
 
 async def register(client, email="ana@example.com", name="Ana", dob="1990-05-01", phone="612345678", **extra):
     payload = {"email": email, "phone": phone, "password": "secret123", "display_name": name,
-               "dob": dob, "country": "ES", "province": "Madrid", **extra}
+               "first_name": name, "last_name": "Prueba", "dob": dob, "country": "ES", "province": "Madrid", **extra}
     return await client.post("/auth/register", json=payload)
 
 

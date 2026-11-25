@@ -32,8 +32,8 @@ def to(outbox, email):
 
 
 async def test_sign_up_needs_a_real_email_and_sends_the_confirmation(client, outbox):
-    base = {"phone": "611222333", "password": "secret123", "display_name": "Ana", "dob": "1990-01-01",
-            "country": "ES", "province": "Madrid"}
+    base = {"phone": "611222333", "password": "secret123", "display_name": "Ana", "first_name": "Ana",
+            "last_name": "Prueba", "dob": "1990-01-01", "country": "ES", "province": "Madrid"}
     for bad in ("", "ana", "ana@example", "ana@@example.com", "ana example@x.com"):
         res = await client.post("/auth/register", json={**base, "email": bad})
         assert res.status_code == 400, bad
@@ -46,7 +46,7 @@ async def test_sign_up_needs_a_real_email_and_sends_the_confirmation(client, out
 
 async def test_resend_verification_is_limited_and_silent(client, db_session, outbox):
     base = {"email": "leo@example.com", "phone": "611222334", "password": "secret123", "display_name": "Leo",
-            "dob": "1990-01-01", "country": "ES", "province": "Madrid"}
+            "first_name": "Leo", "last_name": "Prueba", "dob": "1990-01-01", "country": "ES", "province": "Madrid"}
     assert (await client.post("/auth/register", json=base)).status_code == 200
     outbox.clear()
     assert (await client.post("/auth/resend-verification", json={"email": "leo@example.com"})).json() == {"ok": True}

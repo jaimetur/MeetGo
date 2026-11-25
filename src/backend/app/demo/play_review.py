@@ -57,7 +57,10 @@ async def _person(db, reviewer: User, key: str, name: str) -> User:
     user = (await db.execute(select(User).where(User.email == email))).scalar_one_or_none()
     if user:
         return user
-    user = User(email=email, phone=None, password_hash=None, display_name=name, dob=reviewer.dob,
+    first, last = name.split(" ", 1)
+    # the alias is one word and unique: the first name, with the account key when someone already has it
+    alias = first if not (await db.execute(select(User.id).where(func.lower(User.display_name) == first.lower()))).first() else f"{first}_{key}"
+    user = User(email=email, phone=None, password_hash=None, display_name=alias, first_name=first, last_name=last, dob=reviewer.dob,
                 age_range=reviewer.age_range, country=reviewer.country, province=reviewer.province, accept_dm=True,
                 bio=BIO, role="user", email_verified=True)
     db.add(user)

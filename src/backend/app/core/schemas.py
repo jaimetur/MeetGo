@@ -23,7 +23,9 @@ class RegisterIn(BaseModel):
     email: str
     phone: str
     password: str | None = None
-    display_name: str
+    display_name: str  # the alias
+    first_name: str | None = None
+    last_name: str | None = None
     dob: str  # YYYY-MM-DD
     country: str | None = None
     province: str
@@ -40,6 +42,8 @@ class LoginIn(BaseModel):
 class UserOut(BaseModel):
     id: int
     display_name: str
+    first_name: str | None = None
+    last_name: str | None = None
     dob: str
     age_range: AgeRange
     country: str | None
@@ -82,6 +86,8 @@ class UserSummary(BaseModel):
 
 class UpdateProfileIn(BaseModel):
     display_name: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
     email: str | None = None
     password: str | None = None
     dob: str | None = None
@@ -119,6 +125,8 @@ class BanIn(BaseModel):
 
 class AdminUserUpdateIn(BaseModel):
     display_name: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
     email: str | None = None
     phone: str | None = None
     password: str | None = None
@@ -133,6 +141,8 @@ class AdminUserUpdateIn(BaseModel):
 
 class AdminUserCreateIn(BaseModel):
     display_name: str
+    first_name: str | None = None
+    last_name: str | None = None
     email: str
     phone: str
     password: str

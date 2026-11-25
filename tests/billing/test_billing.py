@@ -46,8 +46,8 @@ async def test_launch_code_gives_a_year_to_the_first_places_only(client, db_sess
     res = await client.put("/admin/promo-codes", json={"code": "lanzamiento", "aliases": ["MEETGO50"], "duration": "1y",
                                                         "max_uses": 2, "public": True}, headers=admin)
     assert res.json()["left"] == 2
-    a = await make_user(client, db_session, "a@example.com", "A", promo_code="lanzamiento")
-    b = await make_user(client, db_session, "b@example.com", "B", promo_code="Meet Go 50")
+    a = await make_user(client, db_session, "a@example.com", "A_user", promo_code="lanzamiento")
+    b = await make_user(client, db_session, "b@example.com", "B_user", promo_code="Meet Go 50")
     status = (await client.get("/billing/status", headers=a[0])).json()
     assert status["source"] == "grant" and status["grant"]["source"] == "LANZAMIENTO"
     assert status["grant"]["until"][:4] in {str(time.gmtime().tm_year + 1)}
@@ -55,7 +55,8 @@ async def test_launch_code_gives_a_year_to_the_first_places_only(client, db_sess
     assert (await client.get("/billing/promos")).json()["promos"] == []  # full: no longer advertised
 
     res = await client.post("/auth/register", json={"email": "c@example.com", "phone": "699000111", "password": "secret123",
-                                                     "display_name": "C", "dob": "1990-01-01", "province": "Madrid",
+                                                     "display_name": "Cecilia", "first_name": "Cecilia", "last_name": "Prueba",
+                                                     "dob": "1990-01-01", "province": "Madrid",
                                                      "promo_code": "LANZAMIENTO"})
     assert res.status_code == 409
     async with db_session() as db:
@@ -74,7 +75,7 @@ async def test_seeded_campaign_is_public_with_fifty_places(client):
 
 async def test_admin_grants_and_redeeming_later(client, db_session):
     await _enable(client)
-    user = await make_user(client, db_session, "u@example.com", "U")
+    user = await make_user(client, db_session, "u@example.com", "U_user")
     admin = await admin_headers(client)
     res = await client.put(f"/admin/users/{user[1]['id']}/access", json={"free_until": "lifetime"}, headers=admin)
     assert res.json()["active"] and res.json()["grant"]["until"] is None
@@ -87,7 +88,7 @@ async def test_admin_grants_and_redeeming_later(client, db_session):
 
 async def test_stripe_webhook_needs_a_valid_signature_and_activates_the_plan(client, db_session):
     await _enable(client)
-    user = await make_user(client, db_session, "s@example.com", "S")
+    user = await make_user(client, db_session, "s@example.com", "S_user")
     async with db_session() as db:
         await set_section(db, "stripe", {"webhook_enc": encrypt("whsec_test"), "secret_enc": encrypt("sk_test"),
                                          "prices": {"monthly": "price_m", "yearly": "price_y"}})

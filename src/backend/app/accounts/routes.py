@@ -21,7 +21,7 @@ from app.conversations.service import (
 from app.mail.notify_email import account_email
 from app.realtime.service import online_ids
 from app.core.security import hash_password
-from app.accounts.common import me_out, normalize_phone, parse_dob, user_out, valid_email
+from app.accounts.common import clean_alias, clean_person_name, me_out, normalize_phone, parse_dob, user_out, valid_email
 
 router = APIRouter(tags=["me"])
 
@@ -44,11 +44,12 @@ async def public_settings(db: AsyncSession = Depends(get_db)):
 @router.patch("/me/profile", response_model=MeOut)
 async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     old_province, old_age = user.province, user_age_key(user)
-    if payload.display_name is not None:
-        name = payload.display_name.strip()
-        if not name or len(name) > 64:
-            raise HTTPException(400, t("err_display_name"))
-        user.display_name = name
+    if payload.display_name is not None and payload.display_name.strip().lstrip("@") != user.display_name:
+        user.display_name = await clean_alias(db, payload.display_name, user.id)
+    if payload.first_name is not None:
+        user.first_name = clean_person_name(payload.first_name, 64, "err_first_name")
+    if payload.last_name is not None:
+        user.last_name = clean_person_name(payload.last_name, 96, "err_last_name")
     password_changed = False
     if payload.email is not None:
         email = payload.email.strip().lower()
@@ -139,7 +140,10 @@ async def search_users(q: str = "", db: AsyncSession = Depends(get_db), user: Us
         return []
     friend_ids = select(Friendship.friend_id).where(Friendship.user_id == user.id)
     res = await db.execute(select(User).where(
-        User.id != user.id, User.is_banned.is_(False), User.display_name.ilike(f"%{q}%"),
+        User.id != user.id, User.is_banned.is_(False),
+        # by alias, or by first name and surnames ("javier calde")
+        or_(User.display_name.ilike(f"%{q.lstrip('@')}%"),
+            func.concat_ws(" ", User.first_name, User.last_name).ilike(f"%{q}%")),
         or_(User.id.in_(friend_ids), User.province == user.province),
     ).order_by(User.display_name).limit(20))
     users = res.scalars().all()
@@ -153,7 +157,8 @@ async def search_users(q: str = "", db: AsyncSession = Depends(get_db), user: Us
     dm_asked = set((await db.execute(select(DMRequest.to_user_id).where(
         DMRequest.from_user_id == user.id, DMRequest.to_user_id.in_(ids),
         DMRequest.status == DMStatus.PENDING))).scalars().all()) if ids else set()
-    return [{"id": u.id, "display_name": u.display_name, "avatar_url": u.avatar_url, "province": u.province,
+    return [{"id": u.id, "display_name": u.display_name, "first_name": u.first_name, "last_name": u.last_name,
+             "avatar_url": u.avatar_url, "province": u.province,
              "friend": u.id in friends, "accept_dm": u.accept_dm, "online": u.id in online,
              "friend_requested": u.id in friend_asked, "dm_requested": u.id in dm_asked} for u in users]
 

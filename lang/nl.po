@@ -1607,6 +1607,36 @@ msgstr "Herladen"
 msgid "ui_update_later"
 msgstr "Later herinneren"
 
+msgid "ui_first_name"
+msgstr "Voornaam"
+
+msgid "ui_last_name"
+msgstr "Achternaam"
+
+msgid "ui_alias"
+msgstr "Gebruikersnaam"
+
+msgid "ui_alias_hint"
+msgstr "Eén woord (letters, cijfers, ‘_’ of ‘.’). Dit zien anderen, en niemand anders kan hem hebben."
+
+msgid "ui_complete_profile_title"
+msgstr "Vul je profiel aan"
+
+msgid "ui_complete_profile_lead"
+msgstr "Op MeetGo heeft iedereen nu een voor- en achternaam, want er kunnen duizenden Javiers zijn. Je achternaam staat alleen op je profielkaart; in chats zie je je gebruikersnaam."
+
+msgid "err_alias_format"
+msgstr "De gebruikersnaam moet één woord van 3 tot 30 tekens zijn: letters, cijfers, ‘_’ of ‘.’"
+
+msgid "err_alias_taken"
+msgstr "Iemand anders heeft die gebruikersnaam al"
+
+msgid "err_first_name"
+msgstr "Vul je voornaam in"
+
+msgid "err_last_name"
+msgstr "Vul je achternaam in"
+
 msgid "ui_info"
 msgstr "Info"
 

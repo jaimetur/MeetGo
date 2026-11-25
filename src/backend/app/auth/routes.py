@@ -13,7 +13,7 @@ from app.core.schemas import AdminLoginIn, ForgotPasswordIn, LoginIn, RegisterIn
 from app.core.security import create_access_token, hash_password, verify_password
 from app.billing.service import billing_config, redeem_code
 from app.mail.notify_email import account_email
-from app.accounts.common import normalize_phone, parse_dob, user_out, valid_email
+from app.accounts.common import clean_alias, clean_person_name, normalize_phone, parse_dob, user_out, valid_email
 
 router = APIRouter(tags=["auth"])
 
@@ -28,9 +28,9 @@ async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
     if not valid_email(email):
         raise HTTPException(400, t("err_invalid_email"))
     ar = parse_dob(payload.dob)
-    display_name = (payload.display_name or "").strip()
-    if not display_name or len(display_name) > 64:
-        raise HTTPException(400, t("err_display_name"))
+    first_name = clean_person_name(payload.first_name, 64, "err_first_name")
+    last_name = clean_person_name(payload.last_name, 96, "err_last_name")
+    display_name = await clean_alias(db, payload.display_name)
 
     if (await db.execute(select(User.id).where(func.lower(User.email) == email))).first():
         raise HTTPException(409, t("err_email_already_used"))
@@ -44,6 +44,7 @@ async def register(payload: RegisterIn, db: AsyncSession = Depends(get_db)):
     token = secrets.token_urlsafe(32)
     u = User(
         email=email, phone=phone_norm, password_hash=hash_password(payload.password), display_name=display_name,
+        first_name=first_name, last_name=last_name,
         dob=payload.dob, age_range=ar, country=payload.country or "ES", province=payload.province.strip(),
         city=(payload.city.strip() if payload.city else None), accept_dm=bool(payload.accept_dm),
         avatar_url=payload.avatar_url, bio=payload.bio, email_verified=False,

@@ -1,6 +1,8 @@
 export type UserSummary = { id: number; display_name: string; avatar_url?: string | null };
 
 export type Me = UserSummary & {
+  first_name?: string | null;
+  last_name?: string | null;
   email?: string | null;
   phone?: string | null;
   province: string;

@@ -3,6 +3,7 @@ import { LANGUAGES, getLang, setLang, t } from "@lang";
 import { api, setToken } from "../api";
 import { isNativeApp } from "../native";
 import { queryParam } from "../router";
+import type { Me } from "../types";
 import { SLOGAN, countryOptions, regionLabel } from "./common";
 
 type View = "login" | "register" | "forgot" | "reset" | "sent";
@@ -99,7 +100,7 @@ function Login({ onSignedIn, setView }: { onSignedIn: () => Promise<void>; setVi
 function Register({ setView }: { setView: (v: View) => void }) {
   const [settings, setSettings] = useState<any>(null);
   const [form, setForm] = useState({
-    display_name: "", email: "", password: "", dob: "", country: "ES", province: "", cc: "+34", phone: "",
+    display_name: "", first_name: "", last_name: "", email: "", password: "", dob: "", country: "ES", province: "", cc: "+34", phone: "",
     accept_dm: true, promo_code: queryParam("code") || "",
   });
   const [error, setError] = useState("");
@@ -116,7 +117,8 @@ function Register({ setView }: { setView: (v: View) => void }) {
     setError("");
     try {
       await api.register({
-        display_name: form.display_name.trim(), email: form.email.trim(), password: form.password, dob: form.dob,
+        display_name: form.display_name.trim().replace(/^@/, ""), first_name: form.first_name.trim(), last_name: form.last_name.trim(),
+        email: form.email.trim(), password: form.password, dob: form.dob,
         country: form.country, province: form.province, phone: `${form.cc}${form.phone.replace(/\D/g, "")}`,
         accept_dm: form.accept_dm, promo_code: form.promo_code.trim() || undefined,
       });
@@ -132,7 +134,11 @@ function Register({ setView }: { setView: (v: View) => void }) {
     <form className="stack" onSubmit={submit}>
       <h1>{t("ui_register_title")}</h1>
       <p className="muted" style={{ margin: 0 }}>{t("ui_register_lead")}</p>
-      <label className="fld">{t("ui_display_name")}<input id="reg-name" className="inp" required maxLength={64} value={form.display_name} onChange={(e) => set("display_name", e.target.value)} /></label>
+      <div className="grid2">
+        <label className="fld">{t("ui_first_name")}<input id="reg-first" className="inp" required maxLength={64} autoComplete="given-name" value={form.first_name} onChange={(e) => set("first_name", e.target.value)} /></label>
+        <label className="fld">{t("ui_last_name")}<input id="reg-last" className="inp" required maxLength={96} autoComplete="family-name" value={form.last_name} onChange={(e) => set("last_name", e.target.value)} /></label>
+      </div>
+      <AliasField id="reg-name" value={form.display_name} onChange={(v) => set("display_name", v)} />
       <label className="fld">{t("ui_email")}<input id="reg-email" className="inp" type="email" autoComplete="email" required value={form.email} onChange={(e) => set("email", e.target.value)} /></label>
       <label className="fld">{t("ui_password_new")}<input id="reg-password" className="inp" type="password" autoComplete="new-password" minLength={6} required value={form.password} onChange={(e) => set("password", e.target.value)} /></label>
       <div className="grid2">
@@ -218,5 +224,55 @@ function Reset({ token, setView }: { token: string; setView: (v: View) => void }
       )}
       <button type="button" className="linkbtn" onClick={() => setView("login")}>{t("ui_go_login")}</button>
     </form>
+  );
+}
+
+/** The alias: one word (letters, digits, "_" or "."), 3 to 30, nobody else's; spaces are not let in. */
+export function AliasField({ id, value, onChange }: { id: string; value: string; onChange: (v: string) => void }) {
+  return (
+    <label className="fld">{t("ui_alias")}
+      <span className="aliasinp"><span aria-hidden="true">@</span>
+        <input id={id} className="inp" required minLength={3} maxLength={30} autoCapitalize="off" autoCorrect="off" spellCheck={false}
+          autoComplete="username" value={value} onChange={(e) => onChange(e.target.value.replace(/[\s@]/g, ""))} />
+      </span>
+      <span className="muted fldhint">{t("ui_alias_hint")}</span>
+    </label>
+  );
+}
+
+/** Everyone has a first name and surnames now (there can be thousands of Javiers): whoever lacks them is asked once,
+ * with the alias they can still change. Nothing else can be done until it is saved. */
+export function CompleteProfile({ me, onSaved }: { me: Me; onSaved: (u: Me) => void }) {
+  const [form, setForm] = useState({ first_name: me.first_name || "", last_name: me.last_name || "", display_name: me.display_name });
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      onSaved(await api.updateProfile({ first_name: form.first_name.trim(), last_name: form.last_name.trim(), display_name: form.display_name.trim() }));
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="modal-bg">
+      <form className="modal" role="dialog" aria-modal="true" aria-label={t("ui_complete_profile_title")} onSubmit={submit}>
+        <header><span className="grow">{t("ui_complete_profile_title")}</span></header>
+        <div className="mbody">
+          <p className="muted" style={{ margin: 0, fontSize: 13.5 }}>{t("ui_complete_profile_lead")}</p>
+          <div className="grid2">
+            <label className="fld">{t("ui_first_name")}<input id="cp-first" className="inp" required maxLength={64} autoComplete="given-name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} /></label>
+            <label className="fld">{t("ui_last_name")}<input id="cp-last" className="inp" required maxLength={96} autoComplete="family-name" value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} /></label>
+          </div>
+          <AliasField id="cp-alias" value={form.display_name} onChange={(v) => setForm({ ...form, display_name: v })} />
+          {error ? <div className="err">{error}</div> : null}
+        </div>
+        <footer><button className="btn pri" disabled={busy}>{t("ui_save")}</button></footer>
+      </form>
+    </div>
   );
 }

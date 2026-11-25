@@ -33,7 +33,7 @@ from app.mail.email import send_email
 from app.core.app_settings import app_base_url
 from app.messaging.service import delete_message
 from app.board.service import delete_post_data
-from app.accounts.common import me_out, normalize_phone, parse_dob
+from app.accounts.common import clean_alias, clean_person_name, me_out, normalize_phone, parse_dob
 from app.accounts.deletion import delete_account
 from app.communities.service import AGE_KEYS
 from app.realtime.service import online_ids
@@ -94,7 +94,8 @@ async def list_users(q: str | None = None, db: AsyncSession = Depends(get_db), a
     query = select(User)
     if q:
         like = f"%{q}%"
-        query = query.where(or_(User.display_name.ilike(like), User.email.ilike(like), User.phone.ilike(like)))
+        query = query.where(or_(User.display_name.ilike(like), func.concat_ws(" ", User.first_name, User.last_name).ilike(like),
+                                User.email.ilike(like), User.phone.ilike(like)))
     users = (await db.execute(query.order_by(User.id.desc()).limit(500))).scalars().all()
     plans = await _plans(db, [u.id for u in users])
     try:
@@ -236,7 +237,9 @@ async def create_user(payload: AdminUserCreateIn, db: AsyncSession = Depends(get
     if len(payload.password) < 6:
         raise HTTPException(400, t("err_password_too_short"))
     u = User(email=email, phone=phone_norm, password_hash=hash_password(payload.password),
-             display_name=payload.display_name.strip(), dob=payload.dob, age_range=parse_dob(payload.dob),
+             display_name=await clean_alias(db, payload.display_name),
+             first_name=clean_person_name(payload.first_name, 64, "err_first_name"),
+             last_name=clean_person_name(payload.last_name, 96, "err_last_name"), dob=payload.dob, age_range=parse_dob(payload.dob),
              country=payload.country or "ES", province=payload.province.strip(),
              city=(payload.city.strip() if payload.city else None), accept_dm=False, bio="",
              role=payload.role or "user", email_verified=True)
@@ -252,8 +255,12 @@ async def update_user(user_id: int, payload: AdminUserUpdateIn, db: AsyncSession
     target = await db.get(User, user_id)
     if not target:
         raise HTTPException(404, t("err_user_not_found"))
-    if payload.display_name is not None:
-        target.display_name = payload.display_name.strip()
+    if payload.display_name is not None and payload.display_name.strip().lstrip("@") != target.display_name:
+        target.display_name = await clean_alias(db, payload.display_name, target.id)
+    if payload.first_name is not None:
+        target.first_name = clean_person_name(payload.first_name, 64, "err_first_name")
+    if payload.last_name is not None:
+        target.last_name = clean_person_name(payload.last_name, 96, "err_last_name")
     if payload.email is not None:
         email = payload.email.strip().lower() or None
         if email != target.email:
