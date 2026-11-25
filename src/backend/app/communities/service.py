@@ -5,7 +5,7 @@ import unicodedata
 from datetime import timedelta
 
 from fastapi import HTTPException
-from sqlalchemy import and_, func, or_, select
+from sqlalchemy import String, and_, cast, func, or_, select
 from sqlalchemy.dialects.postgresql import array, insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -194,7 +194,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
         interest = interests.get(c.interest_id)
         member = mine.get(c.id)
         joined = active(member)
-        title = interest.name if interest else (c.title or "")
+        title = interest.label() if interest else (c.title or "")
         out.append({
             "id": c.id,
             "kind": "interest" if c.interest_id else "custom",
@@ -279,7 +279,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
                 ConversationMember.user_id.not_in(bots or {0}))))
         if q.strip():
             like = f"%{q.strip()}%"
-            query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), Conversation.description.ilike(like)))
+            query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), cast(Interest.names, String).ilike(like), Conversation.description.ilike(like)))
         out = await communities_out(db, user, list((await db.execute(query.limit(400))).scalars().all()))
         out.sort(key=lambda c: (c["title"].lower(), -c["member_count"]) if len(provinces) == 1 else (-c["member_count"], c["title"].lower()))
         return out
@@ -298,7 +298,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
         query = query.where(or_(and_(Conversation.access_mode != "invite", interest_visible()), Conversation.id.in_(my_ids)))
     if q.strip():
         like = f"%{q.strip()}%"
-        query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), Conversation.description.ilike(like)))
+        query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), cast(Interest.names, String).ilike(like), Conversation.description.ilike(like)))
     convs = list((await db.execute(query)).scalars().all())
     out = await communities_out(db, user, convs)
     out.sort(key=lambda c: (not c["joined"], -c["member_count"], c["title"].lower()))

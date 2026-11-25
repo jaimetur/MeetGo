@@ -29,6 +29,10 @@ dev = [
   "pytest==8.3.4",
   "pytest-asyncio==0.24.0",
 ]
+# tools/play_screenshots.py (the Play store screenshots); then: playwright install chromium
+screens = [
+  "playwright==1.65.2",
+]
 
 # The backend package is src/backend/app (as in BodyLens).
 [tool.setuptools.packages.find]

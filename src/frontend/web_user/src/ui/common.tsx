@@ -133,11 +133,16 @@ export function fullName(u: { first_name?: string | null; last_name?: string | n
 
 /** "Jaime (jaimetur)" from a profile, where display_name is the alias alone; the alias when there is no name. */
 export function shownName(u: { display_name: string; first_name?: string | null }): string {
-  return u.first_name ? `${u.first_name} (${u.display_name})` : u.display_name;
+  // the alias in brackets only when it says something else than the name ("Lucy", not "Lucy (Lucy)")
+  if (!u.first_name || u.first_name.toLocaleLowerCase() === u.display_name.toLocaleLowerCase()) return u.first_name || u.display_name;
+  return `${u.first_name} (${u.display_name})`;
 }
 
 export function convTitle(conv: Conversation): string {
-  return conv.kind === "channel" ? `#${conv.slug || conv.title}` : conv.title;
+  if (conv.kind !== "channel") return conv.title;
+  // an interest's chat: its tag in Spanish ("#senderismo"), or its name in the language I read ("#hiking")
+  if (conv.slug && getLang() !== "es" && conv.title) return "#" + conv.title.toLocaleLowerCase().trim().replace(/\s+/g, "_");
+  return `#${conv.slug || conv.title}`;
 }
 
 export function Modal({ title, onClose, children, footer }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode }) {
@@ -210,7 +215,7 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
           <a href={`${site}/terms.html`} target="_blank" rel="noreferrer">{t("ui_about_terms")}</a>
           <a href={`${site}/privacy.html`} target="_blank" rel="noreferrer">{t("ui_about_privacy")}</a>
         </nav>
-        <p className="muted about-copy">© {new Date().getFullYear()} MeetGo. {t("ui_about_rights")}</p>
+        <p className="muted about-copy">© {new Date().getFullYear()} JTG Cloud Services. {t("ui_about_rights")}</p>
       </div>
     </Modal>,
     document.body,

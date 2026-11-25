@@ -21,7 +21,7 @@ async def test_creator_changes_scope_and_ages_expelling_who_no_longer_fits(clien
     # 30 to 45: Bea (51) would leave; the dry run says so without changing anything
     body = {"scope_kind": "province", "age_limit": True, "min_age": 30, "max_age": 45}
     dry = (await client.post(f"/communities/{cid}/filters", json={**body, "dry_run": True}, headers=ana[0])).json()
-    assert dry == {"expelled": 1, "names": ["Bea (Bea)"]}
+    assert dry == {"expelled": 1, "names": ["Bea"]}
     assert (await client.get(f"/communities/{cid}", headers=bea[0])).json()["joined"] is True
     # the creator cannot leave themself out
     assert (await client.post(f"/communities/{cid}/filters", json={**body, "min_age": 40}, headers=ana[0])).status_code == 400

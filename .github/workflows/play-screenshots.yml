@@ -1,0 +1,69 @@
+name: 📸 Play screenshots
+
+# Takes the Google Play store screenshots again, in every language and for every device Play asks for (phone, 7" and
+# 10" tablet, Chromebook), from a demo account with made-up content in each language (app.demo.play_review --lang).
+# tools/play_screenshots.py does it.
+# - Run by hand (Actions → Play screenshots → Run workflow, on a branch): the images are committed to that branch in
+#   assets/play-store/<device>/<lang>/, ready to upload to each language of the store listing.
+# - On a release (vX.Y.Z tag): they are attached to the release as play-screenshots.zip.
+on:
+  # Not on every push: the screenshots show relative times ("in 3 days") and would change, and be committed, each time.
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+concurrency:
+  group: meetgo-play-screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: play
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+    env:
+      TZ: Europe/Madrid
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Tools (backend, frontend, Playwright, fonts for every language)
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q fonts-noto-color-emoji fonts-noto-cjk
+          pip install -q -e ".[screens]"
+          python -m playwright install --with-deps chromium
+          (cd src/frontend && npm ci --silent)
+      - name: Screenshots
+        run: python tools/play_screenshots.py --pg postgresql://postgres:play@127.0.0.1:5432 --redis redis://127.0.0.1:6379/0
+      - name: Commit them to the branch (run by hand)
+        if: github.ref_type == 'branch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/play-store
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Play screenshots taken again [skip ci]"
+          git push
+      - name: Attach them to the release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          (cd assets && zip -qr "$RUNNER_TEMP/play-screenshots.zip" play-store)
+          gh release view "${{ github.ref_name }}" >/dev/null 2>&1 && gh release upload "${{ github.ref_name }}" "$RUNNER_TEMP/play-screenshots.zip" --clobber

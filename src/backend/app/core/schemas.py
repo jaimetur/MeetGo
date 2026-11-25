@@ -156,7 +156,9 @@ class AdminUserCreateIn(BaseModel):
 class InterestOut(BaseModel):
     id: int
     slug: str
-    name: str
+    name: str  # in the language of whoever asks
+    base_name: str | None = None  # the Spanish one (the administration edits both)
+    names: dict[str, str] = Field(default_factory=dict)
     category: str | None = None
     icon: str | None = None
     color: str | None = None
@@ -260,6 +262,7 @@ class PostCreateIn(BaseModel):
 class AdminInterestIn(BaseModel):
     slug: str
     name: str
+    names: dict[str, str] | None = None  # the name in the other languages
     category: str | None = None
     icon: str | None = None
     color: str | None = None

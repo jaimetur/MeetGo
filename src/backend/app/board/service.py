@@ -122,7 +122,7 @@ async def community_refs(db: AsyncSession, conv_ids) -> dict[int, dict]:
                              .where(Conversation.id.in_(ids)))).all()
     out = {}
     for c, i in rows:
-        title = i.name if i else (c.title or "")
+        title = i.label() if i else (c.title or "")
         out[c.id] = {"id": c.id, "title": title, "slug": i.slug if i else slugify(title)}
     return out
 

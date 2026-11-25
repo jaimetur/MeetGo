@@ -55,8 +55,8 @@ async def _check():
         dm = (await conn.execute(text("SELECT id, dm_key FROM conversations WHERE kind='dm'"))).one()
         assert dm.dm_key == "1:2"
         assert (await conn.execute(text("SELECT body FROM messages WHERE conversation_id=:c"), {"c": dm.id})).scalar() == "Privado"
-        # The old tables stay untouched.
-        assert (await conn.execute(text("SELECT count(*) FROM room_messages"))).scalar() == 2
+        # Once moved, the old tables are gone (0020).
+        assert (await conn.execute(text("SELECT to_regclass('room_messages') IS NULL AND to_regclass('dm_messages') IS NULL"))).scalar()
 
 
 async def test_age_ranges_31_60_and_61_plus():

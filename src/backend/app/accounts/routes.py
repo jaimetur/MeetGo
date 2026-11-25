@@ -187,7 +187,7 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_db), me_user: Us
 
 
 def interest_out(i: Interest) -> InterestOut:
-    return InterestOut(id=i.id, slug=i.slug, name=i.name, category=i.category, icon=i.icon, color=i.color,
+    return InterestOut(id=i.id, slug=i.slug, name=i.label(), base_name=i.name, names=dict(i.names or {}), category=i.category, icon=i.icon, color=i.color,
                        age_ranges=list(i.age_ranges or []), active=i.active is not False, tags=list(i.tags or [i.slug]),
                        min_age=i.min_age, max_age=i.max_age, access_mode=i.access_mode or "open", board_mode=i.board_mode or "open",
                        retention_days=i.retention_days or 365, join_questions=list(i.join_questions or []))
@@ -246,7 +246,7 @@ async def explore_channels(db: AsyncSession = Depends(get_db), user: User = Depe
         cid, mode, n = by_interest.get(i.id, (None, "open", 0))
         if mode == "invite" and cid not in mine:
             continue
-        out.append({"interest": {"id": i.id, "slug": i.slug, "name": i.name}, "conversation_id": cid,
+        out.append({"interest": {"id": i.id, "slug": i.slug, "name": i.label()}, "conversation_id": cid,
                     "member_count": n, "joined": bool(cid and cid in mine), "access_mode": mode,
                     "zone": f"{user.province} · {AGE_LABELS.get(age, age)}"})
     out.sort(key=lambda c: (-c["member_count"], c["interest"]["name"]))

@@ -340,6 +340,8 @@ async def delete_user(user_id: int, db: AsyncSession = Depends(get_db), admin: U
 def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
     """Look and restrictions: an empty category, icon or colour goes back to automatic."""
     import re
+    if payload.names is not None:  # the name in the other languages; an empty one shows the Spanish name
+        it.names = {lang: name.strip()[:128] for lang, name in payload.names.items() if isinstance(name, str) and name.strip() and len(lang) <= 8}
     for field in ("category", "icon"):
         value = getattr(payload, field)
         if value is not None:

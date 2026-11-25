@@ -341,7 +341,7 @@ def last_seen_shown(viewer: User, other: User | None, is_friend: bool) -> str | 
 def conversation_base(conv: Conversation, member: ConversationMember, interest: Interest | None,
                       other: User | None, online: set[int], last_seen: str | None = None) -> dict:
     if conv.kind == "channel":
-        title = interest.name if interest else (conv.title or "chat")
+        title = interest.label() if interest else (conv.title or "chat")
         slug = interest.slug if interest else None
         # where and for whom: the fixed range, or the community's own age span (communities made by people, interests
         # with a custom range)
@@ -371,7 +371,7 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
         "read_only": member.expelled_message_id is not None,
         "min_age": conv.min_age,
         "max_age": conv.max_age,
-        "interest": {"id": interest.id, "slug": interest.slug, "name": interest.name} if interest else None,
+        "interest": {"id": interest.id, "slug": interest.slug, "name": interest.label()} if interest else None,
         "other_user": ({**user_summary(other), "online": other.id in online, "last_seen_at": last_seen} if other else None),
         "role": member.role,
         "notify": member.notify,

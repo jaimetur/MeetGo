@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
+- Interest names in every language (the built-in ones translated; editable in Administration), and the interest chats titled in the language of whoever reads them.
+- Administration: groups of regions (autonomous communities, states…) can be created, renamed, deleted and assigned to each region.
+- A name equal to its alias shows once («Lucy», not «Lucy (Lucy)»).
+- Google Play store screenshots in all ten languages and for phone, 7" and 10" tablets and Chromebook, taken by tools/play_screenshots.py from a demo account with content in each language, in assets/play-store; a workflow takes them again on demand and attaches them to each release. The Android workflow uploads each build to Play's internal testing by itself once the PLAY_SERVICE_ACCOUNT_JSON secret exists (docs/play-store/AUTO_UPLOAD.md).
+- Privacy policy and terms updated for the new data and features; «About MeetGo» shows © JTG Cloud Services.
+- The tables of version 0.1 (rooms and direct messages), kept for safety after their data moved, are removed.
 - A new password is typed twice (sign-up, «Forgot your password» and a person's card in Administration), so a typo cannot lock anyone out.
 - The creator of a community can change, in «Edit», its geographic scope (its province, its autonomous community or the whole country) and its ages. Before saving they are told who would no longer fit; those people are expelled with a notice («expelled due to a change in the filter settings») and keep the earlier messages read only, with nothing new and without writing.
 - Uploading an avatar photo opens a frame to choose the part that is kept: drag the photo, zoom with the slider, the mouse wheel or two fingers.

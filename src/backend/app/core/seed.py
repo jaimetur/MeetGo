@@ -141,6 +141,8 @@ DEFAULT_SETTINGS = {
     "cities_by_country": {},
 }
 
+from app.core.interest_names import BUILTIN_NAMES  # noqa: E402
+
 DEFAULT_INTERESTS = [
     ("tomar_algo", "Tomar algo"),
     ("senderismo", "Senderismo"),
@@ -237,7 +239,7 @@ async def seed(db: AsyncSession) -> None:
     existing = set((await db.execute(select(Interest.slug))).scalars().all())
     for slug, name in DEFAULT_INTERESTS:
         if slug not in existing:
-            db.add(Interest(slug=slug, name=name))
+            db.add(Interest(slug=slug, name=name, names=BUILTIN_NAMES.get(slug, {})))
     await db.commit()
     await merge_interests(db, MERGED_INTERESTS, "tomar_algo")
     await merge_interests(db, MERGED_SPORTS, "deporte")

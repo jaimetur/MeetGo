@@ -74,12 +74,28 @@ function CountryEditor({ s, code, onClose, onApply }: { s: Settings; code: strin
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const groups: Row[] = (code && s.region_groups?.[code]) || [];
-  const groupOf = useMemo(() => {
+  // groups of regions (autonomous communities, states…): what a community's scope can be besides a region or the country
+  const [groups, setGroups] = useState<Row[]>(() => ((code && s.region_groups?.[code]) || []).map((g: Row) => ({ ...g, regions: [...(g.regions || [])] })));
+  const [newGroup, setNewGroup] = useState("");
+  const groupValueOf = useMemo(() => {
     const m: Record<string, string> = {};
-    for (const g of groups) for (const r of g.regions || []) m[r] = g.name;
+    for (const g of groups) for (const r of g.regions || []) m[r] = g.value;
     return m;
   }, [groups]);
+  const slugOf = (n: string) => n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "") || "group";
+  function addGroup() {
+    const n = newGroup.trim();
+    if (!n || groups.some((g) => g.name.toLowerCase() === n.toLowerCase())) return;
+    let v = slugOf(n);
+    while (groups.some((g) => g.value === v)) v += "_2";
+    setGroups([...groups, { value: v, name: n, regions: [] }].sort((x, y) => x.name.localeCompare(y.name, undefined, { sensitivity: "base" })));
+    setNewGroup("");
+  }
+  // a region belongs to one group at most
+  function assign(region: string, groupValue: string) {
+    setGroups(groups.map((g) => ({ ...g, regions: g.value === groupValue ? [...(g.regions || []).filter((r: string) => r !== region), region]
+      : (g.regions || []).filter((r: string) => r !== region) })));
+  }
 
   const taken = useMemo(() => new Set(Object.entries(s.provinces_by_country || {}).filter(([k]) => k !== code)
     .flatMap(([, list]) => (list as Region[]).map((r) => r.value.toLowerCase()))), [s, code]);
@@ -107,7 +123,7 @@ function CountryEditor({ s, code, onClose, onApply }: { s: Settings; code: strin
     if (phone.trim() && phone.trim() !== "+") calling.push({ cc: phone.trim().startsWith("+") ? phone.trim() : `+${phone.trim()}`, name: name.trim(), code: C });
     // groups keep only regions that still exist
     const values = new Set(regions.map((r) => r.value));
-    const nextGroups = groups.map((g) => ({ ...g, regions: (g.regions || []).filter((r: string) => values.has(r)) })).filter((g) => g.regions.length);
+    const nextGroups = groups.map((g) => ({ ...g, name: (g.name || "").trim() || g.value, regions: (g.regions || []).filter((r: string) => values.has(r)) })).filter((g) => g.regions.length);
     onApply({
       countries,
       calling_codes: calling,
@@ -167,7 +183,13 @@ function CountryEditor({ s, code, onClose, onApply }: { s: Settings; code: strin
                 </form>
               ) : (
                 <>
-                  <span className="grow adm-tile-txt"><b>{r.name}</b>{groupOf[r.value] ? <small>{groupOf[r.value]}</small> : null}</span>
+                  <span className="grow adm-tile-txt"><b>{r.name}</b></span>
+                  {groups.length ? (
+                    <select className="inp adm-region-group" aria-label={a("ge_group_of", { region: r.name })} value={groupValueOf[r.value] || ""} onChange={(e) => assign(r.value, e.target.value)}>
+                      <option value="">—</option>
+                      {groups.map((g) => <option key={g.value} value={g.value}>{g.name}</option>)}
+                    </select>
+                  ) : null}
                   <button className="iconbtn" aria-label={a("co_rename")} onClick={() => { setEditing(r.value); setDraft(r.name); }}><Icon name="edit" size="sm" /></button>
                   <button className="iconbtn" aria-label={a("co_delete_yes")} onClick={() => setRegions(regions.filter((x) => x.value !== r.value))}><Icon name="x" size="sm" /></button>
                 </>
@@ -181,6 +203,23 @@ function CountryEditor({ s, code, onClose, onApply }: { s: Settings; code: strin
           <button className="btn sm" disabled={!adding.trim()}><Icon name="plus" size="sm" />{a("add")}</button>
         </form>
         <small className="muted">{a("ge_regions_hint")}</small>
+      </div>
+      <div className="adm-sub">
+        <div className="adm-sub-head"><b>{a("ge_groups_title")} · {groups.length}</b></div>
+        <small className="muted">{a("ge_groups_hint")}</small>
+        <div className="adm-regions">
+          {groups.map((g) => (
+            <div key={g.value} className="adm-region">
+              <input className="inp grow" aria-label={a("co_rename")} value={g.name} onChange={(e) => setGroups(groups.map((x) => x.value === g.value ? { ...x, name: e.target.value } : x))} />
+              <span className="muted adm-group-n">{(g.regions || []).length}</span>
+              <button className="iconbtn" aria-label={a("co_delete_yes")} onClick={() => setGroups(groups.filter((x) => x.value !== g.value))}><Icon name="x" size="sm" /></button>
+            </div>
+          ))}
+        </div>
+        <form className="adm-test" onSubmit={(e) => { e.preventDefault(); addGroup(); }}>
+          <input className="inp" placeholder={a("ge_group_add")} value={newGroup} onChange={(e) => setNewGroup(e.target.value)} />
+          <button className="btn sm" disabled={!newGroup.trim()}><Icon name="plus" size="sm" />{a("add")}</button>
+        </form>
       </div>
     </Modal>,
     document.body,

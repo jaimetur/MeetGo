@@ -83,7 +83,9 @@ class User(Base):
     def shown_name(self) -> str:
         """How the others see the person: "Jaime (jaimetur)" (the surnames are in the card); the alias alone when there
         is no name (bots)."""
-        return f"{self.first_name} ({self.display_name})" if self.first_name else self.display_name
+        if not self.first_name or self.first_name.lower() == (self.display_name or "").lower():
+            return self.first_name or self.display_name  # "Lucy", not "Lucy (Lucy)"
+        return f"{self.first_name} ({self.display_name})"
     dob: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD
     age_range: Mapped[AgeRange] = mapped_column(
         Enum(AgeRange, values_callable=lambda obj: [e.value for e in obj], name="agerange"),
@@ -139,7 +141,14 @@ class Interest(Base):
     __tablename__ = "interests"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     slug: Mapped[str] = mapped_column(String(64), unique=True, index=True)
-    name: Mapped[str] = mapped_column(String(128))
+    name: Mapped[str] = mapped_column(String(128))  # in Spanish
+    # The name in the other languages ({"en": "Hiking", ...}); a language without one shows the Spanish name.
+    names: Mapped[dict] = mapped_column(JSONB, default=dict)
+
+    def label(self, lang: str | None = None) -> str:
+        """The name in the language of whoever is looking (the request's), or the Spanish one."""
+        from app.core.i18n import get_lang
+        return (self.names or {}).get(lang or get_lang()) or self.name
     # Set in the administration; empty means automatic (guessed from the name in the app).
     category: Mapped[str | None] = mapped_column(String(32), nullable=True)
     icon: Mapped[str | None] = mapped_column(String(32), nullable=True)

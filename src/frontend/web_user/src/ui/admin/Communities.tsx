@@ -1,7 +1,7 @@
 /** The interest communities (one per zone and age range): grouped by category, each with its look and restrictions. */
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { t } from "@lang";
+import { LANGUAGES, t } from "@lang";
 import { api, type AdminInterest } from "../../../../web_admin/api";
 import { toast } from "../../store";
 import { CATEGORY_KEYS, guessCategory } from "../Communities";
@@ -87,7 +87,9 @@ export function Communities() {
 }
 
 function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInterest | null; onClose: () => void; onSaved: () => void }) {
-  const [name, setName] = useState(interest?.name || "");
+  const [name, setName] = useState(interest?.base_name || interest?.name || "");  // in Spanish
+  // the name in the other languages (empty: the Spanish one is shown)
+  const [names, setNames] = useState<Record<string, string>>(interest?.names || {});
   const [category, setCategory] = useState(interest?.category || "");
   const [icon, setIcon] = useState(interest?.icon || "");
   const [color, setColor] = useState(interest?.color || "");
@@ -115,7 +117,7 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
     if (!name.trim() || !slug) return;
     setBusy(true);
     const payload = {
-      slug, name: name.trim(), category, icon, color, active, age_mode: ageMode,
+      slug, name: name.trim(), names, category, icon, color, active, age_mode: ageMode,
       age_ranges: ageMode === "ranges" ? ages : [], ...(ageMode === "span" ? { min_age: Number(minAge) || 18, max_age: maxAge.trim() ? Number(maxAge) : null } : {}),
       access_mode: access, board_mode: board, retention_days: retention,
       join_questions: access === "request" ? questions.map((q) => q.trim()).filter(Boolean) : [],
@@ -148,6 +150,15 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
       {confirm ? <p className="adm-red adm-note">{a("co_delete_hint")}</p> : null}
 
       <Field label={a("co_name")}><input id="adm-co-name" className="inp" value={name} onChange={(e) => setName(e.target.value)} placeholder={a("co_new_ph")} /></Field>
+      <details className="adm-names">
+        <summary>{a("co_names")} ({LANGUAGES.filter(([l]) => l !== "es" && names[l]).length}/{LANGUAGES.length - 1})</summary>
+        <small className="muted">{a("co_names_hint")}</small>
+        <div className="adm-grid">
+          {LANGUAGES.filter(([l]) => l !== "es").map(([l, label]) => (
+            <Field key={l} label={label}><input className="inp" value={names[l] || ""} placeholder={name} onChange={(e) => setNames((n) => ({ ...n, [l]: e.target.value }))} /></Field>
+          ))}
+        </div>
+      </details>
       <Field label={a("co_category")}>
         <select className="inp" value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="">{a("co_auto", { value: t(guess.category) })}</option>
