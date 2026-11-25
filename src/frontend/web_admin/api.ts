@@ -340,7 +340,7 @@ export type AdminStats = {
 
 export type UserActivity = {
   messages: number; communities: number; groups: number; dms: number; friends: number; posts: number;
-  reports_received: number; reports_made: number; online: boolean;
+  reports_received: number; reports_made: number; online: boolean; connected_seconds?: number;
 };
 
 export type AiStatus = { configured: boolean; source: "panel" | "env" | ""; hint: string; model: string; models: string[] };

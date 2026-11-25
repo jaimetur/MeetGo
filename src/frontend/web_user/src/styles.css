@@ -1273,7 +1273,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-mini span { font-size: 11px; color: var(--muted); font-weight: 600; }
 .adm-mini > div.alert { border-color: color-mix(in srgb, var(--admred) 55%, transparent); }
 .adm-mini > div.alert b { color: var(--admred); }
-.adm-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.adm-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .adm-facts > div { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; background: var(--panel2); min-width: 0; }
 .adm-facts span { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
 .adm-facts b { font-size: 13px; overflow-wrap: anywhere; }

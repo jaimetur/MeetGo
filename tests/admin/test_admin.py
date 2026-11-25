@@ -56,3 +56,30 @@ async def test_overview_person_summary_and_blocking(client, db_session):
 
     # ordinary people cannot see any of it
     assert (await client.get("/admin/stats", headers=ana_h)).status_code in (401, 403)
+
+
+async def test_visits_and_time_connected_count_without_signing_in_again(client, db_session):
+    """The app keeps the session open: coming back after a while is a visit, and the open session counts as time
+    connected (the sign-ins with the password stay as they are)."""
+    from datetime import datetime, timedelta
+    from tests.helpers import admin_headers, make_user
+    headers = await admin_headers(client)
+    ana_h, ana = await make_user(client, db_session, "ana.visits@example.com", "Ana")
+
+    async def admin_view():
+        listed = next(u for u in (await client.get("/admin/users", headers=headers)).json() if u["id"] == ana["id"])
+        summary = (await client.get(f"/admin/users/{ana['id']}/summary", headers=headers)).json()
+        return listed, summary
+
+    before, _ = await admin_view()
+    await client.get("/me", headers=ana_h)  # still active: no new visit
+    assert (await admin_view())[0]["visit_count"] == before["visit_count"]
+    async with db_session() as db:  # an hour away, with the app open for 10 minutes
+        now = datetime.utcnow()
+        await db.execute(update(User).where(User.id == ana["id"]).values(
+            last_seen_at=now - timedelta(hours=1), session_active=True, session_started_at=now - timedelta(minutes=10)))
+        await db.commit()
+    await client.get("/me", headers=ana_h)
+    listed, summary = await admin_view()
+    assert listed["visit_count"] == before["visit_count"] + 1 and listed["login_count"] == before["login_count"]
+    assert summary["connected_seconds"] >= 600

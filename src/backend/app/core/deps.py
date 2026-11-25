@@ -9,6 +9,8 @@ from app.core.security import decode_token
 from app.core.i18n import get_lang, t
 from app.core.models import User
 
+VISIT_GAP_SECONDS = 30 * 60
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 async def get_db() -> AsyncSession:
@@ -34,6 +36,8 @@ async def get_current_user(
     # Only requests from the web app say the language (X-Lang); calls from the Android shell do not.
     lang = get_lang() if request.headers.get("x-lang") else user.lang
     if not user.last_seen_at or (now - user.last_seen_at).total_seconds() > 60 or user.lang != lang:
+        if not user.last_seen_at or (now - user.last_seen_at).total_seconds() >= VISIT_GAP_SECONDS:
+            user.visit_count = (user.visit_count or 0) + 1  # back after a while: a new visit
         user.last_seen_at = now
         user.lang = lang
         db.add(user)

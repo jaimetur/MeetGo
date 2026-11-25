@@ -104,6 +104,9 @@ class User(Base):
     password_temp: Mapped[bool] = mapped_column(Boolean, default=False)
     phone_changed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     login_count: Mapped[int] = mapped_column(Integer, default=0)
+    # Times the person came back to MeetGo (after half an hour or more without activity): the app keeps the session
+    # open, so the sign-ins (with the password) are few.
+    visit_count: Mapped[int] = mapped_column(Integer, default=0)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     session_started_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)

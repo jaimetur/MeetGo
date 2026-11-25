@@ -33,6 +33,18 @@ async def _dm_partners(user_id: int) -> list[int]:
         return list(set(res.scalars().all()))
 
 
+
+MAX_SESSION = 12 * 3600  # a session whose end was lost (the server restarted) counts at most this
+
+
+async def _session_started(user_id: int) -> None:
+    """The app is open again (the first of the person's connections): the time connected counts from now."""
+    async with SessionLocal() as db:
+        u = await db.get(User, user_id)
+        if u:
+            u.session_active, u.session_started_at = True, datetime.utcnow()
+            await db.commit()
+
 @router.websocket("/ws")
 async def ws_endpoint(ws: WebSocket, ticket: str = ""):
     user_id = await realtime.consume_ticket(ticket)
@@ -50,6 +62,7 @@ async def ws_endpoint(ws: WebSocket, ticket: str = ""):
     realtime.gateway.add(user_id, ws)
     came_online = await realtime.presence_connect(user_id)
     if came_online:
+        await _session_started(user_id)
         await realtime.publish(await _dm_partners(user_id), {"type": "presence.updated", "user_id": user_id, "online": True})
     await ws.send_text(json.dumps({"type": "hello", "user_id": user_id}))
 
@@ -89,7 +102,14 @@ async def ws_endpoint(ws: WebSocket, ticket: str = ""):
                 async with SessionLocal() as db:
                     u = await db.get(User, user_id)
                     if u:
-                        u.last_seen_at = datetime.utcnow()
+                        now = datetime.utcnow()
+                        u.last_seen_at = now
+                        # time connected: from the first connection to the last one closing (a lost one counts
+                        # at most MAX_SESSION)
+                        if u.session_started_at:
+                            spent = (now - u.session_started_at).total_seconds()
+                            u.total_connected_seconds = (u.total_connected_seconds or 0) + int(max(0, min(spent, MAX_SESSION)))
+                        u.session_active, u.session_started_at = False, None
                         await db.commit()
                 await realtime.publish(await _dm_partners(user_id), {"type": "presence.updated", "user_id": user_id, "online": False})
         except Exception:

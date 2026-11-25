@@ -57,6 +57,7 @@ class MeOut(UserOut):
     role: str
     phone: str | None
     login_count: int
+    visit_count: int = 0
     last_login_at: UTCDateTime | None
     last_seen_at: UTCDateTime | None
     total_connected_seconds: int

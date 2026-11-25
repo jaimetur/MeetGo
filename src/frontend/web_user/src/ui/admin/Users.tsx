@@ -28,6 +28,7 @@ export type AdminUser = {
   is_banned?: boolean;
   banned_until?: string | null;
   login_count?: number;
+  visit_count?: number;
   last_login_at?: string | null;
   last_seen_at?: string | null;
   total_connected_seconds?: number;
@@ -256,9 +257,12 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
               </div>
               <div className="adm-facts">
                 <div><span>{a("ud_joined")}</span><b>{fmtDate(user.created_at)}</b></div>
+                {/* the app keeps the session open: the last activity and the visits say more than the sign-ins */}
+                <div><span>{a("ud_last_access")}</span><b>{activity?.online || user.online ? a("ud_now") : fmtDateTime(user.last_seen_at || user.last_login_at)}</b></div>
+                <div><span>{a("ud_visits")}</span><b>{user.visit_count ?? 0}</b></div>
+                <div><span>{a("ud_time")}</span><b>{duration(activity?.connected_seconds ?? user.total_connected_seconds ?? 0)}</b></div>
                 <div><span>{a("ud_last_login")}</span><b>{fmtDateTime(user.last_login_at)}</b></div>
                 <div><span>{a("ud_logins")}</span><b>{user.login_count ?? 0}</b></div>
-                <div><span>{a("ud_time")}</span><b>{duration(user.total_connected_seconds || 0)}</b></div>
               </div>
 
               <section className="adm-block">

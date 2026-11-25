@@ -190,6 +190,10 @@ async def user_summary_stats(user_id: int, db: AsyncSession = Depends(get_db), a
         "reports_received": await n(select(func.count()).select_from(Report).join(Message, Message.id == Report.message_id).where(Message.sender_id == user_id)),
         "reports_made": await n(select(func.count()).select_from(Report).where(Report.reporter_id == user_id)),
         "online": await _is_online(user_id),
+        # with the session open now (the app is connected)
+        "connected_seconds": (target.total_connected_seconds or 0) + (
+            int(max(0, min((datetime.utcnow() - target.session_started_at).total_seconds(), 12 * 3600)))
+            if target.session_active and target.session_started_at else 0),
     }
 
 
