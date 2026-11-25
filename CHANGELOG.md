@@ -167,6 +167,96 @@ All notable changes to this project will be documented in this file.
 - Rewrote the README: features, deployment behind a reverse proxy, and how to turn on payments and push notifications.
 - Added `docs/ANDROID.md`: signing key, GitHub secrets, Firebase, Google Play subscription and App Links setup. `tools/CreateUpdateRelease.py` now also updates the Android version.
 
+#### 📱 Google Play (es-ES):
+MeetGo se renueva por completo para conocer gente de tu zona.
+• Comunidades de tu zona por aficiones, con tablón y chat
+• Planes y quedadas con plazas y lista de espera
+• Chats, grupos y mensajes directos con notas de voz, reacciones y confirmación de lectura
+• Perfil con foto y 10 temas de color
+• 10 idiomas
+• Bloquear personas y denunciar mensajes
+
+#### 📱 Google Play (en-US):
+MeetGo has been rebuilt to meet people in your area.
+• Communities of your area by hobby, with a board and a chat
+• Plans and meetups with places and a waiting list
+• Chats, groups and direct messages with voice notes, reactions and read receipts
+• Profile photo and 10 colour themes
+• 10 languages
+• Block people and report messages
+
+#### 📱 Google Play (ca):
+MeetGo es renova del tot per conèixer gent de la teva zona.
+• Comunitats de la teva zona per aficions, amb tauler i xat
+• Plans i quedades amb places i llista d'espera
+• Xats, grups i missatges directes amb notes de veu, reaccions i confirmació de lectura
+• Perfil amb foto i 10 temes de color
+• 10 idiomes
+• Bloquejar persones i denunciar missatges
+
+#### 📱 Google Play (de-DE):
+MeetGo ist komplett neu, um Leute in deiner Gegend kennenzulernen.
+• Communities deiner Gegend nach Hobbys, mit Pinnwand und Chat
+• Pläne und Treffen mit Plätzen und Warteliste
+• Chats, Gruppen und Direktnachrichten mit Sprachnachrichten, Reaktionen und Lesebestätigung
+• Profilfoto und 10 Farbthemen
+• 10 Sprachen
+• Personen blockieren und Nachrichten melden
+
+#### 📱 Google Play (fr-FR):
+MeetGo fait peau neuve pour rencontrer des gens près de chez vous.
+• Communautés de votre zone par loisir, avec un tableau et un chat
+• Sorties et rencontres avec places et liste d'attente
+• Chats, groupes et messages privés avec notes vocales, réactions et accusés de lecture
+• Photo de profil et 10 thèmes de couleur
+• 10 langues
+• Bloquer des personnes et signaler des messages
+
+#### 📱 Google Play (it-IT):
+MeetGo si rinnova del tutto per conoscere persone della tua zona.
+• Community della tua zona per hobby, con bacheca e chat
+• Piani e incontri con posti e lista d'attesa
+• Chat, gruppi e messaggi diretti con note vocali, reazioni e conferma di lettura
+• Foto del profilo e 10 temi di colore
+• 10 lingue
+• Bloccare persone e segnalare messaggi
+
+#### 📱 Google Play (ja-JP):
+MeetGo を全面的に刷新しました。近くの人と出会えるアプリです。
+• 趣味ごとの地域コミュニティ（掲示板とチャット付き）
+• 定員とキャンセル待ちのあるプランや集まり
+• チャット、グループ、ダイレクトメッセージ（ボイスメモ、リアクション、既読表示）
+• プロフィール写真と10種類のカラーテーマ
+• 10言語に対応
+• ユーザーのブロックとメッセージの報告
+
+#### 📱 Google Play (nl-NL):
+MeetGo is helemaal vernieuwd om mensen in je buurt te leren kennen.
+• Community's van je regio per hobby, met prikbord en chat
+• Plannen en meetups met plaatsen en wachtlijst
+• Chats, groepen en directe berichten met spraakberichten, reacties en leesbevestiging
+• Profielfoto en 10 kleurthema's
+• 10 talen
+• Mensen blokkeren en berichten melden
+
+#### 📱 Google Play (pt-PT):
+O MeetGo foi totalmente renovado para conhecer pessoas da sua zona.
+• Comunidades da sua zona por passatempo, com mural e chat
+• Planos e encontros com lugares e lista de espera
+• Chats, grupos e mensagens diretas com notas de voz, reações e confirmação de leitura
+• Foto de perfil e 10 temas de cor
+• 10 idiomas
+• Bloquear pessoas e denunciar mensagens
+
+#### 📱 Google Play (zh-CN):
+MeetGo 全面焕新，帮你认识附近的人。
+• 按兴趣划分的本地社区，带公告板和聊天
+• 有名额和候补名单的计划与聚会
+• 聊天、群组和私信，支持语音消息、表情回应和已读回执
+• 个人头像和 10 种配色主题
+• 支持 10 种语言
+• 屏蔽他人和举报消息
+
 ---
 
 ## Release: v0.1.0
