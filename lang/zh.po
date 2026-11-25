@@ -3318,7 +3318,7 @@ msgid "ui_retention_days"
 msgstr "{n} 天"
 
 msgid "ui_zone_lead_place"
-msgstr "你的区域是 {zone} · {age}。选择其他国家或省份，查看那里与你同龄的社区。只能加入你所在区域的社区。"
+msgstr "你的区域是 {zone}。选择其他国家或省份，查看那里与你同龄的社区。只能加入你所在区域的社区。"
 
 msgid "ui_suggest_title"
 msgstr "为你推荐的社区"
@@ -3337,6 +3337,36 @@ msgstr "社区兴趣"
 
 msgid "ui_community_interests_hint"
 msgstr "最多 5 个。会推荐给你所在区域有其中任一兴趣的人。"
+
+msgid "ui_voice_note"
+msgstr "语音消息"
+
+msgid "ui_voice_play"
+msgstr "播放"
+
+msgid "ui_voice_pause"
+msgstr "暂停"
+
+msgid "ui_voice_cannot_play"
+msgstr "无法播放此音频"
+
+msgid "ui_voice_unsupported"
+msgstr "此浏览器无法录音"
+
+msgid "ui_voice_no_mic"
+msgstr "没有使用麦克风的权限"
+
+msgid "ui_voice_recording"
+msgstr "录音中…"
+
+msgid "ui_voice_discard"
+msgstr "放弃"
+
+msgid "ui_voice_send"
+msgstr "发送语音消息"
+
+msgid "ui_voice_record"
+msgstr "录制语音消息"
 
 msgid "ui_install_title"
 msgstr "安装 MeetGo"

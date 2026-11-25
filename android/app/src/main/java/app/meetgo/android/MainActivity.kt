@@ -17,6 +17,7 @@ import android.provider.Settings
 import android.util.Base64
 import android.view.ViewGroup
 import android.webkit.CookieManager
+import android.webkit.PermissionRequest
 import android.webkit.RenderProcessGoneDetail
 import android.webkit.URLUtil
 import android.webkit.ValueCallback
@@ -111,6 +112,13 @@ class MainActivity : ComponentActivity() {
     }
 
     private val askPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+
+    /** The web app asked for the microphone (a voice note): granted once Android's permission is. */
+    private var pendingMic: PermissionRequest? = null
+    private val askMic = registerForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
+        pendingMic?.let { if (ok) it.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE)) else it.deny() }
+        pendingMic = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
@@ -262,6 +270,22 @@ class MainActivity : ComponentActivity() {
                 fileCallback?.onReceiveValue(null)
                 fileCallback = callback
                 return try { chooseFiles.launch(chooserIntent(params)); true } catch (_: Exception) { fileCallback = null; false }
+            }
+
+            // only the microphone, and only for MeetGo's own pages (voice notes)
+            override fun onPermissionRequest(request: PermissionRequest) {
+                runOnUiThread {
+                    val mic = request.resources.contains(PermissionRequest.RESOURCE_AUDIO_CAPTURE)
+                    if (!mic || !sameServer(request.origin)) {
+                        request.deny()
+                    } else if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        request.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+                    } else {
+                        pendingMic?.deny()
+                        pendingMic = request
+                        askMic.launch(Manifest.permission.RECORD_AUDIO)
+                    }
+                }
             }
         }
         // files the server sends for download (the web app's own files go through NativeBridge.saveFile)

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- voice notes in the chats (asked the first time one is recorded) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <!-- Android 13+: asked the first time the web app asks for the push token (after signing in) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 

@@ -3318,7 +3318,7 @@ msgid "ui_retention_days"
 msgstr "{n} 日"
 
 msgid "ui_zone_lead_place"
-msgstr "あなたのゾーンは {zone} · {age} です。別の国や地域を選ぶと、同じ年齢層のコミュニティを見られます。参加できるのは自分のゾーンだけです。"
+msgstr "あなたのゾーンは {zone} です。別の国や地域を選ぶと、同じ年齢層のコミュニティを見られます。参加できるのは自分のゾーンだけです。"
 
 msgid "ui_suggest_title"
 msgstr "あなたへのおすすめ"
@@ -3337,6 +3337,36 @@ msgstr "コミュニティの興味"
 
 msgid "ui_community_interests_hint"
 msgstr "5 つまで。いずれかに興味がある同じゾーンの人におすすめされます。"
+
+msgid "ui_voice_note"
+msgstr "ボイスメッセージ"
+
+msgid "ui_voice_play"
+msgstr "再生"
+
+msgid "ui_voice_pause"
+msgstr "一時停止"
+
+msgid "ui_voice_cannot_play"
+msgstr "この音声は再生できません"
+
+msgid "ui_voice_unsupported"
+msgstr "このブラウザでは録音できません"
+
+msgid "ui_voice_no_mic"
+msgstr "マイクの使用が許可されていません"
+
+msgid "ui_voice_recording"
+msgstr "録音中…"
+
+msgid "ui_voice_discard"
+msgstr "破棄"
+
+msgid "ui_voice_send"
+msgstr "ボイスメッセージを送信"
+
+msgid "ui_voice_record"
+msgstr "ボイスメッセージを録音"
 
 msgid "ui_install_title"
 msgstr "MeetGoをインストール"

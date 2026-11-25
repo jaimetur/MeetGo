@@ -252,8 +252,12 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
             for u in (await db.execute(select(User).where(User.id.in_(sender_ids)))).scalars().all():
                 senders[u.id] = u
     attach_ids = set()
+    voice_ids = set()
     if last_ids:
-        attach_ids = set((await db.execute(select(Attachment.message_id).where(Attachment.message_id.in_(last_ids)))).scalars().all())
+        for mid, fname in (await db.execute(select(Attachment.message_id, Attachment.file_name).where(Attachment.message_id.in_(last_ids)))).all():
+            attach_ids.add(mid)
+            if (fname or "").startswith("voice_note_"):
+                voice_ids.add(mid)
 
     dm_ids = [c.id for _, c in rows if c.kind == "dm"]
     others: dict[int, User] = {}
@@ -286,8 +290,8 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
             "member_count": counts.get(conv.id, 0),
             "unread_count": min(unread.get(conv.id, 0), 999),
             "mention_count": mentions.get(conv.id, 0),
-            "last_message": last_message_out(last, senders.get(last.sender_id) if last else None,
-                                             bool(last and last.id in attach_ids)) if last else None,
+            "last_message": {**last_message_out(last, senders.get(last.sender_id) if last else None,
+                                                bool(last and last.id in attach_ids)), "voice": last.id in voice_ids} if last else None,
         })
         out.append(item)
     out.sort(key=lambda c: (not c["pinned"], -(_ts(c["last_message_at"]))), reverse=False)
@@ -340,6 +344,8 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
         "avatar_url": conv.avatar_url if conv.kind != "dm" else (other.avatar_url if other else None),
         "province": conv.province,
         "age_range": conv.age_range,
+        "min_age": conv.min_age,
+        "max_age": conv.max_age,
         "interest": {"id": interest.id, "slug": interest.slug, "name": interest.name} if interest else None,
         "other_user": ({**user_summary(other), "online": other.id in online, "last_seen_at": last_seen} if other else None),
         "role": member.role,

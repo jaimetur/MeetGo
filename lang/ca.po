@@ -3318,7 +3318,7 @@ msgid "ui_retention_days"
 msgstr "{n} dies"
 
 msgid "ui_zone_lead_place"
-msgstr "La teva zona és {zone} · {age}. Tria un altre país o província per veure’n les comunitats de la teva edat. Només pots entrar a les de la teva zona."
+msgstr "La teva zona és {zone}. Tria un altre país o província per veure’n les comunitats de la teva edat. Només pots entrar a les de la teva zona."
 
 msgid "ui_suggest_title"
 msgstr "Comunitats per a tu"
@@ -3337,6 +3337,36 @@ msgstr "Interessos de la comunitat"
 
 msgid "ui_community_interests_hint"
 msgstr "Fins a 5. Se suggerirà a la gent de la teva zona que en tingui algun."
+
+msgid "ui_voice_note"
+msgstr "Nota de veu"
+
+msgid "ui_voice_play"
+msgstr "Reproduir"
+
+msgid "ui_voice_pause"
+msgstr "Pausa"
+
+msgid "ui_voice_cannot_play"
+msgstr "No es pot reproduir aquest àudio"
+
+msgid "ui_voice_unsupported"
+msgstr "Aquest navegador no pot gravar àudio"
+
+msgid "ui_voice_no_mic"
+msgstr "No hi ha permís per fer servir el micròfon"
+
+msgid "ui_voice_recording"
+msgstr "Gravant…"
+
+msgid "ui_voice_discard"
+msgstr "Descartar"
+
+msgid "ui_voice_send"
+msgstr "Enviar nota de veu"
+
+msgid "ui_voice_record"
+msgstr "Gravar una nota de veu"
 
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"

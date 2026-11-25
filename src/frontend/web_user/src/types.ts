@@ -29,6 +29,7 @@ export type LastMessage = {
   body: string;
   deleted: boolean;
   has_attachments: boolean;
+  voice?: boolean;
   created_at: string;
 };
 
@@ -41,6 +42,8 @@ export type Conversation = {
   avatar_url: string | null;
   province: string | null;
   age_range: string | null;
+  min_age?: number | null;
+  max_age?: number | null;
   interest: { id: number; slug: string; name: string } | null;
   other_user: (UserSummary & { online: boolean; last_seen_at?: string | null }) | null;
   role: string;

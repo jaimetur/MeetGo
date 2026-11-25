@@ -3318,7 +3318,7 @@ msgid "ui_retention_days"
 msgstr "{n} dagen"
 
 msgid "ui_zone_lead_place"
-msgstr "Je zone is {zone} · {age}. Kies een ander land of provincie om de community’s van jouw leeftijd daar te zien. Je kunt alleen lid worden in je eigen zone."
+msgstr "Je zone is {zone}. Kies een ander land of provincie om de community’s van jouw leeftijd daar te zien. Je kunt alleen lid worden in je eigen zone."
 
 msgid "ui_suggest_title"
 msgstr "Community’s voor jou"
@@ -3337,6 +3337,36 @@ msgstr "Interesses van de community"
 
 msgid "ui_community_interests_hint"
 msgstr "Tot 5. Wordt voorgesteld aan mensen in je zone met een daarvan."
+
+msgid "ui_voice_note"
+msgstr "Spraakbericht"
+
+msgid "ui_voice_play"
+msgstr "Afspelen"
+
+msgid "ui_voice_pause"
+msgstr "Pauze"
+
+msgid "ui_voice_cannot_play"
+msgstr "Deze audio kan niet worden afgespeeld"
+
+msgid "ui_voice_unsupported"
+msgstr "Deze browser kan geen audio opnemen"
+
+msgid "ui_voice_no_mic"
+msgstr "Geen toestemming voor de microfoon"
+
+msgid "ui_voice_recording"
+msgstr "Opnemen…"
+
+msgid "ui_voice_discard"
+msgstr "Weggooien"
+
+msgid "ui_voice_send"
+msgstr "Spraakbericht sturen"
+
+msgid "ui_voice_record"
+msgstr "Spraakbericht opnemen"
 
 msgid "ui_install_title"
 msgstr "MeetGo installeren"

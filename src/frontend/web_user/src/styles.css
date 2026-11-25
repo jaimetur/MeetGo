@@ -1457,5 +1457,25 @@ a.btn { text-decoration: none; }
 .chips.wrapchips { flex-wrap: wrap; overflow: visible; }
 
 /* a community's place and ages, under its name */
-.cscope { display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
-.cscope .ic { width: 13px; height: 13px; flex: none; }
+.ctags { flex-wrap: wrap; gap: 6px; }
+.ktag.kscope { background: color-mix(in srgb, var(--blue) 13%, transparent); color: var(--blue); }
+.ktag.kage { background: color-mix(in srgb, var(--teal) 15%, transparent); color: var(--teal); }
+.info-tags { flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+/* voice notes: the player in a message and the recording bar in the composer */
+.voice { display: flex; align-items: center; gap: 10px; min-width: 210px; max-width: 320px; padding: 4px 2px; }
+.voice-play { width: 38px; height: 38px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--grad); color: #fff; }
+.msg.mine .voice-play { background: rgba(255, 255, 255, 0.95); color: var(--blue); }
+.voice-tri { width: 0; height: 0; border-left: 12px solid currentColor; border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 3px; }
+.voice-pause { width: 12px; height: 14px; border-left: 4px solid currentColor; border-right: 4px solid currentColor; }
+.voice-track { flex: 1; height: 6px; border-radius: 999px; background: var(--line2); cursor: pointer; position: relative; overflow: hidden; }
+.voice-track i { position: absolute; inset: 0 auto 0 0; background: var(--blue); border-radius: 999px; }
+.msg.mine .voice-track { background: rgba(255, 255, 255, 0.35); }
+.msg.mine .voice-track i { background: #fff; }
+.voice-time { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); min-width: 34px; text-align: right; }
+.msg.mine .voice-time { color: rgba(255, 255, 255, 0.85); }
+.recbar { display: flex; align-items: center; gap: 10px; width: 100%; padding: 4px 4px 4px 8px; }
+.composer:has(.recbar) > textarea, .composer:has(.recbar) > .ctools { display: none; }
+.recdot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; animation: recpulse 1s ease-in-out infinite; flex: none; }
+.rectime { font-variant-numeric: tabular-nums; font-weight: 700; }
+@keyframes recpulse { 50% { opacity: 0.3; } }

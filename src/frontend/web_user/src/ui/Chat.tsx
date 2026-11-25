@@ -271,7 +271,7 @@ function ConversationStart({ conv }: { conv: Conversation }) {
     <div className="empty" style={{ paddingTop: 40 }}>
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}><ConvIcon conv={conv} size={56} /></div>
       <h3>{convTitle(conv)}</h3>
-      <p>{conv.kind === "channel" ? t("ui_channel_start", { zone: conv.subtitle || "" }) : conv.kind === "group" ? t("ui_group_start") : t("ui_dm_start", { name: conv.title })}</p>
+      <p>{conv.kind === "channel" ? t("ui_channel_start", { zone: conv.province || "" }) : conv.kind === "group" ? t("ui_group_start") : t("ui_dm_start", { name: conv.title })}</p>
     </div>
   );
 }
@@ -425,7 +425,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
 
   let sub: React.ReactNode = conv.subtitle;
   if (conv.kind === "dm") sub = conv.other_user?.online ? <span className="on">{t("ui_online")}</span> : conv.other_user?.last_seen_at ? lastSeenText(conv.other_user.last_seen_at) : null;
-  else sub = conv.kind === "channel" && conv.subtitle ? `${conv.subtitle} · ${t("ui_members_n", { n: conv.member_count })}` : t("ui_members_n", { n: conv.member_count });
+  else sub = t("ui_members_n", { n: conv.member_count });  // where and for whom: tags in the info panel and the community
 
   return (
     <header className="chead">
@@ -663,10 +663,60 @@ function Rich({ text }: { text: string }) {
   );
 }
 
+/** Voice notes are uploaded as voice_note_<milliseconds>.<ext>: their length is in the name (WebM files often lack it). */
+function voiceMs(name: string): number | null {
+  const m = /^voice_note_(\d+)\./.exec(name);
+  return m ? Number(m[1]) : null;
+}
+
+const VOICE_MAX_SECONDS = 300;  // 5 minutes
+const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+let playingAudio: HTMLAudioElement | null = null;
+
+/** A voice note (or any audio): play/pause, a bar to move through it, and the time. One plays at a time. */
+function AudioNote({ url, name }: { url: string; name: string }) {
+  const ref = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [pos, setPos] = useState(0);
+  const [len, setLen] = useState(() => (voiceMs(name) ?? 0) / 1000);
+  const toggle = () => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.paused) {
+      if (playingAudio && playingAudio !== el) playingAudio.pause();
+      playingAudio = el;
+      el.play().catch(() => toast(t("ui_voice_cannot_play"), "error"));
+    } else el.pause();
+  };
+  const seek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el || !len) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    el.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * len;
+  };
+  return (
+    <div className="voice">
+      <audio ref={ref} src={url} preload="metadata"
+        onLoadedMetadata={(e) => { const d = e.currentTarget.duration; if (Number.isFinite(d) && d > 0) setLen(d); }}
+        onTimeUpdate={(e) => setPos(e.currentTarget.currentTime)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
+        onEnded={(e) => { setPlaying(false); setPos(0); e.currentTarget.currentTime = 0; }} />
+      <button type="button" className="voice-play" onClick={toggle} aria-label={playing ? t("ui_voice_pause") : t("ui_voice_play")}>
+        {playing ? <span className="voice-pause" aria-hidden="true" /> : <span className="voice-tri" aria-hidden="true" />}
+      </button>
+      <div className="voice-track" onClick={seek} role="slider" aria-label={t("ui_voice_note")} aria-valuemin={0} aria-valuemax={Math.round(len)} aria-valuenow={Math.round(pos)}>
+        <i style={{ width: `${len ? Math.min(100, (pos / len) * 100) : 0}%` }} />
+      </div>
+      <span className="voice-time">{mmss(playing || pos ? pos : len)}</span>
+    </div>
+  );
+}
+
 function Attachments({ m }: { m: Message }) {
   return (
     <div className="atts">
-      {m.attachments.map((a) => a.mime.startsWith("image/") ? (
+      {m.attachments.map((a) => a.mime.startsWith("audio/") ? (
+        <AudioNote key={a.id} url={fileUrl(a.url)} name={a.file_name} />
+      ) : a.mime.startsWith("image/") ? (
         <a key={a.id} className="att-img" href={fileUrl(a.url)} target="_blank" rel="noopener noreferrer">
           <img src={fileUrl(a.thumb_url || a.url)} alt={a.file_name} loading="lazy" width={a.width ? Math.min(a.width, 360) : undefined} />
         </a>
@@ -823,6 +873,73 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
     }
   }
 
+  // ---- voice notes: the microphone records, then the note is uploaded and sent as a message ----
+  const [rec, setRec] = useState<{ started: number } | null>(null);
+  const [elapsed, setElapsed] = useState(0);
+  const recorder = useRef<{ mr: MediaRecorder; chunks: Blob[]; stream: MediaStream; send: boolean } | null>(null);
+  useEffect(() => {
+    if (!rec) return;
+    const id = window.setInterval(() => {
+      const s = (Date.now() - rec.started) / 1000;
+      setElapsed(s);
+      if (s >= VOICE_MAX_SECONDS) stopRecording(true);
+    }, 250);
+    return () => window.clearInterval(id);
+  }, [rec]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => () => recorder.current?.stream.getTracks().forEach((tr) => tr.stop()), []);
+
+  async function startRecording() {
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") return toast(t("ui_voice_unsupported"), "error");
+    let stream: MediaStream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch {
+      return toast(t("ui_voice_no_mic"), "error");
+    }
+    const type = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm", "audio/ogg;codecs=opus"].find((x) => MediaRecorder.isTypeSupported(x)) || "";
+    const mr = new MediaRecorder(stream, type ? { mimeType: type } : undefined);
+    const chunks: Blob[] = [];
+    const started = Date.now();
+    recorder.current = { mr, chunks, stream, send: false };
+    mr.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+    mr.onstop = () => {
+      stream.getTracks().forEach((tr) => tr.stop());
+      const cur = recorder.current;
+      recorder.current = null;
+      const ms = Date.now() - started;
+      if (!cur?.send || ms < 800) return;
+      const mime = (mr.mimeType || type || "audio/webm").split(";")[0];
+      const ext = mime.includes("mp4") ? "m4a" : mime.includes("ogg") ? "ogg" : "webm";
+      sendVoice(new File(chunks, `voice_note_${ms}.${ext}`, { type: mime }));
+    };
+    mr.start(250);
+    setElapsed(0);
+    setRec({ started });
+  }
+
+  function stopRecording(send: boolean) {
+    const cur = recorder.current;
+    setRec(null);
+    if (!cur) return;
+    cur.send = send;
+    if (cur.mr.state !== "inactive") cur.mr.stop();
+  }
+
+  async function sendVoice(file: File) {
+    const entry: PendingAttachment = { name: t("ui_voice_note"), uploading: true };
+    setAtts((a) => [...a, entry]);
+    try {
+      const res = await api.upload(file, file.name);
+      setAtts((a) => a.filter((x) => x !== entry));
+      onSent?.();
+      await sendMessage(conv.id, { body: "", client_id: uuid(), reply_to_id: replyTo?.id, thread_root_id: threadRootId, attachment_ids: [res.id] }, replyTo);
+      onCancelReply?.();
+    } catch (e: any) {
+      toast(e.message, "error");
+      setAtts((a) => a.filter((x) => x !== entry));
+    }
+  }
+
   async function submit() {
     const body = text.trim();
     const ready = atts.filter((a) => a.id && !a.uploading).map((a) => a.id!);
@@ -890,6 +1007,15 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
           ))}
         </div>
       ) : null}
+      {rec ? (
+        <div className="recbar" role="status">
+          <button type="button" className="iconbtn" onClick={() => stopRecording(false)} aria-label={t("ui_voice_discard")} title={t("ui_voice_discard")}><Icon name="trash" /></button>
+          <span className="recdot" aria-hidden="true" />
+          <span className="rectime">{mmss(elapsed)}</span>
+          <span className="grow muted">{t("ui_voice_recording")}</span>
+          <button type="button" className="sendb" onClick={() => stopRecording(true)} aria-label={t("ui_voice_send")} title={t("ui_voice_send")}><Icon name="send" size="sm" /></button>
+        </div>
+      ) : null}
       <textarea
         id={`composer-${conv.id}-${threadRootId || 0}`}
         ref={area} rows={1} value={text} placeholder={placeholder} aria-label={placeholder}
@@ -905,7 +1031,11 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
         ) : null}
         <span className="hint">{compact ? "" : t("ui_enter_hint")}</span>
         {/* keeps the focus (and the phone's keyboard) in the text after sending, as chat apps do */}
-        <button className="sendb" onMouseDown={(e) => e.preventDefault()} onClick={submit} title={t("ui_send")} aria-label={t("ui_send")} disabled={atts.some((a) => a.uploading)}><Icon name="send" size="sm" /></button>
+        {!text.trim() && !atts.length && !rec ? (
+          <button className="sendb mic" id={`voice-${conv.id}-${threadRootId || 0}`} onClick={startRecording} title={t("ui_voice_record")} aria-label={t("ui_voice_record")}><Icon name="mic" size="sm" /></button>
+        ) : (
+          <button className="sendb" onMouseDown={(e) => e.preventDefault()} onClick={submit} title={t("ui_send")} aria-label={t("ui_send")} disabled={atts.some((a) => a.uploading)}><Icon name="send" size="sm" /></button>
+        )}
       </div>
     </div>
   );

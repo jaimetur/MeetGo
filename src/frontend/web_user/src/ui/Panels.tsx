@@ -7,6 +7,7 @@ import type { Conversation, Member, Message } from "../types";
 import { ActionSheet, Composer, MessageItem, type MessageActions } from "./Chat";
 import { Avatar, Icon, convTitle } from "./common";
 import { RichEditor, RichText } from "./RichText";
+import { ScopeTags } from "./Communities";
 
 export function SidePanel({ conversationId, thread, panel }: { conversationId: number; thread: number | null; panel: "members" | "info" | null }) {
   const conv = useStore((s) => s.conversations[conversationId]);
@@ -242,6 +243,7 @@ function InfoPanel({ conv }: { conv: Conversation }) {
       <div>
         <div className="info-title">{convTitle(conv)}</div>
         <div className="muted info-meta">{conv.kind !== "dm" ? t("ui_members_n", { n: conv.member_count }) : ""}</div>
+        {conv.kind === "channel" ? <div className="row info-tags"><ScopeTags c={conv} /></div> : null}
         {conv.description && !(staff && conv.kind === "group") ? <p style={{ fontSize: 13 }}>{conv.description}</p> : null}
       </div>
       {conv.rules_markdown && !staff ? (

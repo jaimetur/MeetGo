@@ -126,7 +126,7 @@ function ConvRow({ c, active, typing }: { c: Conversation; active: boolean; typi
   let preview = "";
   if (last) {
     const who = last.kind === "system" ? "" : last.sender_name && c.kind !== "dm" ? `${last.sender_name}: ` : "";
-    preview = last.deleted ? t("ui_msg_deleted") : who + (last.body || (last.has_attachments ? "📎 " + t("ui_attachment") : ""));
+    preview = last.deleted ? t("ui_msg_deleted") : who + (last.body || (last.voice ? "🎤 " + t("ui_voice_note") : last.has_attachments ? "📎 " + t("ui_attachment") : ""));
   }
   const [menuAt, setMenuAt] = useState<{ x: number; y: number } | null>(null);
   return (

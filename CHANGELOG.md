@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Voice notes in chats: hold nothing, just tap the microphone when the message is empty, record up to 5 minutes and send (or discard); notes play in the chat with a seekable bar, and the chat list shows "🎤 Voice note". The Android app asks for the microphone (needs the new build).
+- Where and for whom a community is now shows as tags (place, and its age range, ranges or own span) on community cards, the community page and the chat's info panel; the chat header keeps just the members, and your zone is only your place.
 - Discover other zones at any level: a province (or state, region...), a group of them where the country has one (Spain's autonomous communities, Ireland's provinces, Japan's regions) or a whole country; over several provinces each community says which one it is in.
 - On computers your own messages show on the right in a blue bubble, with your avatar beside it.
 - Chat text a little bigger, and a text size in Settings for the whole app: Small, Normal (as designed) or Large, per device.

@@ -3318,7 +3318,7 @@ msgid "ui_retention_days"
 msgstr "{n} Tage"
 
 msgid "ui_zone_lead_place"
-msgstr "Deine Zone ist {zone} · {age}. Wähle ein anderes Land oder eine andere Provinz, um dortige Communities deines Alters zu sehen. Beitreten kannst du nur in deiner Zone."
+msgstr "Deine Zone ist {zone}. Wähle ein anderes Land oder eine andere Provinz, um dortige Communities deines Alters zu sehen. Beitreten kannst du nur in deiner Zone."
 
 msgid "ui_suggest_title"
 msgstr "Communities für dich"
@@ -3337,6 +3337,36 @@ msgstr "Interessen der Community"
 
 msgid "ui_community_interests_hint"
 msgstr "Bis zu 5. Sie wird Menschen deiner Zone mit einem davon vorgeschlagen."
+
+msgid "ui_voice_note"
+msgstr "Sprachnachricht"
+
+msgid "ui_voice_play"
+msgstr "Abspielen"
+
+msgid "ui_voice_pause"
+msgstr "Pause"
+
+msgid "ui_voice_cannot_play"
+msgstr "Dieses Audio kann nicht abgespielt werden"
+
+msgid "ui_voice_unsupported"
+msgstr "Dieser Browser kann kein Audio aufnehmen"
+
+msgid "ui_voice_no_mic"
+msgstr "Keine Berechtigung für das Mikrofon"
+
+msgid "ui_voice_recording"
+msgstr "Aufnahme…"
+
+msgid "ui_voice_discard"
+msgstr "Verwerfen"
+
+msgid "ui_voice_send"
+msgstr "Sprachnachricht senden"
+
+msgid "ui_voice_record"
+msgstr "Sprachnachricht aufnehmen"
 
 msgid "ui_install_title"
 msgstr "MeetGo installieren"

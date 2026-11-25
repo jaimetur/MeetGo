@@ -1390,7 +1390,7 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
   }
   return (
     <Modal title={t("ui_zone_title")} onClose={onClose}>
-      <p className="muted" style={{ marginTop: 0 }}>{t("ui_zone_lead_place", { zone: me.province, age: ageText(me.age_range) })}</p>
+      <p className="muted" style={{ marginTop: 0 }}>{t("ui_zone_lead_place", { zone: me.province })}</p>
       <label className="fld">{t("ui_country")}
         <select id="zone-country" className="inp" value={country} onChange={(e) => { setCountry(e.target.value); setArea(""); setProvince(""); }}>
           {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}

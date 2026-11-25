@@ -113,7 +113,7 @@ function handle(ev: any) {
         const viewing = s.activeConversation === m.conversation_id && document.visibilityState === "visible";
         const counts = !mine && !viewing && !m.deleted;
         patchConversation(m.conversation_id, {
-          last_message: { id: m.id, kind: m.kind, sender_id: m.sender?.id ?? null, sender_name: m.sender?.display_name ?? null, body: m.body.slice(0, 140), deleted: m.deleted, has_attachments: m.attachments.length > 0, created_at: m.created_at },
+          last_message: { id: m.id, kind: m.kind, sender_id: m.sender?.id ?? null, sender_name: m.sender?.display_name ?? null, body: m.body.slice(0, 140), deleted: m.deleted, has_attachments: m.attachments.length > 0, voice: m.attachments.some((a) => a.file_name.startsWith("voice_note_")), created_at: m.created_at },
           last_message_at: m.created_at,
           unread_count: mine ? 0 : conv.unread_count + (counts ? 1 : 0),
           mention_count: conv.mention_count + (counts && meId != null && m.mentions.includes(meId) ? 1 : 0),

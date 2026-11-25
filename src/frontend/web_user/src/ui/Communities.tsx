@@ -106,7 +106,6 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
           <CommunityBadge c={c} />
           <div style={{ minWidth: 0 }}>
             <div className="ctitle">{c.title}</div>
-            <div className="cscope"><Icon name="place" size="sm" />{scopeText(c)}</div>
             <div className="cstats">
               <span>{t("ui_members_n", { n: c.member_count })}</span>
               {c.online_count ? <span><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</span> : null}
@@ -115,7 +114,8 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
           </div>
         </div>
         {c.description ? <p className="cdesc">{c.description}</p> : null}
-        <div className="row">
+        <div className="row ctags">
+          <ScopeTags c={c} />
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.role && c.role !== "member" ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role])}</span> : null}
           <span className="grow" />
@@ -479,7 +479,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
         <div className="row chead2-tags" style={{ flexWrap: "wrap" }}>
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.board_mode === "admins" ? <span className="ktag"><Icon name="megaphone" size="sm" />{t("ui_community_board_admins")}</span> : null}
-          <span className="ktag"><Icon name="place" size="sm" />{scopeText(c)}</span>
+          <ScopeTags c={c} />
           {c.retention_days ? <span className="ktag" title={t("ui_community_retention_hint")}><Icon name="clock" size="sm" />{t("ui_community_retention_tag", { time: retentionText(c.retention_days) })}</span> : null}
           {c.role ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role] || "ui_role_member")}</span> : null}
           {c.rules ? <button className="ktag link" onClick={() => setRules(true)}><Icon name="shield" size="sm" />{t("ui_community_rules")}</button> : null}
@@ -854,10 +854,24 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 /** Home: the communities I belong to, one tap away (board, chat and members). */
 
 
-/** Where and for whom a community is: "Madrid · 31-60" or, with its own age span, "Madrid · 25–40 años". */
-export function scopeText(c: Pick<Community, "province" | "age_range" | "min_age" | "max_age">): string {
-  const ages = c.min_age != null || c.max_age != null ? ageSpanText(c as Community) : (c.age_range || "").replace("_plus", "+").replace("_", "-");
-  return [c.province, ages].filter(Boolean).join(" · ");
+type ScopeOf = { province?: string | null; age_range?: string | null; min_age?: number | null; max_age?: number | null; age_ranges?: string[] | null };
+
+/** "31_60" → "31-60", "61_plus" → "61+". */
+function rangeLabel(r: string): string {
+  return r.replace("_plus", "+").replace("_", "-");
+}
+
+/** Where and for whom a community is, as tags: the place, and its own age span or its age ranges (one tag each). */
+export function ScopeTags({ c }: { c: ScopeOf }) {
+  const span = c.min_age != null || c.max_age != null;
+  const ranges = span ? [] : (c.age_ranges && c.age_ranges.length ? c.age_ranges : c.age_range ? [c.age_range] : []);
+  return (
+    <>
+      {c.province ? <span className="ktag kscope"><Icon name="place" size="sm" />{c.province}</span> : null}
+      {span ? <span className="ktag kage"><Icon name="users" size="sm" />{ageSpanText(c as Community)}</span> : null}
+      {ranges.map((r) => <span key={r} className="ktag kage"><Icon name="users" size="sm" />{rangeLabel(r)}</span>)}
+    </>
+  );
 }
 
 /** "25–40 años", "From 25", "Up to 40". */
