@@ -129,7 +129,7 @@ export function Billing({ embedded = false }: { embedded?: boolean }) {
           <textarea className="inp mono" rows={4} spellCheck={false} placeholder={t2("bill_sa_placeholder")} value={play.service_account} onChange={(e) => setPlay({ ...play, service_account: e.target.value })} />
         </Field>
         <Field label={a("bz_bucket")} hint={a("bz_bucket_hint")}>
-          <input id="bz-bucket" className="inp mono" placeholder="gs://pubsite_prod_rev_…" value={play.reports_bucket} onChange={(e) => setPlay({ ...play, reports_bucket: e.target.value })} />
+          <input id="bz-bucket" className="inp mono" placeholder="gs://pubsite_prod_…" value={play.reports_bucket} onChange={(e) => setPlay({ ...play, reports_bucket: e.target.value })} />
         </Field>
         <Steps title={a("bz_bucket_how")} link={{ href: "https://support.google.com/googleplay/android-developer/answer/6135870?hl=es", text: a("bz_bucket_help") }}
           steps={[a("bz_bucket_step1"), a("bz_bucket_step2"), a("bz_bucket_step3")]} />
