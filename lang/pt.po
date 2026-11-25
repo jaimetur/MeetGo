@@ -4174,6 +4174,9 @@ msgstr "Comunidades"
 msgid "ui_sec_communities_zone"
 msgstr "Comunidades · {zone}"
 
+msgid "ui_sub_plans"
+msgstr "Planos ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Conversas dos planos"
 

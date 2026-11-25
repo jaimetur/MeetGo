@@ -1672,3 +1672,12 @@ a.btn { text-decoration: none; }
 .mt .ctime + .ticks { margin-left: 3px; }
 /* drop-downs in windows: as tall as the other fields and easy to tap */
 .modal select.inp { min-height: 46px; padding: 11px 12px; font-size: 15px; }
+
+/* chats of a community's plans, under its chat and indented, folded or unfolded with their row */
+.csubs { margin-left: 26px; border-left: 2px solid var(--line); padding-left: 2px; }
+.csubs .crow { grid-template-columns: 34px minmax(0, 1fr) auto; padding-block: 5px; }
+.csubs .crow .av, .csubs .crow .cicon { transform: scale(0.88); }
+.csubtoggle { display: flex; align-items: center; gap: 8px; width: calc(100% - 12px); margin: 0 6px; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--muted); text-align: left; }
+.csubtoggle:hover { background: var(--hover, rgba(127, 127, 127, 0.08)); }
+.csubtoggle .chev { font-size: 15px; line-height: 1; transition: transform .15s ease; }
+.csubtoggle .chev.open { transform: rotate(90deg); }

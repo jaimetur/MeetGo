@@ -4175,6 +4175,9 @@ msgstr "コミュニティ"
 msgid "ui_sec_communities_zone"
 msgstr "コミュニティ · {zone}"
 
+msgid "ui_sub_plans"
+msgstr "予定（{n}）"
+
 msgid "ui_sec_plans"
 msgstr "予定のチャット"
 

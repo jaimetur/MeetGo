@@ -44,6 +44,25 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
   const myPlans = useStore((s) => s.myPlans);
   const planChats = useMemo(() => new Set((myPlans || []).map((p) => p.chat_conversation_id).filter((x): x is number => !!x)), [myPlans]);
   const kindOf = (c: Conversation): Filter => (c.kind === "group" && planChats.has(c.id) ? "plan" : c.kind);
+  // each plan chat belongs to its community's chat: listed under it, indented, and folded or unfolded per community
+  const parentOf = useMemo(() => new Map((myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.community.id])), [myPlans]);
+  const [folded, setFolded] = useState<Set<number>>(() => {
+    try {
+      return new Set(JSON.parse(localStorage.getItem("chats.foldedPlans") || "[]"));
+    } catch {
+      return new Set();
+    }
+  });
+  const toggleFold = (id: number) => setFolded((prev) => {
+    const next = new Set(prev);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    try {
+      localStorage.setItem("chats.foldedPlans", JSON.stringify([...next]));
+    } catch {
+      /* per device */
+    }
+    return next;
+  });
 
   useEffect(() => {
     setFound(null);
@@ -59,10 +78,17 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     if (filter !== "all") return kindOf(c) === filter;
     return true;
   });
+  // nested under their community when it is listed too (all of them, or the communities filter)
+  const nest = filter === "all" || filter === "channel";
+  const shownChannels = new Set(visible.filter((c) => !c.pinned && c.kind === "channel").map((c) => c.id));
+  const planList = (filter === "channel" ? all.filter((c) => !q || convTitle(c).toLowerCase().includes(q.toLowerCase())) : visible)
+    .filter((c) => !c.pinned && kindOf(c) === "plan");
+  const childrenOf = (id: number) => (nest ? planList.filter((c) => parentOf.get(c.id) === id) : []);
+  const nested = (c: Conversation) => nest && shownChannels.has(parentOf.get(c.id) ?? -1);
   const sections: [string, Conversation[]][] = [
     [t("ui_sec_pinned"), visible.filter((c) => c.pinned)],
     [t("ui_sec_communities"), visible.filter((c) => !c.pinned && c.kind === "channel")],
-    [t("ui_sec_plans"), visible.filter((c) => !c.pinned && kindOf(c) === "plan")],
+    [t("ui_sec_plans"), visible.filter((c) => !c.pinned && kindOf(c) === "plan" && !nested(c))],
     [t("ui_sec_groups"), visible.filter((c) => !c.pinned && kindOf(c) === "group")],
     [t("ui_sec_direct"), visible.filter((c) => !c.pinned && c.kind === "dm")],
   ];
@@ -94,7 +120,27 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
         {sections.map(([label, items]) => items.length ? (
           <div key={label}>
             <div className="lsec">{label}</div>
-            {items.map((c) => <ConvRow key={c.id} c={c} active={c.id === activeId} typing={Object.entries(typing[c.id] || {}).some(([uid, v]) => +uid !== meId && v.until > Date.now() && !v.thread)} />)}
+            {items.map((c) => {
+              const isTyping = (id: number) => Object.entries(typing[id] || {}).some(([uid, v]) => +uid !== meId && v.until > Date.now() && !v.thread);
+              const kids = c.kind === "channel" && !c.pinned ? childrenOf(c.id) : [];
+              const open = !folded.has(c.id);
+              const unread = kids.reduce((n, k) => n + (k.unread_count || 0), 0);
+              return (
+                <React.Fragment key={c.id}>
+                  <ConvRow c={c} active={c.id === activeId} typing={isTyping(c.id)} />
+                  {kids.length ? (
+                    <div className="csubs">
+                      <button type="button" className="csubtoggle" aria-expanded={open} onClick={() => toggleFold(c.id)}>
+                        <Icon name="calendar" size="sm" /><span className="grow">{t("ui_sub_plans", { n: kids.length })}</span>
+                        {!open && unread ? <span className="bdg">{unread > 99 ? "99+" : unread}</span> : null}
+                        <span className={"chev" + (open ? " open" : "")} aria-hidden="true">›</span>
+                      </button>
+                      {open ? kids.map((k) => <ConvRow key={k.id} c={k} active={k.id === activeId} typing={isTyping(k.id)} />) : null}
+                    </div>
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
           </div>
         ) : null)}
         {!visible.length && !found?.length ? (

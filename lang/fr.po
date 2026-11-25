@@ -5035,6 +5035,9 @@ msgstr "Communautés"
 msgid "ui_sec_communities_zone"
 msgstr "Communautés · {zone}"
 
+msgid "ui_sub_plans"
+msgstr "Plans ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Chats des plans"
 
