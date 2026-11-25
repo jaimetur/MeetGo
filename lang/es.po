@@ -4086,6 +4086,24 @@ msgstr "Inscritas"
 msgid "ui_cshow_joined_short"
 msgstr "Inscritas"
 
+msgid "ui_community_coadmins"
+msgstr "Coadministradores (opcional)"
+
+msgid "ui_community_coadmins_hint"
+msgstr "Pueden cambiar los ajustes, aceptar solicitudes y nombrar moderadores. Se aplica al momento; tienen que ser miembros."
+
+msgid "ui_community_coadmin_add"
+msgstr "Añadir coadministrador…"
+
+msgid "ui_community_coadmins_none"
+msgstr "Todavía no hay ninguno."
+
+msgid "ui_community_coadmins_no_members"
+msgstr "Cuando se una más gente podrás elegir coadministradores entre los miembros."
+
+msgid "ui_community_coadmin_remove"
+msgstr "Quitar a {name} como coadministrador"
+
 msgid "ui_cshow_new"
 msgstr "No inscritas"
 

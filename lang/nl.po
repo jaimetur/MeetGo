@@ -4085,6 +4085,24 @@ msgstr "Lid van"
 msgid "ui_cshow_joined_short"
 msgstr "Lid"
 
+msgid "ui_community_coadmins"
+msgstr "Mede-beheerders (optioneel)"
+
+msgid "ui_community_coadmins_hint"
+msgstr "Ze kunnen de instellingen wijzigen, verzoeken accepteren en moderators aanwijzen. Geldt meteen; ze moeten lid zijn."
+
+msgid "ui_community_coadmin_add"
+msgstr "Mede-beheerder toevoegen…"
+
+msgid "ui_community_coadmins_none"
+msgstr "Nog geen."
+
+msgid "ui_community_coadmins_no_members"
+msgstr "Als er meer mensen lid worden, kun je mede-beheerders uit de leden kiezen."
+
+msgid "ui_community_coadmin_remove"
+msgstr "{name} als mede-beheerder verwijderen"
+
 msgid "ui_cshow_new"
 msgstr "Geen lid"
 

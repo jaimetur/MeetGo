@@ -4085,6 +4085,24 @@ msgstr "已加入"
 msgid "ui_cshow_joined_short"
 msgstr "已加入"
 
+msgid "ui_community_coadmins"
+msgstr "共同管理员（可选）"
+
+msgid "ui_community_coadmins_hint"
+msgstr "他们可以更改设置、接受申请并任命版主。立即生效；必须是成员。"
+
+msgid "ui_community_coadmin_add"
+msgstr "添加共同管理员…"
+
+msgid "ui_community_coadmins_none"
+msgstr "还没有。"
+
+msgid "ui_community_coadmins_no_members"
+msgstr "有更多人加入后，你可以从成员中选择共同管理员。"
+
+msgid "ui_community_coadmin_remove"
+msgstr "取消 {name} 的共同管理员身份"
+
 msgid "ui_cshow_new"
 msgstr "未加入"
 

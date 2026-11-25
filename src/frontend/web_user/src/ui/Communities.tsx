@@ -299,6 +299,57 @@ export function CommunitiesPage() {
   );
 }
 
+/** Co-administrators (optional), chosen by the creator among the members: they change the settings, accept requests and
+ * name moderators. Applied at once, like the roles in Members. */
+function CoAdmins({ community }: { community: Community }) {
+  const me = useStore((s) => s.me);
+  const [members, setMembers] = useState<CommunityMember[] | null>(null);
+  const [busy, setBusy] = useState(false);
+  const load = () => api.communityMembers(community.id).then(setMembers).catch(() => setMembers([]));
+  useEffect(() => { load(); }, [community.id]);
+  const people = (members || []).filter((m) => !m.bot && m.id !== me?.id);
+  const admins = people.filter((m) => m.role === "admin");
+  const others = people.filter((m) => m.role === "member" || m.role === "moderator")
+    .sort((x, y) => x.display_name.localeCompare(y.display_name, undefined, { sensitivity: "base" }));
+  const setRole = async (m: CommunityMember, role: string) => {
+    setBusy(true);
+    try {
+      await api.setCommunityRole(community.id, m.id, role);
+      await load();
+    } catch (e) {
+      toast((e as Error).message, "error");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="fld" id="cm-coadmins"><span>{t("ui_community_coadmins")}</span>
+      {admins.length ? (
+        <div className="chips wrapchips">
+          {admins.map((m) => (
+            <span key={m.id} className="chip on coadmin">
+              {m.display_name}
+              <button type="button" className="chipx" disabled={busy} aria-label={t("ui_community_coadmin_remove", { name: m.display_name })} onClick={() => setRole(m, "member")}><Icon name="x" size="sm" /></button>
+            </span>
+          ))}
+        </div>
+      ) : members ? <small className="muted">{t("ui_community_coadmins_none")}</small> : null}
+      {members ? (
+        others.length ? (
+          <select id="cm-coadmin-add" className="inp" value="" disabled={busy} onChange={(e) => {
+            const m = others.find((x) => String(x.id) === e.target.value);
+            if (m) setRole(m, "admin");
+          }}>
+            <option value="">{t("ui_community_coadmin_add")}</option>
+            {others.map((m) => <option key={m.id} value={m.id}>{m.display_name}</option>)}
+          </select>
+        ) : !people.length ? <small className="muted">{t("ui_community_coadmins_no_members")}</small> : null
+      ) : null}
+      <small className="muted">{t("ui_community_coadmins_hint")}</small>
+    </div>
+  );
+}
+
 /** Create a community, or change one (owner and admins). */
 function CommunityFormModal({ community, onClose, onSaved }: { community?: Community; onClose: () => void; onSaved?: (c: Community) => void }) {
   const me = useStore((s) => s.me);
@@ -428,6 +479,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
       ) : null}
       {owner ? <small className="muted">{t("ui_community_filters_hint")}</small> : null}
+      {owner && community ? <CoAdmins community={community} /> : null}
       {expel ? (
         <ConfirmModal title={t("ui_community_filters_confirm_title")} danger confirm={t("ui_community_filters_confirm")}
           body={t("ui_community_filters_confirm_body", { n: expel.n, names: expel.names.join(", ") + (expel.n > expel.names.length ? "…" : "") })}

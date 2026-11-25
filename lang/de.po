@@ -4946,6 +4946,24 @@ msgstr "Beigetreten"
 msgid "ui_cshow_joined_short"
 msgstr "Beigetr."
 
+msgid "ui_community_coadmins"
+msgstr "Mitadministratoren (optional)"
+
+msgid "ui_community_coadmins_hint"
+msgstr "Sie können die Einstellungen ändern, Anfragen annehmen und Moderatoren ernennen. Gilt sofort; sie müssen Mitglieder sein."
+
+msgid "ui_community_coadmin_add"
+msgstr "Mitadministrator hinzufügen…"
+
+msgid "ui_community_coadmins_none"
+msgstr "Noch keine."
+
+msgid "ui_community_coadmins_no_members"
+msgstr "Wenn mehr Leute beitreten, kannst du Mitadministratoren unter den Mitgliedern wählen."
+
+msgid "ui_community_coadmin_remove"
+msgstr "{name} als Mitadministrator entfernen"
+
 msgid "ui_cshow_new"
 msgstr "Nicht beigetreten"
 

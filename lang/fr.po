@@ -4945,6 +4945,24 @@ msgstr "Rejointes"
 msgid "ui_cshow_joined_short"
 msgstr "Rejointes"
 
+msgid "ui_community_coadmins"
+msgstr "Co-administrateurs (facultatif)"
+
+msgid "ui_community_coadmins_hint"
+msgstr "Ils peuvent modifier les réglages, accepter les demandes et nommer des modérateurs. C'est immédiat ; ils doivent être membres."
+
+msgid "ui_community_coadmin_add"
+msgstr "Ajouter un co-administrateur…"
+
+msgid "ui_community_coadmins_none"
+msgstr "Aucun pour l'instant."
+
+msgid "ui_community_coadmins_no_members"
+msgstr "Quand d'autres personnes rejoindront la communauté, tu pourras choisir des co-administrateurs parmi les membres."
+
+msgid "ui_community_coadmin_remove"
+msgstr "Retirer {name} comme co-administrateur"
+
 msgid "ui_cshow_new"
 msgstr "Non rejointes"
 

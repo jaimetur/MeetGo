@@ -1629,3 +1629,8 @@ a.btn { text-decoration: none; }
 .recdot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; animation: recpulse 1s ease-in-out infinite; flex: none; }
 .rectime { font-variant-numeric: tabular-nums; font-weight: 700; }
 @keyframes recpulse { 50% { opacity: 0.3; } }
+
+/* community settings: co-administrators as chips with a remove button */
+.chip.coadmin { display: inline-flex; align-items: center; gap: 4px; padding-right: 4px; }
+.chip.coadmin .chipx { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; color: inherit; opacity: .85; }
+.chip.coadmin .chipx:hover { opacity: 1; background: rgba(0, 0, 0, .15); }

@@ -109,6 +109,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Community settings: the creator adds or removes co-administrators (optional) among the members.
 - Communities: an «Admin» tab (the ones you created or co-administer, when there are any) apart from the joined ones, and «Not joined» instead of «New».
 - New built-in interests: Economy and Politics, in the 10 languages and with their icons.
 - The Google Play listing in the 10 languages, updated on its own: its texts (`assets/play-store/listings/`), screenshots and feature graphic per language (`tools/play_listing.py`).

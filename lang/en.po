@@ -4086,6 +4086,24 @@ msgstr "Joined"
 msgid "ui_cshow_joined_short"
 msgstr "Joined"
 
+msgid "ui_community_coadmins"
+msgstr "Co-administrators (optional)"
+
+msgid "ui_community_coadmins_hint"
+msgstr "They can change the settings, accept requests and name moderators. It applies at once; they have to be members."
+
+msgid "ui_community_coadmin_add"
+msgstr "Add a co-administrator…"
+
+msgid "ui_community_coadmins_none"
+msgstr "None yet."
+
+msgid "ui_community_coadmins_no_members"
+msgstr "When more people join you can choose co-administrators among the members."
+
+msgid "ui_community_coadmin_remove"
+msgstr "Remove {name} as co-administrator"
+
 msgid "ui_cshow_new"
 msgstr "Not joined"
 

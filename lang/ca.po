@@ -4085,6 +4085,24 @@ msgstr "Inscrites"
 msgid "ui_cshow_joined_short"
 msgstr "Inscrites"
 
+msgid "ui_community_coadmins"
+msgstr "Coadministradors (opcional)"
+
+msgid "ui_community_coadmins_hint"
+msgstr "Poden canviar la configuració, acceptar sol·licituds i nomenar moderadors. S'aplica al moment; han de ser membres."
+
+msgid "ui_community_coadmin_add"
+msgstr "Afegeix un coadministrador…"
+
+msgid "ui_community_coadmins_none"
+msgstr "Encara no n'hi ha cap."
+
+msgid "ui_community_coadmins_no_members"
+msgstr "Quan s'hi uneixi més gent podràs triar coadministradors entre els membres."
+
+msgid "ui_community_coadmin_remove"
+msgstr "Treu {name} com a coadministrador"
+
 msgid "ui_cshow_new"
 msgstr "No inscrites"
 
