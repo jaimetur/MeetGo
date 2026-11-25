@@ -1,0 +1,100 @@
+name: 🚀 Release
+
+# Publishes each MeetGo version when it reaches main (when its X.Y.Z branch is merged), with no manual step:
+# - the GitHub release vX.Y.Z (the version of pyproject.toml), as the latest release, with the notes of that version's
+#   block in CHANGELOG.md (without its "📱 Google Play" sections, which are only for the store), the source code, the
+#   Play screenshots (play-screenshots.zip) and the Android APK and AAB (android.yml);
+# - Google Play: the build the testers have in the closed test (PLAY_TRACK, alpha by default) goes to the stable
+#   track of the PLAY_STABLE_TRACK variable (production), with the version's release notes, without building it again
+#   (tools/play_publish.py promote). Without that variable, until Google gives the app access to production, the
+#   version stays in the closed test.
+# If the version already has a release, it is published again on the new commit. By hand: Actions → 🚀 Release → Run
+# workflow, on main.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: meetgo-release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Version
+        id: version
+        run: |
+          VERSION=$(sed -n 's/^version *= *"\([^"]*\)".*/\1/p' pyproject.toml | head -1)
+          if [ -z "$VERSION" ]; then echo "::error title=Release::No version in pyproject.toml"; exit 1; fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Release notes from the changelog
+        run: |
+          mkdir -p dist
+          python3 - "${{ steps.version.outputs.version }}" <<'PY'
+          import re, sys
+          from pathlib import Path
+          version = sys.argv[1]
+          text = Path("CHANGELOG.md").read_text(encoding="utf-8")
+          m = re.search(rf"^## Release: v{re.escape(version)}\s*$(.*?)(?=^---\s*$|^## |\Z)", text, re.M | re.S)
+          if not m:
+              sys.exit(f"Release v{version} not found in CHANGELOG.md")
+          notes = re.sub(r"^#### 📱 Google Play \([\w-]+\):?[ \t]*\n.*?(?=^#### |\Z)", "", m.group(1), flags=re.M | re.S)
+          Path("dist/release_notes.md").write_text(notes.strip() + "\n", encoding="utf-8")
+          PY
+          cat dist/release_notes.md
+
+      - name: Source code and Play screenshots
+        run: |
+          git archive --format=zip --prefix="MeetGo-${{ steps.version.outputs.version }}/" -o "dist/MeetGo_${{ steps.version.outputs.version }}_source.zip" HEAD
+          (cd assets && zip -qr ../dist/play-screenshots.zip play-store)
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          # a version that already has a release is published again, with its tag on the new commit
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release delete "$TAG" --yes --cleanup-tag
+          elif git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null; then
+            git push origin ":refs/tags/$TAG"
+          fi
+          gh release create "$TAG" dist/*.zip --title "$TAG" --notes-file dist/release_notes.md --target "$GITHUB_SHA" --latest
+          echo "::notice title=Release::$TAG published as the latest release"
+
+  android:
+    needs: publish
+    uses: ./.github/workflows/android.yml
+    with:
+      release_tag: ${{ needs.publish.outputs.tag }}
+    secrets: inherit
+
+  play:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Google Play, from the closed test to the stable track
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          PLAY_TRACK: ${{ vars.PLAY_TRACK || 'alpha' }}
+          PLAY_STABLE_TRACK: ${{ vars.PLAY_STABLE_TRACK }}
+          VERSION: ${{ needs.publish.outputs.version }}
+        run: |
+          if [ -z "$PLAY_STABLE_TRACK" ]; then echo "::notice title=Google Play::No PLAY_STABLE_TRACK variable: $VERSION stays in the $PLAY_TRACK track. Set it to production once Google gives the app access to production."; exit 0; fi
+          if [ -z "$PLAY_SERVICE_ACCOUNT_JSON" ]; then echo "::warning title=Google Play::No PLAY_SERVICE_ACCOUNT_JSON secret: $VERSION was not sent to the $PLAY_STABLE_TRACK track."; exit 0; fi
+          pip install -q google-auth requests
+          python tools/play_publish.py promote "$VERSION" --from "$PLAY_TRACK" --track "$PLAY_STABLE_TRACK"
+          echo "::notice title=Google Play::$VERSION sent to the $PLAY_STABLE_TRACK track"

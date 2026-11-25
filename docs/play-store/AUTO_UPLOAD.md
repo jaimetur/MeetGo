@@ -18,9 +18,11 @@ del workflow), así que Play siempre la acepta.
 
 El workflow `.github/workflows/android.yml` ya tiene el paso preparado: en cuanto exista el secreto
 `PLAY_SERVICE_ACCOUNT_JSON`, cada build nueva de Android de una rama `X.Y.Z` (también lanzada a mano; las de `main`
-no) se sube sola a Play, al canal de la variable `PLAY_TRACK` (si no existe, `alpha` = **prueba cerrada**), con el
-nombre «X.Y.Z (build)». Si la versión de Gradle no coincide con la rama, la subida falla; sin el secreto, el workflow
-avisa y no sube nada. Mam-IA, BodyLens y MeetGo suben igual. Para crearlo, una sola vez:
+no) se sube sola a Play (`tools/play_publish.py`), al canal de la variable `PLAY_TRACK` (si no existe, `alpha` =
+**prueba cerrada**), con el nombre «X.Y.Z (build)» y sus notas de versión (sección 4). Si la versión de Gradle no
+coincide con la rama, la subida falla; sin el secreto, el workflow avisa y no sube nada. Cuando la versión llega a
+`main`, se publica sola: release de GitHub y, con acceso a producción, Play (sección 4). Mam-IA, BodyLens y MeetGo
+suben igual. Para crearlo, una sola vez:
 
 1. **Cuenta de servicio: la que ya tienes para todas tus apps**, `play-billing@jtgcloud-play.iam.gserviceaccount.com`
    (proyecto de Google Cloud `jtgcloud-play`). No crees otra.
@@ -37,16 +39,16 @@ avisa y no sube nada. Mam-IA, BodyLens y MeetGo suben igual. Para crearlo, una s
 5. **Guardarla en GitHub.** En el repositorio → **Settings → Secrets and variables → Actions → New repository
    secret**: nombre `PLAY_SERVICE_ACCOUNT_JSON`, valor: **todo el contenido** del archivo `.json` → **Add secret**.
 6. **El canal (opcional).** En el mismo sitio, pestaña **Variables → New repository variable**: nombre `PLAY_TRACK`,
-   valor `alpha` (prueba cerrada), `internal` (pruebas internas), `beta` (prueba abierta) o `production`. `alpha` es
-   el canal que Play crea para la prueba cerrada («Alpha» en **Pruebas cerradas**). Si tu prueba cerrada es un canal
-   que creaste tú, pon aquí su nombre.
+   el canal de las ramas `X.Y.Z`, por defecto `alpha`: el canal que Play crea para la prueba cerrada («Alpha» en
+   **Pruebas cerradas**). Si tu prueba cerrada es un canal que creaste tú, pon aquí su nombre. El canal estable
+   (`PLAY_STABLE_TRACK`) es otro: sección 4.
 7. **Probar.** **Actions → Android app → Run workflow** en la rama de la versión. El paso «Upload to Google Play» debe
    salir en verde y la versión aparecer en ese canal de Play Console.
 
 Notas:
 - La **primera** versión de una app siempre hay que subirla a mano (ya está hecha).
 - Para **Producción** hace falta antes la prueba cerrada (12 testers durante 14 días, por ser cuenta personal). Cuando
-  se pueda, basta con cambiar la variable `PLAY_TRACK` a `production` (sección 4).
+  se pueda, basta con crear la variable `PLAY_STABLE_TRACK` con `production` (sección 4).
 - Si Play responde que la app tiene cambios pendientes de revisión en la ficha, sube la versión a mano esa vez.
 
 ## 3. Capturas de la ficha en cada idioma
@@ -67,42 +69,63 @@ Play muestra a cada persona las capturas del idioma de su tienda si la ficha tie
    las capturas de su carpeta: teléfono, tablet de 7", tablet de 10" y Chromebook.
 4. **Guardar**. Los idiomas sin capturas propias usan las del idioma predeterminado (español).
 
-## 4. Pasar a producción
+## 4. Release final, notas de versión y producción
 
-Con una cuenta de desarrollador personal, Google pide antes una prueba cerrada con al menos 12 testers durante 14 días
-seguidos. Después, en Play Console → **Panel → Solicitar acceso a producción**. Cuando Google lo conceda:
+Cuando una versión llega a `main` (al fusionar su rama `X.Y.Z`), «🚀 Release» (`.github/workflows/release.yml`) la
+publica sola:
+
+- **GitHub**: la release `vX.Y.Z`, marcada como la última, con las notas del bloque de esa versión en `CHANGELOG.md`, el
+  código fuente, las capturas de Play (`play-screenshots.zip`) y el APK y el AAB de la app. Si la versión ya tenía
+  release, se vuelve a publicar en el commit nuevo.
+- **Google Play**: la compilación de esa versión que los testers tienen en la prueba cerrada pasa al canal estable de
+  la variable `PLAY_STABLE_TRACK` (`production`), con sus notas. Es la misma compilación que probaron: no se vuelve a
+  compilar. Si la prueba cerrada no tiene esa versión, falla y lo dice: lanza antes el workflow de Android en la rama.
+  Mientras `PLAY_STABLE_TRACK` no existe, la release de GitHub se publica igual y la versión se queda en la prueba
+  cerrada.
+
+**Notas de versión.** Salen del bloque de la versión en `CHANGELOG.md`, para GitHub y para Play («Novedades», en cada
+subida a la prueba cerrada y al pasar a producción):
+
+- GitHub recibe el bloque entero.
+- Play admite como mucho 500 caracteres por idioma. Si el bloque tiene secciones `#### 📱 Google Play (<idioma>):`, una
+  por idioma, se manda su texto tal cual. Si no, se mandan los títulos de sus novedades, mejoras y correcciones, en
+  inglés (el idioma del CHANGELOG). Solo van los idiomas que tiene la ficha, así que sin la traducción `en-US` de la
+  ficha (sección 3) las notas automáticas no llegan. Las secciones 📱 no salen en GitHub.
+
+```markdown
+#### 📱 Google Play (es-ES):
+Comunidades con su afición, notas de voz y la app en diez idiomas.
+
+#### 📱 Google Play (en-US):
+Communities with their hobby, voice notes and the app in ten languages.
+```
+
+Para ver lo que recibiría Play: `python tools/play_publish.py notes 0.2.0`.
+
+**Pasar a producción (una vez).** Con una cuenta de desarrollador personal, Google pide antes una prueba cerrada con al
+menos 12 testers durante 14 días seguidos. Después, en Play Console → **Panel → Solicitar acceso a producción**. Cuando
+Google lo conceda:
 
 1. **Play Console → Usuarios y permisos**: abre la cuenta de servicio. En **Permisos de la app → MeetGo**, añade
    «Publicar en producción, excluir dispositivos y usar la firma de aplicaciones de Play». **Aplicar → Guardar
    cambios.**
 2. **Play Console → Probar y publicar → Producción → pestaña Países/regiones**: añade los países donde se publica. Sin
    países, la subida a producción falla.
-3. Cambia el canal (en el terminal, desde cualquier carpeta):
+3. Activa el canal estable (en el terminal, desde cualquier carpeta):
 
    ```bash
-   gh variable set PLAY_TRACK --body production -R jaimetur/MeetGo
+   gh variable set PLAY_STABLE_TRACK --body production -R jaimetur/MeetGo
    ```
 
    Las 3 apps (Mam-IA, BodyLens y MeetGo) a la vez:
 
    ```bash
-   for r in Mam-IA BodyLens MeetGo; do gh variable set PLAY_TRACK --body production -R jaimetur/$r; done
+   for r in Mam-IA BodyLens MeetGo; do gh variable set PLAY_STABLE_TRACK --body production -R jaimetur/$r; done
    ```
 
-4. Prueba: **Actions → Android app → Run workflow**, rama de la versión. El registro debe terminar con
-   «X.Y.Z (N) uploaded to the production track».
+4. Prueba: **Actions → 🚀 Release → Run workflow**, rama `main`. El registro debe terminar con
+   «X.Y.Z sent to the production track».
 
-Desde entonces:
-
-- Cada compilación de una rama de release va a producción, para todos los usuarios en cuanto Google la aprueba. Solo
-  compila cuando cambia `android/`: los cambios de la web llegan sin versión nueva de la app.
-- No hay despliegue progresivo (porcentaje de usuarios). Con pocos usuarios no aporta nada, y habría que subir el
-  porcentaje a mano en Play Console.
-- No hace falta subir también a la prueba cerrada. Play da a cada persona la versión con el número más alto de los
-  canales a los que tiene acceso, así que los testers también reciben la de producción.
-- Si alguna vez quieres probar una versión antes de que llegue a todos, vuelve a la prueba cerrada y pásala a mano con
-  **Promocionar versión → Producción**:
-
-  ```bash
-  gh variable delete PLAY_TRACK -R jaimetur/MeetGo
-  ```
+Desde entonces, las ramas `X.Y.Z` siguen subiendo a la prueba cerrada y lo que llega a `main` va a producción, para
+todos los usuarios en cuanto Google lo aprueba. No hay despliegue progresivo (porcentaje de usuarios): con pocos
+usuarios no aporta nada, y habría que subir el porcentaje a mano en Play Console.

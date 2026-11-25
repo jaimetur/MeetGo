@@ -5,14 +5,15 @@ name: 🤖 Android app
 #   tools/deploy-android.sh takes the APK to the server, which serves it at /downloads/android.apk.
 # - Called by another workflow with a release tag, it attaches the APK and the AAB to that version's release instead.
 # - On a release branch (X.Y.Z), with the PLAY_SERVICE_ACCOUNT_JSON secret, each build (also run by hand) goes to
-#   Google Play, named "X.Y.Z (build)" (versionName = the release version, versionCode = the build number), to the
-#   track of the PLAY_TRACK variable (by default alpha, the closed test; production once Google has given the app
-#   access to it, see docs/play-store/AUTO_UPLOAD.md). If versionName is not the branch, it fails. It runs last: a Play
-#   error leaves the job red but the APK is already published.
+#   Google Play (tools/play_publish.py), named "X.Y.Z (build)" (versionName = the release version, versionCode = the
+#   build number), to the track of the PLAY_TRACK variable (by default alpha, the closed test), with the release notes
+#   of the version's block in CHANGELOG.md. If versionName is not the branch, it fails. It runs last: a Play error
+#   leaves the job red but the APK is already published. When the version reaches main, release.yml takes this build
+#   to production (see docs/play-store/AUTO_UPLOAD.md).
 on:
   push:
     branches: [main, "[0-9]+.[0-9]+.[0-9]+"]
-    paths: ["android/**", ".github/workflows/android.yml"]
+    paths: ["android/**", ".github/workflows/android.yml", "tools/play_publish.py"]
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -109,31 +110,19 @@ jobs:
           # read by tools/deploy-android.sh: "build <run number> · <commit> · <version>"
           echo "build ${{ github.run_number }} · ${GITHUB_SHA::7} · $ANDROID_VERSION" > android-build.txt
           gh release upload android-latest android-build.txt --clobber
-      # Google Play: on a release branch (X.Y.Z), with the service account's key in the PLAY_SERVICE_ACCOUNT_JSON secret
-      # (see docs/play-store/AUTO_UPLOAD.md), every new build goes to Play by itself, to the track in the PLAY_TRACK
-      # variable (alpha = closed testing by default; production once Google allows it), named "X.Y.Z (build)".
-      - name: Upload to Google Play? (release branch, secret, versionName)
+      - name: Upload to Google Play (release branches)
         if: ${{ !inputs.release_tag }}
         env:
-          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          PLAY_TRACK: ${{ vars.PLAY_TRACK || 'alpha' }}
         run: |
           if [[ ! "$GITHUB_REF_NAME" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then echo "Not a release branch: not uploaded to Google Play."; exit 0; fi
-          if [ -z "$PLAY_JSON" ]; then echo "::warning title=Google Play::No PLAY_SERVICE_ACCOUNT_JSON secret: the AAB was not uploaded to Google Play."; exit 0; fi
+          if [ -z "$PLAY_SERVICE_ACCOUNT_JSON" ]; then echo "::warning title=Google Play::No PLAY_SERVICE_ACCOUNT_JSON secret: the AAB was not uploaded to Google Play."; exit 0; fi
           if [ "$ANDROID_VERSION" != "$GITHUB_REF_NAME" ]; then echo "::error title=Google Play::versionName $ANDROID_VERSION is not the release $GITHUB_REF_NAME (run tools/CreateUpdateRelease.py --update)"; exit 1; fi
-          echo "PLAY_UPLOAD=true" >> "$GITHUB_ENV"
-      - name: Upload to Google Play (release branches)
-        if: ${{ !inputs.release_tag && env.PLAY_UPLOAD == 'true' }}
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: app.meetgo.android
-          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-          releaseName: ${{ env.ANDROID_VERSION }} (${{ github.run_number }})
-          track: ${{ vars.PLAY_TRACK || 'alpha' }}
-          status: completed
-      - name: Uploaded to Google Play
-        if: ${{ !inputs.release_tag && env.PLAY_UPLOAD == 'true' }}
-        run: echo "::notice title=Google Play::$ANDROID_VERSION (${{ github.run_number }}) uploaded to the ${{ vars.PLAY_TRACK || 'alpha' }} track"
+          pip install -q google-auth requests
+          python tools/play_publish.py bundle android/app/build/outputs/bundle/release/app-release.aab --track "$PLAY_TRACK" \
+            --name "$ANDROID_VERSION (${{ github.run_number }})" --version "$ANDROID_VERSION"
+          echo "::notice title=Google Play::$ANDROID_VERSION (${{ github.run_number }}) uploaded to the $PLAY_TRACK track"
       - name: Attach to the version release
         if: ${{ inputs.release_tag }}
         env:
