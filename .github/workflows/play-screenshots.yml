@@ -3,14 +3,15 @@ name: 📸 Play screenshots
 # Takes the Google Play store screenshots again, in every language and for every device Play asks for (phone, 7" and
 # 10" tablet, Chromebook), from a demo account with made-up content in each language (app.demo.play_review --lang).
 # tools/play_screenshots.py does it.
-# - On every push to main or to a release branch (X.Y.Z) that changes what they show (the web app, the demo content,
+# - On every push to a release branch (X.Y.Z, not main) that changes what they show (the web app, the demo content,
 #   the translations or the tool), and by hand (Actions → Play screenshots → Run workflow): the images are committed to
 #   that same branch in assets/play-store/<device>/<lang>/ and, if the PLAY_SERVICE_ACCOUNT_JSON secret exists, sent to
 #   the Play listing in each language, with the listing's texts in assets/play-store/listings/ (tools/play_listing.py).
 # - On a release (vX.Y.Z tag): they are attached to the release as play-screenshots.zip.
 on:
   push:
-    branches: [main, "[0-9]+.[0-9]+.[0-9]+"]
+    # not main: there the bot would commit screenshots, and main must only move forward from the release branch
+    branches: ["[0-9]+.[0-9]+.[0-9]+"]
     tags: ["v*"]
     paths:
       - "src/frontend/**"

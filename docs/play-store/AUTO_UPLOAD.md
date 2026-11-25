@@ -63,7 +63,7 @@ actualiza sola, sin pasar por Play Console:
    `fullDescription` (4000). Para cambiar la ficha, se cambian ahí.
 2. **Las capturas.** Están en `assets/play-store/<dispositivo>/<idioma>/` (`phone`, `tablet7`, `tablet10`,
    `chromebook`; `es`, `en`, `ca`, `de`, `fr`, `it`, `pt`, `nl`, `ja`, `zh`), numeradas en el orden en que van.
-   Se regeneran solas en GitHub en cada push a `main` o a una rama `X.Y.Z` que cambie la web, el contenido de
+   Se regeneran solas en GitHub en cada push a una rama `X.Y.Z` (no en `main`) que cambie la web, el contenido de
    demostración, las traducciones o los textos de la ficha (también a mano con **Actions → Play screenshots → Run
    workflow**), y se guardan en la misma rama; con cada versión publicada se adjuntan además como
    `play-screenshots.zip` a su release.
