@@ -12,7 +12,7 @@ name: 🤖 Android app
 #   to production (see docs/play-store/AUTO_UPLOAD.md).
 on:
   push:
-    branches: [main, "[0-9]+.[0-9]+.[0-9]+"]
+    branches: ["[0-9]+.[0-9]+.[0-9]+"]   # not main: the push that makes a version final runs release.yml, which builds and attaches it
     paths: ["android/**", ".github/workflows/android.yml"]   # not tools/play_publish.py: a new upload script needs no new app version
   workflow_dispatch:
   workflow_call:
