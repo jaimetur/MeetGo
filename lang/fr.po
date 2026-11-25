@@ -3284,7 +3284,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 an (pareil dans toutes les communautés d’intérêts)"
 
 msgid "ui_community_retention_hint"
-msgstr "Passé ce délai, les messages (avec leurs photos et fichiers) sont supprimés tout seuls. Le tableau et les sorties ne sont pas supprimés."
+msgstr "Passé ce délai, les messages (avec leurs photos et fichiers) sont supprimés tout seuls, sauf le message épinglé. Le tableau et les sorties ne sont pas supprimés."
 
 msgid "ui_community_retention_tag"
 msgstr "Discussion : {time}"

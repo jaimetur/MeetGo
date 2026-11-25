@@ -3285,7 +3285,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 年（すべての興味コミュニティで共通）"
 
 msgid "ui_community_retention_hint"
-msgstr "期間を過ぎたチャットのメッセージ（写真やファイルを含む）は自動で削除されます。掲示板と予定は削除されません。"
+msgstr "期間を過ぎたチャットのメッセージ（写真やファイルを含む）は自動で削除されます（固定メッセージは除く）。掲示板と予定は削除されません。"
 
 msgid "ui_community_retention_tag"
 msgstr "チャット：{time}"

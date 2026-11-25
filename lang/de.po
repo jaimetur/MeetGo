@@ -3285,7 +3285,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 Jahr (gleich in allen Interessen-Communities)"
 
 msgid "ui_community_retention_hint"
-msgstr "Danach werden Chatnachrichten (samt Fotos und Dateien) automatisch gelöscht. Pinnwand und Treffen bleiben."
+msgstr "Danach werden Chatnachrichten (samt Fotos und Dateien) automatisch gelöscht, außer der angehefteten Nachricht. Pinnwand und Treffen bleiben."
 
 msgid "ui_community_retention_tag"
 msgstr "Chat: {time}"

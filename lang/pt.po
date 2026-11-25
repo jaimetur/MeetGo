@@ -3284,7 +3284,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 ano (igual em todas as comunidades de interesses)"
 
 msgid "ui_community_retention_hint"
-msgstr "Passado esse tempo, as mensagens do chat (e as suas fotos e ficheiros) apagam-se sozinhas. O mural e os planos não se apagam."
+msgstr "Passado esse tempo, as mensagens do chat (e as suas fotos e ficheiros) apagam-se sozinhas, exceto a mensagem fixada. O mural e os planos não se apagam."
 
 msgid "ui_community_retention_tag"
 msgstr "Chat: {time}"

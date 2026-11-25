@@ -3285,7 +3285,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 年（所有兴趣社区相同）"
 
 msgid "ui_community_retention_hint"
-msgstr "超过时长后，聊天消息（及其照片和文件）会自动删除。公告板和计划不会删除。"
+msgstr "超过时长后，聊天消息（及其照片和文件）会自动删除，置顶消息除外。公告板和计划不会删除。"
 
 msgid "ui_community_retention_tag"
 msgstr "聊天：{time}"

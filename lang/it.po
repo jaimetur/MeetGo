@@ -3285,7 +3285,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 anno (uguale in tutte le community di interessi)"
 
 msgid "ui_community_retention_hint"
-msgstr "Trascorso questo tempo, i messaggi della chat (con foto e file) si cancellano da soli. Bacheca e piani restano."
+msgstr "Trascorso questo tempo, i messaggi della chat (con foto e file) si cancellano da soli, tranne il messaggio fissato. Bacheca e piani restano."
 
 msgid "ui_community_retention_tag"
 msgstr "Chat: {time}"

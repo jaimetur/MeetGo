@@ -1,5 +1,6 @@
 """Communities keep their chat for a limited time (Conversation.retention_days): older messages are deleted for good,
-with their thread replies, reactions, reports and files, so the history does not grow forever. Board posts, plans and
+with their thread replies, reactions, reports and files, so the history does not grow forever. The pinned message
+(and its thread) never expires. Board posts, plans and
 private chats are not affected."""
 
 import logging
@@ -29,14 +30,17 @@ async def purge_conversation(db: AsyncSession, conv: Conversation) -> int:
         return 0
     cutoff = utcnow() - timedelta(days=conv.retention_days)
     total = 0
+    # the pinned message never expires, nor do the replies of its thread
+    pinned = conv.pinned_message_id or 0
+    keep = (Message.id != pinned, func.coalesce(Message.thread_root_id, 0) != pinned)
     while True:
         roots = list((await db.execute(select(Message.id).where(
-            Message.conversation_id == conv.id, Message.created_at < cutoff).order_by(Message.id).limit(BATCH))).scalars().all())
+            Message.conversation_id == conv.id, Message.created_at < cutoff, *keep).order_by(Message.id).limit(BATCH))).scalars().all())
         if not roots:
             break
         # the replies of an expired thread go with it (they would be left without their first message)
         ids = set(roots) | set((await db.execute(select(Message.id).where(
-            Message.conversation_id == conv.id, Message.thread_root_id.in_(roots)))).scalars().all())
+            Message.conversation_id == conv.id, Message.thread_root_id.in_(roots), *keep))).scalars().all())
         files = [k for row in (await db.execute(select(Attachment.storage_key, Attachment.thumb_key).where(
             Attachment.message_id.in_(ids)))).all() for k in row if k]
         await db.execute(delete(Message).where(Message.id.in_(ids)))  # reactions, attachments and reports cascade
@@ -47,17 +51,18 @@ async def purge_conversation(db: AsyncSession, conv: Conversation) -> int:
         last = (await db.execute(select(Message).where(Message.conversation_id == conv.id).order_by(Message.id.desc()).limit(1))).scalar_one_or_none()
         conv.last_message_id = last.id if last else None
         conv.last_message_at = last.created_at if last else None
-        if conv.pinned_message_id and not await db.get(Message, conv.pinned_message_id):
-            conv.pinned_message_id = None
         await db.commit()
     return total
 
 
 async def purge_once(db: AsyncSession) -> int:
-    """The automatic round: every community with old messages. Returns how many messages were deleted."""
+    """The automatic round: every community with old messages (the pinned one does not count). Returns how many
+    messages were deleted."""
     oldest = func.min(Message.created_at)
     rows = (await db.execute(select(Conversation).join(Message, Message.conversation_id == Conversation.id).where(
-        Conversation.kind == "channel", Conversation.retention_days.is_not(None)).group_by(Conversation.id).having(
+        Conversation.kind == "channel", Conversation.retention_days.is_not(None),
+        Message.id != func.coalesce(Conversation.pinned_message_id, 0),
+        func.coalesce(Message.thread_root_id, 0) != func.coalesce(Conversation.pinned_message_id, 0)).group_by(Conversation.id).having(
         oldest < func.now() - func.make_interval(0, 0, 0, Conversation.retention_days)))).scalars().all()
     total = 0
     for conv in rows:

@@ -3285,7 +3285,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 jaar (hetzelfde in alle interessecommunity’s)"
 
 msgid "ui_community_retention_hint"
-msgstr "Daarna worden chatberichten (met foto’s en bestanden) vanzelf verwijderd. Prikbord en plannen blijven."
+msgstr "Daarna worden chatberichten (met foto’s en bestanden) vanzelf verwijderd, behalve het vastgezette bericht. Prikbord en plannen blijven."
 
 msgid "ui_community_retention_tag"
 msgstr "Chat: {time}"

@@ -3285,7 +3285,7 @@ msgid "ui_community_retention_interest"
 msgstr "1 any (igual a totes les comunitats d’interessos)"
 
 msgid "ui_community_retention_hint"
-msgstr "Passat aquest temps, els missatges del xat (i les fotos i fitxers) s’esborren sols. El tauler i els plans no s’esborren."
+msgstr "Passat aquest temps, els missatges del xat (i les fotos i fitxers) s’esborren sols, excepte el missatge fixat. El tauler i els plans no s’esborren."
 
 msgid "ui_community_retention_tag"
 msgstr "Xat: {time}"
