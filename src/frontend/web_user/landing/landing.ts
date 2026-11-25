@@ -37,6 +37,8 @@ function applyLang(next: string) {
   });
   const pick = document.getElementById("langPick") as HTMLSelectElement | null;
   if (pick) pick.value = next;
+  const code = document.getElementById("langCode");
+  if (code) code.textContent = next;
   try { localStorage.setItem("meetgo.lang", next); } catch { /* private mode */ }
   renderPromo();
   renderApk();
