@@ -129,13 +129,15 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
   const staff = ["owner", "admin", "moderator"].includes(conv.role) || me?.role === "admin";
   const canModerate = staff && !isMe && member && member.role !== "owner" && conv.kind !== "dm";
 
-  async function run(fn: () => Promise<unknown>, done?: string) {
+  async function run(fn: () => Promise<unknown>, done?: string): Promise<boolean> {
     try {
       await fn();
       if (done) toast(done);
       onChanged();
+      return true;
     } catch (e: any) {
       toast(e.message, "error");
+      return false;
     }
   }
   // Communities: take someone out (they may join again) or expel them (they cannot come back).
@@ -174,7 +176,9 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
       {!isMe ? (
         <div className="btns">
           <button className="btn pri sm" onClick={message}>{t("ui_send_message")}</button>
-          {user.friend ? <button className="btn sm" disabled>{t("ui_friend")} ✓</button> : <button className="btn sm" onClick={() => run(() => api.friendRequest(userId), t("ui_friend_request_sent"))}>{t("ui_add_friend")}</button>}
+          {user.friend ? <button className="btn sm" disabled>{t("ui_friend")} ✓</button>
+            : user.friend_requested ? <button className="btn sm" disabled>{t("ui_friend_request_pending")} ✓</button>
+            : <button className="btn sm" onClick={() => run(() => api.friendRequest(userId), t("ui_friend_request_sent")).then((ok) => ok && setUser((u: any) => ({ ...u, friend_requested: true })))}>{t("ui_add_friend")}</button>}
           {following.includes(userId)
             ? <button className="btn sm" onClick={() => run(() => api.unfollow(userId)).then(() => setFollowing((f) => f.filter((x) => x !== userId)))}>{t("ui_unfollow")}</button>
             : <button className="btn sm" onClick={() => run(() => api.follow(userId)).then(() => setFollowing((f) => [...f, userId]))}>{t("ui_follow")}</button>}
@@ -303,7 +307,8 @@ function ProfileShortcut({ userId }: { userId: number }) {
     <div className="card" style={{ margin: 0 }}>
       <div className="row"><Avatar user={user} size={44} online={user.online} /><div><div className="nm">{user.display_name}</div><div className="meta">{user.province}</div></div></div>
       {user.bio ? <div style={{ fontSize: 13 }}>{user.bio}</div> : null}
-      {!user.friend ? <button className="btn sm" onClick={() => api.friendRequest(userId).then(() => toast(t("ui_friend_request_sent"))).catch((e) => toast(e.message, "error"))}>{t("ui_add_friend")}</button> : null}
+      {user.friend ? null : user.friend_requested ? <button className="btn sm" disabled>{t("ui_friend_request_pending")} ✓</button>
+        : <button className="btn sm" onClick={() => api.friendRequest(userId).then(() => { toast(t("ui_friend_request_sent")); setUser((u: any) => ({ ...u, friend_requested: true })); }).catch((e) => toast(e.message, "error"))}>{t("ui_add_friend")}</button>}
     </div>
   );
 }

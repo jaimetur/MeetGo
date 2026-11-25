@@ -174,6 +174,10 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_db), me_user: Us
     out.pop("dob", None)
     out["online"] = u.id in await online_ids([u.id])
     out["friend"] = is_friend
+    # a request of mine still waiting: the button says so instead of asking again
+    out["friend_requested"] = not is_friend and bool((await db.execute(select(FriendRequest.id).where(
+        FriendRequest.from_user_id == me_user.id, FriendRequest.to_user_id == user_id,
+        FriendRequest.status == FriendRequestStatus.PENDING))).first())
     return out
 
 
