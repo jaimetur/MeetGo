@@ -22,9 +22,11 @@ on:
       - ".github/workflows/play-screenshots.yml"
   workflow_dispatch:
 
+# one at a time per branch: a newer push waits for the run in progress (which also sends the Play listing) instead of
+# cancelling it; only the latest waiting one is kept
 concurrency:
   group: meetgo-play-screenshots-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
