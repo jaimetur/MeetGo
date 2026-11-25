@@ -16,7 +16,7 @@ import { PhoneTop } from "./Board";
 function PageShell({ title, lead, children, tab }: { title: string; lead?: string; children: React.ReactNode; tab?: boolean }) {
   // `tab`: a screen of the phone's tab bar (People): the usual top bar instead of a back button
   return (
-    <main className="page">
+    <main className={"page" + (tab ? " tabpage" : "")}>
       {tab ? <PhoneTop title={title} /> : null}
       <div className="wrapw">
         <div className={"row" + (tab ? " deskonly" : "")}>
