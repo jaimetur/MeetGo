@@ -3351,7 +3351,7 @@ msgid "landing_t4_t"
 msgstr "Benachrichtigungen nach deinem Geschmack"
 
 msgid "landing_t5_p"
-msgstr "Finde die Nachricht mit der Treffzeit in all deinen Unterhaltungen."
+msgstr "Finde die Nachricht mit der Uhrzeit des Plans in all deinen Unterhaltungen."
 
 msgid "landing_t5_t"
 msgstr "Suche"
@@ -3963,7 +3963,7 @@ msgid "err_join_community_first"
 msgstr "Tritt zuerst der Community bei"
 
 msgid "err_not_a_plan"
-msgstr "Nur Treffen und Events haben Teilnehmende"
+msgstr "Nur Pläne und Events haben Teilnehmende"
 
 msgid "err_organiser_cannot_leave"
 msgstr "Die organisierende Person kann den eigenen Plan nicht verlassen: Sag ihn stattdessen ab"
@@ -3981,7 +3981,7 @@ msgid "err_post_past"
 msgstr "Dieser Plan hat bereits stattgefunden"
 
 msgid "err_post_starts_at_required"
-msgstr "Treffen und Events brauchen ein Startdatum"
+msgstr "Pläne und Events brauchen ein Startdatum"
 
 msgid "err_read_only_chat"
 msgstr "Dieser Plan wurde abgesagt: Sein Chat ist schreibgeschützt"
@@ -4020,7 +4020,7 @@ msgid "ui_board_f_events"
 msgstr "Events"
 
 msgid "ui_board_f_meetups"
-msgstr "Treffen"
+msgstr "Pläne"
 
 msgid "ui_board_f_notices"
 msgstr "Ankündigungen"
@@ -4251,7 +4251,7 @@ msgid "ui_agenda_empty_title"
 msgstr "Keine Pläne in Sicht"
 
 msgid "ui_agenda_empty_body"
-msgstr "Hier siehst du die Treffen und Events dieser Community, Tag für Tag."
+msgstr "Hier siehst du die Pläne und Events dieser Community, Tag für Tag."
 
 msgid "ui_avatar_profile"
 msgstr "Mein Profil"
@@ -4476,7 +4476,7 @@ msgid "ui_plans_browse_board"
 msgstr "Pinnwand durchstöbern"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Melde dich auf der Pinnwand für ein Treffen oder Event an und es erscheint hier, mit seinem Chat."
+msgstr "Melde dich auf der Pinnwand für einen Plan oder ein Event an und er erscheint hier, mit seinem Chat."
 
 msgid "ui_plans_empty_going_title"
 msgstr "Noch keine Pläne"
@@ -4500,7 +4500,7 @@ msgid "ui_plans_later"
 msgstr "Später"
 
 msgid "ui_plans_lead"
-msgstr "Treffen und Events, bei denen du dabei bist oder die du organisierst, jeweils mit eigenem Chat"
+msgstr "Pläne und Events, bei denen du dabei bist oder die du organisierst, jeweils mit eigenem Chat"
 
 msgid "ui_plans_next"
 msgstr "Deine nächsten Pläne"
@@ -4602,7 +4602,7 @@ msgid "ui_post_kind_event"
 msgstr "Event"
 
 msgid "ui_post_kind_meetup"
-msgstr "Treffen"
+msgstr "Plan"
 
 msgid "ui_post_kind_notice"
 msgstr "Ankündigung"
@@ -4824,7 +4824,7 @@ msgid "ui_publish_need_community"
 msgstr "Wähle die Community, in der du es veröffentlichst"
 
 msgid "ui_publish_need_date"
-msgstr "Treffen und Events brauchen Tag und Uhrzeit"
+msgstr "Pläne und Events brauchen Tag und Uhrzeit"
 
 msgid "ui_publish_need_title"
 msgstr "Gib einen Titel ein"
@@ -5038,6 +5038,9 @@ msgstr "Communities · {zone}"
 
 msgid "ui_sub_plans"
 msgstr "Pläne ({n})"
+
+msgid "ui_sub_events"
+msgstr "Events ({n})"
 
 msgid "ui_sec_plans"
 msgstr "Plan-Chats"

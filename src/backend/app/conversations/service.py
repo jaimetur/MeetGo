@@ -141,7 +141,7 @@ DEFAULT_RULES = (
     "- Respeto ante todo: nada de acoso.\n"
     "- Sin spam ni autopromoción.\n"
     "- No compartas teléfonos en el chat; usa mensajes directos.\n"
-    "- Las quedadas se organizan mejor en un grupo.\n"
+    "- Los planes se organizan mejor en un grupo.\n"
 )
 
 

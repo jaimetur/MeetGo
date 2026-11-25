@@ -3843,7 +3843,7 @@ msgid "err_post_not_found"
 msgstr "投稿が見つかりません"
 
 msgid "err_post_starts_at_required"
-msgstr "ミートアップとイベントには開始日が必要です"
+msgstr "予定とイベントには開始日が必要です"
 
 msgid "err_post_dates"
 msgstr "終了は開始より前にできません"
@@ -3855,7 +3855,7 @@ msgid "err_post_past"
 msgstr "この予定はすでに終わっています"
 
 msgid "err_not_a_plan"
-msgstr "参加者がいるのはミートアップとイベントだけです"
+msgstr "参加者がいるのは予定とイベントだけです"
 
 msgid "err_comments_off"
 msgstr "この投稿ではコメントがオフになっています"
@@ -4178,6 +4178,9 @@ msgstr "コミュニティ · {zone}"
 msgid "ui_sub_plans"
 msgstr "予定（{n}）"
 
+msgid "ui_sub_events"
+msgstr "イベント（{n}）"
+
 msgid "ui_sec_plans"
 msgstr "予定のチャット"
 
@@ -4206,7 +4209,7 @@ msgid "ui_board_f_week"
 msgstr "今週"
 
 msgid "ui_board_f_meetups"
-msgstr "ミートアップ"
+msgstr "予定"
 
 msgid "ui_board_f_events"
 msgstr "イベント"
@@ -4257,7 +4260,7 @@ msgid "ui_board_back_home"
 msgstr "ボードに戻る"
 
 msgid "ui_post_kind_meetup"
-msgstr "ミートアップ"
+msgstr "予定"
 
 msgid "ui_post_kind_event"
 msgstr "イベント"
@@ -4587,7 +4590,7 @@ msgid "ui_publish_need_community"
 msgstr "投稿先のコミュニティを選んでください"
 
 msgid "ui_publish_need_date"
-msgstr "ミートアップとイベントには日付と時刻が必要です"
+msgstr "予定とイベントには日付と時刻が必要です"
 
 msgid "ui_publish_date_past"
 msgstr "この日付はすでに過ぎています"
@@ -4611,7 +4614,7 @@ msgid "ui_plans_title"
 msgstr "あなたの予定"
 
 msgid "ui_plans_lead"
-msgstr "参加または主催しているミートアップとイベント。それぞれチャット付きです"
+msgstr "参加または主催している予定とイベント。それぞれチャット付きです"
 
 msgid "ui_plans_going"
 msgstr "参加"
@@ -4641,7 +4644,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "予定はまだありません"
 
 msgid "ui_plans_empty_going_body"
-msgstr "ボードでミートアップやイベントに参加登録すると、チャットと一緒にここに表示されます。"
+msgstr "ボードで予定やイベントに参加登録すると、チャットと一緒にここに表示されます。"
 
 msgid "ui_plans_empty_org_title"
 msgstr "主催している予定はありません"
@@ -4782,7 +4785,7 @@ msgid "ui_agenda_empty_title"
 msgstr "予定されているプランはありません"
 
 msgid "ui_agenda_empty_body"
-msgstr "このコミュニティのオフ会やイベントが日ごとにここに表示されます。"
+msgstr "このコミュニティの予定やイベントが日ごとにここに表示されます。"
 
 msgid "ui_avatar_profile"
 msgstr "マイプロフィール"

@@ -3844,7 +3844,7 @@ msgid "err_post_not_found"
 msgstr "Post not found"
 
 msgid "err_post_starts_at_required"
-msgstr "Meetups and events need a start date"
+msgstr "Plans and events need a start date"
 
 msgid "err_post_dates"
 msgstr "The end cannot be before the start"
@@ -3856,7 +3856,7 @@ msgid "err_post_past"
 msgstr "This plan has already happened"
 
 msgid "err_not_a_plan"
-msgstr "Only meetups and events have attendees"
+msgstr "Only plans and events have attendees"
 
 msgid "err_comments_off"
 msgstr "Comments are turned off for this post"
@@ -4179,6 +4179,9 @@ msgstr "Communities · {zone}"
 msgid "ui_sub_plans"
 msgstr "Plans ({n})"
 
+msgid "ui_sub_events"
+msgstr "Events ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Plan chats"
 
@@ -4207,7 +4210,7 @@ msgid "ui_board_f_week"
 msgstr "This week"
 
 msgid "ui_board_f_meetups"
-msgstr "Meetups"
+msgstr "Plans"
 
 msgid "ui_board_f_events"
 msgstr "Events"
@@ -4258,7 +4261,7 @@ msgid "ui_board_back_home"
 msgstr "Back to the board"
 
 msgid "ui_post_kind_meetup"
-msgstr "Meetup"
+msgstr "Plan"
 
 msgid "ui_post_kind_event"
 msgstr "Event"
@@ -4588,7 +4591,7 @@ msgid "ui_publish_need_community"
 msgstr "Choose the community where you'll publish it"
 
 msgid "ui_publish_need_date"
-msgstr "Meetups and events need a day and a time"
+msgstr "Plans and events need a day and a time"
 
 msgid "ui_publish_date_past"
 msgstr "The date has already passed"
@@ -4612,7 +4615,7 @@ msgid "ui_plans_title"
 msgstr "Your plans"
 
 msgid "ui_plans_lead"
-msgstr "Meetups and events you go to or organise, each with its chat"
+msgstr "Plans and events you go to or organise, each with its chat"
 
 msgid "ui_plans_going"
 msgstr "Going"
@@ -4642,7 +4645,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "No plans yet"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Sign up for a meetup or an event on the board and it will appear here, with its chat."
+msgstr "Sign up for a plan or an event on the board and it will appear here, with its chat."
 
 msgid "ui_plans_empty_org_title"
 msgstr "You aren't organising anything"
@@ -4783,7 +4786,7 @@ msgid "ui_agenda_empty_title"
 msgstr "No plans coming up"
 
 msgid "ui_agenda_empty_body"
-msgstr "Meetups and events of this community will show here, day by day."
+msgstr "Plans and events of this community will show here, day by day."
 
 msgid "ui_avatar_profile"
 msgstr "My profile"

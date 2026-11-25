@@ -3962,7 +3962,7 @@ msgid "err_join_community_first"
 msgstr "Rejoins d’abord la communauté"
 
 msgid "err_not_a_plan"
-msgstr "Seuls les rencontres et les événements ont des participants"
+msgstr "Seuls les plans et les événements ont des participants"
 
 msgid "err_organiser_cannot_leave"
 msgstr "L’organisateur ne peut pas quitter son propre plan : annule-le plutôt"
@@ -3980,7 +3980,7 @@ msgid "err_post_past"
 msgstr "Ce plan a déjà eu lieu"
 
 msgid "err_post_starts_at_required"
-msgstr "Les rencontres et les événements ont besoin d’une date de début"
+msgstr "Les plans et les événements ont besoin d’une date de début"
 
 msgid "err_read_only_chat"
 msgstr "Ce plan a été annulé : son chat est en lecture seule"
@@ -4019,7 +4019,7 @@ msgid "ui_board_f_events"
 msgstr "Événements"
 
 msgid "ui_board_f_meetups"
-msgstr "Rencontres"
+msgstr "Plans"
 
 msgid "ui_board_f_notices"
 msgstr "Annonces"
@@ -4250,7 +4250,7 @@ msgid "ui_agenda_empty_title"
 msgstr "Aucun plan à venir"
 
 msgid "ui_agenda_empty_body"
-msgstr "Les sorties et événements de cette communauté s'afficheront ici, jour par jour."
+msgstr "Les plans et événements de cette communauté s'afficheront ici, jour par jour."
 
 msgid "ui_avatar_profile"
 msgstr "Mon profil"
@@ -4475,7 +4475,7 @@ msgid "ui_plans_browse_board"
 msgstr "Parcourir le tableau"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Inscris-toi à une rencontre ou à un événement sur le tableau et il apparaîtra ici, avec son chat."
+msgstr "Inscris-toi à un plan ou à un événement sur le tableau et il apparaîtra ici, avec son chat."
 
 msgid "ui_plans_empty_going_title"
 msgstr "Pas encore de plans"
@@ -4499,7 +4499,7 @@ msgid "ui_plans_later"
 msgstr "Plus tard"
 
 msgid "ui_plans_lead"
-msgstr "Rencontres et événements auxquels tu participes ou que tu organises, chacun avec son chat"
+msgstr "Plans et événements auxquels tu participes ou que tu organises, chacun avec son chat"
 
 msgid "ui_plans_next"
 msgstr "Tes prochains plans"
@@ -4601,7 +4601,7 @@ msgid "ui_post_kind_event"
 msgstr "Événement"
 
 msgid "ui_post_kind_meetup"
-msgstr "Rencontre"
+msgstr "Plan"
 
 msgid "ui_post_kind_notice"
 msgstr "Annonce"
@@ -4823,7 +4823,7 @@ msgid "ui_publish_need_community"
 msgstr "Choisis la communauté où tu la publieras"
 
 msgid "ui_publish_need_date"
-msgstr "Les rencontres et les événements ont besoin d’un jour et d’une heure"
+msgstr "Les plans et les événements ont besoin d’un jour et d’une heure"
 
 msgid "ui_publish_need_title"
 msgstr "Donne-lui un titre"
@@ -5037,6 +5037,9 @@ msgstr "Communautés · {zone}"
 
 msgid "ui_sub_plans"
 msgstr "Plans ({n})"
+
+msgid "ui_sub_events"
+msgstr "Événements ({n})"
 
 msgid "ui_sec_plans"
 msgstr "Chats des plans"

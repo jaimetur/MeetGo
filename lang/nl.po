@@ -3351,7 +3351,7 @@ msgid "landing_t4_t"
 msgstr "Meldingen op jouw manier"
 
 msgid "landing_t5_p"
-msgstr "Vind dat bericht met het tijdstip van de afspraak in al je gesprekken."
+msgstr "Vind dat bericht met het tijdstip van het plan in al je gesprekken."
 
 msgid "landing_t5_t"
 msgstr "Zoeken"
@@ -3843,7 +3843,7 @@ msgid "err_post_not_found"
 msgstr "Bericht niet gevonden"
 
 msgid "err_post_starts_at_required"
-msgstr "Meetups en evenementen hebben een startdatum nodig"
+msgstr "Plannen en evenementen hebben een startdatum nodig"
 
 msgid "err_post_dates"
 msgstr "Het einde kan niet voor het begin liggen"
@@ -3855,7 +3855,7 @@ msgid "err_post_past"
 msgstr "Dit plan is al geweest"
 
 msgid "err_not_a_plan"
-msgstr "Alleen meetups en evenementen hebben deelnemers"
+msgstr "Alleen plannen en evenementen hebben deelnemers"
 
 msgid "err_comments_off"
 msgstr "Reacties zijn uitgeschakeld voor dit bericht"
@@ -4178,6 +4178,9 @@ msgstr "Communities · {zone}"
 msgid "ui_sub_plans"
 msgstr "Plannen ({n})"
 
+msgid "ui_sub_events"
+msgstr "Evenementen ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Plan-chats"
 
@@ -4206,7 +4209,7 @@ msgid "ui_board_f_week"
 msgstr "Deze week"
 
 msgid "ui_board_f_meetups"
-msgstr "Meetups"
+msgstr "Plannen"
 
 msgid "ui_board_f_events"
 msgstr "Evenementen"
@@ -4257,7 +4260,7 @@ msgid "ui_board_back_home"
 msgstr "Terug naar het prikbord"
 
 msgid "ui_post_kind_meetup"
-msgstr "Meetup"
+msgstr "Plan"
 
 msgid "ui_post_kind_event"
 msgstr "Evenement"
@@ -4587,7 +4590,7 @@ msgid "ui_publish_need_community"
 msgstr "Kies de community waarin je het plaatst"
 
 msgid "ui_publish_need_date"
-msgstr "Meetups en evenementen hebben een dag en een tijd nodig"
+msgstr "Plannen en evenementen hebben een dag en een tijd nodig"
 
 msgid "ui_publish_date_past"
 msgstr "De datum is al voorbij"
@@ -4611,7 +4614,7 @@ msgid "ui_plans_title"
 msgstr "Jouw plannen"
 
 msgid "ui_plans_lead"
-msgstr "Meetups en evenementen waar je naartoe gaat of die je organiseert, elk met een eigen chat"
+msgstr "Plannen en evenementen waar je naartoe gaat of die je organiseert, elk met een eigen chat"
 
 msgid "ui_plans_going"
 msgstr "Ik ga mee"
@@ -4641,7 +4644,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "Nog geen plannen"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Meld je aan voor een meetup of evenement op het prikbord en het verschijnt hier, met de chat erbij."
+msgstr "Meld je aan voor een plan of evenement op het prikbord en het verschijnt hier, met de chat erbij."
 
 msgid "ui_plans_empty_org_title"
 msgstr "Je organiseert niets"
@@ -4782,7 +4785,7 @@ msgid "ui_agenda_empty_title"
 msgstr "Geen plannen in zicht"
 
 msgid "ui_agenda_empty_body"
-msgstr "Hier zie je de meetups en evenementen van deze community, dag voor dag."
+msgstr "Hier zie je de plannen en evenementen van deze community, dag voor dag."
 
 msgid "ui_avatar_profile"
 msgstr "Mijn profiel"

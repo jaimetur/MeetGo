@@ -3350,7 +3350,7 @@ msgid "landing_t4_t"
 msgstr "Alertas à tua maneira"
 
 msgid "landing_t5_p"
-msgstr "Encontra aquela mensagem com a hora do encontro em todas as tuas conversas."
+msgstr "Encontra aquela mensagem com a hora do plano em todas as tuas conversas."
 
 msgid "landing_t5_t"
 msgstr "Pesquisa"
@@ -3842,7 +3842,7 @@ msgid "err_post_not_found"
 msgstr "Publicação não encontrada"
 
 msgid "err_post_starts_at_required"
-msgstr "Os encontros e os eventos precisam de uma data de início"
+msgstr "Os planos e os eventos precisam de uma data de início"
 
 msgid "err_post_dates"
 msgstr "O fim não pode ser antes do início"
@@ -3854,7 +3854,7 @@ msgid "err_post_past"
 msgstr "Este plano já aconteceu"
 
 msgid "err_not_a_plan"
-msgstr "Só os encontros e os eventos têm participantes"
+msgstr "Só os planos e os eventos têm participantes"
 
 msgid "err_comments_off"
 msgstr "Os comentários estão desativados nesta publicação"
@@ -4177,6 +4177,9 @@ msgstr "Comunidades · {zone}"
 msgid "ui_sub_plans"
 msgstr "Planos ({n})"
 
+msgid "ui_sub_events"
+msgstr "Eventos ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Conversas dos planos"
 
@@ -4205,7 +4208,7 @@ msgid "ui_board_f_week"
 msgstr "Esta semana"
 
 msgid "ui_board_f_meetups"
-msgstr "Encontros"
+msgstr "Planos"
 
 msgid "ui_board_f_events"
 msgstr "Eventos"
@@ -4256,7 +4259,7 @@ msgid "ui_board_back_home"
 msgstr "Voltar ao mural"
 
 msgid "ui_post_kind_meetup"
-msgstr "Encontro"
+msgstr "Plano"
 
 msgid "ui_post_kind_event"
 msgstr "Evento"
@@ -4586,7 +4589,7 @@ msgid "ui_publish_need_community"
 msgstr "Escolhe a comunidade onde o vais publicar"
 
 msgid "ui_publish_need_date"
-msgstr "Os encontros e os eventos precisam de um dia e de uma hora"
+msgstr "Os planos e os eventos precisam de um dia e de uma hora"
 
 msgid "ui_publish_date_past"
 msgstr "A data já passou"
@@ -4610,7 +4613,7 @@ msgid "ui_plans_title"
 msgstr "Os teus planos"
 
 msgid "ui_plans_lead"
-msgstr "Encontros e eventos a que vais ou que organizas, cada um com a sua conversa"
+msgstr "Planos e eventos a que vais ou que organizas, cada um com a sua conversa"
 
 msgid "ui_plans_going"
 msgstr "Vou"
@@ -4640,7 +4643,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "Ainda sem planos"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Inscreve-te num encontro ou evento no mural e vai aparecer aqui, com a sua conversa."
+msgstr "Inscreve-te num plano ou evento no mural e vai aparecer aqui, com a sua conversa."
 
 msgid "ui_plans_empty_org_title"
 msgstr "Não estás a organizar nada"
@@ -4781,7 +4784,7 @@ msgid "ui_agenda_empty_title"
 msgstr "Não há planos à vista"
 
 msgid "ui_agenda_empty_body"
-msgstr "Aqui vais ver os encontros e eventos desta comunidade, dia a dia."
+msgstr "Aqui vais ver os planos e eventos desta comunidade, dia a dia."
 
 msgid "ui_avatar_profile"
 msgstr "O meu perfil"

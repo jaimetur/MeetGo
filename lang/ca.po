@@ -3351,7 +3351,7 @@ msgid "landing_t4_t"
 msgstr "Avisos a la teva manera"
 
 msgid "landing_t5_p"
-msgstr "Troba aquell missatge amb l'hora de la quedada entre totes les teves converses."
+msgstr "Troba aquell missatge amb l'hora del pla entre totes les teves converses."
 
 msgid "landing_t5_t"
 msgstr "Cerca"
@@ -3843,7 +3843,7 @@ msgid "err_post_not_found"
 msgstr "No s'ha trobat la publicació"
 
 msgid "err_post_starts_at_required"
-msgstr "Les quedades i els esdeveniments necessiten una data d'inici"
+msgstr "Els plans i els esdeveniments necessiten una data d'inici"
 
 msgid "err_post_dates"
 msgstr "El final no pot ser abans de l'inici"
@@ -3855,7 +3855,7 @@ msgid "err_post_past"
 msgstr "Aquest pla ja ha passat"
 
 msgid "err_not_a_plan"
-msgstr "Només les quedades i els esdeveniments tenen assistents"
+msgstr "Només els plans i els esdeveniments tenen assistents"
 
 msgid "err_comments_off"
 msgstr "Els comentaris d'aquesta publicació estan desactivats"
@@ -4178,6 +4178,9 @@ msgstr "Comunitats · {zone}"
 msgid "ui_sub_plans"
 msgstr "Plans ({n})"
 
+msgid "ui_sub_events"
+msgstr "Esdeveniments ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Xats de plans"
 
@@ -4206,7 +4209,7 @@ msgid "ui_board_f_week"
 msgstr "Aquesta setmana"
 
 msgid "ui_board_f_meetups"
-msgstr "Quedades"
+msgstr "Plans"
 
 msgid "ui_board_f_events"
 msgstr "Esdeveniments"
@@ -4257,7 +4260,7 @@ msgid "ui_board_back_home"
 msgstr "Torna al tauler"
 
 msgid "ui_post_kind_meetup"
-msgstr "Quedada"
+msgstr "Pla"
 
 msgid "ui_post_kind_event"
 msgstr "Esdeveniment"
@@ -4587,7 +4590,7 @@ msgid "ui_publish_need_community"
 msgstr "Tria la comunitat on el publicaràs"
 
 msgid "ui_publish_need_date"
-msgstr "Les quedades i els esdeveniments necessiten un dia i una hora"
+msgstr "Els plans i els esdeveniments necessiten un dia i una hora"
 
 msgid "ui_publish_date_past"
 msgstr "La data ja ha passat"
@@ -4611,7 +4614,7 @@ msgid "ui_plans_title"
 msgstr "Els teus plans"
 
 msgid "ui_plans_lead"
-msgstr "Quedades i esdeveniments als quals vas o que organitzes, cadascun amb el seu xat"
+msgstr "Plans i esdeveniments als quals vas o que organitzes, cadascun amb el seu xat"
 
 msgid "ui_plans_going"
 msgstr "Hi vas"
@@ -4641,7 +4644,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "Encara no hi ha plans"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Apunta't a una quedada o a un esdeveniment del tauler i apareixerà aquí, amb el seu xat."
+msgstr "Apunta't a un pla o a un esdeveniment del tauler i apareixerà aquí, amb el seu xat."
 
 msgid "ui_plans_empty_org_title"
 msgstr "No organitzes res"
@@ -4782,7 +4785,7 @@ msgid "ui_agenda_empty_title"
 msgstr "No hi ha plans a la vista"
 
 msgid "ui_agenda_empty_body"
-msgstr "Aquí veuràs les quedades i esdeveniments d'aquesta comunitat, dia a dia."
+msgstr "Aquí veuràs els plans i esdeveniments d'aquesta comunitat, dia a dia."
 
 msgid "ui_avatar_profile"
 msgstr "El meu perfil"

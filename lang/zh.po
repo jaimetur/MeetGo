@@ -3843,7 +3843,7 @@ msgid "err_post_not_found"
 msgstr "未找到该帖子"
 
 msgid "err_post_starts_at_required"
-msgstr "聚会和活动需要开始日期"
+msgstr "计划和活动需要开始日期"
 
 msgid "err_post_dates"
 msgstr "结束时间不能早于开始时间"
@@ -3855,7 +3855,7 @@ msgid "err_post_past"
 msgstr "该计划已经结束"
 
 msgid "err_not_a_plan"
-msgstr "只有聚会和活动才有参加者"
+msgstr "只有计划和活动才有参加者"
 
 msgid "err_comments_off"
 msgstr "该帖子已关闭评论"
@@ -4178,6 +4178,9 @@ msgstr "社区 · {zone}"
 msgid "ui_sub_plans"
 msgstr "计划（{n}）"
 
+msgid "ui_sub_events"
+msgstr "活动（{n}）"
+
 msgid "ui_sec_plans"
 msgstr "计划聊天"
 
@@ -4206,7 +4209,7 @@ msgid "ui_board_f_week"
 msgstr "本周"
 
 msgid "ui_board_f_meetups"
-msgstr "聚会"
+msgstr "计划"
 
 msgid "ui_board_f_events"
 msgstr "活动"
@@ -4257,7 +4260,7 @@ msgid "ui_board_back_home"
 msgstr "返回公告板"
 
 msgid "ui_post_kind_meetup"
-msgstr "聚会"
+msgstr "计划"
 
 msgid "ui_post_kind_event"
 msgstr "活动"
@@ -4587,7 +4590,7 @@ msgid "ui_publish_need_community"
 msgstr "请选择要发布到的社区"
 
 msgid "ui_publish_need_date"
-msgstr "聚会和活动需要日期和时间"
+msgstr "计划和活动需要日期和时间"
 
 msgid "ui_publish_date_past"
 msgstr "该日期已经过去"
@@ -4611,7 +4614,7 @@ msgid "ui_plans_title"
 msgstr "你的计划"
 
 msgid "ui_plans_lead"
-msgstr "你参加或组织的聚会和活动,各自附带聊天"
+msgstr "你参加或组织的计划和活动,各自附带聊天"
 
 msgid "ui_plans_going"
 msgstr "参加"
@@ -4641,7 +4644,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "还没有计划"
 
 msgid "ui_plans_empty_going_body"
-msgstr "在公告板上报名参加聚会或活动,它就会连同聊天一起显示在这里。"
+msgstr "在公告板上报名参加计划或活动,它就会连同聊天一起显示在这里。"
 
 msgid "ui_plans_empty_org_title"
 msgstr "你没有在组织任何计划"
@@ -4782,7 +4785,7 @@ msgid "ui_agenda_empty_title"
 msgstr "暂无即将到来的计划"
 
 msgid "ui_agenda_empty_body"
-msgstr "这里会按天显示本社区的聚会和活动。"
+msgstr "这里会按天显示本社区的计划和活动。"
 
 msgid "ui_avatar_profile"
 msgstr "我的资料"

@@ -3351,7 +3351,7 @@ msgid "landing_t4_t"
 msgstr "Avisos a tu medida"
 
 msgid "landing_t5_p"
-msgstr "Encuentra aquel mensaje con la hora de la quedada en todas tus conversaciones."
+msgstr "Encuentra aquel mensaje con la hora del plan en todas tus conversaciones."
 
 msgid "landing_t5_t"
 msgstr "Búsqueda"
@@ -3844,7 +3844,7 @@ msgid "err_post_not_found"
 msgstr "Publicación no encontrada"
 
 msgid "err_post_starts_at_required"
-msgstr "Las quedadas y los eventos necesitan una fecha de inicio"
+msgstr "Los planes y los eventos necesitan una fecha de inicio"
 
 msgid "err_post_dates"
 msgstr "El final no puede ser anterior al inicio"
@@ -3856,7 +3856,7 @@ msgid "err_post_past"
 msgstr "Este plan ya ha pasado"
 
 msgid "err_not_a_plan"
-msgstr "Solo las quedadas y los eventos tienen asistentes"
+msgstr "Solo los planes y los eventos tienen asistentes"
 
 msgid "err_comments_off"
 msgstr "Los comentarios están desactivados en esta publicación"
@@ -4179,6 +4179,9 @@ msgstr "Comunidades · {zone}"
 msgid "ui_sub_plans"
 msgstr "Planes ({n})"
 
+msgid "ui_sub_events"
+msgstr "Eventos ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Chats de planes"
 
@@ -4207,7 +4210,7 @@ msgid "ui_board_f_week"
 msgstr "Esta semana"
 
 msgid "ui_board_f_meetups"
-msgstr "Quedadas"
+msgstr "Planes"
 
 msgid "ui_board_f_events"
 msgstr "Eventos"
@@ -4258,7 +4261,7 @@ msgid "ui_board_back_home"
 msgstr "Volver al tablón"
 
 msgid "ui_post_kind_meetup"
-msgstr "Quedada"
+msgstr "Plan"
 
 msgid "ui_post_kind_event"
 msgstr "Evento"
@@ -4588,7 +4591,7 @@ msgid "ui_publish_need_community"
 msgstr "Elige la comunidad donde publicarlo"
 
 msgid "ui_publish_need_date"
-msgstr "Las quedadas y los eventos necesitan día y hora"
+msgstr "Los planes y los eventos necesitan día y hora"
 
 msgid "ui_publish_date_past"
 msgstr "La fecha ya ha pasado"
@@ -4612,7 +4615,7 @@ msgid "ui_plans_title"
 msgstr "Tus planes"
 
 msgid "ui_plans_lead"
-msgstr "Quedadas y eventos a los que vas o que organizas, cada uno con su chat"
+msgstr "Planes y eventos a los que vas o que organizas, cada uno con su chat"
 
 msgid "ui_plans_going"
 msgstr "Voy"
@@ -4642,7 +4645,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "Todavía no tienes planes"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Apúntate a una quedada o un evento del tablón y aparecerá aquí, con su chat."
+msgstr "Apúntate a un plan o un evento del tablón y aparecerá aquí, con su chat."
 
 msgid "ui_plans_empty_org_title"
 msgstr "No organizas nada"
@@ -4783,7 +4786,7 @@ msgid "ui_agenda_empty_title"
 msgstr "No hay planes a la vista"
 
 msgid "ui_agenda_empty_body"
-msgstr "Aquí verás las quedadas y eventos de esta comunidad, día a día."
+msgstr "Aquí verás los planes y eventos de esta comunidad, día a día."
 
 msgid "ui_avatar_profile"
 msgstr "Mi perfil"

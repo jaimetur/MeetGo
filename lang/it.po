@@ -3351,7 +3351,7 @@ msgid "landing_t4_t"
 msgstr "Avvisi a modo tuo"
 
 msgid "landing_t5_p"
-msgstr "Trova quel messaggio con l'orario dell'incontro in tutte le tue conversazioni."
+msgstr "Trova quel messaggio con l'orario del piano in tutte le tue conversazioni."
 
 msgid "landing_t5_t"
 msgstr "Ricerca"
@@ -3843,7 +3843,7 @@ msgid "err_post_not_found"
 msgstr "Post non trovato"
 
 msgid "err_post_starts_at_required"
-msgstr "Gli incontri e gli eventi richiedono una data di inizio"
+msgstr "I piani e gli eventi richiedono una data di inizio"
 
 msgid "err_post_dates"
 msgstr "La fine non può essere prima dell'inizio"
@@ -3855,7 +3855,7 @@ msgid "err_post_past"
 msgstr "Questo piano è già passato"
 
 msgid "err_not_a_plan"
-msgstr "Solo gli incontri e gli eventi hanno partecipanti"
+msgstr "Solo i piani e gli eventi hanno partecipanti"
 
 msgid "err_comments_off"
 msgstr "I commenti sono disattivati per questo post"
@@ -4178,6 +4178,9 @@ msgstr "Comunità · {zone}"
 msgid "ui_sub_plans"
 msgstr "Piani ({n})"
 
+msgid "ui_sub_events"
+msgstr "Eventi ({n})"
+
 msgid "ui_sec_plans"
 msgstr "Chat dei piani"
 
@@ -4206,7 +4209,7 @@ msgid "ui_board_f_week"
 msgstr "Questa settimana"
 
 msgid "ui_board_f_meetups"
-msgstr "Incontri"
+msgstr "Piani"
 
 msgid "ui_board_f_events"
 msgstr "Eventi"
@@ -4257,7 +4260,7 @@ msgid "ui_board_back_home"
 msgstr "Torna alla bacheca"
 
 msgid "ui_post_kind_meetup"
-msgstr "Incontro"
+msgstr "Piano"
 
 msgid "ui_post_kind_event"
 msgstr "Evento"
@@ -4587,7 +4590,7 @@ msgid "ui_publish_need_community"
 msgstr "Scegli la comunità in cui lo pubblicherai"
 
 msgid "ui_publish_need_date"
-msgstr "Gli incontri e gli eventi richiedono un giorno e un'ora"
+msgstr "I piani e gli eventi richiedono un giorno e un'ora"
 
 msgid "ui_publish_date_past"
 msgstr "La data è già passata"
@@ -4611,7 +4614,7 @@ msgid "ui_plans_title"
 msgstr "I tuoi piani"
 
 msgid "ui_plans_lead"
-msgstr "Incontri ed eventi a cui partecipi o che organizzi, ognuno con la sua chat"
+msgstr "Piani ed eventi a cui partecipi o che organizzi, ognuno con la sua chat"
 
 msgid "ui_plans_going"
 msgstr "Partecipo"
@@ -4641,7 +4644,7 @@ msgid "ui_plans_empty_going_title"
 msgstr "Ancora nessun piano"
 
 msgid "ui_plans_empty_going_body"
-msgstr "Iscriviti a un incontro o a un evento in bacheca e apparirà qui, con la sua chat."
+msgstr "Iscriviti a un piano o a un evento in bacheca e apparirà qui, con la sua chat."
 
 msgid "ui_plans_empty_org_title"
 msgstr "Non stai organizzando niente"
@@ -4782,7 +4785,7 @@ msgid "ui_agenda_empty_title"
 msgstr "Nessun piano in arrivo"
 
 msgid "ui_agenda_empty_body"
-msgstr "Qui vedrai gli incontri e gli eventi di questa community, giorno per giorno."
+msgstr "Qui vedrai i piani e gli eventi di questa community, giorno per giorno."
 
 msgid "ui_avatar_profile"
 msgstr "Il mio profilo"

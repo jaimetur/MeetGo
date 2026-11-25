@@ -46,14 +46,16 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
   const kindOf = (c: Conversation): Filter => (c.kind === "group" && planChats.has(c.id) ? "plan" : c.kind);
   // each plan chat belongs to its community's chat: listed under it, indented, and folded or unfolded per community
   const parentOf = useMemo(() => new Map((myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.community.id])), [myPlans]);
-  const [folded, setFolded] = useState<Set<number>>(() => {
+  // two folds per community: its plans and its events ("<community>:meetup" / "<community>:event")
+  const kindOfChat = useMemo(() => new Map((myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.kind])), [myPlans]);
+  const [folded, setFolded] = useState<Set<string>>(() => {
     try {
-      return new Set(JSON.parse(localStorage.getItem("chats.foldedPlans") || "[]"));
+      return new Set((JSON.parse(localStorage.getItem("chats.foldedPlans") || "[]") as unknown[]).map(String).map((k) => (k.includes(":") ? k : `${k}:meetup`)));
     } catch {
       return new Set();
     }
   });
-  const toggleFold = (id: number) => setFolded((prev) => {
+  const toggleFold = (id: string) => setFolded((prev) => {
     const next = new Set(prev);
     if (next.has(id)) next.delete(id); else next.add(id);
     try {
@@ -123,21 +125,29 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
             {items.map((c) => {
               const isTyping = (id: number) => Object.entries(typing[id] || {}).some(([uid, v]) => +uid !== meId && v.until > Date.now() && !v.thread);
               const kids = c.kind === "channel" && !c.pinned ? childrenOf(c.id) : [];
-              const open = !folded.has(c.id);
-              const unread = kids.reduce((n, k) => n + (k.unread_count || 0), 0);
+              const groups: [string, string, string, Conversation[]][] = [
+                ["meetup", "calendar", "ui_sub_plans", kids.filter((k) => kindOfChat.get(k.id) !== "event")],
+                ["event", "ticket", "ui_sub_events", kids.filter((k) => kindOfChat.get(k.id) === "event")],
+              ];
               return (
                 <React.Fragment key={c.id}>
                   <ConvRow c={c} active={c.id === activeId} typing={isTyping(c.id)} />
-                  {kids.length ? (
-                    <div className="csubs">
-                      <button type="button" className="csubtoggle" aria-expanded={open} onClick={() => toggleFold(c.id)}>
-                        <Icon name="calendar" size="sm" /><span className="grow">{t("ui_sub_plans", { n: kids.length })}</span>
-                        {!open && unread ? <span className="bdg">{unread > 99 ? "99+" : unread}</span> : null}
-                        <span className={"chev" + (open ? " open" : "")} aria-hidden="true">›</span>
-                      </button>
-                      {open ? kids.map((k) => <ConvRow key={k.id} c={k} active={k.id === activeId} typing={isTyping(k.id)} />) : null}
-                    </div>
-                  ) : null}
+                  {groups.map(([kind, icon, label, list]) => {
+                    if (!list.length) return null;
+                    const key = `${c.id}:${kind}`;
+                    const open = !folded.has(key);
+                    const unread = list.reduce((n, k) => n + (k.unread_count || 0), 0);
+                    return (
+                      <div key={kind} className="csubs">
+                        <button type="button" className="csubtoggle" aria-expanded={open} onClick={() => toggleFold(key)}>
+                          <Icon name={icon} size="sm" /><span className="grow">{t(label, { n: list.length })}</span>
+                          {!open && unread ? <span className="bdg">{unread > 99 ? "99+" : unread}</span> : null}
+                          <span className={"chev" + (open ? " open" : "")} aria-hidden="true">›</span>
+                        </button>
+                        {open ? list.map((k) => <ConvRow key={k.id} c={k} active={k.id === activeId} typing={isTyping(k.id)} />) : null}
+                      </div>
+                    );
+                  })}
                 </React.Fragment>
               );
             })}
