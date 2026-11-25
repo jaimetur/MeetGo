@@ -1571,6 +1571,30 @@ msgstr "すでにアカウントをお持ちの方"
 msgid "ui_hide_chat"
 msgstr "会話を非表示"
 
+msgid "ui_msg_info"
+msgstr "メッセージ情報"
+
+msgid "ui_msg_info_short"
+msgstr "情報"
+
+msgid "ui_msg_info_sent"
+msgstr "送信"
+
+msgid "ui_msg_info_read_by"
+msgstr "既読"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "配信済み"
+
+msgid "ui_msg_info_pending"
+msgstr "まだ配信されていません"
+
+msgid "ui_msg_info_no_time"
+msgstr "時刻なし（記録開始前）"
+
+msgid "ui_msg_info_hidden"
+msgstr "既読通知がオフです：届いた時刻のみ表示されます。"
+
 msgid "ui_info"
 msgstr "情報"
 

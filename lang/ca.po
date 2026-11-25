@@ -1571,6 +1571,30 @@ msgstr "Ja tinc un compte"
 msgid "ui_hide_chat"
 msgstr "Amaga la conversa"
 
+msgid "ui_msg_info"
+msgstr "Info. del missatge"
+
+msgid "ui_msg_info_short"
+msgstr "Info"
+
+msgid "ui_msg_info_sent"
+msgstr "Enviat"
+
+msgid "ui_msg_info_read_by"
+msgstr "Llegit per"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "Lliurat a"
+
+msgid "ui_msg_info_pending"
+msgstr "Encara no lliurat"
+
+msgid "ui_msg_info_no_time"
+msgstr "sense hora (d'abans que es desés)"
+
+msgid "ui_msg_info_hidden"
+msgstr "Les confirmacions de lectura estan desactivades: només veus quan li va arribar."
+
 msgid "ui_info"
 msgstr "Informació"
 

@@ -1571,6 +1571,30 @@ msgstr "Ho già un account"
 msgid "ui_hide_chat"
 msgstr "Nascondi conversazione"
 
+msgid "ui_msg_info"
+msgstr "Info messaggio"
+
+msgid "ui_msg_info_short"
+msgstr "Info"
+
+msgid "ui_msg_info_sent"
+msgstr "Inviato"
+
+msgid "ui_msg_info_read_by"
+msgstr "Letto da"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "Consegnato a"
+
+msgid "ui_msg_info_pending"
+msgstr "Non ancora consegnato"
+
+msgid "ui_msg_info_no_time"
+msgstr "senza ora (da prima che venisse salvata)"
+
+msgid "ui_msg_info_hidden"
+msgstr "Le conferme di lettura sono disattivate: vedi solo quando è arrivato."
+
 msgid "ui_info"
 msgstr "Info"
 

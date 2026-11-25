@@ -1571,6 +1571,30 @@ msgstr "Ik heb al een account"
 msgid "ui_hide_chat"
 msgstr "Gesprek verbergen"
 
+msgid "ui_msg_info"
+msgstr "Berichtinfo"
+
+msgid "ui_msg_info_short"
+msgstr "Info"
+
+msgid "ui_msg_info_sent"
+msgstr "Verzonden"
+
+msgid "ui_msg_info_read_by"
+msgstr "Gelezen door"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "Bezorgd bij"
+
+msgid "ui_msg_info_pending"
+msgstr "Nog niet bezorgd"
+
+msgid "ui_msg_info_no_time"
+msgstr "geen tijd (van voordat die werd bewaard)"
+
+msgid "ui_msg_info_hidden"
+msgstr "Leesbevestigingen staan uit: je ziet alleen wanneer het aankwam."
+
 msgid "ui_info"
 msgstr "Info"
 

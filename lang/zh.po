@@ -1571,6 +1571,30 @@ msgstr "我已有账号"
 msgid "ui_hide_chat"
 msgstr "隐藏会话"
 
+msgid "ui_msg_info"
+msgstr "消息信息"
+
+msgid "ui_msg_info_short"
+msgstr "信息"
+
+msgid "ui_msg_info_sent"
+msgstr "已发送"
+
+msgid "ui_msg_info_read_by"
+msgstr "已读"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "已送达"
+
+msgid "ui_msg_info_pending"
+msgstr "尚未送达"
+
+msgid "ui_msg_info_no_time"
+msgstr "无时间（记录之前）"
+
+msgid "ui_msg_info_hidden"
+msgstr "已读回执已关闭：你只能看到送达时间。"
+
 msgid "ui_info"
 msgstr "信息"
 

@@ -6,10 +6,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import get_current_user, get_db, require_write_access
 from app.core.i18n import t
-from app.core.models import Attachment, Message, Report, User
+from app.core.models import Attachment, Conversation, Message, Report, User
 from app.core.schemas import MessageCreateIn, MessageEditIn, ReportIn
 from app.conversations.service import get_membership, messages_out, require_member
-from app.messaging.service import delete_message, edit_message, send_message, set_reaction
+from app.messaging.service import delete_message, edit_message, message_info, send_message, set_reaction
 from app.mail.notify_email import notify_admins_report
 from app.messaging.storage import attachment_out, check_signature, file_path, save_upload
 
@@ -90,6 +90,16 @@ async def _own_conversation_message(db: AsyncSession, message_id: int, user: Use
     if not msg or not member:
         raise HTTPException(404, t("err_message_not_found"))
     return msg, member
+
+
+@router.get("/messages/{message_id}/info", response_model=dict)
+async def get_message_info(message_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """Who got and read my message, and when (direct messages and groups)."""
+    msg, _ = await _own_conversation_message(db, message_id, user)
+    conv = await db.get(Conversation, msg.conversation_id)
+    if msg.sender_id != user.id or not conv or conv.kind not in ("dm", "group"):
+        raise HTTPException(404, t("err_message_not_found"))
+    return await message_info(db, msg, conv, user)
 
 
 @router.patch("/messages/{message_id}", response_model=dict)

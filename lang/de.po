@@ -1571,6 +1571,30 @@ msgstr "Ich habe schon ein Konto"
 msgid "ui_hide_chat"
 msgstr "Unterhaltung ausblenden"
 
+msgid "ui_msg_info"
+msgstr "Nachrichteninfo"
+
+msgid "ui_msg_info_short"
+msgstr "Info"
+
+msgid "ui_msg_info_sent"
+msgstr "Gesendet"
+
+msgid "ui_msg_info_read_by"
+msgstr "Gelesen von"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "Zugestellt an"
+
+msgid "ui_msg_info_pending"
+msgstr "Noch nicht zugestellt"
+
+msgid "ui_msg_info_no_time"
+msgstr "ohne Uhrzeit (von vor der Speicherung)"
+
+msgid "ui_msg_info_hidden"
+msgstr "Lesebestätigungen sind aus: Du siehst nur, wann sie ankam."
+
 msgid "ui_info"
 msgstr "Info"
 

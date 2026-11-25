@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { t } from "@lang";
 import { Icon } from "./common";
 import { EMOJI_GROUPS } from "./emojiData";
+import { useSwipeDown } from "./swipeClose";
 
 const RECENT_KEY = "emoji.recent";
 const RECENT_MAX = 24;
@@ -50,7 +51,7 @@ export function searchEmojis(query: string): { e: string; name: string }[] {
   return hits.map((x, i) => ({ x, i })).sort((a, b) => rank(a.x) - rank(b.x) || a.i - b.i).slice(0, SEARCH_MAX).map(({ x }) => ({ e: x.e, name: x.name }));
 }
 
-export function EmojiPicker({ onPick, className = "" }: { onPick: (e: string) => void; className?: string }) {
+export function EmojiPicker({ onPick, onClose, className = "" }: { onPick: (e: string) => void; onClose?: () => void; className?: string }) {
   // read once: the recent row does not reorder while I pick (it would move under my finger); it updates next time
   const [recent] = useState(recentEmojis);
   const pages = useRef<HTMLDivElement>(null);
@@ -85,6 +86,8 @@ export function EmojiPicker({ onPick, className = "" }: { onPick: (e: string) =>
     const el = pages.current;
     if (el) el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
   }
+  // a swipe down closes it (from the top part, or from a page already at its top), as a sheet
+  const swipe = useSwipeDown(onClose);
   function onScroll() {
     const el = pages.current;
     if (!el || !el.clientWidth) return;
@@ -94,11 +97,16 @@ export function EmojiPicker({ onPick, className = "" }: { onPick: (e: string) =>
 
   return (
     // a tap on an emoji keeps the focus (and the keyboard) where it was; the search box takes it
-    <div className={"epick " + className} onMouseDown={(e) => { if (!(e.target instanceof HTMLInputElement)) e.preventDefault(); }}>
+    <div className={"epick " + className} onMouseDown={(e) => { if (!(e.target instanceof HTMLInputElement)) e.preventDefault(); }}
+      {...swipe.handlers} style={swipe.style}>
+      {onClose ? <div className="epick-grip" aria-hidden="true" /> : null}
+      <div className="epick-top">
       <div className="epick-search">
         <Icon name="search" size="sm" />
         <input type="search" value={q} onChange={(e) => { if (!searching) want.current = active; setQ(e.target.value); }}
           placeholder={t("ui_emoji_search")} aria-label={t("ui_emoji_search")} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false} />
+      </div>
+      {onClose ? <button type="button" className="iconbtn epick-close" onClick={onClose} title={t("ui_close")} aria-label={t("ui_close")}><Icon name="x" /></button> : null}
       </div>
       <div className="epick-tabs" role="tablist">
         {groups.map((g, i) => (

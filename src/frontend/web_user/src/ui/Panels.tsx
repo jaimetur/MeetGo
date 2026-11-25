@@ -8,14 +8,18 @@ import { ActionSheet, Composer, MessageItem, type MessageActions } from "./Chat"
 import { Avatar, Icon, convTitle } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ScopeTags } from "./Communities";
+import { useSwipeDown } from "./swipeClose";
 
 export function SidePanel({ conversationId, thread, panel }: { conversationId: number; thread: number | null; panel: "members" | "info" | null }) {
   const conv = useStore((s) => s.conversations[conversationId]);
   if (!conv) return null;
   const close = () => navigate(chatPath(conversationId));
   const tab = thread ? "thread" : panel;
+  // on phones it covers the chat: a swipe down closes it, as the sheets (unless a list inside is scrolled down)
+  const swipe = useSwipeDown(close, ".sbody, .msgs, [data-virtuoso-scroller], .plist, textarea");
+  const coarse = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
   return (
-    <aside className="side" aria-label={t("ui_side_panel")}>
+    <aside className="side" aria-label={t("ui_side_panel")} {...(coarse ? swipe.handlers : {})} style={swipe.style}>
       <div className="stabs">
         {thread ? <button className="stab on">{t("ui_thread")}</button> : null}
         {conv.kind !== "dm" ? <button className={"stab" + (tab === "members" ? " on" : "")} onClick={() => navigate(chatPath(conversationId, { panel: "members" }))}>{t("ui_members")}</button> : null}
@@ -114,7 +118,7 @@ function MembersPanel({ conv }: { conv: Conversation }) {
   );
 }
 
-function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conversation; userId: number; member?: Member; onClose: () => void; onChanged: () => void }) {
+function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conversation; userId: number; member?: Member; onClose?: () => void; onChanged: () => void }) {
   const me = useStore((s) => s.me);
   const [user, setUser] = useState<any>(null);
   const [following, setFollowing] = useState<number[]>([]);
@@ -144,12 +148,12 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
   function kick(ban: boolean) {
     const ask = `${t(ban ? "ui_community_ban_member" : "ui_community_remove_member")}: ${user.display_name}\n${t(ban ? "ui_community_ban_hint" : "ui_community_remove_hint")}`;
     if (!window.confirm(ask)) return;
-    void run(() => api.removeCommunityMember(conv.id, userId, ban), t(ban ? "ui_community_member_banned" : "ui_community_member_removed", { name: user.display_name })).then(onClose);
+    void run(() => api.removeCommunityMember(conv.id, userId, ban), t(ban ? "ui_community_member_banned" : "ui_community_member_removed", { name: user.display_name })).then(() => onClose?.());
   }
   function banFor(hours: number | null) {
     if (hours === null) return kick(true);
     if (!window.confirm(t("ui_ban_confirm_hours", { name: user.display_name, hours }))) return;
-    void run(() => api.banCommunityMember(conv.id, userId, hours), t("ui_banned_toast", { name: user.display_name })).then(onClose);
+    void run(() => api.banCommunityMember(conv.id, userId, hours), t("ui_banned_toast", { name: user.display_name })).then(() => onClose?.());
   }
   async function message() {
     try {
@@ -170,12 +174,13 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
           <div className="nm">{user.display_name}</div>
           <div className="meta">{[user.province, user.online ? t("ui_online") : t("ui_offline"), member && member.role !== "member" ? t("ui_role_" + member.role) : null].filter(Boolean).join(" · ")}</div>
         </div>
-        <button className="iconbtn" onClick={onClose} aria-label={t("ui_close")}><Icon name="x" size="sm" /></button>
+        {onClose ? <button className="iconbtn" onClick={onClose} aria-label={t("ui_close")}><Icon name="x" size="sm" /></button> : null}
       </div>
       {user.bio ? <div style={{ fontSize: 13 }}>{user.bio}</div> : null}
       {!isMe ? (
         <div className="btns">
-          <button className="btn pri sm" onClick={message}>{t("ui_send_message")}</button>
+          {/* in our direct chat already: no "send a message" */}
+          {!(conv.kind === "dm" && conv.other_user?.id === userId) ? <button className="btn pri sm" onClick={message}>{t("ui_send_message")}</button> : null}
           {user.friend ? <button className="btn sm" disabled>{t("ui_friend")} ✓</button>
             : user.friend_requested ? <button className="btn sm" disabled>{t("ui_friend_request_pending")} ✓</button>
             : <button className="btn sm" onClick={() => run(() => api.friendRequest(userId), t("ui_friend_request_sent")).then((ok) => ok && setUser((u: any) => ({ ...u, friend_requested: true })))}>{t("ui_add_friend")}</button>}
@@ -291,24 +296,8 @@ function InfoPanel({ conv }: { conv: Conversation }) {
           ) : null}
         </div>
       ) : null}
-      {conv.kind === "dm" && conv.other_user ? <ProfileShortcut userId={conv.other_user.id} /> : null}
+      {conv.kind === "dm" && conv.other_user ? <ProfileCard conv={conv} userId={conv.other_user.id} onChanged={() => undefined} /> : null}
       <div className="muted" style={{ fontSize: 12 }}>{t("ui_notify_current", { mode: t("ui_notify_" + conv.notify) })}</div>
-    </div>
-  );
-}
-
-function ProfileShortcut({ userId }: { userId: number }) {
-  const [user, setUser] = useState<any>(null);
-  useEffect(() => {
-    api.user(userId).then(setUser).catch(() => undefined);
-  }, [userId]);
-  if (!user) return null;
-  return (
-    <div className="card" style={{ margin: 0 }}>
-      <div className="row"><Avatar user={user} size={44} online={user.online} /><div><div className="nm">{user.display_name}</div><div className="meta">{user.province}</div></div></div>
-      {user.bio ? <div style={{ fontSize: 13 }}>{user.bio}</div> : null}
-      {user.friend ? null : user.friend_requested ? <button className="btn sm" disabled>{t("ui_friend_request_pending")} ✓</button>
-        : <button className="btn sm" onClick={() => api.friendRequest(userId).then(() => { toast(t("ui_friend_request_sent")); setUser((u: any) => ({ ...u, friend_requested: true })); }).catch((e) => toast(e.message, "error"))}>{t("ui_add_friend")}</button>}
     </div>
   );
 }

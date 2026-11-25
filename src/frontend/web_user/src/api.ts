@@ -158,6 +158,7 @@ export const api = {
   editMessage: (id: number, body: string) => req<Message>(`/messages/${id}`, { method: "PATCH", json: { body } }),
   deleteMessage: (id: number) => req(`/messages/${id}`, { method: "DELETE" }),
   react: (id: number, emoji: string, on: boolean) => req(`/messages/${id}/reactions/${encodeURIComponent(emoji)}`, { method: on ? "PUT" : "DELETE" }),
+  messageInfo: (id: number) => req<{ message_id: number; created_at: string; people: { user: UserSummary; delivered: boolean; read: boolean; read_hidden: boolean; delivered_at: string | null; read_at: string | null }[] }>(`/messages/${id}/info`),
   report: (id: number, reason: string, details?: string) => req(`/messages/${id}/report`, { method: "POST", json: { reason, details } }),
   read: (id: number, message_id: number) => req(`/conversations/${id}/read`, { method: "POST", json: { message_id } }),
   readState: (id: number) => req<{ user_id: number; last_read_message_id: number; last_delivered_message_id: number; receipts: boolean }[]>(`/conversations/${id}/read-state`),

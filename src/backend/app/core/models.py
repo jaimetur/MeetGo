@@ -307,6 +307,19 @@ class MessageReaction(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
+class ReceiptMark(Base):
+    """When a member's ✓✓ (delivered) or blue ✓✓ (read) moved up to a message, in direct messages and groups: a message
+    was delivered / read by them at the first mark at or after it (the message's Info, as in WhatsApp)."""
+    __tablename__ = "receipt_marks"
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    conversation_id: Mapped[int] = mapped_column(ForeignKey("conversations.id", ondelete="CASCADE"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    kind: Mapped[str] = mapped_column(String(10))  # delivered | read
+    message_id: Mapped[int] = mapped_column(BigInteger)
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    __table_args__ = (Index("ix_receipt_marks_lookup", "conversation_id", "user_id", "kind", "message_id"),)
+
+
 class Attachment(Base):
     __tablename__ = "attachments"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)

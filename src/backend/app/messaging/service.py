@@ -5,12 +5,12 @@ import logging
 from datetime import timedelta
 
 from fastapi import HTTPException
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
 from app.core.i18n import t, use_lang
-from app.core.models import Attachment, Conversation, ConversationMember, Message, MessageReaction, User, utcnow
+from app.core.models import Attachment, Conversation, ConversationMember, Message, MessageReaction, ReceiptMark, User, utcnow
 from app.core.redis_conn import get_redis
 from app.realtime import service as realtime
 from app.conversations.service import is_staff, messages_out
@@ -231,6 +231,10 @@ def receipts_shared(conv: Conversation, reader: User | None, viewer: User | None
 async def mark_read(db: AsyncSession, conv: Conversation, member: ConversationMember, message_id: int) -> int:
     upto = min(int(message_id), conv.last_message_id or 0)
     if upto > (member.last_read_message_id or 0):
+        if conv.kind != "channel":  # when, for the message's Info
+            if upto > (member.last_delivered_message_id or 0):
+                db.add(ReceiptMark(conversation_id=conv.id, user_id=member.user_id, kind="delivered", message_id=upto))
+            db.add(ReceiptMark(conversation_id=conv.id, user_id=member.user_id, kind="read", message_id=upto))
         member.last_read_message_id = upto
         member.last_delivered_message_id = max(member.last_delivered_message_id or 0, upto)  # read is delivered too
         await db.commit()
@@ -261,6 +265,7 @@ async def mark_delivered(db: AsyncSession, user: User, conv_ids: list[int] | Non
     moved = []
     for member, conv in (await db.execute(q)).all():
         member.last_delivered_message_id = conv.last_message_id
+        db.add(ReceiptMark(conversation_id=conv.id, user_id=user.id, kind="delivered", message_id=conv.last_message_id))
         moved.append(conv.id)
     await db.commit()
     for cid in moved:
@@ -268,3 +273,30 @@ async def mark_delivered(db: AsyncSession, user: User, conv_ids: list[int] | Non
                  "last_delivered_message_id": (await db.get(Conversation, cid)).last_message_id}
         await realtime.publish([u for u in await recipients(db, cid) if u != user.id], event)
     return len(moved)
+
+
+async def message_info(db: AsyncSession, msg: Message, conv: Conversation, viewer: User) -> dict:
+    """The Info of my message, as in WhatsApp: for each other member, when it reached their app and when they read it
+    (the read time only where blue ticks are shared). A time is None when it happened before times were kept."""
+    from app.conversations.service import user_summary
+    rows = (await db.execute(select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
+        ConversationMember.conversation_id == conv.id, ConversationMember.user_id != viewer.id,
+        User.bot_role.is_(None)))).all()
+    marks: dict[tuple[int, str], object] = {}
+    for uid, kind, at in (await db.execute(select(ReceiptMark.user_id, ReceiptMark.kind, func.min(ReceiptMark.at)).where(
+            ReceiptMark.conversation_id == conv.id, ReceiptMark.message_id >= msg.id).group_by(
+            ReceiptMark.user_id, ReceiptMark.kind))).all():
+        marks[(uid, kind)] = at
+    people = []
+    for member, u in rows:
+        read = (member.last_read_message_id or 0) >= msg.id and receipts_shared(conv, u, viewer)
+        delivered = read or max(member.last_delivered_message_id or 0, member.last_read_message_id or 0) >= msg.id
+        read_at = marks.get((u.id, "read")) if read else None
+        delivered_at = marks.get((u.id, "delivered")) or marks.get((u.id, "read")) if delivered else None
+        if read_at and delivered_at and delivered_at > read_at:
+            delivered_at = read_at
+        people.append({"user": user_summary(u), "delivered": delivered, "read": read, "read_hidden": not receipts_shared(conv, u, viewer),
+                       "delivered_at": delivered_at.isoformat() if delivered_at else None,
+                       "read_at": read_at.isoformat() if read_at else None})
+    people.sort(key=lambda p: (not p["read"], not p["delivered"], p["read_at"] or p["delivered_at"] or "", p["user"]["display_name"]))
+    return {"message_id": msg.id, "created_at": msg.created_at.isoformat(), "people": people}

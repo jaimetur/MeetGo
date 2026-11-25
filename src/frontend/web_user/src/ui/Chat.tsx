@@ -11,6 +11,7 @@ import type { Conversation, Member, Message } from "../types";
 import { dayKey, dayLabel, fileSize, isOnlyEmoji, timeOf, tokenize, uuid } from "../util";
 import { Avatar, ConvIcon, Icon, Modal, QUICK_REACTIONS, convTitle, useClickOutside } from "./common";
 import { EmojiPicker } from "./EmojiPicker";
+import { useSwipeDown } from "./swipeClose";
 
 const START_INDEX = 1_000_000;
 
@@ -31,6 +32,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
   const [menuFor, setMenuFor] = useState<number | null>(null);
   const [sheetFor, setSheetFor] = useState<Message | null>(null);
   const [reportFor, setReportFor] = useState<Message | null>(null);
+  const [infoFor, setInfoFor] = useState<Message | null>(null);
   const [atBottom, setAtBottom] = useState(true);
   const [flashId, setFlashId] = useState<number | null>(around);
   const [firstItemIndex, setFirstItemIndex] = useState(START_INDEX);
@@ -179,6 +181,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
     edit: (m) => setEditing(m.id),
     remove: (m) => removeMessage(m),
     report: (m) => setReportFor(m),
+    info: (m) => setInfoFor(m),
     pin: (m) => api.updateConversation(conversationId, { pinned_message_id: conv.pinned_message_id === m.id ? 0 : m.id }).then(() => refreshConversation(conversationId)).catch((e) => toast(e.message, "error")),
     copy: (m) => navigator.clipboard?.writeText(m.body).then(() => toast(t("ui_copied"))).catch(() => undefined),
     openMenu: (m) => setMenuFor(menuFor === m.id ? null : m.id),
@@ -257,6 +260,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
 
       {sheetFor ? <ActionSheet m={sheetFor} conv={conv} meId={me?.id} staff={staff} actions={actions} onClose={() => setSheetFor(null)} /> : null}
       {reportFor ? <ReportModal m={reportFor} onClose={() => setReportFor(null)} /> : null}
+      {infoFor ? <MessageInfo m={infoFor} onClose={() => setInfoFor(null)} /> : null}
     </main>
   );
 }
@@ -497,6 +501,7 @@ export type MessageActions = {
   jump: (id: number) => void;
   retry: (m: Message) => void;
   profile: (userId: number) => void;
+  info?: (m: Message) => void;
 };
 
 const MOD_REASONS: Record<string, string> = {
@@ -566,6 +571,8 @@ export function MessageItem(props: {
             <div className="mh">
               <button className="who" onClick={() => m.sender && actions.profile(m.sender.id)}>{mine ? t("ui_you") : m.sender?.display_name || t("ui_deleted_user")}</button>
               <span className="when" title={new Date(m.created_at).toLocaleString()}>{timeOf(m.created_at)}</span>
+              {/* the ticks go right after the time, as in WhatsApp */}
+              {props.readTicks && !m.deleted && !props.editing ? <Ticks tick={props.readTicks} /> : null}
               {m.thread_root_id && m.also_in_channel && !inThread ? <span className="when">· {t("ui_replied_in_thread")}</span> : null}
             </div>
           ) : null}
@@ -580,7 +587,7 @@ export function MessageItem(props: {
             <div className={"mt" + (isOnlyEmoji(m.body) && !m.attachments.length ? " big" : "")}>
               {m.body ? <Rich text={m.body} /> : null}
               {m.edited_at ? <span className="edited"> ({t("ui_edited")})</span> : null}
-              {props.readTicks ? <Ticks tick={props.readTicks} /> : null}
+              {props.readTicks && cont ? <Ticks tick={props.readTicks} /> : null}
             </div>
           )}
           {m.attachments.length ? <Attachments m={m} /> : null}
@@ -630,6 +637,7 @@ function MenuActions({ m, conv, mine, canEdit, staff, actions, inThread, done }:
       {m.body ? <button onClick={run(() => actions.copy(m))}><Icon name="copy" size="sm" />{t("ui_copy")}</button> : null}
       {canEdit && m.body ? <button onClick={run(() => actions.edit(m))}><Icon name="edit" size="sm" />{t("ui_edit")}</button> : null}
       {staff && conv.kind !== "dm" && !inThread ? <button onClick={run(() => actions.pin(m))}><Icon name="pin" size="sm" />{conv.pinned_message_id === m.id ? t("ui_unpin") : t("ui_pin")}</button> : null}
+      {mine && actions.info && conv.kind !== "channel" && !m.pending && !m.failed && !m.deleted ? <button onClick={run(() => actions.info!(m))}><Icon name="info" size="sm" />{t("ui_msg_info_short")}</button> : null}
       {!mine ? <button onClick={run(() => actions.report(m))}><Icon name="flag" size="sm" />{t("ui_report")}</button> : null}
       {mine || staff ? <button className="warn" onClick={run(() => actions.remove(m))}><Icon name="trash" size="sm" />{t("ui_delete")}</button> : null}
     </>
@@ -639,10 +647,12 @@ function MenuActions({ m, conv, mine, canEdit, staff, actions, inThread, done }:
 export function ActionSheet({ m, conv, meId, staff, actions, onClose, inThread }: { m: Message; conv: Conversation; meId?: number; staff: boolean; actions: MessageActions; onClose: () => void; inThread?: boolean }) {
   const mine = m.sender?.id === meId;
   const canEdit = mine && !m.deleted && Date.now() - new Date(m.created_at).getTime() < 48 * 3600000;
+  const swipe = useSwipeDown(onClose, ".sheet");
   return (
     <div className="sheet-bg" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="sheet" role="menu">
+      <div className="sheet" role="menu" {...swipe.handlers} style={swipe.style}>
         <div className="grab" />
+        <button type="button" className="iconbtn sheet-close" onClick={onClose} title={t("ui_close")} aria-label={t("ui_close")}><Icon name="x" /></button>
         <div className="rbar">{QUICK_REACTIONS.map((e) => <button key={e} onClick={() => { actions.react(m, e); onClose(); }}>{e}</button>)}</div>
         <div className="menu" style={{ position: "static", boxShadow: "none", border: 0, background: "transparent" }}>
           <MenuActions m={m} conv={conv} mine={mine} canEdit={canEdit} staff={staff} actions={actions} inThread={inThread} done={onClose} />
@@ -755,6 +765,38 @@ function EditBox({ m, onDone }: { m: Message; onDone: () => void }) {
       />
       <div className="row"><button className="btn pri sm" onClick={save}>{t("ui_save")}</button><button className="btn sm" onClick={onDone}>{t("ui_cancel")}</button><span className="muted" style={{ fontSize: 12 }}>{t("ui_edit_hint")}</span></div>
     </div>
+  );
+}
+
+/** My message's Info, as in WhatsApp: who read it and when, and who got it and when. */
+function MessageInfo({ m, onClose }: { m: Message; onClose: () => void }) {
+  const [info, setInfo] = useState<Awaited<ReturnType<typeof api.messageInfo>> | null>(null);
+  const [error, setError] = useState("");
+  useEffect(() => { api.messageInfo(m.id).then(setInfo).catch((e) => setError(e.message)); }, [m.id]);
+  const when = (iso: string | null) => (iso ? `${dayLabel(iso)}, ${timeOf(iso)}` : t("ui_msg_info_no_time"));
+  const people = info?.people || [];
+  const read = people.filter((p) => p.read);
+  const delivered = people.filter((p) => !p.read && p.delivered);
+  const pending = people.filter((p) => !p.delivered);
+  const row = (p: (typeof people)[number], iso: string | null) => (
+    <div key={p.user.id} className="row minfo-row"><Avatar user={p.user} size={32} /><span className="grow">{p.user.display_name}</span><span className="muted minfo-at">{when(iso)}</span></div>
+  );
+  return (
+    <Modal title={t("ui_msg_info")} onClose={onClose}>
+      <div className="minfo">
+        <div className="minfo-msg">{m.body || (m.attachments.length ? m.attachments[0].file_name.startsWith("voice_note_") ? "🎤 " + t("ui_voice_note") : "📎 " + m.attachments[0].file_name : "")}</div>
+        <div className="muted minfo-sent">{t("ui_msg_info_sent")}: {when(m.created_at)}</div>
+        {error ? <div className="muted">{error}</div> : !info ? <div className="muted">…</div> : (
+          <>
+            {read.length ? <section><h4><span className="ticks t-read"><Icon name="check2" size="sm" /></span>{t("ui_msg_info_read_by")}</h4>{read.map((p) => row(p, p.read_at))}</section> : null}
+            {delivered.length ? <section><h4><span className="ticks t-delivered"><Icon name="check2" size="sm" /></span>{t("ui_msg_info_delivered_to")}</h4>{delivered.map((p) => row(p, p.delivered_at))}
+              {delivered.some((p) => p.read_hidden) ? <div className="muted minfo-note">{t("ui_msg_info_hidden")}</div> : null}</section> : null}
+            {pending.length ? <section><h4><span className="ticks t-sent"><Icon name="check" size="sm" /></span>{t("ui_msg_info_pending")}</h4>{pending.map((p) => (
+              <div key={p.user.id} className="row minfo-row"><Avatar user={p.user} size={32} /><span className="grow">{p.user.display_name}</span></div>))}</section> : null}
+          </>
+        )}
+      </div>
+    </Modal>
   );
 }
 
@@ -1002,7 +1044,7 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
       ) : null}
       {emojiOpen ? (
         <div className="emojipop" ref={emojiRef}>
-          <EmojiPicker onPick={insertEmoji} />
+          <EmojiPicker onPick={insertEmoji} onClose={() => setEmojiOpen(false)} />
         </div>
       ) : null}
       {replyTo ? (

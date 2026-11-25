@@ -218,6 +218,12 @@ a { color: var(--cyan); }
 .emojipop { position: absolute; left: 44px; bottom: calc(100% + 6px); z-index: 6; width: 352px; max-width: calc(100vw - 24px); }
 .epick { background: var(--raise); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
 .epick.inline { box-shadow: none; margin: 6px 0; }
+.epick { transition: transform .18s ease, opacity .18s ease; }
+.epick-grip { width: 36px; height: 4px; border-radius: 2px; background: var(--line); margin: 6px auto 0; flex: none; }
+.epick-top { display: flex; align-items: center; gap: 2px; }
+.epick-top .epick-search { flex: 1; min-width: 0; }
+.epick-close { flex: none; margin: 6px 4px 0 -4px; }
+@media (hover: hover) and (pointer: fine) { .epick-grip { display: none; } }
 .epick-search { display: flex; align-items: center; gap: 8px; margin: 8px 8px 2px; padding: 0 10px; height: 36px; border-radius: 10px; background: var(--panel2); color: var(--muted); }
 .epick-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16px; outline: none; }
 .epick-found { padding-top: 6px; }
@@ -239,7 +245,7 @@ a { color: var(--cyan); }
 .readonly { margin: 0 14px calc(12px + env(safe-area-inset-bottom, 0px)); border: 1px dashed var(--line2); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; font-size: 13px; }
 
 /* ---------- side panel ---------- */
-.side { border-left: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.side { border-left: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; min-width: 0; transition: transform .18s ease, opacity .18s ease; }
 .stabs { height: 62px; display: flex; align-items: center; gap: 4px; padding: 0 10px; border-bottom: 1px solid var(--line); flex: none; }
 .stab { padding: 6px 12px; border-radius: 9px; color: var(--muted); font-weight: 600; font-size: 13px; }
 .stab.on { background: var(--panel2); color: var(--fg); }
@@ -289,12 +295,22 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .toast { background: var(--raise); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); font-size: 13.5px; }
 .toast.error { border-color: rgba(255, 107, 107, 0.6); }
 .modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 40; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); }
-.modal { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); width: min(480px, 100%); max-height: calc(100% - 32px); display: flex; flex-direction: column; }
+.modal { transition: transform .18s ease, opacity .18s ease; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); width: min(480px, 100%); max-height: calc(100% - 32px); display: flex; flex-direction: column; }
 .modal header { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); font-family: var(--display); font-weight: 650; font-size: 16px; }
 .modal .mbody { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
 .modal footer { padding: 12px 16px; border-top: 1px solid var(--line); display: flex; gap: 8px; justify-content: flex-end; }
 .sheet-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 40; display: flex; align-items: flex-end; }
 .sheet { background: var(--raise); width: 100%; border-radius: 18px 18px 0 0; padding: 8px env(safe-area-inset-right, 0px) calc(12px + env(safe-area-inset-bottom, 0px)) env(safe-area-inset-left, 0px); max-height: calc(100% - 24px); overflow-y: auto; }
+.sheet { position: relative; transition: transform .18s ease, opacity .18s ease; }
+.sheet .sheet-close { position: absolute; top: 6px; right: calc(8px + env(safe-area-inset-right, 0px)); }
+.minfo { display: flex; flex-direction: column; gap: 12px; }
+.minfo-msg { background: var(--panel2); border-radius: 12px; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 30vh; overflow-y: auto; }
+.minfo-sent { font-size: 13px; }
+.minfo h4 { display: flex; align-items: center; gap: 6px; margin: 4px 0 6px; font-size: 13px; }
+.minfo h4 .ticks { margin: 0; }
+.minfo-row { gap: 10px; padding: 6px 0; align-items: center; }
+.minfo-at { font-size: 12.5px; text-align: right; }
+.minfo-note { font-size: 12.5px; margin-top: 4px; }
 .sheet .grab { width: 36px; height: 4px; border-radius: 9px; background: var(--line2); margin: 2px auto 10px; }
 .sheet .rbar { display: flex; justify-content: space-around; padding: 4px 12px 10px; font-size: 24px; }
 .sheet button.it { display: flex; gap: 12px; align-items: center; padding: 11px 20px; width: 100%; text-align: left; font-size: 14px; }
@@ -1461,6 +1477,7 @@ a.btn { text-decoration: none; }
 
 /* WhatsApp ticks: ✓ sent, ✓✓ delivered (grey), ✓✓ read (blue); on my blue bubbles the read ones are a bright sky blue */
 .ticks { margin-left: 4px; vertical-align: -2px; }
+.mh .ticks { margin-left: -4px; align-self: center; }
 .ticks .ic { width: 17px; height: 17px; }
 .ticks.t-pending, .ticks.t-sent, .ticks.t-delivered { color: var(--muted); }
 .ticks.t-read { color: #34b7f1; }

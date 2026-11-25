@@ -1571,6 +1571,30 @@ msgstr "I already have an account"
 msgid "ui_hide_chat"
 msgstr "Hide conversation"
 
+msgid "ui_msg_info"
+msgstr "Message info"
+
+msgid "ui_msg_info_short"
+msgstr "Info"
+
+msgid "ui_msg_info_sent"
+msgstr "Sent"
+
+msgid "ui_msg_info_read_by"
+msgstr "Read by"
+
+msgid "ui_msg_info_delivered_to"
+msgstr "Delivered to"
+
+msgid "ui_msg_info_pending"
+msgstr "Not delivered yet"
+
+msgid "ui_msg_info_no_time"
+msgstr "no time (from before it was kept)"
+
+msgid "ui_msg_info_hidden"
+msgstr "Read receipts are off: you only see when it reached them."
+
 msgid "ui_info"
 msgstr "Info"
 

@@ -5,6 +5,7 @@ import { fileUrl } from "../api";
 import { coverGradient } from "../board";
 import type { Conversation, UserSummary } from "../types";
 import { colorFor, initials } from "../util";
+import { useSwipeDown } from "./swipeClose";
 
 const PATHS: Record<string, string> = {
   // hobbies (community icons)
@@ -130,6 +131,7 @@ export function convTitle(conv: Conversation): string {
 
 export function Modal({ title, onClose, children, footer }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+  const swipe = useSwipeDown(onClose);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -138,8 +140,9 @@ export function Modal({ title, onClose, children, footer }: { title: string; onC
   }, [onClose]);
   return (
     <div className="modal-bg" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="modal" role="dialog" aria-modal="true" aria-label={title} ref={ref}>
-        <header>
+      <div className="modal" role="dialog" aria-modal="true" aria-label={title} ref={ref} style={swipe.style}>
+        {/* dragged down by its title bar it closes (not from the body: a form's half-written fields would go) */}
+        <header {...swipe.handlers}>
           <span className="grow">{title}</span>
           <button className="iconbtn" onClick={onClose} aria-label={t("ui_close")}><Icon name="x" /></button>
         </header>

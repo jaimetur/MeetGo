@@ -68,3 +68,28 @@ async def test_last_seen_as_each_person_allows(client, db_session):
     me = (await client.get("/me", headers=ana[0])).json()
     assert me["last_seen_privacy"] == "nobody" and me["read_receipts"] is True
     assert (await client.patch("/me/profile", json={"last_seen_privacy": "some"}, headers=ana[0])).status_code == 422
+
+
+async def test_message_info_shows_when_delivered_and_read(client, db_session):
+    ana = await make_user(client, db_session, "ana.info@example.com", "Ana")
+    bea = await make_user(client, db_session, "bea.info@example.com", "Bea")
+    cid = await _dm(client, ana, bea)
+    first = (await client.post(f"/conversations/{cid}/messages", json={"body": "uno"}, headers=ana[0])).json()
+    second = (await client.post(f"/conversations/{cid}/messages", json={"body": "dos"}, headers=ana[0])).json()
+
+    async def info(mid):
+        return (await client.get(f"/messages/{mid}/info", headers=ana[0])).json()["people"][0]
+
+    p = await info(first["id"])
+    assert not p["delivered"] and not p["read"] and p["delivered_at"] is None
+    await client.post("/conversations/delivered", headers=bea[0])
+    await client.post(f"/conversations/{cid}/read", json={"message_id": first["id"]}, headers=bea[0])
+    p = await info(first["id"])
+    assert p["read"] and p["read_at"] and p["delivered_at"] and p["delivered_at"] <= p["read_at"]
+    p = await info(second["id"])
+    assert p["delivered"] and p["delivered_at"] and not p["read"] and p["read_at"] is None
+    # only for the sender, and with receipts off the read time is not shown
+    assert (await client.get(f"/messages/{first['id']}/info", headers=bea[0])).status_code == 404
+    await client.patch("/me/profile", json={"read_receipts": False}, headers=bea[0])
+    p = await info(first["id"])
+    assert not p["read"] and p["read_at"] is None and p["read_hidden"] and p["delivered"]
