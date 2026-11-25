@@ -4,7 +4,6 @@ import { t } from "@lang";
 import { api } from "../../../../web_admin/api";
 import { toast } from "../../store";
 import { Icon } from "../common";
-import { ClaudeSettings } from "./Claude";
 import { AgeRanges, Countries } from "./Geography";
 import { Languages } from "./Languages";
 import { SectionHead } from "./AdminPage";
@@ -20,6 +19,8 @@ export function Settings() {
   const [testTo, setTestTo] = useState("");
   const [busy, setBusy] = useState(false);
 
+  // Claude's key is set in Business; here it only tells whether new languages can be translated
+  useEffect(() => { api.ai().then((r) => setAiReady(r.configured)).catch(() => undefined); }, []);
   useEffect(() => { api.settings().then((r: Row) => { setSaved(r || {}); setS(r || {}); }).catch((e) => toast(e.message, "error")); }, []);
   const dirty = useMemo(() => JSON.stringify(s) !== JSON.stringify(saved), [s, saved]);
 
@@ -58,10 +59,6 @@ export function Settings() {
         <Field label={t("admin_base_url")}><input className="inp" placeholder={t("admin_base_url_placeholder")} value={s.app_base_url || ""} onChange={(e) => put("app_base_url", e.target.value)} /></Field>
       </Fold>
 
-      <Fold icon="star" title={a("se_claude")} summary={a(aiReady ? "ai_on" : "ai_off")}>
-        <ClaudeSettings onChange={(r) => setAiReady(r.configured)} />
-      </Fold>
-
       <Fold icon="bell" title={a("se_emails")} summary={(mail.enabled ?? true) ? a("bi_on") : a("bi_off")}>
         <Switch id="adm-set-mail" label={t("admin_email_notifications_enabled")} on={mail.enabled ?? true} onChange={(v) => put("email_notifications.enabled", v)} />
         <div className="adm-grid">
@@ -88,14 +85,14 @@ export function Settings() {
           <Field label={t("admin_smtp_host")}><input className="inp" value={smtp.host || ""} onChange={(e) => put("smtp.host", e.target.value)} /></Field>
           <Field label={t("admin_smtp_port")}><input className="inp" value={smtp.port || ""} onChange={(e) => put("smtp.port", e.target.value)} /></Field>
           <Field label={t("admin_smtp_username")}><input className="inp" autoComplete="off" value={smtp.username || ""} onChange={(e) => put("smtp.username", e.target.value)} /></Field>
-          <Field label={t("admin_smtp_password")}><input className="inp" type="password" autoComplete="new-password" value={smtp.password || ""} onChange={(e) => put("smtp.password", e.target.value)} /></Field>
+          <Field label={t("admin_smtp_password")}><input className="inp" type="password" autoComplete="new-password" placeholder={smtp.password_set ? a("bz_secret_kept") : ""} value={smtp.password || ""} onChange={(e) => put("smtp.password", e.target.value)} /></Field>
           <Field label={t("admin_smtp_from_email")}><input className="inp" value={smtp.from_email || ""} onChange={(e) => put("smtp.from_email", e.target.value)} /></Field>
         </div>
         {smtp.mode === "gmail_api" ? (
           <div className="adm-grid">
             <Field label={t("admin_gmail_client_id")}><input className="inp" value={smtp.gmail_client_id || ""} onChange={(e) => put("smtp.gmail_client_id", e.target.value)} /></Field>
-            <Field label={t("admin_gmail_client_secret")}><input className="inp" type="password" value={smtp.gmail_client_secret || ""} onChange={(e) => put("smtp.gmail_client_secret", e.target.value)} /></Field>
-            <Field label={t("admin_gmail_refresh_token")}><input className="inp" type="password" value={smtp.gmail_refresh_token || ""} onChange={(e) => put("smtp.gmail_refresh_token", e.target.value)} /></Field>
+            <Field label={t("admin_gmail_client_secret")}><input className="inp" type="password" placeholder={smtp.gmail_client_secret_set ? a("bz_secret_kept") : ""} value={smtp.gmail_client_secret || ""} onChange={(e) => put("smtp.gmail_client_secret", e.target.value)} /></Field>
+            <Field label={t("admin_gmail_refresh_token")}><input className="inp" type="password" placeholder={smtp.gmail_refresh_token_set ? a("bz_secret_kept") : ""} value={smtp.gmail_refresh_token || ""} onChange={(e) => put("smtp.gmail_refresh_token", e.target.value)} /></Field>
             <Field label={t("admin_gmail_sender_email")}><input className="inp" value={smtp.gmail_sender_email || ""} onChange={(e) => put("smtp.gmail_sender_email", e.target.value)} /></Field>
           </div>
         ) : null}

@@ -21,6 +21,17 @@ from app.core.app_settings import get_section
 
 logger = logging.getLogger("meetgo.email")
 _background_tasks: set[asyncio.Task] = set()
+# the last delivery attempt, for Administration → Business (whether mail works)
+_last: dict = {}
+
+
+def last_result() -> dict:
+    return dict(_last)
+
+
+def _note(ok: bool, error: str | None = None) -> None:
+    from datetime import datetime, timezone
+    _last.update({"ok": ok, "at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"), "error": (error or "")[:200] or None})
 
 
 def smtp_ready(smtp: dict) -> bool:
@@ -65,7 +76,12 @@ def render(title: str, paragraphs: list[str], button: tuple[str, str] | None = N
 async def send_email(db: AsyncSession, to_email: str, subject: str, body: str, html: str | None = None) -> None:
     """Send now and raise on failure (used where the caller reports the error)."""
     smtp = await get_section(db, "smtp")
-    await asyncio.to_thread(deliver_email, smtp, to_email, subject, body, html)
+    try:
+        await asyncio.to_thread(deliver_email, smtp, to_email, subject, body, html)
+    except Exception as e:
+        _note(False, str(getattr(e, "detail", None) or e))
+        raise
+    _note(True)
 
 
 async def send_email_background(db: AsyncSession, to_email: str, subject: str, body: str, html: str | None = None,
@@ -78,7 +94,9 @@ async def send_email_background(db: AsyncSession, to_email: str, subject: str, b
     async def run():
         try:
             await asyncio.to_thread(deliver_email, smtp, to_email, subject, body, html, headers)
-        except Exception:
+            _note(True)
+        except Exception as e:
+            _note(False, str(getattr(e, "detail", None) or e))
             logger.exception("Email to %s failed", to_email)
 
     task = asyncio.create_task(run())

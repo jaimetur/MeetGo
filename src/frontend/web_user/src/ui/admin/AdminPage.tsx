@@ -11,13 +11,12 @@ import { Users } from "./Users";
 import { Moderation } from "./Moderation";
 import { Communities } from "./Communities";
 import { Interests } from "./Interests";
-import { Codes } from "./Codes";
-import { Billing } from "./Billing";
+import { Business } from "./Business";
 import { Settings } from "./Settings";
 import { Bots } from "./Bots";
 import { Backups } from "./Backups";
 
-export type Section = "overview" | "users" | "moderation" | "communities" | "interests" | "codes" | "billing" | "settings" | "backups" | "bots";
+export type Section = "overview" | "users" | "moderation" | "communities" | "interests" | "business" | "settings" | "backups" | "bots";
 
 const SECTIONS: [Section, string, string][] = [
   ["overview", "home", "sec_overview"],
@@ -25,8 +24,7 @@ const SECTIONS: [Section, string, string][] = [
   ["moderation", "flag", "sec_moderation"],
   ["communities", "compass", "sec_communities"],
   ["interests", "smile", "sec_interests"],
-  ["codes", "star", "sec_codes"],
-  ["billing", "file", "sec_billing"],
+  ["business", "chart", "sec_business"],
   ["settings", "sliders", "sec_settings"],
   ["backups", "layers", "sec_backups"],
   ["bots", "shield", "sec_bots"],
@@ -41,7 +39,9 @@ export function AdminPage() {
   const me = useStore((s) => s.me);
   const route = useRoute();
   const read = (): Section => {
-    const s = queryParam("s") as Section | null;
+    const raw = queryParam("s");
+    // subscriptions and codes are now inside Business: old links go there
+    const s = (raw === "billing" || raw === "codes" ? "business" : raw) as Section | null;
     return s && SECTIONS.some(([k]) => k === s) ? s : "overview";
   };
   const [section, setSection] = useState<Section>(read);
@@ -78,8 +78,7 @@ export function AdminPage() {
           {section === "moderation" ? <Moderation onCount={setOpenReports} /> : null}
           {section === "communities" ? <Communities /> : null}
           {section === "interests" ? <Interests /> : null}
-          {section === "codes" ? <Codes /> : null}
-          {section === "billing" ? <Billing /> : null}
+          {section === "business" ? <Business /> : null}
           {section === "settings" ? <Settings /> : null}
           {section === "backups" ? <Backups /> : null}
           {section === "bots" ? <Bots /> : null}

@@ -28,7 +28,7 @@ from app.billing import service as billing
 from app.core.app_settings import get_section, get_settings_row, set_section
 from app.billing.service import normalise_code, promo_out
 from app.conversations.service import messages_out, user_summary
-from app.core.crypto import encrypt
+from app.core.crypto import decrypt, encrypt
 from app.mail.email import send_email
 from app.core.app_settings import app_base_url
 from app.messaging.service import delete_message
@@ -49,20 +49,42 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 PROTECTED_SECTIONS = {"stripe", "play", "fcm", "webpush", "billing"}
 
 
+# Mail secrets inside the "smtp" section: the browser gets "" and whether one is set (…_set), never the value.
+SMTP_SECRETS = ("password", "gmail_client_secret", "gmail_refresh_token")
+
+
+def _public_settings(data: dict) -> dict:
+    out = {k: v for k, v in data.items() if k not in PROTECTED_SECTIONS}
+    if isinstance(out.get("smtp"), dict):
+        smtp = dict(out["smtp"])
+        for k in SMTP_SECRETS:
+            smtp[f"{k}_set"] = bool(smtp.get(k))
+            smtp[k] = ""
+        out["smtp"] = smtp
+    return out
+
+
 @router.get("/settings", response_model=dict)
 async def get_settings(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     data = (await get_settings_row(db)).data or {}
-    return {k: v for k, v in data.items() if k not in PROTECTED_SECTIONS}
+    return _public_settings(data)
 
 
 @router.put("/settings", response_model=dict)
 async def put_settings(payload: dict, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     st = await get_settings_row(db)
+    old_smtp = dict((st.data or {}).get("smtp") or {})
     data = {k: v for k, v in (st.data or {}).items() if k in PROTECTED_SECTIONS}
     data.update({k: v for k, v in (payload or {}).items() if k not in PROTECTED_SECTIONS})
+    if isinstance(data.get("smtp"), dict):
+        smtp = {k: v for k, v in data["smtp"].items() if not k.endswith("_set")}
+        for k in SMTP_SECRETS:  # left empty: the stored one stays
+            if not smtp.get(k) and old_smtp.get(k):
+                smtp[k] = old_smtp[k]
+        data["smtp"] = smtp
     st.data = data
     await db.commit()
-    return {k: v for k, v in data.items() if k not in PROTECTED_SECTIONS}
+    return _public_settings(data)
 
 
 @router.post("/smtp/test", response_model=dict)
@@ -661,13 +683,26 @@ async def get_billing(db: AsyncSession = Depends(get_db), admin: User = Depends(
             StripeSubscription.status.in_(billing.STRIPE_ACTIVE)))).scalar_one(),
         "play": (await db.execute(select(func.count()).select_from(PlaySubscription))).scalar_one(),
     }
+    def ends(enc: str | None) -> str | None:  # "…4f2a": enough to recognise a key, never the key
+        value = decrypt(enc or "")
+        return value[-4:] if len(value) >= 12 else None
+
+    def sa_email(enc: str | None) -> str | None:
+        try:
+            return json.loads(decrypt(enc or "") or "{}").get("client_email")
+        except ValueError:
+            return None
+
     return {
         **await billing.billing_config(db),
         "stripe": {"configured": bool(stripe.get("secret_enc")), "webhook_configured": bool(stripe.get("webhook_enc")),
+                   "secret_ends": ends(stripe.get("secret_enc")), "webhook_ends": ends(stripe.get("webhook_enc")),
                    "prices": stripe.get("prices") or {}, "webhook_url": f"{base}/billing/stripe/webhook"},
         "play": {"package": play.get("package") or "app.meetgo.android", "product": play.get("product") or "meetgo",
-                 "configured": bool(play.get("service_account_enc")), "store_url": play.get("store_url") or ""},
-        "fcm": {"configured": bool(fcm.get("service_account_enc")), "project_id": fcm.get("project_id")},
+                 "configured": bool(play.get("service_account_enc")), "store_url": play.get("store_url") or "",
+                 "account": sa_email(play.get("service_account_enc")), "reports_bucket": play.get("reports_bucket") or ""},
+        "fcm": {"configured": bool(fcm.get("service_account_enc")), "project_id": fcm.get("project_id"),
+                "account": sa_email(fcm.get("service_account_enc"))},
         "counts": counts,
     }
 
@@ -696,7 +731,7 @@ async def put_billing(payload: dict, db: AsyncSession = Depends(get_db), admin: 
     play_in = payload.get("play") or {}
     if play_in:
         play = await get_section(db, "play")
-        for key in ("package", "product", "store_url"):
+        for key in ("package", "product", "store_url", "reports_bucket"):
             if key in play_in:
                 play[key] = (play_in[key] or "").strip()
         if play_in.get("service_account"):
@@ -712,6 +747,8 @@ async def put_billing(payload: dict, db: AsyncSession = Depends(get_db), admin: 
         if not sa.get("project_id") or not sa.get("private_key"):
             raise HTTPException(400, t("err_service_account"))
         await set_section(db, "fcm", {"service_account_enc": encrypt(json.dumps(sa)), "project_id": sa["project_id"]})
+    from app.business.service import clear_cache
+    clear_cache()
     return await get_billing(db, admin)
 
 

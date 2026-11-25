@@ -47,11 +47,17 @@ def _downloads() -> Path:
 
 
 @router.get("/downloads/android.apk")
-async def android_apk():
-    """The Android app, copied to <DATA_DIR>/downloads by tools/deploy-android.sh."""
+async def android_apk(db: AsyncSession = Depends(get_db)):
+    """The Android app, copied to <DATA_DIR>/downloads by tools/deploy-android.sh; each download is counted
+    (Administration → Business)."""
     path = _downloads() / "meetgo-android.apk"
     if not path.exists():
         raise HTTPException(404, t("err_file_not_found"))
+    try:
+        from app.business.service import count_download
+        await count_download(db, "apk")
+    except Exception:  # never stops the download
+        await db.rollback()
     return FileResponse(path, media_type="application/vnd.android.package-archive", filename="meetgo.apk")
 
 

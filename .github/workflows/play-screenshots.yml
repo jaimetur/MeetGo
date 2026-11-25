@@ -72,9 +72,9 @@ jobs:
           if git diff --cached --quiet; then echo "No changes"; exit 0; fi
           git commit -m "Play screenshots taken again [skip ci]"
           git pull --rebase origin "${{ github.ref_name }}" && git push origin "HEAD:${{ github.ref_name }}"
+      # a failure turns the run red (the screenshots are already committed by then)
       - name: Send them to the Play listing (if the PLAY_SERVICE_ACCOUNT_JSON secret exists)
         if: github.ref_type == 'branch'
-        continue-on-error: true
         env:
           PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
         run: |

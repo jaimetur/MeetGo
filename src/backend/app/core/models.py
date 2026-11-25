@@ -1,8 +1,8 @@
 import enum
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from sqlalchemy import (
-    BigInteger, Boolean, DateTime, Enum, ForeignKey, Index, Integer, JSON, String, Text, UniqueConstraint, func,
+    BigInteger, Boolean, Date, DateTime, Enum, ForeignKey, Index, Integer, JSON, String, Text, UniqueConstraint, func,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
@@ -490,6 +490,14 @@ class BoardComment(Base):
 
 
 # ---------------- Subscriptions ----------------
+
+class DownloadCount(Base):
+    """How many times something was downloaded from the server each day (Madrid time): "apk" is the Android app."""
+    __tablename__ = "download_counts"
+    day: Mapped[date] = mapped_column(Date, primary_key=True)
+    kind: Mapped[str] = mapped_column(String(16), primary_key=True)
+    count: Mapped[int] = mapped_column(Integer, default=0)
+
 
 class PromoCode(Base):
     __tablename__ = "promo_codes"

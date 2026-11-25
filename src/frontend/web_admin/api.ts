@@ -166,6 +166,12 @@ export const api = {
   async resolveReport(id: number, payload: { status: "dismissed" | "actioned"; delete_message: boolean }) {
     return await req(`/admin/reports/${id}/resolve`, { method: "POST", body: JSON.stringify(payload) });
   },
+  async business(period: string, refresh = false): Promise<Business> {
+    return await req(`/admin/business?period=${period}${refresh ? "&refresh=true" : ""}`);
+  },
+  async businessTest(source: "stripe" | "play" | "reports" | "fcm" | "smtp"): Promise<{ ok: boolean; detail: string }> {
+    return await req("/admin/business/test", { method: "POST", body: JSON.stringify({ source }) });
+  },
   async billing(): Promise<BillingInfo> {
     return await req("/admin/billing");
   },
@@ -329,9 +335,9 @@ export type Report = {
 export type BillingInfo = {
   enabled: boolean;
   trial_days: number;
-  stripe: { configured: boolean; webhook_configured: boolean; prices: Record<string, string>; webhook_url: string };
-  play: { package: string; product: string; configured: boolean; store_url: string };
-  fcm: { configured: boolean; project_id?: string | null };
+  stripe: { configured: boolean; webhook_configured: boolean; prices: Record<string, string>; webhook_url: string; secret_ends?: string | null; webhook_ends?: string | null };
+  play: { package: string; product: string; configured: boolean; store_url: string; account?: string | null; reports_bucket?: string };
+  fcm: { configured: boolean; project_id?: string | null; account?: string | null };
   counts: { gift: number; web: number; play: number };
 };
 
@@ -339,7 +345,7 @@ export type BillingUpdate = {
   enabled?: boolean;
   trial_days?: number;
   stripe?: { secret?: string; webhook?: string };
-  play?: { package?: string; product?: string; store_url?: string; service_account?: string };
+  play?: { package?: string; product?: string; store_url?: string; service_account?: string; reports_bucket?: string };
   fcm?: { service_account: string };
 };
 
@@ -411,5 +417,37 @@ export type BackupsStatus = {
     count: number; size: number; count_full: number; count_light: number; size_full: number; size_light: number;
     latest_full: number | null; latest_light: number | null; disk: { free: number; total: number; used: number; low: boolean };
     last_success: string | null; last_level: string | null; next_run: string | null; next_level: string | null; problem: string | null;
+  };
+};
+
+/** Administration → Business: each block says where it comes from and when ("unconfigured" or "error" otherwise). */
+export type Source = { source: string; state: "ok" | "unconfigured" | "error"; updated_at?: string | null; error?: string };
+export type Point = { label: string; value: number };
+export type Business = {
+  period: string; generated_at: string;
+  users: Source & { total: number; new: number; active_7d: number; active_30d: number; series: Point[] };
+  subscriptions: Source & {
+    enabled: boolean; trial_days: number; paid: number; trialing: number; ended: number; read_only: number;
+    by_plan: { monthly: number; yearly: number }; by_channel: { web: number; play: number };
+    gifts: { total: number; promo: number; admin: number }; free_legacy: number;
+    promos: { code: string; used: number; max: number | null; left: number | null; public: boolean; expires_on: string | null }[];
+    launch: { code: string; used: number; max: number | null; left: number | null } | null;
+    mrr: { total: number; web: number; play: number };
+  };
+  revenue: {
+    mrr: Source & { total: number; web: number; play: number };
+    stripe: Source & { collected?: number; refunded?: number; net?: number; trials_ended?: number; converted?: number; conversion?: number | null; cancelled?: number };
+    stripe_series: Point[];
+    play: Source & { until?: string | null; currency?: string; period?: number; months?: Record<string, number> };
+  };
+  downloads: {
+    apk: Source & { total: number; period: number; since: string | null; series: Point[] };
+    play: Source & { until?: string | null; period?: number; total?: number; series?: Point[] };
+  };
+  play: { package: string; tracks: Source & { items?: { track: string; name: string | null; codes: string[]; status: string }[] } };
+  health: Source & {
+    backup: { last_success?: string | null; level?: string | null; problem?: string | null };
+    mail: { configured: boolean; ok?: boolean; at?: string; error?: string | null };
+    disk: { free: number; total: number; low: boolean } | null;
   };
 };
