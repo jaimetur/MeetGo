@@ -9,7 +9,8 @@ import {
   removeLocal, setState, toast, updateMessage, useStore, forgetConversation } from "../store";
 import type { Conversation, Member, Message } from "../types";
 import { dayKey, dayLabel, fileSize, isOnlyEmoji, timeOf, tokenize, uuid } from "../util";
-import { Avatar, ConvIcon, EMOJIS, Icon, Modal, QUICK_REACTIONS, convTitle, useClickOutside } from "./common";
+import { Avatar, ConvIcon, Icon, Modal, QUICK_REACTIONS, convTitle, useClickOutside } from "./common";
+import { EmojiPicker } from "./EmojiPicker";
 
 const START_INDEX = 1_000_000;
 
@@ -807,6 +808,17 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
   const fileInput = useRef<HTMLInputElement>(null);
   const emojiRef = useRef<HTMLDivElement>(null);
   useClickOutside(emojiRef, () => setEmojiOpen(false), emojiOpen);
+  // the picker stays open (several emojis in a row, as in WhatsApp); each goes where the cursor is, or at the end
+  function insertEmoji(e: string) {
+    const el = area.current;
+    const focused = !!el && document.activeElement === el;
+    setText((v) => {
+      const from = focused ? el!.selectionStart : v.length;
+      const to = focused ? el!.selectionEnd : v.length;
+      if (focused) requestAnimationFrame(() => { el!.selectionStart = el!.selectionEnd = from + e.length; });
+      return v.slice(0, from) + e + v.slice(to);
+    });
+  }
 
   useEffect(() => {
     try {
@@ -989,8 +1001,8 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
         </div>
       ) : null}
       {emojiOpen ? (
-        <div className="emojis" ref={emojiRef}>
-          {EMOJIS.map((e) => <button key={e} onClick={() => { setText((v) => v + e); setEmojiOpen(false); area.current?.focus(); }}>{e}</button>)}
+        <div className="emojipop" ref={emojiRef}>
+          <EmojiPicker onPick={insertEmoji} />
         </div>
       ) : null}
       {replyTo ? (

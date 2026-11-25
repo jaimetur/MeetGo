@@ -215,6 +215,19 @@ a { color: var(--cyan); }
 .emojis { position: absolute; left: 44px; bottom: calc(100% + 6px); background: var(--raise); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; display: grid; grid-template-columns: repeat(8, 34px); gap: 2px; z-index: 6; }
 .emojis button { height: 34px; border-radius: 8px; font-size: 19px; }
 .emojis button:hover { background: var(--hover); }
+.emojipop { position: absolute; left: 44px; bottom: calc(100% + 6px); z-index: 6; width: 352px; max-width: calc(100vw - 24px); }
+.epick { background: var(--raise); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+.epick.inline { box-shadow: none; margin: 6px 0; }
+.epick-tabs { display: flex; gap: 2px; padding: 6px 6px 4px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.epick-tabs::-webkit-scrollbar { display: none; }
+.epick-tabs button { flex: 1 0 32px; height: 32px; border-radius: 8px; font-size: 17px; opacity: 0.55; filter: grayscale(0.6); transition: opacity .15s, filter .15s, background .15s; }
+.epick-tabs button.on { opacity: 1; filter: none; background: var(--sel); }
+.epick-body { height: 270px; overflow-y: auto; overscroll-behavior: contain; padding: 0 6px 6px; position: relative; }
+.epick.inline .epick-body { height: 220px; }
+.epick-title { position: sticky; top: 0; background: var(--raise); padding: 8px 4px 4px; font-size: 11.5px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); z-index: 1; }
+.epick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 2px; }
+.epick-grid button { height: 38px; border-radius: 8px; font-size: 24px; line-height: 1; }
+@media (hover: hover) { .epick-grid button:hover, .epick-tabs button:hover { background: var(--hover); } }
 .readonly { margin: 0 14px calc(12px + env(safe-area-inset-bottom, 0px)); border: 1px dashed var(--line2); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; font-size: 13px; }
 
 /* ---------- side panel ---------- */
@@ -350,6 +363,7 @@ a.logo { text-decoration: none; }
   .jump { bottom: 84px; }
   .ctools .hint { visibility: hidden; }
   .emojis { left: 0; right: 0; grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .emojipop { left: 0; right: 0; width: auto; max-width: none; }
   .auth .box { padding: 22px 20px; }
 }
 /* ---------- phone look: floating tab bar, chat bubbles, one-line composer ---------- */

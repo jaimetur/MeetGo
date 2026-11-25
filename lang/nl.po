@@ -3368,6 +3368,33 @@ msgstr "Spraakbericht sturen"
 msgid "ui_voice_record"
 msgstr "Spraakbericht opnemen"
 
+msgid "ui_emoji_recent"
+msgstr "Recent"
+
+msgid "ui_emoji_smileys"
+msgstr "Smileys en mensen"
+
+msgid "ui_emoji_animals"
+msgstr "Dieren en natuur"
+
+msgid "ui_emoji_food"
+msgstr "Eten en drinken"
+
+msgid "ui_emoji_activity"
+msgstr "Activiteiten"
+
+msgid "ui_emoji_travel"
+msgstr "Reizen en plaatsen"
+
+msgid "ui_emoji_objects"
+msgstr "Voorwerpen"
+
+msgid "ui_emoji_symbols"
+msgstr "Symbolen"
+
+msgid "ui_emoji_flags"
+msgstr "Vlaggen"
+
 msgid "ui_install_title"
 msgstr "MeetGo installeren"
 

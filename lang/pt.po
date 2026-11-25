@@ -3367,6 +3367,33 @@ msgstr "Enviar mensagem de voz"
 msgid "ui_voice_record"
 msgstr "Gravar mensagem de voz"
 
+msgid "ui_emoji_recent"
+msgstr "Recentes"
+
+msgid "ui_emoji_smileys"
+msgstr "Smileys e pessoas"
+
+msgid "ui_emoji_animals"
+msgstr "Animais e natureza"
+
+msgid "ui_emoji_food"
+msgstr "Comida e bebida"
+
+msgid "ui_emoji_activity"
+msgstr "Atividades"
+
+msgid "ui_emoji_travel"
+msgstr "Viagens e lugares"
+
+msgid "ui_emoji_objects"
+msgstr "Objetos"
+
+msgid "ui_emoji_symbols"
+msgstr "Símbolos"
+
+msgid "ui_emoji_flags"
+msgstr "Bandeiras"
+
 msgid "ui_install_title"
 msgstr "Instalar o MeetGo"
 

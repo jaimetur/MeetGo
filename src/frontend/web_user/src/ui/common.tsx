@@ -162,7 +162,6 @@ export function useClickOutside(ref: React.RefObject<HTMLElement>, onOutside: ()
 }
 
 export const QUICK_REACTIONS = ["👍", "❤️", "😂", "😮", "😢", "🙏"];
-export const EMOJIS = ["😀", "😂", "😊", "😍", "😎", "🤔", "😅", "😢", "😮", "😡", "👍", "👎", "👏", "🙌", "🙏", "💪", "❤️", "🔥", "🎉", "✨", "☕", "🍻", "🥾", "🚴", "🎾", "⚽", "🏖️", "🎬", "📍", "📅", "✅", "❓"];
 
 /** The MeetGo wordmark with the arrow of the icon, in the brand gradients. */
 export function Wordmark({ size = 24 }: { size?: number }) {

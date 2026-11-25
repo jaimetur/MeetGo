@@ -3368,6 +3368,33 @@ msgstr "ボイスメッセージを送信"
 msgid "ui_voice_record"
 msgstr "ボイスメッセージを録音"
 
+msgid "ui_emoji_recent"
+msgstr "最近使った絵文字"
+
+msgid "ui_emoji_smileys"
+msgstr "顔と人"
+
+msgid "ui_emoji_animals"
+msgstr "動物と自然"
+
+msgid "ui_emoji_food"
+msgstr "食べ物と飲み物"
+
+msgid "ui_emoji_activity"
+msgstr "アクティビティ"
+
+msgid "ui_emoji_travel"
+msgstr "旅行と場所"
+
+msgid "ui_emoji_objects"
+msgstr "物"
+
+msgid "ui_emoji_symbols"
+msgstr "記号"
+
+msgid "ui_emoji_flags"
+msgstr "旗"
+
 msgid "ui_install_title"
 msgstr "MeetGoをインストール"
 

@@ -3368,6 +3368,33 @@ msgstr "发送语音消息"
 msgid "ui_voice_record"
 msgstr "录制语音消息"
 
+msgid "ui_emoji_recent"
+msgstr "最近使用"
+
+msgid "ui_emoji_smileys"
+msgstr "表情与人物"
+
+msgid "ui_emoji_animals"
+msgstr "动物与自然"
+
+msgid "ui_emoji_food"
+msgstr "食物与饮料"
+
+msgid "ui_emoji_activity"
+msgstr "活动"
+
+msgid "ui_emoji_travel"
+msgstr "旅行与地点"
+
+msgid "ui_emoji_objects"
+msgstr "物品"
+
+msgid "ui_emoji_symbols"
+msgstr "符号"
+
+msgid "ui_emoji_flags"
+msgstr "旗帜"
+
 msgid "ui_install_title"
 msgstr "安装 MeetGo"
 

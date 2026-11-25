@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { t } from "@lang";
-import { EMOJIS, Icon } from "./common";
+import { Icon } from "./common";
+import { EmojiPicker } from "./EmojiPicker";
 
 /*
  * A small, safe text format for community and group rules (no HTML is ever injected):
@@ -129,9 +130,7 @@ export function RichEditor({ id, value, onChange, rows = 7, maxLength = 4000 }: 
         </div>
       ) : null}
       {panel === "emoji" ? (
-        <div className="rt-panel emojis-inline">
-          {["✅", "❌", "⚠️", "🚫", "💬", "🤝", "📌", "📅", "📍", "🔒", "⭐", "❤️", ...EMOJIS].slice(0, 40).map((e, i) => <button type="button" key={e + i} onClick={() => insert(e)}>{e}</button>)}
-        </div>
+        <EmojiPicker onPick={insert} className="inline" />
       ) : null}
       {preview ? (
         <div className="rt-preview">{value.trim() ? <RichText text={value} /> : <span className="muted">{t("ui_rt_empty")}</span>}</div>

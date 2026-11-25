@@ -3368,6 +3368,33 @@ msgstr "Sprachnachricht senden"
 msgid "ui_voice_record"
 msgstr "Sprachnachricht aufnehmen"
 
+msgid "ui_emoji_recent"
+msgstr "Zuletzt verwendet"
+
+msgid "ui_emoji_smileys"
+msgstr "Smileys & Personen"
+
+msgid "ui_emoji_animals"
+msgstr "Tiere & Natur"
+
+msgid "ui_emoji_food"
+msgstr "Essen & Trinken"
+
+msgid "ui_emoji_activity"
+msgstr "Aktivitäten"
+
+msgid "ui_emoji_travel"
+msgstr "Reisen & Orte"
+
+msgid "ui_emoji_objects"
+msgstr "Objekte"
+
+msgid "ui_emoji_symbols"
+msgstr "Symbole"
+
+msgid "ui_emoji_flags"
+msgstr "Flaggen"
+
 msgid "ui_install_title"
 msgstr "MeetGo installieren"
 

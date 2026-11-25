@@ -3368,6 +3368,33 @@ msgstr "Enviar nota de veu"
 msgid "ui_voice_record"
 msgstr "Gravar una nota de veu"
 
+msgid "ui_emoji_recent"
+msgstr "Recents"
+
+msgid "ui_emoji_smileys"
+msgstr "Cares i persones"
+
+msgid "ui_emoji_animals"
+msgstr "Animals i natura"
+
+msgid "ui_emoji_food"
+msgstr "Menjar i beguda"
+
+msgid "ui_emoji_activity"
+msgstr "Activitats"
+
+msgid "ui_emoji_travel"
+msgstr "Viatges i llocs"
+
+msgid "ui_emoji_objects"
+msgstr "Objectes"
+
+msgid "ui_emoji_symbols"
+msgstr "Símbols"
+
+msgid "ui_emoji_flags"
+msgstr "Banderes"
+
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"
 
