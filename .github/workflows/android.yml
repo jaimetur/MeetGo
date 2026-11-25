@@ -13,7 +13,7 @@ name: 🤖 Android app
 on:
   push:
     branches: [main, "[0-9]+.[0-9]+.[0-9]+"]
-    paths: ["android/**", ".github/workflows/android.yml", "tools/play_publish.py"]
+    paths: ["android/**", ".github/workflows/android.yml"]   # not tools/play_publish.py: a new upload script needs no new app version
   workflow_dispatch:
   workflow_call:
     inputs:
