@@ -218,12 +218,20 @@ a { color: var(--cyan); }
 .emojipop { position: absolute; left: 44px; bottom: calc(100% + 6px); z-index: 6; width: 352px; max-width: calc(100vw - 24px); }
 .epick { background: var(--raise); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
 .epick.inline { box-shadow: none; margin: 6px 0; }
+.epick-search { display: flex; align-items: center; gap: 8px; margin: 8px 8px 2px; padding: 0 10px; height: 36px; border-radius: 10px; background: var(--panel2); color: var(--muted); }
+.epick-search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16px; outline: none; }
+.epick-found { padding-top: 6px; }
+.epick-none { padding: 24px 8px; text-align: center; font-size: 13px; }
 .epick-tabs { display: flex; gap: 2px; padding: 6px 6px 4px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
 .epick-tabs::-webkit-scrollbar { display: none; }
 .epick-tabs button { flex: 1 0 32px; height: 32px; border-radius: 8px; font-size: 17px; opacity: 0.55; filter: grayscale(0.6); transition: opacity .15s, filter .15s, background .15s; }
 .epick-tabs button.on { opacity: 1; filter: none; background: var(--sel); }
 .epick-body { height: 270px; overflow-y: auto; overscroll-behavior: contain; padding: 0 6px 6px; position: relative; }
 .epick.inline .epick-body { height: 220px; }
+.epick-pages { display: flex; height: 270px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.epick-pages::-webkit-scrollbar { display: none; }
+.epick.inline .epick-pages { height: 220px; }
+.epick-page { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; overflow-y: auto; overscroll-behavior-y: contain; padding: 0 6px 6px; position: relative; }
 .epick-title { position: sticky; top: 0; background: var(--raise); padding: 8px 4px 4px; font-size: 11.5px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); z-index: 1; }
 .epick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 2px; }
 .epick-grid button { height: 38px; border-radius: 8px; font-size: 24px; line-height: 1; }

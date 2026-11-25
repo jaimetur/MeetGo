@@ -1,7 +1,8 @@
 /** Every emoji, by category as in WhatsApp, with the ones I use most (and most recently) on top. The picker stays
  * open so several can be added; what I use is remembered on this device. */
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { t } from "@lang";
+import { Icon } from "./common";
 import { EMOJI_GROUPS } from "./emojiData";
 
 const RECENT_KEY = "emoji.recent";
@@ -35,54 +36,94 @@ export function rememberEmoji(e: string) {
   }
 }
 
+const ALL = EMOJI_GROUPS.flatMap((g) => g.emojis.map((e, i) => ({ e, name: g.names[i], words: g.names[i].split(/[\s\-_,.’'&]+/) })));
+const SEARCH_MAX = 160;
+
+/** By English name (Unicode's): every word I type starts a word of the name ("red hea" → ❤️); the exact name first,
+ * then the names that start with what I typed. */
+export function searchEmojis(query: string): { e: string; name: string }[] {
+  const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  if (!terms.length) return [];
+  const full = terms.join(" ");
+  const hits = ALL.filter((x) => terms.every((term) => x.words.some((w) => w.startsWith(term))));
+  const rank = (x: { name: string }) => (x.name === full ? 0 : x.name.startsWith(full) ? 1 : 2);
+  return hits.map((x, i) => ({ x, i })).sort((a, b) => rank(a.x) - rank(b.x) || a.i - b.i).slice(0, SEARCH_MAX).map(({ x }) => ({ e: x.e, name: x.name }));
+}
+
 export function EmojiPicker({ onPick, className = "" }: { onPick: (e: string) => void; className?: string }) {
   // read once: the recent row does not reorder while I pick (it would move under my finger); it updates next time
   const [recent] = useState(recentEmojis);
-  const body = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(recent.length ? "recent" : "smileys");
+  const pages = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
   const groups = useMemo(() => [
     ...(recent.length ? [{ key: "recent", icon: "🕘", emojis: recent }] : []),
     ...EMOJI_GROUPS,
   ], [recent]);
+  const [q, setQ] = useState("");
+  const found = useMemo(() => searchEmojis(q), [q]);
+  const searching = !!q.trim();
+  const want = useRef<number | null>(null);  // the page to show once the search is gone
+
+  // one page per category, side by side: a swipe goes to the next or previous one, as in WhatsApp
+  useEffect(() => {
+    if (searching || want.current == null || !pages.current) return;
+    pages.current.scrollLeft = want.current * pages.current.clientWidth;
+    want.current = null;
+  }, [searching]);
 
   function pick(e: string) {
     rememberEmoji(e);
     onPick(e);
   }
-  function go(key: string) {
-    const sec = body.current?.querySelector<HTMLElement>(`[data-g="${key}"]`);
-    if (sec && body.current) body.current.scrollTop = sec.offsetTop;  // at once, as WhatsApp
-    setActive(key);
+  function go(i: number) {
+    setActive(i);
+    if (searching) {
+      want.current = i;
+      setQ("");
+      return;
+    }
+    const el = pages.current;
+    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
   }
   function onScroll() {
-    const b = body.current;
-    if (!b) return;
-    let cur = groups[0]?.key;
-    for (const g of groups) {
-      const sec = b.querySelector<HTMLElement>(`[data-g="${g.key}"]`);
-      if (sec && sec.offsetTop <= b.scrollTop + 8) cur = g.key;
-    }
-    if (cur && cur !== active) setActive(cur);
+    const el = pages.current;
+    if (!el || !el.clientWidth) return;
+    const i = Math.round(el.scrollLeft / el.clientWidth);
+    if (i !== active) setActive(i);
   }
 
   return (
-    <div className={"epick " + className} onMouseDown={(e) => e.preventDefault()}>
+    // a tap on an emoji keeps the focus (and the keyboard) where it was; the search box takes it
+    <div className={"epick " + className} onMouseDown={(e) => { if (!(e.target instanceof HTMLInputElement)) e.preventDefault(); }}>
+      <div className="epick-search">
+        <Icon name="search" size="sm" />
+        <input type="search" value={q} onChange={(e) => { if (!searching) want.current = active; setQ(e.target.value); }}
+          placeholder={t("ui_emoji_search")} aria-label={t("ui_emoji_search")} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false} />
+      </div>
       <div className="epick-tabs" role="tablist">
-        {groups.map((g) => (
-          <button type="button" key={g.key} role="tab" aria-selected={active === g.key} className={active === g.key ? "on" : ""}
-            title={t("ui_emoji_" + g.key)} aria-label={t("ui_emoji_" + g.key)} onClick={() => go(g.key)}>{g.icon}</button>
+        {groups.map((g, i) => (
+          <button type="button" key={g.key} role="tab" aria-selected={!searching && active === i} className={!searching && active === i ? "on" : ""}
+            title={t("ui_emoji_" + g.key)} aria-label={t("ui_emoji_" + g.key)} onClick={() => go(i)}>{g.icon}</button>
         ))}
       </div>
-      <div className="epick-body" ref={body} onScroll={onScroll}>
-        {groups.map((g) => (
-          <section key={g.key} data-g={g.key}>
-            <div className="epick-title">{t("ui_emoji_" + g.key)}</div>
-            <div className="epick-grid">
-              {g.emojis.map((e) => <button type="button" key={e} onClick={() => pick(e)}>{e}</button>)}
-            </div>
-          </section>
-        ))}
-      </div>
+      {searching ? (
+        <div className="epick-body">
+          {found.length
+            ? <div className="epick-grid epick-found">{found.map((x) => <button type="button" key={x.e} title={x.name} onClick={() => pick(x.e)}>{x.e}</button>)}</div>
+            : <div className="muted epick-none">{t("ui_emoji_no_results")}</div>}
+        </div>
+      ) : (
+        <div className="epick-pages" ref={pages} onScroll={onScroll}>
+          {groups.map((g) => (
+            <section key={g.key} className="epick-page" data-g={g.key}>
+              <div className="epick-title">{t("ui_emoji_" + g.key)}</div>
+              <div className="epick-grid">
+                {g.emojis.map((e) => <button type="button" key={e} onClick={() => pick(e)}>{e}</button>)}
+              </div>
+            </section>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

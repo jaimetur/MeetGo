@@ -3395,6 +3395,12 @@ msgstr "Símbolos"
 msgid "ui_emoji_flags"
 msgstr "Banderas"
 
+msgid "ui_emoji_search"
+msgstr "Buscar en inglés: heart, dog, beer…"
+
+msgid "ui_emoji_no_results"
+msgstr "Ningún emoji con ese nombre. Los nombres están en inglés."
+
 msgid "ui_install_title"
 msgstr "Instala MeetGo"
 

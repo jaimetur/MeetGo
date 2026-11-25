@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
-- The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is.
+- The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
 - A person's card shows "Request sent" (switched off) when you already asked them for friendship, instead of letting you ask again.
 - Voice notes in chats: hold nothing, just tap the microphone when the message is empty, record up to 5 minutes and send (or discard); notes play in the chat with a seekable bar, and the chat list shows "🎤 Voice note". The Android app asks for the microphone (needs the new build).
 - Where and for whom a community is now shows as tags (place, and its age range, ranges or own span) on community cards, the community page and the chat's info panel; the chat header keeps just the members, and your zone is only your place.
