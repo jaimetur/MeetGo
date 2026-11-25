@@ -122,27 +122,67 @@ def demo_account(server: str, redis: str, data_dir: str, lang: str) -> dict:
     return {"token": token, "community": hike["conv"], "plan": hike["post"], "plan_chat": hike["plan_chat"]}
 
 
-def shoot(browser, ids: dict, lang: str, devices: list[str]) -> None:
+# A new screenshot replaces the stored one only when more than this share of its pixels changed visibly: the times of
+# the made-up messages move a little between runs (well under 0.1 %), a real change of the app is far more.
+CHANGED_SHARE = 0.005
+STILL_CSS = "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; }"
+
+
+def changed(new: bytes, old_path: Path) -> bool:
+    """Whether `new` looks different from the image already in `old_path` (missing, another size or enough pixels)."""
+    if not old_path.exists():
+        return True
+    import io
+    from PIL import Image, ImageChops
+    a = Image.open(io.BytesIO(new)).convert("RGB")
+    b = Image.open(old_path).convert("RGB")
+    if a.size != b.size:
+        return True
+    diff = ImageChops.difference(a, b).convert("L").point(lambda v: 255 if v > 40 else 0)
+    return diff.histogram()[255] / (a.size[0] * a.size[1]) > CHANGED_SHARE
+
+
+def wait_still(page, seconds: float = 8) -> None:
+    """Until nothing scrolls or appears for a moment (the chat jumps to the new messages after loading)."""
+    probe = "JSON.stringify([document.body.innerText.length, ...[...document.querySelectorAll('*')].filter(e => e.scrollTop > 0).map(e => Math.round(e.scrollTop))])"
+    last, same, end = None, 0, time.time() + seconds
+    while time.time() < end and same < 3:
+        time.sleep(0.3)
+        now = page.evaluate(probe)
+        same = same + 1 if now == last else 0
+        last = now
+
+
+def shoot(browser, ids: dict, lang: str, devices: list[str]) -> int:
     screens = [("1-home", "/"), ("2-communities", "/communities"), ("3-community", f"/communities/{ids['community']}"),
                ("4-agenda", f"/communities/{ids['community']}?tab=agenda"), ("5-plan", f"/p/{ids['plan']}"),
                ("6-community-chat", f"/c/{ids['community']}"), ("7-plan-chat", f"/c/{ids['plan_chat']}")]
     for device in devices:
         w, h, scale = DEVICES[device]
         ctx = browser.new_context(viewport={"width": w, "height": h}, device_scale_factor=scale, locale=LOCALES[lang],
-                                  timezone_id="Europe/Madrid", is_mobile=w < 800, has_touch=w < 800)
+                                  timezone_id="Europe/Madrid", is_mobile=w < 800, has_touch=w < 800, reduced_motion="reduce")
         ctx.add_init_script(f"""localStorage.setItem('token', {ids['token']!r}); localStorage.setItem('lang', {lang!r});
             localStorage.setItem('theme', 'dark'); localStorage.setItem('installHintDismissed', '1');
             sessionStorage.setItem('splashSeen', '1');""")
         page = ctx.new_page()
         out = OUT / device / lang
         out.mkdir(parents=True, exist_ok=True)
+        kept = 0
         for name, path in screens:
             page.goto(WEB + path, wait_until="networkidle")
-            time.sleep(1.2)
+            page.add_style_tag(content=STILL_CSS)
+            time.sleep(0.8)
+            wait_still(page)
             # JPEG: Play takes it and it weighs a fifth of the PNG (280 images go in the repository)
-            page.screenshot(path=str(out / f"{name}.jpg"), type="jpeg", quality=90)
+            shot = page.screenshot(type="jpeg", quality=90)
+            target = out / f"{name}.jpg"
+            if changed(shot, target):
+                target.write_bytes(shot)
+            else:
+                kept += 1
         ctx.close()
-        print(f"  {device}: {len(screens)} screenshots", flush=True)
+        print(f"  {device}: {len(screens) - kept} changed, {kept} as they were", flush=True)
+    return 0
 
 
 def main() -> None:

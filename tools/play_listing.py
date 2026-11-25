@@ -1,6 +1,7 @@
 """Send the store listing to Google Play in every language: its texts, its screenshots and its feature graphic.
 
-Uses the Google Play Developer API (one "edit"). For each language it creates or updates the listing with the texts in
+Uses the Google Play Developer API (one "edit"); only what differs from the listing is sent (Google reviews every
+change), and with nothing different the edit is dropped. For each language it creates or updates the listing with the texts in
 assets/play-store/listings/<locale>.json (title, shortDescription, fullDescription), replaces the phone, 7" and 10"
 tablet screenshots with those in assets/play-store/<device>/<lang>/ and the feature graphic with
 docs/play-store/feature-1024x500-<es|en>.png, then commits. The Chromebook screenshots have no slot in the API: upload
@@ -15,6 +16,7 @@ The workflow .github/workflows/play-screenshots.yml runs it after taking the scr
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -69,14 +71,24 @@ def main() -> int:
     edit = edits.insert(packageName=PACKAGE, body={}).execute()["id"]
     have = {x["language"] for x in edits.listings().list(packageName=PACKAGE, editId=edit).execute().get("listings", [])}
 
+    current = {x["language"]: x for x in edits.listings().list(packageName=PACKAGE, editId=edit).execute().get("listings", [])}
+    changes = 0
     # the texts first: updating a language that the listing does not have yet adds it
     for lang, t in texts.items():
         code = LANGS[lang]
-        edits.listings().update(packageName=PACKAGE, editId=edit, language=code, body={
-            "language": code, "title": t["title"], "shortDescription": t["shortDescription"],
-            "fullDescription": t["fullDescription"]}).execute()
+        body = {"language": code, "title": t["title"], "shortDescription": t["shortDescription"], "fullDescription": t["fullDescription"]}
+        old = current.get(code) or {}
+        if all(old.get(k) == v for k, v in body.items()):
+            continue
+        edits.listings().update(packageName=PACKAGE, editId=edit, language=code, body=body).execute()
         have.add(code)
+        changes += 1
         print(f"{code:6} texts")
+
+    def same(code: str, kind: str, files: list) -> bool:
+        """The listing already has exactly these images, in this order (Play gives each one's sha256)."""
+        listed = images.list(packageName=PACKAGE, editId=edit, language=code, imageType=kind).execute().get("images", [])
+        return [i.get("sha256") for i in listed] == [hashlib.sha256(Path(f).read_bytes()).hexdigest() for f in files]
 
     sent = 0
     images = edits.images()
@@ -85,8 +97,9 @@ def main() -> int:
         if code not in have:
             print(f"{code}: no texts in {LISTINGS.relative_to(ROOT)} and not in the listing yet; skipped")
             continue
-        if not files:
+        if not files or same(code, kind, files):
             continue
+        changes += 1
         images.deleteall(packageName=PACKAGE, editId=edit, language=code, imageType=kind).execute()
         for f in files:
             images.upload(packageName=PACKAGE, editId=edit, language=code, imageType=kind,
@@ -95,12 +108,17 @@ def main() -> int:
         print(f"{code:6} {kind:22} {len(files)} images")
     for lang in langs:
         code, graphic = LANGS[lang], Path(FEATURE.format("es" if lang == "es" else "en"))
-        if code in have and graphic.exists():
+        if code in have and graphic.exists() and not same(code, "featureGraphic", [graphic]):
+            changes += 1
             images.deleteall(packageName=PACKAGE, editId=edit, language=code, imageType="featureGraphic").execute()
             images.upload(packageName=PACKAGE, editId=edit, language=code, imageType="featureGraphic",
                           media_body=MediaFileUpload(str(graphic), mimetype="image/png")).execute()
+    if not changes:
+        edits.delete(packageName=PACKAGE, editId=edit).execute()
+        print("The Play listing already has these texts and images: nothing sent.")
+        return 0
     edits.commit(packageName=PACKAGE, editId=edit).execute()
-    print(f"Sent the texts of {len(texts)} languages and {sent} screenshots to the Play listing.")
+    print(f"Sent {changes} changes ({sent} screenshots) to the Play listing.")
     return 0
 
 

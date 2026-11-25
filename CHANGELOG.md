@@ -110,6 +110,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Play screenshots wait until the screen is still and only replace the stored ones that look different (more than 0.5 % of their pixels), and the store listing only receives the texts and images that differ from what Google has, so runs without visible changes neither commit nor send anything for review. The Android workflow's artifact upload moves to actions/upload-artifact v7 (Node 24).
 - Drop-downs in windows (Discover another area and the rest) are as tall as the other fields.
 - Community settings: the creator adds or removes co-administrators (optional) among the members; the window is wider on computers with each part in its own panel, and the interests are chosen in a window of their own.
 - Communities: an «Admin» tab (the ones you created or co-administer, when there are any) apart from the joined ones, and «Not joined» instead of «New».
