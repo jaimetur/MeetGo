@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
+- When a new version is deployed, an open MeetGo shows a notice to reload the page and apply the latest changes (checked every minute and when the app comes back).
+- Communities for you suggests up to 6 communities, a full row on wide screens.
 - Message info, as in WhatsApp: long-press one of your messages in a direct chat or group and tap Info to see when it reached each person and when they read it. The ticks now sit right after the time.
 - The emoji picker, the message menu, the side panels (information, members, thread) and the pop-up windows close with a button or a swipe down. In a direct chat, Information shows the person's full card (friend, follow, block).
 - A person's card shows "Request sent" (switched off) when you already asked them for friendship, instead of letting you ask again.

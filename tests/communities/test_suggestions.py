@@ -25,7 +25,7 @@ async def test_suggestions_by_interests(client, db_session):
     assert custom["tags"] == ["senderismo", "viajes"]
     await client.post("/me/interests", json={"interest_slugs": ["senderismo", "viajes"]}, headers=bea[0])
     got = (await client.get("/communities/suggested", headers=bea[0])).json()
-    assert len(got) <= 5 and got[0]["id"] == custom["id"] and set(got[0]["matches"]) == {"senderismo", "viajes"}
+    assert len(got) <= 6 and got[0]["id"] == custom["id"] and set(got[0]["matches"]) == {"senderismo", "viajes"}
     assert all(not c["joined"] for c in got)  # her own interest communities are joined, not suggested
     interest = next(i for i in (await client.get("/interests")).json() if i["slug"] == "senderismo")
     assert interest["tags"][0] == "senderismo" and 1 <= len(interest["tags"]) <= 5

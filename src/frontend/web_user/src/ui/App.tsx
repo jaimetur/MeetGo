@@ -8,6 +8,7 @@ import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } fro
 import { getState, loadBlocks, loadConversations, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen } from "./Auth";
 import { ChatView } from "./Chat";
+import { UpdateNotice } from "./UpdateNotice";
 import { HomePage, PostPage, PublishPage } from "./Board";
 import { AboutModal, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
@@ -133,6 +134,7 @@ export default function App() {
   return (
     <>
       {me ? <Shell /> : <AuthScreen onSignedIn={startSession} />}
+      <UpdateNotice />
       {splash !== "off" ? <Splash leaving={splash === "leaving"} /> : null}
     </>
   );

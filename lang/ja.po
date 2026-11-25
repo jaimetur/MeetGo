@@ -1595,6 +1595,18 @@ msgstr "時刻なし（記録開始前）"
 msgid "ui_msg_info_hidden"
 msgstr "既読通知がオフです：届いた時刻のみ表示されます。"
 
+msgid "ui_update_title"
+msgstr "MeetGoが更新されました。"
+
+msgid "ui_update_body"
+msgstr "ページを再読み込みすると最新の変更が反映されます。"
+
+msgid "ui_update_reload"
+msgstr "再読み込み"
+
+msgid "ui_update_later"
+msgstr "後で通知"
+
 msgid "ui_info"
 msgstr "情報"
 

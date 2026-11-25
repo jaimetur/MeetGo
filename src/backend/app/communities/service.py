@@ -339,7 +339,7 @@ async def clean_interest_tags(db: AsyncSession, slugs: list[str] | None) -> list
     return [s for s in wanted if s in known]
 
 
-async def suggested_communities(db: AsyncSession, user: User, limit: int = 5) -> list[dict]:
+async def suggested_communities(db: AsyncSession, user: User, limit: int = 6) -> list[dict]:
     """The communities of my zone I am not in that fit my interests best: the more of my interests they are about, the
     higher; then the ones with more people. Interest communities count their related interests, people's communities
     the interests their creator chose."""

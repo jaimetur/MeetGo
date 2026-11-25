@@ -1595,6 +1595,18 @@ msgstr "senza ora (da prima che venisse salvata)"
 msgid "ui_msg_info_hidden"
 msgstr "Le conferme di lettura sono disattivate: vedi solo quando è arrivato."
 
+msgid "ui_update_title"
+msgstr "MeetGo è stato aggiornato."
+
+msgid "ui_update_body"
+msgstr "Ricarica la pagina per vedere le ultime modifiche."
+
+msgid "ui_update_reload"
+msgstr "Ricarica"
+
+msgid "ui_update_later"
+msgstr "Ricordamelo dopo"
+
 msgid "ui_info"
 msgstr "Info"
 

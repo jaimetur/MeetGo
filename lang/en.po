@@ -1595,6 +1595,18 @@ msgstr "no time (from before it was kept)"
 msgid "ui_msg_info_hidden"
 msgstr "Read receipts are off: you only see when it reached them."
 
+msgid "ui_update_title"
+msgstr "MeetGo has been updated."
+
+msgid "ui_update_body"
+msgstr "Reload the page to see the latest changes."
+
+msgid "ui_update_reload"
+msgstr "Reload"
+
+msgid "ui_update_later"
+msgstr "Remind me later"
+
 msgid "ui_info"
 msgstr "Info"
 

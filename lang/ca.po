@@ -1595,6 +1595,18 @@ msgstr "sense hora (d'abans que es desés)"
 msgid "ui_msg_info_hidden"
 msgstr "Les confirmacions de lectura estan desactivades: només veus quan li va arribar."
 
+msgid "ui_update_title"
+msgstr "MeetGo s'ha actualitzat."
+
+msgid "ui_update_body"
+msgstr "Recarrega la pàgina per veure els últims canvis."
+
+msgid "ui_update_reload"
+msgstr "Recarregar"
+
+msgid "ui_update_later"
+msgstr "Recorda-m'ho després"
+
 msgid "ui_info"
 msgstr "Informació"
 

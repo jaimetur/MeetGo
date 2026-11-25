@@ -458,7 +458,7 @@ export function HomePage() {
   );
 }
 
-/** Communities of my zone, not mine yet, that fit my interests best (up to 5). */
+/** Communities of my zone, not mine yet, that fit my interests best (up to 6: one full row on a wide screen). */
 function SuggestedCommunities() {
   const myCommunities = useStore((s) => s.myCommunities);
   const [list, setList] = useState<Community[] | null>(null);

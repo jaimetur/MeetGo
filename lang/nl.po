@@ -1595,6 +1595,18 @@ msgstr "geen tijd (van voordat die werd bewaard)"
 msgid "ui_msg_info_hidden"
 msgstr "Leesbevestigingen staan uit: je ziet alleen wanneer het aankwam."
 
+msgid "ui_update_title"
+msgstr "MeetGo is bijgewerkt."
+
+msgid "ui_update_body"
+msgstr "Herlaad de pagina om de nieuwste wijzigingen te zien."
+
+msgid "ui_update_reload"
+msgstr "Herladen"
+
+msgid "ui_update_later"
+msgstr "Later herinneren"
+
 msgid "ui_info"
 msgstr "Info"
 

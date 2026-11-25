@@ -11,6 +11,9 @@ const repoRoot = path.join(__dirname, "..", "..");
 const brandingDir = path.join(repoRoot, "assets", "branding");
 const langDir = path.join(repoRoot, "lang");
 const appVersion: string = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), "utf-8")).version;
+// Each build has its own id, in the code and in /version.json: an open page sees when a newer one is deployed.
+const isBuild = process.argv.includes("build");
+const buildId = isBuild ? process.env.MEETGO_BUILD || `${appVersion}-${Date.now().toString(36)}` : "dev";
 
 // VITE_ROOT picks the site: ./web_user (landing at "/", app at "/app/") or ./web_admin.
 const root = path.resolve(__dirname, process.env.VITE_ROOT || "web_user");
@@ -49,6 +52,16 @@ function appRoutes(): Plugin {
   };
 }
 
+/** /version.json with the build id (published with each build; the page compares it with its own). */
+function versionFile(): Plugin {
+  return {
+    name: "meetgo-version",
+    generateBundle() {
+      this.emitFile({ type: "asset", fileName: "version.json", source: JSON.stringify({ build: buildId, version: appVersion }) });
+    },
+  };
+}
+
 /** The branding files are served and published at the site root (/icon-192.png, /og-image.png...). */
 function branding(): Plugin {
   // Only files: hosts like Synology add folders of their own (@eaDir) next to them.
@@ -76,8 +89,8 @@ export default defineConfig({
   root,
   appType: "mpa",
   publicDir: path.join(__dirname, "assets"),
-  define: { __APP_VERSION__: JSON.stringify(appVersion) },
-  plugins: [react(), branding(), ...(site === "web_user" ? [appRoutes()] : [])],
+  define: { __APP_VERSION__: JSON.stringify(appVersion), __BUILD_ID__: JSON.stringify(buildId) },
+  plugins: [react(), branding(), versionFile(), ...(site === "web_user" ? [appRoutes()] : [])],
   resolve: {
     alias: {
       "../lang/lang": path.join(langDir, "lang.ts"),

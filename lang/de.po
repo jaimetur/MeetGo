@@ -1595,6 +1595,18 @@ msgstr "ohne Uhrzeit (von vor der Speicherung)"
 msgid "ui_msg_info_hidden"
 msgstr "Lesebestätigungen sind aus: Du siehst nur, wann sie ankam."
 
+msgid "ui_update_title"
+msgstr "MeetGo wurde aktualisiert."
+
+msgid "ui_update_body"
+msgstr "Lade die Seite neu, um die neuesten Änderungen zu sehen."
+
+msgid "ui_update_reload"
+msgstr "Neu laden"
+
+msgid "ui_update_later"
+msgstr "Später erinnern"
+
 msgid "ui_info"
 msgstr "Info"
 
