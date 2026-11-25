@@ -1584,7 +1584,7 @@ msgid "ui_invite_link"
 msgstr "Enlace de invitación"
 
 msgid "ui_join"
-msgstr "Entrar"
+msgstr "Unirse"
 
 msgid "ui_join_group"
 msgstr "Unirse al grupo"

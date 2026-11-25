@@ -1583,7 +1583,7 @@ msgid "ui_invite_link"
 msgstr "Link de convite"
 
 msgid "ui_join"
-msgstr "Entrar"
+msgstr "Aderir"
 
 msgid "ui_join_group"
 msgstr "Entrar no grupo"
