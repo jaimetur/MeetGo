@@ -4112,6 +4112,18 @@ msgstr "Klaar"
 msgid "ui_community_interests_none"
 msgstr "Geen gekozen."
 
+msgid "ui_csec_general"
+msgstr "Algemeen"
+
+msgid "ui_csec_access"
+msgstr "Wie lid kan worden"
+
+msgid "ui_csec_team"
+msgstr "Mede-beheerders (optioneel)"
+
+msgid "ui_csec_chat"
+msgstr "Chat en prikbord"
+
 msgid "ui_cshow_new"
 msgstr "Geen lid"
 

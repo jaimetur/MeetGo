@@ -4112,6 +4112,18 @@ msgstr "Fet"
 msgid "ui_community_interests_none"
 msgstr "Cap triat."
 
+msgid "ui_csec_general"
+msgstr "General"
+
+msgid "ui_csec_access"
+msgstr "Qui hi pot entrar"
+
+msgid "ui_csec_team"
+msgstr "Coadministradors (opcional)"
+
+msgid "ui_csec_chat"
+msgstr "Xat i tauler"
+
 msgid "ui_cshow_new"
 msgstr "No inscrites"
 

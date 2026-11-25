@@ -4113,6 +4113,18 @@ msgstr "Listo"
 msgid "ui_community_interests_none"
 msgstr "Ninguno elegido."
 
+msgid "ui_csec_general"
+msgstr "General"
+
+msgid "ui_csec_access"
+msgstr "Quién puede entrar"
+
+msgid "ui_csec_team"
+msgstr "Coadministradores (opcional)"
+
+msgid "ui_csec_chat"
+msgstr "Chat y tablón"
+
 msgid "ui_cshow_new"
 msgstr "No inscritas"
 

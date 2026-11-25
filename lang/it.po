@@ -4112,6 +4112,18 @@ msgstr "Fatto"
 msgid "ui_community_interests_none"
 msgstr "Nessuno scelto."
 
+msgid "ui_csec_general"
+msgstr "Generale"
+
+msgid "ui_csec_access"
+msgstr "Chi può entrare"
+
+msgid "ui_csec_team"
+msgstr "Co-amministratori (facoltativo)"
+
+msgid "ui_csec_chat"
+msgstr "Chat e bacheca"
+
 msgid "ui_cshow_new"
 msgstr "Non iscritte"
 

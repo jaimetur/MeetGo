@@ -1658,3 +1658,12 @@ a.btn { text-decoration: none; }
 .adm-test { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: 8px; }
 .adm-test small { font-size: 12px; }
 .fld.coadmins { display: flex; flex-direction: column; gap: 6px; }
+.adm-fold { scroll-margin-top: 150px; }
+
+/* community settings: wider on computers, each part in its own panel, two columns when there is room */
+.modal.wide { width: min(980px, 100%); }
+.cform { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@media (min-width: 900px) { .cform { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.csec { display: flex; flex-direction: column; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--fg) 3%, transparent); min-width: 0; }
+.csec-h { display: flex; align-items: center; gap: 8px; margin: 0; font-family: var(--display); font-size: 14.5px; font-weight: 650; }
+.csec .fld.coadmins > span:first-child { display: none; }

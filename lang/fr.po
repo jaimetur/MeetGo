@@ -4972,6 +4972,18 @@ msgstr "Terminé"
 msgid "ui_community_interests_none"
 msgstr "Aucun choisi."
 
+msgid "ui_csec_general"
+msgstr "Général"
+
+msgid "ui_csec_access"
+msgstr "Qui peut rejoindre"
+
+msgid "ui_csec_team"
+msgstr "Co-administrateurs (facultatif)"
+
+msgid "ui_csec_chat"
+msgstr "Discussion et tableau"
+
 msgid "ui_cshow_new"
 msgstr "Non rejointes"
 

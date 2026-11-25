@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SHOTS = ROOT / "assets" / "play-store"
 LISTINGS = SHOTS / "listings"
-FEATURE = ROOT / "docs" / "play-store" / "feature-1024x500-{}.png"
+FEATURE = str(ROOT / "docs" / "play-store" / "feature-1024x500-{}.png")
 PACKAGE = "app.meetgo.android"
 # our folder → Play's language code
 LANGS = {"es": "es-ES", "en": "en-US", "ca": "ca", "de": "de-DE", "fr": "fr-FR", "it": "it-IT", "pt": "pt-PT",
@@ -94,7 +94,7 @@ def main() -> int:
         sent += len(files)
         print(f"{code:6} {kind:22} {len(files)} images")
     for lang in langs:
-        code, graphic = LANGS[lang], FEATURE.format("es" if lang == "es" else "en")
+        code, graphic = LANGS[lang], Path(FEATURE.format("es" if lang == "es" else "en"))
         if code in have and graphic.exists():
             images.deleteall(packageName=PACKAGE, editId=edit, language=code, imageType="featureGraphic").execute()
             images.upload(packageName=PACKAGE, editId=edit, language=code, imageType="featureGraphic",

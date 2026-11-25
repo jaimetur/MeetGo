@@ -4112,6 +4112,18 @@ msgstr "完成"
 msgid "ui_community_interests_none"
 msgstr "尚未选择。"
 
+msgid "ui_csec_general"
+msgstr "常规"
+
+msgid "ui_csec_access"
+msgstr "谁可以加入"
+
+msgid "ui_csec_team"
+msgstr "共同管理员（可选）"
+
+msgid "ui_csec_chat"
+msgstr "聊天和公告板"
+
 msgid "ui_cshow_new"
 msgstr "未加入"
 

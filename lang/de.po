@@ -4973,6 +4973,18 @@ msgstr "Fertig"
 msgid "ui_community_interests_none"
 msgstr "Keine gewählt."
 
+msgid "ui_csec_general"
+msgstr "Allgemein"
+
+msgid "ui_csec_access"
+msgstr "Wer beitreten kann"
+
+msgid "ui_csec_team"
+msgstr "Mitadministratoren (optional)"
+
+msgid "ui_csec_chat"
+msgstr "Chat und Pinnwand"
+
 msgid "ui_cshow_new"
 msgstr "Nicht beigetreten"
 

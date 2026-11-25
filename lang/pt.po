@@ -4111,6 +4111,18 @@ msgstr "Concluído"
 msgid "ui_community_interests_none"
 msgstr "Nenhum escolhido."
 
+msgid "ui_csec_general"
+msgstr "Geral"
+
+msgid "ui_csec_access"
+msgstr "Quem pode entrar"
+
+msgid "ui_csec_team"
+msgstr "Coadministradores (opcional)"
+
+msgid "ui_csec_chat"
+msgstr "Chat e mural"
+
 msgid "ui_cshow_new"
 msgstr "Não inscritas"
 

@@ -36,6 +36,7 @@ const PATHS: Record<string, string> = {
   gamepad: "M6 8h12a4 4 0 0 1 4 4v1.5a3.5 3.5 0 0 1-6.2 2.2L14.5 14h-5l-1.3 1.7A3.5 3.5 0 0 1 2 13.5V12a4 4 0 0 1 4-4zM7 10.5v3M5.5 12h3M15.5 11.5h.01M17.5 13h.01",
   food: "M5 3v8a3 3 0 0 0 6 0V3M8 3v18M18 21V3c-2.5 1-4 3.5-4 7v4h4",
   chart: "M4 20h16M4 20V4M7.5 15l4-4.5 3 3L20 7.5M16 7.5h4v4",
+  download: "M12 4v11M7 10l5 5 5-5M5 20h14",
   search: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM16.5 16.5 21 21",
   chat: "M4 5h16v11H10l-5 4v-4H4z",
   compass: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15.5 8.5l-2 5-5 2 2-5z",
@@ -146,18 +147,22 @@ export function convTitle(conv: Conversation): string {
   return `#${conv.slug || conv.title}`;
 }
 
-export function Modal({ title, onClose, children, footer }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode }) {
+export function Modal({ title, onClose, children, footer, wide }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode; wide?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const swipe = useSwipeDown(onClose);
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    // Escape closes only the window on top (one can open another, like the interests of a community's settings)
+    const onKey = (e: KeyboardEvent) => {
+      const all = document.querySelectorAll(".modal");
+      if (e.key === "Escape" && all[all.length - 1] === ref.current) onClose();
+    };
     window.addEventListener("keydown", onKey);
     ref.current?.querySelector<HTMLElement>("input, textarea, button")?.focus();
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
   return (
     <div className="modal-bg" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="modal" role="dialog" aria-modal="true" aria-label={title} ref={ref} style={swipe.style}>
+      <div className={"modal" + (wide ? " wide" : "")} role="dialog" aria-modal="true" aria-label={title} ref={ref} style={swipe.style}>
         {/* dragged down by its title bar it closes (not from the body: a form's half-written fields would go) */}
         <header {...swipe.handlers}>
           <span className="grow">{title}</span>

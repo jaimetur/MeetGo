@@ -430,16 +430,22 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     open: t("ui_community_access_open_hint"), request: t("ui_community_access_request_hint"), invite: t("ui_community_access_invite_hint"),
   };
   return (
-    <Modal title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
+    <Modal wide title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
       <>
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
         <button className="btn pri" disabled={busy || form.title.trim().length < 3 || ((!community || owner) && ageWrong)} onClick={() => save()}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
       </>
     )}>
       {!community ? <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_create_lead")}</p> : null}
+      <div className="cform">
+      <section className="csec">
+      <h3 className="csec-h"><Icon name="edit" size="sm" />{t("ui_csec_general")}</h3>
       <label className="fld">{t("ui_community_f_title")}<input id="cm-title" className="inp" maxLength={80} value={form.title} onChange={(e) => set({ title: e.target.value })} placeholder={t("ui_community_title_ph")} /></label>
       <label className="fld">{t("ui_description")}<textarea id="cm-desc" className="inp" rows={3} maxLength={1000} value={form.description} onChange={(e) => set({ description: e.target.value })} placeholder={t("ui_community_desc_ph")} /></label>
       {community ? <div className="fld">{t("ui_community_f_rules")}<RichEditor id="cm-rules" value={form.rules} onChange={(v) => set({ rules: v })} /></div> : null}
+      </section>
+      <section className="csec">
+      <h3 className="csec-h"><Icon name="lock" size="sm" />{t("ui_csec_access")}</h3>
       <div className="fld"><span>{t("ui_community_f_access")}</span>
         <Seg label={t("ui_community_f_access")} value={form.access_mode} onChange={(access_mode) => set({ access_mode })}
           options={[["open", t("ui_community_access_open")], ["request", t("ui_community_access_request")], ["invite", t("ui_community_access_invite")]]} />
@@ -480,29 +486,43 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
       ) : null}
       {owner ? <small className="muted">{t("ui_community_filters_hint")}</small> : null}
-      {owner && community ? <CoAdmins community={community} /> : null}
+      </section>
       {expel ? (
         <ConfirmModal title={t("ui_community_filters_confirm_title")} danger confirm={t("ui_community_filters_confirm")}
           body={t("ui_community_filters_confirm_body", { n: expel.n, names: expel.names.join(", ") + (expel.n > expel.names.length ? "…" : "") })}
           onClose={() => { setExpel(null); setBusy(false); }} onConfirm={() => { setExpel(null); return save(true); }} />
       ) : null}
       {!interest ? (
-        <div className="fld coadmins"><span>{t("ui_community_interests")}</span>
-          {/* the chosen ones; the whole list opens with the button */}
+        <section className="csec">
+          <h3 className="csec-h"><Icon name="star" size="sm" />{t("ui_community_interests")}</h3>
           <div className="chips wrapchips">
-            {(pickTags ? allInterests : allInterests.filter((i) => form.tags.includes(i.slug))).map((i) => {
-              const on = form.tags.includes(i.slug);
-              return <button key={i.slug} type="button" className={"chip" + (on ? " on" : "")} aria-pressed={on} disabled={!on && form.tags.length >= 5}
-                onClick={() => set({ tags: on ? form.tags.filter((x) => x !== i.slug) : [...form.tags, i.slug] })}>{i.name}</button>;
-            })}
-            {!pickTags && !form.tags.length ? <small className="muted">{t("ui_community_interests_none")}</small> : null}
+            {allInterests.filter((i) => form.tags.includes(i.slug)).map((i) => (
+              <span key={i.slug} className="chip on">{i.name}</span>
+            ))}
+            {!form.tags.length ? <small className="muted">{t("ui_community_interests_none")}</small> : null}
           </div>
-          <button type="button" id="cm-tags-toggle" className="btn sm" style={{ alignSelf: "flex-start" }} aria-expanded={pickTags} onClick={() => setPickTags((v) => !v)}>
-            <Icon name={pickTags ? "check2" : "edit"} size="sm" />{pickTags ? t("ui_community_interests_done") : t("ui_community_interests_choose", { n: form.tags.length })}
+          <button type="button" id="cm-tags-edit" className="btn sm" style={{ alignSelf: "flex-start" }} onClick={() => setPickTags(true)}>
+            <Icon name="edit" size="sm" />{t("ui_community_interests_choose", { n: form.tags.length })}
           </button>
           <small className="muted">{t("ui_community_interests_hint")}</small>
-        </div>
+          {pickTags ? (
+            <Modal title={t("ui_community_interests")} onClose={() => setPickTags(false)} footer={
+              <button type="button" id="cm-tags-done" className="btn pri" onClick={() => setPickTags(false)}>{t("ui_community_interests_done")}</button>}>
+              <small className="muted">{t("ui_community_interests_hint")} ({form.tags.length}/5)</small>
+              <div className="chips wrapchips">
+                {allInterests.map((i) => {
+                  const on = form.tags.includes(i.slug);
+                  return <button key={i.slug} type="button" className={"chip" + (on ? " on" : "")} aria-pressed={on} disabled={!on && form.tags.length >= 5}
+                    onClick={() => set({ tags: on ? form.tags.filter((x) => x !== i.slug) : [...form.tags, i.slug] })}>{i.name}</button>;
+                })}
+              </div>
+            </Modal>
+          ) : null}
+        </section>
       ) : null}
+      {owner && community ? <section className="csec"><h3 className="csec-h"><Icon name="shield" size="sm" />{t("ui_csec_team")}</h3><CoAdmins community={community} /></section> : null}
+      <section className="csec">
+      <h3 className="csec-h"><Icon name="chat" size="sm" />{t("ui_csec_chat")}</h3>
       <label className="fld">{t("ui_community_retention")}
         {interest ? <span className="note"><Icon name="clock" size="sm" />{t("ui_community_retention_interest")}</span> : (
           <select id="cm-retention" className="inp" value={form.retention} onChange={(e) => set({ retention: Number(e.target.value) })}>
@@ -515,6 +535,8 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         <Seg label={t("ui_community_f_board")} value={form.board_mode} onChange={(board_mode) => set({ board_mode })}
           options={[["open", t("ui_community_board_open")], ["admins", t("ui_community_board_admins")]]} />
         <small className="muted">{form.board_mode === "open" ? t("ui_community_board_open_hint") : t("ui_community_board_admins_hint")}</small>
+      </div>
+      </section>
       </div>
     </Modal>
   );
