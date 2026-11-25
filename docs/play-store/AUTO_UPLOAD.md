@@ -4,7 +4,7 @@
 
 1. En GitHub, abre **Releases → «Android app (rolling build)»** (la pre-release `android-latest`).
 2. Descarga **`meetgo-android.aab`**. En **`android-build.txt`** ves de qué build y commit es: tiene que ser el último.
-3. En [Play Console](https://play.google.com/console) → **MeetGo** → **Probar y publicar → Pruebas → Pruebas cerradas**
+3. En [Play Console](https://play.google.com/console) → **MeetGo** → **Probar y publicar → Pruebas → Prueba cerrada**
    → canal **Alpha** → **Gestionar canal**.
 4. **Crear nueva versión** → arrastra el `.aab` a «App bundles».
 5. Nombre de la versión: se rellena solo (por ejemplo `0.2.0 (57)`: la versión del repositorio y el número de build). En «Notas de la versión» escribe qué cambia (por ejemplo «Notas de voz»).
@@ -31,16 +31,18 @@ suben igual. Para crearlo, una sola vez:
 3. **Clave JSON.** Usa la clave JSON de esa cuenta que ya tengas guardada. Si no la tienes: **IAM y administración →
    Cuentas de servicio → play-billing → Claves → Agregar clave → Crear clave nueva → JSON**. Es una contraseña:
    guárdala bien y no la subas a ningún repositorio.
-4. **Darle permiso en Play.** En Play Console → **Gestionar cuenta → Usuarios y permisos → Invitar a usuarios
-   nuevos**: pon el email de la cuenta de servicio (`play-billing@jtgcloud-play.iam.gserviceaccount.com`; si ya está
-   invitada, ábrela). En **Permisos de la app** añade **MeetGo** y marca:
-   «Ver información de la app», «Publicar en canales de prueba», «Publicar en producción…» (solo si vas a usar
-   `production`) y «Gestionar la presencia en la tienda» (para que suba las capturas). **Invitar usuario**.
+4. **Darle permiso en Play.** En Play Console → **Gestionar cuenta → Usuarios y permisos → Invitar a nuevos usuarios**:
+   pon el correo de la cuenta de servicio (`play-billing@jtgcloud-play.iam.gserviceaccount.com`), sin fecha de
+   caducidad. En la pestaña **Permisos de la cuenta** (valen para todas las apps), marca «Ver información de las
+   aplicaciones y descargar informes en bloque (solo lectura)», «Ver datos financieros, pedidos y respuestas a encuestas
+   de cancelación», «Gestionar pedidos y suscripciones», «Lanzar aplicaciones en canales de pruebas», «Lanzar a
+   producción, excluir dispositivos y usar la firma de aplicaciones de Play» y «Gestionar la presencia en Play Store».
+   **Invitar usuario**. Si ya estaba invitada, ábrela con **Gestionar** en su fila y marca lo que le falte.
 5. **Guardarla en GitHub.** En el repositorio → **Settings → Secrets and variables → Actions → New repository
    secret**: nombre `PLAY_SERVICE_ACCOUNT_JSON`, valor: **todo el contenido** del archivo `.json` → **Add secret**.
 6. **El canal (opcional).** En el mismo sitio, pestaña **Variables → New repository variable**: nombre `PLAY_TRACK`,
    el canal de las ramas `X.Y.Z`, por defecto `alpha`: el canal que Play crea para la prueba cerrada («Alpha» en
-   **Pruebas cerradas**). Si tu prueba cerrada es un canal que creaste tú, pon aquí su nombre. El canal estable
+   **Prueba cerrada**). Si tu prueba cerrada es un canal que creaste tú, pon aquí su nombre. El canal estable
    (`PLAY_STABLE_TRACK`) es otro: sección 4.
 7. **Probar.** **Actions → Android app → Run workflow** en la rama de la versión. El paso «Upload to Google Play» debe
    salir en verde y la versión aparecer en ese canal de Play Console.
@@ -106,11 +108,11 @@ Para ver lo que recibiría Play: `python tools/play_publish.py notes 0.2.0`.
 menos 12 testers durante 14 días seguidos. Después, en Play Console → **Panel → Solicitar acceso a producción**. Cuando
 Google lo conceda:
 
-1. **Play Console → Gestionar cuenta → Usuarios y permisos**: abre la cuenta de servicio. En **Permisos de la app →
-   MeetGo**, añade «Publicar en producción, excluir dispositivos y usar la firma de aplicaciones de Play».
-   **Aplicar → Guardar cambios.**
-2. **Play Console → Probar y publicar → Producción → pestaña Países/regiones**: añade los países donde se publica. Sin
-   países, la subida a producción falla.
+1. La cuenta de servicio necesita «Lanzar a producción, excluir dispositivos y usar la firma de aplicaciones de Play».
+   Si la invitaste como en la sección 2, ya lo tiene. Si no: **Gestionar cuenta → Usuarios y permisos →
+   Gestionar** en su fila, y márcalo.
+2. **Play Console → Probar y publicar → Producción → pestaña Países o territorios → Añadir países o territorios**:
+   añade los países donde se publica y guarda los cambios. Sin países, la subida a producción falla.
 3. Activa el canal estable (en el terminal, desde cualquier carpeta):
 
    ```bash
