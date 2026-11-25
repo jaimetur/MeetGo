@@ -521,6 +521,21 @@ export function MessageItem(props: {
   const longPressed = useRef(false);
   const menuRef = useRef<HTMLDivElement>(null);
   useClickOutside(menuRef, () => props.closeMenu?.(), !!props.menuOpen);
+  // The menu opens below the message; near the bottom of the chat, where it would be cut, it opens above instead.
+  const [menuUp, setMenuUp] = useState(false);
+  React.useLayoutEffect(() => {
+    if (!props.menuOpen) { setMenuUp(false); return; }
+    const el = menuRef.current;
+    if (!el) return;
+    const box = el.getBoundingClientRect();
+    const scroller = el.closest("[data-virtuoso-scroller], .msgs, .tbody") as HTMLElement | null;
+    const area = scroller ? scroller.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+    const bottom = Math.min(area.bottom, window.innerHeight);
+    const top = Math.max(area.top, 0);
+    // above: the menu ends near the top of the message, so it needs its own height of room there
+    const msgTop = (el.parentElement as HTMLElement).getBoundingClientRect().top;
+    setMenuUp(box.bottom > bottom && msgTop - box.height >= top);
+  }, [props.menuOpen]);
   const newDay = !prev || dayKey(prev.created_at) !== dayKey(m.created_at);
   const cont = !newDay && !props.showNewSep && prev && prev.kind !== "system" && m.kind !== "system" && prev.sender?.id === m.sender?.id
     && !m.reply_to && !prev.thread && new Date(m.created_at).getTime() - new Date(prev.created_at).getTime() < 5 * 60000;
@@ -620,7 +635,7 @@ export function MessageItem(props: {
           </div>
         ) : null}
         {props.menuOpen ? (
-          <div className="menu" style={{ right: 18, top: 16 }} ref={menuRef} role="menu">
+          <div className="menu" style={menuUp ? { right: 18, bottom: "calc(100% - 8px)" } : { right: 18, top: 16 }} ref={menuRef} role="menu">
             <div className="row" style={{ padding: "2px 4px 6px", gap: 2 }}>
               {QUICK_REACTIONS.map((e) => <button key={e} style={{ width: 30, justifyContent: "center", fontSize: 17, padding: 4 }} onClick={() => { actions.react(m, e); props.closeMenu?.(); }}>{e}</button>)}
             </div>
