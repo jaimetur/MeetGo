@@ -138,6 +138,18 @@ export default function App() {
   );
 }
 
+/** A finger on something that scrolls sideways (suggested communities, tab strips…) scrolls it: it is not a swipe
+ *  to the next section. */
+function insideSideScroller(el: HTMLElement | null): boolean {
+  for (let e = el; e && e !== document.body; e = e.parentElement) {
+    if (e.scrollWidth > e.clientWidth + 2) {
+      const o = getComputedStyle(e).overflowX;
+      if (o === "auto" || o === "scroll") return true;
+    }
+  }
+  return false;
+}
+
 export async function startSession() {
   const me = await api.me();
   setState({ me });
@@ -264,7 +276,7 @@ function Shell() {
   const onTouchStart = (e: React.TouchEvent) => {
     const el = e.target as HTMLElement;
     swipe.current = tabIndex < 0 || e.touches.length > 1 || el.closest(".chips, .segtabs, input, textarea, select, .modal-bg, .sheet-bg")
-      ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() };
+      || insideSideScroller(el) ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() };
   };
   const onTouchEnd = (e: React.TouchEvent) => {
     const start = swipe.current;

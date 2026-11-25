@@ -112,6 +112,7 @@ All notable changes to this project will be documented in this file.
 - Administration → Communities: each interest community has a category, an icon and a colour (or automatic), and restrictions: active or not, and the age ranges it exists for. The app uses that look everywhere, and a restricted community is not created, listed or joinable outside its ages.
 - Administration → Subscriptions → Firebase: step-by-step guide to get the service account JSON for Android push notifications.
 - Dialogs that are taller than the screen scroll inside and keep their buttons visible.
+- Phones: scrolling sideways through the suggested communities (or anything else that scrolls sideways) no longer swipes to another section.
 - The zone tag at the top shows only the place. Every community shows where it is and for which ages ("Madrid · 31-60", or its own span) on its card, on its page and in its chat's header. The community cards' member and online counts are on one line again (a style clash put them one under the other).
 - Looking at another zone keeps your own age range (worked out from your date of birth): only the place can change.
 - Home suggests up to 5 communities of your zone that fit your profile's interests best. Communities made by people can choose up to 5 interests; each interest community comes with 1 to 5 related interests (administrators can change them).
