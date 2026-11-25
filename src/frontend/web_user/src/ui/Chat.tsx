@@ -569,7 +569,8 @@ export function MessageItem(props: {
       >
         <div className="avcol"><button onClick={() => m.sender && actions.profile(m.sender.id)} aria-label={m.sender?.display_name}><Avatar user={m.sender} size={inThread ? 32 : 38} /></button></div>
         <div className="mbody">
-          {!cont ? (
+          {/* mine always carry it (time and ticks at the bottom right, as in WhatsApp); others' only the first of a group */}
+          {!cont || mine ? (
             <div className="mh">
               <button className="who" onClick={() => m.sender && actions.profile(m.sender.id)}>{mine ? t("ui_you") : m.sender?.display_name || t("ui_deleted_user")}</button>
               <span className="when" title={new Date(m.created_at).toLocaleString()}>{timeOf(m.created_at)}</span>
@@ -589,9 +590,8 @@ export function MessageItem(props: {
             <div className={"mt" + (isOnlyEmoji(m.body) && !m.attachments.length ? " big" : "")}>
               {m.body ? <Rich text={m.body} /> : null}
               {m.edited_at ? <span className="edited"> ({t("ui_edited")})</span> : null}
-              {/* grouped messages (same person, a few minutes apart) keep their own time, before the ticks */}
-              {cont ? <span className="when ctime" title={new Date(m.created_at).toLocaleString()}>{timeOf(m.created_at)}</span> : null}
-              {props.readTicks && cont ? <Ticks tick={props.readTicks} /> : null}
+              {/* others' grouped messages (same person, a few minutes apart) keep their own time at the end */}
+              {cont && !mine ? <span className="when ctime" title={new Date(m.created_at).toLocaleString()}>{timeOf(m.created_at)}</span> : null}
             </div>
           )}
           {m.attachments.length ? <Attachments m={m} /> : null}
