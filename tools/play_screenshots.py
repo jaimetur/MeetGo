@@ -173,6 +173,11 @@ def shoot(browser, ids: dict, lang: str, devices: list[str]) -> int:
             page.add_style_tag(content=STILL_CSS)
             time.sleep(0.8)
             wait_still(page)
+            if path.startswith("/c/"):
+                # a chat may stop at the new-messages line or further down depending on timing: always at the latest
+                for _ in range(3):
+                    page.evaluate("document.querySelectorAll('[data-virtuoso-scroller], .msgs').forEach(e => { e.scrollTop = e.scrollHeight; })")
+                    wait_still(page)
             # JPEG: Play takes it and it weighs a fifth of the PNG (280 images go in the repository)
             shot = page.screenshot(type="jpeg", quality=90)
             target = out / f"{name}.jpg"
