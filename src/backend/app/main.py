@@ -11,6 +11,8 @@ from app.mail import notify_email
 from app.core.migrate import run_migrations
 from app.core.redis_conn import close_redis
 from app.admin import routes as admin
+from app.backups import routes as backups
+from app.backups import service as backup_service
 from app.auth import routes as auth
 from app.billing import routes as billing
 from app.board import routes as board
@@ -49,7 +51,7 @@ async def i18n_middleware(request: Request, call_next):
     return await call_next(request)
 
 
-for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, admin, communities, board):
+for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, admin, communities, board):
     app.include_router(module.router)
 
 
@@ -67,10 +69,12 @@ async def on_startup():
     await startup()
     await gateway.start()
     notify_email.start()
+    backup_service.start_scheduler()
 
 
 @app.on_event("shutdown")
 async def on_shutdown():
     await notify_email.stop()
+    await backup_service.stop_scheduler()
     await gateway.stop()
     await close_redis()

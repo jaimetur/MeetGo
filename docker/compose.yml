@@ -32,6 +32,8 @@ services:
       - ../src/backend/app:/srv/app
       - ../lang:/srv/lang
       - meetgo_data:/data
+      # Administration → Backups writes to /data/backups: the stack's backups folder, visible on the host (File Station)
+      - ../backups:/data/backups
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
     restart: unless-stopped
 

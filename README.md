@@ -1,5 +1,11 @@
 # MeetGo
 
+<p align="center">
+  <a href="https://www.meetgo.app/"><img alt="Visit the MeetGo website: www.meetgo.app" src="https://img.shields.io/badge/%F0%9F%8C%90%20Visit%20the%20website-www.meetgo.app-1d6fe0?style=for-the-badge&labelColor=0b1f3a"></a>
+  &nbsp;
+  <a href="https://www.meetgo.app/app/"><img alt="Open the MeetGo app" src="https://img.shields.io/badge/%F0%9F%92%AC%20Open%20the%20app-www.meetgo.app%2Fapp-12b886?style=for-the-badge&labelColor=0b1f3a"></a>
+</p>
+
 Messaging for meeting people nearby: chat channels by province, age range and interest,
 private groups and direct messages, on the web and in an Android app.
 

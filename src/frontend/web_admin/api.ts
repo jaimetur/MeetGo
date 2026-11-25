@@ -211,6 +211,42 @@ export const api = {
   async stats(): Promise<AdminStats> {
     return await req("/admin/stats");
   },
+  // ---- backups (Administration → Backups) ----
+  async backups(): Promise<BackupsStatus> {
+    return await req("/admin/backups");
+  },
+  async saveBackupSettings(settings: BackupSettings): Promise<BackupsStatus> {
+    return await req("/admin/backups/settings", { method: "PUT", body: JSON.stringify(settings) });
+  },
+  async backupFiles(path: string): Promise<BackupFile[]> {
+    return await req(`/admin/backups/files?path=${encodeURIComponent(path)}`);
+  },
+  async backupDirs(path: string): Promise<{ path: string; root: string; parent: string | null; dirs: string[] }> {
+    return await req(`/admin/backups/dirs?path=${encodeURIComponent(path)}`);
+  },
+  async newBackupDir(path: string, name: string): Promise<{ path: string; root: string; parent: string | null; dirs: string[] }> {
+    return await req("/admin/backups/dirs", { method: "POST", body: JSON.stringify({ path, name }) });
+  },
+  async runBackup(level: "full" | "light"): Promise<BackupTask> {
+    return await req("/admin/backups/run", { method: "POST", body: JSON.stringify({ level }) });
+  },
+  async backupTask(id: string): Promise<BackupTask> {
+    return await req(`/admin/backups/task/${id}`);
+  },
+  async inspectBackup(path: string, name: string): Promise<BackupManifest> {
+    return await req("/admin/backups/inspect", { method: "POST", body: JSON.stringify({ path, name }) });
+  },
+  async restoreBackup(path: string, name: string, parts: string[]): Promise<BackupTask> {
+    return await req("/admin/backups/restore", { method: "POST", body: JSON.stringify({ path, name, parts }) });
+  },
+  async deleteBackup(path: string, name: string) {
+    return await req("/admin/backups/delete", { method: "POST", body: JSON.stringify({ path, name }) });
+  },
+  /** A link valid 10 minutes, for the browser to download the ZIP. */
+  async backupDownloadUrl(path: string, name: string): Promise<string> {
+    const { token } = await req("/admin/backups/download-link", { method: "POST", body: JSON.stringify({ path, name }) });
+    return `${API_BASE}/admin/backups/download?path=${encodeURIComponent(path)}&name=${encodeURIComponent(name)}&token=${encodeURIComponent(token)}`;
+  },
   async userSummary(id: number): Promise<UserActivity> {
     return await req(`/admin/users/${id}/summary`);
   },
@@ -356,4 +392,24 @@ export type AdminInterest = {
   age_ranges: string[]; active: boolean; zones: number; people: number;
   tags: string[]; min_age: number | null; max_age: number | null; access_mode: "open" | "request"; board_mode: "open" | "admins";
   retention_days: number; join_questions: string[];
+};
+
+export type BackupSettings = {
+  enabled: boolean; recurrence: "hourly" | "every_4_hours" | "daily" | "weekly" | "monthly"; weekly_day: number; monthly_day: number;
+  execution_time: string; light_backups: boolean; full_backup_day: number; keep_days: number; keep_weeks: number; keep_months: number;
+  components: string[]; backup_path: string;
+};
+export type BackupFile = { name: string; level: "full" | "light"; origin: "manual" | "scheduled" | "prerestore"; size: number; created_at: string };
+export type BackupTask = { id: string; kind: "backup" | "restore"; state: "running" | "done" | "error"; step: string; progress: number; message: string; file: string };
+export type BackupManifest = {
+  created_at?: string; level?: string; origin?: string; by?: string; alembic?: string; components?: string[];
+  has_database: boolean; has_files: boolean; file_count: number; table_count: number;
+};
+export type BackupsStatus = {
+  settings: BackupSettings; root: string; default_path: string; backups: BackupFile[]; task: BackupTask | null;
+  status: {
+    count: number; size: number; count_full: number; count_light: number; size_full: number; size_light: number;
+    latest_full: number | null; latest_light: number | null; disk: { free: number; total: number; used: number; low: boolean };
+    last_success: string | null; last_level: string | null; next_run: string | null; next_level: string | null; problem: string | null;
+  };
 };

@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
+- Administration → Backups, as in DriveTest Analyzer: the stored backups, their size, the free disk space, the last and the next backup; «Back up now» (full: database and uploaded files; light: database only), «Restore» (choosing the parts, with an automatic backup first so it can be undone) with download and delete, and scheduled backups (hourly, every 4 hours, daily, weekly or monthly, light ones between weekly full ones) with retention by days, weeks and months. In the stack they go to its backups folder, visible on the NAS.
+- The README has buttons to the website and the app.
 - Interest names in every language (the built-in ones translated; editable in Administration), and the interest chats titled in the language of whoever reads them.
 - Administration: groups of regions (autonomous communities, states…) can be created, renamed, deleted and assigned to each region.
 - A name equal to its alias shows once («Lucy», not «Lucy (Lucy)»).

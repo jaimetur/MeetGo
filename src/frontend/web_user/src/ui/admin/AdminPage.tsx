@@ -14,8 +14,9 @@ import { Codes } from "./Codes";
 import { Billing } from "./Billing";
 import { Settings } from "./Settings";
 import { Bots } from "./Bots";
+import { Backups } from "./Backups";
 
-export type Section = "overview" | "users" | "moderation" | "communities" | "codes" | "billing" | "settings" | "bots";
+export type Section = "overview" | "users" | "moderation" | "communities" | "codes" | "billing" | "settings" | "backups" | "bots";
 
 const SECTIONS: [Section, string, string][] = [
   ["overview", "home", "sec_overview"],
@@ -25,6 +26,7 @@ const SECTIONS: [Section, string, string][] = [
   ["codes", "star", "sec_codes"],
   ["billing", "file", "sec_billing"],
   ["settings", "sliders", "sec_settings"],
+  ["backups", "layers", "sec_backups"],
   ["bots", "shield", "sec_bots"],
 ];
 
@@ -76,6 +78,7 @@ export function AdminPage() {
           {section === "codes" ? <Codes /> : null}
           {section === "billing" ? <Billing /> : null}
           {section === "settings" ? <Settings /> : null}
+          {section === "backups" ? <Backups /> : null}
           {section === "bots" ? <Bots /> : null}
         </div>
       </div>
