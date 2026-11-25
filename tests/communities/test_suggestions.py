@@ -59,3 +59,16 @@ async def test_interest_settings_and_age_span(client, db_session):
     async with db_session() as db:
         convs = (await db.execute(select(Conversation).where(Conversation.interest_id == cine["id"], Conversation.province == "Madrid"))).scalars().all()
         assert all(c.age_range != "custom" and c.min_age is None for c in convs)
+
+
+async def test_suggestions_tie_goes_to_more_members(client, db_session):
+    ana = await make_user(client, db_session, "ana.tie@example.com", "Ana")
+    leo = await make_user(client, db_session, "leo.tie@example.com", "Leo")
+    bea = await make_user(client, db_session, "bea.tie@example.com", "Bea")
+    # "Alfa" comes first by name, but "Zeta" gets one more member: same matches, so Zeta goes first
+    alfa = (await client.post("/communities", json={"title": "Alfa ajedrez", "interest_tags": ["viajes"]}, headers=ana[0])).json()
+    zeta = (await client.post("/communities", json={"title": "Zeta ajedrez", "interest_tags": ["viajes"]}, headers=ana[0])).json()
+    assert (await client.post(f"/communities/{zeta['id']}/join", json={}, headers=leo[0])).status_code == 200
+    await client.post("/me/interests", json={"interest_slugs": ["viajes"]}, headers=bea[0])
+    got = [c["id"] for c in (await client.get("/communities/suggested", headers=bea[0])).json()]
+    assert zeta["id"] in got and alfa["id"] in got and got.index(zeta["id"]) < got.index(alfa["id"])
