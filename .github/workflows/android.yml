@@ -82,10 +82,10 @@ jobs:
           path: smoke/
           if-no-files-found: ignore
           retention-days: 3
-      - name: Version
+      - name: Version (the repository's release, X.Y.Z)
         run: |
-          MM=$(sed -n 's/.*versionName = "\([0-9]*\.[0-9]*\)\.".*/\1/p' android/app/build.gradle.kts)
-          echo "ANDROID_VERSION=$MM.${{ github.run_number }}" >> "$GITHUB_ENV"
+          V=$(sed -n 's/.*versionName = "\([0-9.]*\)".*/\1/p' android/app/build.gradle.kts)
+          echo "ANDROID_VERSION=$V" >> "$GITHUB_ENV"
       - name: Publish to the rolling android-latest pre-release
         if: ${{ !inputs.release_tag }}
         env:
@@ -105,20 +105,22 @@ jobs:
           echo "build ${{ github.run_number }} · ${GITHUB_SHA::7} · $ANDROID_VERSION" > android-build.txt
           gh release upload android-latest android-build.txt --clobber
       # Google Play: with the service account's key in the PLAY_SERVICE_ACCOUNT_JSON secret (see docs/play-store/AUTO_UPLOAD.md)
-      # every new build goes to the internal testing track by itself; without it nothing changes.
+      # every new build goes to Play by itself, to the track in the PLAY_TRACK variable (alpha = closed testing by
+      # default; internal, beta or production), named "X.Y.Z (build)"; without the secret nothing changes.
       - name: Is there a Google Play key?
         env:
           PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
         run: |
           if [ -n "$PLAY_JSON" ]; then echo "HAS_PLAY=true" >> "$GITHUB_ENV"; else echo "No PLAY_SERVICE_ACCOUNT_JSON, so no upload to Google Play."; fi
-      - name: Upload to Google Play (internal testing)
+      - name: Upload to Google Play
         if: ${{ !inputs.release_tag && env.HAS_PLAY == 'true' }}
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: app.meetgo.android
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-          track: internal
+          releaseName: ${{ env.ANDROID_VERSION }} (${{ github.run_number }})
+          track: ${{ vars.PLAY_TRACK || 'alpha' }}
           status: completed
       - name: Attach to the version release
         if: ${{ inputs.release_tag }}

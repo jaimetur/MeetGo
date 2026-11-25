@@ -3,13 +3,22 @@ name: 📸 Play screenshots
 # Takes the Google Play store screenshots again, in every language and for every device Play asks for (phone, 7" and
 # 10" tablet, Chromebook), from a demo account with made-up content in each language (app.demo.play_review --lang).
 # tools/play_screenshots.py does it.
-# - Run by hand (Actions → Play screenshots → Run workflow, on a branch): the images are committed to that branch in
-#   assets/play-store/<device>/<lang>/, ready to upload to each language of the store listing.
+# - On every push to main or to a release branch (X.Y.Z) that changes what they show (the web app, the demo content,
+#   the translations or the tool), and by hand (Actions → Play screenshots → Run workflow): the images are committed to
+#   that same branch in assets/play-store/<device>/<lang>/ and, if the PLAY_SERVICE_ACCOUNT_JSON secret exists, sent to
+#   the Play listing in each language (tools/play_listing.py).
 # - On a release (vX.Y.Z tag): they are attached to the release as play-screenshots.zip.
 on:
-  # Not on every push: the screenshots show relative times ("in 3 days") and would change, and be committed, each time.
   push:
+    branches: [main, "[0-9]+.[0-9]+.[0-9]+"]
     tags: ["v*"]
+    paths:
+      - "src/frontend/**"
+      - "src/backend/app/demo/**"
+      - "lang/**"
+      - "tools/play_screenshots.py"
+      - "tools/play_listing.py"
+      - ".github/workflows/play-screenshots.yml"
   workflow_dispatch:
 
 concurrency:
@@ -51,7 +60,7 @@ jobs:
           (cd src/frontend && npm ci --silent)
       - name: Screenshots
         run: python tools/play_screenshots.py --pg postgresql://postgres:play@127.0.0.1:5432 --redis redis://127.0.0.1:6379/0
-      - name: Commit them to the branch (run by hand)
+      - name: Commit them to the same branch
         if: github.ref_type == 'branch'
         run: |
           git config user.name "github-actions[bot]"
@@ -59,7 +68,16 @@ jobs:
           git add assets/play-store
           if git diff --cached --quiet; then echo "No changes"; exit 0; fi
           git commit -m "Play screenshots taken again [skip ci]"
-          git push
+          git pull --rebase origin "${{ github.ref_name }}" && git push origin "HEAD:${{ github.ref_name }}"
+      - name: Send them to the Play listing (if the PLAY_SERVICE_ACCOUNT_JSON secret exists)
+        if: github.ref_type == 'branch'
+        continue-on-error: true
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -z "$PLAY_SERVICE_ACCOUNT_JSON" ]; then echo "No PLAY_SERVICE_ACCOUNT_JSON: the listing is not updated."; exit 0; fi
+          pip install -q google-api-python-client google-auth
+          python tools/play_listing.py
       - name: Attach them to the release
         if: github.ref_type == 'tag'
         env:

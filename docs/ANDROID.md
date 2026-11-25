@@ -50,8 +50,9 @@ changes `android/`, and can be run by hand (*Run workflow*). It leaves `meetgo-a
 `meetgo-android.aab` (for Google Play) and `android-build.txt` (build, commit and version) in the rolling pre-release
 `android-latest`. Called from another workflow with `release_tag`, it attaches the APK and AAB to that release instead.
 
-- `versionCode` is the workflow's run number and `versionName` is `<major.minor>.<run number>`. The major.minor is in
-  `android/app/build.gradle.kts`; `tools/CreateUpdateRelease.py` rewrites it with every release.
+- `versionName` is the repository's release (`X.Y.Z`, the same as `pyproject.toml` and the CHANGELOG), written in
+  `android/app/build.gradle.kts` by `tools/CreateUpdateRelease.py`; `versionCode` is the workflow's run number, which
+  Google Play needs to grow with every upload. Play shows them as «0.2.0 (45)».
 - Locally: open `android/` in Android Studio (JDK 17, Gradle 8.11.1; there is no Gradle wrapper in the repository), or
   run `gradle assembleDebug` in `android/`. Without `android/app/google-services.json` the app builds without push.
 

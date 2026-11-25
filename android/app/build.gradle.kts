@@ -18,9 +18,10 @@ android {
         applicationId = "app.meetgo.android"
         minSdk = 28
         targetSdk = 36
-        // the patch is the CI build number; tools/CreateUpdateRelease.py rewrites the major.minor
+        // versionName is the repository's release (X.Y.Z), rewritten by tools/CreateUpdateRelease.py; versionCode is the
+        // CI build number, which Google Play needs to grow with every upload (Play shows "0.2.0 (45)")
         versionCode = (System.getenv("MEETGO_ANDROID_BUILD") ?: "1").toInt()
-        versionName = "0.2." + (System.getenv("MEETGO_ANDROID_BUILD") ?: "0")
+        versionName = "0.2.0"
     }
 
     // in CI, if the keystore is in the secrets, the app is signed with it; otherwise with the debug key

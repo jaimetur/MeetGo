@@ -108,6 +108,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Google Play shows the repository's version (versionName = the release X.Y.Z, versionCode = the build number), every Android build of main or a release branch is uploaded to the track in the `PLAY_TRACK` variable (closed testing by default), and the Play screenshots are taken again on every relevant push to main or a release branch and sent to the store listing in each language (`tools/play_listing.py`).
 - Communities show an icon of their hobby (hiking, cycling, reading, cinema, football, padel, beach, coffee, travel…) on compact cards and on their cover, also in the chat list. Rules support headings, lists, highlight boxes, bold, italic, underline, colours and emojis, with a formatting toolbar and a preview, and the information panel is easier to read on phones.
 - Installed on the iPhone, the app fills the whole screen (iOS left a strip the height of the status bar empty at the bottom), and the tab bar sits just above the home indicator.
 - Account page reorganised: a card with your photo, name, email and area and the sign-out button always in view, and tabs for profile (about you, your area, privacy and security), interests, notifications and settings.

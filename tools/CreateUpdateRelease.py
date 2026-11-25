@@ -5,7 +5,7 @@ Adapted from DriveTest Analyzer's and BodyLens' tool of the same name. A MeetGo 
   - a branch named after the version (X.Y.Z), committed and pushed to origin;
   - a `## Release: vX.Y.Z` block on top of CHANGELOG.md, whose header gives the current version and release date;
   - the same version in pyproject.toml, src/frontend/package.json and src/frontend/package-lock.json;
-  - the major.minor of the Android app's versionName (android/app/build.gradle.kts; the patch is the CI build number).
+  - the Android app's versionName (android/app/build.gradle.kts; its versionCode is the CI build number).
 
 Usage:
   python tools/CreateUpdateRelease.py                                 # window (Tk); questions in the terminal without Tk
@@ -108,9 +108,8 @@ def replace_package_lock_version(content: str, version: str) -> str:
 
 
 def replace_android_version(content: str, version: str) -> str:
-    """Return the Gradle script with the major.minor of versionName updated (the patch is the CI build number)."""
-    major, minor, _ = version.split('.')
-    content, count = re.subn(r'(versionName\s*=\s*")\d+\.\d+\.(")', rf'\g<1>{major}.{minor}.\g<2>', content, count=1)
+    """Return the Gradle script with versionName set to the release (the same version Google Play shows)."""
+    content, count = re.subn(r'(versionName\s*=\s*).*$', rf'\g<1>"{version}"', content, count=1, flags=re.MULTILINE)
     if count != 1:
         raise RuntimeError('Unable to update versionName in android/app/build.gradle.kts.')
     return content
