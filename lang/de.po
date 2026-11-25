@@ -3236,6 +3236,45 @@ msgstr "Wer am meisten organisiert (90 Tage)"
 msgid "ui_stats_private"
 msgstr "Nur das Team der Community sieht das."
 
+msgid "ui_sending"
+msgstr "Wird gesendet"
+
+msgid "ui_delivered"
+msgstr "Zugestellt"
+
+msgid "ui_last_seen_today"
+msgstr "zuletzt heute um {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "zuletzt gestern um {time}"
+
+msgid "ui_last_seen_date"
+msgstr "zuletzt am {date} um {time}"
+
+msgid "ui_privacy_title"
+msgstr "Datenschutz"
+
+msgid "ui_privacy_receipts"
+msgstr "Lesebestätigungen"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "Wenn du sie ausschaltest, sendest und siehst du in privaten Chats keine blauen Haken. In Gruppen werden sie immer angezeigt."
+
+msgid "ui_privacy_last_seen"
+msgstr "Wer sieht, wann ich zuletzt online war"
+
+msgid "ui_privacy_everyone"
+msgstr "Alle"
+
+msgid "ui_privacy_friends"
+msgstr "Meine Freunde"
+
+msgid "ui_privacy_nobody"
+msgstr "Niemand"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "Wählst du „Niemand“, siehst du auch bei anderen nicht, wann sie zuletzt online waren."
+
 msgid "ui_install_title"
 msgstr "MeetGo installieren"
 

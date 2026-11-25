@@ -3236,6 +3236,45 @@ msgstr "组织最多的人（90 天）"
 msgid "ui_stats_private"
 msgstr "只有社区团队能看到。"
 
+msgid "ui_sending"
+msgstr "发送中"
+
+msgid "ui_delivered"
+msgstr "已送达"
+
+msgid "ui_last_seen_today"
+msgstr "最后上线 今天 {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "最后上线 昨天 {time}"
+
+msgid "ui_last_seen_date"
+msgstr "最后上线 {date} {time}"
+
+msgid "ui_privacy_title"
+msgstr "隐私"
+
+msgid "ui_privacy_receipts"
+msgstr "已读回执"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "关闭后，在私聊中你既不会发送也看不到蓝色双勾。群聊中始终显示。"
+
+msgid "ui_privacy_last_seen"
+msgstr "谁能看到我的最后上线时间"
+
+msgid "ui_privacy_everyone"
+msgstr "所有人"
+
+msgid "ui_privacy_friends"
+msgstr "我的好友"
+
+msgid "ui_privacy_nobody"
+msgstr "没有人"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "选择“没有人”后，你也看不到别人的最后上线时间。"
+
 msgid "ui_install_title"
 msgstr "安装 MeetGo"
 

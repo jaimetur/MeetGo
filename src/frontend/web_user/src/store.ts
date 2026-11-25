@@ -13,7 +13,8 @@ export type State = {
   messages: Record<number, MessageList>;
   threads: Record<number, Thread>;
   typing: Record<number, Record<number, { name: string; until: number; thread: number | null }>>;
-  readStates: Record<number, Record<number, number>>;
+  // per chat and person: up to which message their app has it (delivered, ✓✓) and up to which they read it (blue)
+  readStates: Record<number, Record<number, { read: number; delivered: number }>>;
   billing: BillingStatus | null;
   requests: { friends: number; dms: number };
   connected: boolean;
@@ -95,6 +96,19 @@ export async function loadConversations() {
   const map: Record<number, Conversation> = {};
   list.forEach((c) => (map[c.id] = c));
   setState({ conversations: map, loadedConversations: true });
+  // what was sent to me while I was away has now reached my app: the senders see ✓✓
+  api.deliveredAll().catch(() => undefined);
+}
+
+/** One person's receipts in a chat (from the read-state list or a live event). */
+export function setReceipt(convId: number, userId: number, patch: { read?: number; delivered?: number }) {
+  setState((st) => {
+    const conv = st.readStates[convId] || {};
+    const cur = conv[userId] || { read: 0, delivered: 0 };
+    const read = Math.max(cur.read, patch.read ?? 0);
+    const delivered = Math.max(cur.delivered, patch.delivered ?? 0, read);
+    return { readStates: { ...st.readStates, [convId]: { ...conv, [userId]: { read, delivered } } } };
+  });
 }
 
 export async function refreshConversation(id: number) {

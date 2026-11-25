@@ -3236,6 +3236,45 @@ msgstr "Qui organitza més (90 dies)"
 msgid "ui_stats_private"
 msgstr "Només ho veu l’equip de la comunitat."
 
+msgid "ui_sending"
+msgstr "Enviant"
+
+msgid "ui_delivered"
+msgstr "Lliurat"
+
+msgid "ui_last_seen_today"
+msgstr "últ. cop avui a les {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "últ. cop ahir a les {time}"
+
+msgid "ui_last_seen_date"
+msgstr "últ. cop el {date} a les {time}"
+
+msgid "ui_privacy_title"
+msgstr "Privadesa"
+
+msgid "ui_privacy_receipts"
+msgstr "Confirmacions de lectura"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "Si les desactives, no enviaràs ni rebràs el doble check blau als xats privats. Als grups sempre es veuen."
+
+msgid "ui_privacy_last_seen"
+msgstr "Qui veu la meva última connexió"
+
+msgid "ui_privacy_everyone"
+msgstr "Tothom"
+
+msgid "ui_privacy_friends"
+msgstr "Els meus amics"
+
+msgid "ui_privacy_nobody"
+msgstr "Ningú"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "Si tries «Ningú», tampoc veuràs l’última connexió dels altres."
+
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"
 

@@ -88,6 +88,10 @@ class User(Base):
     bio: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     accept_dm: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Privacy, as in WhatsApp: blue ticks (read receipts in direct messages) and who sees my "last seen" (all, friends,
+    # nobody); both work both ways: switching them off hides the others' too.
+    read_receipts: Mapped[bool] = mapped_column(Boolean, default=True)
+    last_seen_privacy: Mapped[str] = mapped_column(String(16), default="all")
     calendar_token: Mapped[str | None] = mapped_column(String(64), nullable=True, unique=True)  # my plans as a calendar feed
     created_at: Mapped[datetime] = mapped_column(DateTime, default=naive_utcnow)
     last_active_at: Mapped[datetime] = mapped_column(DateTime, default=naive_utcnow)
@@ -236,6 +240,7 @@ class ConversationMember(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True, index=True)
     role: Mapped[str] = mapped_column(String(16), default=MemberRole.MEMBER.value)
     joined_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    last_delivered_message_id: Mapped[int] = mapped_column(BigInteger, default=0)  # reached the person's app (✓✓)
     last_read_message_id: Mapped[int] = mapped_column(BigInteger, default=0)
     notify: Mapped[str] = mapped_column(String(16), default="all")  # all | mentions | none
     muted_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

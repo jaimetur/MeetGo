@@ -1433,3 +1433,12 @@ button.adm-tile:hover { border-color: var(--line2); background: var(--raise); }
 .cbars i { display: block; width: 100%; border-radius: 4px 4px 2px 2px; background: var(--grad2); }
 .cbars i.zero { background: var(--line2); }
 a.btn { text-decoration: none; }
+
+/* WhatsApp ticks: ✓ sent, ✓✓ delivered (grey), ✓✓ read (blue); on my blue bubbles the read ones are a bright sky blue */
+.ticks { margin-left: 4px; vertical-align: -2px; }
+.ticks .ic { width: 17px; height: 17px; }
+.ticks.t-pending, .ticks.t-sent, .ticks.t-delivered { color: var(--muted); }
+.ticks.t-read { color: #34b7f1; }
+.msg.mine .ticks.t-pending, .msg.mine .ticks.t-sent, .msg.mine .ticks.t-delivered { color: rgba(255, 255, 255, 0.5); }
+.msg.mine .ticks.t-read { color: #4df3ff; filter: drop-shadow(0 0 1.5px rgba(0, 30, 80, 0.7)); }
+.msg.mine .ticks.t-read .ic { stroke-width: 2.8; }

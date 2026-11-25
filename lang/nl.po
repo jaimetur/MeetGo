@@ -3236,6 +3236,45 @@ msgstr "Wie het meest organiseert (90 dagen)"
 msgid "ui_stats_private"
 msgstr "Alleen het team van de community ziet dit."
 
+msgid "ui_sending"
+msgstr "Verzenden"
+
+msgid "ui_delivered"
+msgstr "Afgeleverd"
+
+msgid "ui_last_seen_today"
+msgstr "laatst gezien vandaag om {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "laatst gezien gisteren om {time}"
+
+msgid "ui_last_seen_date"
+msgstr "laatst gezien op {date} om {time}"
+
+msgid "ui_privacy_title"
+msgstr "Privacy"
+
+msgid "ui_privacy_receipts"
+msgstr "Leesbevestigingen"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "Zet je ze uit, dan stuur en zie je geen blauwe vinkjes in privéchats. In groepen zijn ze altijd zichtbaar."
+
+msgid "ui_privacy_last_seen"
+msgstr "Wie ziet wanneer ik het laatst online was"
+
+msgid "ui_privacy_everyone"
+msgstr "Iedereen"
+
+msgid "ui_privacy_friends"
+msgstr "Mijn vrienden"
+
+msgid "ui_privacy_nobody"
+msgstr "Niemand"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "Kies je ‘Niemand’, dan zie je dat van anderen ook niet."
+
 msgid "ui_install_title"
 msgstr "MeetGo installeren"
 

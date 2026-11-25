@@ -2,7 +2,7 @@ import { api, WS_BASE } from "./api";
 import { emitBoardEvent } from "./board";
 import {
   addMessage, catchUp, getState, loadConversations, loadMessages, patchConversation, refreshConversation, removeConversation,
-  refreshMyPlansSoon, replaceMessage, setReactions, setState, updateMessage, forgetConversation } from "./store";
+  refreshMyPlansSoon, replaceMessage, setReactions, setReceipt, setState, updateMessage, forgetConversation } from "./store";
 import type { Message } from "./types";
 
 let ws: WebSocket | null = null;
@@ -87,6 +87,15 @@ export function sendTyping(conversationId: number, threadRootId: number | null =
   ws.send(JSON.stringify({ type: "typing", conversation_id: conversationId, thread_root_id: threadRootId }));
 }
 
+const deliverTimers: Record<number, number> = {};
+function ackDelivered(conversationId: number) {
+  if (deliverTimers[conversationId]) return;
+  deliverTimers[conversationId] = window.setTimeout(() => {
+    delete deliverTimers[conversationId];
+    api.delivered(conversationId).catch(() => undefined);
+  }, 800);
+}
+
 function handle(ev: any) {
   const s = getState();
   const meId = s.me?.id;
@@ -113,6 +122,8 @@ function handle(ev: any) {
       // Typing stops when the message arrives.
       if (m.sender) clearTyping(m.conversation_id, m.sender.id);
       if (m.sender?.id !== meId) onIncoming?.(m);
+      // it reached my app: the sender sees ✓✓ (direct messages and groups)
+      if (m.sender?.id !== meId && conv.kind !== "channel") ackDelivered(m.conversation_id);
       break;
     }
     case "message.updated":
@@ -128,8 +139,11 @@ function handle(ev: any) {
       if (ev.user_id === meId) {
         refreshConversation(ev.conversation_id);
       } else {
-        setState((st) => ({ readStates: { ...st.readStates, [ev.conversation_id]: { ...(st.readStates[ev.conversation_id] || {}), [ev.user_id]: ev.last_read_message_id } } }));
+        setReceipt(ev.conversation_id, ev.user_id, { read: ev.last_read_message_id });
       }
+      break;
+    case "delivered.updated":
+      if (ev.user_id !== meId) setReceipt(ev.conversation_id, ev.user_id, { delivered: ev.last_delivered_message_id });
       break;
     case "typing": {
       const until = Date.now() + 5000;
@@ -144,7 +158,8 @@ function handle(ev: any) {
         const conversations = { ...st.conversations };
         for (const c of Object.values(conversations)) {
           const other = c.other_user;
-          if (other && other.id === ev.user_id) conversations[c.id] = { ...c, other_user: { ...other, online: !!ev.online } };
+          // going offline: their "last seen" is now (only if they let me see it)
+          if (other && other.id === ev.user_id) conversations[c.id] = { ...c, other_user: { ...other, online: !!ev.online, last_seen_at: !ev.online && other.last_seen_at ? new Date().toISOString() : other.last_seen_at } };
         }
         return { conversations };
       });

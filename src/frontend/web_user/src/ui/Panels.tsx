@@ -121,9 +121,10 @@ function ProfileCard({ conv, userId, member, onClose, onChanged }: { conv: Conve
     api.user(userId).then(setUser).catch(() => setUser({ id: userId, display_name: member?.display_name || "—", hidden: true }));
     api.following().then(setFollowing).catch(() => undefined);
   }, [userId]);
+  // every hook before the early return: React needs the same hooks on every render (it used to freeze the app here)
+  const blocked = useStore((s) => s.blocked);
   if (!user) return null;
   const isMe = me?.id === userId;
-  const blocked = useStore((s) => s.blocked);
   const staff = ["owner", "admin", "moderator"].includes(conv.role) || me?.role === "admin";
   const canModerate = staff && !isMe && member && member.role !== "owner" && conv.kind !== "dm";
 

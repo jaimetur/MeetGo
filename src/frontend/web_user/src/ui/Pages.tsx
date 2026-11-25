@@ -502,6 +502,7 @@ export function AccountPage() {
               <button className="btn" onClick={() => native.changeServer()}>{t("ui_change_server")}</button>
             </div>
           ) : null}
+          <PrivacyBox />
           <CalendarFeed />
           <BlockedPeople />
           <DeleteAccount />
@@ -706,6 +707,31 @@ function DeleteAccount() {
 }
 
 /** The text size of the whole app on this device: small, normal or large, with a preview. */
+/** Privacy as in WhatsApp: read receipts (blue ticks) and who sees my "last seen"; both work both ways. */
+function PrivacyBox() {
+  const me = useStore((s) => s.me);
+  if (!me) return null;
+  const save = (patch: Record<string, unknown>) => api.updateProfile(patch).then((u) => { setState({ me: u }); toast(t("ui_saved")); }).catch((e) => toast(e.message, "error"));
+  return (
+    <section className="box stack">
+      <h3 className="boxtitle"><Icon name="lock" size="sm" /> {t("ui_privacy_title")}</h3>
+      <label className="tgl" htmlFor="acc-read-receipts">
+        <span className="grow">{t("ui_privacy_receipts")}<small>{t("ui_privacy_receipts_hint")}</small></span>
+        <input id="acc-read-receipts" type="checkbox" role="switch" checked={me.read_receipts !== false} onChange={(e) => save({ read_receipts: e.target.checked })} />
+        <span className="sw" aria-hidden="true" />
+      </label>
+      <label className="fld setfld">{t("ui_privacy_last_seen")}
+        <select id="acc-last-seen" className="inp" value={me.last_seen_privacy || "all"} onChange={(e) => save({ last_seen_privacy: e.target.value })}>
+          <option value="all">{t("ui_privacy_everyone")}</option>
+          <option value="friends">{t("ui_privacy_friends")}</option>
+          <option value="nobody">{t("ui_privacy_nobody")}</option>
+        </select>
+        <small className="muted">{t("ui_privacy_last_seen_hint")}</small>
+      </label>
+    </section>
+  );
+}
+
 /** My plans as a calendar the phone (or Google) subscribes to and keeps up to date. */
 function CalendarFeed() {
   const [path, setPath] = useState<string | null>(null);

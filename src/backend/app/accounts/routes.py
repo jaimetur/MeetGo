@@ -99,6 +99,10 @@ async def update_profile(payload: UpdateProfileIn, db: AsyncSession = Depends(ge
         user.city = payload.city.strip() or None
     if payload.accept_dm is not None:
         user.accept_dm = bool(payload.accept_dm)
+    if payload.read_receipts is not None:
+        user.read_receipts = payload.read_receipts
+    if payload.last_seen_privacy is not None:
+        user.last_seen_privacy = payload.last_seen_privacy
     if payload.avatar_url is not None:
         user.avatar_url = payload.avatar_url.strip() or None
     if payload.bio is not None:

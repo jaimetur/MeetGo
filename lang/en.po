@@ -3236,6 +3236,45 @@ msgstr "Who organises most (90 days)"
 msgid "ui_stats_private"
 msgstr "Only the community's team sees this."
 
+msgid "ui_sending"
+msgstr "Sending"
+
+msgid "ui_delivered"
+msgstr "Delivered"
+
+msgid "ui_last_seen_today"
+msgstr "last seen today at {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "last seen yesterday at {time}"
+
+msgid "ui_last_seen_date"
+msgstr "last seen {date} at {time}"
+
+msgid "ui_privacy_title"
+msgstr "Privacy"
+
+msgid "ui_privacy_receipts"
+msgstr "Read receipts"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "If you turn them off, you won't send or receive blue ticks in private chats. In groups they always show."
+
+msgid "ui_privacy_last_seen"
+msgstr "Who sees my last seen"
+
+msgid "ui_privacy_everyone"
+msgstr "Everyone"
+
+msgid "ui_privacy_friends"
+msgstr "My friends"
+
+msgid "ui_privacy_nobody"
+msgstr "Nobody"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "If you pick “Nobody”, you won't see other people's last seen either."
+
 msgid "ui_install_title"
 msgstr "Install MeetGo"
 

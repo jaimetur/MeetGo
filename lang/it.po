@@ -3236,6 +3236,45 @@ msgstr "Chi organizza di più (90 giorni)"
 msgid "ui_stats_private"
 msgstr "Lo vede solo il team della community."
 
+msgid "ui_sending"
+msgstr "Invio…"
+
+msgid "ui_delivered"
+msgstr "Consegnato"
+
+msgid "ui_last_seen_today"
+msgstr "ultimo accesso oggi alle {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "ultimo accesso ieri alle {time}"
+
+msgid "ui_last_seen_date"
+msgstr "ultimo accesso il {date} alle {time}"
+
+msgid "ui_privacy_title"
+msgstr "Privacy"
+
+msgid "ui_privacy_receipts"
+msgstr "Conferme di lettura"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "Se le disattivi, non invierai né vedrai la doppia spunta blu nelle chat private. Nei gruppi si vedono sempre."
+
+msgid "ui_privacy_last_seen"
+msgstr "Chi vede il mio ultimo accesso"
+
+msgid "ui_privacy_everyone"
+msgstr "Tutti"
+
+msgid "ui_privacy_friends"
+msgstr "I miei amici"
+
+msgid "ui_privacy_nobody"
+msgstr "Nessuno"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "Se scegli «Nessuno», non vedrai nemmeno l’ultimo accesso degli altri."
+
 msgid "ui_install_title"
 msgstr "Installa MeetGo"
 

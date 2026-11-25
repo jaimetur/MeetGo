@@ -256,6 +256,11 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
         for cid, u in res.all():
             others[cid] = u
     online = await online_ids([u.id for u in others.values()])
+    friends = set()
+    if others:
+        from app.core.models import Friendship
+        friends = set((await db.execute(select(Friendship.friend_id).where(
+            Friendship.user_id == user.id, Friendship.friend_id.in_([u.id for u in others.values()])))).scalars().all())
 
     interest_ids = {c.interest_id for _, c in rows if c.interest_id}
     interests = {}
@@ -267,7 +272,9 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
         last = last_msgs.get(conv.last_message_id or 0)
         if last and last.id <= (member.cleared_message_id or 0):
             last = None
-        item = conversation_base(conv, member, interests.get(conv.interest_id), others.get(conv.id), online)
+        other = others.get(conv.id)
+        item = conversation_base(conv, member, interests.get(conv.interest_id), other, online,
+                                 last_seen_shown(user, other, bool(other and other.id in friends)))
         item.update({
             "member_count": counts.get(conv.id, 0),
             "unread_count": min(unread.get(conv.id, 0), 999),
@@ -286,8 +293,19 @@ def _ts(value: str | None) -> float:
     return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
 
 
+def last_seen_shown(viewer: User, other: User | None, is_friend: bool) -> str | None:
+    """The other person's "last seen", as in WhatsApp: as they allow it (everyone, friends, nobody), and only if I share
+    mine (with "nobody" I do not see anyone's)."""
+    if not other or not other.last_seen_at or (viewer.last_seen_privacy or "all") == "nobody":
+        return None
+    allowed = other.last_seen_privacy or "all"
+    if allowed == "nobody" or (allowed == "friends" and not is_friend):
+        return None
+    return iso(other.last_seen_at)
+
+
 def conversation_base(conv: Conversation, member: ConversationMember, interest: Interest | None,
-                      other: User | None, online: set[int]) -> dict:
+                      other: User | None, online: set[int], last_seen: str | None = None) -> dict:
     if conv.kind == "channel":
         title = interest.name if interest else (conv.title or "chat")
         slug = interest.slug if interest else None
@@ -310,7 +328,7 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
         "province": conv.province,
         "age_range": conv.age_range,
         "interest": {"id": interest.id, "slug": interest.slug, "name": interest.name} if interest else None,
-        "other_user": ({**user_summary(other), "online": other.id in online} if other else None),
+        "other_user": ({**user_summary(other), "online": other.id in online, "last_seen_at": last_seen} if other else None),
         "role": member.role,
         "notify": member.notify,
         "muted_until": iso(member.muted_until),

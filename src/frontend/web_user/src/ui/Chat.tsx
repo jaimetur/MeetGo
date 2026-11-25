@@ -81,7 +81,9 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
     })();
     const c = getState().conversations[conversationId];
     if (c && c.kind !== "channel") {
-      api.readState(conversationId).then((rows) => setState((s) => ({ readStates: { ...s.readStates, [conversationId]: Object.fromEntries(rows.map((r) => [r.user_id, r.last_read_message_id])) } }))).catch(() => undefined);
+      api.readState(conversationId).then((rows) => setState((s) => ({
+        readStates: { ...s.readStates, [conversationId]: Object.fromEntries(rows.map((r) => [r.user_id, { read: r.last_read_message_id, delivered: Math.max(r.last_delivered_message_id || 0, r.last_read_message_id) }])) },
+      }))).catch(() => undefined);
     }
     return () => {
       cancelled = true;
@@ -157,8 +159,15 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
   }
 
   const typingNames = Object.entries(typingMap || {}).filter(([uid, v]) => +uid !== me?.id && v.until > Date.now() && !v.thread).map(([, v]) => v.name);
-  const othersRead = readState ? Math.max(0, ...Object.values(readState)) : 0;
-  const myLastId = [...items].reverse().find((m) => m.sender?.id === me?.id && m.id > 0)?.id;
+  // WhatsApp ticks: ✓ sent, ✓✓ in everyone's app, blue ✓✓ read by everyone (in groups, by all the members)
+  const receipts = readState ? Object.values(readState) : [];
+  const allRead = receipts.length ? Math.min(...receipts.map((r) => r.read)) : 0;
+  const allDelivered = receipts.length ? Math.min(...receipts.map((r) => Math.max(r.delivered, r.read))) : 0;
+  const tickFor = (m: Message): Tick | null => {
+    if (conv.kind === "channel" || m.sender?.id !== me?.id || m.deleted) return null;
+    if (m.pending || m.id <= 0) return "pending";
+    return m.id <= allRead ? "read" : m.id <= allDelivered ? "delivered" : "sent";
+  };
   const readOnly = billing && billing.required && !billing.active;
   const silencedUntil = conv.silenced_until ? new Date(conv.silenced_until) : null;
 
@@ -219,7 +228,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
                     editing={editing === m.id} onEditDone={() => setEditing(null)}
                     menuOpen={menuFor === m.id} closeMenu={() => setMenuFor(null)}
                     flash={flashId === m.id}
-                    readTicks={conv.kind !== "channel" && m.id === myLastId ? (othersRead >= m.id ? "read" : "sent") : null}
+                    readTicks={tickFor(m)}
                   />
                 );
               }}
@@ -385,6 +394,28 @@ export function ConvMenuItems({ conv, onDone }: { conv: Conversation; onDone: ()
   );
 }
 
+type Tick = "pending" | "sent" | "delivered" | "read";
+
+function Ticks({ tick }: { tick: Tick }) {
+  const title = { pending: t("ui_sending"), sent: t("ui_sent"), delivered: t("ui_delivered"), read: t("ui_read") }[tick];
+  return (
+    <span className={"ticks t-" + tick} title={title} aria-label={title}>
+      <Icon name={tick === "pending" ? "clock" : tick === "sent" ? "check" : "check2"} size="sm" />
+    </span>
+  );
+}
+
+/** "last seen today at 21:30", "yesterday at…", "on 12/11 at…" (as in WhatsApp). */
+export function lastSeenText(iso: string): string {
+  const d = new Date(iso);
+  const time = d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  const day = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diff = Math.round((day(new Date()) - day(d)) / 86400000);
+  if (diff <= 0) return t("ui_last_seen_today", { time });
+  if (diff === 1) return t("ui_last_seen_yesterday", { time });
+  return t("ui_last_seen_date", { date: d.toLocaleDateString(undefined, { day: "numeric", month: "short" }), time });
+}
+
 function ChatHeader({ conv }: { conv: Conversation }) {
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
@@ -393,7 +424,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
   const muted = conv.notify === "none" || (conv.muted_until && new Date(conv.muted_until) > new Date());
 
   let sub: React.ReactNode = conv.subtitle;
-  if (conv.kind === "dm") sub = conv.other_user?.online ? <span className="on">{t("ui_online")}</span> : t("ui_offline");
+  if (conv.kind === "dm") sub = conv.other_user?.online ? <span className="on">{t("ui_online")}</span> : conv.other_user?.last_seen_at ? lastSeenText(conv.other_user.last_seen_at) : null;
   else sub = t("ui_members_n", { n: conv.member_count });
 
   return (
@@ -475,7 +506,7 @@ const MOD_REASONS: Record<string, string> = {
 export function MessageItem(props: {
   m: Message; prev?: Message; conv: Conversation; meId?: number; staff: boolean; actions: MessageActions; inThread?: boolean;
   showNewSep?: boolean; editing?: boolean; onEditDone?: () => void; menuOpen?: boolean; closeMenu?: () => void; flash?: boolean;
-  readTicks?: "read" | "sent" | null;
+  readTicks?: Tick | null;
 }) {
   const { m, prev, conv, meId, staff, actions, inThread } = props;
   const pressTimer = useRef<number | null>(null);
@@ -548,7 +579,7 @@ export function MessageItem(props: {
             <div className={"mt" + (isOnlyEmoji(m.body) && !m.attachments.length ? " big" : "")}>
               {m.body ? <Rich text={m.body} /> : null}
               {m.edited_at ? <span className="edited"> ({t("ui_edited")})</span> : null}
-              {props.readTicks ? <span className="ticks" title={props.readTicks === "read" ? t("ui_read") : t("ui_sent")}> <Icon name={props.readTicks === "read" ? "check2" : "check"} size="sm" /></span> : null}
+              {props.readTicks ? <Ticks tick={props.readTicks} /> : null}
             </div>
           )}
           {m.attachments.length ? <Attachments m={m} /> : null}

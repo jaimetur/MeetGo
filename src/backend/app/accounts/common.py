@@ -71,7 +71,7 @@ def me_out(u: User) -> MeOut:
         role=u.role or "user", bot_role=u.bot_role, phone=u.phone, login_count=u.login_count or 0, last_login_at=u.last_login_at,
         last_seen_at=u.last_seen_at, total_connected_seconds=u.total_connected_seconds or 0,
         session_active=bool(u.session_active), session_started_at=u.session_started_at,
-        email_prefs=prefs_of(u),
+        email_prefs=prefs_of(u), read_receipts=u.read_receipts is not False, last_seen_privacy=u.last_seen_privacy or "all",
     )
 
 

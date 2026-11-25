@@ -15,6 +15,8 @@ export type Me = UserSummary & {
   email_verified: boolean;
   dob_change_count: number;
   email_prefs?: Record<string, boolean>;
+  read_receipts?: boolean;
+  last_seen_privacy?: "all" | "friends" | "nobody";
 };
 
 export type Kind = "channel" | "group" | "dm";
@@ -40,7 +42,7 @@ export type Conversation = {
   province: string | null;
   age_range: string | null;
   interest: { id: number; slug: string; name: string } | null;
-  other_user: (UserSummary & { online: boolean }) | null;
+  other_user: (UserSummary & { online: boolean; last_seen_at?: string | null }) | null;
   role: string;
   notify: "all" | "mentions" | "none";
   muted_until: string | null;

@@ -3236,6 +3236,45 @@ msgstr "Quién más organiza (90 días)"
 msgid "ui_stats_private"
 msgstr "Solo lo ve el equipo de la comunidad."
 
+msgid "ui_sending"
+msgstr "Enviando"
+
+msgid "ui_delivered"
+msgstr "Entregado"
+
+msgid "ui_last_seen_today"
+msgstr "últ. vez hoy a las {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "últ. vez ayer a las {time}"
+
+msgid "ui_last_seen_date"
+msgstr "últ. vez el {date} a las {time}"
+
+msgid "ui_privacy_title"
+msgstr "Privacidad"
+
+msgid "ui_privacy_receipts"
+msgstr "Confirmaciones de lectura"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "Si las desactivas, no enviarás ni recibirás el doble check azul en los chats privados. En los grupos siempre se ven."
+
+msgid "ui_privacy_last_seen"
+msgstr "Quién ve mi última conexión"
+
+msgid "ui_privacy_everyone"
+msgstr "Todos"
+
+msgid "ui_privacy_friends"
+msgstr "Mis amigos"
+
+msgid "ui_privacy_nobody"
+msgstr "Nadie"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "Si eliges «Nadie», tampoco verás la última conexión de los demás."
+
 msgid "ui_install_title"
 msgstr "Instala MeetGo"
 

@@ -64,6 +64,8 @@ class MeOut(UserOut):
     session_started_at: UTCDateTime | None
     # Which automatic emails the person gets (mentions, messages, requests and, for administrators, reports).
     email_prefs: dict[str, bool] = Field(default_factory=dict)
+    read_receipts: bool = True
+    last_seen_privacy: str = "all"
 
 class EmailPrefsIn(BaseModel):
     mentions: bool | None = None
@@ -89,6 +91,8 @@ class UpdateProfileIn(BaseModel):
     accept_dm: bool | None = None
     avatar_url: str | None = None
     bio: str | None = None
+    read_receipts: bool | None = None
+    last_seen_privacy: str | None = Field(default=None, pattern="^(all|friends|nobody)$")
 
 class ForgotPasswordIn(BaseModel):
     email: str

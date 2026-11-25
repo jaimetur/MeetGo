@@ -221,14 +221,50 @@ async def set_reaction(db: AsyncSession, msg: Message, user: User, emoji: str, o
     return out
 
 
+def receipts_shared(conv: Conversation, reader: User | None, viewer: User | None) -> bool:
+    """Blue ticks, as in WhatsApp: always in groups; in direct messages only if both people keep read receipts on."""
+    if conv.kind != "dm":
+        return True
+    return bool(reader and viewer and reader.read_receipts is not False and viewer.read_receipts is not False)
+
+
 async def mark_read(db: AsyncSession, conv: Conversation, member: ConversationMember, message_id: int) -> int:
     upto = min(int(message_id), conv.last_message_id or 0)
     if upto > (member.last_read_message_id or 0):
         member.last_read_message_id = upto
+        member.last_delivered_message_id = max(member.last_delivered_message_id or 0, upto)  # read is delivered too
         await db.commit()
-        event = {"type": "read.updated", "conversation_id": conv.id, "user_id": member.user_id,
-                 "last_read_message_id": upto}
-        # Read receipts are visible in direct messages and groups; in channels only the reader's devices hear it.
-        to = await recipients(db, conv.id) if conv.kind != "channel" else [member.user_id]
-        await realtime.publish(to, event)
+        read = {"type": "read.updated", "conversation_id": conv.id, "user_id": member.user_id, "last_read_message_id": upto}
+        if conv.kind == "channel":  # no receipts in channels: only the reader's devices hear it
+            await realtime.publish([member.user_id], read)
+            return member.last_read_message_id
+        to = await recipients(db, conv.id)
+        users = {u.id: u for u in (await db.execute(select(User).where(User.id.in_(to)))).scalars().all()}
+        reader = users.get(member.user_id)
+        shared = [uid for uid in to if uid == member.user_id or receipts_shared(conv, reader, users.get(uid))]
+        hidden = [uid for uid in to if uid not in shared]
+        await realtime.publish(shared, read)
+        if hidden:  # they see it delivered (✓✓ grey), not read
+            await realtime.publish(hidden, {"type": "delivered.updated", "conversation_id": conv.id, "user_id": member.user_id,
+                                            "last_delivered_message_id": member.last_delivered_message_id})
     return member.last_read_message_id
+
+
+async def mark_delivered(db: AsyncSession, user: User, conv_ids: list[int] | None = None) -> int:
+    """My app has the messages (✓✓): direct messages and groups up to their last message. Tells the senders. Returns how
+    many conversations moved."""
+    q = select(ConversationMember, Conversation).join(Conversation, Conversation.id == ConversationMember.conversation_id).where(
+        ConversationMember.user_id == user.id, Conversation.kind.in_(("dm", "group")), ConversationMember.away.is_(False),
+        ConversationMember.banned.is_(False), Conversation.last_message_id > ConversationMember.last_delivered_message_id)
+    if conv_ids is not None:
+        q = q.where(Conversation.id.in_(conv_ids))
+    moved = []
+    for member, conv in (await db.execute(q)).all():
+        member.last_delivered_message_id = conv.last_message_id
+        moved.append(conv.id)
+    await db.commit()
+    for cid in moved:
+        event = {"type": "delivered.updated", "conversation_id": cid, "user_id": user.id,
+                 "last_delivered_message_id": (await db.get(Conversation, cid)).last_message_id}
+        await realtime.publish([u for u in await recipients(db, cid) if u != user.id], event)
+    return len(moved)

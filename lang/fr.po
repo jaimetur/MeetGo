@@ -3235,6 +3235,45 @@ msgstr "Qui organise le plus (90 jours)"
 msgid "ui_stats_private"
 msgstr "Visible seulement par l’équipe de la communauté."
 
+msgid "ui_sending"
+msgstr "Envoi…"
+
+msgid "ui_delivered"
+msgstr "Distribué"
+
+msgid "ui_last_seen_today"
+msgstr "vu aujourd’hui à {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "vu hier à {time}"
+
+msgid "ui_last_seen_date"
+msgstr "vu le {date} à {time}"
+
+msgid "ui_privacy_title"
+msgstr "Confidentialité"
+
+msgid "ui_privacy_receipts"
+msgstr "Confirmations de lecture"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "Si vous les désactivez, vous n’enverrez ni ne verrez les coches bleues dans les discussions privées. Dans les groupes, elles s’affichent toujours."
+
+msgid "ui_privacy_last_seen"
+msgstr "Qui voit ma dernière connexion"
+
+msgid "ui_privacy_everyone"
+msgstr "Tout le monde"
+
+msgid "ui_privacy_friends"
+msgstr "Mes amis"
+
+msgid "ui_privacy_nobody"
+msgstr "Personne"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "Si vous choisissez « Personne », vous ne verrez pas non plus la dernière connexion des autres."
+
 msgid "ui_install_title"
 msgstr "Installer MeetGo"
 

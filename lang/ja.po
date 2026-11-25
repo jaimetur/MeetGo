@@ -3236,6 +3236,45 @@ msgstr "よく主催する人（90 日）"
 msgid "ui_stats_private"
 msgstr "コミュニティの運営だけが見られます。"
 
+msgid "ui_sending"
+msgstr "送信中"
+
+msgid "ui_delivered"
+msgstr "配信済み"
+
+msgid "ui_last_seen_today"
+msgstr "最終オンライン 今日 {time}"
+
+msgid "ui_last_seen_yesterday"
+msgstr "最終オンライン 昨日 {time}"
+
+msgid "ui_last_seen_date"
+msgstr "最終オンライン {date} {time}"
+
+msgid "ui_privacy_title"
+msgstr "プライバシー"
+
+msgid "ui_privacy_receipts"
+msgstr "既読通知"
+
+msgid "ui_privacy_receipts_hint"
+msgstr "オフにすると、個別チャットで青い既読マークを送ることも見ることもできなくなります。グループでは常に表示されます。"
+
+msgid "ui_privacy_last_seen"
+msgstr "最終オンラインを見られる人"
+
+msgid "ui_privacy_everyone"
+msgstr "全員"
+
+msgid "ui_privacy_friends"
+msgstr "友達"
+
+msgid "ui_privacy_nobody"
+msgstr "なし"
+
+msgid "ui_privacy_last_seen_hint"
+msgstr "「なし」を選ぶと、他の人の最終オンラインも見られなくなります。"
+
 msgid "ui_install_title"
 msgstr "MeetGoをインストール"
 

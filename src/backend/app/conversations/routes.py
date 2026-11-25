@@ -20,7 +20,7 @@ from app.realtime import service as realtime
 from app.conversations.service import (
     conversations_out, dm_between, get_membership, is_staff, join, messages_out, require_member, user_summary,
 )
-from app.messaging.service import mark_read, recipients
+from app.messaging.service import mark_delivered, mark_read, receipts_shared, recipients
 
 from app.social.blocks import require_not_blocked
 
@@ -305,13 +305,34 @@ async def read(conv_id: int, payload: ReadIn, db: AsyncSession = Depends(get_db)
 
 @router.get("/conversations/{conv_id}/read-state", response_model=list[dict])
 async def read_state(conv_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    """Where each member has read up to: read receipts for direct messages and small groups."""
+    """Where each member's app has the messages (delivered, ✓✓) and where they have read up to (blue), for direct
+    messages and small groups. In direct messages reading is shown only if both people keep read receipts on."""
     conv, _ = await require_member(db, conv_id, user)
     if conv.kind == "channel":
         return []
-    res = await db.execute(select(ConversationMember.user_id, ConversationMember.last_read_message_id).where(
-        ConversationMember.conversation_id == conv.id, ConversationMember.user_id != user.id).limit(50))
-    return [{"user_id": uid, "last_read_message_id": last} for uid, last in res.all()]
+    res = await db.execute(select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
+        ConversationMember.conversation_id == conv.id, ConversationMember.user_id != user.id,
+        ConversationMember.away.is_(False)).limit(50))
+    out = []
+    for m, other in res.all():
+        delivered = max(m.last_delivered_message_id or 0, m.last_read_message_id or 0)
+        shared = receipts_shared(conv, other, user)
+        out.append({"user_id": m.user_id, "last_delivered_message_id": delivered,
+                    "last_read_message_id": m.last_read_message_id if shared else 0, "receipts": shared})
+    return out
+
+
+@router.post("/conversations/delivered", response_model=dict)
+async def delivered_all(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """The app has just loaded my chats: every direct message and group is delivered up to its last message."""
+    return {"moved": await mark_delivered(db, user)}
+
+
+@router.post("/conversations/{conv_id}/delivered", response_model=dict)
+async def delivered_one(conv_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """A new message of this chat reached my app (it came through the live connection)."""
+    await require_member(db, conv_id, user)
+    return {"moved": await mark_delivered(db, user, [conv_id])}
 
 
 # ---------- direct messages ----------

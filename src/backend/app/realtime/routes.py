@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+from datetime import datetime
 
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from sqlalchemy import select
@@ -84,6 +85,12 @@ async def ws_endpoint(ws: WebSocket, ticket: str = ""):
         realtime.gateway.remove(user_id, ws)
         try:
             if await realtime.presence_disconnect(user_id):
+                # "last seen" is when the last connection closed
+                async with SessionLocal() as db:
+                    u = await db.get(User, user_id)
+                    if u:
+                        u.last_seen_at = datetime.utcnow()
+                        await db.commit()
                 await realtime.publish(await _dm_partners(user_id), {"type": "presence.updated", "user_id": user_id, "online": False})
         except Exception:
             pass
