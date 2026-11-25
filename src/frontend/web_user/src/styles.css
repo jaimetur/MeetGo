@@ -1670,3 +1670,5 @@ a.btn { text-decoration: none; }
 .csec .fld.coadmins > span:first-child { display: none; }
 .mt .ctime { margin-left: 8px; white-space: nowrap; }
 .mt .ctime + .ticks { margin-left: 3px; }
+/* drop-downs in windows: as tall as the other fields and easy to tap */
+.modal select.inp { min-height: 46px; padding: 11px 12px; font-size: 15px; }

@@ -110,6 +110,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Drop-downs in windows (Discover another area and the rest) are as tall as the other fields.
 - Community settings: the creator adds or removes co-administrators (optional) among the members; the window is wider on computers with each part in its own panel, and the interests are chosen in a window of their own.
 - Communities: an «Admin» tab (the ones you created or co-administer, when there are any) apart from the joined ones, and «Not joined» instead of «New».
 - New built-in interests: Economy and Politics, in the 10 languages and with their icons.
