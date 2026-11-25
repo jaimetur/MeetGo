@@ -118,7 +118,7 @@ async def punish(db, conv: Conversation, user_id: int, rule: str) -> None:
     bots = await bot_ids(db)
     bot = await db.get(User, bots.get("moderator")) if bots.get("moderator") else None
     bot_member = await get_membership(db, conv.id, bot.id) if bot else None
-    params = {"name": target.display_name, "hours": hours or 0, "rule": rule.strip()[:200] or "—"}
+    params = {"name": target.shown_name, "hours": hours or 0, "rule": rule.strip()[:200] or "—"}
     if bot and bot_member:
         with use_lang(target.lang):
             body = t("bot_banned_hours" if hours else "bot_banned_forever", params)

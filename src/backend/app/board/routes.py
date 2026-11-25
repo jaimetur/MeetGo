@@ -298,7 +298,7 @@ async def attend(post_id: int, payload: AttendIn | None = None, db: AsyncSession
     author = await db.get(User, post.author_id) if post.author_id else None
     if author and author.id != user.id and status in ("going", "pending"):
         await board.tell(db, [author], post, "email_plan_joined" if status == "going" else "email_plan_request",
-                         {"name": user.display_name})
+                         {"name": user.shown_name})
     return {"status": status}
 
 

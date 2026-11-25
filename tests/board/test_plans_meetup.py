@@ -27,7 +27,7 @@ async def test_companions_take_places_and_a_party_waits_whole(client, db_session
     assert seen["going_count"] == 4 and seen["max_guests"] == 2
     # Ana brings one fewer: one place frees up, Bea's party of 2 does not fit, Cris goes up
     await client.put(f"/posts/{post['id']}/guests", json={"guests": 1}, headers=ana[0])
-    statuses = {a["display_name"]: a["status"] for a in (await client.get(f"/posts/{post['id']}/attendees", headers=owner[0])).json()}
+    statuses = {a["username"]: a["status"] for a in (await client.get(f"/posts/{post['id']}/attendees", headers=owner[0])).json()}
     assert statuses["Person3"] == "going" and statuses["Person2"] == "waitlist"
 
 

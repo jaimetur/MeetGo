@@ -80,14 +80,14 @@ async def create_friend_request(payload: FriendRequestCreateIn, db: AsyncSession
         await _add_friendship(db, user.id, other.id)
         await db.commit()
         await realtime.publish([user.id, other.id], {"type": "requests.changed"})
-        await notify_email.notify(db, other, "requests", "email_friend_accepted", {"name": user.display_name}, "/app/people")
+        await notify_email.notify(db, other, "requests", "email_friend_accepted", {"name": user.shown_name}, "/app/people")
         return _fr_out(reverse)
     fr = FriendRequest(from_user_id=user.id, to_user_id=other.id, status=FriendRequestStatus.PENDING)
     db.add(fr)
     await db.commit()
     await db.refresh(fr)
     await realtime.publish([other.id], {"type": "requests.changed"})
-    await notify_email.notify(db, other, "requests", "email_friend_request", {"name": user.display_name}, "/app/people")
+    await notify_email.notify(db, other, "requests", "email_friend_request", {"name": user.shown_name}, "/app/people")
     return _fr_out(fr)
 
 
@@ -116,7 +116,7 @@ async def resolve_friend_request(request_id: int, payload: FriendRequestResolveI
     await realtime.publish([req.from_user_id, user.id], {"type": "requests.changed"})
     if payload.accept:
         await notify_email.notify(db, await db.get(User, req.from_user_id), "requests", "email_friend_accepted",
-                                  {"name": user.display_name}, "/app/people")
+                                  {"name": user.shown_name}, "/app/people")
     return {"ok": True}
 
 
@@ -160,5 +160,5 @@ async def get_feed(limit: int = 50, before_id: int | None = None, db: AsyncSessi
     if before_id:
         q = q.where(Post.id < before_id)
     rows = (await db.execute(q.order_by(Post.id.desc()).limit(limit))).all()
-    return [PostOut(id=p.id, user_id=p.user_id, user=UserSummary(id=u.id, display_name=u.display_name, avatar_url=u.avatar_url),
+    return [PostOut(id=p.id, user_id=p.user_id, user=UserSummary(id=u.id, display_name=u.shown_name, username=u.display_name, avatar_url=u.avatar_url),
                     content=p.content, created_at=p.created_at) for p, u in rows]

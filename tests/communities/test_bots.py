@@ -30,11 +30,11 @@ async def test_every_community_has_the_two_bots(client, db_session):
     bots = await _bots(db_session)
     assert set(bots) == {"admin", "moderator"}
     members = (await client.get(f"/communities/{com['id']}/members", headers=ana[0])).json()
-    assert [(m["display_name"], m["role"], m["bot"]) for m in members] == [
+    assert [(m["username"], m["role"], m["bot"]) for m in members] == [
         ("bot-admin", "admin", True), ("bot-moderator", "moderator", True), ("Ana", "owner", False)]
     assert com["member_count"] == 1  # the bots do not count
     interest = next(c for c in (await client.get("/communities", headers=ana[0])).json() if c["kind"] == "interest")
-    roles = {m["display_name"]: m["role"] for m in (await client.get(f"/communities/{interest['id']}/members", headers=ana[0])).json()}
+    roles = {m["username"]: m["role"] for m in (await client.get(f"/communities/{interest['id']}/members", headers=ana[0])).json()}
     assert roles["bot-admin"] == "admin" and roles["bot-moderator"] == "moderator"
     # Nobody moderates the bots.
     res = await client.post(f"/communities/{com['id']}/members/{bots['moderator']}/ban", json={"hours": 6}, headers=ana[0])
@@ -62,8 +62,8 @@ async def test_moderators_ban_and_only_admins_lift(client, db_session):
     assert res.status_code == 403
     assert (await client.delete(f"/communities/{cid}/membership", headers=bea[0])).status_code == 409  # no way out
     bans = (await client.get(f"/communities/{cid}/bans", headers=mod[0])).json()
-    assert [(b["user"]["display_name"], b["forever"]) for b in bans] == [("Bea", False)] and bans[0]["until"]
-    member = next(m for m in (await client.get(f"/communities/{cid}/members", headers=ana[0])).json() if m["display_name"] == "Bea")
+    assert [(b["user"]["username"], b["forever"]) for b in bans] == [("Bea", False)] and bans[0]["until"]
+    member = next(m for m in (await client.get(f"/communities/{cid}/members", headers=ana[0])).json() if m["username"] == "Bea")
     assert member["ban_until"]
 
     assert (await client.post(f"/communities/{cid}/members/{bea[1]['id']}/unban", headers=mod[0])).status_code == 403

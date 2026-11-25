@@ -295,10 +295,9 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .aliasinp > span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 .aliasinp .inp { padding-left: 28px; width: 100%; }
 .fldhint { font-size: 12px; font-weight: 400; }
-.fullnm { font-size: 13px; color: var(--muted); }
 .toasts { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 8px; z-index: 50; width: min(440px, calc(100% - 32px)); }
-/* a new version was deployed: reload to apply it (top centre: at the bottom it would cover the composer on phones) */
-.updnote { position: fixed; left: 50%; transform: translateX(-50%); top: calc(10px + env(safe-area-inset-top, 0px)); z-index: 60;
+/* a new version was deployed: reload to apply it (bottom centre; on phones above the tab bar) */
+.updnote { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 60;
   display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(560px, calc(100vw - 24px)); padding: 10px 8px 10px 14px;
   border-radius: 14px; background: #121a26; color: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28); font-size: 14px; line-height: 1.35; }
 .updnote b { display: block; }
@@ -418,6 +417,7 @@ a.logo { text-decoration: none; }
   .lbody { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
   .page { padding-bottom: calc(var(--mnavh, 70px) + 84px); }
   .toasts { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  .updnote { bottom: calc(var(--mnavh, 70px) + 10px + env(safe-area-inset-bottom, 0px)); }
 
   /* the tab bar sits at the bottom edge, frosted, with the current tab lit */
   .mnav {

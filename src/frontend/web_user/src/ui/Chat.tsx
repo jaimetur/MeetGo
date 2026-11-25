@@ -904,7 +904,7 @@ export function Composer({ conv, replyTo, onCancelReply, threadRootId, onSent, c
   function pickMention(m: Member) {
     if (!suggest) return;
     const caret = area.current?.selectionStart ?? text.length;
-    const name = m.display_name.replace(/\s+/g, "_");
+    const name = m.username || m.display_name.replace(/\s+/g, "_");
     const next = text.slice(0, suggest.start) + "@" + name + " " + text.slice(caret);
     setText(next);
     setMentionIds((ids) => ({ ...ids, [name]: m.id }));

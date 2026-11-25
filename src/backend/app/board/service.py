@@ -325,7 +325,7 @@ async def create_plan_chat(db: AsyncSession, post: BoardPost, author: User) -> N
     db.add(chat)
     await db.flush()
     await join(db, chat, author.id, role="owner", notify="all")
-    await _system(db, chat, t("sys_group_created", {"name": author.display_name}))
+    await _system(db, chat, t("sys_group_created", {"name": author.shown_name}))
     post.chat_conversation_id = chat.id
 
 
@@ -333,7 +333,7 @@ async def chat_add(db: AsyncSession, post: BoardPost, user: User) -> None:
     chat = await db.get(Conversation, post.chat_conversation_id) if post.chat_conversation_id else None
     if chat and not await get_membership(db, chat.id, user.id):
         await join(db, chat, user.id, notify="all")
-        await _system(db, chat, t("sys_member_joined", {"name": user.display_name}))
+        await _system(db, chat, t("sys_member_joined", {"name": user.shown_name}))
 
 
 async def chat_remove(db: AsyncSession, post: BoardPost, user: User) -> None:
@@ -343,7 +343,7 @@ async def chat_remove(db: AsyncSession, post: BoardPost, user: User) -> None:
     if member and member.role != "owner":
         await db.delete(member)
         chat = await db.get(Conversation, post.chat_conversation_id)
-        await _system(db, chat, t("sys_member_left", {"name": user.display_name, "by": user.display_name}))
+        await _system(db, chat, t("sys_member_left", {"name": user.shown_name, "by": user.shown_name}))
 
 
 # ---------- attendance ----------

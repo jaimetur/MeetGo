@@ -103,4 +103,4 @@ def me_out(u: User) -> MeOut:
 
 
 def summary(u: User) -> UserSummary:
-    return UserSummary(id=u.id, display_name=u.display_name, avatar_url=u.avatar_url)
+    return UserSummary(id=u.id, display_name=u.shown_name, username=u.display_name, avatar_url=u.avatar_url)

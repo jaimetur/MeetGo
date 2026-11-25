@@ -33,7 +33,7 @@ def test_message_and_typing_reach_the_other_member():
             tc.post(f"/conversations/{conv_id}/messages", json={"body": "¡Hola!"}, headers=ana)
             event = ws.receive_json()
             assert event["type"] == "message.created" and event["message"]["body"] == "¡Hola!"
-            assert event["message"]["sender"]["display_name"] == "Ana"
+            assert event["message"]["sender"]["username"] == "Ana"
         # A ticket works once.
         try:
             with tc.websocket_connect(f"/ws?ticket={ticket}") as ws:

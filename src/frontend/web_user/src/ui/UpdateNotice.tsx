@@ -10,6 +10,26 @@ const POLL_MS = 60_000;
 export function UpdateNotice() {
   const [build, setBuild] = useState<string | null>(null);
   const [dismissed, setDismissed] = useState("");
+  // it sits at the bottom, above whatever is there (the composer in a chat, the tab bar on phones), covering nothing
+  const [bottom, setBottom] = useState<number | null>(null);
+  const showing = !!build && build !== dismissed;
+  useEffect(() => {
+    if (!showing) return;
+    const place = () => {
+      let top = window.innerHeight;
+      for (const sel of [".composer", ".mnav"]) {
+        for (const el of Array.from(document.querySelectorAll<HTMLElement>(sel))) {
+          const r = el.getBoundingClientRect();
+          if (r.height && r.bottom > window.innerHeight - 4 - 200 && r.top < top && getComputedStyle(el).display !== "none") top = r.top;
+        }
+      }
+      setBottom(top < window.innerHeight ? Math.round(window.innerHeight - top + 10) : null);
+    };
+    place();
+    const timer = window.setInterval(place, 700);  // the screen changes (another page, the keyboard)
+    window.addEventListener("resize", place);
+    return () => { window.clearInterval(timer); window.removeEventListener("resize", place); };
+  }, [showing]);
   useEffect(() => {
     if (!__BUILD_ID__ || __BUILD_ID__ === "dev") return;
     let stop = false;
@@ -38,9 +58,9 @@ export function UpdateNotice() {
       window.removeEventListener("online", onWake);
     };
   }, []);
-  if (!build || build === dismissed) return null;
+  if (!showing) return null;
   return (
-    <div className="updnote" role="alert">
+    <div className="updnote" role="alert" style={bottom != null ? { bottom } : undefined}>
       <div className="grow">
         <b>{t("ui_update_title")}</b>
         <span>{t("ui_update_body")}</span>

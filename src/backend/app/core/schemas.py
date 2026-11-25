@@ -81,7 +81,8 @@ class EmailPrefsIn(BaseModel):
 
 class UserSummary(BaseModel):
     id: int
-    display_name: str
+    display_name: str  # as shown: "Jaime Tur (jaimetur)"
+    username: str | None = None  # the alias
     avatar_url: str | None
 
 class UpdateProfileIn(BaseModel):

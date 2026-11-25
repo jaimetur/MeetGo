@@ -67,7 +67,7 @@ async def test_posting_each_kind_and_board_mode(client, db_session):
     assert res.status_code == 400
     meetup = await _post(client, bea[0], com["id"], capacity=8)
     assert meetup["my_status"] == "going" and meetup["going_count"] == 1 and meetup["chat_conversation_id"]
-    assert [a["display_name"] for a in meetup["attendees"]] == ["Bea"]
+    assert [a["username"] for a in meetup["attendees"]] == ["Bea"]
     event = await _post(client, bea[0], com["id"], kind="event", title="Festival", ends_at=soon(52), link_url="https://x.es")
     assert event["kind"] == "event" and event["link_url"] == "https://x.es"
     res = await client.post(f"/communities/{com['id']}/posts", json={"kind": "thread", "title": "x"}, headers=cris[0])
@@ -111,7 +111,7 @@ async def test_capacity_waiting_list_and_plan_chat(client, db_session, outbox):
     assert (await client.get(f"/posts/{post['id']}", headers=cris[0])).json()["my_status"] == "going"
     assert any(m["to"] == "cris@example.com" and "Ruta Cercedilla" in m["subject"] for m in outbox)
     attendees = (await client.get(f"/posts/{post['id']}/attendees", headers=bea[0])).json()
-    assert [(a["display_name"], a["status"]) for a in attendees] == [("Ana", "going"), ("Cris", "going")]
+    assert [(a["username"], a["status"]) for a in attendees] == [("Ana", "going"), ("Cris", "going")]
 
     plans = (await client.get("/me/plans", params={"when": "upcoming"}, headers=cris[0])).json()
     assert [p["id"] for p in plans] == [post["id"]]
@@ -141,7 +141,7 @@ async def test_join_with_approval(client, db_session):
     assert (await client.post(f"/posts/{post['id']}/attend", headers=bea[0])).json() == {"status": "pending"}
     assert (await client.post(f"/posts/{post['id']}/attend", headers=cris[0])).json() == {"status": "pending"}
     assert [a["status"] for a in (await client.get(f"/posts/{post['id']}/attendees", headers=bea[0])).json()] == ["going"]
-    pending = [a["display_name"] for a in (await client.get(f"/posts/{post['id']}/attendees", headers=ana[0])).json()
+    pending = [a["username"] for a in (await client.get(f"/posts/{post['id']}/attendees", headers=ana[0])).json()
                if a["status"] == "pending"]
     assert pending == ["Bea", "Cris"]
 
@@ -168,7 +168,7 @@ async def test_comments_modes(client, db_session):
     assert (await comment(open_post, bea)).status_code == 200
     assert (await comment(open_post, out)).status_code == 403  # not a member
     page = (await client.get(f"/posts/{open_post['id']}/comments", headers=cris[0])).json()
-    assert [c["author"]["display_name"] for c in page["comments"]] == ["Bea"] and page["comments"][0]["can_delete"] is False
+    assert [c["author"]["username"] for c in page["comments"]] == ["Bea"] and page["comments"][0]["can_delete"] is False
     assert (await client.get(f"/posts/{open_post['id']}", headers=cris[0])).json()["comment_count"] == 1
 
     plan = await _post(client, ana[0], com["id"], comments_mode="attendees")
@@ -280,7 +280,7 @@ async def test_reports_reach_the_moderation_queue(client, db_session):
     admin = await admin_headers(client)
     [report] = (await client.get("/admin/reports", headers=admin)).json()
     assert report["kind"] == "post" and report["post"]["title"] == "Compra aquí"
-    assert report["message"]["sender"]["display_name"] == "Ana" and "spam spam" in report["message"]["body"]
+    assert report["message"]["sender"]["username"] == "Ana" and "spam spam" in report["message"]["body"]
     res = await client.post(f"/admin/reports/{report['id']}/resolve", json={"status": "actioned", "delete_message": True},
                             headers=admin)
     assert res.json() == {"ok": True}

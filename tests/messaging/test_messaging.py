@@ -91,11 +91,11 @@ async def test_direct_messages_need_friendship_or_a_request(client, db_session):
     res = (await client.post("/conversations/dm", json={"user_id": cris[1]["id"]}, headers=ana[0])).json()
     assert res["status"] == "pending"
     reqs = (await client.get("/dm/requests", headers=cris[0])).json()
-    assert reqs[0]["from_user"]["display_name"] == "Ana"
+    assert reqs[0]["from_user"]["username"] == "Ana"
     conv_id = (await client.post(f"/dm/requests/{reqs[0]['id']}/resolve", json={"accept": True}, headers=cris[0])).json()["conversation_id"]
     await _send(client, ana[0], conv_id, "¡Hola Cris!")
     item = next(c for c in (await client.get("/conversations", headers=cris[0])).json() if c["id"] == conv_id)
-    assert item["kind"] == "dm" and item["title"] == "Ana" and item["unread_count"] == 1
+    assert item["kind"] == "dm" and item["title"] == "Ana Prueba (Ana)" and item["unread_count"] == 1
 
     await befriend(client, ana, bea)
     assert "conversation_id" in (await client.post("/conversations/dm", json={"user_id": bea[1]["id"]}, headers=ana[0])).json()
@@ -116,7 +116,7 @@ async def test_groups_invites_roles_and_leaving(client, db_session):
     joined = (await client.post(f"/conversations/join/{detail['invite_code']}", headers=cris[0])).json()
     assert joined["conversation_id"] == gid
     members = (await client.get(f"/conversations/{gid}/members", headers=cris[0])).json()
-    assert [m["display_name"] for m in members][0] == "Ana" and len(members) == 3
+    assert [m["username"] for m in members][0] == "Ana" and len(members) == 3
 
     assert (await client.delete(f"/conversations/{gid}/members/{ana[1]['id']}", headers=bea[0])).status_code == 403
     assert (await client.delete(f"/conversations/{gid}/members/{ana[1]['id']}", headers=ana[0])).status_code == 200

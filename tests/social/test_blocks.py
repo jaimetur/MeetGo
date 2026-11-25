@@ -15,7 +15,7 @@ async def test_blocking_stops_dms_requests_and_follows(client, db_session):
     assert (await client.post(f"/conversations/{dm}/messages", json={"body": "hola"}, headers=bea[0])).status_code == 200
 
     assert (await client.post(f"/users/{bea[1]['id']}/block", headers=ana[0])).json() == {"ok": True}
-    assert [b["display_name"] for b in (await client.get("/me/blocks", headers=ana[0])).json()] == ["Bea"]
+    assert [b["username"] for b in (await client.get("/me/blocks", headers=ana[0])).json()] == ["Bea"]
     # both ways: no messages in our chat, no new chat, request or follow
     assert (await client.post(f"/conversations/{dm}/messages", json={"body": "?"}, headers=bea[0])).status_code == 403
     assert (await client.post(f"/conversations/{dm}/messages", json={"body": "?"}, headers=ana[0])).status_code == 403

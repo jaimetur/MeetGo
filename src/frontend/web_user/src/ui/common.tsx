@@ -130,6 +130,12 @@ export function fullName(u: { first_name?: string | null; last_name?: string | n
   return [u?.first_name, u?.last_name].filter(Boolean).join(" ");
 }
 
+/** "Jaime Tur (jaimetur)" from a profile, where display_name is the alias alone; the alias when there is no name. */
+export function shownName(u: { display_name: string; first_name?: string | null; last_name?: string | null }): string {
+  const full = fullName(u);
+  return full ? `${full} (${u.display_name})` : u.display_name;
+}
+
 export function convTitle(conv: Conversation): string {
   return conv.kind === "channel" ? `#${conv.slug || conv.title}` : conv.title;
 }

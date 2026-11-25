@@ -3,7 +3,7 @@
 import secrets
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import delete, select, update
+from sqlalchemy import delete, func, or_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.app_settings import app_base_url
@@ -201,7 +201,7 @@ async def join_community(community_id: int, payload: JoinIn | None = None, db: A
         title = conv.title or ""
         if conv.interest_id:
             title = (await communities_out(db, user, [conv]))[0]["title"]
-        params = {"name": user.display_name, "community": title}
+        params = {"name": user.shown_name, "community": title}
         path = f"/app/communities/{conv.id}?tab=members"
         staff_users = list((await db.execute(select(User).where(User.id.in_(staff)))).scalars().all()) if staff else []
         push_notice(staff_users, "community.request", "email_community_request", params, path)
@@ -291,7 +291,8 @@ async def members(community_id: int, q: str = "", limit: int = 200, db: AsyncSes
     query = select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
         community_member_filter(conv.id))
     if q.strip():
-        query = query.where(User.display_name.ilike(f"%{q.strip()}%"))
+        like = f"%{q.strip().lstrip('@')}%"
+        query = query.where(or_(User.display_name.ilike(like), func.concat_ws(" ", User.first_name, User.last_name).ilike(like)))
     rows = (await db.execute(query.limit(max(1, min(limit, 500))))).all()
     online = await realtime.online_ids([u.id for _, u in rows])
     out = [{**user_summary(u), "role": m.role, "online": u.id in online, "bot": bool(u.bot_role),
@@ -389,7 +390,7 @@ async def clear_chat(community_id: int, db: AsyncSession = Depends(get_db), user
     await db.execute(delete(Message).where(Message.conversation_id == conv.id))
     conv.pinned_message_id = None
     conv.last_message_id = None
-    await _system(db, conv, t("sys_chat_cleared", {"name": user.display_name}))
+    await _system(db, conv, t("sys_chat_cleared", {"name": user.shown_name}))
     await db.execute(update(ConversationMember).where(ConversationMember.conversation_id == conv.id).values(
         last_read_message_id=conv.last_message_id, email_notified_message_id=conv.last_message_id))
     await db.commit()

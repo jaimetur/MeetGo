@@ -39,7 +39,7 @@ async def test_create_and_join_an_open_community(client, db_session):
     assert [c["id"] for c in (await client.get("/communities", params={"mine": 1}, headers=bea[0])).json()] == [com["id"]]
     assert any(c["id"] == com["id"] for c in (await client.get("/conversations", headers=bea[0])).json())
     members = (await client.get(f"/communities/{com['id']}/members", headers=bea[0])).json()
-    assert [(m["display_name"], m["role"]) for m in members if not m["bot"]] == [("Ana", "owner"), ("Bea", "member")]
+    assert [(m["username"], m["role"]) for m in members if not m["bot"]] == [("Ana", "owner"), ("Bea", "member")]
 
     # Other zones neither see it nor join it.
     assert (await client.get(f"/communities/{com['id']}", headers=far[0])).status_code == 404
@@ -58,7 +58,7 @@ async def test_request_mode_needs_approval(client, db_session):
     assert (await client.get(f"/communities/{com['id']}", headers=bea[0])).json()["request_pending"] is True
     assert (await client.get(f"/communities/{com['id']}/requests", headers=bea[0])).status_code == 403
     requests = (await client.get(f"/communities/{com['id']}/requests", headers=ana[0])).json()
-    assert [r["user"]["display_name"] for r in requests] == ["Bea", "Cris"]
+    assert [r["user"]["username"] for r in requests] == ["Bea", "Cris"]
 
     res = await client.post(f"/communities/{com['id']}/requests/{bea[1]['id']}/resolve", json={"accept": True}, headers=ana[0])
     assert res.json() == {"ok": True}
@@ -102,7 +102,7 @@ async def test_roles(client, db_session):
     assert (await client.put(f"{url}/{dani[1]['id']}/role", json={"role": "admin"}, headers=bea[0])).status_code == 403
     # A moderator names nobody.
     assert (await client.put(f"{url}/{dani[1]['id']}/role", json={"role": "moderator"}, headers=cris[0])).status_code == 403
-    roles = {m["display_name"]: m["role"] for m in (await client.get(url, headers=dani[0])).json() if not m["bot"]}
+    roles = {m["username"]: m["role"] for m in (await client.get(url, headers=dani[0])).json() if not m["bot"]}
     assert roles == {"Ana": "owner", "Bea": "admin", "Cris": "moderator", "Dani": "member"}
 
     # Staff remove people below them; a moderator cannot remove an admin.
@@ -137,7 +137,7 @@ async def test_zone_change_marks_memberships_away_and_back(client, db_session):
     res = await client.post(f"/conversations/{com['id']}/messages", json={"body": "hola"}, headers=bea[0])
     assert res.status_code == 404
     members = (await client.get(f"/communities/{com['id']}/members", headers=ana[0])).json()
-    assert [m["display_name"] for m in members if not m["bot"]] == ["Ana"]
+    assert [m["username"] for m in members if not m["bot"]] == ["Ana"]
     assert (await client.get(f"/communities/{com['id']}", headers=ana[0])).json()["member_count"] == 1
 
     await client.patch("/me/profile", json={"province": "Madrid"}, headers=bea[0])
@@ -185,7 +185,7 @@ async def test_remove_lets_rejoin_but_expel_does_not(client, db_session):
     assert (await client.post(f"/communities/{cid}/join", headers=bea[0])).status_code == 403
     assert not any(c["id"] == cid for c in (await client.get("/conversations", headers=bea[0])).json())
     members = (await client.get(f"/communities/{cid}/members", headers=ana[0])).json()
-    assert [m["display_name"] for m in members if not m["bot"]] == ["Ana"]
+    assert [m["username"] for m in members if not m["bot"]] == ["Ana"]
 
 
 async def test_discovering_another_zone(client, db_session):

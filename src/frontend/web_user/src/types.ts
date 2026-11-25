@@ -1,4 +1,5 @@
-export type UserSummary = { id: number; display_name: string; avatar_url?: string | null };
+/** display_name is how the person is shown ("Jaime Tur (jaimetur)"); username is the alias, for @mentions. */
+export type UserSummary = { id: number; display_name: string; username?: string | null; avatar_url?: string | null };
 
 export type Me = UserSummary & {
   first_name?: string | null;

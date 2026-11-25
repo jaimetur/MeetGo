@@ -14,9 +14,9 @@ All notable changes to this project will be documented in this file.
 
 #### 🌟 New Features:
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
-- Everyone gives a first name and surname(s) (asked once of whoever lacks them), and the display name becomes a username: one word, chosen by each person and unique. Chats and lists show the username; the person's card also shows the full name, and people can be found by either.
+- Everyone gives a first name and surname(s) (asked once of whoever lacks them), and the display name becomes a username: one word, chosen by each person and unique. Chats, communities, lists, notifications and emails show the full name with the username in brackets, «Jaime Tur (jaimetur)»; @mentions use the username, and people can be found by either.
 - Administration, a person's card: «Last activity» is when they last used the app (or «Now» when connected), «Visits» counts each time they came back after half an hour or more, and the time connected counts while the app is open. The sign-ins with the password are shown apart: the app keeps the session open, so they are few.
-- When a new version is deployed, an open MeetGo shows a notice to reload the page and apply the latest changes (checked every minute and when the app comes back).
+- When a new version is deployed, an open MeetGo shows a notice at the bottom to reload the page and apply the latest changes (checked every minute and when the app comes back); it sits above the tab bar and the message box, covering nothing.
 - Communities for you suggests up to 6 communities, a full row on wide screens.
 - Message info, as in WhatsApp: long-press one of your messages in a direct chat or group and tap Info to see when it reached each person and when they read it. The ticks now sit right after the time.
 - The emoji picker, the message menu, the side panels (information, members, thread) and the pop-up windows close with a button or a swipe down. In a direct chat, Information shows the person's full card (friend, follow, block).

@@ -157,7 +157,7 @@ async def search_users(q: str = "", db: AsyncSession = Depends(get_db), user: Us
     dm_asked = set((await db.execute(select(DMRequest.to_user_id).where(
         DMRequest.from_user_id == user.id, DMRequest.to_user_id.in_(ids),
         DMRequest.status == DMStatus.PENDING))).scalars().all()) if ids else set()
-    return [{"id": u.id, "display_name": u.display_name, "first_name": u.first_name, "last_name": u.last_name,
+    return [{"id": u.id, "display_name": u.shown_name, "username": u.display_name, "first_name": u.first_name, "last_name": u.last_name,
              "avatar_url": u.avatar_url, "province": u.province,
              "friend": u.id in friends, "accept_dm": u.accept_dm, "online": u.id in online,
              "friend_requested": u.id in friend_asked, "dm_requested": u.id in dm_asked} for u in users]

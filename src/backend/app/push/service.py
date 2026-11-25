@@ -112,13 +112,13 @@ async def _notify(db: AsyncSession, conversation_id: int, message_id: int) -> No
     elif conv.kind == "group":
         title = conv.title or "Grupo"
     else:
-        title = sender.display_name if sender else "MeetGo"
+        title = sender.shown_name if sender else "MeetGo"
     body = msg.body or ""
     if not body:
         has_file = (await db.execute(select(Attachment.id).where(Attachment.message_id == msg.id).limit(1))).scalar_one_or_none()
         body = "📎 Archivo adjunto" if has_file else ""
     if conv.kind != "dm" and sender:
-        body = f"{sender.display_name}: {body}"
+        body = f"{sender.shown_name}: {body}"
     data = {
         "type": "message",
         "conversation_id": str(conv.id),
@@ -126,7 +126,7 @@ async def _notify(db: AsyncSession, conversation_id: int, message_id: int) -> No
         "message_id": str(msg.id),
         "thread_root_id": str(msg.thread_root_id or ""),
         "title": title,
-        "sender_name": sender.display_name if sender else "",
+        "sender_name": sender.shown_name if sender else "",
         "body": body[:400],
         "url": f"/app/c/{conv.id}",
         "sent_at": str(int(time.time())),

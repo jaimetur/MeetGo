@@ -79,7 +79,7 @@ async def create_group(payload: GroupCreateIn, db: AsyncSession = Depends(get_db
         if uid != user.id and await _friends(db, user.id, uid):
             await join(db, conv, uid, notify="all")
             added.append(uid)
-    await _system(db, conv, t("sys_group_created", {"name": user.display_name}))
+    await _system(db, conv, t("sys_group_created", {"name": user.shown_name}))
     await db.commit()
     await _changed(db, conv.id)
     return {"id": conv.id, "added": added}
@@ -125,7 +125,8 @@ async def list_members(conv_id: int, q: str = "", limit: int = 200, db: AsyncSes
         ConversationMember.conversation_id == conv_id, ConversationMember.banned.is_(False),
         ConversationMember.away.is_(False))
     if q.strip():
-        query = query.where(User.display_name.ilike(f"%{q.strip()}%"))
+        like = f"%{q.strip().lstrip('@')}%"
+        query = query.where(or_(User.display_name.ilike(like), func.concat_ws(" ", User.first_name, User.last_name).ilike(like)))
     rows = (await db.execute(query.limit(max(1, min(limit, 500))))).all()
     online = await realtime.online_ids([u.id for _, u in rows])
     order = {"owner": 0, "admin": 1, "moderator": 2, "member": 3}
@@ -152,13 +153,13 @@ async def add_members(conv_id: int, payload: MembersAddIn, db: AsyncSession = De
         if not existing:
             await join(db, conv, uid, notify="all")
             other = await db.get(User, uid)
-            await _system(db, conv, t("sys_member_added", {"name": other.display_name, "by": user.display_name}))
+            await _system(db, conv, t("sys_member_added", {"name": other.shown_name, "by": user.shown_name}))
             added.append(uid)
     await db.commit()
     await _changed(db, conv.id)
     for uid in added:
         await notify_email.notify(db, await db.get(User, uid), "requests", "email_group_added",
-                                  {"name": user.display_name, "group": conv.title or ""}, f"/app/c/{conv.id}")
+                                  {"name": user.shown_name, "group": conv.title or ""}, f"/app/c/{conv.id}")
     return {"added": added}
 
 
@@ -181,7 +182,7 @@ async def remove_member(conv_id: int, user_id: int, db: AsyncSession = Depends(g
     await db.flush()
     if conv.kind == "group":
         key = "sys_member_left" if user_id == user.id else "sys_member_removed"
-        await _system(db, conv, t(key, {"name": other.display_name if other else "—", "by": user.display_name}))
+        await _system(db, conv, t(key, {"name": other.shown_name if other else "—", "by": user.shown_name}))
         if was_owner:
             # Hand the group to the longest-standing member.
             nxt = (await db.execute(select(ConversationMember).where(ConversationMember.conversation_id == conv.id)
@@ -261,7 +262,7 @@ async def join_by_invite(code: str, db: AsyncSession = Depends(get_db), user: Us
         raise HTTPException(403, t("err_banned_here"))
     if not existing:
         await join(db, conv, user.id, notify="all")
-        await _system(db, conv, t("sys_member_joined", {"name": user.display_name}))
+        await _system(db, conv, t("sys_member_joined", {"name": user.shown_name}))
         await db.commit()
         await _changed(db, conv.id)
     return {"conversation_id": conv.id}
@@ -374,7 +375,7 @@ async def open_dm(payload: DMOpenIn, db: AsyncSession = Depends(get_db), user: U
     db.add(req)
     await db.commit()
     await realtime.publish([other.id], {"type": "requests.changed"})
-    await notify_email.notify(db, other, "requests", "email_dm_request", {"name": user.display_name}, "/app/people")
+    await notify_email.notify(db, other, "requests", "email_dm_request", {"name": user.shown_name}, "/app/people")
     return {"request_id": req.id, "status": "pending"}
 
 
@@ -404,7 +405,7 @@ async def resolve_dm_request(request_id: int, payload: DMRequestResolveIn, db: A
     if conv_id:
         await realtime.publish([req.from_user_id, user.id], {"type": "conversation.changed", "conversation_id": conv_id})
         await notify_email.notify(db, await db.get(User, req.from_user_id), "requests", "email_dm_accepted",
-                                  {"name": user.display_name}, f"/app/c/{conv_id}")
+                                  {"name": user.shown_name}, f"/app/c/{conv_id}")
     return {"ok": True, "conversation_id": conv_id}
 
 

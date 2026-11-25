@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, convTitle, countryOptions, fullName, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
@@ -151,7 +151,7 @@ function FindPeople() {
         {res.map((p) => (
           <div key={p.id} className="item">
             <Avatar user={p} size={36} online={p.online} />
-            <div className="grow">{p.display_name}<div className="muted" style={{ fontSize: 12 }}>{[fullName(p), p.province].filter(Boolean).join(" · ")}</div></div>
+            <div className="grow">{p.display_name}<div className="muted" style={{ fontSize: 12 }}>{p.province}</div></div>
             {/* friendship, and a private chat: with friends at once; with others only if they accept private messages */}
             {!p.friend ? (
               p.friend_requested
@@ -368,8 +368,7 @@ export function AccountPage() {
       <div className="acchero">
         <Avatar user={me} size={60} />
         <div className="grow" style={{ minWidth: 0 }}>
-          <div className="acchero-name">@{me.display_name}</div>
-          {fullName(me) ? <div className="acchero-meta">{fullName(me)}</div> : null}
+          <div className="acchero-name">{shownName(me)}</div>
           <div className="acchero-meta">{me.email}</div>
           <div className="acchero-meta">{me.province}{ageLabel ? ` · ${ageLabel}` : ""}</div>
         </div>

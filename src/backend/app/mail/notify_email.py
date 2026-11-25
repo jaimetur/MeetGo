@@ -162,7 +162,7 @@ async def conversation_label(db: AsyncSession, conv: Conversation, for_user_id: 
     if conv.kind == "dm" and for_user_id:
         other_id = next((int(x) for x in (conv.dm_key or "").split(":") if x and int(x) != for_user_id), None)
         other = await db.get(User, other_id) if other_id else None
-        return other.display_name if other else (conv.title or "")
+        return other.shown_name if other else (conv.title or "")
     return conv.title or ""
 
 
@@ -242,7 +242,7 @@ async def digest_once(db: AsyncSession) -> int:
 
 async def _send_digest(db: AsyncSession, user: User, wanted: list) -> None:
     senders = {r.sender_id for _, r in wanted}
-    names = {u.id: u.display_name for u in (await db.execute(select(User).where(User.id.in_(senders)))).scalars().all()}
+    names = {u.id: u.shown_name for u in (await db.execute(select(User).where(User.id.in_(senders)))).scalars().all()}
     labels: dict[int, str] = {}
     lines = []
     with use_lang(user.lang):

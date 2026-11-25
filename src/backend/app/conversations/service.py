@@ -29,7 +29,8 @@ def iso(dt: datetime | None) -> str | None:
 def user_summary(u: User | None) -> dict | None:
     if not u:
         return None
-    return {"id": u.id, "display_name": u.display_name, "avatar_url": u.avatar_url}
+    # display_name is how the person is shown (name, surnames and alias); username is the alias (for @mentions)
+    return {"id": u.id, "display_name": u.shown_name, "username": u.display_name, "avatar_url": u.avatar_url}
 
 
 def user_age_key(user: User) -> str:
@@ -328,7 +329,7 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
             ages = AGE_LABELS.get(conv.age_range or "", conv.age_range or "")
         subtitle = f"{conv.province} · {ages}"
     elif conv.kind == "dm":
-        title = other.display_name if other else "—"
+        title = other.shown_name if other else "—"
         slug = None
         subtitle = None
     else:
@@ -368,7 +369,7 @@ def last_message_out(m: Message, sender: User | None, has_attachments: bool) -> 
         "id": m.id,
         "kind": m.kind,
         "sender_id": m.sender_id,
-        "sender_name": sender.display_name if sender else None,
+        "sender_name": sender.shown_name if sender else None,
         "body": body[:SNIPPET],
         "deleted": bool(m.deleted_at),
         "has_attachments": has_attachments,
@@ -431,7 +432,7 @@ async def messages_out(db: AsyncSession, messages: list[Message], me_id: int) ->
             "moderation_reason": m.moderation_reason,
             "reply_to": ({
                 "id": reply.id,
-                "sender_name": users[reply.sender_id].display_name if reply.sender_id in users else None,
+                "sender_name": users[reply.sender_id].shown_name if reply.sender_id in users else None,
                 "body": "" if reply.deleted_at else (reply.body or "")[:SNIPPET],
                 "deleted": bool(reply.deleted_at),
             } if reply else None),
