@@ -81,9 +81,9 @@ class User(Base):
 
     @property
     def shown_name(self) -> str:
-        """How the others see the person: "Jaime Tur (jaimetur)"; the alias alone when there is no name (bots)."""
-        full = " ".join(p for p in (self.first_name, self.last_name) if p)
-        return f"{full} ({self.display_name})" if full else self.display_name
+        """How the others see the person: "Jaime (jaimetur)" (the surnames are in the card); the alias alone when there
+        is no name (bots)."""
+        return f"{self.first_name} ({self.display_name})" if self.first_name else self.display_name
     dob: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD
     age_range: Mapped[AgeRange] = mapped_column(
         Enum(AgeRange, values_callable=lambda obj: [e.value for e in obj], name="agerange"),

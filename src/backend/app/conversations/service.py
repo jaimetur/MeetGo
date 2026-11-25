@@ -29,7 +29,7 @@ def iso(dt: datetime | None) -> str | None:
 def user_summary(u: User | None) -> dict | None:
     if not u:
         return None
-    # display_name is how the person is shown (name, surnames and alias); username is the alias (for @mentions)
+    # display_name is how the person is shown (first name and alias); username is the alias (for @mentions)
     return {"id": u.id, "display_name": u.shown_name, "username": u.display_name, "avatar_url": u.avatar_url}
 
 

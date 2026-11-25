@@ -144,7 +144,7 @@ function UserRow({ u, onOpen }: { u: AdminUser; onOpen: () => void }) {
     <button className={"adm-urow" + (blocked(u) ? " dim" : "")} onClick={onOpen}>
       <Avatar user={u} size={44} online={!!u.online} />
       <span className="adm-urow-main">
-        <span className="adm-urow-name"><b>{shownName(u)}</b><UserBadges u={u} /></span>
+        <span className="adm-urow-name"><b>{shownName(u)}</b>{u.last_name ? <span className="muted">{u.last_name}</span> : null}<UserBadges u={u} /></span>
         <span className="adm-urow-meta">{u.email || u.phone || `#${u.id}`}</span>
         {zone ? <span className="adm-urow-meta"><Icon name="place" size="sm" />{zone}</span> : null}
       </span>
@@ -239,6 +239,7 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
           {user ? <Avatar user={user} size={56} online={!!user.online} /> : <span className="adm-stat-ic t-blue"><Icon name="plus" /></span>}
           <div className="grow" style={{ minWidth: 0 }}>
             <h2>{user ? shownName(user) : a("us_new")}</h2>
+            {user?.last_name ? <div className="adm-sheet-sub"><span>{fullName(user)}</span></div> : null}
             {user ? <div className="adm-sheet-sub">{user.online ? <span className="adm-online">{a("us_online")}</span> : <span>{a("ud_last_seen")}: {ago(user.last_seen_at)}</span>}{z ? <span>{z}</span> : null}</div> : null}
             {user ? <div className="adm-sheet-badges"><UserBadges u={user} />{self ? <Badge tone="teal">{a("ud_self")}</Badge> : null}</div> : null}
           </div>

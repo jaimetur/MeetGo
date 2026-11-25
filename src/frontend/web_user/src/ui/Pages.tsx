@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel, shownName } from "./common";
+import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
@@ -369,6 +369,7 @@ export function AccountPage() {
         <Avatar user={me} size={60} />
         <div className="grow" style={{ minWidth: 0 }}>
           <div className="acchero-name">{shownName(me)}</div>
+          {me.last_name ? <div className="acchero-meta">{fullName(me)}</div> : null}
           <div className="acchero-meta">{me.email}</div>
           <div className="acchero-meta">{me.province}{ageLabel ? ` · ${ageLabel}` : ""}</div>
         </div>

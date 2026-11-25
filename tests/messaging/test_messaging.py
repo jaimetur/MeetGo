@@ -95,7 +95,7 @@ async def test_direct_messages_need_friendship_or_a_request(client, db_session):
     conv_id = (await client.post(f"/dm/requests/{reqs[0]['id']}/resolve", json={"accept": True}, headers=cris[0])).json()["conversation_id"]
     await _send(client, ana[0], conv_id, "¡Hola Cris!")
     item = next(c for c in (await client.get("/conversations", headers=cris[0])).json() if c["id"] == conv_id)
-    assert item["kind"] == "dm" and item["title"] == "Ana Prueba (Ana)" and item["unread_count"] == 1
+    assert item["kind"] == "dm" and item["title"] == "Ana (Ana)" and item["unread_count"] == 1
 
     await befriend(client, ana, bea)
     assert "conversation_id" in (await client.post("/conversations/dm", json={"user_id": bea[1]["id"]}, headers=ana[0])).json()

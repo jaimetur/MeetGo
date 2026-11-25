@@ -10,7 +10,8 @@ export function colorFor(seed: string | number): string {
 }
 
 export function initials(name: string): string {
-  const parts = (name || "?").trim().split(/\s+/);
+  // "Jaime (jaimetur)": the alias in brackets is not part of the name
+  const parts = ((name || "").replace(/\s*\([^)]*\)\s*$/, "").trim() || name || "?").trim().split(/\s+/);
   return ((parts[0]?.[0] || "") + (parts[1]?.[0] || parts[0]?.[1] || "")).toUpperCase();
 }
 
