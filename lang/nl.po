@@ -4074,10 +4074,10 @@ msgid "ui_cshow_mine"
 msgstr "Mijn communities"
 
 msgid "ui_cshow_created"
-msgstr "Door mij gemaakt"
+msgstr "Beheer"
 
 msgid "ui_cshow_created_short"
-msgstr "Gemaakt"
+msgstr "Beheer"
 
 msgid "ui_cshow_joined"
 msgstr "Lid van"
@@ -4086,7 +4086,7 @@ msgid "ui_cshow_joined_short"
 msgstr "Lid"
 
 msgid "ui_cshow_new"
-msgstr "Nieuw"
+msgstr "Geen lid"
 
 msgid "ui_community_no_new"
 msgstr "Je zit al in alle communities van je zone"

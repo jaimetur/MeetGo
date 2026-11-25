@@ -109,7 +109,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
-- Communities: a «Created by me» tab (when you have any) apart from the ones you joined.
+- Communities: an «Admin» tab (the ones you created or co-administer, when there are any) apart from the joined ones, and «Not joined» instead of «New».
 - New built-in interests: Economy and Politics, in the 10 languages and with their icons.
 - The Google Play listing in the 10 languages, updated on its own: its texts (`assets/play-store/listings/`), screenshots and feature graphic per language (`tools/play_listing.py`).
 - The landing's phone and computer screens follow the language chosen on the page, in the 10 languages.
@@ -130,6 +130,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
+- Windows (community settings and the rest) are never taller than the screen with the interface enlarged (computers, large text): their content scrolls and the buttons stay in view.
 - iPhone: a long press on a message opened its menu but iOS then selected the menu's text and swallowed every tap; text can no longer be selected outside fields on touch screens (Copy is in the menu).
 - Phones: replying to a message can be cancelled again; a long quoted message pushed the cancel button off the screen, and tapping it moved the composer away from the finger.
 - The slogan "Meet People, Go Places!" is back on the sign-in screen, and Settings has an About MeetGo window with the icon, logo, slogan, app version, copyright and links to the website, terms and privacy.

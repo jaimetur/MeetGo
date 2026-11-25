@@ -4934,10 +4934,10 @@ msgid "ui_cshow_mine"
 msgstr "Mes communautés"
 
 msgid "ui_cshow_created"
-msgstr "Créées par moi"
+msgstr "Admin"
 
 msgid "ui_cshow_created_short"
-msgstr "Créées"
+msgstr "Admin"
 
 msgid "ui_cshow_joined"
 msgstr "Rejointes"
@@ -4946,7 +4946,7 @@ msgid "ui_cshow_joined_short"
 msgstr "Rejointes"
 
 msgid "ui_cshow_new"
-msgstr "Nouvelles"
+msgstr "Non rejointes"
 
 msgid "ui_community_no_new"
 msgstr "Tu es déjà dans toutes les communautés de ta zone"

@@ -4074,10 +4074,10 @@ msgid "ui_cshow_mine"
 msgstr "Le mie community"
 
 msgid "ui_cshow_created"
-msgstr "Create da me"
+msgstr "Admin"
 
 msgid "ui_cshow_created_short"
-msgstr "Create"
+msgstr "Admin"
 
 msgid "ui_cshow_joined"
 msgstr "Iscritte"
@@ -4086,7 +4086,7 @@ msgid "ui_cshow_joined_short"
 msgstr "Iscritte"
 
 msgid "ui_cshow_new"
-msgstr "Nuove"
+msgstr "Non iscritte"
 
 msgid "ui_community_no_new"
 msgstr "Sei già in tutte le community della tua zona"

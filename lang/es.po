@@ -4075,10 +4075,10 @@ msgid "ui_cshow_mine"
 msgstr "Mis comunidades"
 
 msgid "ui_cshow_created"
-msgstr "Creadas por mí"
+msgstr "Admin"
 
 msgid "ui_cshow_created_short"
-msgstr "Creadas"
+msgstr "Admin"
 
 msgid "ui_cshow_joined"
 msgstr "Inscritas"
@@ -4087,7 +4087,7 @@ msgid "ui_cshow_joined_short"
 msgstr "Inscritas"
 
 msgid "ui_cshow_new"
-msgstr "Nuevas"
+msgstr "No inscritas"
 
 msgid "ui_community_no_new"
 msgstr "Ya estás en todas las comunidades de tu zona"

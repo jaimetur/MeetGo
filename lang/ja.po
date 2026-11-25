@@ -4074,10 +4074,10 @@ msgid "ui_cshow_mine"
 msgstr "参加中"
 
 msgid "ui_cshow_created"
-msgstr "作成したもの"
+msgstr "管理"
 
 msgid "ui_cshow_created_short"
-msgstr "作成"
+msgstr "管理"
 
 msgid "ui_cshow_joined"
 msgstr "参加中"
@@ -4086,7 +4086,7 @@ msgid "ui_cshow_joined_short"
 msgstr "参加中"
 
 msgid "ui_cshow_new"
-msgstr "新しい"
+msgstr "未参加"
 
 msgid "ui_community_no_new"
 msgstr "このエリアのすべてのコミュニティに参加済みです"

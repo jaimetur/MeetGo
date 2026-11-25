@@ -206,7 +206,7 @@ export function CommunitiesPage() {
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
   const notMine = (list || []).filter((c) => !c.joined).length;
-  // All of them, the ones I created (if any), the ones I joined (Open, blue) or only new ones (Join, green);
+  // All of them, the ones I run (if any), the ones I joined (Open, blue) or the ones I have not joined (Join, green);
   // remembered on this device.
   type Show = "all" | "created" | "mine" | "new";
   const [show, setShowState] = useState<Show>(() => {
@@ -226,7 +226,8 @@ export function CommunitiesPage() {
       /* per device */
     }
   };
-  const created = (c: Community) => c.joined && c.kind === "custom" && c.role === "owner";
+  // the ones I run: created by me or where I am a co-administrator
+  const created = (c: Community) => c.joined && (c.role === "owner" || c.role === "admin");
   const createdCount = (list || []).filter(created).length;
   const mineCount = (list || []).length - notMine - createdCount;
   // without communities of my own, that tab is not there: its place goes back to all of them
