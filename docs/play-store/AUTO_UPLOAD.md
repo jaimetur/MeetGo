@@ -31,9 +31,9 @@ suben igual. Para crearlo, una sola vez:
 3. **Clave JSON.** Usa la clave JSON de esa cuenta que ya tengas guardada. Si no la tienes: **IAM y administración →
    Cuentas de servicio → play-billing → Claves → Agregar clave → Crear clave nueva → JSON**. Es una contraseña:
    guárdala bien y no la subas a ningún repositorio.
-4. **Darle permiso en Play.** En Play Console → **Usuarios y permisos → Invitar a usuarios nuevos**: pon el email de
-   la cuenta de servicio (`play-billing@jtgcloud-play.iam.gserviceaccount.com`; si ya está invitada, ábrela). En
-   **Permisos de la app** añade **MeetGo** y marca:
+4. **Darle permiso en Play.** En Play Console → **Gestionar cuenta → Usuarios y permisos → Invitar a usuarios
+   nuevos**: pon el email de la cuenta de servicio (`play-billing@jtgcloud-play.iam.gserviceaccount.com`; si ya está
+   invitada, ábrela). En **Permisos de la app** añade **MeetGo** y marca:
    «Ver información de la app», «Publicar en canales de prueba», «Publicar en producción…» (solo si vas a usar
    `production`) y «Gestionar la presencia en la tienda» (para que suba las capturas). **Invitar usuario**.
 5. **Guardarla en GitHub.** En el repositorio → **Settings → Secrets and variables → Actions → New repository
@@ -106,9 +106,9 @@ Para ver lo que recibiría Play: `python tools/play_publish.py notes 0.2.0`.
 menos 12 testers durante 14 días seguidos. Después, en Play Console → **Panel → Solicitar acceso a producción**. Cuando
 Google lo conceda:
 
-1. **Play Console → Usuarios y permisos**: abre la cuenta de servicio. En **Permisos de la app → MeetGo**, añade
-   «Publicar en producción, excluir dispositivos y usar la firma de aplicaciones de Play». **Aplicar → Guardar
-   cambios.**
+1. **Play Console → Gestionar cuenta → Usuarios y permisos**: abre la cuenta de servicio. En **Permisos de la app →
+   MeetGo**, añade «Publicar en producción, excluir dispositivos y usar la firma de aplicaciones de Play».
+   **Aplicar → Guardar cambios.**
 2. **Play Console → Probar y publicar → Producción → pestaña Países/regiones**: añade los países donde se publica. Sin
    países, la subida a producción falla.
 3. Activa el canal estable (en el terminal, desde cualquier carpeta):
