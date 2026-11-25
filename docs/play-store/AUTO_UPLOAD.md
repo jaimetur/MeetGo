@@ -20,23 +20,23 @@ El workflow `.github/workflows/android.yml` ya tiene el paso preparado: en cuant
 sube sola a Play, al canal de la variable `PLAY_TRACK` (si no existe, `alpha` = **prueba cerrada**), con el nombre
 «X.Y.Z (build)». Para crearlo, una sola vez:
 
-1. **Proyecto de Google Cloud.** En <https://console.cloud.google.com/> crea un proyecto (por ejemplo «MeetGo Play»)
-   o usa el de Firebase.
-2. **Activar la API.** En ese proyecto: **APIs y servicios → Biblioteca →** busca **«Google Play Android Developer
-   API»** → **Habilitar**.
-3. **Cuenta de servicio.** **IAM y administración → Cuentas de servicio → Crear cuenta de servicio**:
-   nombre `github-play-upload`, sin roles → **Listo**.
-4. **Clave JSON.** Entra en esa cuenta → pestaña **Claves → Agregar clave → Crear clave nueva → JSON**. Se descarga
-   un archivo `.json`: es una contraseña, guárdalo bien y no lo subas a ningún repositorio.
-5. **Darle permiso en Play.** En Play Console → **Usuarios y permisos → Invitar a usuarios nuevos**: pon el email de
-   la cuenta de servicio (termina en `@….iam.gserviceaccount.com`). En **Permisos de la app** añade **MeetGo** y marca:
+1. **Cuenta de servicio: la que ya tienes para todas tus apps**, `play-billing@jtgcloud-play.iam.gserviceaccount.com`
+   (proyecto de Google Cloud `jtgcloud-play`). No crees otra.
+2. **Activar la API.** En <https://console.cloud.google.com/>, proyecto `jtgcloud-play`: **APIs y servicios →
+   Biblioteca →** busca **«Google Play Android Developer API»** → **Habilitar** (si ya sale activada, nada).
+3. **Clave JSON.** Usa la clave JSON de esa cuenta que ya tengas guardada. Si no la tienes: **IAM y administración →
+   Cuentas de servicio → play-billing → Claves → Agregar clave → Crear clave nueva → JSON**. Es una contraseña:
+   guárdala bien y no la subas a ningún repositorio.
+4. **Darle permiso en Play.** En Play Console → **Usuarios y permisos → Invitar a usuarios nuevos**: pon el email de
+   la cuenta de servicio (`play-billing@jtgcloud-play.iam.gserviceaccount.com`; si ya está invitada, ábrela). En
+   **Permisos de la app** añade **MeetGo** y marca:
    «Ver información de la app», «Publicar en canales de prueba», «Publicar en producción…» (solo si vas a usar
    `production`) y «Gestionar la presencia en la tienda» (para que suba las capturas). **Invitar usuario**.
-6. **Guardarla en GitHub.** En el repositorio → **Settings → Secrets and variables → Actions → New repository
+5. **Guardarla en GitHub.** En el repositorio → **Settings → Secrets and variables → Actions → New repository
    secret**: nombre `PLAY_SERVICE_ACCOUNT_JSON`, valor: **todo el contenido** del archivo `.json` → **Add secret**.
-7. **El canal (opcional).** En el mismo sitio, pestaña **Variables → New repository variable**: nombre `PLAY_TRACK`,
+6. **El canal (opcional).** En el mismo sitio, pestaña **Variables → New repository variable**: nombre `PLAY_TRACK`,
    valor `alpha` (prueba cerrada), `internal` (pruebas internas), `beta` (prueba abierta) o `production`.
-8. **Probar.** **Actions → Android app → Run workflow** en la rama de la versión. El paso «Upload to Google Play» debe
+7. **Probar.** **Actions → Android app → Run workflow** en la rama de la versión. El paso «Upload to Google Play» debe
    salir en verde y la versión aparecer en ese canal de Play Console.
 
 Notas:
