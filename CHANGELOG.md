@@ -132,6 +132,8 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen has a link to the website (the logo and a "Home page" button), as in BodyLens; not in the Android app.
 
 #### 🐛 Bug fixes:
+- Messages sent in a row show their own time too, before the ticks.
+- Windows: dragging one down to close it no longer leaves it see-through or half moved if the touch is lost (Android app), and their height works in WebViews without dvh.
 - Windows (community settings and the rest) are never taller than the screen with the interface enlarged (computers, large text): their content scrolls and the buttons stay in view.
 - iPhone: a long press on a message opened its menu but iOS then selected the menu's text and swallowed every tap; text can no longer be selected outside fields on touch screens (Copy is in the menu).
 - Phones: replying to a message can be cancelled again; a long quoted message pushed the cancel button off the screen, and tapping it moved the composer away from the finger.

@@ -589,6 +589,8 @@ export function MessageItem(props: {
             <div className={"mt" + (isOnlyEmoji(m.body) && !m.attachments.length ? " big" : "")}>
               {m.body ? <Rich text={m.body} /> : null}
               {m.edited_at ? <span className="edited"> ({t("ui_edited")})</span> : null}
+              {/* grouped messages (same person, a few minutes apart) keep their own time, before the ticks */}
+              {cont ? <span className="when ctime" title={new Date(m.created_at).toLocaleString()}>{timeOf(m.created_at)}</span> : null}
               {props.readTicks && cont ? <Ticks tick={props.readTicks} /> : null}
             </div>
           )}

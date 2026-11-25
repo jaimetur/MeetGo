@@ -398,8 +398,10 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .modal .mbody { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
 /* never taller than the screen: the body scrolls and the title and the buttons stay in view. Inside a zoomed screen
    (text size, computers) a length is multiplied by the zoom, so the screen's height is divided by it (--z) */
+.modal { max-height: calc((100vh - 32px) / var(--z, 1)); }  /* browsers without dvh (older Android WebViews) */
 .modal { max-height: calc((100dvh - max(16px, env(safe-area-inset-top, 0px)) - max(16px, env(safe-area-inset-bottom, 0px))) / var(--z, 1)); }
 .modal header, .modal footer { flex: none; }
+.modal header { touch-action: none; }  /* the drag to close is ours, not a scroll of the page */
 .modal .mbody { flex: 1 1 auto; min-height: 0; -webkit-overflow-scrolling: touch; }
 .modal footer { padding: 12px 16px; border-top: 1px solid var(--line); display: flex; gap: 8px; justify-content: flex-end; }
 .sheet-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 40; display: flex; align-items: flex-end; }
@@ -1539,7 +1541,6 @@ button.adm-tile:hover { border-color: var(--line2); background: var(--raise); }
 .modal .adm-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
 .modal footer .grow { flex: 1; }
 /* a long dialog scrolls inside and keeps its buttons on screen (the % height did not resolve inside the grid) */
-.modal { max-height: calc((100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / var(--z, 1)); }
 .modal .mbody { min-height: 0; }
 
 /* plans: calendar, companions, ratings, check-in */
@@ -1667,3 +1668,5 @@ a.btn { text-decoration: none; }
 .csec { display: flex; flex-direction: column; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--fg) 3%, transparent); min-width: 0; }
 .csec-h { display: flex; align-items: center; gap: 8px; margin: 0; font-family: var(--display); font-size: 14.5px; font-weight: 650; }
 .csec .fld.coadmins > span:first-child { display: none; }
+.mt .ctime { margin-left: 8px; white-space: nowrap; }
+.mt .ctime + .ticks { margin-left: 3px; }

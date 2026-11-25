@@ -26,7 +26,21 @@ export function useSwipeDown(onClose: (() => void) | undefined, scrollers = ".ep
     setPull(0);
     if (close) onClose?.();
   };
-  const style: React.CSSProperties | undefined = pull
-    ? { transform: `translateY(${pull}px)`, opacity: Math.max(0.4, 1 - pull / 300), transition: "none" } : undefined;
+  // A touch the system takes over (Android's WebView, a scroll) may never send its end here: whatever happens, the
+  // next finger lifted anywhere puts the window back, so it never stays half dragged and see-through.
+  React.useEffect(() => {
+    if (!pull) return;
+    const reset = () => { drag.current = null; setPull(0); };
+    window.addEventListener("touchend", reset);
+    window.addEventListener("touchcancel", reset);
+    window.addEventListener("blur", reset);
+    return () => {
+      window.removeEventListener("touchend", reset);
+      window.removeEventListener("touchcancel", reset);
+      window.removeEventListener("blur", reset);
+    };
+  }, [pull > 0]);
+  // it follows the finger without fading (a see-through window over the page looks broken)
+  const style: React.CSSProperties | undefined = pull ? { transform: `translateY(${pull}px)`, transition: "none" } : undefined;
   return { handlers: { onTouchStart, onTouchMove, onTouchEnd, onTouchCancel: onTouchEnd }, style };
 }
