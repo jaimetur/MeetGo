@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Administration → Interests: add, rename (in the 10 languages), hide or delete the interests people choose in their profile and for their communities.
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
 - Administration → Backups, as in DriveTest Analyzer: the stored backups, their size, the free disk space, the last and the next backup; «Back up now» (full: database and uploaded files; light: database only), «Restore» (choosing the parts, with an automatic backup first so it can be undone) with download and delete, and scheduled backups (hourly, every 4 hours, daily, weekly or monthly, light ones between weekly full ones) with retention by days, weeks and months. In the stack they go to its backups folder, visible on the NAS.
 - The README has buttons to the website and the app.

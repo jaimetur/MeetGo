@@ -10,19 +10,21 @@ import { Overview } from "./Overview";
 import { Users } from "./Users";
 import { Moderation } from "./Moderation";
 import { Communities } from "./Communities";
+import { Interests } from "./Interests";
 import { Codes } from "./Codes";
 import { Billing } from "./Billing";
 import { Settings } from "./Settings";
 import { Bots } from "./Bots";
 import { Backups } from "./Backups";
 
-export type Section = "overview" | "users" | "moderation" | "communities" | "codes" | "billing" | "settings" | "backups" | "bots";
+export type Section = "overview" | "users" | "moderation" | "communities" | "interests" | "codes" | "billing" | "settings" | "backups" | "bots";
 
 const SECTIONS: [Section, string, string][] = [
   ["overview", "home", "sec_overview"],
   ["users", "users", "sec_users"],
   ["moderation", "flag", "sec_moderation"],
   ["communities", "compass", "sec_communities"],
+  ["interests", "smile", "sec_interests"],
   ["codes", "star", "sec_codes"],
   ["billing", "file", "sec_billing"],
   ["settings", "sliders", "sec_settings"],
@@ -75,6 +77,7 @@ export function AdminPage() {
           {section === "users" ? <Users initialFilter={filter} /> : null}
           {section === "moderation" ? <Moderation onCount={setOpenReports} /> : null}
           {section === "communities" ? <Communities /> : null}
+          {section === "interests" ? <Interests /> : null}
           {section === "codes" ? <Codes /> : null}
           {section === "billing" ? <Billing /> : null}
           {section === "settings" ? <Settings /> : null}
