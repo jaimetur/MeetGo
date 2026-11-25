@@ -13,7 +13,7 @@ from app.core.models import CommunityRequest, Conversation, ConversationMember, 
 from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
-    NEW_COMMUNITY_RETENTION, RETENTION_CHOICES, clean_questions, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
+    NEW_COMMUNITY_RETENTION, RETENTION_CHOICES, clean_interest_tags, clean_questions, suggested_communities, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
     staff_ids, staff_of, valid_zone,
 )
 from app.conversations.service import fits_age
@@ -72,10 +72,19 @@ async def communities(q: str = "", mine: int = 0, province: str | None = None, a
                       db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     """My zone's communities, or those of another zone to discover them: a province, a group of provinces of a country
     (area, e.g. an autonomous community) or a whole country, with an age range."""
+    # another place can be looked at, but always with my own age range (worked out from my date of birth)
+    if province or country or area or age_range:
+        age_range = user_age_key(user)
     zone = await valid_zone(db, province, age_range, country, area)
-    if (province or age_range or country or area) and not zone:
+    if (province or country or area) and not zone:
         raise HTTPException(400, t("err_invalid_zone"))
     return await list_communities(db, user, q, bool(mine), zone)
+
+
+@router.get("/communities/suggested", response_model=list[dict])
+async def suggested(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """Up to 5 communities of my zone, that I am not in, fitting my interests best (with `matches`: which ones)."""
+    return await suggested_communities(db, user)
 
 
 @router.post("/communities", response_model=dict)
@@ -92,7 +101,8 @@ async def create_community(payload: CommunityCreateIn, db: AsyncSession = Depend
                         policy_json={"join_questions": clean_questions(payload.join_questions)} if payload.join_questions else {},
                         invite_code=secrets.token_urlsafe(9), access_mode=payload.access_mode,
                         board_mode=payload.board_mode, min_age=payload.min_age, max_age=payload.max_age,
-                        retention_days=payload.retention_days or NEW_COMMUNITY_RETENTION)
+                        retention_days=payload.retention_days or NEW_COMMUNITY_RETENTION,
+                        interest_tags=await clean_interest_tags(db, payload.interest_tags))
     if not fits_age(user, conv):
         raise HTTPException(400, t("err_age_span_creator"))
     db.add(conv)
@@ -150,6 +160,8 @@ async def update_community(community_id: int, payload: CommunityUpdateIn, db: As
         conv.rules_markdown = payload.rules
     if payload.join_questions is not None:
         conv.policy_json = {**(conv.policy_json or {}), "join_questions": clean_questions(payload.join_questions)}
+    if payload.interest_tags is not None and not conv.interest_id:
+        conv.interest_tags = await clean_interest_tags(db, payload.interest_tags)
     if payload.retention_days is not None:
         # interest communities always keep a year; people's communities choose among the fixed periods
         if conv.interest_id or payload.retention_days not in RETENTION_CHOICES:

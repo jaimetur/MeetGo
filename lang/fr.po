@@ -3281,7 +3281,7 @@ msgid "ui_community_retention"
 msgstr "La discussion garde les messages pendant"
 
 msgid "ui_community_retention_interest"
-msgstr "1 an (pareil dans toutes les communautés d’intérêts)"
+msgstr "Réglé par l’administration de MeetGo (identique dans toutes les zones)"
 
 msgid "ui_community_retention_hint"
 msgstr "Passé ce délai, les messages (avec leurs photos et fichiers) sont supprimés tout seuls, sauf le message épinglé. Le tableau et les sorties ne sont pas supprimés."
@@ -3315,6 +3315,27 @@ msgstr "1 an"
 
 msgid "ui_retention_days"
 msgstr "{n} jours"
+
+msgid "ui_zone_lead_place"
+msgstr "Votre zone est {zone} · {age}. Choisissez un autre pays ou une autre province pour voir ses communautés de votre âge. Vous ne pouvez rejoindre que celles de votre zone."
+
+msgid "ui_suggest_title"
+msgstr "Communautés pour vous"
+
+msgid "ui_suggest_pick_interests"
+msgstr "Choisissez vos centres d’intérêt dans votre profil et nous vous suggérerons des communautés"
+
+msgid "ui_suggest_by_people"
+msgstr "créée par des membres"
+
+msgid "ui_suggest_because"
+msgstr "Pour : {list}"
+
+msgid "ui_community_interests"
+msgstr "Centres d’intérêt de la communauté"
+
+msgid "ui_community_interests_hint"
+msgstr "Jusqu’à 5. Elle sera suggérée aux personnes de votre zone qui en ont un."
 
 msgid "ui_install_title"
 msgstr "Installer MeetGo"

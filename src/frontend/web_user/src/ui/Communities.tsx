@@ -106,8 +106,9 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
           <CommunityBadge c={c} />
           <div style={{ minWidth: 0 }}>
             <div className="ctitle">{c.title}</div>
+            <div className="cscope"><Icon name="place" size="sm" />{scopeText(c)}</div>
             <div className="cstats">
-              <span>{wide ? `${c.province} · ` : ""}{t("ui_members_n", { n: c.member_count })}</span>
+              <span>{t("ui_members_n", { n: c.member_count })}</span>
               {c.online_count ? <span><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</span> : null}
               {c.upcoming_count ? <span>{t("ui_community_plans_n", { n: c.upcoming_count })}</span> : null}
             </div>
@@ -299,7 +300,10 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     ageLimit: false, min_age: Math.max(18, myAge - 5), max_age: myAge + 5,
     questions: [...(community?.join_questions || []), "", "", ""].slice(0, 3),
     retention: community?.retention_days || 30,
+    tags: (community?.kind === "custom" ? community.tags : []) || [],
   });
+  const [allInterests, setAllInterests] = useState<{ slug: string; name: string }[]>([]);
+  useEffect(() => { api.interests().then((l) => setAllInterests(l.filter((i) => i.active !== false))).catch(() => undefined); }, []);
   const interest = community?.kind === "interest";
   const [busy, setBusy] = useState(false);
   const set = (p: Partial<typeof form>) => setForm((f) => ({ ...f, ...p }));
@@ -308,7 +312,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     try {
       const questions = form.access_mode === "request" ? form.questions.map((q) => q.trim()).filter(Boolean) : [];
       const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions,
-        ...(interest ? {} : { retention_days: form.retention }) };
+        ...(interest ? {} : { retention_days: form.retention, interest_tags: form.tags }) };
       if (community) {
         const c = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
         toast(t("ui_saved"));
@@ -374,6 +378,18 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
         </>
       ) : community.min_age != null || community.max_age != null ? (
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
+      ) : null}
+      {!interest ? (
+        <div className="fld"><span>{t("ui_community_interests")}</span>
+          <div className="chips wrapchips">
+            {allInterests.map((i) => {
+              const on = form.tags.includes(i.slug);
+              return <button key={i.slug} type="button" className={"chip" + (on ? " on" : "")} aria-pressed={on} disabled={!on && form.tags.length >= 5}
+                onClick={() => set({ tags: on ? form.tags.filter((x) => x !== i.slug) : [...form.tags, i.slug] })}>{i.name}</button>;
+            })}
+          </div>
+          <small className="muted">{t("ui_community_interests_hint")}</small>
+        </div>
       ) : null}
       <label className="fld">{t("ui_community_retention")}
         {interest ? <span className="note"><Icon name="clock" size="sm" />{t("ui_community_retention_interest")}</span> : (
@@ -463,7 +479,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
         <div className="row chead2-tags" style={{ flexWrap: "wrap" }}>
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.board_mode === "admins" ? <span className="ktag"><Icon name="megaphone" size="sm" />{t("ui_community_board_admins")}</span> : null}
-          {c.min_age != null || c.max_age != null ? <span className="ktag"><Icon name="user" size="sm" />{ageSpanText(c)}</span> : null}
+          <span className="ktag"><Icon name="place" size="sm" />{scopeText(c)}</span>
           {c.retention_days ? <span className="ktag" title={t("ui_community_retention_hint")}><Icon name="clock" size="sm" />{t("ui_community_retention_tag", { time: retentionText(c.retention_days) })}</span> : null}
           {c.role ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role] || "ui_role_member")}</span> : null}
           {c.rules ? <button className="ktag link" onClick={() => setRules(true)}><Icon name="shield" size="sm" />{t("ui_community_rules")}</button> : null}
@@ -838,6 +854,12 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 /** Home: the communities I belong to, one tap away (board, chat and members). */
 
 
+/** Where and for whom a community is: "Madrid · 31-60" or, with its own age span, "Madrid · 25–40 años". */
+export function scopeText(c: Pick<Community, "province" | "age_range" | "min_age" | "max_age">): string {
+  const ages = c.min_age != null || c.max_age != null ? ageSpanText(c as Community) : (c.age_range || "").replace("_plus", "+").replace("_", "-");
+  return [c.province, ages].filter(Boolean).join(" · ");
+}
+
 /** "25–40 años", "From 25", "Up to 40". */
 function ageSpanText(c: Community): string {
   if (c.min_age != null && c.max_age != null) return t("ui_community_ages_span", { min: c.min_age, max: c.max_age });
@@ -860,7 +882,7 @@ function CommunityStatsView({ c }: { c: Community }) {
   ];
   return (
     <div className="swrap stack" style={{ gap: 14 }}>
-      <div className="cstats">
+      <div className="cstatgrid">
         {tiles.map(([icon, label, value, sub]) => (
           <div key={label} className="cstat"><Icon name={icon} size="sm" /><b>{value}</b><span>{label}</span>{sub ? <small>{sub}</small> : null}</div>
         ))}

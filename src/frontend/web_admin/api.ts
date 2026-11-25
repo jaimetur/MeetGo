@@ -353,4 +353,6 @@ export type AdminLanguage = {
 export type AdminInterest = {
   id: number; slug: string; name: string; category: string | null; icon: string | null; color: string | null;
   age_ranges: string[]; active: boolean; zones: number; people: number;
+  tags: string[]; min_age: number | null; max_age: number | null; access_mode: "open" | "request"; board_mode: "open" | "admins";
+  retention_days: number; join_questions: string[];
 };

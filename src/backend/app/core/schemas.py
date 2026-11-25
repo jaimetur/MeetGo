@@ -150,6 +150,13 @@ class InterestOut(BaseModel):
     color: str | None = None
     age_ranges: list[str] = Field(default_factory=list)
     active: bool = True
+    tags: list[str] = Field(default_factory=list)
+    min_age: int | None = None
+    max_age: int | None = None
+    access_mode: str = "open"
+    board_mode: str = "open"
+    retention_days: int = 365
+    join_questions: list[str] = Field(default_factory=list)
 
 class SetInterestsIn(BaseModel):
     interest_slugs: list[str] = Field(default_factory=list)
@@ -246,6 +253,14 @@ class AdminInterestIn(BaseModel):
     color: str | None = None
     age_ranges: list[str] | None = None
     active: bool | None = None
+    tags: list[str] | None = None
+    age_mode: str | None = Field(default=None, pattern="^(ranges|span)$")
+    min_age: int | None = Field(default=None, ge=18, le=120)
+    max_age: int | None = Field(default=None, ge=18, le=120)
+    access_mode: str | None = Field(default=None, pattern="^(open|request)$")
+    board_mode: str | None = Field(default=None, pattern="^(open|admins)$")
+    retention_days: int | None = None
+    join_questions: list[str] | None = Field(default=None, max_length=3)
 
 class AdminSmtpTestIn(BaseModel):
     to_email: str
@@ -369,6 +384,7 @@ class CommunityCreateIn(BaseModel):
     max_age: int | None = Field(default=None, ge=18, le=120)
     join_questions: list[str] | None = Field(default=None, max_length=3)
     retention_days: int | None = None
+    interest_tags: list[str] | None = Field(default=None, max_length=5)
 
 
 class CommunityUpdateIn(BaseModel):
@@ -380,6 +396,7 @@ class CommunityUpdateIn(BaseModel):
     rules: str | None = Field(default=None, max_length=4000)
     join_questions: list[str] | None = Field(default=None, max_length=3)
     retention_days: int | None = None
+    interest_tags: list[str] | None = Field(default=None, max_length=5)
 
 
 class JoinIn(BaseModel):

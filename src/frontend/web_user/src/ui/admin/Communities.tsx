@@ -9,7 +9,7 @@ import { Icon, Modal, guessIcon, hobbyIcon, setInterestLooks } from "../common";
 import { colorFor } from "../../util";
 import { SectionHead } from "./AdminPage";
 import { a } from "./i18n";
-import { Badge, Empty, Field, Switch } from "./kit";
+import { Badge, Choice, Empty, Field, Switch } from "./kit";
 
 const ICONS = ["users", "chat", "coffee", "beer", "cocktail", "food", "party", "dance", "network", "ball", "basket", "racket",
   "dumbbell", "bike", "trophy", "waves", "mountain", "trees", "umbrella", "plane", "camera", "film", "ticket", "music",
@@ -93,6 +93,16 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
   const [color, setColor] = useState(interest?.color || "");
   const [ages, setAges] = useState<string[]>(interest?.age_ranges || []);
   const [active, setActive] = useState(interest?.active ?? true);
+  const [ageMode, setAgeMode] = useState<"ranges" | "span">(interest && (interest.min_age != null || interest.max_age != null) ? "span" : "ranges");
+  const [minAge, setMinAge] = useState(interest?.min_age ?? 25);
+  const [maxAge, setMaxAge] = useState(interest?.max_age ?? 45);
+  const [access, setAccess] = useState<"open" | "request">(interest?.access_mode || "open");
+  const [board, setBoard] = useState<"open" | "admins">(interest?.board_mode || "open");
+  const [retention, setRetention] = useState(interest?.retention_days || 365);
+  const [questions, setQuestions] = useState<string[]>([...(interest?.join_questions || []), "", "", ""].slice(0, 3));
+  const [tags, setTags] = useState<string[]>(interest?.tags || []);
+  const [all, setAll] = useState<AdminInterest[]>([]);
+  useEffect(() => { api.adminInterests().then(setAll).catch(() => undefined); }, []);
   const [busy, setBusy] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const slug = interest?.slug || slugify(name);
@@ -103,7 +113,13 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
   async function save() {
     if (!name.trim() || !slug) return;
     setBusy(true);
-    const payload = { slug, name: name.trim(), category, icon, color, age_ranges: ages, active };
+    const payload = {
+      slug, name: name.trim(), category, icon, color, active, age_mode: ageMode,
+      age_ranges: ageMode === "ranges" ? ages : [], ...(ageMode === "span" ? { min_age: minAge, max_age: maxAge } : {}),
+      access_mode: access, board_mode: board, retention_days: retention,
+      join_questions: access === "request" ? questions.map((q) => q.trim()).filter(Boolean) : [],
+      tags: [slug, ...tags.filter((x) => x !== slug)].slice(0, 5),
+    };
     try {
       if (interest) await api.updateInterest(interest.id, payload); else await api.createInterest(payload);
       toast(interest ? a("co_saved") : a("co_created"));
@@ -157,6 +173,16 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
         <div className="adm-sub-head"><b>{a("co_rules")}</b></div>
         <Switch id="adm-co-active" label={a("co_active")} hint={a("co_active_hint")} on={active} onChange={setActive} />
         <div className="adm-field"><span>{a("co_ages")}</span>
+          <Choice label={a("co_ages")} value={ageMode} onChange={setAgeMode} options={[["ranges", a("co_age_ranges")], ["span", a("co_age_span")]]} />
+        </div>
+        {ageMode === "span" ? (
+          <div className="adm-grid">
+            <Field label={a("co_min_age")}><input className="inp" type="number" min={18} max={120} value={minAge} onChange={(e) => setMinAge(Number(e.target.value) || 18)} /></Field>
+            <Field label={a("co_max_age")}><input className="inp" type="number" min={18} max={120} value={maxAge} onChange={(e) => setMaxAge(Number(e.target.value) || 18)} /></Field>
+            <small className="muted" style={{ gridColumn: "1 / -1" }}>{a("co_age_span_hint")}</small>
+          </div>
+        ) : (
+        <div className="adm-field">
           <div className="adm-choice">
             {AGES.map(([k, label]) => {
               const on = !ages.length || ages.includes(k);
@@ -168,6 +194,39 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
             })}
           </div>
           <small>{ages.length ? a("co_ages_some") : a("co_ages_all")}</small>
+        </div>
+        )}
+      </div>
+
+      <div className="adm-sub">
+        <div className="adm-sub-head"><b>{a("co_settings")}</b><span className="muted">{a("co_settings_hint")}</span></div>
+        <div className="adm-field"><span>{a("co_access")}</span>
+          <Choice label={a("co_access")} value={access} onChange={setAccess} options={[["open", a("co_access_open")], ["request", a("co_access_request")]]} />
+        </div>
+        {access === "request" ? (
+          <div className="adm-field"><span>{a("co_questions")}</span>
+            {questions.map((q, i) => <input key={i} className="inp" maxLength={200} placeholder={a("co_question_ph", { n: i + 1 })} value={q} onChange={(e) => setQuestions(questions.map((x, j) => (j === i ? e.target.value : x)))} />)}
+          </div>
+        ) : null}
+        <div className="adm-field"><span>{a("co_board")}</span>
+          <Choice label={a("co_board")} value={board} onChange={setBoard} options={[["open", a("co_board_open")], ["admins", a("co_board_admins")]]} />
+        </div>
+        <Field label={a("co_retention")}>
+          <select className="inp" value={retention} onChange={(e) => setRetention(Number(e.target.value))}>
+            {[1, 2, 3, 7, 30, 90, 180, 365].map((d) => <option key={d} value={d}>{a("ret_" + d)}</option>)}
+          </select>
+        </Field>
+      </div>
+
+      <div className="adm-sub">
+        <div className="adm-sub-head"><b>{a("co_tags")}</b><span className="muted">{a("co_tags_hint")}</span></div>
+        <div className="chips wrapchips">
+          {all.filter((x) => x.slug !== slug).map((x) => {
+            const on = tags.includes(x.slug);
+            const full = tags.filter((y) => y !== slug).length >= 4;
+            return <button key={x.slug} type="button" className={"chip" + (on ? " on" : "")} aria-pressed={on} disabled={!on && full}
+              onClick={() => setTags(on ? tags.filter((y) => y !== x.slug) : [...tags, x.slug])}>{x.name}</button>;
+          })}
         </div>
       </div>
     </Modal>,

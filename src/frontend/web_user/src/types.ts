@@ -155,6 +155,8 @@ export type Community = {
   max_age?: number | null;
   join_questions?: string[];
   retention_days?: number | null;
+  tags?: string[];
+  matches?: string[];
   created_at: string;
 };
 

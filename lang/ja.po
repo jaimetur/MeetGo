@@ -3282,7 +3282,7 @@ msgid "ui_community_retention"
 msgstr "チャットのメッセージ保存期間"
 
 msgid "ui_community_retention_interest"
-msgstr "1 年（すべての興味コミュニティで共通）"
+msgstr "MeetGo の管理者が設定します（全ゾーン共通）"
 
 msgid "ui_community_retention_hint"
 msgstr "期間を過ぎたチャットのメッセージ（写真やファイルを含む）は自動で削除されます（固定メッセージは除く）。掲示板と予定は削除されません。"
@@ -3316,6 +3316,27 @@ msgstr "1 年"
 
 msgid "ui_retention_days"
 msgstr "{n} 日"
+
+msgid "ui_zone_lead_place"
+msgstr "あなたのゾーンは {zone} · {age} です。別の国や地域を選ぶと、同じ年齢層のコミュニティを見られます。参加できるのは自分のゾーンだけです。"
+
+msgid "ui_suggest_title"
+msgstr "あなたへのおすすめ"
+
+msgid "ui_suggest_pick_interests"
+msgstr "プロフィールで興味を選ぶと、コミュニティをおすすめします"
+
+msgid "ui_suggest_by_people"
+msgstr "ユーザーが作成"
+
+msgid "ui_suggest_because"
+msgstr "理由：{list}"
+
+msgid "ui_community_interests"
+msgstr "コミュニティの興味"
+
+msgid "ui_community_interests_hint"
+msgstr "5 つまで。いずれかに興味がある同じゾーンの人におすすめされます。"
 
 msgid "ui_install_title"
 msgstr "MeetGoをインストール"

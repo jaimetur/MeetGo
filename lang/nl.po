@@ -3282,7 +3282,7 @@ msgid "ui_community_retention"
 msgstr "De chat bewaart berichten gedurende"
 
 msgid "ui_community_retention_interest"
-msgstr "1 jaar (hetzelfde in alle interessecommunity’s)"
+msgstr "Ingesteld door de beheerders van MeetGo (overal hetzelfde)"
 
 msgid "ui_community_retention_hint"
 msgstr "Daarna worden chatberichten (met foto’s en bestanden) vanzelf verwijderd, behalve het vastgezette bericht. Prikbord en plannen blijven."
@@ -3316,6 +3316,27 @@ msgstr "1 jaar"
 
 msgid "ui_retention_days"
 msgstr "{n} dagen"
+
+msgid "ui_zone_lead_place"
+msgstr "Je zone is {zone} · {age}. Kies een ander land of provincie om de community’s van jouw leeftijd daar te zien. Je kunt alleen lid worden in je eigen zone."
+
+msgid "ui_suggest_title"
+msgstr "Community’s voor jou"
+
+msgid "ui_suggest_pick_interests"
+msgstr "Kies je interesses in je profiel en we stellen community’s voor"
+
+msgid "ui_suggest_by_people"
+msgstr "gemaakt door leden"
+
+msgid "ui_suggest_because"
+msgstr "Vanwege: {list}"
+
+msgid "ui_community_interests"
+msgstr "Interesses van de community"
+
+msgid "ui_community_interests_hint"
+msgstr "Tot 5. Wordt voorgesteld aan mensen in je zone met een daarvan."
 
 msgid "ui_install_title"
 msgstr "MeetGo installeren"

@@ -3282,7 +3282,7 @@ msgid "ui_community_retention"
 msgstr "Der Chat behält Nachrichten für"
 
 msgid "ui_community_retention_interest"
-msgstr "1 Jahr (gleich in allen Interessen-Communities)"
+msgstr "Wird von der MeetGo-Administration festgelegt (in allen Zonen gleich)"
 
 msgid "ui_community_retention_hint"
 msgstr "Danach werden Chatnachrichten (samt Fotos und Dateien) automatisch gelöscht, außer der angehefteten Nachricht. Pinnwand und Treffen bleiben."
@@ -3316,6 +3316,27 @@ msgstr "1 Jahr"
 
 msgid "ui_retention_days"
 msgstr "{n} Tage"
+
+msgid "ui_zone_lead_place"
+msgstr "Deine Zone ist {zone} · {age}. Wähle ein anderes Land oder eine andere Provinz, um dortige Communities deines Alters zu sehen. Beitreten kannst du nur in deiner Zone."
+
+msgid "ui_suggest_title"
+msgstr "Communities für dich"
+
+msgid "ui_suggest_pick_interests"
+msgstr "Wähle in deinem Profil deine Interessen, dann schlagen wir dir Communities vor"
+
+msgid "ui_suggest_by_people"
+msgstr "von Mitgliedern erstellt"
+
+msgid "ui_suggest_because"
+msgstr "Wegen: {list}"
+
+msgid "ui_community_interests"
+msgstr "Interessen der Community"
+
+msgid "ui_community_interests_hint"
+msgstr "Bis zu 5. Sie wird Menschen deiner Zone mit einem davon vorgeschlagen."
 
 msgid "ui_install_title"
 msgstr "MeetGo installieren"

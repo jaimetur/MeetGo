@@ -342,6 +342,30 @@ def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
         it.age_ranges = [a for a in AGE_KEYS if a in payload.age_ranges]
     if payload.active is not None:
         it.active = payload.active
+    # the settings of its communities, as in a community made by people
+    if payload.age_mode == "span":
+        if payload.min_age is None and payload.max_age is None:
+            raise HTTPException(400, t("err_age_span"))
+        if payload.min_age is not None and payload.max_age is not None and payload.min_age > payload.max_age:
+            raise HTTPException(400, t("err_age_span"))
+        it.min_age, it.max_age, it.age_ranges = payload.min_age, payload.max_age, []
+    elif payload.age_mode == "ranges":
+        it.min_age = it.max_age = None
+    if payload.access_mode is not None:
+        it.access_mode = payload.access_mode
+    if payload.board_mode is not None:
+        it.board_mode = payload.board_mode
+    if payload.retention_days is not None:
+        from app.communities.service import RETENTION_CHOICES
+        if payload.retention_days not in RETENTION_CHOICES:
+            raise HTTPException(400, t("err_retention"))
+        it.retention_days = payload.retention_days
+    if payload.join_questions is not None:
+        it.join_questions = [q.strip()[:200] for q in payload.join_questions if q and q.strip()][:3]
+    if payload.tags is not None:
+        # its own interest first, then up to 4 more
+        tags = [it.slug] + [s for s in dict.fromkeys(payload.tags) if s != it.slug]
+        it.tags = tags[:5]
 
 
 @router.get("/interests", response_model=list[dict])
@@ -375,9 +399,14 @@ async def update_interest(interest_id: int, payload: AdminInterestIn, db: AsyncS
     it = await db.get(Interest, interest_id)
     if not it:
         raise HTTPException(404, t("err_interest_not_found"))
+    from app.communities.interest_settings import apply_interest_settings, has_span
+    had_span = has_span(it)
     it.slug, it.name = payload.slug, payload.name
     _apply_interest(it, payload)
     await db.commit()
+    # every zone's community of the interest follows its settings (joined per province with an age span)
+    await apply_interest_settings(db, it, had_span)
+    await db.refresh(it)
     return interest_out(it)
 
 

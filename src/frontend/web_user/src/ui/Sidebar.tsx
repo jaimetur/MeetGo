@@ -11,13 +11,32 @@ import { ConvMenuItems } from "./Chat";
 import { Avatar, ConvIcon, Icon, Modal, convTitle } from "./common";
 
 type Filter = "all" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
+const FILTER_KEYS: Filter[] = ["all", "unread", "dm", "mentions", "channel", "plan", "group"];
 
 export function Sidebar({ activeId }: { activeId: number | null }) {
   const conversations = useStore((s) => s.conversations);
   const all = useMemo(() => sortedConversations(conversations), [conversations]);
   const typing = useStore((s) => s.typing);
   const meId = useStore((s) => s.me?.id);
-  const [filter, setFilter] = useState<Filter>("all");
+  // the chosen tab is kept on this device (closing the app or a new version of the server does not reset it)
+  const [filter, setFilterState] = useState<Filter>(() => {
+    try {
+      const saved = localStorage.getItem("chats.filter") as Filter | null;
+      return saved && FILTER_KEYS.includes(saved) ? saved : "all";
+    } catch {
+      return "all";
+    }
+  });
+  // a remembered tab far to the right is scrolled into view
+  useEffect(() => { document.getElementById(`chats-f-${filter}`)?.scrollIntoView({ block: "nearest", inline: "nearest" }); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const setFilter = (f: Filter) => {
+    setFilterState(f);
+    try {
+      localStorage.setItem("chats.filter", f);
+    } catch {
+      /* private mode */
+    }
+  };
   const [q, setQ] = useState("");
   const [found, setFound] = useState<Message[] | null>(null);
   const [newChat, setNewChat] = useState(false);
@@ -48,8 +67,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     [t("ui_sec_direct"), visible.filter((c) => !c.pinned && c.kind === "dm")],
   ];
   const filters: [Filter, string][] = [
-    ["all", t("ui_f_all")], ["unread", t("ui_f_unread")], ["mentions", t("ui_f_mentions")],
-    ["channel", t("ui_f_communities")], ["plan", t("ui_f_plans")], ["group", t("ui_f_groups")], ["dm", t("ui_f_direct")],
+    ["all", t("ui_f_all")], ["unread", t("ui_f_unread")], ["dm", t("ui_f_direct")], ["mentions", t("ui_f_mentions")],
+    ["channel", t("ui_f_communities")], ["plan", t("ui_f_plans")], ["group", t("ui_f_groups")],
   ];
 
   return (
@@ -67,7 +86,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
         </div>
         <div className="chips" role="tablist">
           {filters.map(([f, label]) => (
-            <button key={f} role="tab" aria-selected={filter === f} className={"chip" + (filter === f ? " on" : "")} onClick={() => setFilter(f)}>{label}</button>
+            <button key={f} id={`chats-f-${f}`} role="tab" aria-selected={filter === f} className={"chip" + (filter === f ? " on" : "")} onClick={() => setFilter(f)}>{label}</button>
           ))}
         </div>
       </div>

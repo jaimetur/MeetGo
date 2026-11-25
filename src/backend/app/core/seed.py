@@ -182,6 +182,46 @@ DEFAULT_INTERESTS = [
 
 # Interests whose name changed: (old name, new name). Only a name still as it was is changed (not one an administrator
 # renamed); the communities show the interest's name, so they follow.
+# The interests each interest community is about (its own first, 1-5): people with any of them get it suggested.
+# Applied while an interest has none, so what an administrator sets is kept.
+INTEREST_TAGS = {
+    "tomar_algo": ["tomar_algo", "hacer_amigos", "salir_de_fiesta", "networking", "conciertos"],
+    "senderismo": ["senderismo", "deportes_aire_libre", "viajes", "picnics", "fitness"],
+    "cine": ["cine", "lectura", "conciertos", "hacer_amigos"],
+    "deporte": ["deporte", "fitness", "futbol", "baloncesto", "deportes_aire_libre"],
+    "networking": ["networking", "tomar_algo", "aprender_ingles", "hacer_amigos"],
+    "ciclismo": ["ciclismo", "mtb", "deportes_aire_libre", "fitness", "viajes"],
+    "mtb": ["mtb", "ciclismo", "deportes_aire_libre", "senderismo"],
+    "motos": ["motos", "coches", "viajes"],
+    "coches": ["coches", "motos", "viajes"],
+    "playa": ["playa", "deportes_acuaticos", "picnics", "viajes", "tomar_algo"],
+    "viajes": ["viajes", "senderismo", "playa", "aprender_ingles", "motos"],
+    "lectura": ["lectura", "cine", "aprender_ingles", "aprender_frances"],
+    "picnics": ["picnics", "senderismo", "playa", "cocina", "hacer_amigos"],
+    "deportes_aire_libre": ["deportes_aire_libre", "senderismo", "ciclismo", "mtb", "deportes_acuaticos"],
+    "deportes_acuaticos": ["deportes_acuaticos", "playa", "deportes_aire_libre", "fitness"],
+    "futbol": ["futbol", "futbol_sala", "deporte"],
+    "futbol_sala": ["futbol_sala", "futbol", "deporte"],
+    "tenis": ["tenis", "padel", "deporte", "fitness"],
+    "padel": ["padel", "tenis", "deporte", "fitness"],
+    "fitness": ["fitness", "crossfit", "deporte", "ciclismo"],
+    "crossfit": ["crossfit", "fitness", "deporte"],
+    "conciertos": ["conciertos", "musica_rock", "musica_flamenca", "salir_de_fiesta", "tomar_algo"],
+    "musica_rock": ["musica_rock", "conciertos", "guitarra", "bateria"],
+    "musica_flamenca": ["musica_flamenca", "conciertos", "bailes", "guitarra"],
+    "salir_de_fiesta": ["salir_de_fiesta", "tomar_algo", "bailes", "conciertos", "hacer_amigos"],
+    "hacer_amigos": ["hacer_amigos", "tomar_algo", "salir_de_fiesta", "picnics"],
+    "aprender_ingles": ["aprender_ingles", "viajes", "networking"],
+    "aprender_aleman": ["aprender_aleman", "viajes", "networking"],
+    "aprender_frances": ["aprender_frances", "viajes", "lectura"],
+    "cocina": ["cocina", "picnics", "tomar_algo"],
+    "guitarra": ["guitarra", "musica_rock", "musica_flamenca", "conciertos"],
+    "bateria": ["bateria", "musica_rock", "conciertos"],
+    "teclado": ["teclado", "conciertos", "guitarra"],
+    "bailes": ["bailes", "salir_de_fiesta", "musica_flamenca", "fitness"],
+    "baloncesto": ["baloncesto", "deporte", "fitness"],
+}
+
 RENAMED_INTERESTS = {"tomar_algo": ("Quedar para tomar algo", "Tomar algo"), "deporte": ("Deporte", "Deportes")}
 
 
@@ -203,6 +243,9 @@ async def seed(db: AsyncSession) -> None:
     await merge_interests(db, MERGED_SPORTS, "deporte")
     for slug, (old, new) in RENAMED_INTERESTS.items():
         await db.execute(update(Interest).where(Interest.slug == slug, Interest.name == old).values(name=new))
+    for it in (await db.execute(select(Interest))).scalars().all():
+        if not it.tags:
+            it.tags = INTEREST_TAGS.get(it.slug) or [it.slug]
     await db.commit()
     await update_age_ranges(db)
     await ensure_admin(db)

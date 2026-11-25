@@ -11,7 +11,7 @@ import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
-import { AboutModal, Avatar, Icon, Modal, Wordmark, useClickOutside, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -450,10 +450,46 @@ export function HomePage() {
           </div>
           <button className="btn go" onClick={() => navigate("/publish")}><Icon name="plus" size="sm" />{t("ui_nav_publish")}</button>
         </header>
+        <SuggestedCommunities />
         <FilterChips value={filter} onChange={setFilter} />
         <PostList feed={feed} empty={empty} />
       </div>
     </main>
+  );
+}
+
+/** Communities of my zone, not mine yet, that fit my interests best (up to 5). */
+function SuggestedCommunities() {
+  const myCommunities = useStore((s) => s.myCommunities);
+  const [list, setList] = useState<Community[] | null>(null);
+  const [interests, setInterests] = useState<Record<string, string>>({});
+  useEffect(() => {
+    api.suggestedCommunities().then(setList).catch(() => setList([]));
+    api.interests().then((l) => setInterests(Object.fromEntries(l.map((i) => [i.slug, i.name])))).catch(() => undefined);
+  }, [myCommunities?.length]);
+  if (!list) return null;
+  if (!list.length) {
+    // without interests there is nothing to suggest: invite to choose them
+    return myCommunities && myCommunities.length > 2 ? null : (
+      <button className="forme-empty" onClick={() => navigate("/account?section=interests")}>
+        <Icon name="star" size="sm" /><span className="grow">{t("ui_suggest_pick_interests")}</span><span aria-hidden="true">›</span>
+      </button>
+    );
+  }
+  return (
+    <section className="forme">
+      <div className="forme-head"><b>{t("ui_suggest_title")}</b><button className="linkbtn" onClick={() => navigate("/communities")}>{t("ui_post_see_all")}</button></div>
+      <div className="forme-row">
+        {list.map((c) => (
+          <button key={c.id} className="forme-card" onClick={() => navigate(communityPath(c.id))}>
+            <span className="forme-ic" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+            <b>{c.title}</b>
+            <small className="muted">{t("ui_members_n", { n: c.member_count })}{c.kind === "custom" ? ` · ${t("ui_suggest_by_people")}` : ""}</small>
+            <span className="forme-why">{t("ui_suggest_because", { list: (c.matches || []).map((m) => interests[m] || m).slice(0, 3).join(", ") })}</span>
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -1306,12 +1342,12 @@ export function ZoneTag() {
   const browse = useStore((s) => s.browseZone);
   const [open, setOpen] = useState(false);
   if (!me) return null;
+  // only the place: the age range is always mine (each community shows its own)
   const label = browse ? browse.label : me.province;
-  const age = browse ? browse.age_range : me.age_range;
   return (
     <>
       <button className={"zonetag" + (browse ? " other" : "")} onClick={() => setOpen(true)} title={t("ui_zone_change")} aria-label={t("ui_zone_change")}>
-        <Icon name="place" size="sm" /><span>{label} · {ageText(age)}</span>
+        <Icon name="place" size="sm" /><span>{label}</span>
       </button>
       {/* out of the phone's top bar: its glass effect would trap a fixed dialog inside it */}
       {open ? createPortal(<ZoneModal onClose={() => setOpen(false)} />, document.body) : null}
@@ -1328,7 +1364,8 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
   const [country, setCountry] = useState(browse?.country || me.country || "ES");
   const [area, setArea] = useState(browse ? browse.area || "" : "");
   const [province, setProvince] = useState(browse ? browse.province || "" : me.province);
-  const [age, setAge] = useState(browse?.age_range || me.age_range);
+  // the age range is always mine (from my date of birth): only the place can change
+  const age = me.age_range;
   useEffect(() => {
     api.publicSettings().then(setGeo).catch(() => setGeo({}));
   }, []);
@@ -1353,7 +1390,7 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
   }
   return (
     <Modal title={t("ui_zone_title")} onClose={onClose}>
-      <p className="muted" style={{ marginTop: 0 }}>{t("ui_zone_lead", { zone: `${me.province} · ${ageText(me.age_range)}` })}</p>
+      <p className="muted" style={{ marginTop: 0 }}>{t("ui_zone_lead_place", { zone: me.province, age: ageText(me.age_range) })}</p>
       <label className="fld">{t("ui_country")}
         <select id="zone-country" className="inp" value={country} onChange={(e) => { setCountry(e.target.value); setArea(""); setProvince(""); }}>
           {countryOptions(geo?.countries).map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
@@ -1371,11 +1408,6 @@ function ZoneModal({ onClose }: { onClose: () => void }) {
         <select id="zone-province" className="inp" value={province} onChange={(e) => setProvince(e.target.value)}>
           <option value="">{group ? t("ui_zone_whole_area", { area: group.name }) : t("ui_zone_whole_country", { country: countryName })}</option>
           {provinces.map((p) => <option key={p.value} value={p.value}>{p.name}</option>)}
-        </select>
-      </label>
-      <label className="fld">{t("ui_zone_age")}
-        <select id="zone-age" className="inp" value={age} onChange={(e) => setAge(e.target.value)}>
-          {["18_30", "31_60", "61_plus"].map((a) => <option key={a} value={a}>{ageText(a)}</option>)}
         </select>
       </label>
       <div className="stack" style={{ gap: 8, marginTop: 6 }}>

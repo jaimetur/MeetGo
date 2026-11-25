@@ -3282,7 +3282,7 @@ msgid "ui_community_retention"
 msgstr "El chat guarda los mensajes durante"
 
 msgid "ui_community_retention_interest"
-msgstr "1 año (igual en todas las comunidades de intereses)"
+msgstr "Lo configura la administración de MeetGo (igual en todas las zonas)"
 
 msgid "ui_community_retention_hint"
 msgstr "Pasado ese tiempo, los mensajes del chat (y sus fotos y archivos) se borran solos, salvo el mensaje fijado. El tablón y los planes no se borran."
@@ -3316,6 +3316,27 @@ msgstr "1 año"
 
 msgid "ui_retention_days"
 msgstr "{n} días"
+
+msgid "ui_zone_lead_place"
+msgstr "Tu zona es {zone} · {age}. Elige otro país o provincia para ver sus comunidades de tu misma edad. Solo puedes entrar en las de tu zona."
+
+msgid "ui_suggest_title"
+msgstr "Comunidades para ti"
+
+msgid "ui_suggest_pick_interests"
+msgstr "Elige tus intereses en tu perfil y te sugeriremos comunidades"
+
+msgid "ui_suggest_by_people"
+msgstr "creada por usuarios"
+
+msgid "ui_suggest_because"
+msgstr "Por: {list}"
+
+msgid "ui_community_interests"
+msgstr "Intereses de la comunidad"
+
+msgid "ui_community_interests_hint"
+msgstr "Hasta 5. Se sugerirá a la gente de tu zona que tenga alguno de ellos."
 
 msgid "ui_install_title"
 msgstr "Instala MeetGo"

@@ -3282,7 +3282,7 @@ msgid "ui_community_retention"
 msgstr "El xat guarda els missatges durant"
 
 msgid "ui_community_retention_interest"
-msgstr "1 any (igual a totes les comunitats d’interessos)"
+msgstr "Ho configura l’administració de MeetGo (igual a totes les zones)"
 
 msgid "ui_community_retention_hint"
 msgstr "Passat aquest temps, els missatges del xat (i les fotos i fitxers) s’esborren sols, excepte el missatge fixat. El tauler i els plans no s’esborren."
@@ -3316,6 +3316,27 @@ msgstr "1 any"
 
 msgid "ui_retention_days"
 msgstr "{n} dies"
+
+msgid "ui_zone_lead_place"
+msgstr "La teva zona és {zone} · {age}. Tria un altre país o província per veure’n les comunitats de la teva edat. Només pots entrar a les de la teva zona."
+
+msgid "ui_suggest_title"
+msgstr "Comunitats per a tu"
+
+msgid "ui_suggest_pick_interests"
+msgstr "Tria els teus interessos al perfil i et suggerirem comunitats"
+
+msgid "ui_suggest_by_people"
+msgstr "creada per usuaris"
+
+msgid "ui_suggest_because"
+msgstr "Per: {list}"
+
+msgid "ui_community_interests"
+msgstr "Interessos de la comunitat"
+
+msgid "ui_community_interests_hint"
+msgstr "Fins a 5. Se suggerirà a la gent de la teva zona que en tingui algun."
 
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"

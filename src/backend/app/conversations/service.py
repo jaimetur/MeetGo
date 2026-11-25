@@ -105,10 +105,15 @@ def is_staff(member: ConversationMember | None, user: User) -> bool:
 # ---------- channels ----------
 
 async def channel_for(db: AsyncSession, province: str, age_key: str, interest_id: int) -> Conversation:
+    """The interest's community of a zone (made with the interest's settings if missing). With an age span the
+    interest has one community per province, whatever the range."""
+    from app.communities.interest_settings import channel_values, interest_key
+    interest = await db.get(Interest, interest_id)
+    age_key = interest_key(interest, age_key)
     await db.execute(
         pg_insert(Conversation)
-        .values(kind=ConversationKind.CHANNEL.value, province=province, age_range=age_key, interest_id=interest_id, retention_days=365,
-                created_at=utcnow(), slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, policy_json={})
+        .values(kind=ConversationKind.CHANNEL.value, province=province, age_range=age_key, interest_id=interest_id,
+                created_at=utcnow(), slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, **channel_values(interest))
         .on_conflict_do_nothing(constraint="uq_channel_key")
     )
     res = await db.execute(select(Conversation).where(
@@ -152,6 +157,8 @@ async def join_interest_channel(db: AsyncSession, user: User, interest_id: int) 
 
 
 async def leave_interest_channel(db: AsyncSession, user: User, interest_id: int, province: str, age_key: str) -> None:
+    from app.communities.interest_settings import interest_key
+    age_key = interest_key(await db.get(Interest, interest_id), age_key)
     res = await db.execute(select(Conversation.id).where(
         Conversation.kind == "channel", Conversation.province == province,
         Conversation.age_range == age_key, Conversation.interest_id == interest_id))
@@ -309,7 +316,13 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
     if conv.kind == "channel":
         title = interest.name if interest else (conv.title or "chat")
         slug = interest.slug if interest else None
-        subtitle = f"{conv.province} · {AGE_LABELS.get(conv.age_range or '', conv.age_range or '')}"
+        # where and for whom: the fixed range, or the community's own age span (communities made by people, interests
+        # with a custom range)
+        if conv.min_age is not None or conv.max_age is not None:
+            ages = f"{conv.min_age or 18}–{conv.max_age}" if conv.max_age is not None else f"{conv.min_age}+"
+        else:
+            ages = AGE_LABELS.get(conv.age_range or "", conv.age_range or "")
+        subtitle = f"{conv.province} · {ages}"
     elif conv.kind == "dm":
         title = other.display_name if other else "—"
         slug = None

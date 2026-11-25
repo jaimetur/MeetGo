@@ -122,9 +122,17 @@ async def get_community(db: AsyncSession, community_id: int, user: User) -> tupl
     return conv, member
 
 
-def interest_allows(interest: Interest | None, age: str | None) -> bool:
-    """An interest's restrictions: it is active and, when it lists age ranges, `age` is one of them."""
-    return bool(interest and interest.active is not False and (not interest.age_ranges or age in interest.age_ranges))
+def interest_allows(interest: Interest | None, age: str | None, user: User | None = None) -> bool:
+    """An interest's restrictions: it is active and, with an age span, the person's age fits it (from the date of
+    birth); otherwise, when it lists age ranges, `age` is one of them."""
+    from app.communities.interest_settings import has_span
+    from app.conversations.service import user_years
+    if not interest or interest.active is False:
+        return False
+    if has_span(interest):
+        years = user_years(user) if user else None
+        return years is not None and (interest.min_age or 0) <= years <= (interest.max_age if interest.max_age is not None else 200)
+    return not interest.age_ranges or age in interest.age_ranges
 
 
 def interest_visible():
@@ -137,13 +145,15 @@ def interest_visible():
 
 async def ensure_interest_channels(db: AsyncSession, user: User, zone: tuple[str, str] | None = None) -> None:
     """Every interest has its community in each zone: create the missing ones of my zone (or of `zone`)."""
+    from app.communities.interest_settings import channel_values, interest_key
     province, age = zone or (user.province, user_age_key(user))
-    ids = [i.id for i in (await db.execute(select(Interest))).scalars().all() if interest_allows(i, age)]
-    if not ids:
+    interests = [i for i in (await db.execute(select(Interest))).scalars().all() if interest_allows(i, age, user)]
+    if not interests:
         return
-    rows = [dict(kind="channel", province=province, age_range=age, interest_id=i, created_at=utcnow(), retention_days=INTEREST_RETENTION,
-                 slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, policy_json={}, access_mode="open", board_mode="open")
-            for i in ids]
+    defaults = {"min_age": None, "max_age": None}
+    rows = [dict(kind="channel", province=province, age_range=interest_key(i, age), interest_id=i.id, created_at=utcnow(),
+                 slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, **{**defaults, **channel_values(i)})
+            for i in interests]
     await db.execute(pg_insert(Conversation).values(rows).on_conflict_do_nothing(constraint="uq_channel_key"))
     await db.commit()
 
@@ -209,6 +219,8 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
             "retention_days": c.retention_days,
+            # the interests it is about: suggestions to people with those interests
+            "tags": (list(interest.tags or [interest.slug]) if interest else list(c.interest_tags or [])),
             "min_age": c.min_age,
             "max_age": c.max_age,
             "join_questions": join_questions(c),
@@ -255,7 +267,7 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
     if zone:
         provinces, age = zone
         query = select(Conversation).outerjoin(Interest, Interest.id == Conversation.interest_id).where(
-            Conversation.kind == "channel", Conversation.province.in_(provinces), Conversation.age_range == age,
+            Conversation.kind == "channel", Conversation.province.in_(provinces), age_fits_sql(user),
             Conversation.access_mode != "invite", interest_visible())
         if len(provinces) == 1:
             await ensure_interest_channels(db, user, (provinces[0], age))
@@ -316,3 +328,32 @@ async def pending_request(db: AsyncSession, conversation_id: int, user_id: int) 
 def community_member_filter(conversation_id: int):
     return and_(ConversationMember.conversation_id == conversation_id, ConversationMember.banned.is_(False),
                 ConversationMember.away.is_(False))
+
+
+async def clean_interest_tags(db: AsyncSession, slugs: list[str] | None) -> list[str]:
+    """Up to 5 existing interests, in the order given."""
+    wanted = list(dict.fromkeys(s for s in (slugs or []) if s))[:5]
+    if not wanted:
+        return []
+    known = set((await db.execute(select(Interest.slug).where(Interest.slug.in_(wanted)))).scalars().all())
+    return [s for s in wanted if s in known]
+
+
+async def suggested_communities(db: AsyncSession, user: User, limit: int = 5) -> list[dict]:
+    """The communities of my zone I am not in that fit my interests best: the more of my interests they are about, the
+    higher; then the ones with more people. Interest communities count their related interests, people's communities
+    the interests their creator chose."""
+    from app.core.models import UserInterest
+    mine = set((await db.execute(select(Interest.slug).join(UserInterest, UserInterest.interest_id == Interest.id).where(
+        UserInterest.user_id == user.id))).scalars().all())
+    if not mine:
+        return []
+    scored = []
+    for c in await list_communities(db, user):
+        if c["joined"] or c["request_pending"] or c["access_mode"] == "invite" or c.get("my_zone") is False:
+            continue
+        matches = [t for t in c.get("tags") or [] if t in mine]
+        if matches:
+            scored.append((len(matches), c["member_count"], {**c, "matches": matches}))
+    scored.sort(key=lambda x: (-x[0], -x[1], x[2]["title"].lower()))
+    return [c for _, _, c in scored[:limit]]

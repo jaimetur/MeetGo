@@ -134,6 +134,16 @@ class Interest(Base):
     # Restrictions: the age ranges it exists for (empty = all) and whether it is open at all.
     age_ranges: Mapped[list] = mapped_column(JSONB, default=list)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
+    # Interests (slugs) this community is about, 1-5 including its own: people with any of them get it suggested.
+    tags: Mapped[list] = mapped_column(JSONB, default=list)
+    # The settings of its communities (every zone), as in a community made by people: an age span instead of the fixed
+    # ranges (then one community per province), who joins, who posts on the board, how long the chat keeps messages.
+    min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    access_mode: Mapped[str] = mapped_column(String(16), default="open")
+    board_mode: Mapped[str] = mapped_column(String(16), default="open")
+    retention_days: Mapped[int] = mapped_column(Integer, default=365)
+    join_questions: Mapped[list] = mapped_column(JSONB, default=list)
 
 
 class UserInterest(Base):
@@ -224,6 +234,8 @@ class Conversation(Base):
     invite_code: Mapped[str | None] = mapped_column(String(32), nullable=True, unique=True)
     # Communities made by people may admit an age span (from the date of birth) instead of their creator's range.
     # Communities: how many days their chat keeps its messages (older ones are deleted); None keeps them.
+    # Communities made by people: the interests (slugs, up to 5) they are about, to suggest them to people.
+    interest_tags: Mapped[list] = mapped_column(JSONB, default=list)
     retention_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)

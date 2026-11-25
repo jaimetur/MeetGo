@@ -1422,7 +1422,7 @@ button.adm-tile:hover { border-color: var(--line2); background: var(--raise); }
 .reqitem { align-items: flex-start; }
 .reqanswer { display: flex; flex-direction: column; margin-top: 4px; font-size: 13px; }
 .reqanswer small { color: var(--muted); font-size: 11.5px; }
-.cstats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.cstatgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .cstat { display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
 .cstat .ic { color: var(--blue); }
 .cstat b { font-family: var(--display); font-size: 22px; color: var(--strong); }
@@ -1442,3 +1442,20 @@ a.btn { text-decoration: none; }
 .msg.mine .ticks.t-pending, .msg.mine .ticks.t-sent, .msg.mine .ticks.t-delivered { color: rgba(255, 255, 255, 0.5); }
 .msg.mine .ticks.t-read { color: #4df3ff; filter: drop-shadow(0 0 1.5px rgba(0, 30, 80, 0.7)); }
 .msg.mine .ticks.t-read .ic { stroke-width: 2.8; }
+
+/* home: communities for me */
+.forme { margin: 0 0 14px; min-width: 0; max-width: 100%; }
+.forme-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; font-size: 15px; }
+.forme-row { max-width: 100%; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 6px; }
+.forme-row::-webkit-scrollbar { display: none; }
+.forme-card { flex: 0 0 170px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); text-align: left; color: var(--fg); min-width: 0; }
+.forme-card b { font-size: 14px; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.forme-card small { font-size: 12px; }
+.forme-ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; margin-bottom: 4px; }
+.forme-why { font-size: 11.5px; font-weight: 600; color: var(--teal); }
+.forme-empty { display: flex; align-items: center; gap: 10px; width: 100%; margin: 0 0 14px; padding: 12px 14px; border-radius: 14px; background: var(--panel2); color: var(--fg); font-weight: 600; font-size: 13.5px; text-align: left; }
+.chips.wrapchips { flex-wrap: wrap; overflow: visible; }
+
+/* a community's place and ages, under its name */
+.cscope { display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.cscope .ic { width: 13px; height: 13px; flex: none; }
