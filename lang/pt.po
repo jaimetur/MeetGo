@@ -2779,6 +2779,219 @@ msgstr "Já corrigiste a tua data de nascimento uma vez."
 msgid "ui_zone_hint"
 msgstr "Os teus chats são os do teu distrito e escalão etário. Se mudares de distrito ou de data de nascimento, passas para os chats da nova zona."
 
+msgid "landing_mk01"
+msgstr "caminhadas"
+
+msgid "landing_mk02"
+msgstr "padel"
+
+msgid "landing_mk03"
+msgstr "cafe-juntos"
+
+msgid "landing_mk04"
+msgstr "37 online"
+
+msgid "landing_mk05"
+msgstr "Madrid · 31-60 ·"
+
+msgid "landing_mk06"
+msgstr "Proponho Siete Picos a partir do porto de Navacerrada. 11 km, cerca de 4 h."
+
+msgid "landing_mk07"
+msgstr "12 respostas"
+
+msgid "landing_mk08"
+msgstr "Mensagem removida: número de telefone"
+
+msgid "landing_mk09"
+msgstr "Mensagens novas"
+
+msgid "landing_mk10"
+msgstr "Saio às 8, ainda tenho 2 lugares"
+
+msgid "landing_mk11"
+msgstr "· Há lugar no carro desde Alcobendas?"
+
+msgid "landing_mk12"
+msgstr "@Álex"
+
+msgid "landing_mk13"
+msgstr "como foi o último troço da Maliciosa?"
+
+msgid "landing_mk14"
+msgstr "O Pablo e mais 2 estão a escrever…"
+
+msgid "landing_mk15"
+msgstr "Mensagem em #caminhadas"
+
+msgid "landing_mk16"
+msgstr "Percurso Cercedilla sábado"
+
+msgid "landing_mk17"
+msgstr "8 membros"
+
+msgid "landing_mk18"
+msgstr "A Elena adicionou-te ao grupo"
+
+msgid "landing_mk19"
+msgstr "Carros: Carlos (4), Lucía (2) e eu (3)"
+
+msgid "landing_mk20"
+msgstr "Saímos às 8:15 de Moncloa"
+
+msgid "landing_mk21"
+msgstr "Mensagem"
+
+msgid "landing_mk22"
+msgstr "Conversas"
+
+msgid "landing_mk23"
+msgstr "Tudo"
+
+msgid "landing_mk24"
+msgstr "Não lidas"
+
+msgid "landing_mk25"
+msgstr "Grupos"
+
+msgid "landing_mk26"
+msgstr "Conversas · Madrid 31-60"
+
+msgid "landing_mk27"
+msgstr "Lucía: Alguém conhece La Pedriza?"
+
+msgid "landing_mk28"
+msgstr "Iván: Campo livre amanhã às 20h"
+
+msgid "landing_mk29"
+msgstr "Carlos: Saímos às 8:15"
+
+msgid "landing_mk30"
+msgstr "Diretas"
+
+msgid "landing_mk31"
+msgstr "a escrever…"
+
+msgid "landing_mk32"
+msgstr "Obrigado pelo track 🙌"
+
+msgid "landing_mk33"
+msgstr "seg"
+
+msgid "landing_mk34"
+msgstr "Pessoas"
+
+msgid "landing_mk35"
+msgstr "Perfil"
+
+msgid "landing_mk36"
+msgstr "Tópico"
+
+msgid "landing_mk37"
+msgstr "#caminhadas · 12 respostas"
+
+msgid "landing_mk38"
+msgstr "Há alguma fonte no caminho?"
+
+msgid "landing_mk39"
+msgstr "Sim, a dos Geólogos. Levem 1,5 l na mesma."
+
+msgid "landing_mk40"
+msgstr "Tenho bastões de sobra se alguém precisar"
+
+msgid "landing_mk41"
+msgstr "Contem comigo. Almoçamos lá em cima ou ao descer?"
+
+msgid "landing_mk42"
+msgstr "Responder no tópico"
+
+msgid "landing_mk43"
+msgstr "5 online"
+
+msgid "landing_mk44"
+msgstr "8 membros ·"
+
+msgid "landing_mk45"
+msgstr "A Elena criou o grupo"
+
+msgid "landing_mk46"
+msgstr "Somos 8. Carros: Carlos (4), Lucía (2) e eu (3)."
+
+msgid "landing_mk47"
+msgstr "Saímos às 8:15 de Moncloa, na gare dos autocarros interurbanos"
+
+msgid "landing_mk48"
+msgstr "TU"
+
+msgid "landing_mk49"
+msgstr "Tu"
+
+msgid "landing_mk50"
+msgstr "Perfeito, levo café para todos ☕"
+
+msgid "landing_mk51"
+msgstr "· Saímos às 8:15 de Moncloa"
+
+msgid "landing_mk52"
+msgstr "Responder"
+
+msgid "landing_mk53"
+msgstr "Marcar como lida"
+
+msgid "landing_mk54"
+msgstr "MeetGo · agora"
+
+msgid "landing_mk55"
+msgstr "Alinhas no sábado? Ainda tenho um lugar"
+
+msgid "landing_mk56"
+msgstr "Online"
+
+msgid "landing_mk57"
+msgstr "Olá! Vi em #caminhadas que sais de Alcobendas"
+
+msgid "landing_mk58"
+msgstr "Sim, às 8. Ainda tenho um lugar"
+
+msgid "landing_mk59"
+msgstr "Alinhas no sábado?"
+
+msgid "landing_mk60"
+msgstr "A Lucía está a escrever…"
+
+msgid "landing_mk61"
+msgstr "Mensagem para a Lucía"
+
+msgid "landing_mk62"
+msgstr "Iván: Campo livre às 20h"
+
+msgid "landing_mk63"
+msgstr "Sara: Café em Malasaña"
+
+msgid "landing_mk64"
+msgstr "Madrid · 31-60 · 248 membros · 37 online"
+
+msgid "landing_mk65"
+msgstr "Previsão para sábado na serra: sol e 14 °C"
+
+msgid "landing_mk66"
+msgstr "12 respostas · última há 3 min"
+
+msgid "landing_mk67"
+msgstr "· Alguém tem lugar no carro desde Alcobendas?"
+
+msgid "landing_mk68"
+msgstr "fizeste a Maliciosa no mês passado, como foi o último troço?"
+
+msgid "landing_mk69"
+msgstr "Membros"
+
+msgid "landing_mk70"
+msgstr "Moderadores · 2"
+
+msgid "landing_mk71"
+msgstr "Online · 35"
+
 msgid "landing_a0"
 msgstr "Nada. O MeetGo é grátis: cria a tua conta e usa-o sem limites, sem cartão."
 

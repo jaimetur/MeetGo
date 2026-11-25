@@ -2780,6 +2780,219 @@ msgstr "生年月日はすでに1回訂正済みです。"
 msgid "ui_zone_hint"
 msgstr "チャットは、都道府県／州と年齢層に応じたものになります。都道府県／州や生年月日を変更すると、新しい地域のチャットに移動します。"
 
+msgid "landing_mk01"
+msgstr "ハイキング"
+
+msgid "landing_mk02"
+msgstr "パデル"
+
+msgid "landing_mk03"
+msgstr "コーヒー会"
+
+msgid "landing_mk04"
+msgstr "オンライン37人"
+
+msgid "landing_mk05"
+msgstr "Madrid · 31-60 ·"
+
+msgid "landing_mk06"
+msgstr "Navacerrada峠からSiete Picosはどう？ 11 km、約4時間。"
+
+msgid "landing_mk07"
+msgstr "返信12件"
+
+msgid "landing_mk08"
+msgstr "メッセージを削除しました：電話番号"
+
+msgid "landing_mk09"
+msgstr "新着メッセージ"
+
+msgid "landing_mk10"
+msgstr "8時に出発、あと2席空いてるよ"
+
+msgid "landing_mk11"
+msgstr "· Alcobendasから乗せてもらえる？"
+
+msgid "landing_mk12"
+msgstr "@Álex"
+
+msgid "landing_mk13"
+msgstr "Maliciosaの最後の区間どうだった？"
+
+msgid "landing_mk14"
+msgstr "Pabloほか2人が入力中…"
+
+msgid "landing_mk15"
+msgstr "#ハイキング にメッセージ"
+
+msgid "landing_mk16"
+msgstr "土曜のCercedillaコース"
+
+msgid "landing_mk17"
+msgstr "メンバー8人"
+
+msgid "landing_mk18"
+msgstr "Elenaがあなたをグループに追加しました"
+
+msgid "landing_mk19"
+msgstr "車：Carlos（4）、Lucía（2）、私（3）"
+
+msgid "landing_mk20"
+msgstr "8:15にMoncloa出発"
+
+msgid "landing_mk21"
+msgstr "メッセージ"
+
+msgid "landing_mk22"
+msgstr "チャット"
+
+msgid "landing_mk23"
+msgstr "すべて"
+
+msgid "landing_mk24"
+msgstr "未読"
+
+msgid "landing_mk25"
+msgstr "グループ"
+
+msgid "landing_mk26"
+msgstr "チャット · Madrid 31-60"
+
+msgid "landing_mk27"
+msgstr "Lucía：La Pedrizaを知ってる人いる？"
+
+msgid "landing_mk28"
+msgstr "Iván：明日20時コート空いてるよ"
+
+msgid "landing_mk29"
+msgstr "Carlos：8:15に出発"
+
+msgid "landing_mk30"
+msgstr "ダイレクト"
+
+msgid "landing_mk31"
+msgstr "入力中…"
+
+msgid "landing_mk32"
+msgstr "トラックありがとう 🙌"
+
+msgid "landing_mk33"
+msgstr "月"
+
+msgid "landing_mk34"
+msgstr "ユーザー"
+
+msgid "landing_mk35"
+msgstr "プロフィール"
+
+msgid "landing_mk36"
+msgstr "スレッド"
+
+msgid "landing_mk37"
+msgstr "#ハイキング · 返信12件"
+
+msgid "landing_mk38"
+msgstr "途中に水場ある？"
+
+msgid "landing_mk39"
+msgstr "うん、Geólogosの水場があるよ。でも1.5 lは持ってきてね。"
+
+msgid "landing_mk40"
+msgstr "ストック余ってるから必要なら言って"
+
+msgid "landing_mk41"
+msgstr "参加するよ。山頂で食べる？ 下りてから？"
+
+msgid "landing_mk42"
+msgstr "スレッドで返信"
+
+msgid "landing_mk43"
+msgstr "オンライン5人"
+
+msgid "landing_mk44"
+msgstr "メンバー8人 ·"
+
+msgid "landing_mk45"
+msgstr "Elenaがグループを作成しました"
+
+msgid "landing_mk46"
+msgstr "全員で8人。車：Carlos（4）、Lucía（2）、私（3）。"
+
+msgid "landing_mk47"
+msgstr "8:15にMoncloa出発、長距離バスのりば"
+
+msgid "landing_mk48"
+msgstr "自分"
+
+msgid "landing_mk49"
+msgstr "あなた"
+
+msgid "landing_mk50"
+msgstr "了解、みんなの分のコーヒー持ってくね ☕"
+
+msgid "landing_mk51"
+msgstr "· 8:15にMoncloa出発"
+
+msgid "landing_mk52"
+msgstr "返信"
+
+msgid "landing_mk53"
+msgstr "既読にする"
+
+msgid "landing_mk54"
+msgstr "MeetGo · 今"
+
+msgid "landing_mk55"
+msgstr "土曜、来る？ あと1席あるよ"
+
+msgid "landing_mk56"
+msgstr "オンライン"
+
+msgid "landing_mk57"
+msgstr "こんにちは！ #ハイキング でAlcobendasから出発するって見たよ"
+
+msgid "landing_mk58"
+msgstr "うん、8時発。あと1席あるよ"
+
+msgid "landing_mk59"
+msgstr "土曜、来る？"
+
+msgid "landing_mk60"
+msgstr "Lucíaが入力中…"
+
+msgid "landing_mk61"
+msgstr "Lucíaにメッセージ"
+
+msgid "landing_mk62"
+msgstr "Iván：20時コート空いてる"
+
+msgid "landing_mk63"
+msgstr "Sara：Malasañaでコーヒー"
+
+msgid "landing_mk64"
+msgstr "Madrid · 31-60 · メンバー248人 · オンライン37人"
+
+msgid "landing_mk65"
+msgstr "土曜の山の天気予報：晴れ、14 °C"
+
+msgid "landing_mk66"
+msgstr "返信12件 · 最新は3分前"
+
+msgid "landing_mk67"
+msgstr "· Alcobendasから乗せてもらえる人いる？"
+
+msgid "landing_mk68"
+msgstr "先月Maliciosa登ったよね、最後の区間どうだった？"
+
+msgid "landing_mk69"
+msgstr "メンバー"
+
+msgid "landing_mk70"
+msgstr "モデレーター · 2"
+
+msgid "landing_mk71"
+msgstr "オンライン · 35"
+
 msgid "landing_a0"
 msgstr "無料です。MeetGoはアカウントを作成するだけで、制限なく使えます。カードは不要です。"
 

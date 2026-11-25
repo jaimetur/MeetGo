@@ -108,6 +108,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- The landing's phone and computer screens follow the language chosen on the page, in the 10 languages.
 - The landing's language selector shows a globe and the language's code, as in BodyLens.
 - Google Play shows the repository's version (versionName = the release X.Y.Z, versionCode = the build number), every Android build of a release branch is uploaded to the track in the `PLAY_TRACK` variable (closed testing by default, production once Google allows it), and the Play screenshots are taken again on every relevant push to main or a release branch and sent to the store listing in each language (`tools/play_listing.py`).
 - Communities show an icon of their hobby (hiking, cycling, reading, cinema, football, padel, beach, coffee, travel…) on compact cards and on their cover, also in the chat list. Rules support headings, lists, highlight boxes, bold, italic, underline, colours and emojis, with a formatting toolbar and a preview, and the information panel is easier to read on phones.

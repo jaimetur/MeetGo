@@ -2780,6 +2780,219 @@ msgstr "Je hebt je geboortedatum al één keer gecorrigeerd."
 msgid "ui_zone_hint"
 msgstr "Je chats zijn die van je provincie en leeftijdsgroep. Als je van provincie of geboortedatum verandert, ga je naar de chats van de nieuwe zone."
 
+msgid "landing_mk01"
+msgstr "wandelen"
+
+msgid "landing_mk02"
+msgstr "padel"
+
+msgid "landing_mk03"
+msgstr "koffie-afspreken"
+
+msgid "landing_mk04"
+msgstr "37 online"
+
+msgid "landing_mk05"
+msgstr "Madrid · 31-60 ·"
+
+msgid "landing_mk06"
+msgstr "Ik stel Siete Picos voor vanaf de Navacerrada-pas. 11 km, ongeveer 4 u."
+
+msgid "landing_mk07"
+msgstr "12 reacties"
+
+msgid "landing_mk08"
+msgstr "Bericht verwijderd: telefoonnummer"
+
+msgid "landing_mk09"
+msgstr "Nieuwe berichten"
+
+msgid "landing_mk10"
+msgstr "Ik vertrek om 8 uur, nog 2 plekken vrij"
+
+msgid "landing_mk11"
+msgstr "· Plek in de auto vanaf Alcobendas?"
+
+msgid "landing_mk12"
+msgstr "@Álex"
+
+msgid "landing_mk13"
+msgstr "hoe was het laatste stuk van de Maliciosa?"
+
+msgid "landing_mk14"
+msgstr "Pablo en 2 anderen typen…"
+
+msgid "landing_mk15"
+msgstr "Bericht in #wandelen"
+
+msgid "landing_mk16"
+msgstr "Tocht Cercedilla zaterdag"
+
+msgid "landing_mk17"
+msgstr "8 leden"
+
+msgid "landing_mk18"
+msgstr "Elena heeft je aan de groep toegevoegd"
+
+msgid "landing_mk19"
+msgstr "Auto's: Carlos (4), Lucía (2) en ik (3)"
+
+msgid "landing_mk20"
+msgstr "We vertrekken om 8:15 bij Moncloa"
+
+msgid "landing_mk21"
+msgstr "Bericht"
+
+msgid "landing_mk22"
+msgstr "Chats"
+
+msgid "landing_mk23"
+msgstr "Alles"
+
+msgid "landing_mk24"
+msgstr "Ongelezen"
+
+msgid "landing_mk25"
+msgstr "Groepen"
+
+msgid "landing_mk26"
+msgstr "Chats · Madrid 31-60"
+
+msgid "landing_mk27"
+msgstr "Lucía: Kent iemand La Pedriza?"
+
+msgid "landing_mk28"
+msgstr "Iván: Baan morgen vrij om 20 uur"
+
+msgid "landing_mk29"
+msgstr "Carlos: We vertrekken om 8:15"
+
+msgid "landing_mk30"
+msgstr "Direct"
+
+msgid "landing_mk31"
+msgstr "typt…"
+
+msgid "landing_mk32"
+msgstr "Bedankt voor de track 🙌"
+
+msgid "landing_mk33"
+msgstr "ma"
+
+msgid "landing_mk34"
+msgstr "Mensen"
+
+msgid "landing_mk35"
+msgstr "Profiel"
+
+msgid "landing_mk36"
+msgstr "Draad"
+
+msgid "landing_mk37"
+msgstr "#wandelen · 12 reacties"
+
+msgid "landing_mk38"
+msgstr "Is er onderweg een drinkwaterpunt?"
+
+msgid "landing_mk39"
+msgstr "Ja, die van de Geólogos. Neem toch maar 1,5 l mee."
+
+msgid "landing_mk40"
+msgstr "Ik heb stokken over als iemand ze nodig heeft"
+
+msgid "landing_mk41"
+msgstr "Ik ben erbij. Eten we boven of tijdens de afdaling?"
+
+msgid "landing_mk42"
+msgstr "Reageer in de draad"
+
+msgid "landing_mk43"
+msgstr "5 online"
+
+msgid "landing_mk44"
+msgstr "8 leden ·"
+
+msgid "landing_mk45"
+msgstr "Elena heeft de groep gemaakt"
+
+msgid "landing_mk46"
+msgstr "We zijn met 8. Auto's: Carlos (4), Lucía (2) en ik (3)."
+
+msgid "landing_mk47"
+msgstr "We vertrekken om 8:15 bij Moncloa, perron voor streekbussen"
+
+msgid "landing_mk48"
+msgstr "JE"
+
+msgid "landing_mk49"
+msgstr "Jij"
+
+msgid "landing_mk50"
+msgstr "Perfect, ik neem koffie mee voor iedereen ☕"
+
+msgid "landing_mk51"
+msgstr "· We vertrekken om 8:15 bij Moncloa"
+
+msgid "landing_mk52"
+msgstr "Reageren"
+
+msgid "landing_mk53"
+msgstr "Markeer als gelezen"
+
+msgid "landing_mk54"
+msgstr "MeetGo · nu"
+
+msgid "landing_mk55"
+msgstr "Ga je zaterdag mee? Ik heb nog één plek"
+
+msgid "landing_mk56"
+msgstr "Online"
+
+msgid "landing_mk57"
+msgstr "Hoi! Ik zag in #wandelen dat je vanuit Alcobendas vertrekt"
+
+msgid "landing_mk58"
+msgstr "Ja, om 8 uur. Ik heb nog één plek"
+
+msgid "landing_mk59"
+msgstr "Ga je zaterdag mee?"
+
+msgid "landing_mk60"
+msgstr "Lucía typt…"
+
+msgid "landing_mk61"
+msgstr "Bericht aan Lucía"
+
+msgid "landing_mk62"
+msgstr "Iván: Baan vrij om 20 uur"
+
+msgid "landing_mk63"
+msgstr "Sara: Koffie in Malasaña"
+
+msgid "landing_mk64"
+msgstr "Madrid · 31-60 · 248 leden · 37 online"
+
+msgid "landing_mk65"
+msgstr "Voorspelling voor zaterdag in de sierra: zon en 14 °C"
+
+msgid "landing_mk66"
+msgstr "12 reacties · laatste 3 min geleden"
+
+msgid "landing_mk67"
+msgstr "· Heeft iemand plek in de auto vanaf Alcobendas?"
+
+msgid "landing_mk68"
+msgstr "jij deed vorige maand de Maliciosa, hoe was het laatste stuk?"
+
+msgid "landing_mk69"
+msgstr "Leden"
+
+msgid "landing_mk70"
+msgstr "Moderators · 2"
+
+msgid "landing_mk71"
+msgstr "Online · 35"
+
 msgid "landing_a0"
 msgstr "Niets. MeetGo is gratis: maak je account aan en gebruik het zonder beperkingen, geen kaart nodig."
 

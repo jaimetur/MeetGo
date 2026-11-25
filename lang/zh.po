@@ -2780,6 +2780,219 @@ msgstr "你已经更正过一次出生日期了。"
 msgid "ui_zone_hint"
 msgstr "你的聊天属于你所在的省份和年龄段。如果你更改省份或出生日期,就会转到新区域的聊天。"
 
+msgid "landing_mk01"
+msgstr "徒步"
+
+msgid "landing_mk02"
+msgstr "帕德尔"
+
+msgid "landing_mk03"
+msgstr "约咖啡"
+
+msgid "landing_mk04"
+msgstr "37人在线"
+
+msgid "landing_mk05"
+msgstr "Madrid · 31-60 ·"
+
+msgid "landing_mk06"
+msgstr "我建议从Navacerrada山口走Siete Picos。11 km，约4小时。"
+
+msgid "landing_mk07"
+msgstr "12条回复"
+
+msgid "landing_mk08"
+msgstr "消息已撤回：电话号码"
+
+msgid "landing_mk09"
+msgstr "新消息"
+
+msgid "landing_mk10"
+msgstr "我8点出发，还有2个座位"
+
+msgid "landing_mk11"
+msgstr "· 从Alcobendas出发有空位吗？"
+
+msgid "landing_mk12"
+msgstr "@Álex"
+
+msgid "landing_mk13"
+msgstr "Maliciosa最后一段怎么样？"
+
+msgid "landing_mk14"
+msgstr "Pablo和另外2人正在输入…"
+
+msgid "landing_mk15"
+msgstr "在 #徒步 发消息"
+
+msgid "landing_mk16"
+msgstr "周六Cercedilla路线"
+
+msgid "landing_mk17"
+msgstr "8位成员"
+
+msgid "landing_mk18"
+msgstr "Elena把你加进了群"
+
+msgid "landing_mk19"
+msgstr "车：Carlos (4)、Lucía (2)、我 (3)"
+
+msgid "landing_mk20"
+msgstr "8:15从Moncloa出发"
+
+msgid "landing_mk21"
+msgstr "消息"
+
+msgid "landing_mk22"
+msgstr "聊天"
+
+msgid "landing_mk23"
+msgstr "全部"
+
+msgid "landing_mk24"
+msgstr "未读"
+
+msgid "landing_mk25"
+msgstr "群组"
+
+msgid "landing_mk26"
+msgstr "聊天 · Madrid 31-60"
+
+msgid "landing_mk27"
+msgstr "Lucía：有人了解La Pedriza吗？"
+
+msgid "landing_mk28"
+msgstr "Iván：明天20点场地空着"
+
+msgid "landing_mk29"
+msgstr "Carlos：8:15出发"
+
+msgid "landing_mk30"
+msgstr "私信"
+
+msgid "landing_mk31"
+msgstr "正在输入…"
+
+msgid "landing_mk32"
+msgstr "谢谢分享轨迹 🙌"
+
+msgid "landing_mk33"
+msgstr "周一"
+
+msgid "landing_mk34"
+msgstr "用户"
+
+msgid "landing_mk35"
+msgstr "个人资料"
+
+msgid "landing_mk36"
+msgstr "讨论串"
+
+msgid "landing_mk37"
+msgstr "#徒步 · 12条回复"
+
+msgid "landing_mk38"
+msgstr "路上有水源吗？"
+
+msgid "landing_mk39"
+msgstr "有，Geólogos那边有。不过还是带上1.5 l吧。"
+
+msgid "landing_mk40"
+msgstr "我多带了登山杖，需要的说一声"
+
+msgid "landing_mk41"
+msgstr "算我一个。我们在山顶吃还是下山再吃？"
+
+msgid "landing_mk42"
+msgstr "在讨论串中回复"
+
+msgid "landing_mk43"
+msgstr "5人在线"
+
+msgid "landing_mk44"
+msgstr "8位成员 ·"
+
+msgid "landing_mk45"
+msgstr "Elena创建了群"
+
+msgid "landing_mk46"
+msgstr "我们一共8人。车：Carlos (4)、Lucía (2)、我 (3)。"
+
+msgid "landing_mk47"
+msgstr "8:15从Moncloa出发，在长途汽车站台集合"
+
+msgid "landing_mk48"
+msgstr "我"
+
+msgid "landing_mk49"
+msgstr "你"
+
+msgid "landing_mk50"
+msgstr "太好了，我给大家带咖啡 ☕"
+
+msgid "landing_mk51"
+msgstr "· 8:15从Moncloa出发"
+
+msgid "landing_mk52"
+msgstr "回复"
+
+msgid "landing_mk53"
+msgstr "标为已读"
+
+msgid "landing_mk54"
+msgstr "MeetGo · 刚刚"
+
+msgid "landing_mk55"
+msgstr "周六来吗？我还有一个座位"
+
+msgid "landing_mk56"
+msgstr "在线"
+
+msgid "landing_mk57"
+msgstr "嗨！我在 #徒步 看到你从Alcobendas出发"
+
+msgid "landing_mk58"
+msgstr "对，8点。我还有一个座位"
+
+msgid "landing_mk59"
+msgstr "周六来吗？"
+
+msgid "landing_mk60"
+msgstr "Lucía正在输入…"
+
+msgid "landing_mk61"
+msgstr "发消息给Lucía"
+
+msgid "landing_mk62"
+msgstr "Iván：20点场地空着"
+
+msgid "landing_mk63"
+msgstr "Sara：在Malasaña喝咖啡"
+
+msgid "landing_mk64"
+msgstr "Madrid · 31-60 · 248位成员 · 37人在线"
+
+msgid "landing_mk65"
+msgstr "周六山区预报：晴，14 °C"
+
+msgid "landing_mk66"
+msgstr "12条回复 · 最新3分钟前"
+
+msgid "landing_mk67"
+msgstr "· 有人从Alcobendas出发还有车位吗？"
+
+msgid "landing_mk68"
+msgstr "你上个月走了Maliciosa，最后一段怎么样？"
+
+msgid "landing_mk69"
+msgstr "成员"
+
+msgid "landing_mk70"
+msgstr "版主 · 2"
+
+msgid "landing_mk71"
+msgstr "在线 · 35"
+
 msgid "landing_a0"
 msgstr "没有费用。MeetGo 是免费的:创建账号即可无限使用,无需绑定银行卡。"
 

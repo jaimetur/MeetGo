@@ -2780,6 +2780,219 @@ msgstr "Ja has corregit la teva data de naixement una vegada."
 msgid "ui_zone_hint"
 msgstr "Els teus xats són els de la teva província i rang d'edat. Si canvies de província o de data de naixement, passes als xats de la zona nova."
 
+msgid "landing_mk01"
+msgstr "excursionisme"
+
+msgid "landing_mk02"
+msgstr "padel"
+
+msgid "landing_mk03"
+msgstr "quedar-per-un-cafe"
+
+msgid "landing_mk04"
+msgstr "37 en línia"
+
+msgid "landing_mk05"
+msgstr "Madrid · 31-60 ·"
+
+msgid "landing_mk06"
+msgstr "Proposo Siete Picos des del port de Navacerrada. 11 km, unes 4 h."
+
+msgid "landing_mk07"
+msgstr "12 respostes"
+
+msgid "landing_mk08"
+msgstr "Missatge retirat: número de telèfon"
+
+msgid "landing_mk09"
+msgstr "Missatges nous"
+
+msgid "landing_mk10"
+msgstr "Surto a les 8, em queden 2 places"
+
+msgid "landing_mk11"
+msgstr "· Lloc al cotxe des d'Alcobendas?"
+
+msgid "landing_mk12"
+msgstr "@Álex"
+
+msgid "landing_mk13"
+msgstr "què tal l'últim tram de la Maliciosa?"
+
+msgid "landing_mk14"
+msgstr "Pablo i 2 més escriuen…"
+
+msgid "landing_mk15"
+msgstr "Missatge a #excursionisme"
+
+msgid "landing_mk16"
+msgstr "Ruta Cercedilla dissabte"
+
+msgid "landing_mk17"
+msgstr "8 membres"
+
+msgid "landing_mk18"
+msgstr "Elena t'ha afegit al grup"
+
+msgid "landing_mk19"
+msgstr "Cotxes: Carlos (4), Lucía (2) i jo (3)"
+
+msgid "landing_mk20"
+msgstr "Sortim a les 8:15 de Moncloa"
+
+msgid "landing_mk21"
+msgstr "Missatge"
+
+msgid "landing_mk22"
+msgstr "Xats"
+
+msgid "landing_mk23"
+msgstr "Tot"
+
+msgid "landing_mk24"
+msgstr "No llegits"
+
+msgid "landing_mk25"
+msgstr "Grups"
+
+msgid "landing_mk26"
+msgstr "Xats · Madrid 31-60"
+
+msgid "landing_mk27"
+msgstr "Lucía: Algú coneix la Pedriza?"
+
+msgid "landing_mk28"
+msgstr "Iván: Pista lliure demà a les 20 h"
+
+msgid "landing_mk29"
+msgstr "Carlos: Sortim a les 8:15"
+
+msgid "landing_mk30"
+msgstr "Directes"
+
+msgid "landing_mk31"
+msgstr "escrivint…"
+
+msgid "landing_mk32"
+msgstr "Gràcies pel track 🙌"
+
+msgid "landing_mk33"
+msgstr "dl"
+
+msgid "landing_mk34"
+msgstr "Persones"
+
+msgid "landing_mk35"
+msgstr "Perfil"
+
+msgid "landing_mk36"
+msgstr "Fil"
+
+msgid "landing_mk37"
+msgstr "#excursionisme · 12 respostes"
+
+msgid "landing_mk38"
+msgstr "Hi ha font pel camí?"
+
+msgid "landing_mk39"
+msgstr "Sí, la dels Geólogos. Porteu 1,5 l igualment."
+
+msgid "landing_mk40"
+msgstr "Tinc bastons de sobra si algú els necessita"
+
+msgid "landing_mk41"
+msgstr "Apuntat. Mengem a dalt o baixem?"
+
+msgid "landing_mk42"
+msgstr "Respon al fil"
+
+msgid "landing_mk43"
+msgstr "5 en línia"
+
+msgid "landing_mk44"
+msgstr "8 membres ·"
+
+msgid "landing_mk45"
+msgstr "Elena ha creat el grup"
+
+msgid "landing_mk46"
+msgstr "Som 8. Cotxes: Carlos (4), Lucía (2) i jo (3)."
+
+msgid "landing_mk47"
+msgstr "Sortim a les 8:15 de Moncloa, a l'andana dels interurbans"
+
+msgid "landing_mk48"
+msgstr "TU"
+
+msgid "landing_mk49"
+msgstr "Tu"
+
+msgid "landing_mk50"
+msgstr "Perfecte, porto cafè per a tothom ☕"
+
+msgid "landing_mk51"
+msgstr "· Sortim a les 8:15 de Moncloa"
+
+msgid "landing_mk52"
+msgstr "Respon"
+
+msgid "landing_mk53"
+msgstr "Marca com a llegit"
+
+msgid "landing_mk54"
+msgstr "MeetGo · ara"
+
+msgid "landing_mk55"
+msgstr "T'apuntes al dissabte? Em queda una plaça"
+
+msgid "landing_mk56"
+msgstr "En línia"
+
+msgid "landing_mk57"
+msgstr "Hola! He vist a #excursionisme que surts d'Alcobendas"
+
+msgid "landing_mk58"
+msgstr "Sí, a les 8. Em queda una plaça"
+
+msgid "landing_mk59"
+msgstr "T'apuntes al dissabte?"
+
+msgid "landing_mk60"
+msgstr "Lucía està escrivint…"
+
+msgid "landing_mk61"
+msgstr "Missatge a Lucía"
+
+msgid "landing_mk62"
+msgstr "Iván: Pista lliure a les 20 h"
+
+msgid "landing_mk63"
+msgstr "Sara: Cafè a Malasaña"
+
+msgid "landing_mk64"
+msgstr "Madrid · 31-60 · 248 membres · 37 en línia"
+
+msgid "landing_mk65"
+msgstr "Previsió per al dissabte a la serra: sol i 14 °C"
+
+msgid "landing_mk66"
+msgstr "12 respostes · l'última fa 3 min"
+
+msgid "landing_mk67"
+msgstr "· Algú té lloc al cotxe des d'Alcobendas?"
+
+msgid "landing_mk68"
+msgstr "tu vas fer la Maliciosa el mes passat, què tal l'últim tram?"
+
+msgid "landing_mk69"
+msgstr "Membres"
+
+msgid "landing_mk70"
+msgstr "Moderadors · 2"
+
+msgid "landing_mk71"
+msgstr "En línia · 35"
+
 msgid "landing_a0"
 msgstr "Res. MeetGo és gratis: crea el teu compte i fes-lo servir sense límits, sense targeta."
 
