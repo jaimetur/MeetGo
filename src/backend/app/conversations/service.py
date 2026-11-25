@@ -107,7 +107,7 @@ def is_staff(member: ConversationMember | None, user: User) -> bool:
 async def channel_for(db: AsyncSession, province: str, age_key: str, interest_id: int) -> Conversation:
     await db.execute(
         pg_insert(Conversation)
-        .values(kind=ConversationKind.CHANNEL.value, province=province, age_range=age_key, interest_id=interest_id,
+        .values(kind=ConversationKind.CHANNEL.value, province=province, age_range=age_key, interest_id=interest_id, retention_days=365,
                 created_at=utcnow(), slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, policy_json={})
         .on_conflict_do_nothing(constraint="uq_channel_key")
     )

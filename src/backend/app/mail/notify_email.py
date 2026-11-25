@@ -357,6 +357,9 @@ async def _loop() -> None:
                 if loop_time - last_reminders >= REMINDERS_EVERY or last_reminders == 0.0:
                     last_reminders = loop_time
                     await reminders_once(db)
+                    # communities' chats keep their messages for a limited time (every 6 hours is enough)
+                    from app.messaging.retention import purge_once
+                    await purge_once(db)
         except asyncio.CancelledError:
             raise
         except Exception:

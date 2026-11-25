@@ -368,6 +368,7 @@ class CommunityCreateIn(BaseModel):
     min_age: int | None = Field(default=None, ge=18, le=120)
     max_age: int | None = Field(default=None, ge=18, le=120)
     join_questions: list[str] | None = Field(default=None, max_length=3)
+    retention_days: int | None = None
 
 
 class CommunityUpdateIn(BaseModel):
@@ -378,6 +379,7 @@ class CommunityUpdateIn(BaseModel):
     board_mode: str | None = Field(default=None, pattern="^(open|admins)$")
     rules: str | None = Field(default=None, max_length=4000)
     join_questions: list[str] | None = Field(default=None, max_length=3)
+    retention_days: int | None = None
 
 
 class JoinIn(BaseModel):

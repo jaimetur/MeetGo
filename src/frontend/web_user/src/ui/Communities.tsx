@@ -298,14 +298,17 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     access_mode: (community?.access_mode || "open") as AccessMode, board_mode: (community?.board_mode || "open") as BoardMode,
     ageLimit: false, min_age: Math.max(18, myAge - 5), max_age: myAge + 5,
     questions: [...(community?.join_questions || []), "", "", ""].slice(0, 3),
+    retention: community?.retention_days || 30,
   });
+  const interest = community?.kind === "interest";
   const [busy, setBusy] = useState(false);
   const set = (p: Partial<typeof form>) => setForm((f) => ({ ...f, ...p }));
   async function save() {
     setBusy(true);
     try {
       const questions = form.access_mode === "request" ? form.questions.map((q) => q.trim()).filter(Boolean) : [];
-      const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions };
+      const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions,
+        ...(interest ? {} : { retention_days: form.retention }) };
       if (community) {
         const c = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
         toast(t("ui_saved"));
@@ -372,6 +375,14 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       ) : community.min_age != null || community.max_age != null ? (
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
       ) : null}
+      <label className="fld">{t("ui_community_retention")}
+        {interest ? <span className="note"><Icon name="clock" size="sm" />{t("ui_community_retention_interest")}</span> : (
+          <select id="cm-retention" className="inp" value={form.retention} onChange={(e) => set({ retention: Number(e.target.value) })}>
+            {RETENTION_DAYS.map((d) => <option key={d} value={d}>{retentionText(d)}</option>)}
+          </select>
+        )}
+        <small className="muted">{t("ui_community_retention_hint")}</small>
+      </label>
       <div className="fld"><span>{t("ui_community_f_board")}</span>
         <Seg label={t("ui_community_f_board")} value={form.board_mode} onChange={(board_mode) => set({ board_mode })}
           options={[["open", t("ui_community_board_open")], ["admins", t("ui_community_board_admins")]]} />
@@ -453,6 +464,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
           {c.access_mode !== "open" ? <span className="ktag"><Icon name="lock" size="sm" />{t(ACCESS_KEYS[c.access_mode])}</span> : null}
           {c.board_mode === "admins" ? <span className="ktag"><Icon name="megaphone" size="sm" />{t("ui_community_board_admins")}</span> : null}
           {c.min_age != null || c.max_age != null ? <span className="ktag"><Icon name="user" size="sm" />{ageSpanText(c)}</span> : null}
+          {c.retention_days ? <span className="ktag" title={t("ui_community_retention_hint")}><Icon name="clock" size="sm" />{t("ui_community_retention_tag", { time: retentionText(c.retention_days) })}</span> : null}
           {c.role ? <span className="ktag k-meetup">{t(ROLE_KEYS[c.role] || "ui_role_member")}</span> : null}
           {c.rules ? <button className="ktag link" onClick={() => setRules(true)}><Icon name="shield" size="sm" />{t("ui_community_rules")}</button> : null}
           <span className="grow" />
@@ -866,4 +878,12 @@ function CommunityStatsView({ c }: { c: Community }) {
       <p className="muted" style={{ margin: 0, fontSize: 12.5 }}>{t("ui_stats_private")}</p>
     </div>
   );
+}
+
+/** How long a community's chat keeps its messages (the choices the server accepts). */
+const RETENTION_DAYS = [1, 2, 3, 7, 30, 90, 180, 365];
+
+function retentionText(days: number): string {
+  const keys: Record<number, string> = { 1: "ui_retention_1d", 2: "ui_retention_2d", 3: "ui_retention_3d", 7: "ui_retention_1w", 30: "ui_retention_1m", 90: "ui_retention_3m", 180: "ui_retention_6m", 365: "ui_retention_1y" };
+  return keys[days] ? t(keys[days]) : t("ui_retention_days", { n: days });
 }

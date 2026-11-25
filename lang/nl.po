@@ -995,6 +995,9 @@ msgstr "Hoe was ‘{plan}’?"
 msgid "push_plan_rate_body"
 msgstr "Geef snel een beoordeling: dat helpt de organisator."
 
+msgid "err_retention"
+msgstr "Kies een van de beschikbare periodes (interessecommunity’s bewaren altijd een jaar)"
+
 msgid "err_cannot_delete_self"
 msgstr "Je kunt jezelf niet verwijderen"
 
@@ -3274,6 +3277,45 @@ msgstr "Niemand"
 
 msgid "ui_privacy_last_seen_hint"
 msgstr "Kies je ‘Niemand’, dan zie je dat van anderen ook niet."
+
+msgid "ui_community_retention"
+msgstr "De chat bewaart berichten gedurende"
+
+msgid "ui_community_retention_interest"
+msgstr "1 jaar (hetzelfde in alle interessecommunity’s)"
+
+msgid "ui_community_retention_hint"
+msgstr "Daarna worden chatberichten (met foto’s en bestanden) vanzelf verwijderd. Prikbord en plannen blijven."
+
+msgid "ui_community_retention_tag"
+msgstr "Chat: {time}"
+
+msgid "ui_retention_1d"
+msgstr "1 dag"
+
+msgid "ui_retention_2d"
+msgstr "2 dagen"
+
+msgid "ui_retention_3d"
+msgstr "3 dagen"
+
+msgid "ui_retention_1w"
+msgstr "1 week"
+
+msgid "ui_retention_1m"
+msgstr "1 maand"
+
+msgid "ui_retention_3m"
+msgstr "3 maanden"
+
+msgid "ui_retention_6m"
+msgstr "6 maanden"
+
+msgid "ui_retention_1y"
+msgstr "1 jaar"
+
+msgid "ui_retention_days"
+msgstr "{n} dagen"
 
 msgid "ui_install_title"
 msgstr "MeetGo installeren"

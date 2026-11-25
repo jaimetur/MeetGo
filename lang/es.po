@@ -995,6 +995,9 @@ msgstr "¿Qué tal «{plan}»?"
 msgid "push_plan_rate_body"
 msgstr "Valóralo en un momento: ayuda a quien lo organizó."
 
+msgid "err_retention"
+msgstr "Elige uno de los plazos disponibles (las comunidades de intereses guardan siempre un año)"
+
 msgid "err_cannot_delete_self"
 msgstr "No puedes eliminarte"
 
@@ -3274,6 +3277,45 @@ msgstr "Nadie"
 
 msgid "ui_privacy_last_seen_hint"
 msgstr "Si eliges «Nadie», tampoco verás la última conexión de los demás."
+
+msgid "ui_community_retention"
+msgstr "El chat guarda los mensajes durante"
+
+msgid "ui_community_retention_interest"
+msgstr "1 año (igual en todas las comunidades de intereses)"
+
+msgid "ui_community_retention_hint"
+msgstr "Pasado ese tiempo, los mensajes del chat (y sus fotos y archivos) se borran solos. El tablón y los planes no se borran."
+
+msgid "ui_community_retention_tag"
+msgstr "Chat: {time}"
+
+msgid "ui_retention_1d"
+msgstr "1 día"
+
+msgid "ui_retention_2d"
+msgstr "2 días"
+
+msgid "ui_retention_3d"
+msgstr "3 días"
+
+msgid "ui_retention_1w"
+msgstr "1 semana"
+
+msgid "ui_retention_1m"
+msgstr "1 mes"
+
+msgid "ui_retention_3m"
+msgstr "3 meses"
+
+msgid "ui_retention_6m"
+msgstr "6 meses"
+
+msgid "ui_retention_1y"
+msgstr "1 año"
+
+msgid "ui_retention_days"
+msgstr "{n} días"
 
 msgid "ui_install_title"
 msgstr "Instala MeetGo"

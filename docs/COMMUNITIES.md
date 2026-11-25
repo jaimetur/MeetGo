@@ -154,6 +154,7 @@ Notes on the implementation (additions, nothing above changes):
 from the date of birth (changed only once), whatever their fixed range; without a span they belong to the creator's
 range as before. Interest communities always use the fixed ranges. With `access_mode: request`, up to 3
 `join_questions`: `POST /communities/{id}/join` takes `{answers}` and `GET …/requests` returns them.
+`retention_days` (1, 2, 3, 7, 30, 90, 180 or 365): how long the chat keeps its messages; interest communities 365 (fixed), new communities 30, set on creation or with `PATCH` by owner/admin; older messages are deleted every few hours (`app/messaging/retention.py`).
 `GET /communities/{id}/stats` (staff): members, joined per week, messages, active people, plans, real attendance and
 the average rating.
 

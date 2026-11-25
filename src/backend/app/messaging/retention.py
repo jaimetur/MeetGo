@@ -1,0 +1,68 @@
+"""Communities keep their chat for a limited time (Conversation.retention_days): older messages are deleted for good,
+with their thread replies, reactions, reports and files, so the history does not grow forever. Board posts, plans and
+private chats are not affected."""
+
+import logging
+from datetime import timedelta
+
+from sqlalchemy import delete, func, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.models import Attachment, Conversation, Message, utcnow
+from app.messaging.storage import file_path
+
+logger = logging.getLogger("meetgo.retention")
+BATCH = 2000
+
+
+def _remove_files(keys: list[str]) -> None:
+    for key in keys:
+        try:
+            file_path(key).unlink(missing_ok=True)
+        except Exception:  # a missing or odd file never stops the cleaning
+            pass
+
+
+async def purge_conversation(db: AsyncSession, conv: Conversation) -> int:
+    """Deletes the messages older than the community's retention. Returns how many."""
+    if not conv.retention_days:
+        return 0
+    cutoff = utcnow() - timedelta(days=conv.retention_days)
+    total = 0
+    while True:
+        roots = list((await db.execute(select(Message.id).where(
+            Message.conversation_id == conv.id, Message.created_at < cutoff).order_by(Message.id).limit(BATCH))).scalars().all())
+        if not roots:
+            break
+        # the replies of an expired thread go with it (they would be left without their first message)
+        ids = set(roots) | set((await db.execute(select(Message.id).where(
+            Message.conversation_id == conv.id, Message.thread_root_id.in_(roots)))).scalars().all())
+        files = [k for row in (await db.execute(select(Attachment.storage_key, Attachment.thumb_key).where(
+            Attachment.message_id.in_(ids)))).all() for k in row if k]
+        await db.execute(delete(Message).where(Message.id.in_(ids)))  # reactions, attachments and reports cascade
+        total += len(ids)
+        await db.commit()
+        _remove_files(files)
+    if total:
+        last = (await db.execute(select(Message).where(Message.conversation_id == conv.id).order_by(Message.id.desc()).limit(1))).scalar_one_or_none()
+        conv.last_message_id = last.id if last else None
+        conv.last_message_at = last.created_at if last else None
+        if conv.pinned_message_id and not await db.get(Message, conv.pinned_message_id):
+            conv.pinned_message_id = None
+        await db.commit()
+    return total
+
+
+async def purge_once(db: AsyncSession) -> int:
+    """The automatic round: every community with old messages. Returns how many messages were deleted."""
+    oldest = func.min(Message.created_at)
+    rows = (await db.execute(select(Conversation).join(Message, Message.conversation_id == Conversation.id).where(
+        Conversation.kind == "channel", Conversation.retention_days.is_not(None)).group_by(Conversation.id).having(
+        oldest < func.now() - func.make_interval(0, 0, 0, Conversation.retention_days)))).scalars().all()
+    total = 0
+    for conv in rows:
+        n = await purge_conversation(db, conv)
+        if n:
+            logger.info("Retention: %s old messages deleted from community %s", n, conv.id)
+        total += n
+    return total

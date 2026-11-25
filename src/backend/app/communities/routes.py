@@ -13,7 +13,7 @@ from app.core.models import CommunityRequest, Conversation, ConversationMember, 
 from app.core.schemas import BanIn, CommunityCreateIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
-    clean_questions, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
+    NEW_COMMUNITY_RETENTION, RETENTION_CHOICES, clean_questions, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
     staff_ids, staff_of, valid_zone,
 )
 from app.conversations.service import fits_age
@@ -84,12 +84,15 @@ async def create_community(payload: CommunityCreateIn, db: AsyncSession = Depend
     # An age span replaces the creator's fixed range; it must include the creator, worked out from the date of birth.
     if payload.min_age is not None and payload.max_age is not None and payload.min_age > payload.max_age:
         raise HTTPException(400, t("err_age_span"))
+    if payload.retention_days is not None and payload.retention_days not in RETENTION_CHOICES:
+        raise HTTPException(400, t("err_retention"))
     conv = Conversation(kind="channel", title=payload.title.strip(), description=payload.description,
                         avatar_url=payload.avatar_url or None, province=user.province, age_range=user_age_key(user),
                         created_by_id=user.id, created_at=utcnow(), slow_mode_seconds=0, rules_markdown="",
                         policy_json={"join_questions": clean_questions(payload.join_questions)} if payload.join_questions else {},
                         invite_code=secrets.token_urlsafe(9), access_mode=payload.access_mode,
-                        board_mode=payload.board_mode, min_age=payload.min_age, max_age=payload.max_age)
+                        board_mode=payload.board_mode, min_age=payload.min_age, max_age=payload.max_age,
+                        retention_days=payload.retention_days or NEW_COMMUNITY_RETENTION)
     if not fits_age(user, conv):
         raise HTTPException(400, t("err_age_span_creator"))
     db.add(conv)
@@ -147,6 +150,11 @@ async def update_community(community_id: int, payload: CommunityUpdateIn, db: As
         conv.rules_markdown = payload.rules
     if payload.join_questions is not None:
         conv.policy_json = {**(conv.policy_json or {}), "join_questions": clean_questions(payload.join_questions)}
+    if payload.retention_days is not None:
+        # interest communities always keep a year; people's communities choose among the fixed periods
+        if conv.interest_id or payload.retention_days not in RETENTION_CHOICES:
+            raise HTTPException(400, t("err_retention"))
+        conv.retention_days = payload.retention_days
     await db.commit()
     await _changed(db, conv.id)
     return await _out(db, user, conv)

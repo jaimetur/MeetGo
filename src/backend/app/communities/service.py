@@ -17,6 +17,10 @@ from app.conversations.service import DEFAULT_RULES, age_fits_sql, fits_age, get
 from app.realtime.service import online_ids
 
 ROLE_RANK = {"owner": 0, "admin": 1, "moderator": 2, "member": 3}
+# How long a community's chat keeps its messages, in days: interest communities a year; people's communities choose.
+RETENTION_CHOICES = (1, 2, 3, 7, 30, 90, 180, 365)
+INTEREST_RETENTION = 365
+NEW_COMMUNITY_RETENTION = 30
 STAFF = ("owner", "admin", "moderator")
 
 
@@ -137,7 +141,7 @@ async def ensure_interest_channels(db: AsyncSession, user: User, zone: tuple[str
     ids = [i.id for i in (await db.execute(select(Interest))).scalars().all() if interest_allows(i, age)]
     if not ids:
         return
-    rows = [dict(kind="channel", province=province, age_range=age, interest_id=i, created_at=utcnow(),
+    rows = [dict(kind="channel", province=province, age_range=age, interest_id=i, created_at=utcnow(), retention_days=INTEREST_RETENTION,
                  slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, policy_json={}, access_mode="open", board_mode="open")
             for i in ids]
     await db.execute(pg_insert(Conversation).values(rows).on_conflict_do_nothing(constraint="uq_channel_key"))
@@ -204,6 +208,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "invite_code": c.invite_code if detail and admin_of(member, user) else None,
             "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
+            "retention_days": c.retention_days,
             "min_age": c.min_age,
             "max_age": c.max_age,
             "join_questions": join_questions(c),

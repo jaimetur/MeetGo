@@ -215,7 +215,7 @@ export const api = {
     req<Community[]>(`/communities${qs({ q: params.q, mine: params.mine ? 1 : undefined, province: params.province, age_range: params.age_range,
       country: params.province ? undefined : params.country, area: params.province ? undefined : params.area })}`),
   community: (id: number) => req<Community>(`/communities/${id}`),
-  createCommunity: (payload: { title: string; description?: string; avatar_url?: string; access_mode: string; board_mode: string; min_age?: number | null; max_age?: number | null; join_questions?: string[] }) => req<Community>("/communities", { method: "POST", json: payload }),
+  createCommunity: (payload: { title: string; description?: string; avatar_url?: string; access_mode: string; board_mode: string; min_age?: number | null; max_age?: number | null; join_questions?: string[]; retention_days?: number }) => req<Community>("/communities", { method: "POST", json: payload }),
   updateCommunity: (id: number, payload: Record<string, unknown>) => req<Community>(`/communities/${id}`, { method: "PATCH", json: payload }),
   joinCommunity: (id: number, answers?: string[]) => req<{ status: "joined" | "requested" }>(`/communities/${id}/join`, { method: "POST", json: answers ? { answers } : undefined }),
   communityStats: (id: number) => req<CommunityStats>(`/communities/${id}/stats`),

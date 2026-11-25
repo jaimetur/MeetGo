@@ -995,6 +995,9 @@ msgstr "「{plan}」はどうでしたか？"
 msgid "push_plan_rate_body"
 msgstr "さっと評価して主催者に伝えましょう。"
 
+msgid "err_retention"
+msgstr "用意された期間から選んでください（興味コミュニティは常に 1 年保存）"
+
 msgid "err_cannot_delete_self"
 msgstr "自分自身は削除できません"
 
@@ -3274,6 +3277,45 @@ msgstr "なし"
 
 msgid "ui_privacy_last_seen_hint"
 msgstr "「なし」を選ぶと、他の人の最終オンラインも見られなくなります。"
+
+msgid "ui_community_retention"
+msgstr "チャットのメッセージ保存期間"
+
+msgid "ui_community_retention_interest"
+msgstr "1 年（すべての興味コミュニティで共通）"
+
+msgid "ui_community_retention_hint"
+msgstr "期間を過ぎたチャットのメッセージ（写真やファイルを含む）は自動で削除されます。掲示板と予定は削除されません。"
+
+msgid "ui_community_retention_tag"
+msgstr "チャット：{time}"
+
+msgid "ui_retention_1d"
+msgstr "1 日"
+
+msgid "ui_retention_2d"
+msgstr "2 日"
+
+msgid "ui_retention_3d"
+msgstr "3 日"
+
+msgid "ui_retention_1w"
+msgstr "1 週間"
+
+msgid "ui_retention_1m"
+msgstr "1 か月"
+
+msgid "ui_retention_3m"
+msgstr "3 か月"
+
+msgid "ui_retention_6m"
+msgstr "6 か月"
+
+msgid "ui_retention_1y"
+msgstr "1 年"
+
+msgid "ui_retention_days"
+msgstr "{n} 日"
 
 msgid "ui_install_title"
 msgstr "MeetGoをインストール"

@@ -995,6 +995,9 @@ msgstr "Què tal «{plan}»?"
 msgid "push_plan_rate_body"
 msgstr "Valora’l en un moment: ajuda qui l’ha organitzat."
 
+msgid "err_retention"
+msgstr "Tria un dels terminis disponibles (les comunitats d’interessos sempre guarden un any)"
+
 msgid "err_cannot_delete_self"
 msgstr "No et pots eliminar a tu mateix"
 
@@ -3274,6 +3277,45 @@ msgstr "Ningú"
 
 msgid "ui_privacy_last_seen_hint"
 msgstr "Si tries «Ningú», tampoc veuràs l’última connexió dels altres."
+
+msgid "ui_community_retention"
+msgstr "El xat guarda els missatges durant"
+
+msgid "ui_community_retention_interest"
+msgstr "1 any (igual a totes les comunitats d’interessos)"
+
+msgid "ui_community_retention_hint"
+msgstr "Passat aquest temps, els missatges del xat (i les fotos i fitxers) s’esborren sols. El tauler i els plans no s’esborren."
+
+msgid "ui_community_retention_tag"
+msgstr "Xat: {time}"
+
+msgid "ui_retention_1d"
+msgstr "1 dia"
+
+msgid "ui_retention_2d"
+msgstr "2 dies"
+
+msgid "ui_retention_3d"
+msgstr "3 dies"
+
+msgid "ui_retention_1w"
+msgstr "1 setmana"
+
+msgid "ui_retention_1m"
+msgstr "1 mes"
+
+msgid "ui_retention_3m"
+msgstr "3 mesos"
+
+msgid "ui_retention_6m"
+msgstr "6 mesos"
+
+msgid "ui_retention_1y"
+msgstr "1 any"
+
+msgid "ui_retention_days"
+msgstr "{n} dies"
 
 msgid "ui_install_title"
 msgstr "Instal·la MeetGo"

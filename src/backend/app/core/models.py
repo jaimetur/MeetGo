@@ -223,6 +223,8 @@ class Conversation(Base):
     policy_json: Mapped[dict] = mapped_column(JSONB, default=dict)
     invite_code: Mapped[str | None] = mapped_column(String(32), nullable=True, unique=True)
     # Communities made by people may admit an age span (from the date of birth) instead of their creator's range.
+    # Communities: how many days their chat keeps its messages (older ones are deleted); None keeps them.
+    retention_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     pinned_message_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)

@@ -994,6 +994,9 @@ msgstr "Alors, « {plan} » ?"
 msgid "push_plan_rate_body"
 msgstr "Notez-le en un instant : ça aide l’organisateur."
 
+msgid "err_retention"
+msgstr "Choisissez une des durées proposées (les communautés d’intérêts gardent toujours un an)"
+
 msgid "err_cannot_delete_self"
 msgstr "Impossible de se supprimer soi-même"
 
@@ -3273,6 +3276,45 @@ msgstr "Personne"
 
 msgid "ui_privacy_last_seen_hint"
 msgstr "Si vous choisissez « Personne », vous ne verrez pas non plus la dernière connexion des autres."
+
+msgid "ui_community_retention"
+msgstr "La discussion garde les messages pendant"
+
+msgid "ui_community_retention_interest"
+msgstr "1 an (pareil dans toutes les communautés d’intérêts)"
+
+msgid "ui_community_retention_hint"
+msgstr "Passé ce délai, les messages (avec leurs photos et fichiers) sont supprimés tout seuls. Le tableau et les sorties ne sont pas supprimés."
+
+msgid "ui_community_retention_tag"
+msgstr "Discussion : {time}"
+
+msgid "ui_retention_1d"
+msgstr "1 jour"
+
+msgid "ui_retention_2d"
+msgstr "2 jours"
+
+msgid "ui_retention_3d"
+msgstr "3 jours"
+
+msgid "ui_retention_1w"
+msgstr "1 semaine"
+
+msgid "ui_retention_1m"
+msgstr "1 mois"
+
+msgid "ui_retention_3m"
+msgstr "3 mois"
+
+msgid "ui_retention_6m"
+msgstr "6 mois"
+
+msgid "ui_retention_1y"
+msgstr "1 an"
+
+msgid "ui_retention_days"
+msgstr "{n} jours"
 
 msgid "ui_install_title"
 msgstr "Installer MeetGo"

@@ -995,6 +995,9 @@ msgstr "“{plan}”怎么样？"
 msgid "push_plan_rate_body"
 msgstr "花一秒评价一下，帮助组织者。"
 
+msgid "err_retention"
+msgstr "请选择可用的期限之一（兴趣社区始终保存一年）"
+
 msgid "err_cannot_delete_self"
 msgstr "不能删除自己"
 
@@ -3274,6 +3277,45 @@ msgstr "没有人"
 
 msgid "ui_privacy_last_seen_hint"
 msgstr "选择“没有人”后，你也看不到别人的最后上线时间。"
+
+msgid "ui_community_retention"
+msgstr "聊天消息保存时长"
+
+msgid "ui_community_retention_interest"
+msgstr "1 年（所有兴趣社区相同）"
+
+msgid "ui_community_retention_hint"
+msgstr "超过时长后，聊天消息（及其照片和文件）会自动删除。公告板和计划不会删除。"
+
+msgid "ui_community_retention_tag"
+msgstr "聊天：{time}"
+
+msgid "ui_retention_1d"
+msgstr "1 天"
+
+msgid "ui_retention_2d"
+msgstr "2 天"
+
+msgid "ui_retention_3d"
+msgstr "3 天"
+
+msgid "ui_retention_1w"
+msgstr "1 周"
+
+msgid "ui_retention_1m"
+msgstr "1 个月"
+
+msgid "ui_retention_3m"
+msgstr "3 个月"
+
+msgid "ui_retention_6m"
+msgstr "6 个月"
+
+msgid "ui_retention_1y"
+msgstr "1 年"
+
+msgid "ui_retention_days"
+msgstr "{n} 天"
 
 msgid "ui_install_title"
 msgstr "安装 MeetGo"
