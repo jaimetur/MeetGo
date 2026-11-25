@@ -1634,3 +1634,27 @@ a.btn { text-decoration: none; }
 .chip.coadmin { display: inline-flex; align-items: center; gap: 4px; padding-right: 4px; }
 .chip.coadmin .chipx { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 999px; color: inherit; opacity: .85; }
 .chip.coadmin .chipx:hover { opacity: 1; background: rgba(0, 0, 0, .15); }
+
+/* Administration → Business */
+.bz-period { margin: 0 0 14px; max-width: 560px; }
+.bz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-bottom: 22px; }
+.bz-card { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.bz-card.wide { grid-column: 1 / -1; }
+.bz-card .adm-card-head b { display: inline-flex; align-items: center; gap: 6px; }
+.bz-nums { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+.bz-num { display: flex; flex-direction: column; min-width: 0; }
+.bz-num small { font-size: 11.5px; color: var(--muted); }
+.bz-num b { font-size: 22px; font-family: var(--display); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.bz-num span { font-size: 11.5px; color: var(--muted); }
+.bz-from { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 11.5px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 6px; }
+.bz-from small { flex-basis: 100%; }
+.bz-from.off { color: var(--muted); }
+.bz-from.err { color: var(--admred); }
+.bz-list { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.bz-list > div { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.bz-list > div > span:last-child { text-align: right; }
+.bz-h2 { font-family: var(--display); font-size: 18px; margin: 8px 0 2px; }
+.adm-green { color: #16a34a; font-weight: 600; }
+.adm-test { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: 8px; }
+.adm-test small { font-size: 12px; }
+.fld.coadmins { display: flex; flex-direction: column; gap: 6px; }

@@ -4104,6 +4104,15 @@ msgstr "When more people join you can choose co-administrators among the members
 msgid "ui_community_coadmin_remove"
 msgstr "Remove {name} as co-administrator"
 
+msgid "ui_community_interests_choose"
+msgstr "Choose interests ({n}/5)"
+
+msgid "ui_community_interests_done"
+msgstr "Done"
+
+msgid "ui_community_interests_none"
+msgstr "None chosen."
+
 msgid "ui_cshow_new"
 msgstr "Not joined"
 

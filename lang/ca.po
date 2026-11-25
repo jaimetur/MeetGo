@@ -4103,6 +4103,15 @@ msgstr "Quan s'hi uneixi més gent podràs triar coadministradors entre els memb
 msgid "ui_community_coadmin_remove"
 msgstr "Treu {name} com a coadministrador"
 
+msgid "ui_community_interests_choose"
+msgstr "Tria interessos ({n}/5)"
+
+msgid "ui_community_interests_done"
+msgstr "Fet"
+
+msgid "ui_community_interests_none"
+msgstr "Cap triat."
+
 msgid "ui_cshow_new"
 msgstr "No inscrites"
 

@@ -4964,6 +4964,15 @@ msgstr "Wenn mehr Leute beitreten, kannst du Mitadministratoren unter den Mitgli
 msgid "ui_community_coadmin_remove"
 msgstr "{name} als Mitadministrator entfernen"
 
+msgid "ui_community_interests_choose"
+msgstr "Interessen wählen ({n}/5)"
+
+msgid "ui_community_interests_done"
+msgstr "Fertig"
+
+msgid "ui_community_interests_none"
+msgstr "Keine gewählt."
+
 msgid "ui_cshow_new"
 msgstr "Nicht beigetreten"
 

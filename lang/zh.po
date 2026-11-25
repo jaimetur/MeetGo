@@ -4103,6 +4103,15 @@ msgstr "有更多人加入后，你可以从成员中选择共同管理员。"
 msgid "ui_community_coadmin_remove"
 msgstr "取消 {name} 的共同管理员身份"
 
+msgid "ui_community_interests_choose"
+msgstr "选择兴趣（{n}/5）"
+
+msgid "ui_community_interests_done"
+msgstr "完成"
+
+msgid "ui_community_interests_none"
+msgstr "尚未选择。"
+
 msgid "ui_cshow_new"
 msgstr "未加入"
 

@@ -4103,6 +4103,15 @@ msgstr "メンバーが増えたら、その中から共同管理者を選べま
 msgid "ui_community_coadmin_remove"
 msgstr "{name}を共同管理者から外す"
 
+msgid "ui_community_interests_choose"
+msgstr "興味を選ぶ（{n}/5）"
+
+msgid "ui_community_interests_done"
+msgstr "完了"
+
+msgid "ui_community_interests_none"
+msgstr "まだ選ばれていません。"
+
 msgid "ui_cshow_new"
 msgstr "未参加"
 

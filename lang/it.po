@@ -4103,6 +4103,15 @@ msgstr "Quando si unirà altra gente potrai scegliere i co-amministratori tra i 
 msgid "ui_community_coadmin_remove"
 msgstr "Togli {name} come co-amministratore"
 
+msgid "ui_community_interests_choose"
+msgstr "Scegli gli interessi ({n}/5)"
+
+msgid "ui_community_interests_done"
+msgstr "Fatto"
+
+msgid "ui_community_interests_none"
+msgstr "Nessuno scelto."
+
 msgid "ui_cshow_new"
 msgstr "Non iscritte"
 

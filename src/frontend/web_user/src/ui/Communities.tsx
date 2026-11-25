@@ -323,7 +323,9 @@ function CoAdmins({ community }: { community: Community }) {
     }
   };
   return (
-    <div className="fld" id="cm-coadmins"><span>{t("ui_community_coadmins")}</span>
+    <div className="fld coadmins" id="cm-coadmins">
+      <span>{t("ui_community_coadmins")}</span>
+      {members && !people.length ? <small className="muted">{t("ui_community_coadmins_no_members")}</small> : null}
       {admins.length ? (
         <div className="chips wrapchips">
           {admins.map((m) => (
@@ -333,19 +335,17 @@ function CoAdmins({ community }: { community: Community }) {
             </span>
           ))}
         </div>
-      ) : members ? <small className="muted">{t("ui_community_coadmins_none")}</small> : null}
-      {members ? (
-        others.length ? (
-          <select id="cm-coadmin-add" className="inp" value="" disabled={busy} onChange={(e) => {
-            const m = others.find((x) => String(x.id) === e.target.value);
-            if (m) setRole(m, "admin");
-          }}>
-            <option value="">{t("ui_community_coadmin_add")}</option>
-            {others.map((m) => <option key={m.id} value={m.id}>{m.display_name}</option>)}
-          </select>
-        ) : !people.length ? <small className="muted">{t("ui_community_coadmins_no_members")}</small> : null
       ) : null}
-      <small className="muted">{t("ui_community_coadmins_hint")}</small>
+      {others.length ? (
+        <select id="cm-coadmin-add" className="inp" value="" disabled={busy} onChange={(e) => {
+          const m = others.find((x) => String(x.id) === e.target.value);
+          if (m) setRole(m, "admin");
+        }}>
+          <option value="">{t("ui_community_coadmin_add")}</option>
+          {others.map((m) => <option key={m.id} value={m.id}>{m.display_name}</option>)}
+        </select>
+      ) : null}
+      {people.length ? <small className="muted">{t("ui_community_coadmins_hint")}</small> : null}
     </div>
   );
 }
@@ -364,6 +364,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     tags: (community?.kind === "custom" ? community.tags : []) || [],
   });
   const [allInterests, setAllInterests] = useState<{ slug: string; name: string }[]>([]);
+  const [pickTags, setPickTags] = useState(false);
   useEffect(() => { api.interests().then((l) => setAllInterests(l.filter((i) => i.active !== false))).catch(() => undefined); }, []);
   const interest = community?.kind === "interest";
   const [busy, setBusy] = useState(false);
@@ -486,14 +487,19 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
           onClose={() => { setExpel(null); setBusy(false); }} onConfirm={() => { setExpel(null); return save(true); }} />
       ) : null}
       {!interest ? (
-        <div className="fld"><span>{t("ui_community_interests")}</span>
+        <div className="fld coadmins"><span>{t("ui_community_interests")}</span>
+          {/* the chosen ones; the whole list opens with the button */}
           <div className="chips wrapchips">
-            {allInterests.map((i) => {
+            {(pickTags ? allInterests : allInterests.filter((i) => form.tags.includes(i.slug))).map((i) => {
               const on = form.tags.includes(i.slug);
               return <button key={i.slug} type="button" className={"chip" + (on ? " on" : "")} aria-pressed={on} disabled={!on && form.tags.length >= 5}
                 onClick={() => set({ tags: on ? form.tags.filter((x) => x !== i.slug) : [...form.tags, i.slug] })}>{i.name}</button>;
             })}
+            {!pickTags && !form.tags.length ? <small className="muted">{t("ui_community_interests_none")}</small> : null}
           </div>
+          <button type="button" id="cm-tags-toggle" className="btn sm" style={{ alignSelf: "flex-start" }} aria-expanded={pickTags} onClick={() => setPickTags((v) => !v)}>
+            <Icon name={pickTags ? "check2" : "edit"} size="sm" />{pickTags ? t("ui_community_interests_done") : t("ui_community_interests_choose", { n: form.tags.length })}
+          </button>
           <small className="muted">{t("ui_community_interests_hint")}</small>
         </div>
       ) : null}

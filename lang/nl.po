@@ -4103,6 +4103,15 @@ msgstr "Als er meer mensen lid worden, kun je mede-beheerders uit de leden kieze
 msgid "ui_community_coadmin_remove"
 msgstr "{name} als mede-beheerder verwijderen"
 
+msgid "ui_community_interests_choose"
+msgstr "Interesses kiezen ({n}/5)"
+
+msgid "ui_community_interests_done"
+msgstr "Klaar"
+
+msgid "ui_community_interests_none"
+msgstr "Geen gekozen."
+
 msgid "ui_cshow_new"
 msgstr "Geen lid"
 

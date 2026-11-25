@@ -4963,6 +4963,15 @@ msgstr "Quand d'autres personnes rejoindront la communauté, tu pourras choisir 
 msgid "ui_community_coadmin_remove"
 msgstr "Retirer {name} comme co-administrateur"
 
+msgid "ui_community_interests_choose"
+msgstr "Choisir les centres d'intérêt ({n}/5)"
+
+msgid "ui_community_interests_done"
+msgstr "Terminé"
+
+msgid "ui_community_interests_none"
+msgstr "Aucun choisi."
+
 msgid "ui_cshow_new"
 msgstr "Non rejointes"
 
