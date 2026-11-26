@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, LAYOUTS, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
+import { AboutModal, Avatar, Icon, LAYOUTS, Modal, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -501,7 +501,7 @@ export function AccountPage() {
       {section === "settings" ? (
         <div className="stack" style={{ gap: 14 }}>
           {/* each setting in its own panel: design, theme, text size, language */}
-          <div className="box setbox"><LayoutPicker /></div>
+          <div className="box setbox"><LayoutPicker theme={theme} onTheme={changeTheme} /></div>
           <div className="box setbox">
             <div className="fld themefld">{t("ui_theme")}
               <ThemePicker value={theme} onChange={changeTheme} />
@@ -590,9 +590,8 @@ export function JoinPage({ code }: { code: string }) {
 }
 
 /** The colour themes as swatches: the system's, then the light ones and the dark ones (see THEMES in App.tsx). */
-function ThemePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  // a tiny window of the app in each theme: its background, side panel, top bar, two messages and a button
-  const mini = (th: (typeof THEMES)[string]) => (
+// a tiny window of the app in each theme: its background, side panel, top bar, two messages and a button
+const themeMini = (th: (typeof THEMES)[string]) => (
     <span className="tp" style={{ background: th.bg, color: th.dark ? "rgba(255,255,255,.55)" : "rgba(15,26,46,.45)" }}>
       <span className="tp-side" style={{ background: th.panel }} />
       <span className="tp-bar" style={{ background: `linear-gradient(90deg, ${th.accent}, ${th.accent2})` }} />
@@ -600,7 +599,10 @@ function ThemePicker({ value, onChange }: { value: string; onChange: (v: string)
       <span className="tp-msg me" style={{ background: `linear-gradient(135deg, ${th.accent}, ${th.accent2})` }} />
       <span className="tp-btn" style={{ background: th.accent }} />
     </span>
-  );
+);
+
+function ThemePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const mini = themeMini;
   const swatch = (id: string) => (
     <button key={id} type="button" className={"themesw" + (value === id ? " on" : "")} aria-pressed={value === id} onClick={() => onChange(id)}>
       <span className="themesw-prev">{mini(THEMES[id])}</span>
@@ -810,8 +812,15 @@ function AboutButton() {
 }
 
 /** How the list of communities looks (this device): the cards as they were or one of the five styles. */
-function LayoutPicker() {
+/** Each design's own themes, light and night: choosing the design offers them. */
+const LAYOUT_THEMES: Record<Layout, [string, string]> = {
+  actual: ["pastel", "pasteldark"], conversa: ["conversa", "conversadark"], momentos: ["momentos", "momentosdark"],
+  muro: ["muro", "murodark"], chispa: ["chispa", "chispadark"], quedadas: ["quedadas", "quedadasdark"],
+};
+
+function LayoutPicker({ theme, onTheme }: { theme: string; onTheme: (v: string) => void }) {
   const [value, setValue] = useState<Layout>(getLayout);
+  const [offer, setOffer] = useState<Layout | null>(null);
   const pick = (v: Layout) => {
     setValue(v);
     try {
@@ -819,6 +828,7 @@ function LayoutPicker() {
     } catch {
       /* per-device preference */
     }
+    if (!LAYOUT_THEMES[v].includes(theme)) setOffer(v);
   };
   return (
     <div className="fld setfld layoutfld">{t("ui_layout")}
@@ -831,6 +841,20 @@ function LayoutPicker() {
         ))}
       </div>
       <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_layout_hint")}</div>
+      {offer ? (
+        <Modal title={t("ui_layout_theme_title")} onClose={() => setOffer(null)}
+          footer={<button className="btn" onClick={() => setOffer(null)}>{t("ui_layout_theme_keep")}</button>}>
+          <p className="muted" style={{ marginTop: 0 }}>{t("ui_layout_theme_body", { name: t("ui_layout_" + offer) })}</p>
+          <div className="themepick two">
+            {LAYOUT_THEMES[offer].map((id) => (
+              <button key={id} id={`layout-theme-${id}`} type="button" className="themesw" onClick={() => { onTheme(id); setOffer(null); }}>
+                <span className="themesw-prev">{themeMini(THEMES[id])}</span>
+                <span className="themesw-name">{t(THEMES[id].label)}</span>
+              </button>
+            ))}
+          </div>
+        </Modal>
+      ) : null}
     </div>
   );
 }

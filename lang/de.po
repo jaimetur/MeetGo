@@ -4320,10 +4320,10 @@ msgid "ui_theme_prodark"
 msgstr "Schlicht Nacht"
 
 msgid "ui_theme_pastel"
-msgstr "Pastell"
+msgstr "MeetGo"
 
 msgid "ui_theme_pasteldark"
-msgstr "Pastell Nacht"
+msgstr "MeetGo Nacht"
 
 msgid "ui_theme_conversa"
 msgstr "Conversa"
@@ -4390,6 +4390,15 @@ msgstr "Im ganzen Land"
 
 msgid "ui_people_where_all"
 msgstr "Überall"
+
+msgid "ui_layout_theme_title"
+msgstr "Auch das Design ändern?"
+
+msgid "ui_layout_theme_body"
+msgstr "Das Layout {name} hat eigene Farben. Wähle eines seiner Designs oder behalte deins."
+
+msgid "ui_layout_theme_keep"
+msgstr "Mein Design behalten"
 
 msgid "ui_theme_plum"
 msgstr "Pflaume"

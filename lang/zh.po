@@ -6012,10 +6012,10 @@ msgid "ui_theme_prodark"
 msgstr "简约夜间"
 
 msgid "ui_theme_pastel"
-msgstr "柔彩"
+msgstr "MeetGo"
 
 msgid "ui_theme_pasteldark"
-msgstr "柔彩夜间"
+msgstr "MeetGo夜间"
 
 msgid "ui_theme_conversa"
 msgstr "Conversa"
@@ -6082,6 +6082,15 @@ msgstr "全国"
 
 msgid "ui_people_where_all"
 msgstr "任何地方"
+
+msgid "ui_layout_theme_title"
+msgstr "也更换主题吗？"
+
+msgid "ui_layout_theme_body"
+msgstr "{name}布局有自己的颜色。选择它的一个主题，或保留你当前的主题。"
+
+msgid "ui_layout_theme_keep"
+msgstr "保留我的主题"
 
 msgid "ui_theme_plum"
 msgstr "梅紫"

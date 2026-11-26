@@ -2126,10 +2126,10 @@ button.fwho-row:hover { background: var(--panel2); }
 /* ---- Settings → Design: how the list of communities is laid out (Communities.tsx LAYOUTS), on top of any theme ---- */
 .ccover2 { display: none; }
 .layoutfld { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; }
-.layoutpick { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
-.layoutpick button { display: flex; flex-direction: column; gap: 6px; padding: 6px; border-radius: 12px; border: 2px solid transparent; background: var(--panel2); font-size: 12.5px; font-weight: 600; color: var(--fg); }
+.layoutpick { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }  /* the same size as the theme cards */
+.layoutpick button { display: flex; flex-direction: column; gap: 6px; padding: 6px; border-radius: 14px; border: 2px solid transparent; background: var(--panel2); font-size: 12.5px; font-weight: 600; color: var(--fg); }
 .layoutpick button.on { border-color: var(--blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 22%, transparent); }
-.lp-prev { height: 56px; border-radius: 8px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 3px; padding: 5px; }
+.lp-prev { height: 68px; border-radius: 8px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 3px; padding: 5px; }
 .lp-prev i { background: var(--line2); border-radius: 3px; }
 .lp-actual .lp-prev { grid-template-columns: 1fr 1fr; }
 .lp-conversa .lp-prev { grid-template-rows: repeat(4, 1fr); }
@@ -2246,3 +2246,5 @@ button.fwho-row:hover { background: var(--panel2); }
 .peoplesearch .inp { width: auto; max-width: 46vw; }
 .setbox .fld { color: var(--strong); }
 .dnav .di .myname { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.themepick.two { grid-template-columns: 1fr 1fr; }
+.themepick.two { grid-template-columns: 1fr 1fr; }

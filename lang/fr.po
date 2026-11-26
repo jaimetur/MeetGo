@@ -4319,10 +4319,10 @@ msgid "ui_theme_prodark"
 msgstr "Sobre nuit"
 
 msgid "ui_theme_pastel"
-msgstr "Pastel"
+msgstr "MeetGo"
 
 msgid "ui_theme_pasteldark"
-msgstr "Pastel nuit"
+msgstr "MeetGo nuit"
 
 msgid "ui_theme_conversa"
 msgstr "Conversa"
@@ -4389,6 +4389,15 @@ msgstr "Dans tout le pays"
 
 msgid "ui_people_where_all"
 msgstr "Partout"
+
+msgid "ui_layout_theme_title"
+msgstr "Changer aussi le thème ?"
+
+msgid "ui_layout_theme_body"
+msgstr "La mise en page {name} a ses propres couleurs. Choisis l'un de ses thèmes ou garde le tien."
+
+msgid "ui_layout_theme_keep"
+msgstr "Garder mon thème"
 
 msgid "ui_theme_plum"
 msgstr "Prune"

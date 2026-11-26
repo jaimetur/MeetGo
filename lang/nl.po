@@ -6012,10 +6012,10 @@ msgid "ui_theme_prodark"
 msgstr "Sober nacht"
 
 msgid "ui_theme_pastel"
-msgstr "Pastel"
+msgstr "MeetGo"
 
 msgid "ui_theme_pasteldark"
-msgstr "Pastel nacht"
+msgstr "MeetGo nacht"
 
 msgid "ui_theme_conversa"
 msgstr "Conversa"
@@ -6082,6 +6082,15 @@ msgstr "Heel het land"
 
 msgid "ui_people_where_all"
 msgstr "Overal"
+
+msgid "ui_layout_theme_title"
+msgstr "Ook het thema wijzigen?"
+
+msgid "ui_layout_theme_body"
+msgstr "De indeling {name} heeft eigen kleuren. Kies een van de thema's of houd het jouwe."
+
+msgid "ui_layout_theme_keep"
+msgstr "Mijn thema houden"
 
 msgid "ui_theme_plum"
 msgstr "Pruim"

@@ -6011,10 +6011,10 @@ msgid "ui_theme_prodark"
 msgstr "Sóbrio noite"
 
 msgid "ui_theme_pastel"
-msgstr "Pastel"
+msgstr "MeetGo"
 
 msgid "ui_theme_pasteldark"
-msgstr "Pastel noite"
+msgstr "MeetGo noite"
 
 msgid "ui_theme_conversa"
 msgstr "Conversa"
@@ -6081,6 +6081,15 @@ msgstr "Em todo o país"
 
 msgid "ui_people_where_all"
 msgstr "Em qualquer lugar"
+
+msgid "ui_layout_theme_title"
+msgstr "Mudar também o tema?"
+
+msgid "ui_layout_theme_body"
+msgstr "O layout {name} tem as suas próprias cores. Escolhe um dos seus temas ou mantém o teu."
+
+msgid "ui_layout_theme_keep"
+msgstr "Manter o meu tema"
 
 msgid "ui_theme_plum"
 msgstr "Ameixa"

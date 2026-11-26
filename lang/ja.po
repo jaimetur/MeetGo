@@ -6012,10 +6012,10 @@ msgid "ui_theme_prodark"
 msgstr "シンプル（夜）"
 
 msgid "ui_theme_pastel"
-msgstr "パステル"
+msgstr "MeetGo"
 
 msgid "ui_theme_pasteldark"
-msgstr "パステル（夜）"
+msgstr "MeetGo（夜）"
 
 msgid "ui_theme_conversa"
 msgstr "Conversa"
@@ -6082,6 +6082,15 @@ msgstr "国内全体"
 
 msgid "ui_people_where_all"
 msgstr "どこでも"
+
+msgid "ui_layout_theme_title"
+msgstr "テーマも変更しますか？"
+
+msgid "ui_layout_theme_body"
+msgstr "{name}レイアウトには専用の色があります。そのテーマを選ぶか、今のテーマのままにしてください。"
+
+msgid "ui_layout_theme_keep"
+msgstr "今のテーマのまま"
 
 msgid "ui_theme_plum"
 msgstr "プラム"
