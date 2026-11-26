@@ -2245,3 +2245,4 @@ button.fwho-row:hover { background: var(--panel2); }
 .peoplesearch { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
 .peoplesearch .inp { width: auto; max-width: 46vw; }
 .setbox .fld { color: var(--strong); }
+.dnav .di .myname { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import type { Me } from "../types";
 import { t } from "@lang";
 import { API_BASE, api, getToken, setApiHandlers, setToken } from "../api";
 import { native, setNativeHandlers } from "../native";
@@ -12,10 +13,10 @@ import { UpdateNotice } from "./UpdateNotice";
 import { FeedPostPage, WallPage } from "./Feed";
 import { useNoAutofill } from "../noAutofill";
 import { HomePage, PostPage, PublishPage } from "./Board";
-import { AboutModal, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
+import { AboutModal, Avatar, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
-import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage } from "./Pages";
+import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage, accountMemory } from "./Pages";
 import { PlansPage, RightColumn } from "./Plans";
 import { ActingAsBar, AdminPage } from "./Admin";
 import { ZoneTag } from "./Board";
@@ -106,6 +107,31 @@ export function signOut() {
   native.setSession(API_BASE, "");
   resetState();
   navigate("/", true);
+}
+
+/** My name in the menu: first name and first surname, or the surname's initial when it does not fit. */
+function MyName({ me }: { me: Me }) {
+  const first = (me.first_name || "").trim();
+  const surname = (me.last_name || "").trim().split(/\s+/)[0] || "";
+  const full = first ? [first, surname].filter(Boolean).join(" ") : me.display_name;
+  const short = first && surname ? `${first} ${surname[0]}.` : full;
+  const ref = React.useRef<HTMLSpanElement>(null);
+  const [fits, setFits] = useState(true);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const check = () => {
+      el.textContent = full;
+      const ok = el.scrollWidth <= el.clientWidth;
+      el.textContent = ok ? full : short;
+      setFits(ok);
+    };
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [full, short]);
+  return <span ref={ref} className="dl myname">{fits ? full : short}</span>;
 }
 
 export default function App() {
@@ -275,7 +301,8 @@ function Shell() {
 
   // Which tab is lit for the current screen.
   const current = ({ chat: "chats", post: "home", feedpost: "home", wall: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;
-  const go = (name: string) => navigate(name === "home" ? "/" : "/" + name);
+  // my account opens on the tab I was on in this session
+  const go = (name: string) => navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
 
   const menu = [
     { name: "home", icon: "home", label: t("ui_nav_home"), badge: 0 },
@@ -331,8 +358,8 @@ function Shell() {
         <div className="dzone"><ZoneTag /></div>
         {menu.map((n) => (
           <button key={n.name} className={"di" + (current === n.name ? " on" : "")} title={n.label} aria-label={n.label} aria-current={current === n.name ? "page" : undefined} onClick={() => go(n.name)}>
-            <Icon name={n.icon} />
-            <span className="dl">{n.label}</span>
+            {n.name === "account" && me ? <Avatar user={me} size={24} /> : <Icon name={n.icon} />}
+            {n.name === "account" && me ? <MyName me={me} /> : <span className="dl">{n.label}</span>}
             {n.badge ? <span className={"bdg" + (n.at ? " at" : "")}>{n.badge > 99 ? "99+" : n.badge}</span> : null}
           </button>
         ))}

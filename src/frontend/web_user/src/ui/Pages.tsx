@@ -237,6 +237,9 @@ export function MentionsPage() {
   );
 }
 
+/** The tab of my account I was on, while the app stays open (opening it again starts on the first one). */
+export const accountMemory = { section: "profile" };
+
 export function AccountPage() {
   const me = useStore((s) => s.me)!;
   const billing = useStore((s) => s.billing);
@@ -273,6 +276,9 @@ export function AccountPage() {
   };
   const [section, setSectionState] = useState<Section>(fromUrl);
   useEffect(() => setSectionState(fromUrl()), [route]);
+  useEffect(() => {
+    accountMemory.section = section;
+  }, [section]);
   const setSection = (s: Section) => {
     setSectionState(s);
     navigate(s === "profile" ? "/account" : `/account?section=${s}`, true);
