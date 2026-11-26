@@ -158,16 +158,20 @@ export function convTitle(conv: Conversation): string {
 export function Modal({ title, onClose, children, footer, wide }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode; wide?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const swipe = useSwipeDown(onClose);
+  const closing = useRef(onClose);
+  closing.current = onClose;
   useEffect(() => {
     // Escape closes only the window on top (one can open another, like the interests of a community's settings)
     const onKey = (e: KeyboardEvent) => {
       const all = document.querySelectorAll(".modal");
-      if (e.key === "Escape" && all[all.length - 1] === ref.current) onClose();
+      if (e.key === "Escape" && all[all.length - 1] === ref.current) closing.current();
     };
     window.addEventListener("keydown", onKey);
-    ref.current?.querySelector<HTMLElement>("input, textarea, button")?.focus();
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, []);
+  // the first field takes the focus once, when the window opens (not again each time it is drawn: typing in a field
+  // would lose it, and on phones the keyboard would close)
+  useEffect(() => { ref.current?.querySelector<HTMLElement>(".mbody input, .mbody textarea, input, textarea, button")?.focus(); }, []);
   return (
     <div className="modal-bg" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className={"modal" + (wide ? " wide" : "")} role="dialog" aria-modal="true" aria-label={title} ref={ref} style={swipe.style}>

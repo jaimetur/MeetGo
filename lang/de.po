@@ -6170,6 +6170,30 @@ msgstr "2010er"
 msgid "ui_hits_20s"
 msgstr "2020er"
 
+msgid "ui_sticker_faces"
+msgstr "Gesichter"
+
+msgid "ui_sticker_love"
+msgstr "Liebe"
+
+msgid "ui_sticker_party"
+msgstr "Party"
+
+msgid "ui_sticker_food"
+msgstr "Essen"
+
+msgid "ui_sticker_sport"
+msgstr "Sport"
+
+msgid "ui_sticker_nature"
+msgstr "Natur"
+
+msgid "ui_sticker_travel"
+msgstr "Reisen"
+
+msgid "ui_sticker_symbols"
+msgstr "Symbole"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

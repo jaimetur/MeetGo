@@ -141,7 +141,7 @@ def clean_layout(layout: dict | None) -> dict:
     text = layout.get("text") or {}
     out = {"text": {
         "x": _unit(text.get("x")), "y": _unit(text.get("y")),
-        "size": _num(text.get("size"), 14, 72, 28),
+        "size": _num(text.get("size"), 14, 96, 28),
         "color": text.get("color") if isinstance(text.get("color"), str) and COLOR_RE.match(text["color"]) else "#ffffff",
         "font": text.get("font") if text.get("font") in FONTS else "classic",
         "bg": text.get("bg") if text.get("bg") in TEXT_BGS else "none",
@@ -152,7 +152,7 @@ def clean_layout(layout: dict | None) -> dict:
         e = st.get("e") if isinstance(st, dict) else None
         if isinstance(e, str) and 0 < len(e) <= 16:
             stickers.append({"e": e, "x": _unit(st.get("x")), "y": _unit(st.get("y")),
-                             "size": _num(st.get("size"), 24, 160, 56)})
+                             "size": _num(st.get("size"), 24, 220, 56)})
     out["stickers"] = stickers
     out["filter"] = layout.get("filter") if layout.get("filter") in FILTERS else "none"
     return out

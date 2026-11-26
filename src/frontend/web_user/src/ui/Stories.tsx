@@ -3,12 +3,13 @@
  * from), and the viewer: full screen, one after another, tap to go on or back, hold to pause; reactions and a reply
  * (it reaches the author as a direct message); for mine, who saw them and deleting. */
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { t } from "@lang";
 import { api, fileUrl } from "../api";
 import { navigate } from "../router";
 import { toast, useStore } from "../store";
 import type { MusicTrack, StoryGroup, StoryItem, StoryLayout, UserSummary } from "../types";
-import { DEFAULT_TEXT, FILTERS, FONTS, MUSIC_SECONDS, MusicPicker, STICKERS, StoryCanvas, TEXT_BGS, TEXT_COLORS } from "./StoryCanvas";
+import { DEFAULT_TEXT, FILTERS, FONTS, MUSIC_SECONDS, MusicPicker, STICKER_GROUPS, STICKER_MAX, StoryCanvas, TEXT_BGS, TEXT_COLORS, TEXT_MAX } from "./StoryCanvas";
 import { shortWhen } from "../util";
 import { Avatar, Icon, Modal, QUICK_REACTIONS } from "./common";
 
@@ -29,7 +30,7 @@ export function StoriesBar() {
   return (
     <div className="stbar" aria-label={t("ui_stories")}>
       <div className="stitem">
-        <button id="story-mine" type="button" className={"stcircle" + (mine ? " ring seen" : "")} onClick={() => (mine ? setOpen(0) : setCreating(true))}>
+        <button id="story-mine" type="button" className={"stcircle" + (mine ? " ring" : "")} onClick={() => (mine ? setOpen(0) : setCreating(true))}>
           <Avatar user={me} size={58} />
         </button>
         <button id="story-new" type="button" className="stplus" onClick={() => setCreating(true)} aria-label={t("ui_story_new")}><Icon name="plus" size="sm" /></button>
@@ -62,6 +63,7 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   const [layout, setLayout] = useState<StoryLayout>({ text: { ...DEFAULT_TEXT }, stickers: [], filter: "none" });
   const [selected, setSelected] = useState<number | "text" | null>(null);
   const [tool, setTool] = useState<"text" | "stickers" | "filters" | null>("text");
+  const [group, setGroup] = useState("faces");
   const [music, setMusic] = useState<{ track: MusicTrack; start: number } | null>(null);
   const [picking, setPicking] = useState(false);
   const [audience, setAudience] = useState("friends");
@@ -149,17 +151,20 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
                 {TEXT_BGS.map((b) => <button key={b} type="button" className={"chip" + (tx.bg === b ? " on" : "")} onClick={() => setText2({ bg: b })}>{t(`ui_story_bg_${b}`)}</button>)}
                 {(["left", "center", "right"] as const).map((al) => <button key={al} type="button" className={"chip" + (tx.align === al ? " on" : "")} onClick={() => setText2({ align: al })}>{t(`ui_story_align_${al}`)}</button>)}
               </div>
-              <label className="strange">{t("ui_story_size")}<input type="range" min={14} max={72} value={tx.size} onChange={(e) => setText2({ size: Number(e.target.value) })} /></label>
+              <label className="strange">{t("ui_story_size")}<input type="range" min={14} max={TEXT_MAX} value={tx.size} onChange={(e) => setText2({ size: Number(e.target.value) })} /></label>
             </div>
           ) : null}
           {tool === "stickers" ? (
             <div className="stpanel">
-              <div className="ststickers">{STICKERS.map((e) => (
+              <div className="chips mtags mlists">
+                {STICKER_GROUPS.map(([k]) => <button key={k} type="button" className={"chip" + (group === k ? " on" : "")} onClick={() => setGroup(k)}>{t(`ui_sticker_${k}`)}</button>)}
+              </div>
+              <div className="ststickers">{(STICKER_GROUPS.find(([k]) => k === group)?.[1] || []).map((e) => (
                 <button key={e} type="button" onClick={() => { const list = [...(layout.stickers || []), { e, x: 0.5, y: 0.35, size: 56 }].slice(0, 12); setLayout({ ...layout, stickers: list }); setSelected(list.length - 1); }}>{e}</button>
               ))}</div>
               {sel ? (
                 <div className="strow">
-                  <label className="strange grow">{t("ui_story_size")}<input type="range" min={24} max={160} value={sel.size}
+                  <label className="strange grow">{t("ui_story_size")}<input type="range" min={24} max={STICKER_MAX} value={sel.size}
                     onChange={(e) => setLayout({ ...layout, stickers: layout.stickers!.map((s, i) => (i === selected ? { ...s, size: Number(e.target.value) } : s)) })} /></label>
                   <button type="button" className="btn sm danger" onClick={() => { setLayout({ ...layout, stickers: layout.stickers!.filter((_, i) => i !== selected) }); setSelected(null); }}><Icon name="trash" size="sm" />{t("ui_remove")}</button>
                 </div>
@@ -197,7 +202,8 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
           ) : null}
         </div>
       </div>
-      {picking ? <MusicPicker value={music} onClose={() => setPicking(false)} onPick={(v) => { setMusic(v); setPicking(false); }} /> : null}
+      {/* a window of its own (on top of this one, not inside it: it would be cut) */}
+      {picking ? createPortal(<MusicPicker value={music} onClose={() => setPicking(false)} onPick={(v) => { setMusic(v); setPicking(false); }} />, document.body) : null}
     </Modal>
   );
 }

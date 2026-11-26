@@ -5304,6 +5304,30 @@ msgstr "2010s"
 msgid "ui_hits_20s"
 msgstr "2020s"
 
+msgid "ui_sticker_faces"
+msgstr "Faces"
+
+msgid "ui_sticker_love"
+msgstr "Love"
+
+msgid "ui_sticker_party"
+msgstr "Party"
+
+msgid "ui_sticker_food"
+msgstr "Food"
+
+msgid "ui_sticker_sport"
+msgstr "Sport"
+
+msgid "ui_sticker_nature"
+msgstr "Nature"
+
+msgid "ui_sticker_travel"
+msgstr "Travel"
+
+msgid "ui_sticker_symbols"
+msgstr "Symbols"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "The administration will review it; meanwhile your community shows under «Other»."
 

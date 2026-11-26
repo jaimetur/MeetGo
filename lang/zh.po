@@ -5303,6 +5303,30 @@ msgstr "2010 年代"
 msgid "ui_hits_20s"
 msgstr "2020 年代"
 
+msgid "ui_sticker_faces"
+msgstr "表情"
+
+msgid "ui_sticker_love"
+msgstr "爱心"
+
+msgid "ui_sticker_party"
+msgstr "派对"
+
+msgid "ui_sticker_food"
+msgstr "美食"
+
+msgid "ui_sticker_sport"
+msgstr "运动"
+
+msgid "ui_sticker_nature"
+msgstr "自然"
+
+msgid "ui_sticker_travel"
+msgstr "旅行"
+
+msgid "ui_sticker_symbols"
+msgstr "符号"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

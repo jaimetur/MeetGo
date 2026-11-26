@@ -5303,6 +5303,30 @@ msgstr "Jaren 2010"
 msgid "ui_hits_20s"
 msgstr "Jaren 2020"
 
+msgid "ui_sticker_faces"
+msgstr "Gezichten"
+
+msgid "ui_sticker_love"
+msgstr "Liefde"
+
+msgid "ui_sticker_party"
+msgstr "Feest"
+
+msgid "ui_sticker_food"
+msgstr "Eten"
+
+msgid "ui_sticker_sport"
+msgstr "Sport"
+
+msgid "ui_sticker_nature"
+msgstr "Natuur"
+
+msgid "ui_sticker_travel"
+msgstr "Reizen"
+
+msgid "ui_sticker_symbols"
+msgstr "Symbolen"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

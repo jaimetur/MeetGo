@@ -5303,6 +5303,30 @@ msgstr "Anys 2010"
 msgid "ui_hits_20s"
 msgstr "Anys 2020"
 
+msgid "ui_sticker_faces"
+msgstr "Cares"
+
+msgid "ui_sticker_love"
+msgstr "Amor"
+
+msgid "ui_sticker_party"
+msgstr "Festa"
+
+msgid "ui_sticker_food"
+msgstr "Menjar"
+
+msgid "ui_sticker_sport"
+msgstr "Esport"
+
+msgid "ui_sticker_nature"
+msgstr "Natura"
+
+msgid "ui_sticker_travel"
+msgstr "Viatges"
+
+msgid "ui_sticker_symbols"
+msgstr "Símbols"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 

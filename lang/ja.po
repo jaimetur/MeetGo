@@ -5303,6 +5303,30 @@ msgstr "2010年代"
 msgid "ui_hits_20s"
 msgstr "2020年代"
 
+msgid "ui_sticker_faces"
+msgstr "顔"
+
+msgid "ui_sticker_love"
+msgstr "ハート"
+
+msgid "ui_sticker_party"
+msgstr "パーティー"
+
+msgid "ui_sticker_food"
+msgstr "食べ物"
+
+msgid "ui_sticker_sport"
+msgstr "スポーツ"
+
+msgid "ui_sticker_nature"
+msgstr "自然"
+
+msgid "ui_sticker_travel"
+msgstr "旅行"
+
+msgid "ui_sticker_symbols"
+msgstr "記号"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

@@ -15,8 +15,19 @@ export const FILTERS: [string, string][] = [
   ["cool", "saturate(1.1) hue-rotate(15deg) brightness(1.02)"], ["vivid", "saturate(1.7) contrast(1.1)"], ["fade", "contrast(.8) brightness(1.15) saturate(.7)"],
 ];
 export const TEXT_COLORS = ["#ffffff", "#111827", "#facc15", "#f97316", "#ef4444", "#ec4899", "#a855f7", "#3b82f6", "#22c55e"];
-export const STICKERS = ["😀", "😂", "😍", "🥳", "😎", "🔥", "❤️", "👍", "🎉", "✨", "🌞", "🌙", "🏖️", "🏔️", "⚽", "🎶", "🍕", "🍻", "☕", "📍"];
+export const STICKER_GROUPS: [string, string[]][] = [
+  ["faces", "😀 😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 😉 😊 😇 🥰 😍 🤩 😘 😗 😚 😋 😛 😜 🤪 😝 🤑 🤗 🤭 🤫 🤔 🤐 🤨 😐 😑 😶 😏 😒 🙄 😬 😌 😔 😪 🤤 😴 😷 🤒 🤕 🤢 🤮 🥵 🥶 🥴 😵 🤯 🤠 🥳 🥸 😎 🤓 🧐 😕 😟 🙁 😮 😯 😲 😳 🥺 😦 😧 😨 😰 😥 😢 😭 😱 😖 😣 😞 😓 😩 😫 🥱 😤 😡 😠 🤬 😈 👿 💀 👻 👽 🤖 💩 😺 😸 😹 😻 😼 😽 🙀 😿 😾".split(" ")],
+  ["love", "❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💕 💞 💓 💗 💖 💘 💝 💟 💌 💋 😘 🥰 😍 💑 💏 👩‍❤️‍👨 🌹 💐 🫶 🤟 🤞".split(" ")],
+  ["party", "🎉 🎊 🥳 🎈 🎁 🎂 🍰 🧁 🍾 🥂 🍻 🍺 🍷 🍸 🍹 🪩 💃 🕺 🎶 🎵 🎤 🎧 🎸 🎹 🥁 🎷 🎺 🎻 🪅 🎆 🎇 ✨ 🌟 ⭐ 🔥 💥 🎯 🏆 🥇 👑".split(" ")],
+  ["food", "🍕 🍔 🍟 🌭 🥪 🌮 🌯 🥙 🥗 🍝 🍜 🍲 🍣 🍱 🥟 🍤 🍙 🍚 🥘 🥞 🧇 🥐 🥖 🥨 🧀 🥚 🍳 🥓 🥩 🍗 🍖 🍦 🍨 🍧 🍩 🍪 🍫 🍬 🍭 🍯 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🫐 🍒 🍑 🥭 🍍 🥥 🥑 ☕ 🍵 🧃 🥤 🧋 🍼".split(" ")],
+  ["sport", "⚽ 🏀 🏈 ⚾ 🥎 🎾 🏐 🏉 🥏 🎱 🏓 🏸 🏒 🏑 🥍 🏏 ⛳ 🏹 🎣 🥊 🥋 ⛸️ 🎿 🛷 🏂 🏋️ 🤸 🤼 🤺 🏊 🏄 🚴 🚵 🧗 🏇 🧘 🏃 🚶 🛹 🛼 🏆 🥇 🥈 🥉 🏅 🎽".split(" ")],
+  ["nature", "🌞 🌝 🌛 🌙 ⭐ 🌈 ☀️ 🌤️ ⛅ 🌧️ ⛈️ 🌩️ ❄️ ☃️ ⛄ 🌬️ 💨 🌊 💧 🌸 🌼 🌻 🌺 🌷 🌹 🥀 🍀 🌿 🌱 🌴 🌵 🌲 🌳 🍁 🍂 🍃 🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🦄 🐝 🦋 🐢 🐬 🐳 🐠".split(" ")],
+  ["travel", "✈️ 🚀 🚁 ⛵ 🚤 🛳️ 🚗 🚕 🚙 🚌 🏍️ 🛵 🚲 🚂 🚄 🗺️ 🧭 🏖️ 🏝️ 🏕️ ⛺ 🏔️ ⛰️ 🗻 🌋 🏜️ 🏙️ 🌆 🌃 🌉 🏰 🗼 🗽 🎡 🎢 🎠 🧳 🎒 📸 📷 🎥 🌍 🌎 🌏 📍".split(" ")],
+  ["symbols", "👍 👎 👏 🙌 👐 🤝 🙏 ✌️ 🤘 👌 🤙 👋 💪 👀 💯 ✅ ❌ ❓ ❗ ⚡ 💤 💬 💭 🗯️ ♻️ ☮️ ☯️ 🔔 🎀 🏳️‍🌈 🇪🇸 🆗 🆒 🆕 🆓 🔝 ➡️ ⬅️ ⬆️ ⬇️ 🔄 ⏰ ⌛ 📅 🎯 🔑 💡 📢".split(" ")],
+];
 export const MUSIC_SECONDS = 15;
+export const TEXT_MAX = 96;
+export const STICKER_MAX = 220;
 
 export const DEFAULT_TEXT = { x: 0.5, y: 0.5, size: 28, color: "#ffffff", font: "classic", bg: "none", align: "center" as const };
 
@@ -34,30 +45,83 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
   videoRef?: React.Ref<HTMLVideoElement>; muted?: boolean; onVideoTime?: (p: number) => void; onVideoEnd?: () => void;
 }) {
   const box = useRef<HTMLDivElement>(null);
-  const drag = useRef<{ what: number | "text"; dx: number; dy: number } | null>(null);
   const tx = { ...DEFAULT_TEXT, ...(layout.text || {}) };
+  // the fingers (or the mouse) on the canvas, and what they are doing: moving the text or an emoji, resizing it by its
+  // corner, or pinching it bigger or smaller with two fingers
+  type What = number | "text";
+  const pointers = useRef(new Map<number, { x: number; y: number }>());
+  const gesture = useRef<{ kind: "drag"; what: What; dx: number; dy: number } | { kind: "pinch" | "corner"; what: What; dist: number; size: number } | null>(null);
+  const moved = useRef(false);
   const where = (e: React.PointerEvent) => {
     const r = box.current!.getBoundingClientRect();
     return { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
   };
-  const start = (what: number | "text") => (e: React.PointerEvent) => {
+  const sizeOf = (w: What) => (w === "text" ? tx.size : layout.stickers![w].size);
+  const setSize = (w: What, size: number) => {
+    if (!onLayout) return;
+    if (w === "text") onLayout({ ...layout, text: { ...tx, size: Math.round(Math.min(TEXT_MAX, Math.max(14, size))) } });
+    else onLayout({ ...layout, stickers: layout.stickers!.map((st, i) => (i === w ? { ...st, size: Math.round(Math.min(STICKER_MAX, Math.max(24, size))) } : st)) });
+  };
+  const centre = (w: What) => {
+    const r = box.current!.getBoundingClientRect();
+    const at = w === "text" ? tx : layout.stickers![w];
+    return { x: r.left + at.x * r.width, y: r.top + at.y * r.height };
+  };
+  const spread = () => {
+    const [a, b] = [...pointers.current.values()];
+    return Math.max(1, Math.hypot(a.x - b.x, a.y - b.y));
+  };
+  const pinch = (w: What) => { gesture.current = { kind: "pinch", what: w, dist: spread(), size: sizeOf(w) }; };
+  const start = (what: What) => (e: React.PointerEvent) => {
     if (!editable) return;
     e.stopPropagation();
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    moved.current = false;
+    onSelect?.(what);
+    if (pointers.current.size >= 2) { pinch(what); return; }
     const p = where(e);
     const at = what === "text" ? tx : layout.stickers![what];
-    drag.current = { what, dx: p.x - at.x, dy: p.y - at.y };
-    onSelect?.(what);
+    gesture.current = { kind: "drag", what, dx: p.x - at.x, dy: p.y - at.y };
+  };
+  // a second finger anywhere on the canvas pinches what is chosen
+  const down = (e: React.PointerEvent) => {
+    if (!editable) return;
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const w = gesture.current?.what ?? selected;
+    if (pointers.current.size >= 2 && w != null) pinch(w);
+  };
+  const corner = (what: What) => (e: React.PointerEvent) => {
+    e.stopPropagation();
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    const c = centre(what);
+    gesture.current = { kind: "corner", what, dist: Math.max(1, Math.hypot(e.clientX - c.x, e.clientY - c.y)), size: sizeOf(what) };
+    moved.current = false;
   };
   const move = (e: React.PointerEvent) => {
-    if (!drag.current || !onLayout) return;
-    const p = where(e);
-    const x = Math.min(0.98, Math.max(0.02, p.x - drag.current.dx));
-    const y = Math.min(0.98, Math.max(0.02, p.y - drag.current.dy));
-    if (drag.current.what === "text") onLayout({ ...layout, text: { ...tx, x, y } });
-    else onLayout({ ...layout, stickers: layout.stickers!.map((s, i) => (i === drag.current!.what ? { ...s, x, y } : s)) });
+    if (pointers.current.has(e.pointerId)) pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const g = gesture.current;
+    if (!g || !onLayout) return;
+    moved.current = true;
+    if (g.kind === "drag") {
+      if (pointers.current.size > 1) return;
+      const p = where(e);
+      const x = Math.min(0.98, Math.max(0.02, p.x - g.dx));
+      const y = Math.min(0.98, Math.max(0.02, p.y - g.dy));
+      if (g.what === "text") onLayout({ ...layout, text: { ...tx, x, y } });
+      else onLayout({ ...layout, stickers: layout.stickers!.map((st, i) => (i === g.what ? { ...st, x, y } : st)) });
+    } else if (g.kind === "pinch") {
+      if (pointers.current.size >= 2) setSize(g.what, g.size * spread() / g.dist);
+    } else {
+      const c = centre(g.what);
+      setSize(g.what, g.size * Math.hypot(e.clientX - c.x, e.clientY - c.y) / g.dist);
+    }
   };
-  const end = () => { drag.current = null; };
+  const end = (e: React.PointerEvent) => {
+    pointers.current.delete(e.pointerId);
+    const g = gesture.current;
+    if (!pointers.current.size || (g?.kind === "pinch" && pointers.current.size < 2)) gesture.current = null;
+  };
   const textStyle: React.CSSProperties = {
     left: `${tx.x * 100}%`, top: `${tx.y * 100}%`, fontSize: `calc(${tx.size} * 100cqw / 360)`, textAlign: tx.align,
     color: tx.bg === "solid" ? contrast(tx.color) : tx.color,
@@ -66,7 +130,8 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
   };
   return (
     <div ref={box} className={"stcanvas" + (editable ? " edit" : "")} style={kind === "text" ? { background: bg || "#7c3aed" } : undefined}
-      onPointerMove={move} onPointerUp={end} onPointerCancel={end} onClick={() => editable && onSelect?.(null)}>
+      onPointerDown={down} onPointerMove={move} onPointerUp={end} onPointerCancel={end}
+      onClick={() => { if (editable && !moved.current) onSelect?.(null); moved.current = false; }}>
       {kind === "photo" && mediaUrl ? <img src={mediaUrl} alt="" draggable={false} style={{ filter: filterCss(layout.filter) }} /> : null}
       {kind === "video" && mediaUrl ? (
         <video ref={videoRef} src={mediaUrl} autoPlay loop={editable} muted={muted ?? editable} playsInline style={{ filter: filterCss(layout.filter) }}
@@ -74,11 +139,13 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
       ) : null}
       {text ? (
         <div className={`sttxt f-${tx.font}${selected === "text" ? " sel" : ""}${tx.bg !== "none" ? " boxed" : ""}`} style={textStyle}
-          onPointerDown={start("text")} onClick={(e) => e.stopPropagation()}>{text}</div>
+          onPointerDown={start("text")} onClick={(e) => e.stopPropagation()}>{text}
+          {editable && selected === "text" ? <span className="sthandle" onPointerDown={corner("text")} onClick={(e) => e.stopPropagation()} aria-hidden="true" /> : null}</div>
       ) : null}
       {(layout.stickers || []).map((s, i) => (
         <div key={i} className={"ststicker" + (selected === i ? " sel" : "")} style={{ left: `${s.x * 100}%`, top: `${s.y * 100}%`, fontSize: `calc(${s.size} * 100cqw / 360)` }}
-          onPointerDown={start(i)} onClick={(e) => e.stopPropagation()}>{s.e}</div>
+          onPointerDown={start(i)} onClick={(e) => e.stopPropagation()}>{s.e}
+          {editable && selected === i ? <span className="sthandle" onPointerDown={corner(i)} onClick={(e) => e.stopPropagation()} aria-hidden="true" /> : null}</div>
       ))}
     </div>
   );

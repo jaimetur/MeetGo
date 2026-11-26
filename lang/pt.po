@@ -5302,6 +5302,30 @@ msgstr "Anos 2010"
 msgid "ui_hits_20s"
 msgstr "Anos 2020"
 
+msgid "ui_sticker_faces"
+msgstr "Caras"
+
+msgid "ui_sticker_love"
+msgstr "Amor"
+
+msgid "ui_sticker_party"
+msgstr "Festa"
+
+msgid "ui_sticker_food"
+msgstr "Comida"
+
+msgid "ui_sticker_sport"
+msgstr "Desporto"
+
+msgid "ui_sticker_nature"
+msgstr "Natureza"
+
+msgid "ui_sticker_travel"
+msgstr "Viagens"
+
+msgid "ui_sticker_symbols"
+msgstr "Símbolos"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "A administração irá revê-la; entretanto, a sua comunidade aparecerá em «Outras»."
 
