@@ -5,6 +5,12 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  co_person: "1 persona",
+  co_people_n: "{n} personas",
+  co_zone: "1 zona",
+  co_zones_n: "{n} zonas",
+  co_band: "1 franja de edad",
+  co_bands_n: "{n} franjas de edad",
   cg_translate: "Traducir los vacíos",
   cg_translating: "Traduciendo…",
   ov_active: "Personas activas hoy",
@@ -583,6 +589,12 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  co_person: "1 person",
+  co_people_n: "{n} people",
+  co_zone: "1 area",
+  co_zones_n: "{n} areas",
+  co_band: "1 age band",
+  co_bands_n: "{n} age bands",
   cg_translate: "Translate the empty ones",
   cg_translating: "Translating…",
   ov_active: "People active today",
@@ -1162,6 +1174,12 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  co_person: "1 persona",
+  co_people_n: "{n} persones",
+  co_zone: "1 zona",
+  co_zones_n: "{n} zones",
+  co_band: "1 franja d'edat",
+  co_bands_n: "{n} franges d'edat",
   cg_translate: "Tradueix els buits",
   cg_translating: "Traduint…",
   ov_active: "Persones actives avui",
@@ -1731,6 +1749,12 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  co_person: "1 Person",
+  co_people_n: "{n} Personen",
+  co_zone: "1 Gebiet",
+  co_zones_n: "{n} Gebiete",
+  co_band: "1 Altersgruppe",
+  co_bands_n: "{n} Altersgruppen",
   cg_translate: "Leere übersetzen",
   cg_translating: "Wird übersetzt…",
   ov_active: "Heute aktive Personen",
@@ -2300,6 +2324,12 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  co_person: "1 personne",
+  co_people_n: "{n} personnes",
+  co_zone: "1 zone",
+  co_zones_n: "{n} zones",
+  co_band: "1 tranche d'âge",
+  co_bands_n: "{n} tranches d'âge",
   cg_translate: "Traduire les vides",
   cg_translating: "Traduction…",
   ov_active: "Personnes actives aujourd'hui",
@@ -2869,6 +2899,12 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  co_person: "1 persona",
+  co_people_n: "{n} persone",
+  co_zone: "1 zona",
+  co_zones_n: "{n} zone",
+  co_band: "1 fascia d'età",
+  co_bands_n: "{n} fasce d'età",
   cg_translate: "Traduci i vuoti",
   cg_translating: "Traduzione…",
   ov_active: "Persone attive oggi",
@@ -3438,6 +3474,12 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  co_person: "1 pessoa",
+  co_people_n: "{n} pessoas",
+  co_zone: "1 zona",
+  co_zones_n: "{n} zonas",
+  co_band: "1 faixa etária",
+  co_bands_n: "{n} faixas etárias",
   cg_translate: "Traduzir os vazios",
   cg_translating: "A traduzir…",
   ov_active: "Pessoas ativas hoje",
@@ -4007,6 +4049,12 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  co_person: "1 persoon",
+  co_people_n: "{n} mensen",
+  co_zone: "1 gebied",
+  co_zones_n: "{n} gebieden",
+  co_band: "1 leeftijdsgroep",
+  co_bands_n: "{n} leeftijdsgroepen",
   cg_translate: "Lege vertalen",
   cg_translating: "Vertalen…",
   ov_active: "Vandaag actieve mensen",
@@ -4576,6 +4624,12 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  co_person: "1人",
+  co_people_n: "{n}人",
+  co_zone: "1地域",
+  co_zones_n: "{n}地域",
+  co_band: "1年齢層",
+  co_bands_n: "{n}年齢層",
   cg_translate: "空欄を翻訳",
   cg_translating: "翻訳中…",
   ov_active: "今日アクティブな人",
@@ -5145,6 +5199,12 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  co_person: "1 人",
+  co_people_n: "{n} 人",
+  co_zone: "1 个区域",
+  co_zones_n: "{n} 个区域",
+  co_band: "1 个年龄段",
+  co_bands_n: "{n} 个年龄段",
   cg_translate: "翻译空白项",
   cg_translating: "正在翻译…",
   ov_active: "今日活跃的人",

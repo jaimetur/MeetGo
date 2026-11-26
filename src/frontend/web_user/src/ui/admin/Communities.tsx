@@ -66,8 +66,10 @@ export function Communities() {
                   <span className="adm-tile-ic" style={{ color, background: `color-mix(in srgb, ${color} 15%, transparent)` }}><Icon name={hobbyIcon(i.slug, i.name)} /></span>
                   <span className="grow adm-tile-txt">
                     <b>{i.name}</b>
-                    <small>{a("co_stats2", { zones: i.zones, bands: i.age_bands ?? 0, people: i.people })}</small>
+                    <small>{a(i.people === 1 ? "co_person" : "co_people_n", { n: i.people })}</small>
                     <span className="adm-tile-badges"><Badge tone="gray">{a(`co_geo_${i.geo_level || "country"}`)}</Badge>
+                      <Badge tone="gray">{a(i.zones === 1 ? "co_zone" : "co_zones_n", { n: i.zones })}</Badge>
+                      <Badge tone="gray">{a((i.age_bands ?? 0) === 1 ? "co_band" : "co_bands_n", { n: i.age_bands ?? 0 })}</Badge>
                       {i.suggest ? <Badge tone={i.suggest === "split" ? "orange" : "blue"}>{a(i.suggest === "split" ? "co_suggest_split" : "co_suggest_join")}</Badge> : null}</span>
                     {!i.active || i.age_ranges.length ? (
                       <span className="adm-tile-badges">
