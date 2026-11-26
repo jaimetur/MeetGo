@@ -218,7 +218,9 @@ export function CommunitiesPage() {
   }, [q, load]);
 
   const update = (c: Community) => setList((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
-  const notMine = (list || []).filter((c) => !c.joined).length;
+  // private communities (by invitation only) are shown only to their members
+  const listed = (list || []).filter((c) => c.access_mode !== "invite" || c.joined);
+  const notMine = listed.filter((c) => !c.joined).length;
   // All of them, the ones I run (if any), the ones I joined (Open, blue) or the ones I have not joined (Join, green);
   // remembered on this device.
   type Show = "all" | "created" | "mine" | "new";
@@ -241,8 +243,8 @@ export function CommunitiesPage() {
   };
   // the ones I run: created by me or where I am a co-administrator
   const created = (c: Community) => c.joined && (c.role === "owner" || c.role === "admin");
-  const createdCount = (list || []).filter(created).length;
-  const mineCount = (list || []).length - notMine - createdCount;
+  const createdCount = listed.filter(created).length;
+  const mineCount = listed.length - notMine - createdCount;
   // without communities of my own, that tab is not there: its place goes back to all of them
   const view: Show = show === "created" && !createdCount ? "all" : show;
   // filters on top of the list, to narrow a long one: created in the last 30 days, with people, with plans coming,
@@ -270,12 +272,10 @@ export function CommunitiesPage() {
   const [zone, setZone] = useState("");
   const [age, setAge] = useState("");
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
-  const shown = (list || []).filter((c) => browse || view === "all"
+  const shown = listed.filter((c) => browse || view === "all"
     || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
     .filter((c) => (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo) && (!flags.people || c.member_count > 0)
       && (!flags.plans || c.upcoming_count > 0) && (!flags.online || c.online_count > 0))
-    // private communities (by invitation only) are not shown in the list; the ones I run are, under Admin
-    .filter((c) => c.access_mode !== "invite" || view === "created")
     .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
   const groups = byCategory(shown);
   // the zones and age bands of the list, for the filters beside the search
@@ -321,7 +321,7 @@ export function CommunitiesPage() {
         ) : null}
         {list && list.length && !browse ? (
           <div className={`segtabs cfilter${createdCount ? " c4" : ""}`} role="tablist" aria-label={t("ui_nav_communities")}>
-            {([["all", t("ui_cshow_all"), t("ui_cshow_all"), list.length],
+            {([["all", t("ui_cshow_all"), t("ui_cshow_all"), listed.length],
               ...(createdCount ? [["created", t("ui_cshow_created"), t("ui_cshow_created_short"), createdCount]] : []),
               ["mine", t("ui_cshow_joined"), t("ui_cshow_joined_short"), mineCount],
               ["new", t("ui_cshow_new"), t("ui_cshow_new"), notMine]] as [Show, string, string, number][]).map(([k, label, short, n]) => (
@@ -359,6 +359,7 @@ export function CommunitiesPage() {
             ))}
             {!groups.length && view === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
             {!groups.length && view === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
+            {!groups.length && view !== "mine" && view !== "new" ? <EmptyState icon="search" title={t("ui_no_results")} /> : null}
           </>
         )}
       </div>
