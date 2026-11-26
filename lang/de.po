@@ -4400,6 +4400,39 @@ msgstr "Das Layout {name} hat eigene Farben. Wähle eines seiner Designs oder be
 msgid "ui_layout_theme_keep"
 msgstr "Mein Design behalten"
 
+msgid "ui_theme_classic"
+msgstr "Klassisch"
+
+msgid "ui_theme_bw"
+msgstr "Schwarz-Weiß"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico Nacht"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Modus"
+
+msgid "ui_theme_mode_light"
+msgstr "Tag"
+
+msgid "ui_theme_mode_dark"
+msgstr "Nacht"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Designs der Layouts"
+
+msgid "ui_theme_group_more"
+msgstr "Weitere Designs"
+
 msgid "ui_theme_plum"
 msgstr "Pflaume"
 

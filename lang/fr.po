@@ -4399,6 +4399,39 @@ msgstr "La mise en page {name} a ses propres couleurs. Choisis l'un de ses thèm
 msgid "ui_layout_theme_keep"
 msgstr "Garder mon thème"
 
+msgid "ui_theme_classic"
+msgstr "Classique"
+
+msgid "ui_theme_bw"
+msgstr "Noir et blanc"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico nuit"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Mode"
+
+msgid "ui_theme_mode_light"
+msgstr "Jour"
+
+msgid "ui_theme_mode_dark"
+msgstr "Nuit"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Thèmes des mises en page"
+
+msgid "ui_theme_group_more"
+msgstr "Plus de thèmes"
+
 msgid "ui_theme_plum"
 msgstr "Prune"
 

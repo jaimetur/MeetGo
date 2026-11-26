@@ -6092,6 +6092,39 @@ msgstr "El disseny {name} té els seus propis colors. Tria un dels seus temes o 
 msgid "ui_layout_theme_keep"
 msgstr "Mantenir el meu tema"
 
+msgid "ui_theme_classic"
+msgstr "Clàssic"
+
+msgid "ui_theme_bw"
+msgstr "Blanc i negre"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico nit"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Mode"
+
+msgid "ui_theme_mode_light"
+msgstr "Dia"
+
+msgid "ui_theme_mode_dark"
+msgstr "Nit"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Temes dels dissenys"
+
+msgid "ui_theme_group_more"
+msgstr "Més temes"
+
 msgid "ui_theme_plum"
 msgstr "Pruna"
 

@@ -6092,6 +6092,39 @@ msgstr "{name}レイアウトには専用の色があります。そのテーマ
 msgid "ui_layout_theme_keep"
 msgstr "今のテーマのまま"
 
+msgid "ui_theme_classic"
+msgstr "クラシック"
+
+msgid "ui_theme_bw"
+msgstr "白黒"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico（夜）"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "モード"
+
+msgid "ui_theme_mode_light"
+msgstr "昼"
+
+msgid "ui_theme_mode_dark"
+msgstr "夜"
+
+msgid "ui_theme_mode_auto"
+msgstr "自動"
+
+msgid "ui_theme_group_designs"
+msgstr "レイアウトのテーマ"
+
+msgid "ui_theme_group_more"
+msgstr "その他のテーマ"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 

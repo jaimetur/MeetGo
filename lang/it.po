@@ -6092,6 +6092,39 @@ msgstr "Il layout {name} ha i suoi colori. Scegli uno dei suoi temi o mantieni i
 msgid "ui_layout_theme_keep"
 msgstr "Mantieni il mio tema"
 
+msgid "ui_theme_classic"
+msgstr "Classico"
+
+msgid "ui_theme_bw"
+msgstr "Bianco e nero"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico notte"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Modalità"
+
+msgid "ui_theme_mode_light"
+msgstr "Giorno"
+
+msgid "ui_theme_mode_dark"
+msgstr "Notte"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Temi dei layout"
+
+msgid "ui_theme_group_more"
+msgstr "Altri temi"
+
 msgid "ui_theme_plum"
 msgstr "Prugna"
 

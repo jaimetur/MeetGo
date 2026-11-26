@@ -6093,6 +6093,39 @@ msgstr "The {name} layout has its own colours. Pick one of its themes or keep yo
 msgid "ui_layout_theme_keep"
 msgstr "Keep my theme"
 
+msgid "ui_theme_classic"
+msgstr "Classic"
+
+msgid "ui_theme_bw"
+msgstr "Black and white"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico night"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Mode"
+
+msgid "ui_theme_mode_light"
+msgstr "Day"
+
+msgid "ui_theme_mode_dark"
+msgstr "Night"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Themes of the layouts"
+
+msgid "ui_theme_group_more"
+msgstr "More themes"
+
 msgid "ui_theme_plum"
 msgstr "Plum"
 

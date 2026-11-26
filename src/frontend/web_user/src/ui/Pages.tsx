@@ -7,7 +7,7 @@ import { chatPath, communityPath, navigate, queryParam, useRoute } from "../rout
 import { loadBlocks, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
-import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
+import { CHAT_SIZES, DESIGN_FAMILIES, THEMES, THEME_FAMILIES, type ThemeChoice, type ThemeMode, applyChatSize, readThemeChoice, saveThemeChoice, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
 import { AboutModal, Avatar, Icon, LAYOUTS, Modal, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
@@ -259,13 +259,7 @@ export function AccountPage() {
   useEffect(() => {
     webPushSubscribed().then((on) => setPushState((s) => (s === "denied" ? s : on ? "on" : "off"))).catch(() => undefined);
   }, []);
-  const [theme, setTheme] = useState(() => {
-    try {
-      return localStorage.getItem("theme") || "system";
-    } catch {
-      return "system";
-    }
-  });
+  const [theme, setTheme] = useState<ThemeChoice>(readThemeChoice);
   const [lang, setLangState] = useState(getLang());
   // The tab is in the address (?section=…): the avatar's menu opens My profile or Settings, also from this page.
   type Section = "profile" | "interests" | "notifications" | "plan" | "settings";
@@ -349,14 +343,9 @@ export function AccountPage() {
     toast(ok ? t("ui_push_on") : denied ? t("ui_push_denied") : t("ui_push_failed"), ok ? "info" : "error");
   }
 
-  function changeTheme(value: string) {
+  function changeTheme(value: ThemeChoice) {
     setTheme(value);
-    try {
-      localStorage.setItem("theme", value);
-    } catch {
-      /* per-device preference */
-    }
-    applyTheme(value);
+    saveThemeChoice(value);
   }
   function changeLang(value: string) {
     setLang(value);
@@ -601,25 +590,37 @@ const themeMini = (th: (typeof THEMES)[string]) => (
     </span>
 );
 
-function ThemePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+/** One swatch per theme (its day and night versions), the seven of the designs first, and a Day / Night / Auto switch. */
+function ThemePicker({ value, onChange }: { value: ThemeChoice; onChange: (v: ThemeChoice) => void }) {
   const mini = themeMini;
-  const swatch = (id: string) => (
-    <button key={id} type="button" className={"themesw" + (value === id ? " on" : "")} aria-pressed={value === id} onClick={() => onChange(id)}>
-      <span className="themesw-prev">{mini(THEMES[id])}</span>
-      <span className="themesw-name">{t(THEMES[id].label)}</span>
-    </button>
-  );
-  const ids = Object.keys(THEMES);
-  return (
-    <div className="themepick">
-      <button type="button" className={"themesw sys" + (value === "system" ? " on" : "")} aria-pressed={value === "system"} onClick={() => onChange("system")}>
-        <span className="themesw-prev split"><span className="half">{mini(THEMES.light)}</span><span className="half">{mini(THEMES.dark)}</span></span>
-        <span className="themesw-name">{t("ui_theme_system")}</span>
+  const modes: [ThemeMode, string, string][] = [["light", "sun", "ui_theme_mode_light"], ["dark", "moon", "ui_theme_mode_dark"], ["auto", "monitor", "ui_theme_mode_auto"]];
+  const swatch = (key: string) => {
+    const f = THEME_FAMILIES[key];
+    return (
+      <button key={key} id={`theme-${key}`} type="button" className={"themesw" + (value.family === key ? " on" : "")} aria-pressed={value.family === key}
+        onClick={() => onChange({ ...value, family: key })}>
+        {value.mode === "auto"
+          ? <span className="themesw-prev split"><span className="half">{mini(THEMES[f.light])}</span><span className="half">{mini(THEMES[f.dark])}</span></span>
+          : <span className="themesw-prev">{mini(THEMES[value.mode === "dark" ? f.dark : f.light])}</span>}
+        <span className="themesw-name">{t(f.label)}</span>
       </button>
-      <div className="themegroup">{t("ui_theme_light_group")}</div>
-      {ids.filter((id) => !THEMES[id].dark).map(swatch)}
-      <div className="themegroup">{t("ui_theme_dark_group")}</div>
-      {ids.filter((id) => THEMES[id].dark).map(swatch)}
+    );
+  };
+  const others = Object.keys(THEME_FAMILIES).filter((k) => !DESIGN_FAMILIES.includes(k));
+  return (
+    <div className="stack" style={{ gap: 10 }}>
+      <div className="modepick" role="radiogroup" aria-label={t("ui_theme_mode")}>
+        {modes.map(([m, icon, label]) => (
+          <button key={m} id={`theme-mode-${m}`} type="button" role="radio" aria-checked={value.mode === m} className={value.mode === m ? "on" : ""}
+            onClick={() => onChange({ ...value, mode: m })}><Icon name={icon} size="sm" />{t(label)}</button>
+        ))}
+      </div>
+      <div className="themepick">
+        <div className="themegroup">{t("ui_theme_group_designs")}</div>
+        {DESIGN_FAMILIES.map(swatch)}
+        <div className="themegroup">{t("ui_theme_group_more")}</div>
+        {others.map(swatch)}
+      </div>
     </div>
   );
 }
@@ -812,13 +813,10 @@ function AboutButton() {
 }
 
 /** How the list of communities looks (this device): the cards as they were or one of the five styles. */
-/** Each design's own themes, light and night: choosing the design offers them. */
-const LAYOUT_THEMES: Record<Layout, [string, string]> = {
-  actual: ["pastel", "pasteldark"], conversa: ["conversa", "conversadark"], momentos: ["momentos", "momentosdark"],
-  muro: ["muro", "murodark"], chispa: ["chispa", "chispadark"], quedadas: ["quedadas", "quedadasdark"],
-};
+/** Each design's own theme (with its day and night versions): choosing the design offers it. */
+const LAYOUT_THEMES: Record<Layout, string> = { actual: "meetgo", conversa: "conversa", momentos: "momentos", muro: "muro", chispa: "chispa", quedadas: "quedadas", mosaico: "mosaico" };
 
-function LayoutPicker({ theme, onTheme }: { theme: string; onTheme: (v: string) => void }) {
+function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: ThemeChoice) => void }) {
   const [value, setValue] = useState<Layout>(getLayout);
   const [offer, setOffer] = useState<Layout | null>(null);
   const pick = (v: Layout) => {
@@ -828,7 +826,7 @@ function LayoutPicker({ theme, onTheme }: { theme: string; onTheme: (v: string) 
     } catch {
       /* per-device preference */
     }
-    if (!LAYOUT_THEMES[v].includes(theme)) setOffer(v);
+    if (LAYOUT_THEMES[v] !== theme.family) setOffer(v);
   };
   return (
     <div className="fld setfld layoutfld">{t("ui_layout")}
@@ -846,12 +844,15 @@ function LayoutPicker({ theme, onTheme }: { theme: string; onTheme: (v: string) 
           footer={<button className="btn" onClick={() => setOffer(null)}>{t("ui_layout_theme_keep")}</button>}>
           <p className="muted" style={{ marginTop: 0 }}>{t("ui_layout_theme_body", { name: t("ui_layout_" + offer) })}</p>
           <div className="themepick two">
-            {LAYOUT_THEMES[offer].map((id) => (
-              <button key={id} id={`layout-theme-${id}`} type="button" className="themesw" onClick={() => { onTheme(id); setOffer(null); }}>
-                <span className="themesw-prev">{themeMini(THEMES[id])}</span>
-                <span className="themesw-name">{t(THEMES[id].label)}</span>
-              </button>
-            ))}
+            {(["light", "dark"] as const).map((m) => {
+              const id = THEME_FAMILIES[LAYOUT_THEMES[offer]][m];
+              return (
+                <button key={id} id={`layout-theme-${m}`} type="button" className="themesw" onClick={() => { onTheme({ family: LAYOUT_THEMES[offer], mode: m }); setOffer(null); }}>
+                  <span className="themesw-prev">{themeMini(THEMES[id])}</span>
+                  <span className="themesw-name">{t(THEMES[id].label)}</span>
+                </button>
+              );
+            })}
           </div>
         </Modal>
       ) : null}

@@ -6093,6 +6093,39 @@ msgstr "El diseño {name} tiene sus propios colores. Elige uno de sus temas o ma
 msgid "ui_layout_theme_keep"
 msgstr "Mantener mi tema"
 
+msgid "ui_theme_classic"
+msgstr "Clásico"
+
+msgid "ui_theme_bw"
+msgstr "Blanco y negro"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico noche"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Modo"
+
+msgid "ui_theme_mode_light"
+msgstr "Día"
+
+msgid "ui_theme_mode_dark"
+msgstr "Noche"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Temas de los diseños"
+
+msgid "ui_theme_group_more"
+msgstr "Más temas"
+
 msgid "ui_theme_plum"
 msgstr "Ciruela"
 

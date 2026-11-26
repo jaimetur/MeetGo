@@ -57,6 +57,9 @@ const PATHS: Record<string, string> = {
   back: "m15 5-7 7 7 7",
   more: "M12 5h.01M12 12h.01M12 19h.01",
   x: "M6 6l12 12M18 6 6 18",
+  sun: "M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4",
+  moon: "M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z",
+  monitor: "M4 4h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM8 20h8M12 16v4",
   shield: "M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6zM9 12l2 2 4-4",
   check2: "m2 13 4 4 8-9M10 16l1 1 9-10",
   check: "m5 12 5 5 9-10",
@@ -339,7 +342,7 @@ export function communityCover(slug: string | null | undefined, seed: string | n
 }
 
 /** How Home, Chats and Communities are laid out (Settings → Design, this device): the cards as they were, or one of five styles. */
-export const LAYOUTS = ["actual", "conversa", "momentos", "muro", "chispa", "quedadas"] as const;
+export const LAYOUTS = ["actual", "conversa", "momentos", "muro", "chispa", "quedadas", "mosaico"] as const;
 export type Layout = (typeof LAYOUTS)[number];
 export function getLayout(): Layout {
   try {

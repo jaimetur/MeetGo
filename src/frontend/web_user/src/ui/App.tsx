@@ -50,6 +50,11 @@ export const THEMES: Record<string, { dark: boolean; label: string; bg: string; 
   forest: { dark: true, label: "ui_theme_forest", bg: "#0b1712", panel: "#0f1f18", accent: "#2fbf71", accent2: "#3dd6a3" },
   prodark: { dark: true, label: "ui_theme_prodark", bg: "#0b0f17", panel: "#121826", accent: "#4c8dff", accent2: "#4c8dff" },
   plum: { dark: true, label: "ui_theme_plum", bg: "#150e1e", panel: "#1d1429", accent: "#a66cff", accent2: "#e070d8" },
+  mosaico: { dark: false, label: "ui_theme_mosaico", bg: "#f7f7f5", panel: "#ffffff", accent: "#0f9d8f", accent2: "#12b5a3" },
+  mosaicodark: { dark: true, label: "ui_theme_mosaicodark", bg: "#0d1412", panel: "#151d1b", accent: "#2cc4b3", accent2: "#2cc4b3" },
+  sanddark: { dark: true, label: "ui_theme_sand", bg: "#17120c", panel: "#201911", accent: "#d9893a", accent2: "#e6a456" },
+  peachdark: { dark: true, label: "ui_theme_peach", bg: "#1a0f0c", panel: "#24140f", accent: "#f07152", accent2: "#f59a74" },
+  paper: { dark: false, label: "ui_theme_bw", bg: "#ffffff", panel: "#ffffff", accent: "#1670e0", accent2: "#0a96cc" },
 };
 
 /** Size of the chat's text (this device): small (the earlier size), normal or large. */
@@ -66,16 +71,60 @@ export function applyChatSize(size?: string) {
   document.documentElement.dataset.chatsize = (CHAT_SIZES as readonly string[]).includes(value) ? value : "normal";
 }
 
-export function applyTheme(theme?: string) {
-  let value = theme;
-  if (!value) {
-    try {
-      value = localStorage.getItem("theme") || "system";
-    } catch {
-      value = "system";
+/** Each theme in its two versions, day and night: Settings shows one swatch per theme and a Day / Night / Auto switch.
+ *  The first seven go with the seven designs (Settings → Design). */
+export const THEME_FAMILIES: Record<string, { label: string; light: string; dark: string }> = {
+  meetgo: { label: "ui_theme_pastel", light: "pastel", dark: "pasteldark" },
+  conversa: { label: "ui_theme_conversa", light: "conversa", dark: "conversadark" },
+  momentos: { label: "ui_theme_momentos", light: "momentos", dark: "momentosdark" },
+  muro: { label: "ui_theme_muro", light: "muro", dark: "murodark" },
+  chispa: { label: "ui_theme_chispa", light: "chispa", dark: "chispadark" },
+  quedadas: { label: "ui_theme_quedadas", light: "quedadas", dark: "quedadasdark" },
+  mosaico: { label: "ui_theme_mosaico", light: "mosaico", dark: "mosaicodark" },
+  classic: { label: "ui_theme_classic", light: "light", dark: "dark" },
+  sober: { label: "ui_theme_pro", light: "pro", dark: "prodark" },
+  mint: { label: "ui_theme_mint", light: "mint", dark: "forest" },
+  lavender: { label: "ui_theme_lavender", light: "lavender", dark: "plum" },
+  sand: { label: "ui_theme_sand", light: "sand", dark: "sanddark" },
+  peach: { label: "ui_theme_peach", light: "peach", dark: "peachdark" },
+  bw: { label: "ui_theme_bw", light: "paper", dark: "oled" },
+};
+export const DESIGN_FAMILIES = ["meetgo", "conversa", "momentos", "muro", "chispa", "quedadas", "mosaico"];
+export type ThemeMode = "light" | "dark" | "auto";
+export type ThemeChoice = { family: string; mode: ThemeMode };
+
+/** The theme chosen on this device; one saved the earlier way (a single theme) becomes its family and mode. */
+export function readThemeChoice(): ThemeChoice {
+  try {
+    const family = localStorage.getItem("themeFamily");
+    const mode = localStorage.getItem("themeMode") as ThemeMode;
+    if (family && THEME_FAMILIES[family]) return { family, mode: mode === "light" || mode === "dark" ? mode : "auto" };
+    // Cielo is no longer offered: it becomes Classic by day
+    const old = localStorage.getItem("theme") === "sky" ? "light" : localStorage.getItem("theme");
+    for (const [key, f] of Object.entries(THEME_FAMILIES)) {
+      if (old === f.light) return { family: key, mode: "light" };
+      if (old === f.dark) return { family: key, mode: "dark" };
     }
+  } catch {
+    /* per-device preference */
   }
-  if (value === "system" || !THEMES[value]) value = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  return { family: "classic", mode: "auto" };
+}
+
+export function saveThemeChoice(choice: ThemeChoice) {
+  try {
+    localStorage.setItem("themeFamily", choice.family);
+    localStorage.setItem("themeMode", choice.mode);
+  } catch {
+    /* per-device preference */
+  }
+  applyTheme(choice);
+}
+
+export function applyTheme(choice: ThemeChoice = readThemeChoice()) {
+  const family = THEME_FAMILIES[choice.family] || THEME_FAMILIES.classic;
+  const night = choice.mode === "auto" ? !window.matchMedia("(prefers-color-scheme: light)").matches : choice.mode === "dark";
+  const value = night ? family.dark : family.light;
   const root = document.documentElement;
   root.dataset.theme = THEMES[value].dark ? "dark" : "light";
   root.dataset.palette = value;
@@ -108,6 +157,9 @@ export function signOut() {
   resetState();
   navigate("/", true);
 }
+
+/** The chat I had open, while the app stays open: Chats opens on it again; going back to the list forgets it. */
+const chatMemory = { id: null as number | null };
 
 /** My name in the menu: first name and first surname, or the surname's initial when it does not fit. */
 function MyName({ me }: { me: Me }) {
@@ -147,7 +199,7 @@ export default function App() {
     applyTheme();
     applyChatSize();
     const mq = window.matchMedia("(prefers-color-scheme: light)");
-    const onChange = () => applyTheme();
+    const onChange = () => applyTheme();  // Auto follows the device
     mq.addEventListener?.("change", onChange);
     setApiHandlers({ unauthorized: signOut, paymentRequired: () => setState({ paywall: true }) });
     (async () => {
@@ -301,8 +353,15 @@ function Shell() {
 
   // Which tab is lit for the current screen.
   const current = ({ chat: "chats", post: "home", feedpost: "home", wall: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;
-  // my account opens on the tab I was on in this session
-  const go = (name: string) => navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
+  useEffect(() => {
+    if (route.name === "chat") chatMemory.id = route.id;
+    else if (route.name === "chats") chatMemory.id = null;
+  }, [route]);
+  // my account opens on the tab I was on in this session, and Chats on the chat I had open
+  const go = (name: string) => {
+    if (name === "chats" && chatMemory.id && getState().conversations[chatMemory.id]) return navigate(chatPath(chatMemory.id));
+    navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
+  };
 
   const menu = [
     { name: "home", icon: "home", label: t("ui_nav_home"), badge: 0 },

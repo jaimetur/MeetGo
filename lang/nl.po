@@ -6092,6 +6092,39 @@ msgstr "De indeling {name} heeft eigen kleuren. Kies een van de thema's of houd 
 msgid "ui_layout_theme_keep"
 msgstr "Mijn thema houden"
 
+msgid "ui_theme_classic"
+msgstr "Klassiek"
+
+msgid "ui_theme_bw"
+msgstr "Zwart-wit"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico nacht"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "Modus"
+
+msgid "ui_theme_mode_light"
+msgstr "Dag"
+
+msgid "ui_theme_mode_dark"
+msgstr "Nacht"
+
+msgid "ui_theme_mode_auto"
+msgstr "Auto"
+
+msgid "ui_theme_group_designs"
+msgstr "Thema's van de indelingen"
+
+msgid "ui_theme_group_more"
+msgstr "Meer thema's"
+
 msgid "ui_theme_plum"
 msgstr "Pruim"
 

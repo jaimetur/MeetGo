@@ -6092,6 +6092,39 @@ msgstr "{name}布局有自己的颜色。选择它的一个主题，或保留你
 msgid "ui_layout_theme_keep"
 msgstr "保留我的主题"
 
+msgid "ui_theme_classic"
+msgstr "经典"
+
+msgid "ui_theme_bw"
+msgstr "黑白"
+
+msgid "ui_theme_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mosaicodark"
+msgstr "Mosaico 夜间"
+
+msgid "ui_layout_mosaico"
+msgstr "Mosaico"
+
+msgid "ui_theme_mode"
+msgstr "模式"
+
+msgid "ui_theme_mode_light"
+msgstr "白天"
+
+msgid "ui_theme_mode_dark"
+msgstr "夜间"
+
+msgid "ui_theme_mode_auto"
+msgstr "自动"
+
+msgid "ui_theme_group_designs"
+msgstr "布局主题"
+
+msgid "ui_theme_group_more"
+msgstr "更多主题"
+
 msgid "ui_theme_plum"
 msgstr "梅紫"
 

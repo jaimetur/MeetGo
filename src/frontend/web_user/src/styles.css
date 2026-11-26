@@ -1192,6 +1192,24 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   --blue: #ff6b6b; --cyan: #ff6b6b; --teal: #ff6b6b; --green: #4ccf8f; --sel: #3a2320; --quote: rgba(255, 107, 107, 0.08); --acc-soft: #3d2422; --card-shadow: none; }
 :root:is([data-palette="quedadas"], [data-palette="quedadasdark"]) .ccard { border-radius: 16px; }
 
+/* night versions of Arena and Melocotón, the day one of Blanco y negro (its night is Negro OLED), and Mosaico */
+:root[data-palette="sanddark"] { --bg: #17120c; --rail: #110d08; --panel: #201911; --panel2: #2c2318; --raise: #362b1e; --bubble: #2c2318;
+  --blue: #d9893a; --cyan: #e6a456; --sel: rgba(217, 137, 58, 0.16); --quote: rgba(217, 137, 58, 0.08); }
+:root[data-palette="peachdark"] { --bg: #1a0f0c; --rail: #140b09; --panel: #24140f; --panel2: #321d16; --raise: #3b231b; --bubble: #321d16;
+  --blue: #f07152; --cyan: #f59a74; --sel: rgba(240, 113, 82, 0.16); --quote: rgba(240, 113, 82, 0.08); }
+:root[data-palette="paper"] { --bg: #ffffff; --rail: #ffffff; --panel: #ffffff; --panel2: #f2f2f2; --raise: #ffffff; --bubble: #f2f2f2;
+  --line: rgba(0, 0, 0, 0.1); --line2: rgba(0, 0, 0, 0.18); --fg: #111111; --strong: #000000; --muted: #666666; }
+:root[data-palette="mosaico"] { --bg: #f7f7f5; --rail: #ffffff; --panel: #ffffff; --panel2: #efefec; --raise: #ffffff; --bubble: #ffffff;
+  --line: #e6e6e1; --line2: #d6d6cf; --fg: #1f2421; --strong: #0f1311; --muted: #6b716d;
+  --blue: #0f9d8f; --cyan: #12b5a3; --teal: #12b5a3; --sel: #e3f4f2; --quote: rgba(15, 157, 143, 0.07); --card-shadow: 0 1px 3px rgba(15, 19, 17, 0.08);
+  --grad: #0f9d8f; --grad2: #0f9d8f; --grad-go: #0f9d8f; --on-go: #ffffff; }
+:root[data-palette="mosaicodark"] { --bg: #0d1412; --rail: #0d1412; --panel: #151d1b; --panel2: #1e2926; --raise: #24302d; --bubble: #1e2926;
+  --line: #24302d; --line2: #33423e; --fg: #e5ece9; --strong: #ffffff; --muted: #8fa19b;
+  --blue: #2cc4b3; --cyan: #2cc4b3; --teal: #2cc4b3; --sel: #173430; --quote: rgba(44, 196, 179, 0.08); --card-shadow: none;
+  --grad: #2cc4b3; --grad2: #2cc4b3; --grad-go: #2cc4b3; --on-go: #062b27; }
+:root:is([data-palette="mosaico"], [data-palette="mosaicodark"]) .ccard { border-radius: 16px; }
+:root:is([data-palette="mosaico"], [data-palette="mosaicodark"]) .btn.go { box-shadow: none; }
+
 /* the theme swatches in Settings */
 .themefld { display: flex; flex-direction: column; gap: 8px; grid-column: 1 / -1; }
 .themepick { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
@@ -2138,6 +2156,8 @@ button.fwho-row:hover { background: var(--panel2); }
 .lp-muro .lp-prev { grid-template-columns: repeat(3, 1fr); } .lp-muro .lp-prev i { box-shadow: inset 0 14px 0 color-mix(in srgb, var(--blue) 45%, transparent); }
 .lp-chispa .lp-prev { grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr 1fr; } .lp-chispa .lp-prev i:first-child { grid-row: 1 / -1; background: linear-gradient(160deg, #fd267a, #ff7854); opacity: .7; } .lp-chispa .lp-prev i:last-child { display: none; }
 .lp-quedadas .lp-prev { grid-template-columns: repeat(3, 1fr); grid-template-rows: 1.3fr 1fr; } .lp-quedadas .lp-prev i:last-child { grid-column: 1 / -1; }
+.lp-mosaico .lp-prev { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: repeat(3, 1fr); }
+.lp-mosaico .lp-prev i:nth-child(1) { grid-row: 1 / 3; } .lp-mosaico .lp-prev i:nth-child(2) { grid-row: 1 / 2; } .lp-mosaico .lp-prev i:nth-child(3) { grid-row: 1 / 4; } .lp-mosaico .lp-prev i:nth-child(4) { grid-row: 2 / 4; grid-column: 2; }
 
 /* covers: Momentos, Muro and Chispa show a band with the hobby on top of each card */
 :is(.clay-momentos, .clay-muro, .clay-chispa) .ccover2 { display: grid; place-items: center; height: 130px; color: rgba(255, 255, 255, 0.92); flex: none; }
@@ -2248,3 +2268,23 @@ button.fwho-row:hover { background: var(--panel2); }
 .dnav .di .myname { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .themepick.two { grid-template-columns: 1fr 1fr; }
 .themepick.two { grid-template-columns: 1fr 1fr; }
+
+/* ---- Mosaico: a wall of cards of different heights, in columns (Communities, Home), and rounded tiles in Chats ---- */
+.clay-mosaico .cgrid, .clay-mosaico .plist2 { display: block !important; columns: 3 230px; column-gap: 14px; }
+.clay-mosaico .ccard, .clay-mosaico .pcard { break-inside: avoid; margin-bottom: 14px; display: flex; width: 100%; }
+.clay-mosaico .pcard { display: block; }
+.clay-mosaico .ccover2 { display: grid; place-items: center; height: 150px; color: rgba(255, 255, 255, 0.92); flex: none; }
+.clay-mosaico .ccard:nth-child(3n + 2) .ccover2 { height: 100px; }
+.clay-mosaico .ccard:nth-child(3n) .ccover2 { height: 200px; }
+.clay-mosaico .ccover2 .ic { width: 52px; height: 52px; stroke-width: 1.3; }
+.clay-mosaico .cwm { display: none; }
+.clay-mosaico .ccard:has(.cmarks) .cbody { padding-top: 16px; }
+.clay-mosaico .pcard:nth-child(3n + 2) .pcover { height: 90px; }
+.clay-mosaico .pcard:nth-child(3n) .pcover { height: 190px; }
+.list.clay-mosaico .crow { border-radius: 14px; margin: 4px 8px; width: calc(100% - 16px); padding: 10px 12px; background: var(--panel2); }
+.list.clay-mosaico .crow.unr { background: color-mix(in srgb, var(--blue) 12%, var(--panel)); }
+.list.clay-mosaico .crow.sel { background: var(--sel); }
+.modepick { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--panel2); align-self: flex-start; }
+.modepick button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 9px; font-weight: 600; font-size: 13.5px; color: var(--muted); }
+.modepick button.on { background: var(--panel); color: var(--strong); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+@media (min-width: 1180px) { .setbox .layoutpick, .setbox .themepick:not(.two) { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; } }  /* the seven designs and their seven themes in one row each */
