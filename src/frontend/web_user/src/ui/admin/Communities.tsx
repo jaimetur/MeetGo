@@ -98,14 +98,18 @@ export function Communities() {
                     <b>{i.name}</b>
                     <small>{a(i.people === 1 ? "co_person" : "co_people_n", { n: i.people })}</small>
                     <small>{a(i.zones === 1 ? "co_zone" : "co_zones_n", { n: i.zones })} · {a(bandsOf(i).length === 1 ? "co_band" : "co_bands_n", { n: bandsOf(i).length })}</small>
+                    {/* one row each: the scope (and what to do), the zones (one line, all of them on hover), the age bands */}
                     <span className="adm-tile-badges">
                       {!i.active ? <Badge tone="gray">{a("co_off")}</Badge> : null}
                       <Badge tone="gray">{a("co_scope_badge", { scope: a(`co_geo_${i.geo_level || "country"}`) })}</Badge>
                       {i.suggest ? <Badge tone={i.suggest === "split" ? "orange" : "blue"}>{a(i.suggest === "split" ? "co_suggest_split" : "co_suggest_join")}</Badge> : null}
-                      {(i.zone_list || []).slice(0, 3).map((z) => <Badge key={z.key} tone="blue">{z.label}</Badge>)}
-                      {(i.zone_list || []).length > 3 ? <Badge tone="blue">+{(i.zone_list || []).length - 3}</Badge> : null}
-                      {bandsOf(i).map((k) => <Badge key={k} tone="teal">{bandName(k)}</Badge>)}
                     </span>
+                    {(i.zone_list || []).length ? (
+                      <small className="adm-tile-zones" title={(i.zone_list || []).map((z) => z.label).join(", ")}>
+                        <Icon name="place" size="sm" /><span>{(i.zone_list || []).map((z) => z.label).join(", ")}</span>
+                      </small>
+                    ) : null}
+                    <span className="adm-tile-badges">{bandsOf(i).map((k) => <Badge key={k} tone="teal">{bandName(k)}</Badge>)}</span>
                   </span>
                   <span className="adm-chev" aria-hidden="true">›</span>
                 </button>

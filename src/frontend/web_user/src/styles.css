@@ -1430,6 +1430,9 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-tile-txt b { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .adm-tile-txt small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .adm-tiles .adm-tile-txt small { white-space: normal; line-height: 1.35; }  /* interests: its counts, whole */
+.adm-tiles .adm-tile-txt small.adm-tile-zones { display: flex; align-items: center; gap: 4px; margin-top: 4px; white-space: nowrap; color: var(--fg); font-weight: 600; }
+.adm-tile-zones .ic { flex: none; color: var(--accent, #1a73e8); }
+.adm-tile-zones span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .adm-tile-edit { display: flex; gap: 4px; min-width: 0; }
 .adm-tile-edit .inp { min-width: 0; padding: 7px 9px; }
 .adm-tile-confirm { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12.5px; }
