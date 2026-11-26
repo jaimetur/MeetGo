@@ -494,12 +494,15 @@ export function AccountPage() {
 
       {section === "settings" ? (
         <div className="stack" style={{ gap: 14 }}>
-          <div className="box grid2">
+          {/* each setting in its own panel: design, theme, text size, language */}
+          <div className="box setbox"><LayoutPicker /></div>
+          <div className="box setbox">
             <div className="fld themefld">{t("ui_theme")}
               <ThemePicker value={theme} onChange={changeTheme} />
             </div>
-            <ChatSizePicker />
-            <LayoutPicker />
+          </div>
+          <div className="box setbox"><ChatSizePicker /></div>
+          <div className="box setbox">
             <label className="fld setfld">{t("ui_language")}
               <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value)}>
                 {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}

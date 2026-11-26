@@ -4359,10 +4359,10 @@ msgid "ui_layout"
 msgstr "Layout"
 
 msgid "ui_layout_actual"
-msgstr "Aktuell"
+msgstr "MeetGo"
 
 msgid "ui_layout_hint"
-msgstr "Wie Communities auf diesem Gerät aussehen; das Design ändert die Farben."
+msgstr "Wie Start, Chats und Communities auf diesem Gerät aussehen; das Design ändert die Farben."
 
 msgid "ui_layout_conversa"
 msgstr "Conversa"

@@ -2244,3 +2244,4 @@ button.fwho-row:hover { background: var(--panel2); }
 .list.clay-chispa .crow.unr.sel, .list.clay-chispa .crow.sel { background: var(--sel); }
 .peoplesearch { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
 .peoplesearch .inp { width: auto; max-width: 46vw; }
+.setbox .fld { color: var(--strong); }

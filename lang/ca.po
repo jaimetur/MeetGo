@@ -6051,10 +6051,10 @@ msgid "ui_layout"
 msgstr "Disseny"
 
 msgid "ui_layout_actual"
-msgstr "Actual"
+msgstr "MeetGo"
 
 msgid "ui_layout_hint"
-msgstr "Com es veuen les comunitats en aquest dispositiu; el tema canvia els colors."
+msgstr "Com es veuen Inici, Xats i Comunitats en aquest dispositiu; el tema canvia els colors."
 
 msgid "ui_layout_conversa"
 msgstr "Conversa"

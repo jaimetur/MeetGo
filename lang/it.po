@@ -6051,10 +6051,10 @@ msgid "ui_layout"
 msgstr "Layout"
 
 msgid "ui_layout_actual"
-msgstr "Attuale"
+msgstr "MeetGo"
 
 msgid "ui_layout_hint"
-msgstr "Come appaiono le community su questo dispositivo; il tema cambia i colori."
+msgstr "Come appaiono Home, Chat e Community su questo dispositivo; il tema cambia i colori."
 
 msgid "ui_layout_conversa"
 msgstr "Conversa"

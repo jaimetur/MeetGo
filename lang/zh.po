@@ -6051,10 +6051,10 @@ msgid "ui_layout"
 msgstr "布局"
 
 msgid "ui_layout_actual"
-msgstr "当前"
+msgstr "MeetGo"
 
 msgid "ui_layout_hint"
-msgstr "此设备上社区的显示方式；主题改变颜色。"
+msgstr "此设备上首页、聊天和社区的显示方式；主题改变颜色。"
 
 msgid "ui_layout_conversa"
 msgstr "Conversa"
