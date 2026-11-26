@@ -353,6 +353,11 @@ export function getLayout(): Layout {
   }
 }
 
+/** The design on the whole app (menu, shapes, buttons, lists): `data-layout` on the page, with styles.css. */
+export function applyLayout(v: Layout = getLayout()) {
+  document.documentElement.dataset.layout = v;
+}
+
 /** The community's own colour, as a CSS variable for the pastel themes' icons. */
 export function communityTint(slug: string | null | undefined, seed: string | number): React.CSSProperties {
   return { ["--cc" as string]: interestLook(slug).color || coverColor(seed) };

@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, DESIGN_FAMILIES, THEMES, THEME_FAMILIES, type ThemeChoice, type ThemeMode, applyChatSize, readThemeChoice, saveThemeChoice, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, LAYOUTS, Modal, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
+import { AboutModal, Avatar, Icon, LAYOUTS, Modal, applyLayout, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -813,6 +813,19 @@ function AboutButton() {
 }
 
 /** How the list of communities looks (this device): the cards as they were or one of the five styles. */
+/** A small drawing of each design: how its lists and cards look. */
+function LayoutMini({ k }: { k: Layout }) {
+  const card = (n: number) => Array.from({ length: n }, (_, i) => <span key={i} className="lm-card"><span className="lm-cover" /><span className="lm-ic" /><span className="lm-l" /><span className="lm-l s" /><span className="lm-btn" /></span>);
+  const row = (n: number) => Array.from({ length: n }, (_, i) => <span key={i} className="lm-row"><span className="lm-av" /><span className="lm-lines"><span className="lm-l" /><span className="lm-l s" /></span><span className="lm-dot" /></span>);
+  if (k === "momentos") return <span className="lm lm-momentos"><span className="lm-rings">{[0, 1, 2, 3].map((i) => <span key={i} className={"lm-ring" + (i < 2 ? " on" : "")} />)}</span>{card(1)}</span>;
+  if (k === "chispa") return <span className="lm lm-chispa"><span className="lm-hero"><span className="lm-l" /><span className="lm-l s" /></span><span className="lm-acts"><span /><span className="on" /><span /></span></span>;
+  if (k === "quedadas") return <span className="lm lm-quedadas"><span className="lm-plans">{[0, 1, 2].map((i) => <span key={i} className="lm-plan"><span className="lm-date" /></span>)}</span>{row(2)}</span>;
+  if (k === "mosaico") return <span className="lm lm-mosaico">{[0, 1, 2].map((c) => <span key={c} className="lm-col">{card(c === 1 ? 1 : 2)}</span>)}</span>;
+  if (k === "conversa") return <span className="lm lm-conversa">{row(4)}</span>;
+  if (k === "muro") return <span className="lm lm-muro">{card(2)}</span>;
+  return <span className="lm lm-actual">{card(4)}</span>;
+}
+
 /** Each design's own theme (with its day and night versions): choosing the design offers it. */
 const LAYOUT_THEMES: Record<Layout, string> = { actual: "meetgo", conversa: "conversa", momentos: "momentos", muro: "muro", chispa: "chispa", quedadas: "quedadas", mosaico: "mosaico" };
 
@@ -826,6 +839,7 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
     } catch {
       /* per-device preference */
     }
+    applyLayout(v);
     if (LAYOUT_THEMES[v] !== theme.family) setOffer(v);
   };
   return (
@@ -833,7 +847,7 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
       <div className="layoutpick" role="radiogroup" aria-label={t("ui_layout")}>
         {LAYOUTS.map((k) => (
           <button key={k} id={`layout-${k}`} type="button" role="radio" aria-checked={value === k} className={"lp-" + k + (value === k ? " on" : "")} onClick={() => pick(k)}>
-            <span className="lp-prev" aria-hidden="true"><i /><i /><i /><i /></span>
+            <span className="lp-prev" aria-hidden="true"><LayoutMini k={k} /></span>
             <span>{t("ui_layout_" + k)}</span>
           </button>
         ))}
@@ -843,13 +857,15 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
         <Modal title={t("ui_layout_theme_title")} onClose={() => setOffer(null)}
           footer={<button className="btn" onClick={() => setOffer(null)}>{t("ui_layout_theme_keep")}</button>}>
           <p className="muted" style={{ marginTop: 0 }}>{t("ui_layout_theme_body", { name: t("ui_layout_" + offer) })}</p>
-          <div className="themepick two">
-            {(["light", "dark"] as const).map((m) => {
-              const id = THEME_FAMILIES[LAYOUT_THEMES[offer]][m];
+          <div className="themepick three">
+            {(["light", "dark", "auto"] as const).map((m) => {
+              const f = THEME_FAMILIES[LAYOUT_THEMES[offer]];
               return (
-                <button key={id} id={`layout-theme-${m}`} type="button" className="themesw" onClick={() => { onTheme({ family: LAYOUT_THEMES[offer], mode: m }); setOffer(null); }}>
-                  <span className="themesw-prev">{themeMini(THEMES[id])}</span>
-                  <span className="themesw-name">{t(THEMES[id].label)}</span>
+                <button key={m} id={`layout-theme-${m}`} type="button" className="themesw" onClick={() => { onTheme({ family: LAYOUT_THEMES[offer], mode: m }); setOffer(null); }}>
+                  {m === "auto"
+                    ? <span className="themesw-prev split"><span className="half">{themeMini(THEMES[f.light])}</span><span className="half">{themeMini(THEMES[f.dark])}</span></span>
+                    : <span className="themesw-prev">{themeMini(THEMES[f[m]])}</span>}
+                  <span className="themesw-name">{m === "auto" ? `${t(f.label)} · ${t("ui_theme_mode_auto")}` : t(THEMES[f[m]].label)}</span>
                 </button>
               );
             })}

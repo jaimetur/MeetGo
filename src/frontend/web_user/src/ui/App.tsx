@@ -13,7 +13,7 @@ import { UpdateNotice } from "./UpdateNotice";
 import { FeedPostPage, WallPage } from "./Feed";
 import { useNoAutofill } from "../noAutofill";
 import { HomePage, PostPage, PublishPage } from "./Board";
-import { AboutModal, Avatar, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
+import { AboutModal, Avatar, Icon, InstallHint, applyLayout, Splash, Wordmark, setInterestLooks } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
 import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage, accountMemory } from "./Pages";
@@ -197,6 +197,7 @@ export default function App() {
 
   useEffect(() => {
     applyTheme();
+    applyLayout();
     applyChatSize();
     const mq = window.matchMedia("(prefers-color-scheme: light)");
     const onChange = () => applyTheme();  // Auto follows the device
