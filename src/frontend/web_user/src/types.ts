@@ -59,6 +59,7 @@ export type Conversation = {
   silenced_until: string | null;
   last_read_message_id: number;
   last_message_at: string | null;
+  last_activity_at?: string | null;  // the last message someone wrote, in the last 30 days
   slow_mode_seconds: number;
   pinned_message_id: number | null;
   plan?: { post_id: number; kind: "meetup" | "event"; community_id: number } | null;  // the chat of a plan or event

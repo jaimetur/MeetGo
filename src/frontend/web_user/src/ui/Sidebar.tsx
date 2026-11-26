@@ -81,8 +81,13 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
 
   const visible = all.filter((c) => {
     if (q && !convTitle(c).toLowerCase().includes(q.toLowerCase())) return false;
-    // active: with messages in the last 30 days (by the last message itself: without any, the list gives the creation date)
-    if (filter === "active") return !!c.last_message?.created_at && Date.now() - new Date(c.last_message.created_at).getTime() <= 30 * 86400e3;
+    // active: someone wrote in the last 30 days (automatic notices, like emptying the chat, do not count); a message
+    // that has just arrived counts too
+    if (filter === "active") {
+      const lm = c.last_message;
+      const at = lm && lm.sender_id && lm.kind !== "system" && !lm.deleted ? lm.created_at : c.last_activity_at;
+      return !!at && Date.now() - new Date(at).getTime() <= 30 * 86400e3;
+    }
     if (filter === "unread") return c.unread_count > 0;
     if (filter === "mentions") return c.mention_count > 0;
     if (filter !== "all") return kindOf(c) === filter;

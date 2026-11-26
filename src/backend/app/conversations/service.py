@@ -1,7 +1,7 @@
 """Conversations: access checks, channel membership by zone and interest, and JSON shapes."""
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from fastapi import HTTPException
 from sqlalchemy import and_, func, or_, select
@@ -266,6 +266,16 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
         .group_by(Message.conversation_id)
     )
     mentions = dict((await db.execute(mention_q)).all())
+    # active chats: the last message someone wrote in the last 30 days (automatic notices, such as emptying the chat,
+    # and what I deleted for me do not count)
+    activity = dict((await db.execute(
+        select(Message.conversation_id, func.max(Message.created_at))
+        .join(ConversationMember, and_(ConversationMember.conversation_id == Message.conversation_id,
+                                       ConversationMember.user_id == user.id))
+        .where(Message.conversation_id.in_(ids), Message.created_at >= utcnow() - timedelta(days=30),
+               Message.sender_id.is_not(None), Message.kind != "system", Message.deleted_at.is_(None),
+               Message.id > func.coalesce(ConversationMember.cleared_message_id, 0))
+        .group_by(Message.conversation_id))).all())
 
     last_ids = [c.last_message_id for _, c in rows if c.last_message_id]
     last_msgs: dict[int, Message] = {}
@@ -327,6 +337,7 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
             "member_count": counts.get(conv.id, 0),
             "unread_count": 0 if expelled else min(unread.get(conv.id, 0), 999),
             "mention_count": 0 if expelled else mentions.get(conv.id, 0),
+            "last_activity_at": iso(activity.get(conv.id)),
             "plan": ({"post_id": plans[conv.id][0], "kind": plans[conv.id][1], "community_id": plans[conv.id][2]}
                      if conv.id in plans else None),
             "last_message": {**last_message_out(last, senders.get(last.sender_id) if last else None,
