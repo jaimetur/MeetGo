@@ -290,10 +290,12 @@ export function CommunitiesPage() {
     setZone(""); setAge(""); setQ("");
   };
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
+  const fits = (c: Community) => (!flags.active || isActive(c)) && (!flags.plans || c.upcoming_count > 0) && (!flags.fresh || isFresh(c))
+    && (!zone || c.province === zone) && (!age || ageKey(c) === age);
   const shown = listed.filter((c) => browse || view === "all"
-    || (view === "created" ? created(c) : view === "mine" ? c.joined : !c.joined))
-    .filter((c) => (!flags.active || isActive(c)) && (!flags.plans || c.upcoming_count > 0) && (!flags.fresh || isFresh(c)))
-    .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
+    || (view === "created" ? created(c) : view === "mine" ? c.joined : !c.joined)).filter(fits);
+  // empty among mine because of the filters: the ones I have not joined that fit them are offered first
+  const othersFitting = view === "mine" || view === "created" ? listed.filter((c) => !c.joined && fits(c)).length : 0;
   const groups = byCategory(shown);
   // the zones and age bands of the list, for the filters beside the search
   const zones = [...new Set((list || []).map((c) => c.province).filter(Boolean))].sort((x, y) => x.localeCompare(y));
@@ -374,7 +376,9 @@ export function CommunitiesPage() {
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
               </section>
             ))}
-            {!groups.length && filtered ? <EmptyState icon="search" title={t("ui_no_results")} action={t("ui_cflags_clear")} onAction={clearFilters} /> : null}
+            {!groups.length && filtered ? (othersFitting
+              ? <EmptyState icon="search" title={t("ui_no_results")} action={t("ui_community_show_others", { n: othersFitting })} onAction={() => setShow("new")} />
+              : <EmptyState icon="search" title={t("ui_no_results")} action={t("ui_cflags_clear")} onAction={clearFilters} />) : null}
             {!groups.length && !filtered && view === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
             {!groups.length && !filtered && view === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
             {!groups.length && !filtered && view !== "mine" && view !== "new" ? <EmptyState icon="search" title={t("ui_no_results")} /> : null}
