@@ -122,7 +122,14 @@ export default function App() {
         dropQueryParams("verify_token");
       }
       const started = Date.now();
-      if (getToken()) await startSession().catch(() => setToken(""));
+      // The saved session is dropped only when the server says it is no longer valid; while it cannot answer (it is
+      // restarting, no network) the app keeps trying, and stays signed in.
+      for (let wait = 1000; getToken(); wait = Math.min(wait * 2, 5000)) {
+        try { await startSession(); break; } catch (e: any) {
+          if (e?.status === 401 || e?.status === 403) { setToken(""); break; }
+          await new Promise((r) => window.setTimeout(r, wait));
+        }
+      }
       setBooting(false);
       window.setTimeout(() => setSplash((s) => (s === "on" ? "leaving" : s)), Math.max(0, 1400 - (Date.now() - started)));
       window.setTimeout(() => {
@@ -159,6 +166,8 @@ export async function startSession() {
   const me = await api.me();
   setState({ me });
   native.setSession(API_BASE, getToken());
+  // a fresh token each time the app opens: this device stays signed in while it is used
+  api.refresh().then((r) => { if (r?.access_token && getToken()) { setToken(r.access_token); native.setSession(API_BASE, r.access_token); } }).catch(() => undefined);
   // the look given to each interest in the administration (icons, colours, categories)
   await api.interests().then(setInterestLooks).catch(() => undefined);
   await loadConversations();

@@ -101,6 +101,13 @@ async def login(payload: LoginIn, db: AsyncSession = Depends(get_db)):
     return Token(access_token=create_access_token(str(u.id)), password_temp=bool(u.password_temp))
 
 
+@router.post("/auth/refresh", response_model=Token)
+async def refresh(user: User = Depends(get_current_user)):
+    """A new token for the one in use: the app asks each time it opens, so a device stays signed in for as long as it
+    is used (until signing out on it)."""
+    return Token(access_token=create_access_token(str(user.id)), password_temp=bool(user.password_temp))
+
+
 @router.post("/auth/logout", response_model=dict)
 async def logout(user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     now = datetime.utcnow()

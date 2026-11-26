@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://redis:6379/0"
     JWT_SECRET: str = DEV_JWT_SECRET
     JWT_ALG: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 365  # renewed each time the app opens (POST /auth/refresh)
 
     # Comma-separated list of allowed browser origins. Empty in dev allows localhost origins.
     CORS_ORIGINS: str = ""

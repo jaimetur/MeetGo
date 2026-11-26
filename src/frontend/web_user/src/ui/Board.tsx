@@ -481,6 +481,9 @@ function SuggestedCommunities() {
   const myCommunities = useStore((s) => s.myCommunities);
   const [list, setList] = useState<Community[] | null>(null);
   const [interests, setInterests] = useState<Record<string, string>>({});
+  // folded or not, kept on this device
+  const [folded, setFolded] = useState(() => { try { return localStorage.getItem("home.suggest.folded") === "1"; } catch { return false; } });
+  const fold = () => setFolded((v) => { try { localStorage.setItem("home.suggest.folded", v ? "0" : "1"); } catch { /* private mode */ } return !v; });
   useEffect(() => {
     api.suggestedCommunities().then(setList).catch(() => setList([]));
     api.interests().then((l) => setInterests(Object.fromEntries(l.map((i) => [i.slug, i.name])))).catch(() => undefined);
@@ -495,9 +498,12 @@ function SuggestedCommunities() {
     );
   }
   return (
-    <section className="forme">
-      <div className="forme-head"><b>{t("ui_suggest_title")}</b><button className="linkbtn" onClick={() => navigate("/communities")}>{t("ui_post_see_all")}</button></div>
-      <div className="forme-row">
+    <section className={"forme" + (folded ? " folded" : "")}>
+      <div className="forme-head">
+        <button id="suggest-fold" className="forme-fold" aria-expanded={!folded} onClick={fold}><b>{t("ui_suggest_title")}</b><Icon name="down" size="sm" /></button>
+        <button className="linkbtn" onClick={() => navigate("/communities")}>{t("ui_post_see_all")}</button>
+      </div>
+      {folded ? null : <div className="forme-row">
         {list.map((c) => (
           <button key={c.id} className="forme-card" onClick={() => navigate(communityPath(c.id))}>
             <span className="forme-ic" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
@@ -506,7 +512,7 @@ function SuggestedCommunities() {
             <span className="forme-why">{t("ui_suggest_because", { list: (c.matches || []).map((m) => interests[m] || m).slice(0, 3).join(", ") })}</span>
           </button>
         ))}
-      </div>
+      </div>}
     </section>
   );
 }

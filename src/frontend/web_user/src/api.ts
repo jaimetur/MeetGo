@@ -136,6 +136,7 @@ export const api = {
   login: (email: string, password: string) => req<{ access_token: string; password_temp: boolean }>("/auth/login", { method: "POST", json: { email, password } }),
   register: (payload: Record<string, unknown>) => req("/auth/register", { method: "POST", json: payload }),
   logout: () => req("/auth/logout", { method: "POST" }),
+  refresh: () => req<{ access_token: string }>("/auth/refresh", { method: "POST" }),
   verifyEmail: (token: string) => req(`/auth/verify-email?token=${encodeURIComponent(token)}`),
   forgotPassword: (email: string) => req("/auth/forgot-password", { method: "POST", json: { email } }),
   resendVerification: (email: string) => req("/auth/resend-verification", { method: "POST", json: { email } }),
