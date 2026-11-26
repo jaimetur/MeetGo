@@ -582,6 +582,22 @@ class PlaySubscription(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
+class RequestLog(Base):
+    """Every call to the API (not the preflight ones), kept 30 days for the administration's Logs: who, when, what kind
+    of thing, how it went and from where."""
+    __tablename__ = "request_logs"
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    user_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)  # no foreign key: kept after deletion
+    method: Mapped[str] = mapped_column(String(8))
+    path: Mapped[str] = mapped_column(String(300))
+    status: Mapped[int] = mapped_column(Integer, index=True)
+    ms: Mapped[int] = mapped_column(Integer, default=0)
+    kind: Mapped[str] = mapped_column(String(16), index=True)
+    ip: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    agent: Mapped[str | None] = mapped_column(String(300), nullable=True)
+
+
 class EmailNotice(Base):
     """One-off automatic emails already sent (for example "your free year ends in 7 days"), so they go out once."""
     __tablename__ = "email_notices"

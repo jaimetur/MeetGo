@@ -211,6 +211,10 @@ export const api = {
   async deleteLanguage(code: string): Promise<AdminLanguage[]> {
     return await req(`/admin/languages/${encodeURIComponent(code)}`, { method: "DELETE" });
   },
+  async adminLogs(filters: Record<string, string | number | undefined>): Promise<{ rows: AdminLog[]; more: boolean }> {
+    const qs = new URLSearchParams(Object.entries(filters).filter(([, v]) => v !== undefined && v !== "").map(([k, v]) => [k, String(v)]));
+    return await req(`/admin/logs?${qs}`);
+  },
   async adminCategories(): Promise<AdminCategories> {
     return await req("/admin/categories");
   },
@@ -485,4 +489,10 @@ export type AdminCategories = {
   proposals: { id: number; name: string; created_at: string; user: { id: number; name: string } | null; community: { id: number; title: string } | null }[];
   communities: { id: number; title: string; kind: "custom"; category: string | null; province: string | null; members: number; created_at: string | null }[];
   interests: { id: number; title: string; kind: "interest"; category: string | null; slug: string }[];
+};
+
+/** A call to the API, for Administration → Logs. */
+export type AdminLog = {
+  id: number; at: string; method: string; path: string; status: number; ms: number; kind: string; ip: string | null; agent: string | null;
+  user: { id: number; name: string | null; email: string | null } | null;
 };

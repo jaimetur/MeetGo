@@ -7,7 +7,7 @@ import { api, type Plan, type UserActivity } from "../../../../web_admin/api";
 import { madridYmd, planLabel } from "../../../../web_admin/strings";
 import { toast, useStore } from "../../store";
 import { Avatar, Icon, countryOptions, fullName, regionLabel, shownName } from "../common";
-import { SectionHead } from "./AdminPage";
+import { SectionHead, goSection } from "./AdminPage";
 import { a, ago, duration, fmtDate, fmtDateTime } from "./i18n";
 import { Badge, Choice, Empty, Field, Switch } from "./kit";
 
@@ -270,6 +270,8 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
                 <div><span>{a("ud_last_login")}</span><b>{fmtDateTime(user.last_login_at)}</b></div>
                 <div><span>{a("ud_logins")}</span><b>{user.login_count ?? 0}</b></div>
               </div>
+              <button id="adm-u-logs" type="button" className="btn sm" onClick={() => { onClose(); goSection("logs", String(user.id)); }}>
+                <Icon name="clock" size="sm" />{a("lg_user_logs")}</button>
 
               <section className="adm-block">
                 <h3>{a("ud_access")}</h3>

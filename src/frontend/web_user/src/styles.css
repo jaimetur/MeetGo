@@ -1747,3 +1747,22 @@ a.btn { text-decoration: none; }
 .cg-row small { display: block; font-size: 11.5px; }
 .cg-move { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .cg-move select { max-width: 260px; }
+
+/* Administration → Logs: filters, then one row per call (time, result, method, path, kind, time taken, who) */
+.lg-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
+.lg-filters .adm-search { flex: 1 1 220px; }
+.lg-filters select.inp { flex: 0 0 auto; width: auto; height: 42px; border-radius: 12px; }
+.lg-date { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); }
+.lg-date .inp { height: 42px; border-radius: 12px; padding: 8px 10px; }
+.lg-list { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; }
+.lg-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); }
+.lg-row.open { border-color: var(--accent, #1a73e8); }
+.lg-main { display: flex; align-items: center; gap: 8px; min-width: 0; text-align: left; color: inherit; font-size: 12.5px; }
+.lg-time { font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+.lg-method { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; font-weight: 700; flex: none; }
+.lg-path { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lg-ms { color: var(--muted); font-size: 11.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lg-who { font-size: 12.5px; white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+.lg-more { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 3px; padding: 6px 2px 2px; font-size: 12px; color: var(--muted); word-break: break-all; }
+.lg-more b { color: var(--fg); margin-right: 4px; }
+@media (max-width: 640px) { .lg-main .badge:nth-of-type(2), .lg-ms { display: none; } .lg-who { max-width: 90px; } }

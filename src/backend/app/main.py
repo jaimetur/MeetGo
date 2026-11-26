@@ -53,6 +53,11 @@ async def i18n_middleware(request: Request, call_next):
     return await call_next(request)
 
 
+from app.admin import request_log  # noqa: E402
+
+app.middleware("http")(request_log.middleware)  # every call, for Administration → Logs
+
+
 for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, business, categories, admin, communities, board):
     app.include_router(module.router)
 
@@ -72,10 +77,15 @@ async def on_startup():
     await gateway.start()
     notify_email.start()
     backup_service.start_scheduler()
+    request_log.start()
 
 
 @app.on_event("shutdown")
 async def on_shutdown():
+    try:
+        await request_log.flush()  # what was still waiting to be written
+    except Exception:
+        pass
     await notify_email.stop()
     await backup_service.stop_scheduler()
     await gateway.stop()

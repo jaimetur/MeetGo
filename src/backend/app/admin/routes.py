@@ -410,6 +410,59 @@ def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
         it.tags = tags[:5]
 
 
+@router.get("/logs", response_model=dict)
+async def logs(user: str | None = None, kind: str | None = None, result: str | None = None, method: str | None = None,
+               q: str | None = None, since: datetime | None = None, until: datetime | None = None, before_id: int | None = None,
+               limit: int = 100, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """The calls to the API, newest first, filtered by person (id, name or email), kind, result (ok, 4xx, 5xx), method,
+    text in the path and dates; `before_id` for the next page."""
+    from app.core.models import RequestLog
+    query = select(RequestLog)
+    if user:
+        user = user.strip()
+        if user.isdigit():
+            query = query.where(RequestLog.user_id == int(user))
+        elif user == "-":  # no one signed in
+            query = query.where(RequestLog.user_id.is_(None))
+        else:
+            like = f"%{user.lower()}%"
+            ids = select(User.id).where(or_(func.lower(User.display_name).like(like), func.lower(User.email).like(like),
+                                            func.lower(User.first_name).like(like), func.lower(User.last_name).like(like)))
+            query = query.where(RequestLog.user_id.in_(ids))
+    if kind:
+        query = query.where(RequestLog.kind == kind)
+    if result == "ok":
+        query = query.where(RequestLog.status < 400)
+    elif result == "4xx":
+        query = query.where(RequestLog.status >= 400, RequestLog.status < 500)
+    elif result == "5xx":
+        query = query.where(RequestLog.status >= 500)
+    if method:
+        query = query.where(RequestLog.method == method.upper())
+    if q:
+        query = query.where(RequestLog.path.ilike(f"%{q.strip()}%"))
+    if since:
+        query = query.where(RequestLog.at >= since)
+    if until:
+        query = query.where(RequestLog.at <= until)
+    if before_id:
+        query = query.where(RequestLog.id < before_id)
+    limit = max(1, min(limit, 300))
+    rows = (await db.execute(query.order_by(RequestLog.id.desc()).limit(limit + 1))).scalars().all()
+    more = len(rows) > limit
+    rows = rows[:limit]
+    ids = {r.user_id for r in rows if r.user_id}
+    people = {u.id: u for u in (await db.execute(select(User).where(User.id.in_(ids)))).scalars().all()} if ids else {}
+    return {
+        "rows": [{"id": r.id, "at": r.at.isoformat(), "method": r.method, "path": r.path, "status": r.status, "ms": r.ms,
+                  "kind": r.kind, "ip": r.ip, "agent": r.agent,
+                  "user": {"id": r.user_id, "name": people[r.user_id].display_name if r.user_id in people else None,
+                           "email": people[r.user_id].email if r.user_id in people else None} if r.user_id else None}
+                 for r in rows],
+        "more": more,
+    }
+
+
 @router.get("/pending", response_model=dict)
 async def pending(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     """What waits for review in each section (moderation, categories, communities) and in all."""

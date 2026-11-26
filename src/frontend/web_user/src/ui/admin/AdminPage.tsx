@@ -16,8 +16,9 @@ import { Business } from "./Business";
 import { Settings } from "./Settings";
 import { Bots } from "./Bots";
 import { Backups } from "./Backups";
+import { Logs } from "./Logs";
 
-export type Section = "overview" | "users" | "moderation" | "communities" | "interests" | "categories" | "business" | "settings" | "backups" | "bots";
+export type Section = "overview" | "users" | "moderation" | "communities" | "interests" | "categories" | "business" | "settings" | "backups" | "bots" | "logs";
 
 const SECTIONS: [Section, string, string][] = [
   ["overview", "home", "sec_overview"],
@@ -26,6 +27,7 @@ const SECTIONS: [Section, string, string][] = [
   ["communities", "compass", "sec_communities"],
   ["categories", "layers", "sec_categories"],
   ["moderation", "flag", "sec_moderation"],
+  ["logs", "clock", "sec_logs"],
   ["business", "chart", "sec_business"],
   ["settings", "sliders", "sec_settings"],
   ["backups", "layers", "sec_backups"],
@@ -82,6 +84,7 @@ export function AdminPage() {
           {section === "overview" ? <Overview onReports={setOpenReports} /> : null}
           {section === "users" ? <Users initialFilter={filter} /> : null}
           {section === "moderation" ? <Moderation onCount={setOpenReports} /> : null}
+          {section === "logs" ? <Logs key={filter || ""} initialUser={filter} /> : null}
           {section === "communities" ? <Communities key={filter || ""} initialFilter={filter} /> : null}
           {section === "interests" ? <Interests /> : null}
           {section === "categories" ? <Categories /> : null}
