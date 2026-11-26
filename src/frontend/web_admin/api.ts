@@ -226,6 +226,9 @@ export const api = {
   async assignCategory(payload: { key: string; community_ids: number[]; interest_ids: number[] }): Promise<{ changed: number }> {
     return await req("/admin/categories/assign", { method: "POST", body: JSON.stringify(payload) });
   },
+  async translateCategory(names: Record<string, string>): Promise<{ names: Record<string, string> }> {
+    return await req("/admin/categories/translate", { method: "POST", body: JSON.stringify({ names }) });
+  },
   async approveProposal(id: number, payload: { names?: Record<string, string>; key?: string }) {
     return await req(`/admin/categories/proposals/${id}/approve`, { method: "POST", body: JSON.stringify(payload) });
   },

@@ -1725,6 +1725,7 @@ a.btn { text-decoration: none; }
 .cg-prop small { display: block; }
 .cg-bulk { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
 .cg-bulk .adm-toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+.cg-translate { display: flex; justify-content: flex-end; margin-bottom: 6px; }
 .cg-assign { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
 .cg-bulk .adm-toolbar select { max-width: 260px; }
 .cg-rows { max-height: 420px; overflow-y: auto; border: 1px solid var(--line); border-radius: 12px; }

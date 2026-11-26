@@ -87,6 +87,7 @@ const PATHS: Record<string, string> = {
   right: "m9 5 7 7-7 7",
   door: "M14 4H6v16h8M10 12h10M17 9l3 3-3 3",
   layers: "M12 3 3 8l9 5 9-5zM3 13l9 5 9-5",
+  globe: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z",
 };
 
 export function Icon({ name, size, className }: { name: string; size?: "sm"; className?: string }) {

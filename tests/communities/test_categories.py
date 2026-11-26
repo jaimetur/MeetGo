@@ -88,6 +88,9 @@ async def test_proposals_notify_admins_and_approval_translates(client, db_sessio
     assert waiting["categories"] == 1 and waiting["total"] == waiting["moderation"] + waiting["categories"] + waiting["communities"]
     assert len(events) == 1  # the administrators connected see it now
 
+    proposed = (await client.post("/admin/categories/translate", json={"names": {"es": "Opinión", "en": "Opinion"}}, headers=admin)).json()
+    assert proposed["names"]["en"] == "Opinion" and proposed["names"]["fr"] == "Opinión (fr)"  # proposed for review, typed ones kept
+    assert (await client.post("/admin/categories/translate", json={"names": {"es": "x"}}, headers=ana)).status_code == 403
     [proposal] = (await client.get("/admin/categories", headers=admin)).json()["proposals"]
     res = await client.post(f"/admin/categories/proposals/{proposal['id']}/approve", json={"names": {"es": "Opinión"}}, headers=admin)
     key = res.json()["key"]

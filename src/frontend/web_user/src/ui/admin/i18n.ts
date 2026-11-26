@@ -5,6 +5,8 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  cg_translate: "Traducir los vacíos",
+  cg_translating: "Traduciendo…",
   ov_active: "Personas activas hoy",
   ov_communities: "Comunidades activas (7 días)",
   ov_communities_sub: "{today} hoy · {total} en total",
@@ -581,6 +583,8 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  cg_translate: "Translate the empty ones",
+  cg_translating: "Translating…",
   ov_active: "People active today",
   ov_communities: "Active communities (7 days)",
   ov_communities_sub: "{today} today · {total} in all",
@@ -1158,6 +1162,8 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  cg_translate: "Tradueix els buits",
+  cg_translating: "Traduint…",
   ov_active: "Persones actives avui",
   ov_communities: "Comunitats actives (7 dies)",
   ov_communities_sub: "{today} avui · {total} en total",
@@ -1725,6 +1731,8 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  cg_translate: "Leere übersetzen",
+  cg_translating: "Wird übersetzt…",
   ov_active: "Heute aktive Personen",
   ov_communities: "Aktive Communities (7 Tage)",
   ov_communities_sub: "{today} heute · {total} insgesamt",
@@ -2292,6 +2300,8 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  cg_translate: "Traduire les vides",
+  cg_translating: "Traduction…",
   ov_active: "Personnes actives aujourd'hui",
   ov_communities: "Communautés actives (7 jours)",
   ov_communities_sub: "{today} aujourd'hui · {total} au total",
@@ -2859,6 +2869,8 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  cg_translate: "Traduci i vuoti",
+  cg_translating: "Traduzione…",
   ov_active: "Persone attive oggi",
   ov_communities: "Community attive (7 giorni)",
   ov_communities_sub: "{today} oggi · {total} in tutto",
@@ -3426,6 +3438,8 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  cg_translate: "Traduzir os vazios",
+  cg_translating: "A traduzir…",
   ov_active: "Pessoas ativas hoje",
   ov_communities: "Comunidades ativas (7 dias)",
   ov_communities_sub: "{today} hoje · {total} no total",
@@ -3993,6 +4007,8 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  cg_translate: "Lege vertalen",
+  cg_translating: "Vertalen…",
   ov_active: "Vandaag actieve mensen",
   ov_communities: "Actieve community's (7 dagen)",
   ov_communities_sub: "{today} vandaag · {total} in totaal",
@@ -4560,6 +4576,8 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  cg_translate: "空欄を翻訳",
+  cg_translating: "翻訳中…",
   ov_active: "今日アクティブな人",
   ov_communities: "アクティブなコミュニティ（7日間）",
   ov_communities_sub: "今日 {today} · 合計 {total}",
@@ -5127,6 +5145,8 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  cg_translate: "翻译空白项",
+  cg_translating: "正在翻译…",
   ov_active: "今日活跃的人",
   ov_communities: "活跃社区（7 天）",
   ov_communities_sub: "今天 {today} · 共 {total}",

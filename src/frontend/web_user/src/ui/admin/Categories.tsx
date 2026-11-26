@@ -73,8 +73,30 @@ export function Categories() {
   );
 }
 
-function NamesFields({ names, setNames, placeholder }: { names: Record<string, string>; setNames: (f: (n: Record<string, string>) => Record<string, string>) => void; placeholder?: string }) {
+function NamesFields({ names, setNames, placeholder, autoTranslate }: {
+  names: Record<string, string>; setNames: (f: (n: Record<string, string>) => Record<string, string>) => void; placeholder?: string;
+  autoTranslate?: boolean;  // propose the translations as soon as it opens (approving a proposal)
+}) {
+  const [busy, setBusy] = useState(false);
+  const empty = LANGUAGES.some(([l]) => l !== "es" && !(names[l] || "").trim());
+  // the languages still empty get the proposed translation; what was typed stays
+  const translate = (from: Record<string, string>) => {
+    if (!(from.es || "").trim()) return;
+    setBusy(true);
+    api.translateCategory(from).then((r) => setNames((n) => {
+      const out = { ...n };
+      for (const [l, v] of Object.entries(r.names)) if (!(out[l] || "").trim()) out[l] = v;
+      return out;
+    })).catch((e) => toast(e.message, "error")).finally(() => setBusy(false));
+  };
+  useEffect(() => { if (autoTranslate) translate(names); }, []);
   return (
+    <>
+    <div className="cg-translate">
+      <button id="adm-cat-translate" type="button" className="btn sm" disabled={busy || !empty || !(names.es || "").trim()} onClick={() => translate(names)}>
+        <Icon name="globe" size="sm" />{busy ? a("cg_translating") : a("cg_translate")}
+      </button>
+    </div>
     <div className="adm-grid">
       {LANGUAGES.map(([l, label]) => (
         <Field key={l} label={l === "es" ? `${label} *` : label}>
@@ -82,6 +104,7 @@ function NamesFields({ names, setNames, placeholder }: { names: Record<string, s
         </Field>
       ))}
     </div>
+    </>
   );
 }
 
@@ -146,7 +169,7 @@ function ApproveForm({ proposal, categories, onClose, onDone }: {
         <button type="button" className={mode === "new" ? "on" : ""} onClick={() => setMode("new")}>{a("cg_as_new")}</button>
         <button type="button" className={mode === "existing" ? "on" : ""} onClick={() => setMode("existing")}>{a("cg_as_existing")}</button>
       </div>
-      {mode === "new" ? <><p className="muted adm-note">{a("cg_names_hint")}</p><NamesFields names={names} setNames={setNames} /></> : (
+      {mode === "new" ? <><p className="muted adm-note">{a("cg_names_hint")}</p><NamesFields names={names} setNames={setNames} autoTranslate /></> : (
         <Field label={a("cg_existing")}>
           <select className="inp" value={key} onChange={(e) => setKey(e.target.value)}>
             {categories.map((c) => <option key={c.key} value={c.key}>{c.name}</option>)}

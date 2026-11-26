@@ -96,6 +96,12 @@ async def pending(db: AsyncSession = Depends(get_db), admin: User = Depends(requ
     return {"categories": await cats.pending_count(db)}
 
 
+@router.post("/admin/categories/translate", response_model=dict)
+async def translate(payload: CategoryIn, admin: User = Depends(require_admin)):
+    """The names proposed for the languages still empty (from the Spanish one), to review before saving."""
+    return {"names": await cats.complete_names(_names(payload.names))}
+
+
 @router.post("/admin/categories", response_model=dict)
 async def create_category(payload: CategoryIn, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     names = await cats.complete_names(_names(payload.names))
