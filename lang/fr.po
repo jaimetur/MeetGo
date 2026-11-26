@@ -5587,6 +5587,18 @@ msgstr "Aller à la communauté"
 msgid "err_language_invalid"
 msgstr "Langue non valide"
 
+msgid "ui_admin_pending_categories"
+msgstr "Catégories proposées à examiner ({n})"
+
+msgid "ui_admin_review"
+msgstr "Examiner"
+
+msgid "email_category_proposal_subject"
+msgstr "Nouvelle catégorie proposée"
+
+msgid "email_category_proposal_body"
+msgstr "Quelqu'un a proposé la catégorie «{name}». Examine-la dans Administration → Catégories."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administration l'examinera ; en attendant, votre communauté apparaîtra dans « Autres »."
 

@@ -67,7 +67,7 @@ export function Categories() {
 
       <BulkMove data={data} onDone={load} />
 
-      {open ? <CategoryForm category={open === "new" ? null : { ...open, count: counts[open.key] || 0 }} onClose={() => setOpen(null)} onSaved={() => { setOpen(null); load(); }} /> : null}
+      {open ? <CategoryForm data={data} onAssigned={load} category={open === "new" ? null : { ...open, count: counts[open.key] || 0 }} onClose={() => setOpen(null)} onSaved={() => { setOpen(null); load(); }} /> : null}
       {approving ? <ApproveForm proposal={approving} categories={data.categories} onClose={() => setApproving(null)} onDone={() => { setApproving(null); load(); }} /> : null}
     </div>
   );
@@ -85,8 +85,11 @@ function NamesFields({ names, setNames, placeholder }: { names: Record<string, s
   );
 }
 
-function CategoryForm({ category, onClose, onSaved }: { category: AdminCategory | null; onClose: () => void; onSaved: () => void }) {
+function CategoryForm({ data, category, onClose, onSaved, onAssigned }: {
+  data: AdminCategories; category: AdminCategory | null; onClose: () => void; onSaved: () => void; onAssigned: () => void;
+}) {
   const [names, setNames] = useState<Record<string, string>>(category?.names || {});
+  const [assigning, setAssigning] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [busy, setBusy] = useState(false);
   const run = (fn: () => Promise<unknown>, done: string) => {
@@ -106,6 +109,17 @@ function CategoryForm({ category, onClose, onSaved }: { category: AdminCategory 
       {confirm ? <p className="adm-red adm-note">{a("cg_delete_hint", { n: category?.count || 0 })}</p> : null}
       <p className="muted adm-note">{a("cg_names_hint")}</p>
       <NamesFields names={names} setNames={setNames} />
+      {category ? (
+        <div className="cg-assign">
+          <span className="muted grow">{a("cg_assign_hint", { n: category.count || 0 })}</span>
+          <button id="adm-cat-assign" type="button" className="btn" onClick={() => setAssigning(true)}><Icon name="plus" size="sm" />{a("cg_assign")}</button>
+        </div>
+      ) : null}
+      {assigning && category ? (
+        <Modal wide title={a("cg_assign_title", { name: category.name })} onClose={() => setAssigning(false)}>
+          <BulkMove data={data} fixedTo={category.key} onDone={() => { setAssigning(false); onAssigned(); }} />
+        </Modal>
+      ) : null}
     </Modal>,
     document.body,
   );
@@ -132,7 +146,7 @@ function ApproveForm({ proposal, categories, onClose, onDone }: {
         <button type="button" className={mode === "new" ? "on" : ""} onClick={() => setMode("new")}>{a("cg_as_new")}</button>
         <button type="button" className={mode === "existing" ? "on" : ""} onClick={() => setMode("existing")}>{a("cg_as_existing")}</button>
       </div>
-      {mode === "new" ? <NamesFields names={names} setNames={setNames} /> : (
+      {mode === "new" ? <><p className="muted adm-note">{a("cg_names_hint")}</p><NamesFields names={names} setNames={setNames} /></> : (
         <Field label={a("cg_existing")}>
           <select className="inp" value={key} onChange={(e) => setKey(e.target.value)}>
             {categories.map((c) => <option key={c.key} value={c.key}>{c.name}</option>)}
@@ -146,7 +160,9 @@ function ApproveForm({ proposal, categories, onClose, onDone }: {
 }
 
 /** Pick communities (interests in every zone, and people's) and move them all into one category. */
-function BulkMove({ data, onDone }: { data: AdminCategories; onDone: () => void }) {
+/** Moves communities and interests into a category: any (the section's list) or `fixedTo` (from a category's window,
+ * listing only those not in it yet). */
+function BulkMove({ data, onDone, fixedTo }: { data: AdminCategories; onDone: () => void; fixedTo?: string }) {
   type Row = { id: string; title: string; kind: "interest" | "custom"; category: string; detail: string };
   const rows: Row[] = useMemo(() => [
     ...data.interests.map((i) => ({ id: `i${i.id}`, title: i.title, kind: "interest" as const, category: i.category || guessCategory(i.slug, i.title), detail: a("cg_kind_interest") })),
@@ -155,15 +171,15 @@ function BulkMove({ data, onDone }: { data: AdminCategories; onDone: () => void 
   const [q, setQ] = useState("");
   const [from, setFrom] = useState("");
   const [picked, setPicked] = useState<Set<string>>(new Set());
-  const [to, setTo] = useState("");
+  const [to, setTo] = useState(fixedTo || "");
   const [busy, setBusy] = useState(false);
   const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const shown = rows.filter((r) => (!from || r.category === from) && (!q || plain(r.title).includes(plain(q))));
+  const shown = rows.filter((r) => (!fixedTo || r.category !== fixedTo) && (!from || r.category === from) && (!q || plain(r.title).includes(plain(q))));
   const toggle = (id: string) => setPicked((p) => { const n = new Set(p); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const allShown = shown.length > 0 && shown.every((r) => picked.has(r.id));
   return (
-    <section className="adm-card cg-bulk">
-      <div className="adm-card-head"><b>{a("cg_bulk")}</b><span className="muted">{a("cg_bulk_hint")}</span></div>
+    <section className={"cg-bulk" + (fixedTo ? "" : " adm-card")}>
+      {fixedTo ? null : <div className="adm-card-head"><b>{a("cg_bulk")}</b><span className="muted">{a("cg_bulk_hint")}</span></div>}
       <div className="adm-toolbar">
         <div className="adm-search"><Icon name="search" size="sm" /><input className="inp" type="search" placeholder={a("cg_search")} value={q} onChange={(e) => setQ(e.target.value)} /></div>
         <select className="inp" value={from} onChange={(e) => setFrom(e.target.value)} aria-label={a("cg_from")}>
@@ -189,17 +205,19 @@ function BulkMove({ data, onDone }: { data: AdminCategories; onDone: () => void 
       ) : <Empty icon="search" text={a("us_empty")} />}
       <div className="cg-move">
         <span className="grow">{a("cg_picked", { n: picked.size })}</span>
-        <select id="adm-cat-to" className="inp" value={to} onChange={(e) => setTo(e.target.value)}>
-          <option value="">{a("cg_to")}</option>
-          {data.categories.map((c) => <option key={c.key} value={c.key}>{c.name}</option>)}
-        </select>
+        {fixedTo ? null : (
+          <select id="adm-cat-to" className="inp" value={to} onChange={(e) => setTo(e.target.value)}>
+            <option value="">{a("cg_to")}</option>
+            {data.categories.map((c) => <option key={c.key} value={c.key}>{c.name}</option>)}
+          </select>
+        )}
         <button id="adm-cat-move" className="btn pri" disabled={busy || !to || !picked.size} onClick={() => {
           setBusy(true);
           const ids = [...picked];
           api.assignCategory({ key: to, community_ids: ids.filter((x) => x[0] === "c").map((x) => +x.slice(1)), interest_ids: ids.filter((x) => x[0] === "i").map((x) => +x.slice(1)) })
             .then((r) => { toast(a("cg_moved", { n: r.changed })); setPicked(new Set()); onDone(); })
             .catch((e) => toast(e.message, "error")).finally(() => setBusy(false));
-        }}>{a("cg_move")}</button>
+        }}>{fixedTo ? a("cg_assign_do") : a("cg_move")}</button>
       </div>
     </section>
   );

@@ -142,6 +142,7 @@ export const api = {
   emailPrefs: (payload: Record<string, boolean>) => req<Me>("/me/email-prefs", { method: "PATCH", json: payload }),
   publicSettings: () => req<any>("/settings/public"),
   interests: () => req<Interest[]>("/interests"),
+  adminPending: () => req<{ categories: number }>("/admin/categories/pending"),
   categories: () => req<{ key: string; name: string; icon: string | null; color: string | null; builtin: boolean }[]>("/categories"),
   myInterests: () => req<string[]>("/me/interests"),
   setInterests: (slugs: string[]) => req("/me/interests", { method: "POST", json: { interest_slugs: slugs } }),

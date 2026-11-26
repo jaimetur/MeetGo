@@ -4723,6 +4723,18 @@ msgstr "Ir para a comunidade"
 msgid "err_language_invalid"
 msgstr "Idioma inválido"
 
+msgid "ui_admin_pending_categories"
+msgstr "Categorias propostas por rever ({n})"
+
+msgid "ui_admin_review"
+msgstr "Rever"
+
+msgid "email_category_proposal_subject"
+msgstr "Nova categoria proposta"
+
+msgid "email_category_proposal_body"
+msgstr "Alguém propôs a categoria «{name}». Revê-a em Administração → Categorias."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "A administração irá revê-la; entretanto, a sua comunidade aparecerá em «Outras»."
 

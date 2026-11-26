@@ -46,3 +46,56 @@ def out(c: Category, admin: bool = False) -> dict:
     if admin:
         data.update({"names": dict(c.names or {}), "position": c.position})
     return data
+
+
+# ---------- translation of new categories ----------
+
+async def complete_names(names: dict[str, str]) -> dict[str, str]:
+    """The category's name in every supported language: the ones given stay, the rest are translated from the Spanish
+    one with Claude. Without Claude (no key, an error) the missing ones stay missing (the Spanish one is shown)."""
+    import json
+    import logging
+    from app.core import ai
+    from app.core.languages import BUILTIN_NAMES
+    missing = sorted(code for code in supported() if not (names.get(code) or "").strip())
+    if not missing or not names.get("es"):
+        return names
+    try:
+        await ai.refresh_if_stale()
+        if not ai.api_key():
+            return names
+        schema = {"type": "object", "properties": {c: {"type": "string"} for c in missing}, "required": missing,
+                  "additionalProperties": False}
+        targets = ", ".join(f"{c} ({BUILTIN_NAMES.get(c, c)})" for c in missing)
+        response = await ai.client().messages.create(
+            model=ai.model(), max_tokens=1000,
+            system="You translate the names of categories of communities in a social app (like «Sports», «Culture»). "
+                   "Give a short, natural name as a category label in each language, capitalised as a label is there.",
+            output_config={"format": {"type": "json_schema", "schema": schema}},
+            messages=[{"role": "user", "content": f"Spanish name: {names['es']}\nTranslate it into: {targets}."}])
+        text = next((b.text for b in response.content if b.type == "text"), "")
+        done = {c: v.strip()[:60] for c, v in json.loads(text).items() if c in missing and isinstance(v, str) and v.strip()}
+        return {**names, **done}
+    except Exception:  # the category is made all the same; its names can be completed by hand
+        logging.getLogger("meetgo.categories").exception("Translating the category %s failed", names.get("es"))
+        return names
+
+
+# ---------- notices to the administrators ----------
+
+async def pending_count(db: AsyncSession) -> int:
+    from sqlalchemy import func
+    from app.core.models import CategoryProposal
+    return int((await db.execute(select(func.count()).select_from(CategoryProposal).where(CategoryProposal.status == "pending"))).scalar() or 0)
+
+
+async def tell_admins(db: AsyncSession, proposal_name: str | None = None) -> None:
+    """The administrators' apps reload what is waiting for review (a new proposal appears; one reviewed disappears
+    for all); a new proposal also reaches their phones. Whoever is not connected sees it the next time they open MeetGo."""
+    from app.core.models import User
+    from app.realtime.service import publish
+    admins = list((await db.execute(select(User).where(User.role == "admin"))).scalars().all())
+    await publish([a.id for a in admins], {"type": "admin.pending"})
+    if proposal_name:
+        from app.push.service import push_notice
+        push_notice(admins, "admin.category", "email_category_proposal", {"name": proposal_name}, "/app/admin?s=categories")

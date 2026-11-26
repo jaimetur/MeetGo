@@ -60,3 +60,35 @@ async def test_admin_edits_and_moves_in_bulk(client, db_session):
     assert (await client.delete("/admin/categories/ui_cat_sports", headers=admin)).status_code == 400
     assert (await client.delete(f"/admin/categories/{made['key']}", headers=admin)).json()["ok"] is True
     assert (await client.get(f"/communities/{b['id']}", headers=ana)).json()["category"] == "ui_cat_other"
+
+
+async def test_proposals_notify_admins_and_approval_translates(client, db_session, monkeypatch):
+    """A proposal waits as a notice for the administrators until one of them reviews it; approving it with only the
+    Spanish name fills the other languages (translated with Claude, here a stand-in)."""
+    from app.categories import service as cats
+
+    async def fake_complete(names):
+        return {**{c: f"{names['es']} ({c})" for c in ("en", "ca", "de", "fr", "it", "pt", "nl", "ja", "zh")}, **names}
+    monkeypatch.setattr(cats, "complete_names", fake_complete)
+    events = []
+
+    async def fake_publish(to, event):
+        if event.get("type") == "admin.pending":
+            events.append((sorted(to), event))
+    import app.realtime.service as rt
+    monkeypatch.setattr(rt, "publish", fake_publish)
+
+    admin = await admin_headers(client)
+    ana, _ = await make_user(client, db_session, "ana@example.com", "Ana")
+    assert (await client.get("/admin/categories/pending", headers=ana)).status_code == 403
+    assert (await client.get("/admin/categories/pending", headers=admin)).json() == {"categories": 0}
+    await _create(client, ana, "Tertulias", category_proposal="Opinión")
+    assert (await client.get("/admin/categories/pending", headers=admin)).json() == {"categories": 1}
+    assert len(events) == 1  # the administrators connected see it now
+
+    [proposal] = (await client.get("/admin/categories", headers=admin)).json()["proposals"]
+    res = await client.post(f"/admin/categories/proposals/{proposal['id']}/approve", json={"names": {"es": "Opinión"}}, headers=admin)
+    key = res.json()["key"]
+    assert (await client.get("/admin/categories/pending", headers=admin)).json() == {"categories": 0}  # gone for all
+    assert len(events) == 2
+    assert next(c for c in (await client.get("/categories", headers={"X-Lang": "de"})).json() if c["key"] == key)["name"] == "Opinión (de)"

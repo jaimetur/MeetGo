@@ -4724,6 +4724,18 @@ msgstr "Ves a la comunitat"
 msgid "err_language_invalid"
 msgstr "Idioma no vàlid"
 
+msgid "ui_admin_pending_categories"
+msgstr "Hi ha categories proposades per revisar ({n})"
+
+msgid "ui_admin_review"
+msgstr "Revisa"
+
+msgid "email_category_proposal_subject"
+msgstr "Nova categoria proposada"
+
+msgid "email_category_proposal_body"
+msgstr "Algú ha proposat la categoria «{name}». Revisa-la a Administració → Categories."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 

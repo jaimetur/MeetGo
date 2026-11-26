@@ -4725,6 +4725,18 @@ msgstr "Go to the community"
 msgid "err_language_invalid"
 msgstr "Invalid language"
 
+msgid "ui_admin_pending_categories"
+msgstr "Proposed categories to review ({n})"
+
+msgid "ui_admin_review"
+msgstr "Review"
+
+msgid "email_category_proposal_subject"
+msgstr "New category proposed"
+
+msgid "email_category_proposal_body"
+msgstr "Someone proposed the category «{name}». Review it in Administration → Categories."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "The administration will review it; meanwhile your community shows under «Other»."
 

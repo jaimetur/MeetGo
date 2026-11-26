@@ -4724,6 +4724,18 @@ msgstr "Vai alla community"
 msgid "err_language_invalid"
 msgstr "Lingua non valida"
 
+msgid "ui_admin_pending_categories"
+msgstr "Categorie proposte da rivedere ({n})"
+
+msgid "ui_admin_review"
+msgstr "Rivedi"
+
+msgid "email_category_proposal_subject"
+msgstr "Nuova categoria proposta"
+
+msgid "email_category_proposal_body"
+msgstr "Qualcuno ha proposto la categoria «{name}». Rivedila in Amministrazione → Categorie."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'amministrazione la esaminerà; nel frattempo la tua community comparirà in «Altre»."
 

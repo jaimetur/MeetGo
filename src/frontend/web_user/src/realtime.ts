@@ -2,7 +2,7 @@ import { api, WS_BASE } from "./api";
 import { emitBoardEvent } from "./board";
 import {
   addMessage, catchUp, getState, loadConversations, loadMessages, patchConversation, refreshConversation, removeConversation,
-  refreshMyPlansSoon, replaceMessage, setReactions, setReceipt, setState, updateMessage, forgetConversation } from "./store";
+  refreshMyPlansSoon, replaceMessage, setReactions, setReceipt, setState, updateMessage, forgetConversation, loadAdminPending } from "./store";
 import type { Message } from "./types";
 
 let ws: WebSocket | null = null;
@@ -185,6 +185,9 @@ function handle(ev: any) {
       break;
     case "requests.changed":
       onRequests?.();
+      break;
+    case "admin.pending": // a category proposed, or one reviewed by another administrator
+      loadAdminPending();
       break;
     // Board: the screens listen through onBoardEvent; my plans change with sign-ups and edits.
     case "post.created":

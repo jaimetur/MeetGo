@@ -20,6 +20,7 @@ export type State = {
   connected: boolean;
   activeConversation: number | null;
   toasts: Toast[];
+  adminPending: number;  // administrators: category proposals waiting for review
   paywall: boolean;
   // Subscriptions switched on in the administration; while off, nothing about plans is shown.
   subscriptions: boolean;
@@ -48,6 +49,7 @@ const initial: State = {
   connected: false,
   activeConversation: null,
   toasts: [],
+  adminPending: 0,
   paywall: false,
   subscriptions: false,
   myPlans: null,
@@ -316,6 +318,15 @@ export async function loadCategories() {
   } catch {
     /* the built-in ones stay */
   }
+}
+
+/** Administrators: how many category proposals wait for review (one reviewed by anyone disappears for all). */
+export async function loadAdminPending() {
+  if (getState().me?.role !== "admin") return;
+  try {
+    const p = await api.adminPending();
+    setState({ adminPending: p.categories });
+  } catch { /* not now: next time */ }
 }
 
 export async function loadMyCommunities() {

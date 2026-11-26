@@ -5,6 +5,10 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  cg_assign: "Asignar comunidades",
+  cg_assign_hint: "Tiene {n} comunidades. Puedes traer otras que ya existen.",
+  cg_assign_title: "Asignar comunidades a «{name}»",
+  cg_assign_do: "Asignar",
   co_stats2: "{zones} zonas · {bands} franjas de edad · {people} personas",
   co_geo: "Ámbito geográfico",
   co_geo_country: "Nacional",
@@ -34,7 +38,7 @@ const ES: Dict = {
   cg_saved: "Guardado",
   cg_created: "Categoría creada",
   cg_delete_hint: "Sus {n} comunidades pasarán a «Otras».",
-  cg_names_hint: "El nombre en español es obligatorio; si un idioma queda vacío, se muestra el español.",
+  cg_names_hint: "El nombre en español es obligatorio; los idiomas que dejes vacíos se traducen automáticamente.",
   cg_approve_title: "Aprobar «{name}»",
   cg_approved: "Propuesta aprobada",
   cg_as_new: "Como categoría nueva",
@@ -574,6 +578,10 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  cg_assign: "Assign communities",
+  cg_assign_hint: "It has {n} communities. You can bring in others that already exist.",
+  cg_assign_title: "Assign communities to «{name}»",
+  cg_assign_do: "Assign",
   co_stats2: "{zones} areas · {bands} age bands · {people} people",
   co_geo: "Geographic scope",
   co_geo_country: "National",
@@ -603,7 +611,7 @@ const EN: Dict = {
   cg_saved: "Saved",
   cg_created: "Category created",
   cg_delete_hint: "Its {n} communities will go to «Other».",
-  cg_names_hint: "The Spanish name is required; a language left empty shows the Spanish one.",
+  cg_names_hint: "The Spanish name is required; the languages left empty are translated automatically.",
   cg_approve_title: "Approve «{name}»",
   cg_approved: "Proposal approved",
   cg_as_new: "As a new category",
@@ -1144,6 +1152,10 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  cg_assign: "Assignar comunitats",
+  cg_assign_hint: "Té {n} comunitats. Pots portar-ne d'altres que ja existeixen.",
+  cg_assign_title: "Assignar comunitats a «{name}»",
+  cg_assign_do: "Assigna",
   co_stats2: "{zones} zones · {bands} franges d'edat · {people} persones",
   co_geo: "Àmbit geogràfic",
   co_geo_country: "Nacional",
@@ -1173,7 +1185,7 @@ const CA: Dict = {
   cg_saved: "Desat",
   cg_created: "Categoria creada",
   cg_delete_hint: "Les seves {n} comunitats passaran a «Altres».",
-  cg_names_hint: "El nom en espanyol és obligatori; si un idioma queda buit, es mostra l'espanyol.",
+  cg_names_hint: "El nom en castellà és obligatori; els idiomes que deixis buits es tradueixen automàticament.",
   cg_approve_title: "Aprova «{name}»",
   cg_approved: "Proposta aprovada",
   cg_as_new: "Com a categoria nova",
@@ -1704,6 +1716,10 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  cg_assign: "Communities zuordnen",
+  cg_assign_hint: "Sie hat {n} Communities. Du kannst andere bestehende hinzufügen.",
+  cg_assign_title: "Communities zu «{name}» zuordnen",
+  cg_assign_do: "Zuordnen",
   co_stats2: "{zones} Gebiete · {bands} Altersgruppen · {people} Personen",
   co_geo: "Geografischer Bereich",
   co_geo_country: "National",
@@ -1733,7 +1749,7 @@ const DE: Dict = {
   cg_saved: "Gespeichert",
   cg_created: "Kategorie erstellt",
   cg_delete_hint: "Ihre {n} Communities wechseln zu „Sonstige“.",
-  cg_names_hint: "Der spanische Name ist erforderlich; bleibt eine Sprache leer, wird der spanische angezeigt.",
+  cg_names_hint: "Der spanische Name ist Pflicht; leer gelassene Sprachen werden automatisch übersetzt.",
   cg_approve_title: "„{name}“ genehmigen",
   cg_approved: "Vorschlag genehmigt",
   cg_as_new: "Als neue Kategorie",
@@ -2264,6 +2280,10 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  cg_assign: "Assigner des communautés",
+  cg_assign_hint: "Elle compte {n} communautés. Tu peux en ajouter d'autres qui existent déjà.",
+  cg_assign_title: "Assigner des communautés à «{name}»",
+  cg_assign_do: "Assigner",
   co_stats2: "{zones} zones · {bands} tranches d'âge · {people} personnes",
   co_geo: "Portée géographique",
   co_geo_country: "Nationale",
@@ -2293,7 +2313,7 @@ const FR: Dict = {
   cg_saved: "Enregistré",
   cg_created: "Catégorie créée",
   cg_delete_hint: "Ses {n} communautés passeront dans « Autres ».",
-  cg_names_hint: "Le nom en espagnol est obligatoire ; si une langue reste vide, l'espagnol s'affiche.",
+  cg_names_hint: "Le nom en espagnol est obligatoire ; les langues laissées vides sont traduites automatiquement.",
   cg_approve_title: "Approuver « {name} »",
   cg_approved: "Proposition approuvée",
   cg_as_new: "Comme nouvelle catégorie",
@@ -2824,6 +2844,10 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  cg_assign: "Assegna community",
+  cg_assign_hint: "Ha {n} community. Puoi aggiungerne altre già esistenti.",
+  cg_assign_title: "Assegna community a «{name}»",
+  cg_assign_do: "Assegna",
   co_stats2: "{zones} zone · {bands} fasce d'età · {people} persone",
   co_geo: "Ambito geografico",
   co_geo_country: "Nazionale",
@@ -2853,7 +2877,7 @@ const IT: Dict = {
   cg_saved: "Salvato",
   cg_created: "Categoria creata",
   cg_delete_hint: "Le sue {n} community passeranno a «Altre».",
-  cg_names_hint: "Il nome in spagnolo è obbligatorio; se una lingua resta vuota, viene mostrato lo spagnolo.",
+  cg_names_hint: "Il nome in spagnolo è obbligatorio; le lingue lasciate vuote vengono tradotte automaticamente.",
   cg_approve_title: "Approva «{name}»",
   cg_approved: "Proposta approvata",
   cg_as_new: "Come nuova categoria",
@@ -3384,6 +3408,10 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  cg_assign: "Atribuir comunidades",
+  cg_assign_hint: "Tem {n} comunidades. Podes trazer outras que já existem.",
+  cg_assign_title: "Atribuir comunidades a «{name}»",
+  cg_assign_do: "Atribuir",
   co_stats2: "{zones} zonas · {bands} faixas etárias · {people} pessoas",
   co_geo: "Âmbito geográfico",
   co_geo_country: "Nacional",
@@ -3413,7 +3441,7 @@ const PT: Dict = {
   cg_saved: "Guardado",
   cg_created: "Categoria criada",
   cg_delete_hint: "As suas {n} comunidades passarão para «Outras».",
-  cg_names_hint: "O nome em espanhol é obrigatório; se um idioma ficar vazio, é mostrado o espanhol.",
+  cg_names_hint: "O nome em espanhol é obrigatório; os idiomas deixados vazios são traduzidos automaticamente.",
   cg_approve_title: "Aprovar «{name}»",
   cg_approved: "Proposta aprovada",
   cg_as_new: "Como nova categoria",
@@ -3944,6 +3972,10 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  cg_assign: "Community's toewijzen",
+  cg_assign_hint: "Ze heeft {n} community's. Je kunt andere bestaande toevoegen.",
+  cg_assign_title: "Community's toewijzen aan «{name}»",
+  cg_assign_do: "Toewijzen",
   co_stats2: "{zones} gebieden · {bands} leeftijdsgroepen · {people} mensen",
   co_geo: "Geografisch bereik",
   co_geo_country: "Nationaal",
@@ -3973,7 +4005,7 @@ const NL: Dict = {
   cg_saved: "Opgeslagen",
   cg_created: "Categorie aangemaakt",
   cg_delete_hint: "De {n} communities gaan naar \"Overige\".",
-  cg_names_hint: "De Spaanse naam is verplicht; als een taal leeg blijft, wordt het Spaans getoond.",
+  cg_names_hint: "De Spaanse naam is verplicht; lege talen worden automatisch vertaald.",
   cg_approve_title: "\"{name}\" goedkeuren",
   cg_approved: "Voorstel goedgekeurd",
   cg_as_new: "Als nieuwe categorie",
@@ -4504,6 +4536,10 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  cg_assign: "コミュニティを割り当てる",
+  cg_assign_hint: "{n}件のコミュニティがあります。既存の他のコミュニティを追加できます。",
+  cg_assign_title: "「{name}」にコミュニティを割り当てる",
+  cg_assign_do: "割り当てる",
   co_stats2: "{zones}地域 · {bands}年齢層 · {people}人",
   co_geo: "地理的範囲",
   co_geo_country: "全国",
@@ -4533,7 +4569,7 @@ const JA: Dict = {
   cg_saved: "保存しました",
   cg_created: "カテゴリを作成しました",
   cg_delete_hint: "{n} 件のコミュニティは「その他」に移ります。",
-  cg_names_hint: "スペイン語の名前は必須です。空の言語にはスペイン語が表示されます。",
+  cg_names_hint: "スペイン語の名前は必須です。空欄の言語は自動的に翻訳されます。",
   cg_approve_title: "「{name}」を承認",
   cg_approved: "提案を承認しました",
   cg_as_new: "新しいカテゴリとして",
@@ -5064,6 +5100,10 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  cg_assign: "分配社区",
+  cg_assign_hint: "共有 {n} 个社区。你可以把其他已有的社区加入进来。",
+  cg_assign_title: "将社区分配到「{name}」",
+  cg_assign_do: "分配",
   co_stats2: "{zones} 个区域 · {bands} 个年龄段 · {people} 人",
   co_geo: "地理范围",
   co_geo_country: "全国",
@@ -5093,7 +5133,7 @@ const ZH: Dict = {
   cg_saved: "已保存",
   cg_created: "分类已创建",
   cg_delete_hint: "其 {n} 个社区将移入“其他”。",
-  cg_names_hint: "西班牙语名称为必填；若某种语言留空，则显示西班牙语。",
+  cg_names_hint: "西班牙语名称为必填项；留空的语言会自动翻译。",
   cg_approve_title: "批准“{name}”",
   cg_approved: "提议已批准",
   cg_as_new: "作为新分类",

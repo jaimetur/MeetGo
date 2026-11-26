@@ -90,9 +90,15 @@ async def admin_categories(db: AsyncSession = Depends(get_db), admin: User = Dep
     }
 
 
+@router.get("/admin/categories/pending", response_model=dict)
+async def pending(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """What waits for an administrator's review (the app shows a notice while there is something)."""
+    return {"categories": await cats.pending_count(db)}
+
+
 @router.post("/admin/categories", response_model=dict)
 async def create_category(payload: CategoryIn, db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
-    names = _names(payload.names)
+    names = await cats.complete_names(_names(payload.names))
     key = _new_key(names["es"])
     if await db.get(Category, key):
         raise HTTPException(409, t("err_category_exists"))
@@ -162,6 +168,7 @@ async def approve(proposal_id: int, payload: ApproveIn, db: AsyncSession = Depen
         names = _names(payload.names or {"es": p.name})
         key = _new_key(names["es"])
         if not await db.get(Category, key):
+            names = await cats.complete_names(names)  # the languages left empty, translated
             db.add(Category(key=key, names=names, position=500, builtin=False, created_at=utcnow()))
     p.status, p.category_key = "approved", key
     if p.conversation_id:
@@ -169,6 +176,7 @@ async def approve(proposal_id: int, payload: ApproveIn, db: AsyncSession = Depen
         if conv and conv.category_key in (None, cats.OTHER):
             conv.category_key = key
     await db.commit()
+    await cats.tell_admins(db)  # reviewed: the notice goes away for the other administrators
     return {"ok": True, "key": key}
 
 
@@ -179,4 +187,5 @@ async def reject(proposal_id: int, db: AsyncSession = Depends(get_db), admin: Us
         raise HTTPException(404, t("err_category_invalid"))
     p.status = "rejected"
     await db.commit()
+    await cats.tell_admins(db)
     return {"ok": True}

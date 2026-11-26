@@ -5,7 +5,7 @@ import { native, setNativeHandlers } from "../native";
 import { announceActiveConversation, registerServiceWorker, setupNativePush, subscribeExisting } from "../push";
 import { startRealtime, stopRealtime, setRealtimeHooks } from "../realtime";
 import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } from "../router";
-import { getState, loadBlocks, loadConversations, loadCategories, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
+import { getState, loadBlocks, loadConversations, loadAdminPending, loadCategories, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen, CompleteProfile } from "./Auth";
 import { ChatView } from "./Chat";
 import { UpdateNotice } from "./UpdateNotice";
@@ -203,7 +203,9 @@ function Shell() {
   useEffect(() => {
     loadMyPlans();
     loadCategories();
+    loadAdminPending();
   }, []);
+  const adminPending = useStore((s) => s.adminPending);
   useEffect(() => {
     loadMyCommunities();
     loadBlocks();
@@ -257,7 +259,7 @@ function Shell() {
     { name: "people", icon: "users", label: t("ui_nav_people"), badge: requestsTotal },
     { name: "mentions", icon: "at", label: t("ui_nav_mentions"), badge: mentions, at: true },
     { name: "account", icon: "user", label: t("ui_nav_profile"), badge: 0 },
-    ...(me?.role === "admin" ? [{ name: "admin", icon: "shield", label: t("ui_nav_admin"), badge: 0 }] : []),
+    ...(me?.role === "admin" ? [{ name: "admin", icon: "shield", label: t("ui_nav_admin"), badge: adminPending }] : []),
   ];
   // Phones: Home · Communities · Chats · Plans · People; the profile is in the avatar's menu at the top, and a round ＋ to publish at the side. Swiping moves
   // between the tabs.
@@ -361,6 +363,24 @@ function Shell() {
       {me && !me.bot_role && (!me.first_name || !me.last_name) ? <CompleteProfile me={me} onSaved={(u) => setState({ me: u })} /> : null}
       <ActingAsBar />
       <Toasts />
+      <AdminNotice />
+    </div>
+  );
+}
+
+/** Administrators: a notice while category proposals wait for review, when they open MeetGo or one is proposed.
+ * Closing it hides it until a new one arrives; once reviewed (by anyone) it goes away for everybody. */
+function AdminNotice() {
+  const pending = useStore((s) => s.adminPending);
+  const route = useRoute();
+  const [closedAt, setClosedAt] = useState(0);
+  if (!pending || pending <= closedAt || (route.name === "admin" && queryParam("s") === "categories")) return null;
+  return (
+    <div className="admin-notice" role="alert">
+      <Icon name="shield" />
+      <span className="grow">{t("ui_admin_pending_categories", { n: pending })}</span>
+      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate("/admin?s=categories"); }}>{t("ui_admin_review")}</button>
+      <button className="iconbtn" aria-label={t("ui_close")} onClick={() => setClosedAt(pending)}><Icon name="x" size="sm" /></button>
     </div>
   );
 }

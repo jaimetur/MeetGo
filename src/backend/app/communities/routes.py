@@ -127,6 +127,8 @@ async def create_community(payload: CommunityCreateIn, db: AsyncSession = Depend
         db.add(CategoryProposal(name=payload.category_proposal.strip(), user_id=user.id, conversation_id=conv.id, created_at=utcnow()))
     await join(db, conv, user.id, role="owner")
     await db.commit()
+    if payload.category_proposal and payload.category_proposal.strip():
+        await cats.tell_admins(db, payload.category_proposal.strip())
     await realtime.publish([user.id], {"type": "conversation.changed", "conversation_id": conv.id})
     return await _out(db, user, conv)
 
@@ -201,6 +203,9 @@ async def update_community(community_id: int, payload: CommunityUpdateIn, db: As
         conv.retention_days = payload.retention_days
     await db.commit()
     await _changed(db, conv.id)
+    if not conv.interest_id and (payload.category_proposal or "").strip():
+        from app.categories import service as cats
+        await cats.tell_admins(db, payload.category_proposal.strip())
     return await _out(db, user, conv)
 
 

@@ -4724,6 +4724,18 @@ msgstr "前往社区"
 msgid "err_language_invalid"
 msgstr "语言无效"
 
+msgid "ui_admin_pending_categories"
+msgstr "待审核的分类提议（{n}）"
+
+msgid "ui_admin_review"
+msgstr "审核"
+
+msgid "email_category_proposal_subject"
+msgstr "新的分类提议"
+
+msgid "email_category_proposal_body"
+msgstr "有人提议了分类「{name}」。请在 管理 → 分类 中审核。"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

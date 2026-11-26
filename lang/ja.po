@@ -4724,6 +4724,18 @@ msgstr "コミュニティへ"
 msgid "err_language_invalid"
 msgstr "無効な言語です"
 
+msgid "ui_admin_pending_categories"
+msgstr "確認待ちのカテゴリ提案（{n}）"
+
+msgid "ui_admin_review"
+msgstr "確認する"
+
+msgid "email_category_proposal_subject"
+msgstr "新しいカテゴリの提案"
+
+msgid "email_category_proposal_body"
+msgstr "カテゴリ「{name}」が提案されました。管理 → カテゴリで確認してください。"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

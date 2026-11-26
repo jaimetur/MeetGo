@@ -4724,6 +4724,18 @@ msgstr "Naar de community"
 msgid "err_language_invalid"
 msgstr "Ongeldige taal"
 
+msgid "ui_admin_pending_categories"
+msgstr "Voorgestelde categorieën om te beoordelen ({n})"
+
+msgid "ui_admin_review"
+msgstr "Beoordelen"
+
+msgid "email_category_proposal_subject"
+msgstr "Nieuwe categorie voorgesteld"
+
+msgid "email_category_proposal_body"
+msgstr "Iemand heeft de categorie «{name}» voorgesteld. Beoordeel haar in Beheer → Categorieën."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 
