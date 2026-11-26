@@ -233,6 +233,12 @@ class MainActivity : ComponentActivity() {
         settings.domStorageEnabled = true
         settings.mediaPlaybackRequiresUserGesture = true
         settings.allowFileAccess = false
+        // an app, not a web page: never zoom out to fit something wider (the page then took a corner of the screen)
+        settings.setSupportZoom(false)
+        settings.builtInZoomControls = false
+        settings.displayZoomControls = false
+        settings.loadWithOverviewMode = false
+        settings.useWideViewPort = true
         settings.userAgentString = settings.userAgentString + " MeetGoApp/" + appVersion()
         CookieManager.getInstance().setAcceptCookie(true)
         CookieManager.getInstance().setAcceptThirdPartyCookies(this, false)
