@@ -258,6 +258,8 @@ async def seed(db: AsyncSession) -> None:
     await ensure_bots(db)
     from app.categories.service import ensure_categories
     await ensure_categories(db)
+    from app.communities.interest_settings import regroup_all_once
+    await regroup_all_once(db)
 
 
 # Interests that became one: a coffee, a beer and drinks are now "Tomar algo".

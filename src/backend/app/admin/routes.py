@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
-from sqlalchemy import delete, func, or_, select, text, update
+from sqlalchemy import and_, delete, func, or_, select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import ai, languages
@@ -377,6 +377,8 @@ def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
         it.age_ranges = [a for a in AGE_KEYS if a in payload.age_ranges]
     if payload.active is not None:
         it.active = payload.active
+    if payload.geo_level is not None:
+        it.geo_level = payload.geo_level
     # the settings of its communities, as in a community made by people
     if payload.age_mode == "span":
         if payload.min_age is None and payload.max_age is None:
@@ -407,11 +409,32 @@ def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
 async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     """Every interest with how many zones have its community and how many people are in them."""
     from app.accounts.routes import interest_out
-    channels = dict((await db.execute(select(Conversation.interest_id, func.count()).where(
-        Conversation.kind == "channel", Conversation.interest_id.is_not(None)).group_by(Conversation.interest_id))).all())
+    from app.communities.zones import SPLIT_AT
+    # per interest: its zones and age ranges apart, and its biggest and smallest community (members, not away)
+    rows = (await db.execute(select(Conversation.interest_id, Conversation.province, Conversation.age_range, func.count(ConversationMember.user_id))
+                             .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
+                                                                 ConversationMember.away.is_(False), ConversationMember.banned.is_(False)))
+                             .where(Conversation.kind == "channel", Conversation.interest_id.is_not(None))
+                             .group_by(Conversation.interest_id, Conversation.id, Conversation.province, Conversation.age_range))).all()
+    stats: dict[int, dict] = {}
+    for iid, zone, age, n in rows:
+        s = stats.setdefault(iid, {"zones": set(), "ages": set(), "sizes": []})
+        s["zones"].add(zone)
+        s["ages"].add(age)
+        s["sizes"].append(int(n))
     people = dict((await db.execute(select(UserInterest.interest_id, func.count()).group_by(UserInterest.interest_id))).all())
     interests = (await db.execute(select(Interest).order_by(Interest.name))).scalars().all()
-    return [{**interest_out(i).model_dump(), "zones": int(channels.get(i.id, 0)), "people": int(people.get(i.id, 0))} for i in interests]
+    out = []
+    for i in interests:
+        s = stats.get(i.id, {"zones": set(), "ages": set(), "sizes": []})
+        level = i.geo_level or "country"
+        biggest = max(s["sizes"], default=0)
+        # split when one community passes SPLIT_AT; join into the wider level when they are all small (under 10)
+        suggest = ("split" if level != "province" and biggest > SPLIT_AT
+                   else "join" if level != "country" and len(s["zones"]) > 1 and biggest < 10 else None)
+        out.append({**interest_out(i).model_dump(), "zones": len(s["zones"]), "age_bands": len(s["ages"]),
+                    "communities": len(s["sizes"]), "people": int(people.get(i.id, 0)), "biggest": biggest, "suggest": suggest})
+    return out
 
 
 @router.post("/interests", response_model=InterestOut)
@@ -436,8 +459,12 @@ async def update_interest(interest_id: int, payload: AdminInterestIn, db: AsyncS
         raise HTTPException(404, t("err_interest_not_found"))
     from app.communities.interest_settings import apply_interest_settings, has_span
     had_span = has_span(it)
+    old_level = it.geo_level
     it.slug, it.name = payload.slug, payload.name
     _apply_interest(it, payload)
+    if it.geo_level != old_level:  # its communities joined into wider zones, or split into narrower ones
+        from app.communities.interest_settings import regroup_geo
+        await regroup_geo(db, it)
     await db.commit()
     # every zone's community of the interest follows its settings (joined per province with an age span)
     await apply_interest_settings(db, it, had_span)

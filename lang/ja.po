@@ -4706,6 +4706,24 @@ msgstr "合うものがない：別のカテゴリを提案…"
 msgid "ui_community_category_proposal_ph"
 msgstr "提案するカテゴリの名前"
 
+msgid "ui_community_language"
+msgstr "公用語"
+
+msgid "ui_community_language_auto"
+msgstr "地域の言語"
+
+msgid "ui_community_language_hint"
+msgstr "コミュニティで使う言語です。既定では地域の言語になります。"
+
+msgid "ui_zone_archive"
+msgstr "この地域はより広いコミュニティに統合されました。履歴は{date}までここで閲覧できます。"
+
+msgid "ui_zone_archive_open"
+msgstr "コミュニティへ"
+
+msgid "err_language_invalid"
+msgstr "無効な言語です"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

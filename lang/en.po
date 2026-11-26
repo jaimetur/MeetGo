@@ -4707,6 +4707,24 @@ msgstr "None fits: propose another…"
 msgid "ui_community_category_proposal_ph"
 msgstr "Name of the category you propose"
 
+msgid "ui_community_language"
+msgstr "Official language"
+
+msgid "ui_community_language_auto"
+msgstr "Its area's"
+
+msgid "ui_community_language_hint"
+msgstr "The language the community talks in. By default, the one of its area."
+
+msgid "ui_zone_archive"
+msgstr "This area has joined a wider community. Its history can be read here until {date}."
+
+msgid "ui_zone_archive_open"
+msgstr "Go to the community"
+
+msgid "err_language_invalid"
+msgstr "Invalid language"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "The administration will review it; meanwhile your community shows under «Other»."
 

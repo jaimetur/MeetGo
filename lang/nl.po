@@ -4706,6 +4706,24 @@ msgstr "Geen past: stel een andere voor…"
 msgid "ui_community_category_proposal_ph"
 msgstr "Naam van de categorie die je voorstelt"
 
+msgid "ui_community_language"
+msgstr "Officiële taal"
+
+msgid "ui_community_language_auto"
+msgstr "Die van de regio"
+
+msgid "ui_community_language_hint"
+msgstr "De taal waarin in de community gesproken wordt. Standaard die van de regio."
+
+msgid "ui_zone_archive"
+msgstr "Deze regio is samengevoegd in een grotere community. De geschiedenis is hier tot {date} te lezen."
+
+msgid "ui_zone_archive_open"
+msgstr "Naar de community"
+
+msgid "err_language_invalid"
+msgstr "Ongeldige taal"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

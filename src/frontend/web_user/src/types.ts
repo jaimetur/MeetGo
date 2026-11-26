@@ -48,6 +48,7 @@ export type Conversation = {
   min_age?: number | null;
   max_age?: number | null;
   read_only?: boolean;  // expelled by a change of the community's filters: the chat stays, read only
+  archive?: { until: string; community_id: number | null } | null;  // a zone joined into a wider community: read only until then
   interest: { id: number; slug: string; name: string } | null;
   other_user: (UserSummary & { online: boolean; last_seen_at?: string | null }) | null;
   role: string;
@@ -141,6 +142,7 @@ export type Community = {
   id: number;
   kind: "interest" | "custom";
   category?: string | null;  // its category's key (interest communities: set in the administration, or none)
+  language?: string | null;  // its official language (by default, its zone's)
   title: string;
   slug: string | null;
   description: string | null;

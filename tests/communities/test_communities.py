@@ -4,7 +4,7 @@ from sqlalchemy import select, update
 
 from app.core.models import ConversationMember
 
-from tests.helpers import make_user
+from tests.helpers import make_user, province_level
 
 
 async def _create(client, headers, **kw):
@@ -120,6 +120,7 @@ async def test_roles(client, db_session):
 
 
 async def test_zone_change_marks_memberships_away_and_back(client, db_session):
+    await province_level(db_session)
     ana = await make_user(client, db_session, "ana@example.com", "Ana")
     bea = await make_user(client, db_session, "bea@example.com", "Bea")
     com = await _create(client, ana[0])
@@ -189,6 +190,7 @@ async def test_remove_lets_rejoin_but_expel_does_not(client, db_session):
 
 
 async def test_discovering_another_zone(client, db_session):
+    await province_level(db_session)
     ana = await make_user(client, db_session, "ana@example.com", "Ana")  # Madrid, 31_60
     res = await client.get("/communities", params={"province": "Barcelona", "age_range": "18_30"}, headers=ana[0])
     assert res.status_code == 200, res.text
@@ -203,6 +205,7 @@ async def test_discovering_another_zone(client, db_session):
 
 
 async def test_discovering_an_autonomous_community_or_a_whole_country(client, db_session):
+    await province_level(db_session)
     ana = await make_user(client, db_session, "ana@example.com", "Ana")  # Madrid, 31_60
     leo = await make_user(client, db_session, "leo@example.com", "Leo", province="Sevilla")
     await client.post("/me/interests", json={"interest_slugs": ["senderismo"]}, headers=leo[0])

@@ -150,10 +150,15 @@ async def ensure_interest_channels(db: AsyncSession, user: User, zone: tuple[str
     interests = [i for i in (await db.execute(select(Interest))).scalars().all() if interest_allows(i, age, user)]
     if not interests:
         return
+    from app.communities.zones import geo_data, scope_values, zone_language, zone_of
+    data = await geo_data(db)
     defaults = {"min_age": None, "max_age": None}
-    rows = [dict(kind="channel", province=province, age_range=interest_key(i, age), interest_id=i.id, created_at=utcnow(),
-                 slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, **{**defaults, **channel_values(i)})
-            for i in interests]
+    rows = []
+    for i in interests:  # each interest's own zone width
+        zone = zone_of(data, province, i.geo_level)
+        rows.append(dict(kind="channel", age_range=interest_key(i, age), interest_id=i.id, created_at=utcnow(),
+                         slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, language=zone_language(data, zone),
+                         **scope_values(zone), **{**defaults, **channel_values(i)}))
     await db.execute(pg_insert(Conversation).values(rows).on_conflict_do_nothing(constraint="uq_channel_key"))
     await db.commit()
 
@@ -227,6 +232,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "join_questions": join_questions(c),
             # set in the administration (None: the app picks them from the name)
             "category": (interest.category if interest else c.category_key),
+            "language": c.language,
             "icon": interest.icon if interest else None,
             "color": interest.color if interest else None,
         })

@@ -16,7 +16,7 @@ from app.communities.service import interest_allows
 from app.core.app_settings import get_settings_row
 from app.conversations.service import (
     AGE_LABELS, can_join_channel, channel_for, get_membership, join, join_interest_channel, leave_interest_channel,
-    move_channels_to_zone, user_age_key,
+    move_channels_to_zone, scope_sql, user_age_key,
 )
 from app.mail.notify_email import account_email
 from app.realtime.service import online_ids
@@ -189,7 +189,7 @@ async def get_user(user_id: int, db: AsyncSession = Depends(get_db), me_user: Us
 def interest_out(i: Interest) -> InterestOut:
     return InterestOut(id=i.id, slug=i.slug, name=i.label(), base_name=i.name, names=dict(i.names or {}), category=i.category, icon=i.icon, color=i.color,
                        age_ranges=list(i.age_ranges or []), active=i.active is not False, tags=list(i.tags or [i.slug]),
-                       min_age=i.min_age, max_age=i.max_age, access_mode=i.access_mode or "open", board_mode=i.board_mode or "open",
+                       min_age=i.min_age, max_age=i.max_age, geo_level=i.geo_level or "country", access_mode=i.access_mode or "open", board_mode=i.board_mode or "open",
                        retention_days=i.retention_days or 365, join_questions=list(i.join_questions or []))
 
 
@@ -235,7 +235,7 @@ async def explore_channels(db: AsyncSession = Depends(get_db), user: User = Depe
         select(Conversation.interest_id, Conversation.id, Conversation.access_mode, func.count(ConversationMember.user_id))
         .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
                                             ConversationMember.banned.is_(False), ConversationMember.away.is_(False)))
-        .where(Conversation.kind == "channel", Conversation.province == user.province, Conversation.age_range.in_((age, "custom")),
+        .where(Conversation.kind == "channel", scope_sql(user.province), Conversation.age_range.in_((age, "custom")),
                Conversation.interest_id.isnot(None))
         .group_by(Conversation.interest_id, Conversation.id, Conversation.access_mode))
     by_interest = {iid: (cid, mode, n) for iid, cid, mode, n in res.all()}

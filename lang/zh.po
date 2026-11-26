@@ -4706,6 +4706,24 @@ msgstr "没有合适的：提议其他分类…"
 msgid "ui_community_category_proposal_ph"
 msgstr "你提议的分类名称"
 
+msgid "ui_community_language"
+msgstr "官方语言"
+
+msgid "ui_community_language_auto"
+msgstr "所在区域的语言"
+
+msgid "ui_community_language_hint"
+msgstr "社区交流使用的语言。默认为其所在区域的语言。"
+
+msgid "ui_zone_archive"
+msgstr "该区域已并入更大的社区。其历史记录可在此查看至{date}。"
+
+msgid "ui_zone_archive_open"
+msgstr "前往社区"
+
+msgid "err_language_invalid"
+msgstr "语言无效"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

@@ -1,6 +1,6 @@
 // Communities of my zone: the list, creating one, and a community's page (board, chat and members).
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { t } from "@lang";
+import { LANGUAGES, getLang, t } from "@lang";
 import { api, fileUrl } from "../api";
 import { coverGradient } from "../board";
 import { chatPath, communityPath, goBack, navigate } from "../router";
@@ -411,6 +411,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
   const [pickTags, setPickTags] = useState(false);
   // its category (required to create one), or a new one proposed to the administration ("Other" meanwhile)
   const categories = useStore((s) => s.categories);
+  const [language, setLanguage] = useState(community?.language || "");  // empty: the zone's language
   const [catKey, setCatKey] = useState(community && community.kind === "custom" ? community.category || "" : "");
   const [proposing, setProposing] = useState(false);
   const [proposal, setProposal] = useState("");
@@ -451,7 +452,8 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       const questions = form.access_mode === "request" ? form.questions.map((q) => q.trim()).filter(Boolean) : [];
       const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions,
         ...(interest ? {} : { retention_days: form.retention, interest_tags: form.tags }),
-        ...(interest ? {} : proposing ? { category_proposal: proposal.trim() } : catKey ? { category: catKey } : {}) };
+        ...(interest ? {} : proposing ? { category_proposal: proposal.trim() } : catKey ? { category: catKey } : {}),
+        ...(language ? { language } : {}) };
       if (community) {
         let c: Community & { expelled?: number } = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
         if (owner && filtersChanged()) {
@@ -508,6 +510,13 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
           ) : null}
         </div>
       ) : null}
+      <div className="fld"><span>{t("ui_community_language")}</span>
+        <select id="cm-language" className="inp" value={language} onChange={(e) => setLanguage(e.target.value)}>
+          {!community ? <option value="">{t("ui_community_language_auto")}</option> : null}
+          {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
+        </select>
+        <small className="muted">{t("ui_community_language_hint")}</small>
+      </div>
       <label className="fld">{t("ui_description")}<textarea id="cm-desc" className="inp" rows={3} maxLength={1000} value={form.description} onChange={(e) => set({ description: e.target.value })} placeholder={t("ui_community_desc_ph")} /></label>
       {community ? <div className="fld">{t("ui_community_f_rules")}<RichEditor id="cm-rules" value={form.rules} onChange={(v) => set({ rules: v })} /></div> : null}
       </section>
@@ -1045,7 +1054,7 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 /** Home: the communities I belong to, one tap away (board, chat and members). */
 
 
-type ScopeOf = { province?: string | null; age_range?: string | null; min_age?: number | null; max_age?: number | null; age_ranges?: string[] | null };
+type ScopeOf = { language?: string | null; province?: string | null; age_range?: string | null; min_age?: number | null; max_age?: number | null; age_ranges?: string[] | null };
 
 /** "31_60" → "31-60", "61_plus" → "61+". */
 function rangeLabel(r: string): string {
@@ -1061,6 +1070,7 @@ export function ScopeTags({ c }: { c: ScopeOf }) {
       {c.province ? <span className="ktag kscope"><Icon name="place" size="sm" />{c.province}</span> : null}
       {span ? <span className="ktag kage"><Icon name="users" size="sm" />{ageSpanText(c as Community)}</span> : null}
       {ranges.map((r) => <span key={r} className="ktag kage"><Icon name="users" size="sm" />{rangeLabel(r)}</span>)}
+      {c.language && c.language !== getLang() ? <span className="ktag kscope" title={t("ui_community_language")}>{c.language.toUpperCase()}</span> : null}
     </>
   );
 }

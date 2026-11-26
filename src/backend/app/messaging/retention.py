@@ -16,6 +16,15 @@ logger = logging.getLogger("meetgo.retention")
 BATCH = 2000
 
 
+async def _unused(db: AsyncSession, keys: list[str]) -> list[str]:
+    """The files no message uses any more (a chat copied into a new zone shares its files with the original)."""
+    if not keys:
+        return []
+    used = set((await db.execute(select(Attachment.storage_key).where(Attachment.storage_key.in_(keys)))).scalars().all())
+    used |= set((await db.execute(select(Attachment.thumb_key).where(Attachment.thumb_key.in_(keys)))).scalars().all())
+    return [k for k in keys if k not in used]
+
+
 def _remove_files(keys: list[str]) -> None:
     for key in keys:
         try:
@@ -46,13 +55,35 @@ async def purge_conversation(db: AsyncSession, conv: Conversation) -> int:
         await db.execute(delete(Message).where(Message.id.in_(ids)))  # reactions, attachments and reports cascade
         total += len(ids)
         await db.commit()
-        _remove_files(files)
+        _remove_files(await _unused(db, files))
     if total:
         last = (await db.execute(select(Message).where(Message.conversation_id == conv.id).order_by(Message.id.desc()).limit(1))).scalar_one_or_none()
         conv.last_message_id = last.id if last else None
         conv.last_message_at = last.created_at if last else None
         await db.commit()
     return total
+
+
+async def purge_archived(db: AsyncSession) -> int:
+    """Deletes the chats of joined zones once their time to be read is over. Returns how many."""
+    from datetime import datetime
+    now = utcnow()
+    gone = 0
+    for conv in (await db.execute(select(Conversation).where(
+            Conversation.kind == "group", Conversation.policy_json["archived_until"].astext.is_not(None)))).scalars().all():
+        try:
+            until = datetime.fromisoformat(conv.policy_json["archived_until"])
+        except (TypeError, ValueError):
+            continue
+        if until > now:
+            continue
+        files = [k for row in (await db.execute(select(Attachment.storage_key, Attachment.thumb_key).join(
+            Message, Message.id == Attachment.message_id).where(Message.conversation_id == conv.id))).all() for k in row if k]
+        await db.execute(delete(Conversation).where(Conversation.id == conv.id))  # messages, members, files cascade
+        await db.commit()
+        _remove_files(await _unused(db, files))
+        gone += 1
+    return gone
 
 
 async def purge_once(db: AsyncSession) -> int:
@@ -65,6 +96,8 @@ async def purge_once(db: AsyncSession) -> int:
         func.coalesce(Message.thread_root_id, 0) != func.coalesce(Conversation.pinned_message_id, 0)).group_by(Conversation.id).having(
         oldest < func.now() - func.make_interval(0, 0, 0, Conversation.retention_days)))).scalars().all()
     total = 0
+    if await purge_archived(db):
+        logger.info("Retention: archived zone chats deleted")
     for conv in rows:
         n = await purge_conversation(db, conv)
         if n:

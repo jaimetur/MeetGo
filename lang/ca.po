@@ -4706,6 +4706,24 @@ msgstr "Cap encaixa: proposa'n una altra…"
 msgid "ui_community_category_proposal_ph"
 msgstr "Nom de la categoria que proposes"
 
+msgid "ui_community_language"
+msgstr "Idioma oficial"
+
+msgid "ui_community_language_auto"
+msgstr "El de la seva zona"
+
+msgid "ui_community_language_hint"
+msgstr "L'idioma en què es parla a la comunitat. Per defecte, el de la seva zona geogràfica."
+
+msgid "ui_zone_archive"
+msgstr "Aquesta zona s'ha unit a una comunitat més àmplia. El seu historial es pot consultar aquí fins al {date}."
+
+msgid "ui_zone_archive_open"
+msgstr "Ves a la comunitat"
+
+msgid "err_language_invalid"
+msgstr "Idioma no vàlid"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 

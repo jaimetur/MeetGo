@@ -5569,6 +5569,24 @@ msgstr "Aucune ne convient : en proposer une autre…"
 msgid "ui_community_category_proposal_ph"
 msgstr "Nom de la catégorie que vous proposez"
 
+msgid "ui_community_language"
+msgstr "Langue officielle"
+
+msgid "ui_community_language_auto"
+msgstr "Celle de sa zone"
+
+msgid "ui_community_language_hint"
+msgstr "La langue parlée dans la communauté. Par défaut, celle de sa zone géographique."
+
+msgid "ui_zone_archive"
+msgstr "Cette zone a rejoint une communauté plus large. Son historique reste consultable ici jusqu'au {date}."
+
+msgid "ui_zone_archive_open"
+msgstr "Aller à la communauté"
+
+msgid "err_language_invalid"
+msgstr "Langue non valide"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administration l'examinera ; en attendant, votre communauté apparaîtra dans « Autres »."
 

@@ -120,19 +120,24 @@ def is_staff(member: ConversationMember | None, user: User) -> bool:
 # ---------- channels ----------
 
 async def channel_for(db: AsyncSession, province: str, age_key: str, interest_id: int) -> Conversation:
-    """The interest's community of a zone (made with the interest's settings if missing). With an age span the
-    interest has one community per province, whatever the range."""
+    """The interest's community for someone of `province` and `age_key` (made with the interest's settings if missing):
+    one per zone of the interest's width (country, region or province) and age range; with an age span, one per zone
+    whatever the range."""
     from app.communities.interest_settings import channel_values, interest_key
+    from app.communities.zones import geo_data, scope_values, zone_language, zone_of
     interest = await db.get(Interest, interest_id)
     age_key = interest_key(interest, age_key)
+    data = await geo_data(db)
+    zone = zone_of(data, province, interest.geo_level if interest else None)
     await db.execute(
         pg_insert(Conversation)
-        .values(kind=ConversationKind.CHANNEL.value, province=province, age_range=age_key, interest_id=interest_id,
-                created_at=utcnow(), slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, **channel_values(interest))
+        .values(kind=ConversationKind.CHANNEL.value, age_range=age_key, interest_id=interest_id,
+                created_at=utcnow(), slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, language=zone_language(data, zone),
+                **scope_values(zone), **channel_values(interest))
         .on_conflict_do_nothing(constraint="uq_channel_key")
     )
     res = await db.execute(select(Conversation).where(
-        Conversation.kind == "channel", Conversation.province == province,
+        Conversation.kind == "channel", Conversation.province == zone["key"],
         Conversation.age_range == age_key, Conversation.interest_id == interest_id))
     return res.scalar_one()
 
@@ -174,9 +179,12 @@ async def join_interest_channel(db: AsyncSession, user: User, interest_id: int) 
 
 async def leave_interest_channel(db: AsyncSession, user: User, interest_id: int, province: str, age_key: str) -> None:
     from app.communities.interest_settings import interest_key
-    age_key = interest_key(await db.get(Interest, interest_id), age_key)
+    from app.communities.zones import geo_data, zone_of
+    interest = await db.get(Interest, interest_id)
+    age_key = interest_key(interest, age_key)
+    zone_key = zone_of(await geo_data(db), province, interest.geo_level if interest else None)["key"]
     res = await db.execute(select(Conversation.id).where(
-        Conversation.kind == "channel", Conversation.province == province,
+        Conversation.kind == "channel", Conversation.province == zone_key,
         Conversation.age_range == age_key, Conversation.interest_id == interest_id))
     cid = res.scalar_one_or_none()
     if cid:
@@ -379,6 +387,9 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
         "age_range": conv.age_range,
         # expelled by a change of the community's filters: the chat stays, read only
         "read_only": member.expelled_message_id is not None,
+        # the chat of a zone joined into a wider community: read only until it is deleted
+        "archive": ({"until": (conv.policy_json or {})["archived_until"], "community_id": (conv.policy_json or {}).get("archived_into")}
+                    if (conv.policy_json or {}).get("archived_until") else None),
         "min_age": conv.min_age,
         "max_age": conv.max_age,
         "interest": {"id": interest.id, "slug": interest.slug, "name": interest.label()} if interest else None,

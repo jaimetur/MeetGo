@@ -121,3 +121,164 @@ async def apply_interest_settings(db: AsyncSession, interest: Interest, had_span
         c.policy_json = {**(c.policy_json or {}), "join_questions": values["policy_json"].get("join_questions", [])}
         await _recompute_away(db, c)
     await db.commit()
+
+
+RANK = {"country": 0, "region": 1, "province": 2}
+ARCHIVE_DAYS = 30  # how long the chats of joined zones stay to read
+
+
+async def copy_history(db: AsyncSession, source_id: int, target_id: int) -> None:
+    """Copies the chat of `source` into `target`: its messages (threads, replies and pinned one kept) and their files.
+    Reactions and reports stay in the original."""
+    from app.core.models import Attachment, Message
+    source = await db.get(Conversation, source_id)
+    ids: dict[int, int] = {}
+    for m in (await db.execute(select(Message).where(Message.conversation_id == source_id).order_by(Message.id))).scalars().all():
+        copy = Message(conversation_id=target_id, sender_id=m.sender_id, kind=m.kind, body=m.body,
+                       reply_to_id=ids.get(m.reply_to_id) if m.reply_to_id else None,
+                       thread_root_id=ids.get(m.thread_root_id) if m.thread_root_id else None,
+                       thread_reply_count=m.thread_reply_count, thread_last_reply_at=m.thread_last_reply_at,
+                       also_in_channel=m.also_in_channel, mentions=list(m.mentions or []), created_at=m.created_at,
+                       edited_at=m.edited_at, deleted_at=m.deleted_at, moderation_reason=m.moderation_reason)
+        db.add(copy)
+        await db.flush()
+        ids[m.id] = copy.id
+    if ids:
+        for a in (await db.execute(select(Attachment).where(Attachment.message_id.in_(list(ids))))).scalars().all():
+            db.add(Attachment(message_id=ids[a.message_id], uploader_id=a.uploader_id, storage_key=a.storage_key,
+                              thumb_key=a.thumb_key, file_name=a.file_name, mime=a.mime, size=a.size, width=a.width,
+                              height=a.height, created_at=a.created_at))
+        target = await db.get(Conversation, target_id)
+        target.last_message_id = max(ids.values())
+        target.last_message_at = source.last_message_at
+        if source.pinned_message_id in ids:
+            target.pinned_message_id = ids[source.pinned_message_id]
+        await db.execute(text("""UPDATE conversation_members SET last_read_message_id = :m, email_notified_message_id = :m
+            WHERE conversation_id = :t AND last_read_message_id < :m"""), {"t": target_id, "m": max(ids.values())})
+    await db.flush()
+
+
+async def _move_people_and_board(db: AsyncSession, target: int, others: list[int]) -> None:
+    """Members, posts, series and requests of `others` into `target`; their chats stay where they are."""
+    params = {"t": target, "o": others}
+    await db.execute(text("""
+        INSERT INTO conversation_members (conversation_id, user_id, role, joined_at, last_read_message_id, notify,
+            muted_until, pinned, hidden, strikes, last_strike_at, silenced_until, banned, ban_until,
+            email_notified_message_id, away)
+        SELECT DISTINCT ON (user_id) :t, user_id, role, joined_at, 0, notify, muted_until, pinned, hidden, strikes,
+            last_strike_at, silenced_until, banned, ban_until, 0, away
+        FROM conversation_members WHERE conversation_id = ANY(:o) ORDER BY user_id, away, joined_at
+        ON CONFLICT DO NOTHING"""), params)
+    for table in ("board_posts", "board_series", "community_requests"):
+        await db.execute(text(f"UPDATE {table} SET conversation_id = :t WHERE conversation_id = ANY(:o)"), params)
+
+
+def _archive(c: Conversation, name: str, into: int) -> None:
+    """A joined zone's chat: a read-only chat of its people, kept ARCHIVE_DAYS to look things up, then deleted."""
+    from datetime import timedelta
+    from app.core.models import utcnow
+    c.title = f"{name} · {c.scope_label or c.province}"[:120]
+    c.kind, c.interest_id = "group", None
+    c.province = c.scope_kind = c.scope_value = c.scope_label = None
+    c.scope_provinces = None
+    c.policy_json = {**(c.policy_json or {}), "read_only": True, "archived_into": into,
+                     "archived_until": (utcnow() + timedelta(days=ARCHIVE_DAYS)).isoformat()}
+
+
+async def regroup_geo(db: AsyncSession, interest: Interest) -> None:
+    """Puts the interest's communities at its geographic width (country, region or province), keeping every member.
+
+    Narrower (split): each wide community stays as the zone most of its people are in, and the people of every other
+    zone move to their zone's new community, which starts with a copy of the wide one's chat history.
+    Wider (join): the communities of the same new zone (and age range) become one new community with all their people,
+    posts and requests; its chat starts empty (their conversations would get mixed), and each old chat stays read only
+    for ARCHIVE_DAYS days for its people to look things up. A zone with a single community just takes the new width,
+    history and all. Does not commit."""
+    from sqlalchemy import delete
+    from app.communities.zones import geo_data, scope_values, zone_language, zone_of
+    from app.conversations.service import channel_for, join, user_age_key
+    data = await geo_data(db)
+    level, interest_id, name = interest.geo_level, interest.id, interest.name  # read now: later commits expire it
+    level = level if level in RANK else "country"
+    convs = list((await db.execute(select(Conversation).where(
+        Conversation.kind == "channel", Conversation.interest_id == interest_id))).scalars().all())
+    if not convs:
+        return
+    people: dict[int, list[User]] = {}
+    for member, user in (await db.execute(select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
+            ConversationMember.conversation_id.in_([c.id for c in convs]), ConversationMember.banned.is_(False),
+            ConversationMember.away.is_(False), User.bot_role.is_(None)))).all():
+        people.setdefault(member.conversation_id, []).append(user)
+
+    def zone_for(c: Conversation) -> dict:
+        """The zone of the new width most of its people are in (or where the community was)."""
+        zones = Counter(zone_of(data, u.province, level)["key"] for u in people.get(c.id, []) if u.province)
+        if zones:
+            key = zones.most_common(1)[0][0]
+            return zone_of(data, next(u.province for u in people[c.id] if u.province and zone_of(data, u.province, level)["key"] == key), level)
+        return zone_of(data, (c.scope_provinces or [c.province])[0], level)
+
+    async def rekey(c: Conversation, zone: dict) -> None:
+        for col, value in scope_values(zone).items():
+            setattr(c, col, value)
+        if not c.language:
+            c.language = zone_language(data, zone)
+
+    width = {c.id: c.scope_kind if c.scope_kind in RANK else "province" for c in convs}
+    splits = [c for c in convs if RANK[width[c.id]] < RANK[level]]
+    rest = [c for c in convs if c not in splits]
+    # free the zone keys first, so two communities never hold the same one at once
+    for c in convs:
+        c.province = f"tmp:{c.id}"
+    await db.flush()
+
+    # wider (or the same): join by zone
+    groups: dict[tuple[str, str | None], list[Conversation]] = {}
+    zone_by_key: dict[str, dict] = {}
+    for c in rest:
+        z = zone_for(c)
+        zone_by_key[z["key"]] = z
+        groups.setdefault((z["key"], c.age_range), []).append(c)
+    for (key, age), group in groups.items():
+        if len(group) == 1:
+            await rekey(group[0], zone_by_key[key])
+            continue
+        for c in group:
+            _archive(c, name, 0)
+        await db.flush()
+        fresh = await channel_for(db, zone_by_key[key]["provinces"][0] if zone_by_key[key]["provinces"] else key, age or "31_60", interest_id)
+        await _move_people_and_board(db, fresh.id, [c.id for c in group])
+        for c in group:
+            c.policy_json = {**c.policy_json, "archived_into": fresh.id}
+
+    # narrower: split each wide community by its people's zones
+    new_ids: set[int] = set()
+    for c in splits:
+        await rekey(c, zone_for(c))
+        await db.flush()
+        for u in people.get(c.id, []):
+            if not u.province or u.province in (c.scope_provinces or [c.province]):
+                continue
+            other = await channel_for(db, u.province, user_age_key(u), interest_id)
+            if other.id == c.id:
+                continue
+            if other.id not in {x.id for x in convs} and other.id not in new_ids:
+                new_ids.add(other.id)
+                await copy_history(db, c.id, other.id)
+            await join(db, other, u.id)
+            await db.execute(delete(ConversationMember).where(
+                ConversationMember.conversation_id == c.id, ConversationMember.user_id == u.id))
+    await db.flush()
+
+
+async def regroup_all_once(db: AsyncSession) -> None:
+    """At startup, once: every interest's communities at its width (country by default since 0025). Commits."""
+    from app.core.app_settings import get_section, set_section
+    done = await get_section(db, "migrations")
+    if done.get("geo_levels"):
+        return
+    for interest_id in (await db.execute(select(Interest.id))).scalars().all():
+        interest = await db.get(Interest, interest_id)
+        await regroup_geo(db, interest)
+        await apply_interest_settings(db, interest, has_span(interest))
+    await set_section(db, "migrations", {**done, "geo_levels": True})

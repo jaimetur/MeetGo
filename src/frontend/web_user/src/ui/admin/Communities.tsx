@@ -66,7 +66,9 @@ export function Communities() {
                   <span className="adm-tile-ic" style={{ color, background: `color-mix(in srgb, ${color} 15%, transparent)` }}><Icon name={hobbyIcon(i.slug, i.name)} /></span>
                   <span className="grow adm-tile-txt">
                     <b>{i.name}</b>
-                    <small>{a("co_stats", { zones: i.zones, people: i.people })}</small>
+                    <small>{a("co_stats2", { zones: i.zones, bands: i.age_bands ?? 0, people: i.people })}</small>
+                    <span className="adm-tile-badges"><Badge tone="gray">{a(`co_geo_${i.geo_level || "country"}`)}</Badge>
+                      {i.suggest ? <Badge tone={i.suggest === "split" ? "orange" : "blue"}>{a(i.suggest === "split" ? "co_suggest_split" : "co_suggest_join")}</Badge> : null}</span>
                     {!i.active || i.age_ranges.length ? (
                       <span className="adm-tile-badges">
                         {!i.active ? <Badge tone="gray">{a("co_off")}</Badge> : null}
@@ -95,7 +97,10 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
   const [color, setColor] = useState(interest?.color || "");
   const [ages, setAges] = useState<string[]>(interest?.age_ranges || []);
   const [active, setActive] = useState(interest?.active ?? true);
-  const [ageMode, setAgeMode] = useState<"ranges" | "span">(interest && (interest.min_age != null || interest.max_age != null) ? "span" : "ranges");
+  // "all": one community for every age (a span from 18 with no maximum)
+  const [ageMode, setAgeMode] = useState<"all" | "ranges" | "span">(!interest ? "ranges"
+    : interest.min_age === 18 && interest.max_age == null ? "all" : interest.min_age != null || interest.max_age != null ? "span" : "ranges");
+  const [geo, setGeo] = useState<"country" | "region" | "province">(interest?.geo_level || "country");
   // as typed (they can be emptied while editing); an empty maximum is "no upper limit"
   const [minAge, setMinAge] = useState(String(interest?.min_age ?? 25));
   const [maxAge, setMaxAge] = useState(interest && (interest.min_age != null || interest.max_age != null) ? (interest.max_age != null ? String(interest.max_age) : "") : "45");
@@ -117,8 +122,9 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
     if (!name.trim() || !slug) return;
     setBusy(true);
     const payload = {
-      slug, name: name.trim(), names, category, icon, color, active, age_mode: ageMode,
+      slug, name: name.trim(), names, category, icon, color, active, age_mode: ageMode === "all" ? "span" : ageMode, geo_level: geo,
       age_ranges: ageMode === "ranges" ? ages : [], ...(ageMode === "span" ? { min_age: Number(minAge) || 18, max_age: maxAge.trim() ? Number(maxAge) : null } : {}),
+      ...(ageMode === "all" ? { min_age: 18, max_age: null } : {}),
       access_mode: access, board_mode: board, retention_days: retention,
       join_questions: access === "request" ? questions.map((q) => q.trim()).filter(Boolean) : [],
       tags: [slug, ...tags.filter((x) => x !== slug)].slice(0, 5),
@@ -145,7 +151,7 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
     </>}>
       <div className="adm-preview" style={{ background: `linear-gradient(135deg, ${shownColor}, color-mix(in srgb, ${shownColor} 55%, #0b1220))` }}>
         <span><Icon name={shownIcon} /></span>
-        <div><b>{name || a("co_new_ph")}</b><small>{categoryName(category || guess.category)}{interest ? ` · ${a("co_stats", { zones: interest.zones, people: interest.people })}` : ""}</small></div>
+        <div><b>{name || a("co_new_ph")}</b><small>{categoryName(category || guess.category)}{interest ? ` · ${a("co_stats2", { zones: interest.zones, bands: interest.age_bands ?? 0, people: interest.people })}` : ""}</small></div>
       </div>
       {confirm ? <p className="adm-red adm-note">{a("co_delete_hint")}</p> : null}
 
@@ -184,10 +190,23 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
       <div className="adm-sub">
         <div className="adm-sub-head"><b>{a("co_rules")}</b></div>
         <Switch id="adm-co-active" label={a("co_active")} hint={a("co_active_hint")} on={active} onChange={setActive} />
-        <div className="adm-field"><span>{a("co_ages")}</span>
-          <Choice label={a("co_ages")} value={ageMode} onChange={setAgeMode} options={[["ranges", a("co_age_ranges")], ["span", a("co_age_span")]]} />
+        <div className="adm-field"><span>{a("co_geo")}</span>
+          <Choice label={a("co_geo")} value={geo} onChange={setGeo} options={[["country", a("co_geo_country")], ["region", a("co_geo_region")], ["province", a("co_geo_province")]]} />
+          <small>{a("co_geo_hint")}</small>
         </div>
-        {ageMode === "span" ? (
+        {interest?.suggest ? (
+          <div className={"adm-note " + (interest.suggest === "split" ? "adm-red" : "")}>
+            {interest.suggest === "split" ? a("co_suggest_split_note", { n: interest.biggest ?? 0 }) : a("co_suggest_join_note")}{" "}
+            <button type="button" className="linkbtn" onClick={() => setGeo(interest.suggest === "split"
+              ? (geo === "country" ? "region" : "province") : (geo === "province" ? "region" : "country"))}>
+              {a(interest.suggest === "split" ? "co_suggest_split_do" : "co_suggest_join_do")}
+            </button>
+          </div>
+        ) : null}
+        <div className="adm-field"><span>{a("co_ages")}</span>
+          <Choice label={a("co_ages")} value={ageMode} onChange={setAgeMode} options={[["all", a("co_age_all")], ["ranges", a("co_age_ranges")], ["span", a("co_age_span")]]} />
+        </div>
+        {ageMode === "all" ? <small className="muted">{a("co_age_all_hint")}</small> : ageMode === "span" ? (
           <div className="adm-grid">
             <Field label={a("co_min_age")}><input className="inp" type="number" inputMode="numeric" min={18} max={120} placeholder="18" value={minAge} onChange={(e) => setMinAge(e.target.value)} /></Field>
             <Field label={a("co_max_age")}><input className="inp" type="number" inputMode="numeric" min={18} max={120} placeholder={a("co_age_no_limit")} value={maxAge} onChange={(e) => setMaxAge(e.target.value)} /></Field>

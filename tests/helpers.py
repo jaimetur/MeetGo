@@ -1,8 +1,15 @@
 from sqlalchemy import update
 
-from app.core.models import User
+from app.core.models import Interest, User
 
 _phone = [600000000]
+
+
+async def province_level(db_session):
+    """Interest communities per province (they are national by default), for the tests of zones and provinces."""
+    async with db_session() as db:
+        await db.execute(update(Interest).values(geo_level="province"))
+        await db.commit()
 
 
 async def make_user(client, db_session, email, name=None, province="Madrid", dob="1990-05-01", accept_dm=False, **extra):

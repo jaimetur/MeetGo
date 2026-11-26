@@ -155,6 +155,8 @@ class Interest(Base):
     color: Mapped[str | None] = mapped_column(String(16), nullable=True)
     # Restrictions: the age ranges it exists for (empty = all) and whether it is open at all.
     age_ranges: Mapped[list] = mapped_column(JSONB, default=list)
+    # How wide its communities are: one per country, per region (a group of provinces) or per province
+    geo_level: Mapped[str] = mapped_column(String(16), default="country", server_default="country")
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     # Interests (slugs) this community is about, 1-5 including its own: people with any of them get it suggested.
     tags: Mapped[list] = mapped_column(JSONB, default=list)
@@ -260,6 +262,8 @@ class Conversation(Base):
     interest_tags: Mapped[list] = mapped_column(JSONB, default=list)
     # Communities made by people: their category (Category.key); "ui_cat_other" while a proposed one waits
     category_key: Mapped[str | None] = mapped_column(String(48), nullable=True)
+    # Communities: the language they are held in (by default, their zone's)
+    language: Mapped[str | None] = mapped_column(String(8), nullable=True)
     retention_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)

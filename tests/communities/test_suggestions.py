@@ -5,7 +5,7 @@ from sqlalchemy import select
 
 from app.core.models import Conversation, ConversationMember, Interest
 
-from tests.helpers import admin_headers, make_user
+from tests.helpers import admin_headers, make_user, province_level
 
 
 async def test_other_zones_always_with_my_own_age(client, db_session):
@@ -32,6 +32,7 @@ async def test_suggestions_by_interests(client, db_session):
 
 
 async def test_interest_settings_and_age_span(client, db_session):
+    await province_level(db_session)
     headers = await admin_headers(client)
     young = await make_user(client, db_session, "y.span@example.com", "Joven", dob="2000-01-01")  # 18-30
     mid = await make_user(client, db_session, "m.span@example.com", "Medio", dob="1988-01-01")  # 31-60

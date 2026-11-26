@@ -4,7 +4,7 @@ import io
 
 from PIL import Image
 
-from tests.helpers import befriend, make_user
+from tests.helpers import befriend, make_user, province_level
 
 
 async def _channel(client, headers, slug="senderismo"):
@@ -20,6 +20,7 @@ async def _send(client, headers, conv_id, body, **extra):
 
 
 async def test_choosing_an_interest_joins_the_zone_channel(client, db_session):
+    await province_level(db_session)
     ana = await make_user(client, db_session, "ana@example.com", "Ana")
     bea = await make_user(client, db_session, "bea@example.com", "Bea")
     leo = await make_user(client, db_session, "leo@example.com", "Leo", province="Sevilla")

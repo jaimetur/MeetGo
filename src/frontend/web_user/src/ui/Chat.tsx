@@ -248,7 +248,10 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
       <div className="typing" aria-live="polite">
         {typingNames.length ? (<><span className="dots"><i /><i /><i /></span>{typingText(typingNames)}</>) : null}
       </div>
-      {conv.read_only ? (
+      {conv.archive ? (
+        <div className="readonly"><Icon name="info" /><span className="grow">{t("ui_zone_archive", { date: new Date(conv.archive.until).toLocaleDateString(undefined, { day: "numeric", month: "long" }) })}</span>
+          {conv.archive.community_id ? <button className="btn pri sm" onClick={() => navigate(communityPath(conv.archive!.community_id!))}>{t("ui_zone_archive_open")}</button> : null}</div>
+      ) : conv.read_only ? (
         <div className="readonly"><Icon name="shield" /><span>{t("ui_community_expelled_filters")}</span></div>
       ) : conv.banned ? (
         <div className="readonly"><Icon name="shield" /><span>{t("err_banned_here")}</span></div>

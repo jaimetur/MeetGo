@@ -5570,6 +5570,24 @@ msgstr "Keine passt: andere vorschlagen …"
 msgid "ui_community_category_proposal_ph"
 msgstr "Name der vorgeschlagenen Kategorie"
 
+msgid "ui_community_language"
+msgstr "Amtssprache"
+
+msgid "ui_community_language_auto"
+msgstr "Die ihrer Region"
+
+msgid "ui_community_language_hint"
+msgstr "Die Sprache, in der in der Community gesprochen wird. Standardmäßig die ihrer Region."
+
+msgid "ui_zone_archive"
+msgstr "Diese Region gehört jetzt zu einer größeren Community. Ihr Verlauf ist hier bis zum {date} lesbar."
+
+msgid "ui_zone_archive_open"
+msgstr "Zur Community"
+
+msgid "err_language_invalid"
+msgstr "Ungültige Sprache"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

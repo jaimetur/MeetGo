@@ -4707,6 +4707,24 @@ msgstr "Ninguna encaja: proponer otra…"
 msgid "ui_community_category_proposal_ph"
 msgstr "Nombre de la categoría que propones"
 
+msgid "ui_community_language"
+msgstr "Idioma oficial"
+
+msgid "ui_community_language_auto"
+msgstr "El de su zona"
+
+msgid "ui_community_language_hint"
+msgstr "El idioma en el que se habla en la comunidad. Por defecto, el de su zona geográfica."
+
+msgid "ui_zone_archive"
+msgstr "Esta zona se ha unido a una comunidad más amplia. Su historial se puede consultar aquí hasta el {date}."
+
+msgid "ui_zone_archive_open"
+msgstr "Ir a la comunidad"
+
+msgid "err_language_invalid"
+msgstr "Idioma no válido"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "La revisará la administración; mientras tanto, tu comunidad aparecerá en «Otras»."
 

@@ -167,6 +167,7 @@ class InterestOut(BaseModel):
     tags: list[str] = Field(default_factory=list)
     min_age: int | None = None
     max_age: int | None = None
+    geo_level: str = "country"
     access_mode: str = "open"
     board_mode: str = "open"
     retention_days: int = 365
@@ -276,6 +277,7 @@ class AdminInterestIn(BaseModel):
     board_mode: str | None = Field(default=None, pattern="^(open|admins)$")
     retention_days: int | None = None
     join_questions: list[str] | None = Field(default=None, max_length=3)
+    geo_level: str | None = Field(default=None, pattern="^(country|region|province)$")
 
 class CommunityInviteIn(BaseModel):
     user_ids: list[int] = Field(min_length=1, max_length=50)
@@ -404,6 +406,7 @@ class CommunityCreateIn(BaseModel):
     join_questions: list[str] | None = Field(default=None, max_length=3)
     retention_days: int | None = None
     interest_tags: list[str] | None = Field(default=None, max_length=5)
+    language: str | None = Field(default=None, min_length=2, max_length=8)  # its official language (default: its zone's)
     category: str | None = Field(default=None, max_length=48)  # a category's key, or…
     category_proposal: str | None = Field(default=None, min_length=2, max_length=60)  # …a new one for the administration
 
@@ -420,6 +423,7 @@ class CommunityUpdateIn(BaseModel):
     interest_tags: list[str] | None = Field(default=None, max_length=5)
     category: str | None = Field(default=None, max_length=48)
     category_proposal: str | None = Field(default=None, min_length=2, max_length=60)
+    language: str | None = Field(default=None, min_length=2, max_length=8)
 
 
 class CommunityFiltersIn(BaseModel):
