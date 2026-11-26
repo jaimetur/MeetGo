@@ -127,6 +127,21 @@ export function viewportDiagnostics() {
 
 /** Inside the Android app, once: what its WebView says of the screen (in the request logs of the administration), to
  * see how it measures it. */
+/** In the Android app only: the screen's measures a moment after `what` (Administration → Logs, "settings/public?diag="),
+ *  to see what a phone does without a screenshot. */
+export function reportNativeNow(what: string) {
+  if (!/MeetGoApp\//.test(navigator.userAgent)) return;
+  window.setTimeout(() => {
+    const root = document.documentElement, r = (sel: string) => Math.round(document.querySelector(sel)?.getBoundingClientRect().height || 0);
+    const d = { what, iw: innerWidth, ih: innerHeight, vv: Math.round(window.visualViewport?.height || 0), vvs: window.visualViewport?.scale ?? "-",
+      apph: root.style.getPropertyValue("--app-height") || "-", kb: root.classList.contains("kb") ? 1 : 0, wr: root.classList.contains("writing") ? 1 : 0,
+      root: r("#root"), shell: r(".shell"), screen: r(".screen, .page"), nav: r(".mnav"), act: document.activeElement?.tagName || "-",
+      zoom: getComputedStyle(document.querySelector(".screen, .page") || root).zoom };
+    const q = Object.entries(d).map(([k, v]) => `${k}:${v}`).join(",");
+    import("./api").then(({ API_BASE }) => fetch(`${API_BASE}/settings/public?diag=${encodeURIComponent(q)}`).catch(() => undefined));
+  }, 1500);
+}
+
 function reportNative() {
   if (!/MeetGoApp\//.test(navigator.userAgent)) return;
   try {

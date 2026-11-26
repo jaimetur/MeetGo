@@ -7,6 +7,7 @@ import { chatPath, communityPath, navigate, queryParam, useRoute } from "../rout
 import { loadBlocks, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
+import { reportNativeNow } from "../viewport";
 import { CHAT_SIZES, DESIGN_FAMILIES, THEMES, THEME_FAMILIES, type ThemeChoice, type ThemeMode, applyChatSize, readThemeChoice, saveThemeChoice, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
 import { AboutModal, Avatar, Icon, LAYOUTS, applyLayout, getRailIcons, setRailIcons, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
@@ -858,7 +859,7 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
       <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_layout_hint")}</div>
       <label className="tgl railtgl" htmlFor="set-rail-icons">
         <span className="grow">{t("ui_rail_icons")}<small>{t("ui_rail_icons_hint")}</small></span>
-        <input id="set-rail-icons" type="checkbox" role="switch" checked={rail} onChange={(e) => { setRail(e.target.checked); setRailIcons(e.target.checked); }} />
+        <input id="set-rail-icons" type="checkbox" role="switch" checked={rail} onChange={(e) => { setRail(e.target.checked); setRailIcons(e.target.checked); reportNativeNow("rail"); }} />
         <span className="sw" aria-hidden="true" />
       </label>
     </div>
