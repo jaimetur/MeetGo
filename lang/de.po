@@ -4445,6 +4445,9 @@ msgstr "Communities"
 msgid "ui_community_title_ph"
 msgstr "z. B. Samstagsläufer"
 
+msgid "ui_community_publish_here"
+msgstr "In {name} posten"
+
 msgid "ui_community_yours"
 msgstr "Deine Communities"
 

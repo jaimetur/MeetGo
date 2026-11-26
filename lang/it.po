@@ -4667,6 +4667,9 @@ msgstr "Comunità"
 msgid "ui_community_lead"
 msgstr "Persone di {zone} con i tuoi stessi interessi"
 
+msgid "ui_community_publish_here"
+msgstr "Pubblica in {name}"
+
 msgid "ui_community_yours"
 msgstr "Le tue comunità"
 

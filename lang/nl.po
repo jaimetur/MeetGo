@@ -4667,6 +4667,9 @@ msgstr "Communities"
 msgid "ui_community_lead"
 msgstr "Mensen uit {zone} die delen wat jij leuk vindt"
 
+msgid "ui_community_publish_here"
+msgstr "Plaatsen in {name}"
+
 msgid "ui_community_yours"
 msgstr "Jouw communities"
 

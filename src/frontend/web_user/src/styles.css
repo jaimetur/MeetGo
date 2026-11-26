@@ -1682,3 +1682,9 @@ a.btn { text-decoration: none; }
 .csubtoggle .chev { font-size: 15px; line-height: 1; transition: transform .15s ease; }
 .csubtoggle .chev.open { transform: rotate(90deg); }
 .cname .cmark { margin-right: 4px; color: var(--muted); vertical-align: -2px; }
+
+/* Your communities: the row and, beside it, a button to publish in that community */
+.minirow { position: relative; }
+.minirow .mini { padding-right: 50px; }
+.minipub { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--grad); color: var(--on-accent); }
+.minipub:hover { filter: brightness(1.08); }

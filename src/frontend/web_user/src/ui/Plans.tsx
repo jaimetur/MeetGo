@@ -114,6 +114,11 @@ export function PlansPage() {
 export function RightColumn() {
   const plans = useStore((s) => s.myPlans);
   const communities = useStore((s) => s.myCommunities);
+  const conversations = useStore((s) => s.conversations);
+  const activity = (c: { conversation_id: number }) => {
+    const at = conversations[c.conversation_id]?.last_message_at;
+    return at ? new Date(at).getTime() : 0;
+  };
   return (
     <aside className="rcol" aria-label={t("ui_side_panel")}>
       <section>
@@ -141,17 +146,22 @@ export function RightColumn() {
       <section>
         <div className="row"><h3 className="grow">{t("ui_community_yours")}</h3><button className="linkbtn" onClick={() => navigate("/communities")}>{t("ui_post_see_all")}</button></div>
         {communities === null ? <div className="mini skel"><span className="sk w60" /></div> : null}
-        {[...(communities || [])].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" })).map((c) => (
-          <button key={c.id} className="mini" onClick={() => navigate(communityPath(c.id))}>
-            <span className="minitile round" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
-            <span className="grow" style={{ minWidth: 0 }}>
-              <b>{c.title}</b>
-              <span className="muted">
-                {c.online_count ? <><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</> : t("ui_members_n", { n: c.member_count })}
-                {c.upcoming_count ? ` · ${t("ui_community_plans_n", { n: c.upcoming_count })}` : ""}
+        {/* the latest active first (last message in its chat), then by name; each with a shortcut to publish in it */}
+        {[...(communities || [])].sort((a, b) => (activity(b) - activity(a)) || a.title.localeCompare(b.title, undefined, { sensitivity: "base" })).map((c) => (
+          <div key={c.id} className="minirow">
+            <button className="mini" onClick={() => navigate(communityPath(c.id))}>
+              <span className="minitile round" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+              <span className="grow" style={{ minWidth: 0 }}>
+                <b>{c.title}</b>
+                <span className="muted">
+                  {c.online_count ? <><span className="odot" />{t("ui_community_online_n", { n: c.online_count })}</> : t("ui_members_n", { n: c.member_count })}
+                  {c.upcoming_count ? ` · ${t("ui_community_plans_n", { n: c.upcoming_count })}` : ""}
+                </span>
               </span>
-            </span>
-          </button>
+            </button>
+            <button className="minipub" title={t("ui_community_publish_here", { name: c.title })} aria-label={t("ui_community_publish_here", { name: c.title })}
+              onClick={() => navigate(`/publish?community=${c.id}`)}><Icon name="plus" /></button>
+          </div>
         ))}
         {communities && !communities.length ? (
           <div className="mini empty-mini">
