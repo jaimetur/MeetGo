@@ -5334,7 +5334,7 @@ msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 
 msgid "ui_cbadge_active"
-msgstr "アクティブ"
+msgstr "活動中"
 
 msgid "ui_cbadge_plans"
 msgstr "予定あり"
