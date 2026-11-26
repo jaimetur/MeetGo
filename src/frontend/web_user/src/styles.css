@@ -1446,7 +1446,8 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-shell { display: flex; flex-direction: column; gap: 16px; max-width: 1180px; margin: 0 auto; }
 .adm-nav { position: sticky; top: 0; z-index: 4; display: flex; gap: 4px; padding: 5px; overflow-x: auto; scrollbar-width: none; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); }
 .adm-nav::-webkit-scrollbar { display: none; }
-@media (min-width: 821px) { .adm-nav { flex-wrap: wrap; } .adm-nav button { flex: 0 0 auto; } }
+@media (min-width: 821px) { .adm-nav { display: grid; grid-template-columns: repeat(var(--half, 6), minmax(0, 1fr)); } .adm-nav button { min-width: 0; padding-inline: 8px; } .adm-nav button span { overflow: hidden; text-overflow: ellipsis; } }
+@media (min-width: 821px) and (max-width: 1100px) { .adm-nav { grid-template-columns: repeat(var(--third, 4), minmax(0, 1fr)); } .adm-shell .adm-nav button { font-size: 12px; gap: 5px; padding-inline: 4px; } }
 .adm-nav button { flex: 1 0 auto; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 8px 12px; border-radius: 10px; color: var(--muted); font-weight: 600; font-size: 13.5px; white-space: nowrap; }
 .adm-nav button:hover { background: var(--panel2); color: var(--fg); }
 .adm-nav button.on { background: var(--grad); color: var(--on-accent); box-shadow: 0 4px 12px rgba(30, 144, 255, 0.28); }

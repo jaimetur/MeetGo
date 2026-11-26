@@ -72,7 +72,9 @@ export function AdminPage() {
     <main className="page adm">
       <PhoneTop title={t("ui_nav_admin")} />
       <div className="adm-shell">
-        <nav className="adm-nav" aria-label={t("ui_nav_admin")}>
+        {/* on wide screens one row; otherwise two (or three) rows with about the same number of sections each */}
+        <nav className="adm-nav" aria-label={t("ui_nav_admin")}
+          style={{ ["--n" as string]: SECTIONS.length, ["--half" as string]: Math.ceil(SECTIONS.length / 2), ["--third" as string]: Math.ceil(SECTIONS.length / 3) }}>
           {SECTIONS.map(([k, icon, label]) => (
             <button key={k} id={`adm-nav-${k}`} className={section === k ? "on" : ""} aria-current={section === k ? "page" : undefined}
               onClick={() => { if (k !== section) goSection(k); }}>
