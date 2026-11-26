@@ -51,7 +51,23 @@ export function setupViewport() {
       root.style.removeProperty("--app-height");
       root.style.removeProperty("--app-top");
     }
+    // The page itself never scrolls (each screen scrolls inside): without the keyboard, if the phone moved it (Android
+    // brings a focused switch or checkbox into view by moving the whole page up), put it back.
+    if (!keyboard) unscroll();
   };
+  const unscroll = () => {
+    const el = document.scrollingElement || document.documentElement;
+    if (window.scrollY || el.scrollTop || document.body.scrollTop || (vv && vv.offsetTop > 1 && vv.scale <= 1.01)) {
+      window.scrollTo(0, 0);
+      el.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  };
+  window.addEventListener("scroll", () => {
+    const el = document.activeElement;
+    const typing = !!el && (el.tagName === "TEXTAREA" || (el as HTMLElement).isContentEditable || (el.tagName === "INPUT" && !["checkbox", "radio", "range", "button", "submit", "reset", "color", "file", "image"].includes((el as HTMLInputElement).type)));
+    if (!typing) unscroll();
+  }, { passive: true });
   update();
   reportNative();
   vv?.addEventListener("resize", update);
@@ -134,6 +150,7 @@ export function reportNativeNow(what: string) {
   window.setTimeout(() => {
     const root = document.documentElement, r = (sel: string) => Math.round(document.querySelector(sel)?.getBoundingClientRect().height || 0);
     const d = { what, iw: innerWidth, ih: innerHeight, vv: Math.round(window.visualViewport?.height || 0), vvs: window.visualViewport?.scale ?? "-",
+      sy: Math.round(window.scrollY), vt: Math.round(window.visualViewport?.offsetTop || 0), rt: Math.round(document.querySelector("#root")?.getBoundingClientRect().top || 0),
       apph: root.style.getPropertyValue("--app-height") || "-", kb: root.classList.contains("kb") ? 1 : 0, wr: root.classList.contains("writing") ? 1 : 0,
       root: r("#root"), shell: r(".shell"), screen: r(".screen, .page"), nav: r(".mnav"), act: document.activeElement?.tagName || "-",
       zoom: getComputedStyle(document.querySelector(".screen, .page") || root).zoom };
