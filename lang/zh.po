@@ -4667,6 +4667,21 @@ msgstr "庆祝活动"
 msgid "cover_christmas"
 msgstr "圣诞节"
 
+msgid "cover_golf"
+msgstr "高尔夫"
+
+msgid "cover_ski"
+msgstr "滑雪"
+
+msgid "cover_boxing"
+msgstr "拳击"
+
+msgid "cover_table_tennis"
+msgstr "乒乓球"
+
+msgid "cover_skate"
+msgstr "滑板"
+
 msgid "ui_sec_plans"
 msgstr "计划聊天"
 

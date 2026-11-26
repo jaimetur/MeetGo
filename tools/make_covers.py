@@ -27,7 +27,8 @@ PY = ROOT / "src" / "backend" / "app" / "board" / "cover_arts.py"
 TS = ROOT / "src" / "frontend" / "web_user" / "src" / "coverArts.ts"
 W, H = 1200, 630
 
-from cover_catalog import CATALOG, colors  # noqa: E402  (next to this script)
+from cover_art import PLACES, THINGS, put  # noqa: E402  (next to this script)
+from cover_catalog import CATALOG, COMPOSE, colors  # noqa: E402
 
 
 # Drawings only the covers use (24x24, stroked like the app's icons)
@@ -178,11 +179,21 @@ def cover(paths: dict[str, str], name: str, c1: str, c2: str, kind: str, main: s
             f'{icon(paths, main, 600, 285, 190, 1, 1.5)}</svg>')
 
 
+def scene_cover(name: str) -> str:
+    """The cover: its place, then its things, each with a soft light behind so it stands out."""
+    place, things = COMPOSE[name]
+    rnd = random.Random(name)  # the same picture every time
+    body = PLACES[place](rnd, colors(name))
+    for thing, x, y, s, rot in things:
+        body += f'<ellipse cx="{x}" cy="{y}" rx="{230 * s}" ry="{200 * s}" fill="#fff" opacity=".10"/>'
+        body += put(THINGS[thing](), x, y, s, rot)
+    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">{body}</svg>'
+
+
 def main() -> None:
-    paths = icons()
-    missing = {ic for _, _, _, m, a, *_ in CATALOG for ic in [m, *a] if ic not in paths}
+    missing = [c[0] for c in CATALOG if c[0] not in COMPOSE]
     if missing:
-        raise SystemExit(f"Icons not drawn: {sorted(missing)}")
+        raise SystemExit(f"Covers without a picture in COMPOSE: {missing}")
     names = [c[0] for c in CATALOG]
     if len(set(names)) != len(names):
         raise SystemExit("Repeated cover names")
@@ -190,9 +201,8 @@ def main() -> None:
     for old in OUT.glob("*.svg"):
         if old.stem not in names:
             old.unlink()
-    for name, _cat, kind, main_icon, around, *_ in CATALOG:
-        c1, c2 = colors(name)
-        (OUT / f"{name}.svg").write_text(cover(paths, name, c1, c2, kind, main_icon, around), encoding="utf-8")
+    for name, *_ in CATALOG:
+        (OUT / f"{name}.svg").write_text(scene_cover(name), encoding="utf-8")
     PY.write_text('"""The cover illustrations a plan or an event can take (written by tools/make_covers.py)."""\n\n'
                   f"COVER_ARTS = {tuple(names)!r}\n", encoding="utf-8")
     TS.write_text("// The gallery of cover illustrations (written by tools/make_covers.py): name, category and interests.\n"

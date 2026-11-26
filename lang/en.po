@@ -4668,6 +4668,21 @@ msgstr "Celebration"
 msgid "cover_christmas"
 msgstr "Christmas"
 
+msgid "cover_golf"
+msgstr "Golf"
+
+msgid "cover_ski"
+msgstr "Skiing"
+
+msgid "cover_boxing"
+msgstr "Boxing"
+
+msgid "cover_table_tennis"
+msgstr "Table tennis"
+
+msgid "cover_skate"
+msgstr "Skateboarding"
+
 msgid "ui_sec_plans"
 msgstr "Plan chats"
 

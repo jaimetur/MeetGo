@@ -5531,6 +5531,21 @@ msgstr "Feier"
 msgid "cover_christmas"
 msgstr "Weihnachten"
 
+msgid "cover_golf"
+msgstr "Golf"
+
+msgid "cover_ski"
+msgstr "Skifahren"
+
+msgid "cover_boxing"
+msgstr "Boxen"
+
+msgid "cover_table_tennis"
+msgstr "Tischtennis"
+
+msgid "cover_skate"
+msgstr "Skateboarden"
+
 msgid "ui_sec_plans"
 msgstr "Plan-Chats"
 

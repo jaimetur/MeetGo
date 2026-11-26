@@ -5530,6 +5530,21 @@ msgstr "Célébration"
 msgid "cover_christmas"
 msgstr "Noël"
 
+msgid "cover_golf"
+msgstr "Golf"
+
+msgid "cover_ski"
+msgstr "Ski"
+
+msgid "cover_boxing"
+msgstr "Boxe"
+
+msgid "cover_table_tennis"
+msgstr "Ping-pong"
+
+msgid "cover_skate"
+msgstr "Skate"
+
 msgid "ui_sec_plans"
 msgstr "Chats des plans"
 

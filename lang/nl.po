@@ -4667,6 +4667,21 @@ msgstr "Viering"
 msgid "cover_christmas"
 msgstr "Kerst"
 
+msgid "cover_golf"
+msgstr "Golf"
+
+msgid "cover_ski"
+msgstr "Skiën"
+
+msgid "cover_boxing"
+msgstr "Boksen"
+
+msgid "cover_table_tennis"
+msgstr "Tafeltennis"
+
+msgid "cover_skate"
+msgstr "Skateboarden"
+
 msgid "ui_sec_plans"
 msgstr "Plan-chats"
 

@@ -4667,6 +4667,21 @@ msgstr "Celebració"
 msgid "cover_christmas"
 msgstr "Nadal"
 
+msgid "cover_golf"
+msgstr "Golf"
+
+msgid "cover_ski"
+msgstr "Esquí"
+
+msgid "cover_boxing"
+msgstr "Boxa"
+
+msgid "cover_table_tennis"
+msgstr "Ping-pong"
+
+msgid "cover_skate"
+msgstr "Skate"
+
 msgid "ui_sec_plans"
 msgstr "Xats de plans"
 

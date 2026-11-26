@@ -4667,6 +4667,21 @@ msgstr "お祝い"
 msgid "cover_christmas"
 msgstr "クリスマス"
 
+msgid "cover_golf"
+msgstr "ゴルフ"
+
+msgid "cover_ski"
+msgstr "スキー"
+
+msgid "cover_boxing"
+msgstr "ボクシング"
+
+msgid "cover_table_tennis"
+msgstr "卓球"
+
+msgid "cover_skate"
+msgstr "スケートボード"
+
 msgid "ui_sec_plans"
 msgstr "予定のチャット"
 
