@@ -5,6 +5,8 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  lg_error: "No se han podido cargar los registros.",
+  lg_retry: "Reintentar",
   sec_logs: "Registros",
   lg_lead: "Cada llamada a la API de los últimos 30 días",
   lg_user_ph: "Usuario (nombre, email o nº)",
@@ -633,6 +635,8 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  lg_error: "The logs could not be loaded.",
+  lg_retry: "Retry",
   sec_logs: "Logs",
   lg_lead: "Every call to the API in the last 30 days",
   lg_user_ph: "User (name, email or no.)",
@@ -1262,6 +1266,8 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  lg_error: "No s'han pogut carregar els registres.",
+  lg_retry: "Torna-ho a provar",
   sec_logs: "Registres",
   lg_lead: "Cada crida a l'API dels últims 30 dies",
   lg_user_ph: "Usuari (nom, correu o núm.)",
@@ -1881,6 +1887,8 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  lg_error: "Das Protokoll konnte nicht geladen werden.",
+  lg_retry: "Erneut versuchen",
   sec_logs: "Protokoll",
   lg_lead: "Jeder API-Aufruf der letzten 30 Tage",
   lg_user_ph: "Nutzer (Name, E-Mail oder Nr.)",
@@ -2500,6 +2508,8 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  lg_error: "Impossible de charger les journaux.",
+  lg_retry: "Réessayer",
   sec_logs: "Journaux",
   lg_lead: "Chaque appel à l'API des 30 derniers jours",
   lg_user_ph: "Utilisateur (nom, e-mail ou n°)",
@@ -3119,6 +3129,8 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  lg_error: "Impossibile caricare i registri.",
+  lg_retry: "Riprova",
   sec_logs: "Registri",
   lg_lead: "Ogni chiamata all'API degli ultimi 30 giorni",
   lg_user_ph: "Utente (nome, email o n.)",
@@ -3738,6 +3750,8 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  lg_error: "Não foi possível carregar os registos.",
+  lg_retry: "Tentar de novo",
   sec_logs: "Registos",
   lg_lead: "Cada chamada à API dos últimos 30 dias",
   lg_user_ph: "Utilizador (nome, email ou n.º)",
@@ -4357,6 +4371,8 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  lg_error: "Het logboek kon niet worden geladen.",
+  lg_retry: "Opnieuw proberen",
   sec_logs: "Logboek",
   lg_lead: "Elke API-aanroep van de laatste 30 dagen",
   lg_user_ph: "Gebruiker (naam, e-mail of nr.)",
@@ -4976,6 +4992,8 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  lg_error: "ログを読み込めませんでした。",
+  lg_retry: "再試行",
   sec_logs: "ログ",
   lg_lead: "過去30日間のすべてのAPI呼び出し",
   lg_user_ph: "ユーザー（名前・メール・番号）",
@@ -5595,6 +5613,8 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  lg_error: "无法加载日志。",
+  lg_retry: "重试",
   sec_logs: "日志",
   lg_lead: "过去 30 天内的每次 API 调用",
   lg_user_ph: "用户（名称、邮箱或编号）",

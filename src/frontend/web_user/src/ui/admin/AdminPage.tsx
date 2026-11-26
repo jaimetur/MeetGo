@@ -27,11 +27,11 @@ const SECTIONS: [Section, string, string][] = [
   ["communities", "compass", "sec_communities"],
   ["categories", "layers", "sec_categories"],
   ["moderation", "flag", "sec_moderation"],
-  ["logs", "clock", "sec_logs"],
   ["business", "chart", "sec_business"],
   ["settings", "sliders", "sec_settings"],
   ["backups", "layers", "sec_backups"],
   ["bots", "shield", "sec_bots"],
+  ["logs", "clock", "sec_logs"],
 ];
 
 /** Moves to a section (and, for users, a filter): the section is in the address, so going back works. */

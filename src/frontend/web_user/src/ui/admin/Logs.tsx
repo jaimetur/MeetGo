@@ -21,6 +21,8 @@ export function Logs({ initialUser }: { initialUser?: string }) {
   const [rows, setRows] = useState<AdminLog[] | null>(null);
   const [more, setMore] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const first = useRef(true);
   const [open, setOpen] = useState<number | null>(null);
   const timer = useRef<number>();
   const set = (patch: Partial<Filters>) => setF((x) => ({ ...x, ...patch }));
@@ -28,14 +30,16 @@ export function Logs({ initialUser }: { initialUser?: string }) {
     since: iso(f.since), until: iso(f.until), before_id: before, limit: 100 });
   const load = (before?: number) => {
     setBusy(true);
+    setError("");
     api.adminLogs(params(before)).then((r) => {
       setRows((old) => (before && old ? [...old, ...r.rows] : r.rows));
       setMore(r.more);
-    }).catch((e) => toast(e.message, "error")).finally(() => setBusy(false));
+    }).catch((e) => { setError(e.message || "error"); if (before) toast(e.message, "error"); }).finally(() => setBusy(false));
   };
   // typing waits a moment; the drop-downs and dates apply at once
   useEffect(() => {
     window.clearTimeout(timer.current);
+    if (first.current) { first.current = false; load(); return; }  // the first time, at once
     timer.current = window.setTimeout(() => load(), 350);
     return () => window.clearTimeout(timer.current);
   }, [f]);
@@ -71,7 +75,9 @@ export function Logs({ initialUser }: { initialUser?: string }) {
         {filtered ? <button className="btn sm" onClick={() => setF(EMPTY)}>{a("lg_clear")}</button> : null}
       </div>
 
-      {rows === null ? <div className="adm-loading">{a("loading")}</div> : rows.length === 0 ? <Empty icon="search" text={a("lg_empty")} /> : (
+      {error && !busy ? (
+        <div className="adm-loading">{a("lg_error")} <button className="btn sm" onClick={() => load()}>{a("lg_retry")}</button></div>
+      ) : rows === null ? <div className="adm-loading">{a("loading")}</div> : rows.length === 0 ? <Empty icon="search" text={a("lg_empty")} /> : (
         <div className="lg-list">
           {rows.map((r) => (
             <div key={r.id} className={"lg-row" + (open === r.id ? " open" : "")}>

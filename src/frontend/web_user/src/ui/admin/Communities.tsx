@@ -48,13 +48,11 @@ export function Communities({ initialFilter }: { initialFilter?: string }) {
   useEffect(() => { load(); }, []);
 
   const groups = useMemo(() => {
-    // from the start of words: «lu» finds Lugo, not Andalucía; «coruña» finds A Coruña
+    // the letters anywhere in its name or the names of its zones («lu» finds Andalucía), with or without accents
     const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const words = (x: string) => plain(x).split(/[^a-z0-9]+/).filter(Boolean);
-    const terms = words(q);
-    const needle = terms.length > 0;
+    const needle = plain(q.trim());
     const out = new Map<string, AdminInterest[]>();
-    for (const i of (list || []).filter((i) => (!needle || ((all) => terms.every((t) => all.some((w) => w.startsWith(t))))([i.name, i.slug.replace(/_/g, " "), ...(i.places || [])].flatMap(words)))
+    for (const i of (list || []).filter((i) => (!needle || [i.name, i.slug, ...(i.places || [])].some((x) => plain(x).includes(needle)))
         && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || bandsOf(i).includes(age))
         && (!suggested || (suggested === "any" ? !!i.suggest : i.suggest === suggested)))) {
       const cat = i.category || autoCategory(i);
