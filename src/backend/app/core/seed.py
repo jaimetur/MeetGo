@@ -260,6 +260,8 @@ async def seed(db: AsyncSession) -> None:
     await ensure_categories(db)
     from app.communities.interest_settings import regroup_all_once
     await regroup_all_once(db)
+    from app.communities.zones import fill_languages
+    await fill_languages(db)
 
 
 # Interests that became one: a coffee, a beer and drinks are now "Tomar algo".

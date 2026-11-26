@@ -114,13 +114,12 @@ async def create_community(payload: CommunityCreateIn, db: AsyncSession = Depend
     else:  # the app asks for one; without it (other clients), "Other"
         conv.category_key = await cats.check_key(db, payload.category) if payload.category else cats.OTHER
     # its official language: the one chosen, or its zone's
-    from app.communities.zones import geo_data, zone_language, zone_of
+    from app.communities.zones import default_language, geo_data
     from app.core.i18n import supported
     if payload.language and payload.language in supported():
         conv.language = payload.language
     else:
-        data = await geo_data(db)
-        conv.language = zone_language(data, zone_of(data, user.province, "province"))
+        conv.language = default_language(await geo_data(db), conv)
     db.add(conv)
     await db.flush()
     if payload.category_proposal and payload.category_proposal.strip():
@@ -189,11 +188,12 @@ async def update_community(community_id: int, payload: CommunityUpdateIn, db: As
             db.add(CategoryProposal(name=payload.category_proposal.strip(), user_id=user.id, conversation_id=conv.id, created_at=utcnow()))
         else:
             conv.category_key = await cats.check_key(db, payload.category)
-    if payload.language:
+    if payload.language is not None:  # "": back to its zone's
+        from app.communities.zones import default_language, geo_data
         from app.core.i18n import supported
-        if payload.language not in supported():
+        if payload.language and payload.language not in supported():
             raise HTTPException(400, t("err_language_invalid"))
-        conv.language = payload.language
+        conv.language = payload.language or default_language(await geo_data(db), conv)
     if payload.retention_days is not None:
         # interest communities always keep a year; people's communities choose among the fixed periods
         if conv.interest_id or payload.retention_days not in RETENTION_CHOICES:

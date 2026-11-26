@@ -66,6 +66,26 @@ def zone_language(data: dict, zone: dict) -> str:
     return COUNTRY_LANG.get(country, "es")
 
 
+def default_language(data: dict, conv) -> str:
+    """The language of a community's zone (its scope: a province, a region or a whole country)."""
+    provinces = list(conv.scope_provinces or []) or ([conv.province] if conv.province else [])
+    if not provinces:
+        return "es"
+    return zone_language(data, {"kind": conv.scope_kind or "province", "provinces": provinces})
+
+
+async def fill_languages(db: AsyncSession) -> None:
+    """Communities made before they had an official language get their zone's. Commits."""
+    from sqlalchemy import select
+    from app.core.models import Conversation
+    convs = (await db.execute(select(Conversation).where(Conversation.kind == "channel", Conversation.language.is_(None)))).scalars().all()
+    if convs:
+        data = await geo_data(db)
+        for c in convs:
+            c.language = default_language(data, c)
+        await db.commit()
+
+
 def scope_values(zone: dict) -> dict:
     """The columns of a channel for its zone."""
     return {"province": zone["key"], "scope_kind": zone["kind"], "scope_value": zone["value"], "scope_label": zone["label"],

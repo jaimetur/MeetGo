@@ -406,7 +406,7 @@ class CommunityCreateIn(BaseModel):
     join_questions: list[str] | None = Field(default=None, max_length=3)
     retention_days: int | None = None
     interest_tags: list[str] | None = Field(default=None, max_length=5)
-    language: str | None = Field(default=None, min_length=2, max_length=8)  # its official language (default: its zone's)
+    language: str | None = Field(default=None, max_length=8)  # its official language (default: its zone's)
     category: str | None = Field(default=None, max_length=48)  # a category's key, or…
     category_proposal: str | None = Field(default=None, min_length=2, max_length=60)  # …a new one for the administration
 
@@ -423,7 +423,7 @@ class CommunityUpdateIn(BaseModel):
     interest_tags: list[str] | None = Field(default=None, max_length=5)
     category: str | None = Field(default=None, max_length=48)
     category_proposal: str | None = Field(default=None, min_length=2, max_length=60)
-    language: str | None = Field(default=None, min_length=2, max_length=8)
+    language: str | None = Field(default=None, max_length=8)
 
 
 class CommunityFiltersIn(BaseModel):

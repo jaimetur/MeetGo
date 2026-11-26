@@ -453,7 +453,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions,
         ...(interest ? {} : { retention_days: form.retention, interest_tags: form.tags }),
         ...(interest ? {} : proposing ? { category_proposal: proposal.trim() } : catKey ? { category: catKey } : {}),
-        ...(language ? { language } : {}) };
+        ...(community || language ? { language } : {}) };  // "": its zone's
       if (community) {
         let c: Community & { expelled?: number } = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
         if (owner && filtersChanged()) {
@@ -512,7 +512,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       ) : null}
       <div className="fld"><span>{t("ui_community_language")}</span>
         <select id="cm-language" className="inp" value={language} onChange={(e) => setLanguage(e.target.value)}>
-          {!community ? <option value="">{t("ui_community_language_auto")}</option> : null}
+          <option value="">{t("ui_community_language_auto")}</option>
           {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
         </select>
         <small className="muted">{t("ui_community_language_hint")}</small>

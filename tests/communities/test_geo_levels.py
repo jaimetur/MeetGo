@@ -68,3 +68,8 @@ async def test_official_language(client, db_session):
     changed = (await client.patch(f"/communities/{made['id']}", json={"language": "en"}, headers=ana)).json()
     assert changed["language"] == "en"
     assert (await client.patch(f"/communities/{made['id']}", json={"language": "xx"}, headers=ana)).status_code == 400
+    back = (await client.patch(f"/communities/{made['id']}", json={"language": ""}, headers=ana)).json()
+    assert back["language"] == "es"  # "": back to its zone's (Madrid)
+    bea, _ = await make_user(client, db_session, "bea@example.com", "Bea", province="Huelva")
+    hers = (await client.post("/communities", json={"title": "Playas de Huelva", "category": "ui_cat_culture"}, headers=bea)).json()
+    assert hers["language"] == "es"
