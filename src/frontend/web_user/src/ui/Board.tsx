@@ -196,7 +196,7 @@ export function PostCard({ post, showCommunity = true }: { post: Post; showCommu
   return (
     <article className={"pcard k-" + post.kind + (past ? " past" : "")} onClick={open} onKeyDown={(e) => e.key === "Enter" && open()} tabIndex={0} role="link" aria-label={post.title}>
       {withCover ? (
-        <div className="pcover" style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : post.cover_art ? `center / cover no-repeat url("${coverArtUrl(post.cover_art)}")` : coverGradient("p" + post.id) }}>
+        <div className={"pcover" + (post.cover_url || post.cover_art ? "" : " grad")} style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : post.cover_art ? `center / cover no-repeat url("${coverArtUrl(post.cover_art)}")` : coverGradient("p" + post.id) }}>
           {post.starts_at ? <DateTile iso={post.starts_at} /> : null}
           <div className="pflags">
             {post.pinned ? <span className="pflag"><Icon name="pin" size="sm" />{t("ui_post_pinned")}</span> : null}
