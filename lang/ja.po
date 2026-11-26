@@ -4184,6 +4184,12 @@ msgstr "イベント（{n}）"
 msgid "ui_publish_plan_type"
 msgstr "種類"
 
+msgid "ui_publish_tab_plan"
+msgstr "予定・イベント"
+
+msgid "ui_board_f_plans_events"
+msgstr "予定・イベント"
+
 msgid "ui_sec_plans"
 msgstr "予定のチャット"
 

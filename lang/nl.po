@@ -4184,6 +4184,12 @@ msgstr "Evenementen ({n})"
 msgid "ui_publish_plan_type"
 msgstr "Soort"
 
+msgid "ui_publish_tab_plan"
+msgstr "Plan of Evenement"
+
+msgid "ui_board_f_plans_events"
+msgstr "Plannen of Evenementen"
+
 msgid "ui_sec_plans"
 msgstr "Plan-chats"
 

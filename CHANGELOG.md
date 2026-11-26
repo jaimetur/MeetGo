@@ -111,7 +111,7 @@ All notable changes to this project will be documented in this file.
 
 #### 🚀 Enhancements:
 - Your communities: the latest active first, each with a «+» button to publish in it straight away.
-- Plans and events are one kind of post with a type: one «Plan» tab when publishing (Type: Plan / Event; an event adds its end and a tickets link), one «Plans» filter on the board, and in Chats their chats go under their community's chat, indented, in one «Plans (n)» fold, each marked as plan or event (remembered on each device). The «meetup» kind is now called «plan» in every language.
+- Plans and events are one kind of post with a type: one «Plan or Event» tab when publishing (Type: Plan / Event; an event adds its end and a tickets link), one «Plans or Events» filter on the board, and in Chats their chats go under their community's chat, indented, in one «Plans (n)» fold, each marked as plan or event (remembered on each device). The «meetup» kind is now called «plan» in every language.
 - Play screenshots wait until the screen is still and only replace the stored ones that look different (more than 0.5 % of their pixels), and the store listing only receives the texts and images that differ from what Google has, so runs without visible changes neither commit nor send anything for review. The Android workflow's artifact upload moves to actions/upload-artifact v7 (Node 24).
 - Drop-downs in windows (Discover another area and the rest) are as tall as the other fields.
 - Community settings: the creator adds or removes co-administrators (optional) among the members; the window is wider on computers with each part in its own panel, and the interests are chosen in a window of their own.

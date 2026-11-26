@@ -4184,6 +4184,12 @@ msgstr "Eventi ({n})"
 msgid "ui_publish_plan_type"
 msgstr "Tipo"
 
+msgid "ui_publish_tab_plan"
+msgstr "Piano o Evento"
+
+msgid "ui_board_f_plans_events"
+msgstr "Piani o Eventi"
+
 msgid "ui_sec_plans"
 msgstr "Chat dei piani"
 

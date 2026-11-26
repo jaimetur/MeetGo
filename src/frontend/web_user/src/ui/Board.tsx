@@ -348,7 +348,7 @@ export const FILTERS: [FilterKey, string, FeedFilter][] = [
   ["weekend", "ui_board_f_weekend", { when: "weekend" }],
   ["week", "ui_board_f_week", { when: "week" }],
   // plans and events together: one kind of post with a type
-  ["plan", "ui_board_f_meetups", { kind: "plan" }],
+  ["plan", "ui_board_f_plans_events", { kind: "plan" }],
   ["notice", "ui_board_f_notices", { kind: "notice" }],
 ];
 
@@ -1189,7 +1189,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
 
   // one tab for plans and events (an event is a plan with an end time and a tickets link), chosen with its type below
   const tab: PostKind = form.kind === "event" ? "meetup" : form.kind;
-  const kinds: [PostKind, string][] = [["meetup", t("ui_post_kind_meetup")], ["notice", t("ui_post_kind_notice")], ["thread", t("ui_post_kind_thread")]];
+  const kinds: [PostKind, string][] = [["meetup", t("ui_publish_tab_plan")], ["notice", t("ui_post_kind_notice")], ["thread", t("ui_post_kind_thread")]];
   const commentOptions: ["all" | "attendees" | "off", string][] = dated
     ? [["all", t("ui_publish_comments_all")], ["attendees", t("ui_publish_comments_attendees")], ["off", t("ui_publish_comments_off")]]
     : [["all", t("ui_publish_comments_all")], ["off", t("ui_publish_comments_off")]];

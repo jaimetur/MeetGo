@@ -4184,6 +4184,12 @@ msgstr "活动（{n}）"
 msgid "ui_publish_plan_type"
 msgstr "类型"
 
+msgid "ui_publish_tab_plan"
+msgstr "计划或活动"
+
+msgid "ui_board_f_plans_events"
+msgstr "计划或活动"
+
 msgid "ui_sec_plans"
 msgstr "计划聊天"
 

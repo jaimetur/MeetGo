@@ -4184,6 +4184,12 @@ msgstr "Esdeveniments ({n})"
 msgid "ui_publish_plan_type"
 msgstr "Tipus"
 
+msgid "ui_publish_tab_plan"
+msgstr "Pla o Esdeveniment"
+
+msgid "ui_board_f_plans_events"
+msgstr "Plans o Esdeveniments"
+
 msgid "ui_sec_plans"
 msgstr "Xats de plans"
 
