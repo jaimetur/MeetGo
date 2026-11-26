@@ -1747,7 +1747,9 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 /* Communities: the switches «New» and «Default» */
 .cflags { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: -6px 0 12px; }  /* one row of chips; it scrolls sideways when narrow */
 .cflags::-webkit-scrollbar { display: none; }
-.cflag { flex: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; font-size: 13px; cursor: pointer; background: none; }
+.cflag { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+  color: var(--fg); background: color-mix(in srgb, var(--blue) 10%, var(--panel)); border: 1.5px solid color-mix(in srgb, var(--blue) 45%, transparent); }  /* tinted, so the row stands out */
+.cflag.on { border-color: transparent; }
 .cflag .ic { width: 14px; height: 14px; }
 
 /* Administration → Categories */

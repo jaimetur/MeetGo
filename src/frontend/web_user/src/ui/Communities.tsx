@@ -247,10 +247,10 @@ export function CommunitiesPage() {
   const mineCount = listed.length - notMine - createdCount;
   // without communities of my own, that tab is not there: its place goes back to all of them
   const view: Show = show === "created" && !createdCount ? "all" : show;
-  // filters on top of the list, to narrow a long one: created in the last 30 days, with people, with plans coming,
-  // with someone online now; kept on this device
-  type Flag = "fresh" | "people" | "plans" | "online";
-  const NO_FLAGS: Record<Flag, boolean> = { fresh: false, people: false, plans: false, online: false };
+  // filters on top of the list, to narrow a long one: with activity in the last 30 days, with plans coming, created in
+  // the last 30 days; kept on this device
+  type Flag = "active" | "plans" | "fresh";
+  const NO_FLAGS: Record<Flag, boolean> = { active: false, plans: false, fresh: false };
   const [flags, setFlagsState] = useState<Record<Flag, boolean>>(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("communities.flags") || "{}");
@@ -274,8 +274,8 @@ export function CommunitiesPage() {
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
   const shown = listed.filter((c) => browse || view === "all"
     || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
-    .filter((c) => (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo) && (!flags.people || c.member_count > 0)
-      && (!flags.plans || c.upcoming_count > 0) && (!flags.online || c.online_count > 0))
+    .filter((c) => (!flags.active || (!!c.last_activity_at && new Date(c.last_activity_at).getTime() >= monthAgo))
+      && (!flags.plans || c.upcoming_count > 0) && (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo))
     .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
   const groups = byCategory(shown);
   // the zones and age bands of the list, for the filters beside the search
@@ -334,7 +334,7 @@ export function CommunitiesPage() {
 
         {list && list.length ? (
           <div className="cflags" role="group" aria-label={t("ui_story_tool_filters")}>
-            {([["fresh", "ui_cflag_new"], ["people", "ui_cflag_people"], ["plans", "ui_cflag_plans"], ["online", "ui_cflag_online"]] as [Flag, string][]).map(([k, key]) => (
+            {([["active", "ui_cflag_active"], ["plans", "ui_cflag_plans"], ["fresh", "ui_cflag_new"]] as [Flag, string][]).map(([k, key]) => (
               <button key={k} id={`communities-${k}`} type="button" role="switch" aria-checked={flags[k]} className={"chip cflag" + (flags[k] ? " on" : "")}
                 onClick={() => setFlag(k, !flags[k])}>{flags[k] ? <Icon name="check" size="sm" /> : null}{t(key)}</button>
             ))}

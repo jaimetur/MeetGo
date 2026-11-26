@@ -5332,8 +5332,11 @@ msgstr "Símbolos"
 msgid "ui_community_category_proposal_hint"
 msgstr "A administração irá revê-la; entretanto, a sua comunidade aparecerá em «Outras»."
 
+msgid "ui_cflag_active"
+msgstr "Ativas"
+
 msgid "ui_cflag_new"
-msgstr "Novas"
+msgstr "Recém-criadas"
 
 msgid "ui_cflag_default"
 msgstr "Por defeito"

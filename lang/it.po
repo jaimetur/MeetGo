@@ -5333,8 +5333,11 @@ msgstr "Simboli"
 msgid "ui_community_category_proposal_hint"
 msgstr "L'amministrazione la esaminerà; nel frattempo la tua community comparirà in «Altre»."
 
+msgid "ui_cflag_active"
+msgstr "Attive"
+
 msgid "ui_cflag_new"
-msgstr "Nuove"
+msgstr "Appena create"
 
 msgid "ui_cflag_default"
 msgstr "Predefinite"

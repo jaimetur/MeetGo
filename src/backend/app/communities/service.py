@@ -249,6 +249,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "invite_code": c.invite_code if detail and admin_of(member, user) else None,
             "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
+            "last_activity_at": iso(c.last_message_at),  # its last message (posts on its board leave one too)
             "retention_days": c.retention_days,
             # the interests it is about: suggestions to people with those interests
             "tags": (list(interest.tags or [interest.slug]) if interest else list(c.interest_tags or [])),

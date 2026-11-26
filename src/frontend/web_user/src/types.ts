@@ -169,6 +169,7 @@ export type Community = {
   tags?: string[];
   matches?: string[];
   created_at: string;
+  last_activity_at?: string | null;
 };
 
 export type CommunityStats = {
