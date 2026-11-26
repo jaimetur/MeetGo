@@ -5342,6 +5342,9 @@ msgstr "予定あり"
 msgid "ui_cbadge_new"
 msgstr "新着"
 
+msgid "ui_cflags_clear"
+msgstr "フィルターを解除"
+
 msgid "ui_cflag_active"
 msgstr "アクティブ"
 

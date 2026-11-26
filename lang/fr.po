@@ -6208,6 +6208,9 @@ msgstr "Plans"
 msgid "ui_cbadge_new"
 msgstr "Nouvelle"
 
+msgid "ui_cflags_clear"
+msgstr "Effacer les filtres"
+
 msgid "ui_cflag_active"
 msgstr "Actives"
 

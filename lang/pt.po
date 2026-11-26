@@ -5341,6 +5341,9 @@ msgstr "Com planos"
 msgid "ui_cbadge_new"
 msgstr "Nova"
 
+msgid "ui_cflags_clear"
+msgstr "Limpar filtros"
+
 msgid "ui_cflag_active"
 msgstr "Ativas"
 

@@ -282,6 +282,13 @@ export function CommunitiesPage() {
   });
   const [zone, setZone] = useState("");
   const [age, setAge] = useState("");
+  // the list may be empty only because of the filters: then it says so, and offers to clear them
+  const filtered = Object.values(flags).some(Boolean) || !!zone || !!age || !!q.trim();
+  const clearFilters = () => {
+    setFlagsState(NO_FLAGS);
+    try { localStorage.removeItem("communities.flags"); } catch { /* per device */ }
+    setZone(""); setAge(""); setQ("");
+  };
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
   const shown = listed.filter((c) => browse || view === "all"
     || (view === "created" ? created(c) : view === "mine" ? c.joined : !c.joined))
@@ -367,9 +374,10 @@ export function CommunitiesPage() {
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
               </section>
             ))}
-            {!groups.length && view === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
-            {!groups.length && view === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
-            {!groups.length && view !== "mine" && view !== "new" ? <EmptyState icon="search" title={t("ui_no_results")} /> : null}
+            {!groups.length && filtered ? <EmptyState icon="search" title={t("ui_no_results")} action={t("ui_cflags_clear")} onAction={clearFilters} /> : null}
+            {!groups.length && !filtered && view === "mine" ? <EmptyState icon="compass" title={t("ui_community_none_yet")} action={t("ui_community_show_others", { n: notMine })} onAction={() => setShow("new")} /> : null}
+            {!groups.length && !filtered && view === "new" ? <EmptyState icon="check" title={t("ui_community_no_new")} action={t("ui_cshow_all")} onAction={() => setShow("all")} /> : null}
+            {!groups.length && !filtered && view !== "mine" && view !== "new" ? <EmptyState icon="search" title={t("ui_no_results")} /> : null}
           </>
         )}
       </div>

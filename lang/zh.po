@@ -5342,6 +5342,9 @@ msgstr "有计划"
 msgid "ui_cbadge_new"
 msgstr "新"
 
+msgid "ui_cflags_clear"
+msgstr "清除筛选"
+
 msgid "ui_cflag_active"
 msgstr "活跃"
 

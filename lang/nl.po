@@ -5342,6 +5342,9 @@ msgstr "Plannen"
 msgid "ui_cbadge_new"
 msgstr "Nieuw"
 
+msgid "ui_cflags_clear"
+msgstr "Filters wissen"
+
 msgid "ui_cflag_active"
 msgstr "Actief"
 

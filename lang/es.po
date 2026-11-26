@@ -5343,6 +5343,9 @@ msgstr "Con planes"
 msgid "ui_cbadge_new"
 msgstr "Nueva"
 
+msgid "ui_cflags_clear"
+msgstr "Quitar filtros"
+
 msgid "ui_cflag_active"
 msgstr "Activas"
 

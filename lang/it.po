@@ -5342,6 +5342,9 @@ msgstr "Piani"
 msgid "ui_cbadge_new"
 msgstr "Nuova"
 
+msgid "ui_cflags_clear"
+msgstr "Rimuovi filtri"
+
 msgid "ui_cflag_active"
 msgstr "Attive"
 

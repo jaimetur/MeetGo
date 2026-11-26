@@ -5343,6 +5343,9 @@ msgstr "Plans"
 msgid "ui_cbadge_new"
 msgstr "New"
 
+msgid "ui_cflags_clear"
+msgstr "Clear filters"
+
 msgid "ui_cflag_active"
 msgstr "Active"
 

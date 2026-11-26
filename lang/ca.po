@@ -5342,6 +5342,9 @@ msgstr "Amb plans"
 msgid "ui_cbadge_new"
 msgstr "Nova"
 
+msgid "ui_cflags_clear"
+msgstr "Treure filtres"
+
 msgid "ui_cflag_active"
 msgstr "Actives"
 
