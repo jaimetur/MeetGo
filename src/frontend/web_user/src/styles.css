@@ -1345,6 +1345,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-search .ic { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 .adm-search .inp { padding-left: 36px; border-radius: 12px; height: 42px; }
 .adm-toolbar select.adm-sort { width: auto; flex: none; border-radius: 12px; height: 42px; }
+@media (max-width: 640px) { .adm-toolbar:has(#adm-co-zone) { flex-wrap: wrap; } .adm-toolbar:has(#adm-co-zone) .adm-search { flex-basis: 100%; } .adm-toolbar select#adm-co-zone, .adm-toolbar select#adm-co-age { flex: 1; } }
 .adm-chips { padding: 2px 0; }
 .adm-chips .chip { font-size: 12.5px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
 .adm-chips .chip .cnt { font-size: 11px; font-weight: 700; padding: 0 6px; border-radius: 999px; background: var(--panel2); color: var(--muted); }
@@ -1428,6 +1429,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-tile-txt { display: flex; flex-direction: column; min-width: 0; }
 .adm-tile-txt b { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .adm-tile-txt small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adm-tiles .adm-tile-txt small { white-space: normal; line-height: 1.35; }  /* interests: its counts, whole */
 .adm-tile-edit { display: flex; gap: 4px; min-width: 0; }
 .adm-tile-edit .inp { min-width: 0; padding: 7px 9px; }
 .adm-tile-confirm { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12.5px; }

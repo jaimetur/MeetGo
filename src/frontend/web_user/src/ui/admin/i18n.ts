@@ -5,6 +5,10 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  co_f_zone: "Zona",
+  co_f_zone_all: "Todas las zonas",
+  co_f_age: "Franja de edad",
+  co_f_age_all: "Todas las edades",
   co_person: "1 persona",
   co_people_n: "{n} personas",
   co_zone: "1 zona",
@@ -589,6 +593,10 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  co_f_zone: "Area",
+  co_f_zone_all: "All areas",
+  co_f_age: "Age band",
+  co_f_age_all: "All ages",
   co_person: "1 person",
   co_people_n: "{n} people",
   co_zone: "1 area",
@@ -1174,6 +1182,10 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  co_f_zone: "Zona",
+  co_f_zone_all: "Totes les zones",
+  co_f_age: "Franja d'edat",
+  co_f_age_all: "Totes les edats",
   co_person: "1 persona",
   co_people_n: "{n} persones",
   co_zone: "1 zona",
@@ -1749,6 +1761,10 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  co_f_zone: "Gebiet",
+  co_f_zone_all: "Alle Gebiete",
+  co_f_age: "Altersgruppe",
+  co_f_age_all: "Alle Altersgruppen",
   co_person: "1 Person",
   co_people_n: "{n} Personen",
   co_zone: "1 Gebiet",
@@ -2324,6 +2340,10 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  co_f_zone: "Zone",
+  co_f_zone_all: "Toutes les zones",
+  co_f_age: "Tranche d'âge",
+  co_f_age_all: "Tous les âges",
   co_person: "1 personne",
   co_people_n: "{n} personnes",
   co_zone: "1 zone",
@@ -2899,6 +2919,10 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  co_f_zone: "Zona",
+  co_f_zone_all: "Tutte le zone",
+  co_f_age: "Fascia d'età",
+  co_f_age_all: "Tutte le età",
   co_person: "1 persona",
   co_people_n: "{n} persone",
   co_zone: "1 zona",
@@ -3474,6 +3498,10 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  co_f_zone: "Zona",
+  co_f_zone_all: "Todas as zonas",
+  co_f_age: "Faixa etária",
+  co_f_age_all: "Todas as idades",
   co_person: "1 pessoa",
   co_people_n: "{n} pessoas",
   co_zone: "1 zona",
@@ -4049,6 +4077,10 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  co_f_zone: "Gebied",
+  co_f_zone_all: "Alle gebieden",
+  co_f_age: "Leeftijdsgroep",
+  co_f_age_all: "Alle leeftijden",
   co_person: "1 persoon",
   co_people_n: "{n} mensen",
   co_zone: "1 gebied",
@@ -4624,6 +4656,10 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  co_f_zone: "地域",
+  co_f_zone_all: "すべての地域",
+  co_f_age: "年齢層",
+  co_f_age_all: "すべての年齢",
   co_person: "1人",
   co_people_n: "{n}人",
   co_zone: "1地域",
@@ -5199,6 +5235,10 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  co_f_zone: "区域",
+  co_f_zone_all: "所有区域",
+  co_f_age: "年龄段",
+  co_f_age_all: "所有年龄",
   co_person: "1 人",
   co_people_n: "{n} 人",
   co_zone: "1 个区域",

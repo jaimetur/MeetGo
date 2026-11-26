@@ -423,15 +423,19 @@ async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depe
     from app.accounts.routes import interest_out
     from app.communities.zones import SPLIT_AT
     # per interest: its zones and age ranges apart, and its biggest and smallest community (members, not away)
-    rows = (await db.execute(select(Conversation.interest_id, Conversation.province, Conversation.age_range, func.count(ConversationMember.user_id))
+    rows = (await db.execute(select(Conversation.interest_id, Conversation.province, Conversation.age_range, func.count(ConversationMember.user_id),
+                                    Conversation.scope_label)
                              .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
                                                                  ConversationMember.away.is_(False), ConversationMember.banned.is_(False)))
                              .where(Conversation.kind == "channel", Conversation.interest_id.is_not(None))
-                             .group_by(Conversation.interest_id, Conversation.id, Conversation.province, Conversation.age_range))).all()
+                             .group_by(Conversation.interest_id, Conversation.id, Conversation.province, Conversation.age_range,
+                                       Conversation.scope_label))).all()
     stats: dict[int, dict] = {}
-    for iid, zone, age, n in rows:
+    labels: dict[str, str] = {}
+    for iid, zone, age, n, label in rows:
         s = stats.setdefault(iid, {"zones": set(), "ages": set(), "sizes": []})
         s["zones"].add(zone)
+        labels[zone] = label or zone
         s["ages"].add(age)
         s["sizes"].append(int(n))
     people = dict((await db.execute(select(UserInterest.interest_id, func.count()).group_by(UserInterest.interest_id))).all())
@@ -445,7 +449,10 @@ async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depe
         suggest = ("split" if level != "province" and biggest > SPLIT_AT
                    else "join" if level != "country" and len(s["zones"]) > 1 and biggest < 10 else None)
         out.append({**interest_out(i).model_dump(), "zones": len(s["zones"]), "age_bands": len(s["ages"]),
-                    "communities": len(s["sizes"]), "people": int(people.get(i.id, 0)), "biggest": biggest, "suggest": suggest})
+                    "communities": len(s["sizes"]), "people": int(people.get(i.id, 0)), "biggest": biggest, "suggest": suggest,
+                    # which zones (key and name) and age bands it has, to filter by them
+                    "zone_list": sorted(({"key": z, "label": labels.get(z, z)} for z in s["zones"] if z), key=lambda x: x["label"]),
+                    "age_list": sorted(a for a in s["ages"] if a)})
     return out
 
 

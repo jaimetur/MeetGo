@@ -421,6 +421,7 @@ export type AdminInterest = {
   id: number; slug: string; name: string; category: string | null; icon: string | null; color: string | null;
   age_ranges: string[]; active: boolean; zones: number; people: number;
   geo_level?: "country" | "region" | "province"; age_bands?: number; communities?: number; biggest?: number; suggest?: "split" | "join" | null;
+  zone_list?: { key: string; label: string }[]; age_list?: string[];
   tags: string[]; min_age: number | null; max_age: number | null; access_mode: "open" | "request"; board_mode: "open" | "admins";
   retention_days: number; join_questions: string[];
 };

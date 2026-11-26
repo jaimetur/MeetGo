@@ -27,6 +27,8 @@ const autoIcon = (i: { slug: string; name: string }) => guessIcon(i.slug, i.name
 export function Communities() {
   const [list, setList] = useState<AdminInterest[] | null>(null);
   const [q, setQ] = useState("");
+  const [zone, setZone] = useState("");  // only the interests with a community in this zone…
+  const [age, setAge] = useState("");  // …or for this age band
   const [open, setOpen] = useState<AdminInterest | "new" | null>(null);
 
   const load = () => api.adminInterests().then((l) => { setList(l); setInterestLooks(l); }).catch((e) => { setList([]); toast(e.message, "error"); });
@@ -35,13 +37,22 @@ export function Communities() {
   const groups = useMemo(() => {
     const needle = q.trim().toLowerCase();
     const out = new Map<string, AdminInterest[]>();
-    for (const i of (list || []).filter((i) => !needle || i.name.toLowerCase().includes(needle) || i.slug.includes(needle))) {
+    for (const i of (list || []).filter((i) => (!needle || i.name.toLowerCase().includes(needle) || i.slug.includes(needle))
+        && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || (i.age_list || []).includes(age)))) {
       const cat = i.category || autoCategory(i);
       out.set(cat, [...(out.get(cat) || []), i]);
     }
     for (const v of out.values()) v.sort((x, y) => x.name.localeCompare(y.name, undefined, { sensitivity: "base" }));
     return CATEGORY_KEYS.filter((k) => out.has(k)).map((k) => [k, out.get(k)!] as const);
-  }, [list, q]);
+  }, [list, q, zone, age]);
+  // every zone and age band some interest has, for the filters
+  const zones = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const i of list || []) for (const z of i.zone_list || []) seen.set(z.key, z.label);
+    return [...seen].sort((x, y) => x[1].localeCompare(y[1], undefined, { sensitivity: "base" }));
+  }, [list]);
+  const ages = useMemo(() => [...new Set((list || []).flatMap((i) => i.age_list || []))].sort(), [list]);
+  const ageName = (k: string) => (k === "custom" ? a("co_age_span") : k.replace("_plus", "+").replace("_", "-"));
 
   return (
     <div className="adm-sec">
@@ -53,6 +64,14 @@ export function Communities() {
           <Icon name="search" size="sm" />
           <input className="inp" type="search" placeholder={a("co_search")} value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
+        <select id="adm-co-zone" className="inp adm-sort" value={zone} onChange={(e) => setZone(e.target.value)} aria-label={a("co_f_zone")}>
+          <option value="">{a("co_f_zone_all")}</option>
+          {zones.map(([k, label]) => <option key={k} value={k}>{label}</option>)}
+        </select>
+        <select id="adm-co-age" className="inp adm-sort" value={age} onChange={(e) => setAge(e.target.value)} aria-label={a("co_f_age")}>
+          <option value="">{a("co_f_age_all")}</option>
+          {ages.map((k) => <option key={k} value={k}>{ageName(k)}</option>)}
+        </select>
       </div>
 
       {list === null ? <div className="adm-loading">{a("loading")}</div> : groups.length === 0 ? <Empty icon="search" text={a("us_empty")} /> : groups.map(([cat, items]) => (
@@ -66,17 +85,17 @@ export function Communities() {
                   <span className="adm-tile-ic" style={{ color, background: `color-mix(in srgb, ${color} 15%, transparent)` }}><Icon name={hobbyIcon(i.slug, i.name)} /></span>
                   <span className="grow adm-tile-txt">
                     <b>{i.name}</b>
-                    <small>{a(i.people === 1 ? "co_person" : "co_people_n", { n: i.people })}</small>
-                    <span className="adm-tile-badges"><Badge tone="gray">{a(`co_geo_${i.geo_level || "country"}`)}</Badge>
-                      <Badge tone="gray">{a(i.zones === 1 ? "co_zone" : "co_zones_n", { n: i.zones })}</Badge>
-                      <Badge tone="gray">{a((i.age_bands ?? 0) === 1 ? "co_band" : "co_bands_n", { n: i.age_bands ?? 0 })}</Badge>
-                      {i.suggest ? <Badge tone={i.suggest === "split" ? "orange" : "blue"}>{a(i.suggest === "split" ? "co_suggest_split" : "co_suggest_join")}</Badge> : null}</span>
-                    {!i.active || i.age_ranges.length ? (
-                      <span className="adm-tile-badges">
-                        {!i.active ? <Badge tone="gray">{a("co_off")}</Badge> : null}
-                        {i.age_ranges.length ? <Badge tone="orange">{i.age_ranges.map((k) => AGES.find(([x]) => x === k)?.[1] || k).join(" · ")}</Badge> : null}
-                      </span>
-                    ) : null}
+                    {/* the counts, then which zones and age bands they are */}
+                    <small>{[a(`co_geo_${i.geo_level || "country"}`), a(i.zones === 1 ? "co_zone" : "co_zones_n", { n: i.zones }),
+                      a((i.age_bands ?? 0) === 1 ? "co_band" : "co_bands_n", { n: i.age_bands ?? 0 }),
+                      a(i.people === 1 ? "co_person" : "co_people_n", { n: i.people })].join(" · ")}</small>
+                    <span className="adm-tile-badges">
+                      {!i.active ? <Badge tone="gray">{a("co_off")}</Badge> : null}
+                      {i.suggest ? <Badge tone={i.suggest === "split" ? "orange" : "blue"}>{a(i.suggest === "split" ? "co_suggest_split" : "co_suggest_join")}</Badge> : null}
+                      {(i.zone_list || []).slice(0, 3).map((z) => <Badge key={z.key} tone="blue">{z.label}</Badge>)}
+                      {(i.zone_list || []).length > 3 ? <Badge tone="blue">+{(i.zone_list || []).length - 3}</Badge> : null}
+                      {(i.age_list || []).map((k) => <Badge key={k} tone="teal">{ageName(k)}</Badge>)}
+                    </span>
                   </span>
                   <span className="adm-chev" aria-hidden="true">›</span>
                 </button>
