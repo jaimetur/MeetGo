@@ -146,3 +146,14 @@ async def test_search_places_are_the_zone_and_what_contains_it(client, db_sessio
     rows = {i["slug"]: i for i in (await client.get("/admin/interests", headers=admin)).json()}
     places = set(rows["senderismo"]["places"])
     assert {"Huelva", "España"} <= places and any("Andaluc" in p for p in places)
+
+
+async def test_discovering_a_country_shows_its_default_communities(client, db_session):
+    """Looking at a whole country where nobody is yet, as if I had travelled there: its interest communities show
+    (empty), though only my own zone's can be joined."""
+    ana, _ = await make_user(client, db_session, "ana@example.com", "Ana", province="Madrid")
+    res = await client.get("/communities", params={"country": "FR", "age_range": "31_60"}, headers=ana)
+    assert res.status_code == 200, res.text
+    rows = res.json()
+    assert rows and any(c["slug"] == "senderismo" for c in rows)
+    assert all(c["my_zone"] is False and c["member_count"] == 0 for c in rows)

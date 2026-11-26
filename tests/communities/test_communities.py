@@ -213,7 +213,7 @@ async def test_discovering_an_autonomous_community_or_a_whole_country(client, db
     res = await client.get("/communities", params={"country": "ES", "area": "andalucia", "age_range": "31_60"}, headers=ana[0])
     assert res.status_code == 200, res.text
     assert [(c["province"], c["slug"], c["my_zone"]) for c in res.json()] == [("Sevilla", "senderismo", False)]
-    # the whole country: mine too (and those can be joined)
+    # the whole country: its national ones (none here, all by province) and those inside it with people
     whole = (await client.get("/communities", params={"country": "ES", "age_range": "31_60"}, headers=ana[0])).json()
     assert {c["province"] for c in whole} >= {"Sevilla"}
     assert (await client.get("/communities", params={"country": "ES", "area": "atlantida", "age_range": "31_60"}, headers=ana[0])).status_code == 400

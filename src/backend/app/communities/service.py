@@ -163,6 +163,31 @@ async def ensure_interest_channels(db: AsyncSession, user: User, zone: tuple[str
     await db.commit()
 
 
+async def ensure_area_channels(db: AsyncSession, user: User, provinces: tuple[str, ...], age: str) -> list[str]:
+    """Discovering a country or a region, as if I had travelled there: every interest whose communities are as wide as
+    that area or wider (so it has a single one there) gets it created if missing. Returns their zone keys (shown even
+    while empty); interests split into smaller zones show only the ones with people."""
+    from app.communities.interest_settings import channel_values, interest_key
+    from app.communities.zones import geo_data, scope_values, zone_language, zone_of
+    data = await geo_data(db)
+    keys, rows = [], []
+    for i in (await db.execute(select(Interest))).scalars().all():
+        if not interest_allows(i, age, user):
+            continue
+        zones = {zone_of(data, p, i.geo_level)["key"] for p in provinces}
+        if len(zones) != 1:
+            continue
+        zone = zone_of(data, provinces[0], i.geo_level)
+        keys.append(zone["key"])
+        rows.append(dict(kind="channel", age_range=interest_key(i, age), interest_id=i.id, created_at=utcnow(),
+                         slow_mode_seconds=0, rules_markdown=DEFAULT_RULES, language=zone_language(data, zone),
+                         **scope_values(zone), **{"min_age": None, "max_age": None, **channel_values(i)}))
+    if rows:
+        await db.execute(pg_insert(Conversation).values(rows).on_conflict_do_nothing(constraint="uq_channel_key"))
+        await db.commit()
+    return keys
+
+
 async def staff_ids(db: AsyncSession, conversation_id: int) -> list[int]:
     bots = set((await bot_ids(db)).values())
     res = await db.execute(select(ConversationMember.user_id).where(
@@ -279,10 +304,14 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
         if len(provinces) == 1:
             await ensure_interest_channels(db, user, (provinces[0], age))
         else:
+            # a whole country or region: the interest communities it has as one (even empty, as if I were there), and
+            # those of smaller zones inside it that have people
+            single = await ensure_area_channels(db, user, provinces, age)
             bots = set((await bot_ids(db)).values())
-            query = query.where(Conversation.id.in_(select(ConversationMember.conversation_id).where(
+            with_people = Conversation.id.in_(select(ConversationMember.conversation_id).where(
                 ConversationMember.away.is_(False), ConversationMember.banned.is_(False),
-                ConversationMember.user_id.not_in(bots or {0}))))
+                ConversationMember.user_id.not_in(bots or {0})))
+            query = query.where(or_(with_people, and_(Conversation.interest_id.is_not(None), Conversation.province.in_(single or [""]))))
         if q.strip():
             like = f"%{q.strip()}%"
             query = query.where(or_(Conversation.title.ilike(like), Interest.name.ilike(like), cast(Interest.names, String).ilike(like), Conversation.description.ilike(like)))
