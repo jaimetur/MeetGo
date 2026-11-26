@@ -1170,12 +1170,17 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   --line: #dadde1; --line2: #ced0d4; --fg: #1c1e21; --strong: #050505; --muted: #65676b;
   --blue: #1b74e4; --cyan: #1b74e4; --teal: #1b74e4; --sel: #e7f0fd; --quote: rgba(27, 116, 228, 0.06); --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   --grad: #1b74e4; --grad2: #1b74e4; --grad-go: #1b74e4; --on-go: #ffffff; }
-:root[data-palette="murodark"] { --bg: #18191a; --rail: #242526; --panel: #242526; --panel2: #3a3b3c; --raise: #3a3b3c; --bubble: #3a3b3c;
+/* MeetGo: Muro's colours on a light blue ground */
+:root[data-palette="meetgo"] { --bg: #eaf2fd; --rail: #ffffff; --panel: #ffffff; --panel2: #dde9fb; --raise: #ffffff; --bubble: #ffffff;
+  --line: #d3e1f5; --line2: #c3d5ef; --fg: #1c1e21; --strong: #050505; --muted: #65676b;
+  --blue: #1b74e4; --cyan: #1b74e4; --teal: #1b74e4; --sel: #e7f0fd; --quote: rgba(27, 116, 228, 0.06); --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  --grad: #1b74e4; --grad2: #1b74e4; --grad-go: #1b74e4; --on-go: #ffffff; }
+:root:is([data-palette="murodark"], [data-palette="meetgodark"]) { --bg: #18191a; --rail: #242526; --panel: #242526; --panel2: #3a3b3c; --raise: #3a3b3c; --bubble: #3a3b3c;
   --line: #3e4042; --line2: #4e4f50; --fg: #e4e6eb; --strong: #ffffff; --muted: #b0b3b8;
   --blue: #2d88ff; --cyan: #2d88ff; --teal: #2d88ff; --sel: #263951; --quote: rgba(45, 136, 255, 0.08); --card-shadow: none;
   --grad: #2d88ff; --grad2: #2d88ff; --grad-go: #2d88ff; --on-go: #ffffff; }
-:root:is([data-palette="muro"], [data-palette="murodark"]) .ccard { border-radius: 10px; }
-:root:is([data-palette="muro"], [data-palette="murodark"]) .btn.go { box-shadow: none; }
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="meetgo"], [data-palette="meetgodark"]) .ccard { border-radius: 10px; }
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="meetgo"], [data-palette="meetgodark"]) .btn.go { box-shadow: none; }
 :root[data-palette="chispa"] { --bg: #ffffff; --rail: #ffffff; --panel: #ffffff; --panel2: #f3f4f6; --raise: #ffffff; --bubble: #f3f4f6;
   --line: #eceef1; --line2: #dfe2e6; --fg: #21262e; --strong: #111418; --muted: #6b7280;
   --blue: #fd3f6b; --cyan: #ff6a5c; --teal: #ff6a5c; --sel: #fff0f3; --quote: rgba(253, 63, 107, 0.06); --card-shadow: 0 2px 10px rgba(17, 20, 24, 0.06);
@@ -1232,10 +1237,10 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 :root:is([data-palette="light"], [data-palette="dark"], [data-palette="mint"], [data-palette="forest"], [data-palette="lavender"], [data-palette="plum"], [data-palette="sand"], [data-palette="sanddark"], [data-palette="peach"], [data-palette="peachdark"]) { --acc-soft: color-mix(in srgb, var(--blue) 14%, var(--panel)); }
 
 /* MeetGo (Muro's colours): the zone and age tags keep the colours they had (teal and pink) */
-:root[data-palette="muro"] { --m-zone: #0d9488; --m-age: #db2777; }
-:root[data-palette="murodark"] { --m-zone: #2dd4bf; --m-age: #f472b6; }
-:root:is([data-palette="muro"], [data-palette="murodark"]) .ktag.kscope { color: var(--m-zone); background: color-mix(in srgb, var(--m-zone) 12%, var(--panel)); }
-:root:is([data-palette="muro"], [data-palette="murodark"]) .ktag.kage { color: var(--m-age); background: color-mix(in srgb, var(--m-age) 11%, var(--panel)); }
+:root:is([data-palette="muro"], [data-palette="meetgo"]) { --m-zone: #0d9488; --m-age: #db2777; }
+:root:is([data-palette="murodark"], [data-palette="meetgodark"]) { --m-zone: #2dd4bf; --m-age: #f472b6; }
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="meetgo"], [data-palette="meetgodark"]) .ktag.kscope { color: var(--m-zone); background: color-mix(in srgb, var(--m-zone) 12%, var(--panel)); }
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="meetgo"], [data-palette="meetgodark"]) .ktag.kage { color: var(--m-age); background: color-mix(in srgb, var(--m-age) 11%, var(--panel)); }
 
 /* the theme swatches in Settings */
 .themefld { display: flex; flex-direction: column; gap: 8px; grid-column: 1 / -1; }
