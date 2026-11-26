@@ -265,6 +265,8 @@ async def seed(db: AsyncSession) -> None:
     await regroup_all_once(db)
     from app.communities.zones import fill_languages
     await fill_languages(db)
+    from app.communities.interest_settings import unarchive_once
+    await unarchive_once(db)
     from app.communities.interest_settings import adult_span_once
     await adult_span_once(db, ADULT_SPAN)
 

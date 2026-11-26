@@ -124,7 +124,6 @@ async def apply_interest_settings(db: AsyncSession, interest: Interest, had_span
 
 
 RANK = {"country": 0, "region": 1, "province": 2}
-ARCHIVE_DAYS = 30  # how long the chats of joined zones stay to read
 
 
 async def copy_history(db: AsyncSession, source_id: int, target_id: int) -> None:
@@ -158,47 +157,18 @@ async def copy_history(db: AsyncSession, source_id: int, target_id: int) -> None
     await db.flush()
 
 
-async def _move_people_and_board(db: AsyncSession, target: int, others: list[int]) -> None:
-    """Members, posts, series and requests of `others` into `target`; their chats stay where they are."""
-    params = {"t": target, "o": others}
-    await db.execute(text("""
-        INSERT INTO conversation_members (conversation_id, user_id, role, joined_at, last_read_message_id, notify,
-            muted_until, pinned, hidden, strikes, last_strike_at, silenced_until, banned, ban_until,
-            email_notified_message_id, away)
-        SELECT DISTINCT ON (user_id) :t, user_id, role, joined_at, 0, notify, muted_until, pinned, hidden, strikes,
-            last_strike_at, silenced_until, banned, ban_until, 0, away
-        FROM conversation_members WHERE conversation_id = ANY(:o) ORDER BY user_id, away, joined_at
-        ON CONFLICT DO NOTHING"""), params)
-    for table in ("board_posts", "board_series", "community_requests"):
-        await db.execute(text(f"UPDATE {table} SET conversation_id = :t WHERE conversation_id = ANY(:o)"), params)
-
-
-def _archive(c: Conversation, name: str, into: int) -> None:
-    """A joined zone's chat: a read-only chat of its people, kept ARCHIVE_DAYS to look things up, then deleted."""
-    from datetime import timedelta
-    from app.core.models import utcnow
-    c.title = f"{name} · {c.scope_label or c.province}"[:120]
-    c.kind, c.interest_id = "group", None
-    c.province = c.scope_kind = c.scope_value = c.scope_label = None
-    c.scope_provinces = None
-    c.policy_json = {**(c.policy_json or {}), "read_only": True, "archived_into": into,
-                     "archived_until": (utcnow() + timedelta(days=ARCHIVE_DAYS)).isoformat()}
-
-
 async def regroup_geo(db: AsyncSession, interest: Interest) -> None:
     """Puts the interest's communities at its geographic width (country, region or province), keeping every member.
 
     Narrower (split): each wide community stays as the zone most of its people are in, and the people of every other
     zone move to their zone's new community, which starts with a copy of the wide one's chat history.
-    Wider (join): the communities of the same new zone (and age range) become one new community with all their people,
-    posts and requests; its chat starts empty (their conversations would get mixed), and each old chat stays read only
-    for ARCHIVE_DAYS days for its people to look things up. A zone with a single community just takes the new width,
-    history and all. Does not commit."""
+    Wider (join): the communities of the same new zone (and age range) are joined into the one with most people, with
+    all their members, posts, requests and messages (in the order they were written). Does not commit."""
     from sqlalchemy import delete
     from app.communities.zones import geo_data, scope_values, zone_language, zone_of
     from app.conversations.service import channel_for, join, user_age_key
     data = await geo_data(db)
-    level, interest_id, name = interest.geo_level, interest.id, interest.name  # read now: later commits expire it
+    level, interest_id = interest.geo_level, interest.id  # read now: later commits expire it
     level = level if level in RANK else "country"
     convs = list((await db.execute(select(Conversation).where(
         Conversation.kind == "channel", Conversation.interest_id == interest_id))).scalars().all())
@@ -243,13 +213,11 @@ async def regroup_geo(db: AsyncSession, interest: Interest) -> None:
         if len(group) == 1:
             await rekey(group[0], zone_by_key[key])
             continue
-        for c in group:
-            _archive(c, name, 0)
-        await db.flush()
-        fresh = await channel_for(db, zone_by_key[key]["provinces"][0] if zone_by_key[key]["provinces"] else key, age or "31_60", interest_id)
-        await _move_people_and_board(db, fresh.id, [c.id for c in group])
-        for c in group:
-            c.policy_json = {**c.policy_json, "archived_into": fresh.id}
+        # all of them into the one with most people: members, posts and every message (in the order they were written)
+        group.sort(key=lambda c: (-len(people.get(c.id, [])), c.id))
+        keeper = group[0]
+        await merge_channels(db, keeper.id, [c.id for c in group[1:]])
+        await rekey(keeper, zone_by_key[key])
 
     # narrower: split each wide community by its people's zones
     new_ids: set[int] = set()
@@ -298,3 +266,20 @@ async def adult_span_once(db: AsyncSession, slugs: dict[str, int]) -> None:
             await db.flush()
             await apply_interest_settings(db, interest, had_span=False)
     await set_section(db, "migrations", {**done, "adult_span": True})
+
+
+async def unarchive_once(db: AsyncSession) -> None:
+    """Once: the chats of zones joined while they were kept apart for 30 days (read only, as groups) go into the
+    community they were joined into, messages and all. Commits."""
+    from app.core.app_settings import get_section, set_section
+    done = await get_section(db, "migrations")
+    if done.get("unarchive"):
+        return
+    rows = (await db.execute(text(
+        "SELECT id, (policy_json->>'archived_into')::int FROM conversations WHERE policy_json ? 'archived_until'"))).all()
+    for conv_id, target_id in rows:
+        target = await db.get(Conversation, target_id) if target_id else None
+        if target and target.kind == "channel":
+            await merge_channels(db, target.id, [conv_id])
+    await db.commit()
+    await set_section(db, "migrations", {**done, "unarchive": True})

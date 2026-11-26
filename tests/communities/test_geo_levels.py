@@ -51,12 +51,15 @@ async def test_country_by_default_then_split_and_join(client, db_session):
     await client.patch(f"/admin/interests/{hike['id']}", json={"slug": "senderismo", "name": "Senderismo", "geo_level": "country"}, headers=admin)
     a_conv, b_conv = await _my_channel(client, ana, hike["id"]), await _my_channel(client, bea, hike["id"])
     assert a_conv == b_conv
-    assert a_conv not in (national, new)  # a new community: the zones' chats are not mixed
-    chats = {c["id"]: c for c in (await client.get("/conversations", headers=ana)).json()}
-    old = chats[national if national in chats else new]
-    assert old["archive"] and old["archive"]["community_id"] == a_conv  # the old zone's chat, to read for a while
-    res = await client.post(f"/conversations/{old['id']}/messages", json={"body": "¿sigue?"}, headers=ana)
-    assert res.status_code == 403
+    assert a_conv in (national, new)  # joined into one of them
+    other = bea if new == b_conv else ana
+    await client.post(f"/conversations/{a_conv}/messages", json={"body": "Ya estamos juntos"}, headers=other)
+    msgs = (await client.get(f"/conversations/{a_conv}/messages", headers=ana)).json()
+    msgs = msgs.get("messages", msgs) if isinstance(msgs, dict) else msgs
+    bodies = [m.get("body") for m in msgs]
+    assert "Hola a todo el país" in bodies and bodies.index("Hola a todo el país") < bodies.index("Ya estamos juntos")  # all, in order
+    groups = [c for c in (await client.get("/conversations", headers=ana)).json() if c["kind"] == "group"]
+    assert not groups  # no chat left behind
     members = (await client.get(f"/communities/{a_conv}/members", headers=ana)).json()
     assert {"ana@example.com", "bea@example.com"} <= {m.get("email") for m in members} or len([m for m in members if not m.get("bot")]) >= 2
 
@@ -100,3 +103,31 @@ async def test_new_suggestions_notify_admins(client, db_session, monkeypatch):
         assert await pending.check_suggestions(db) >= 1
         assert await pending.check_suggestions(db) == 0  # once
     assert ("email_suggest_join", "Senderismo") in sent and {"type": "admin.pending"} in events
+
+
+async def test_archived_zone_chats_go_into_their_community(client, db_session):
+    """The chats kept apart for 30 days by the first version (read-only groups named «Interest · tmp:N») are moved,
+    messages and people, into the community they had been joined into."""
+    from sqlalchemy import select
+    from app.communities.interest_settings import unarchive_once
+    from app.core.app_settings import get_section, set_section
+    from app.core.models import Conversation, ConversationMember, Message, utcnow
+    ana, me = await make_user(client, db_session, "ana@example.com", "Ana")
+    hike = await _interest(client, ana, "senderismo")
+    await client.post(f"/channels/{hike['id']}/join", headers=ana)
+    target = await _my_channel(client, ana, hike["id"])
+    async with db_session() as db:
+        old = Conversation(kind="group", title="Senderismo · tmp:2", created_at=utcnow(), rules_markdown="",
+                           policy_json={"read_only": True, "archived_into": target, "archived_until": utcnow().isoformat()})
+        db.add(old)
+        await db.flush()
+        db.add(ConversationMember(conversation_id=old.id, user_id=me["id"], role="member"))
+        db.add(Message(conversation_id=old.id, sender_id=me["id"], kind="text", body="Ruta del sábado", created_at=utcnow()))
+        await db.commit()
+        old_id = old.id
+        done = await get_section(db, "migrations")
+        await set_section(db, "migrations", {**done, "unarchive": False})
+        await unarchive_once(db)
+        assert not (await db.execute(select(Conversation.id).where(Conversation.id == old_id))).first()
+        bodies = (await db.execute(select(Message.body).where(Message.conversation_id == target))).scalars().all()
+        assert "Ruta del sábado" in bodies
