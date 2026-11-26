@@ -180,7 +180,7 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
     <article className={"ccard" + (c.my_zone === false ? " otherzone" : "")} role="link" tabIndex={0}
       onClick={() => c.my_zone !== false && navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && c.my_zone !== false && navigate(communityPath(c.id))}>
       {/* the hobby's silhouette as a soft watermark, tinted with the community's colours */}
-      <span className="cwm" style={{ background: communityCover(c.slug, "c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+      <span className="cwm" style={{ background: communityCover(c.slug, "c" + c.id), ...communityTint(c.slug, "c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
       {isActive(c) || c.upcoming_count > 0 || isFresh(c) ? (
         <div className="cmarks">
           {isActive(c) ? <span className="cmark-b active">{t("ui_cbadge_active")}</span> : null}

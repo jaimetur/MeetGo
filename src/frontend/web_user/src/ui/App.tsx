@@ -74,7 +74,7 @@ export function applyChatSize(size?: string) {
 /** Each theme in its two versions, day and night: Settings shows one swatch per theme and a Day / Night / Auto switch.
  *  The first seven go with the seven designs (Settings → Design). */
 export const THEME_FAMILIES: Record<string, { label: string; light: string; dark: string }> = {
-  meetgo: { label: "ui_theme_pastel", light: "pastel", dark: "pasteldark" },
+  meetgo: { label: "ui_theme_pastel", light: "muro", dark: "murodark" },  // the colours of Muro
   conversa: { label: "ui_theme_conversa", light: "conversa", dark: "conversadark" },
   momentos: { label: "ui_theme_momentos", light: "momentos", dark: "momentosdark" },
   muro: { label: "ui_theme_muro", light: "muro", dark: "murodark" },
@@ -93,6 +93,21 @@ export const DESIGN_FAMILIES = ["meetgo", "conversa", "momentos", "muro", "chisp
 export type ThemeMode = "light" | "dark" | "auto";
 export type ThemeChoice = { family: string; mode: ThemeMode };
 
+/** Once on every device: the MeetGo design and theme (keeping day, night or auto); the person can change them afterwards. */
+const STYLE_VERSION = "2";
+export function resetStyleOnce() {
+  try {
+    if (localStorage.getItem("styleVersion") === STYLE_VERSION) return;
+    const { mode } = readThemeChoice();  // also from a theme saved the earlier way
+    localStorage.setItem("themeFamily", "meetgo");
+    localStorage.setItem("themeMode", mode);
+    localStorage.setItem("communityLayout", "actual");
+    localStorage.setItem("styleVersion", STYLE_VERSION);
+  } catch {
+    /* per-device preference */
+  }
+}
+
 /** The theme chosen on this device; one saved the earlier way (a single theme) becomes its family and mode. */
 export function readThemeChoice(): ThemeChoice {
   try {
@@ -108,7 +123,7 @@ export function readThemeChoice(): ThemeChoice {
   } catch {
     /* per-device preference */
   }
-  return { family: "classic", mode: "auto" };
+  return { family: "meetgo", mode: "auto" };
 }
 
 export function saveThemeChoice(choice: ThemeChoice) {
@@ -213,6 +228,7 @@ export default function App() {
   });
 
   useEffect(() => {
+    resetStyleOnce();
     applyTheme();
     applyLayout();
     applyChatSize();
