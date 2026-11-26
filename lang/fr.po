@@ -2771,7 +2771,7 @@ msgid "admin_email_notifications_cooldown"
 msgstr "Délai minimum entre deux résumés à la même personne (heures)"
 
 msgid "admin_email_notifications_hint"
-msgstr "Chaque personne choisit les e-mails qu’elle reçoit dans Compte → Notifications. Les e-mails du compte (confirmation et mot de passe) sont toujours envoyés."
+msgstr "Chaque personne choisit les e-mails qu’elle reçoit dans Ton compte → Alertes. Les e-mails du compte (confirmation et mot de passe) sont toujours envoyés."
 
 msgid "ui_dob_once"
 msgstr "Tu ne peux corriger ta date de naissance qu’une seule fois."
@@ -4455,6 +4455,9 @@ msgstr "Communautés à fusionner"
 
 msgid "email_suggest_split_title"
 msgstr "Communauté à diviser"
+
+msgid "ui_emails_off_site"
+msgstr "Les emails de notification sont désactivés sur MeetGo. Tes choix sont conservés et refonctionneront quand ils seront réactivés."
 
 msgid "ui_theme_plum"
 msgstr "Prune"

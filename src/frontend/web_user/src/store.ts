@@ -24,6 +24,7 @@ export type State = {
   paywall: boolean;
   // Subscriptions switched on in the administration; while off, nothing about plans is shown.
   subscriptions: boolean;
+  emailsOn: boolean;  // the administration's switch for notification emails
   // Board: my upcoming plans and my communities (right column, Chats filters, Publish). null until loaded.
   myPlans: Post[] | null;
   myCommunities: Community[] | null;
@@ -52,6 +53,7 @@ const initial: State = {
   adminPending: null,
   paywall: false,
   subscriptions: false,
+  emailsOn: true,
   myPlans: null,
   myCommunities: null,
   categories: null,

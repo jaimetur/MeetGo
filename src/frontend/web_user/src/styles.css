@@ -2630,3 +2630,5 @@ button.fwho-row:hover { background: var(--panel2); }
   [data-rail="icons"] .mnav button { height: 46px; gap: 0; }
   [data-rail="icons"] .mnav button .ic { width: 28px; height: 28px; }
 }
+.notebox { padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--amber, #b26b00) 12%, var(--panel)); color: var(--fg); font-size: 13px; }
+.check:has(input:disabled) { opacity: 0.55; }

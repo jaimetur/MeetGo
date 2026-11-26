@@ -2772,7 +2772,7 @@ msgid "admin_email_notifications_cooldown"
 msgstr "同一个人两封摘要之间的最短间隔(小时)"
 
 msgid "admin_email_notifications_hint"
-msgstr "每个人可在 账号 → 通知 中选择要收到哪些邮件。账号类邮件(确认和密码)始终会发送。"
+msgstr "每个人可在 你的账号 → 通知 中选择要收到哪些邮件。账号类邮件(确认和密码)始终会发送。"
 
 msgid "ui_dob_once"
 msgstr "出生日期只能更正一次。"
@@ -6148,6 +6148,9 @@ msgstr "需要合并的社区"
 
 msgid "email_suggest_split_title"
 msgstr "需要拆分的社区"
+
+msgid "ui_emails_off_site"
+msgstr "MeetGo 已关闭通知邮件。你的选择会被保存，开启后将重新生效。"
 
 msgid "ui_theme_plum"
 msgstr "梅紫"

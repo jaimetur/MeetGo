@@ -160,7 +160,7 @@ export async function refreshRequests() {
 export async function refreshBilling() {
   try {
     const [billing, settings] = await Promise.all([api.billing(), api.publicSettings()]);
-    setState({ billing, subscriptions: !!settings?.subscriptions });
+    setState({ billing, subscriptions: !!settings?.subscriptions, emailsOn: settings?.email_notifications !== false });
   } catch {
     /* not critical */
   }

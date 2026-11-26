@@ -243,6 +243,7 @@ export const accountMemory = { section: "profile" };
 export function AccountPage() {
   const me = useStore((s) => s.me)!;
   const billing = useStore((s) => s.billing);
+  const emailsOn = useStore((s) => s.emailsOn);
   const subscriptions = useStore((s) => s.subscriptions);
   // Plans only show while subscriptions are on, or for someone who already pays.
   const showPlans = subscriptions || !!billing?.stripe || !!billing?.play;
@@ -475,9 +476,10 @@ export function AccountPage() {
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_emails")}</h3>
             {!me.email_verified ? <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_unverified")}</div> : null}
+            {!emailsOn ? <div className="notebox">{t("ui_emails_off_site")}</div> : null}
             {["mentions", "messages", "requests", "plans", "reports", "categories", "communities"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
               <label key={k} className="check">
-                <input id={`acc-email-${k}`} type="checkbox" checked={!!me.email_prefs![k]}
+                <input id={`acc-email-${k}`} type="checkbox" checked={emailsOn && !!me.email_prefs![k]} disabled={!emailsOn}
                   onChange={(e) => api.emailPrefs({ [k]: e.target.checked }).then((u) => setState({ me: u })).catch((err) => toast(err.message, "error"))} />
                 {t("ui_email_" + k)}
               </label>

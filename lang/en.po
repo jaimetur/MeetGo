@@ -2772,7 +2772,7 @@ msgid "admin_email_notifications_cooldown"
 msgstr "Minimum between two summaries to the same person (hours)"
 
 msgid "admin_email_notifications_hint"
-msgstr "Each person chooses which emails they get in Account → Notifications. Account emails (confirmation and password) are always sent."
+msgstr "Each person chooses which emails they get in Your account → Alerts. Account emails (confirmation and password) are always sent."
 
 msgid "ui_dob_once"
 msgstr "You can correct your date of birth only once."
@@ -6149,6 +6149,9 @@ msgstr "Communities to join"
 
 msgid "email_suggest_split_title"
 msgstr "Community to split"
+
+msgid "ui_emails_off_site"
+msgstr "Notification emails are switched off on MeetGo. Your choices are kept and will work again once they are switched on."
 
 msgid "ui_theme_plum"
 msgstr "Plum"

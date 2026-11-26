@@ -2772,7 +2772,7 @@ msgid "admin_email_notifications_cooldown"
 msgstr "Minimale tijd tussen twee overzichten aan dezelfde persoon (uren)"
 
 msgid "admin_email_notifications_hint"
-msgstr "Iedereen kiest zelf welke e-mails hij of zij krijgt via Account → Meldingen. E-mails over het account (bevestiging en wachtwoord) worden altijd verstuurd."
+msgstr "Iedereen kiest zelf welke e-mails hij of zij krijgt via Je account → Meldingen. E-mails over het account (bevestiging en wachtwoord) worden altijd verstuurd."
 
 msgid "ui_dob_once"
 msgstr "Je kunt je geboortedatum maar één keer corrigeren."
@@ -6148,6 +6148,9 @@ msgstr "Communities om samen te voegen"
 
 msgid "email_suggest_split_title"
 msgstr "Community om te splitsen"
+
+msgid "ui_emails_off_site"
+msgstr "Meldingsmails staan uit bij MeetGo. Je keuzes blijven bewaard en werken weer zodra ze worden ingeschakeld."
 
 msgid "ui_theme_plum"
 msgstr "Pruim"

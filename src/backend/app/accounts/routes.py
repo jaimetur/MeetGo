@@ -38,6 +38,8 @@ async def public_settings(db: AsyncSession = Depends(get_db)):
            for key in ("languages", "age_ranges", "countries", "calling_codes", "provinces_by_country", "cities_by_country", "region_kinds", "group_kinds", "region_groups")}
     # While subscriptions are off, the apps hide everything about plans and codes.
     out["subscriptions"] = bool((data.get("billing") or {}).get("enabled"))
+    # Notification emails switched off in the administration: the account's email choices show as off.
+    out["email_notifications"] = (data.get("email_notifications") or {}).get("enabled", True) is not False
     return out
 
 

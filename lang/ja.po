@@ -6149,6 +6149,9 @@ msgstr "統合が必要なコミュニティ"
 msgid "email_suggest_split_title"
 msgstr "分割が必要なコミュニティ"
 
+msgid "ui_emails_off_site"
+msgstr "MeetGoでは通知メールがオフになっています。設定は保存され、オンになると再び有効になります。"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 
