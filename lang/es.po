@@ -5073,6 +5073,159 @@ msgstr "1 comentario"
 msgid "ui_feed_one_share"
 msgstr "Compartido 1 vez"
 
+msgid "ui_music_title"
+msgstr "Música"
+
+msgid "ui_music_tab_classic"
+msgstr "Canciones conocidas"
+
+msgid "ui_music_tab_mood"
+msgstr "Estados de ánimo"
+
+msgid "ui_music_all"
+msgstr "Todos"
+
+msgid "ui_music_search"
+msgstr "Buscar canción o autor"
+
+msgid "ui_music_none"
+msgstr "No hay canciones"
+
+msgid "ui_music_listen"
+msgstr "Escuchar"
+
+msgid "ui_music_use"
+msgstr "Usar esta canción"
+
+msgid "ui_music_remove"
+msgstr "Quitar música"
+
+msgid "ui_music_from"
+msgstr "Empieza en el segundo {s}"
+
+msgid "ui_music_license"
+msgstr "Grabación con licencia {license} · {performer}"
+
+msgid "ui_mood_happy"
+msgstr "Alegre"
+
+msgid "ui_mood_chill"
+msgstr "Relajada"
+
+msgid "ui_mood_romantic"
+msgstr "Romántica"
+
+msgid "ui_mood_epic"
+msgstr "Épica"
+
+msgid "ui_mood_sad"
+msgstr "Melancólica"
+
+msgid "ui_mood_energetic"
+msgstr "Enérgica"
+
+msgid "ui_mood_mysterious"
+msgstr "Misteriosa"
+
+msgid "ui_mood_party"
+msgstr "De fiesta"
+
+msgid "ui_mood_dreamy"
+msgstr "Soñadora"
+
+msgid "ui_mood_summer"
+msgstr "Veraniega"
+
+msgid "ui_story_tool_text"
+msgstr "Texto"
+
+msgid "ui_story_tool_stickers"
+msgstr "Emojis"
+
+msgid "ui_story_tool_filters"
+msgstr "Filtros"
+
+msgid "ui_story_tool_music"
+msgstr "Música"
+
+msgid "ui_story_drag_hint"
+msgstr "Arrastra el texto y los emojis para colocarlos donde quieras."
+
+msgid "ui_story_sticker_hint"
+msgstr "Toca un emoji para elegirlo y arrástralo; con la barra cambias su tamaño."
+
+msgid "ui_story_size"
+msgstr "Tamaño"
+
+msgid "ui_story_font_classic"
+msgstr "Clásica"
+
+msgid "ui_story_font_bold"
+msgstr "Negrita"
+
+msgid "ui_story_font_typewriter"
+msgstr "Máquina"
+
+msgid "ui_story_font_neon"
+msgstr "Neón"
+
+msgid "ui_story_font_hand"
+msgstr "A mano"
+
+msgid "ui_story_bg_none"
+msgstr "Sin fondo"
+
+msgid "ui_story_bg_solid"
+msgstr "Con fondo"
+
+msgid "ui_story_bg_soft"
+msgstr "Sombra"
+
+msgid "ui_story_align_left"
+msgstr "Izquierda"
+
+msgid "ui_story_align_center"
+msgstr "Centro"
+
+msgid "ui_story_align_right"
+msgstr "Derecha"
+
+msgid "ui_story_filter_none"
+msgstr "Normal"
+
+msgid "ui_story_filter_bw"
+msgstr "B/N"
+
+msgid "ui_story_filter_sepia"
+msgstr "Sepia"
+
+msgid "ui_story_filter_warm"
+msgstr "Cálido"
+
+msgid "ui_story_filter_cool"
+msgstr "Frío"
+
+msgid "ui_story_filter_vivid"
+msgstr "Vivo"
+
+msgid "ui_story_filter_fade"
+msgstr "Suave"
+
+msgid "ui_story_mute"
+msgstr "Silenciar"
+
+msgid "ui_story_unmute"
+msgstr "Activar sonido"
+
+msgid "err_music_not_found"
+msgstr "Esa canción ya no está disponible"
+
+msgid "err_music_invalid"
+msgstr "Archivo de audio o datos no válidos"
+
+msgid "err_music_builtin"
+msgstr "Las canciones de MeetGo no se borran: puedes ocultarlas"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "La revisará la administración; mientras tanto, tu comunidad aparecerá en «Otras»."
 

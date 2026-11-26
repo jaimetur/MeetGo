@@ -114,6 +114,50 @@ async def comments_out(db: AsyncSession, viewer: User, rows: list[FeedComment]) 
 
 # ---------- stories ----------
 
+FONTS = ("classic", "bold", "typewriter", "neon", "hand")
+TEXT_BGS = ("none", "solid", "soft")
+FILTERS = ("none", "bw", "sepia", "warm", "cool", "vivid", "fade")
+COLOR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
+
+
+def _unit(v, default=0.5) -> float:
+    try:
+        return round(min(1.0, max(0.0, float(v))), 4)
+    except (TypeError, ValueError):
+        return default
+
+
+def _num(v, lo: int, hi: int, default: int) -> int:
+    try:
+        return int(min(hi, max(lo, float(v))))
+    except (TypeError, ValueError):
+        return default
+
+
+def clean_layout(layout: dict | None) -> dict:
+    """A story's layout as stored: the text where it was put (0-1 of the width and height), its size, colour, font,
+    background and alignment; up to 12 emoji stickers; a filter for the photo or video."""
+    layout = layout or {}
+    text = layout.get("text") or {}
+    out = {"text": {
+        "x": _unit(text.get("x")), "y": _unit(text.get("y")),
+        "size": _num(text.get("size"), 14, 72, 28),
+        "color": text.get("color") if isinstance(text.get("color"), str) and COLOR_RE.match(text["color"]) else "#ffffff",
+        "font": text.get("font") if text.get("font") in FONTS else "classic",
+        "bg": text.get("bg") if text.get("bg") in TEXT_BGS else "none",
+        "align": text.get("align") if text.get("align") in ("left", "center", "right") else "center",
+    }}
+    stickers = []
+    for st in (layout.get("stickers") or [])[:12]:
+        e = st.get("e") if isinstance(st, dict) else None
+        if isinstance(e, str) and 0 < len(e) <= 16:
+            stickers.append({"e": e, "x": _unit(st.get("x")), "y": _unit(st.get("y")),
+                             "size": _num(st.get("size"), 24, 160, 56)})
+    out["stickers"] = stickers
+    out["filter"] = layout.get("filter") if layout.get("filter") in FILTERS else "none"
+    return out
+
+
 def story_visible(viewer: User):
     return and_(Story.expires_at > utcnow(), visible(Story, viewer),
                 or_(Story.user_id == viewer.id, ~Story.hidden_from.contains([viewer.id])))
@@ -130,11 +174,16 @@ async def stories_out(db: AsyncSession, viewer: User, stories: list[Story]) -> l
     views = dict((await db.execute(select(StoryView.story_id, func.count()).where(
         StoryView.story_id.in_([s.id for s in stories if s.user_id == viewer.id] or [0])).group_by(StoryView.story_id))).all())
     media = {a.story_id: attachment_out(a) for a in (await db.execute(select(Attachment).where(Attachment.story_id.in_(ids)))).scalars().all()}
+    from app.core.models import MusicTrack
+    from app.feed.music import track_out
+    track_ids = {int(s.music["id"]) for s in stories if s.music and s.music.get("id")}
+    tracks = {m.id: track_out(m) for m in (await db.execute(select(MusicTrack).where(MusicTrack.id.in_(track_ids or {0})))).scalars().all()}
     users = {u.id: u for u in (await db.execute(select(User).where(User.id.in_({s.user_id for s in stories})))).scalars().all()}
     groups: dict[int, list] = {}
     for s in sorted(stories, key=lambda s: s.created_at):
         groups.setdefault(s.user_id, []).append({
-            "id": s.id, "kind": s.kind, "text": s.text, "bg": s.bg, "media": media.get(s.id),
+            "id": s.id, "kind": s.kind, "text": s.text, "bg": s.bg, "media": media.get(s.id), "layout": s.layout or {},
+            "music": {**tracks[int(s.music["id"])], "start": s.music.get("start", 0)} if s.music and int(s.music.get("id") or 0) in tracks else None,
             "created_at": s.created_at.isoformat(), "expires_at": s.expires_at.isoformat(),
             "seen": s.id in seen or s.user_id == viewer.id, "my_reaction": seen.get(s.id),
             "views": int(views.get(s.id, 0)) if s.user_id == viewer.id else None,

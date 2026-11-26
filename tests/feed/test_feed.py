@@ -96,3 +96,47 @@ async def test_stories(client, db_session):
     async with db_session() as db:
         assert await purge_stories(db) == 2
         assert not (await db.execute(select(Story.id))).first()
+
+
+async def test_edit_post_photos(client, db_session):
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    one, two = await _photo(client, ana[0]), await _photo(client, ana[0])
+    post = (await client.post("/feed/posts", json={"body": "Fotos", "attachment_ids": [one]}, headers=ana[0])).json()
+    old = post["media"][0]["id"]
+    res = await client.patch(f"/feed/posts/{post['id']}", json={"add_media": [two], "remove_media": [old]}, headers=ana[0])
+    assert res.status_code == 200, res.text
+    assert [m["id"] for m in res.json()["media"]] == [two]
+
+
+async def test_story_layout_and_music(client, db_session):
+    from app.core.models import MusicTrack
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    async with db_session() as db:
+        db.add(MusicTrack(key="t_one", kind="mood", mood="happy", title="Sol", artist="MeetGo", file="mood_x.m4a", duration=30))
+        await db.commit()
+        track_id = (await db.execute(select(MusicTrack.id).where(MusicTrack.key == "t_one"))).scalar_one()
+    tracks = (await client.get("/music", headers=ana[0])).json()
+    assert any(m["id"] == track_id and m["kind"] == "mood" for m in tracks)
+    layout = {"text": {"x": 0.2, "y": 0.8, "size": 40, "color": "#facc15", "font": "neon", "bg": "soft", "align": "left"},
+              "stickers": [{"e": "🔥", "x": 0.7, "y": 0.2, "size": 80}], "filter": "warm"}
+    res = await client.post("/stories", json={"kind": "text", "text": "Hola", "bg": "#2563eb", "layout": layout,
+                                              "music": {"id": track_id, "start": 99}}, headers=ana[0])
+    assert res.status_code == 200, res.text
+    mine = (await client.get("/stories", headers=ana[0])).json()[0]["stories"][0]
+    assert mine["layout"]["text"]["font"] == "neon" and mine["layout"]["stickers"][0]["e"] == "🔥" and mine["layout"]["filter"] == "warm"
+    assert mine["music"]["title"] == "Sol" and mine["music"]["start"] == 15  # within the song: 30 s minus the 15 s it plays
+    assert (await client.post("/stories", json={"kind": "text", "text": "x", "music": {"id": 999999}}, headers=ana[0])).status_code == 400
+
+
+async def test_admin_music(client, db_session):
+    from app.core.models import MusicTrack
+    admin = await admin_headers(client)
+    async with db_session() as db:
+        db.add(MusicTrack(key="b_one", kind="classic", title="Für Elise", artist="Beethoven", file="classic_x.m4a", builtin=True))
+        await db.commit()
+    rows = (await client.get("/admin/music", headers=admin)).json()
+    tid = next(m["id"] for m in rows if m["key"] == "b_one")
+    assert (await client.delete(f"/admin/music/{tid}", headers=admin)).status_code == 400  # built in: only hidden
+    assert (await client.patch(f"/admin/music/{tid}", json={"active": False}, headers=admin)).json()["active"] is False
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    assert all(m["id"] != tid for m in (await client.get("/music", headers=ana[0])).json())

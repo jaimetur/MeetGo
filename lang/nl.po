@@ -5072,6 +5072,159 @@ msgstr "1 opmerking"
 msgid "ui_feed_one_share"
 msgstr "1 keer gedeeld"
 
+msgid "ui_music_title"
+msgstr "Muziek"
+
+msgid "ui_music_tab_classic"
+msgstr "Bekende stukken"
+
+msgid "ui_music_tab_mood"
+msgstr "Stemmingen"
+
+msgid "ui_music_all"
+msgstr "Alle"
+
+msgid "ui_music_search"
+msgstr "Zoek stuk of componist"
+
+msgid "ui_music_none"
+msgstr "Geen muziek"
+
+msgid "ui_music_listen"
+msgstr "Luisteren"
+
+msgid "ui_music_use"
+msgstr "Dit stuk gebruiken"
+
+msgid "ui_music_remove"
+msgstr "Muziek weghalen"
+
+msgid "ui_music_from"
+msgstr "Begint bij seconde {s}"
+
+msgid "ui_music_license"
+msgstr "Opname onder {license} · {performer}"
+
+msgid "ui_mood_happy"
+msgstr "Vrolijk"
+
+msgid "ui_mood_chill"
+msgstr "Ontspannen"
+
+msgid "ui_mood_romantic"
+msgstr "Romantisch"
+
+msgid "ui_mood_epic"
+msgstr "Episch"
+
+msgid "ui_mood_sad"
+msgstr "Melancholisch"
+
+msgid "ui_mood_energetic"
+msgstr "Energiek"
+
+msgid "ui_mood_mysterious"
+msgstr "Mysterieus"
+
+msgid "ui_mood_party"
+msgstr "Feest"
+
+msgid "ui_mood_dreamy"
+msgstr "Dromerig"
+
+msgid "ui_mood_summer"
+msgstr "Zomer"
+
+msgid "ui_story_tool_text"
+msgstr "Tekst"
+
+msgid "ui_story_tool_stickers"
+msgstr "Emoji's"
+
+msgid "ui_story_tool_filters"
+msgstr "Filters"
+
+msgid "ui_story_tool_music"
+msgstr "Muziek"
+
+msgid "ui_story_drag_hint"
+msgstr "Sleep de tekst en emoji's waar je wilt."
+
+msgid "ui_story_sticker_hint"
+msgstr "Tik op een emoji om hem te kiezen en sleep hem; met de schuif verander je de grootte."
+
+msgid "ui_story_size"
+msgstr "Grootte"
+
+msgid "ui_story_font_classic"
+msgstr "Klassiek"
+
+msgid "ui_story_font_bold"
+msgstr "Vet"
+
+msgid "ui_story_font_typewriter"
+msgstr "Typemachine"
+
+msgid "ui_story_font_neon"
+msgstr "Neon"
+
+msgid "ui_story_font_hand"
+msgstr "Handschrift"
+
+msgid "ui_story_bg_none"
+msgstr "Geen achtergrond"
+
+msgid "ui_story_bg_solid"
+msgstr "Achtergrond"
+
+msgid "ui_story_bg_soft"
+msgstr "Schaduw"
+
+msgid "ui_story_align_left"
+msgstr "Links"
+
+msgid "ui_story_align_center"
+msgstr "Midden"
+
+msgid "ui_story_align_right"
+msgstr "Rechts"
+
+msgid "ui_story_filter_none"
+msgstr "Normaal"
+
+msgid "ui_story_filter_bw"
+msgstr "Z/W"
+
+msgid "ui_story_filter_sepia"
+msgstr "Sepia"
+
+msgid "ui_story_filter_warm"
+msgstr "Warm"
+
+msgid "ui_story_filter_cool"
+msgstr "Koel"
+
+msgid "ui_story_filter_vivid"
+msgstr "Levendig"
+
+msgid "ui_story_filter_fade"
+msgstr "Zacht"
+
+msgid "ui_story_mute"
+msgstr "Dempen"
+
+msgid "ui_story_unmute"
+msgstr "Geluid aan"
+
+msgid "err_music_not_found"
+msgstr "Dit stuk is niet meer beschikbaar"
+
+msgid "err_music_invalid"
+msgstr "Ongeldig audiobestand of gegevens"
+
+msgid "err_music_builtin"
+msgstr "MeetGo's stukken kun je niet verwijderen: je kunt ze verbergen"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

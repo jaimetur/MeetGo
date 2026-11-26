@@ -5072,6 +5072,159 @@ msgstr "1 条评论"
 msgid "ui_feed_one_share"
 msgstr "被分享 1 次"
 
+msgid "ui_music_title"
+msgstr "音乐"
+
+msgid "ui_music_tab_classic"
+msgstr "名曲"
+
+msgid "ui_music_tab_mood"
+msgstr "心情"
+
+msgid "ui_music_all"
+msgstr "全部"
+
+msgid "ui_music_search"
+msgstr "搜索曲名或作曲家"
+
+msgid "ui_music_none"
+msgstr "没有歌曲"
+
+msgid "ui_music_listen"
+msgstr "试听"
+
+msgid "ui_music_use"
+msgstr "使用这首"
+
+msgid "ui_music_remove"
+msgstr "移除音乐"
+
+msgid "ui_music_from"
+msgstr "从第 {s} 秒开始"
+
+msgid "ui_music_license"
+msgstr "录音授权 {license} · {performer}"
+
+msgid "ui_mood_happy"
+msgstr "欢快"
+
+msgid "ui_mood_chill"
+msgstr "轻松"
+
+msgid "ui_mood_romantic"
+msgstr "浪漫"
+
+msgid "ui_mood_epic"
+msgstr "史诗"
+
+msgid "ui_mood_sad"
+msgstr "忧郁"
+
+msgid "ui_mood_energetic"
+msgstr "活力"
+
+msgid "ui_mood_mysterious"
+msgstr "神秘"
+
+msgid "ui_mood_party"
+msgstr "派对"
+
+msgid "ui_mood_dreamy"
+msgstr "梦幻"
+
+msgid "ui_mood_summer"
+msgstr "夏日"
+
+msgid "ui_story_tool_text"
+msgstr "文字"
+
+msgid "ui_story_tool_stickers"
+msgstr "表情"
+
+msgid "ui_story_tool_filters"
+msgstr "滤镜"
+
+msgid "ui_story_tool_music"
+msgstr "音乐"
+
+msgid "ui_story_drag_hint"
+msgstr "拖动文字和表情，放到任意位置。"
+
+msgid "ui_story_sticker_hint"
+msgstr "点按表情选中并拖动；用滑块调整大小。"
+
+msgid "ui_story_size"
+msgstr "大小"
+
+msgid "ui_story_font_classic"
+msgstr "经典"
+
+msgid "ui_story_font_bold"
+msgstr "粗体"
+
+msgid "ui_story_font_typewriter"
+msgstr "打字机"
+
+msgid "ui_story_font_neon"
+msgstr "霓虹"
+
+msgid "ui_story_font_hand"
+msgstr "手写"
+
+msgid "ui_story_bg_none"
+msgstr "无背景"
+
+msgid "ui_story_bg_solid"
+msgstr "有背景"
+
+msgid "ui_story_bg_soft"
+msgstr "阴影"
+
+msgid "ui_story_align_left"
+msgstr "左"
+
+msgid "ui_story_align_center"
+msgstr "中"
+
+msgid "ui_story_align_right"
+msgstr "右"
+
+msgid "ui_story_filter_none"
+msgstr "原图"
+
+msgid "ui_story_filter_bw"
+msgstr "黑白"
+
+msgid "ui_story_filter_sepia"
+msgstr "复古"
+
+msgid "ui_story_filter_warm"
+msgstr "暖色"
+
+msgid "ui_story_filter_cool"
+msgstr "冷色"
+
+msgid "ui_story_filter_vivid"
+msgstr "鲜艳"
+
+msgid "ui_story_filter_fade"
+msgstr "柔和"
+
+msgid "ui_story_mute"
+msgstr "静音"
+
+msgid "ui_story_unmute"
+msgstr "打开声音"
+
+msgid "err_music_not_found"
+msgstr "这首歌已不可用"
+
+msgid "err_music_invalid"
+msgstr "音频文件或数据无效"
+
+msgid "err_music_builtin"
+msgstr "MeetGo 自带的歌曲不能删除：可以隐藏"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

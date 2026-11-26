@@ -7,7 +7,8 @@ import { t } from "@lang";
 import { api, fileUrl } from "../api";
 import { navigate } from "../router";
 import { toast, useStore } from "../store";
-import type { StoryGroup, StoryItem, UserSummary } from "../types";
+import type { MusicTrack, StoryGroup, StoryItem, StoryLayout, UserSummary } from "../types";
+import { DEFAULT_TEXT, FILTERS, FONTS, MUSIC_SECONDS, MusicPicker, STICKERS, StoryCanvas, TEXT_BGS, TEXT_COLORS } from "./StoryCanvas";
 import { shortWhen } from "../util";
 import { Avatar, Icon, Modal, QUICK_REACTIONS } from "./common";
 
@@ -58,6 +59,11 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   const [preview, setPreview] = useState("");
   const [text, setText] = useState("");
   const [bg, setBg] = useState(BACKGROUNDS[0]);
+  const [layout, setLayout] = useState<StoryLayout>({ text: { ...DEFAULT_TEXT }, stickers: [], filter: "none" });
+  const [selected, setSelected] = useState<number | "text" | null>(null);
+  const [tool, setTool] = useState<"text" | "stickers" | "filters" | null>("text");
+  const [music, setMusic] = useState<{ track: MusicTrack; start: number } | null>(null);
+  const [picking, setPicking] = useState(false);
   const [audience, setAudience] = useState("friends");
   const [hidden, setHidden] = useState<number[]>([]);
   const [hiding, setHiding] = useState(false);
@@ -72,19 +78,20 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   }, [file]);
   useEffect(() => { if (hiding && !friends) api.friends().then(setFriends).catch(() => setFriends([])); }, [hiding]);
   const video = !!file && file.type.startsWith("video/");
+  const tx = { ...DEFAULT_TEXT, ...(layout.text || {}) };
+  const setText2 = (patch: Partial<typeof tx>) => setLayout((l) => ({ ...l, text: { ...tx, ...patch } }));
+  const sel = typeof selected === "number" ? layout.stickers?.[selected] : null;
   async function publish() {
     setBusy(true);
     try {
+      const common = { text: text.trim(), audience, hidden_from: hidden, layout, music: music ? { id: music.track.id, start: music.start } : null };
       if (kind === "media") {
         if (!file) return;
-        if (video) {
-          const secs = await duration(preview);
-          if (secs > 16) throw new Error(t("ui_story_video_long"));
-        }
+        if (video && (await duration(preview)) > 16) throw new Error(t("ui_story_video_long"));
         const a = await api.upload(file);
-        await api.storyCreate({ kind: video ? "video" : "photo", text: text.trim(), audience, hidden_from: hidden, attachment_id: a.id });
+        await api.storyCreate({ ...common, kind: video ? "video" : "photo", attachment_id: a.id });
       } else {
-        await api.storyCreate({ kind: "text", text: text.trim(), bg, audience, hidden_from: hidden });
+        await api.storyCreate({ ...common, kind: "text", bg });
       }
       toast(t("ui_story_posted"));
       onDone();
@@ -95,7 +102,7 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
     }
   }
   return (
-    <Modal title={t("ui_story_new")} onClose={onClose} footer={(
+    <Modal wide title={t("ui_story_new")} onClose={onClose} footer={(
       <>
         <select id="story-audience" className="inp faud" value={audience} onChange={(e) => setAudience(e.target.value)} aria-label={t("ui_feed_audience")}>
           {["friends", "followers", "public"].map((a) => <option key={a} value={a}>{t(`ui_feed_aud_${a}`)}</option>)}
@@ -105,46 +112,92 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
         <button id="story-publish" className="btn pri" disabled={busy || (kind === "media" ? !file : !text.trim())} onClick={publish}>{busy ? t("ui_uploading") : t("ui_feed_publish")}</button>
       </>
     )}>
-      <div className="segtabs stkind" role="tablist">
-        <button role="tab" className={kind === "media" ? "on" : ""} onClick={() => setKind("media")}><Icon name="image" size="sm" /> {t("ui_story_kind_media")}</button>
-        <button id="story-kind-text" role="tab" className={kind === "text" ? "on" : ""} onClick={() => setKind("text")}><Icon name="edit" size="sm" /> {t("ui_story_kind_text")}</button>
-      </div>
-      {kind === "media" ? (
-        <div className="stpreview" onClick={() => !file && input.current?.click()}>
-          {file ? (video ? <video src={preview} autoPlay muted loop playsInline /> : <img src={preview} alt="" />)
-            : <button type="button" className="btn" onClick={() => input.current?.click()}><Icon name="image" size="sm" />{t("ui_story_pick")}</button>}
-          {file && text ? <div className="stcaption">{text}</div> : null}
+      <div className="stedit">
+        <div className="stedit-canvas">
+          <div className="segtabs stkind" role="tablist">
+            <button role="tab" className={kind === "media" ? "on" : ""} onClick={() => setKind("media")}><Icon name="image" size="sm" /> {t("ui_story_kind_media")}</button>
+            <button id="story-kind-text" role="tab" className={kind === "text" ? "on" : ""} onClick={() => setKind("text")}><Icon name="edit" size="sm" /> {t("ui_story_kind_text")}</button>
+          </div>
+          {kind === "media" && !file ? (
+            <div className="stpreview" onClick={() => input.current?.click()}>
+              <button type="button" className="btn"><Icon name="image" size="sm" />{t("ui_story_pick")}</button>
+            </div>
+          ) : (
+            <div className="stpreview">
+              <StoryCanvas kind={kind === "text" ? "text" : video ? "video" : "photo"} text={text} bg={bg} mediaUrl={preview} video={video}
+                layout={layout} editable onLayout={setLayout} selected={selected} onSelect={setSelected} />
+            </div>
+          )}
+          {music ? <div className="stmusic-chip"><Icon name="music" size="sm" /><span>{music.track.title} · {music.track.artist}</span></div> : null}
           <input ref={input} type="file" accept="image/*,video/*" hidden onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) setFile(f); }} />
         </div>
-      ) : (
-        <div className="stpreview text" style={{ background: bg }}>
-          <textarea id="story-text" maxLength={500} value={text} onChange={(e) => setText(e.target.value)} placeholder={t("ui_story_text_ph")} autoFocus />
+        <div className="stedit-tools">
+          <textarea id="story-text" className="inp" rows={2} maxLength={500} value={text} onChange={(e) => setText(e.target.value)}
+            placeholder={kind === "text" ? t("ui_story_text_ph") : t("ui_story_caption_ph")} />
+          <small className="muted">{t("ui_story_drag_hint")}</small>
+          <div className="sttools">
+            <button type="button" className={"chip" + (tool === "text" ? " on" : "")} onClick={() => setTool(tool === "text" ? null : "text")}><Icon name="edit" size="sm" />{t("ui_story_tool_text")}</button>
+            <button id="story-tool-stickers" type="button" className={"chip" + (tool === "stickers" ? " on" : "")} onClick={() => setTool(tool === "stickers" ? null : "stickers")}><Icon name="smile" size="sm" />{t("ui_story_tool_stickers")}</button>
+            {kind === "media" && file ? <button type="button" className={"chip" + (tool === "filters" ? " on" : "")} onClick={() => setTool(tool === "filters" ? null : "filters")}><Icon name="image" size="sm" />{t("ui_story_tool_filters")}</button> : null}
+            <button id="story-tool-music" type="button" className={"chip" + (music ? " on" : "")} onClick={() => setPicking(true)}><Icon name="music" size="sm" />{t("ui_story_tool_music")}</button>
+          </div>
+          {tool === "text" ? (
+            <div className="stpanel">
+              <div className="stfonts">{FONTS.map((f) => <button key={f} type="button" className={`chip f-${f}` + (tx.font === f ? " on" : "")} onClick={() => setText2({ font: f })}>{t(`ui_story_font_${f}`)}</button>)}</div>
+              <div className="stswatches">{TEXT_COLORS.map((c) => <button key={c} type="button" className={tx.color === c ? "on" : ""} style={{ background: c }} onClick={() => setText2({ color: c })} aria-label={c} />)}</div>
+              <div className="strow">
+                {TEXT_BGS.map((b) => <button key={b} type="button" className={"chip" + (tx.bg === b ? " on" : "")} onClick={() => setText2({ bg: b })}>{t(`ui_story_bg_${b}`)}</button>)}
+                {(["left", "center", "right"] as const).map((al) => <button key={al} type="button" className={"chip" + (tx.align === al ? " on" : "")} onClick={() => setText2({ align: al })}>{t(`ui_story_align_${al}`)}</button>)}
+              </div>
+              <label className="strange">{t("ui_story_size")}<input type="range" min={14} max={72} value={tx.size} onChange={(e) => setText2({ size: Number(e.target.value) })} /></label>
+            </div>
+          ) : null}
+          {tool === "stickers" ? (
+            <div className="stpanel">
+              <div className="ststickers">{STICKERS.map((e) => (
+                <button key={e} type="button" onClick={() => { const list = [...(layout.stickers || []), { e, x: 0.5, y: 0.35, size: 56 }].slice(0, 12); setLayout({ ...layout, stickers: list }); setSelected(list.length - 1); }}>{e}</button>
+              ))}</div>
+              {sel ? (
+                <div className="strow">
+                  <label className="strange grow">{t("ui_story_size")}<input type="range" min={24} max={160} value={sel.size}
+                    onChange={(e) => setLayout({ ...layout, stickers: layout.stickers!.map((s, i) => (i === selected ? { ...s, size: Number(e.target.value) } : s)) })} /></label>
+                  <button type="button" className="btn sm danger" onClick={() => { setLayout({ ...layout, stickers: layout.stickers!.filter((_, i) => i !== selected) }); setSelected(null); }}><Icon name="trash" size="sm" />{t("ui_remove")}</button>
+                </div>
+              ) : <small className="muted">{t("ui_story_sticker_hint")}</small>}
+            </div>
+          ) : null}
+          {tool === "filters" && file ? (
+            <div className="stpanel stfilters">
+              {FILTERS.map(([k, css]) => (
+                <button key={k} type="button" className={layout.filter === k ? "on" : ""} onClick={() => setLayout({ ...layout, filter: k })}>
+                  {video ? <span className="stfthumb" style={{ background: "#333", filter: css }} /> : <img src={preview} alt="" style={{ filter: css }} />}
+                  <small>{t(`ui_story_filter_${k}`)}</small>
+                </button>
+              ))}
+            </div>
+          ) : null}
+          {kind === "text" ? (
+            <div className="stcolors">
+              {BACKGROUNDS.map((c) => <button key={c} type="button" className={bg === c ? "on" : ""} style={{ background: c }} onClick={() => setBg(c)} aria-label={c} />)}
+            </div>
+          ) : file ? <button type="button" className="linkbtn" onClick={() => input.current?.click()}>{t("ui_story_change")}</button> : null}
+          <button type="button" className="linkbtn sthide-toggle" onClick={() => setHiding(!hiding)}>
+            {hidden.length ? t("ui_story_hidden_n", { n: hidden.length }) : t("ui_story_hide_from")}
+          </button>
+          {hiding ? (
+            <div className="sthide">
+              {friends === null ? <span className="muted">{t("ui_loading")}</span> : friends.length === 0 ? <span className="muted">{t("ui_story_no_friends")}</span>
+                : friends.map((f) => (
+                  <label key={f.id} className="sthide-row">
+                    <input type="checkbox" checked={hidden.includes(f.id)} onChange={(e) => setHidden((h) => (e.target.checked ? [...h, f.id] : h.filter((x) => x !== f.id)))} />
+                    <Avatar user={f} size={28} /><span>{f.display_name}</span>
+                  </label>
+                ))}
+            </div>
+          ) : null}
         </div>
-      )}
-      {kind === "media" ? (
-        <>
-          {file ? <button type="button" className="linkbtn" onClick={() => input.current?.click()}>{t("ui_story_change")}</button> : null}
-          <input className="inp" maxLength={500} value={text} onChange={(e) => setText(e.target.value)} placeholder={t("ui_story_caption_ph")} style={{ marginTop: 8 }} />
-        </>
-      ) : (
-        <div className="stcolors">
-          {BACKGROUNDS.map((c) => <button key={c} type="button" className={bg === c ? "on" : ""} style={{ background: c }} onClick={() => setBg(c)} aria-label={c} />)}
-        </div>
-      )}
-      <button type="button" className="linkbtn sthide-toggle" onClick={() => setHiding(!hiding)}>
-        {hidden.length ? t("ui_story_hidden_n", { n: hidden.length }) : t("ui_story_hide_from")}
-      </button>
-      {hiding ? (
-        <div className="sthide">
-          {friends === null ? <span className="muted">{t("ui_loading")}</span> : friends.length === 0 ? <span className="muted">{t("ui_story_no_friends")}</span>
-            : friends.map((f) => (
-              <label key={f.id} className="sthide-row">
-                <input type="checkbox" checked={hidden.includes(f.id)} onChange={(e) => setHidden((h) => (e.target.checked ? [...h, f.id] : h.filter((x) => x !== f.id)))} />
-                <Avatar user={f} size={28} /><span>{f.display_name}</span>
-              </label>
-            ))}
-        </div>
-      ) : null}
+      </div>
+      {picking ? <MusicPicker value={music} onClose={() => setPicking(false)} onPick={(v) => { setMusic(v); setPicking(false); }} /> : null}
     </Modal>
   );
 }
@@ -172,8 +225,12 @@ function StoryViewer({ groups, start, onClose, onChanged }: { groups: StoryGroup
   const [reply, setReply] = useState("");
   const [viewers, setViewers] = useState<{ user: UserSummary; reaction: string | null }[] | null>(null);
   const [sent, setSent] = useState<string | null>(null);
+  const [muted, setMuted] = useState(false);
   const video = useRef<HTMLVideoElement>(null);
+  const audio = useRef<HTMLAudioElement | null>(null);
   const story: StoryItem | undefined = group?.stories[i];
+  // a story with a song lasts as long as its excerpt; without one, PHOTO_MS
+  const lasts = story?.music ? MUSIC_SECONDS * 1000 : PHOTO_MS;
 
   const next = () => {
     if (i + 1 < group.stories.length) { setI(i + 1); return; }
@@ -194,9 +251,9 @@ function StoryViewer({ groups, start, onClose, onChanged }: { groups: StoryGroup
   useEffect(() => {
     if (!story || paused || viewers || reply) return;
     if (story.kind === "video") return;
-    const startAt = Date.now() - progress * PHOTO_MS;
+    const startAt = Date.now() - progress * lasts;
     const timer = window.setInterval(() => {
-      const p = (Date.now() - startAt) / PHOTO_MS;
+      const p = (Date.now() - startAt) / lasts;
       if (p >= 1) { window.clearInterval(timer); next(); } else setProgress(p);
     }, 50);
     return () => window.clearInterval(timer);
@@ -206,6 +263,21 @@ function StoryViewer({ groups, start, onClose, onChanged }: { groups: StoryGroup
     if (!v) return;
     if (paused || viewers || reply) v.pause(); else void v.play().catch(() => undefined);
   }, [paused, viewers, reply, story?.id]);
+  // its song, from where its author chose
+  useEffect(() => {
+    if (!story?.music) return;
+    const a = new Audio(fileUrl(story.music.url));
+    a.currentTime = story.music.start;
+    audio.current = a;
+    void a.play().catch(() => undefined);
+    return () => { a.pause(); audio.current = null; };
+  }, [story?.id]);
+  useEffect(() => {
+    const a = audio.current;
+    if (!a) return;
+    a.muted = muted;
+    if (paused || viewers || reply) a.pause(); else void a.play().catch(() => undefined);
+  }, [paused, viewers, reply, muted, story?.id]);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -237,17 +309,14 @@ function StoryViewer({ groups, start, onClose, onChanged }: { groups: StoryGroup
             <Avatar user={group.user} size={34} /><b>{group.mine ? t("ui_story_yours") : group.user.display_name}</b><small>{shortWhen(story.created_at)}</small>
           </button>
           <span className="grow" />
+          {story.music ? <button type="button" className="iconbtn" onClick={() => setMuted(!muted)} aria-label={muted ? t("ui_story_unmute") : t("ui_story_mute")}><Icon name={muted ? "mute" : "volume"} /></button> : null}
           <button type="button" className="iconbtn" onClick={() => setPaused(!paused)} aria-label={paused ? t("ui_story_play") : t("ui_story_pause")}><Icon name={paused ? "play" : "pause"} /></button>
           <button type="button" className="iconbtn" onClick={onClose} aria-label={t("ui_close")}><Icon name="x" /></button>
         </div>
-        <div className="stbody" style={story.kind === "text" ? { background: story.bg || "#111827" } : undefined}
-          onPointerDown={() => setPaused(true)} onPointerUp={() => setPaused(false)} onPointerLeave={() => setPaused(false)}>
-          {story.kind === "photo" && story.media ? <img src={fileUrl(story.media.url)} alt="" draggable={false} /> : null}
-          {story.kind === "video" && story.media ? (
-            <video ref={video} src={fileUrl(story.media.url)} autoPlay playsInline
-              onTimeUpdate={(e) => setProgress(e.currentTarget.duration ? e.currentTarget.currentTime / e.currentTarget.duration : 0)} onEnded={next} />
-          ) : null}
-          {story.kind === "text" ? <div className="sttext">{story.text}</div> : story.text ? <div className="stcaption">{story.text}</div> : null}
+        <div className="stbody" onPointerDown={() => setPaused(true)} onPointerUp={() => setPaused(false)} onPointerLeave={() => setPaused(false)}>
+          <StoryCanvas kind={story.kind} text={story.text} bg={story.bg} mediaUrl={story.media ? fileUrl(story.media.url) : null} video={story.kind === "video"}
+            layout={story.layout || {}} videoRef={video} muted={!!story.music || muted} onVideoTime={(p) => !story.music && setProgress(p)} onVideoEnd={() => !story.music && next()} />
+          {story.music ? <div className="stmusic-chip over"><Icon name="music" size="sm" /><span>{story.music.title} · {story.music.artist}</span></div> : null}
           <button type="button" className="sttap left" onClick={prev} aria-label={t("ui_previous")} />
           <button type="button" className="sttap right" onClick={next} aria-label={t("ui_next")} />
         </div>

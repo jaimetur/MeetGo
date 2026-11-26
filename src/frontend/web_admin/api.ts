@@ -211,6 +211,21 @@ export const api = {
   async deleteLanguage(code: string): Promise<AdminLanguage[]> {
     return await req(`/admin/languages/${encodeURIComponent(code)}`, { method: "DELETE" });
   },
+  async adminMusic(): Promise<AdminTrack[]> {
+    return await req("/admin/music");
+  },
+  async addMusic(file: File, fields: { title: string; artist: string; kind: string; mood?: string; license: string; source_url?: string }): Promise<AdminTrack> {
+    const form = new FormData();
+    form.append("file", file, file.name);
+    for (const [k, v] of Object.entries(fields)) if (v) form.append(k, v);
+    return await req("/admin/music", { method: "POST", body: form });
+  },
+  async editMusic(id: number, payload: Record<string, unknown>): Promise<AdminTrack> {
+    return await req(`/admin/music/${id}`, { method: "PATCH", body: JSON.stringify(payload) });
+  },
+  async deleteMusic(id: number) {
+    return await req(`/admin/music/${id}`, { method: "DELETE" });
+  },
   async adminLogs(filters: Record<string, string | number | undefined>): Promise<{ rows: AdminLog[]; more: boolean }> {
     const qs = new URLSearchParams(Object.entries(filters).filter(([, v]) => v !== undefined && v !== "").map(([k, v]) => [k, String(v)]));
     return await req(`/admin/logs?${qs}`);
@@ -496,3 +511,7 @@ export type AdminLog = {
   id: number; at: string; method: string; path: string; status: number; ms: number; kind: string; ip: string | null; agent: string | null;
   user: { id: number; name: string | null; email: string | null } | null;
 };
+
+/** A song of the stories' library, for Administration → Music. */
+export type AdminTrack = { id: number; key: string; kind: "classic" | "mood"; mood: string | null; title: string; artist: string; performer: string;
+  url: string; duration: number; license: string; license_url: string | null; source_url: string | null; builtin: boolean; active: boolean };

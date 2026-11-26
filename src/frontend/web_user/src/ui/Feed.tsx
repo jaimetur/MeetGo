@@ -388,7 +388,7 @@ function Comments({ post, onCount }: { post: FeedPost; onCount: (n: number) => v
         <RichText text={c.body} />
         <div className="fcmeta">
           <span className="muted">{shortWhen(c.created_at)}</span>
-          <button type="button" className="linkbtn" onClick={() => { setReplyTo(c.parent_id ? (list || []).find((x) => x.id === c.parent_id) || c : c); setBody(`@${c.author.display_name} `); }}>{t("ui_feed_reply")}</button>
+          <button type="button" className="linkbtn" onClick={() => { setReplyTo(c.parent_id ? (list || []).find((x) => x.id === c.parent_id) || c : c); setBody(`@${c.author.username || c.author.display_name} `); }}>{t("ui_feed_reply")}</button>
           {c.mine || post.mine ? <button type="button" className="linkbtn muted" onClick={() => remove(c)}>{t("ui_delete")}</button> : null}
         </div>
       </div>
@@ -470,21 +470,60 @@ function EditPost({ post, onClose, onSaved }: { post: FeedPost; onClose: () => v
   const [body, setBody] = useState(post.body);
   const [audience, setAudience] = useState<Audience>(post.audience);
   const [place, setPlace] = useState(post.place || "");
+  const [kept, setKept] = useState<FeedMedia[]>(post.media);  // the photos it has, minus those taken off
+  const [added, setAdded] = useState<FeedMedia[]>([]);
+  const [uploading, setUploading] = useState(0);
   const [busy, setBusy] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
+  const room = MAX_MEDIA - kept.length - added.length;
+  async function add(files: File[]) {
+    const list = files.filter((f) => f.type.startsWith("image/") || f.type.startsWith("video/"));
+    if (list.length > room) toast(t("ui_feed_max_media", { n: MAX_MEDIA }), "error");
+    for (const f of list.slice(0, room)) {
+      setUploading((n) => n + 1);
+      try {
+        const a = await api.upload(f);
+        setAdded((m) => [...m, a]);
+      } catch (e: any) {
+        toast(e.message, "error");
+      } finally {
+        setUploading((n) => n - 1);
+      }
+    }
+  }
+  const removed = post.media.filter((m) => !kept.some((k) => k.id === m.id)).map((m) => m.id);
+  const thumb = (m: FeedMedia, onRemove: () => void) => (
+    <div key={m.id} className="fthumb">
+      {m.mime.startsWith("video/") ? <video src={fileUrl(m.url)} muted /> : <img src={fileUrl(m.thumb_url || m.url)} alt="" />}
+      <button type="button" className="iconbtn" onClick={onRemove} aria-label={t("ui_remove")}><Icon name="x" size="sm" /></button>
+    </div>
+  );
   return (
-    <Modal title={t("ui_feed_edit_title")} onClose={onClose} footer={(
+    <Modal wide title={t("ui_feed_edit_title")} onClose={onClose} footer={(
       <>
         <AudienceSelect value={audience} onChange={setAudience} />
         <span className="grow" />
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
-        <button className="btn pri" disabled={busy} onClick={() => {
+        <button id="feed-edit-save" className="btn pri" disabled={busy || uploading > 0 || (!body.trim() && !kept.length && !added.length && !post.shared_from_id)} onClick={() => {
           setBusy(true);
-          api.feedEdit(post.id, { body, audience, place }).then((p) => { toast(t("ui_saved")); onSaved(p); }).catch((e) => toast(e.message, "error")).finally(() => setBusy(false));
+          api.feedEdit(post.id, { body, audience, place, add_media: added.map((m) => m.id), remove_media: removed })
+            .then((p) => { toast(t("ui_saved")); onSaved(p); }).catch((e) => toast(e.message, "error")).finally(() => setBusy(false));
         }}>{t("ui_save")}</button>
       </>
     )}>
-      <textarea className="inp" rows={5} maxLength={5000} value={body} onChange={(e) => setBody(e.target.value)} />
-      <div className="fplace" style={{ marginTop: 8 }}><Icon name="place" size="sm" /><input className="inp" maxLength={120} value={place} onChange={(e) => setPlace(e.target.value)} placeholder={t("ui_feed_place_ph")} /></div>
+      <textarea id="feed-edit-body" className="inp" rows={5} maxLength={5000} value={body} onChange={(e) => setBody(e.target.value)} />
+      {kept.length || added.length || uploading ? (
+        <div className="fthumbs" style={{ marginTop: 10 }}>
+          {kept.map((m) => thumb(m, () => setKept((x) => x.filter((y) => y.id !== m.id))))}
+          {added.map((m) => thumb(m, () => setAdded((x) => x.filter((y) => y.id !== m.id))))}
+          {Array.from({ length: uploading }).map((_, i) => <div key={`u${i}`} className="fthumb loading"><span className="spinner" /></div>)}
+        </div>
+      ) : null}
+      <div className="fcompose-bar" style={{ marginTop: 10 }}>
+        <button id="feed-edit-add" type="button" className="btn sm" onClick={() => input.current?.click()} disabled={room <= 0}><Icon name="image" size="sm" />{t("ui_feed_add_media")}</button>
+        <div className="fplace grow"><Icon name="place" size="sm" /><input className="inp" maxLength={120} value={place} onChange={(e) => setPlace(e.target.value)} placeholder={t("ui_feed_place_ph")} /></div>
+      </div>
+      <input ref={input} type="file" accept="image/*,video/*" multiple hidden onChange={(e) => { const f = Array.from(e.target.files || []); e.target.value = ""; void add(f); }} />
     </Modal>
   );
 }

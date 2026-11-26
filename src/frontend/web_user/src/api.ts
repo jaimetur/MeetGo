@@ -1,7 +1,7 @@
 import { getLang, t } from "@lang";
 import type {
   Attendee, BillingStatus, Comment, Community, CommunityMember, CommunityStats, Conversation, FeedFilter, Interest, Me, Member, Message, Plans, Post,
-  FeedComment, FeedPost, PostPage, StoryGroup, UserSummary,
+  FeedComment, FeedPost, MusicTrack, PostPage, StoryGroup, StoryLayout, UserSummary,
 } from "./types";
 
 function computeApiBase(): string {
@@ -213,7 +213,7 @@ export const api = {
   feedPost: (id: number) => req<FeedPost>(`/feed/posts/${id}`),
   feedCreate: (payload: { body: string; audience: string; place?: string | null; attachment_ids?: number[]; shared_from_id?: number }) =>
     req<FeedPost>("/feed/posts", { method: "POST", json: payload }),
-  feedEdit: (id: number, payload: { body?: string; audience?: string; place?: string | null }) => req<FeedPost>(`/feed/posts/${id}`, { method: "PATCH", json: payload }),
+  feedEdit: (id: number, payload: { body?: string; audience?: string; place?: string | null; add_media?: number[]; remove_media?: number[] }) => req<FeedPost>(`/feed/posts/${id}`, { method: "PATCH", json: payload }),
   feedDelete: (id: number) => req(`/feed/posts/${id}`, { method: "DELETE" }),
   feedReact: (id: number, emoji: string | null) => req<FeedPost>(`/feed/posts/${id}/reaction`, { method: "PUT", json: { emoji } }),
   feedReactions: (id: number) => req<{ user: UserSummary; emoji: string }[]>(`/feed/posts/${id}/reactions`),
@@ -223,7 +223,9 @@ export const api = {
   feedSave: (id: number, on: boolean) => req(`/feed/posts/${id}/save`, { method: on ? "POST" : "DELETE" }),
   feedReport: (id: number, reason: string, details?: string) => req(`/feed/posts/${id}/report`, { method: "POST", json: { reason, details } }),
   stories: () => req<StoryGroup[]>("/stories"),
-  storyCreate: (payload: { kind: string; text?: string; bg?: string | null; audience: string; hidden_from?: number[]; attachment_id?: number }) =>
+  music: () => req<MusicTrack[]>("/music"),
+  storyCreate: (payload: { kind: string; text?: string; bg?: string | null; audience: string; hidden_from?: number[]; attachment_id?: number;
+    layout?: StoryLayout; music?: { id: number; start: number } | null }) =>
     req<{ ok: boolean; id: number }>("/stories", { method: "POST", json: payload }),
   storyView: (id: number, reaction?: string) => req(`/stories/${id}/view`, { method: "POST", json: { reaction: reaction || null } }),
   storyViewers: (id: number) => req<{ user: UserSummary; reaction: string | null; viewed_at: string }[]>(`/stories/${id}/viewers`),

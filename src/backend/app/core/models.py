@@ -81,11 +81,11 @@ class User(Base):
 
     @property
     def shown_name(self) -> str:
-        """How the others see the person: "Jaime (jaimetur)" (the surnames are in the card); the alias alone when there
+        """How the others see the person: "Jaime (@jaimetur)" (the surnames are in the card); the alias alone when there
         is no name (bots)."""
         if not self.first_name or self.first_name.lower() == (self.display_name or "").lower():
             return self.first_name or self.display_name  # "Lucy", not "Lucy (Lucy)"
-        return f"{self.first_name} ({self.display_name})"
+        return f"{self.first_name} (@{self.display_name})"
     dob: Mapped[str] = mapped_column(String(10))  # YYYY-MM-DD
     age_range: Mapped[AgeRange] = mapped_column(
         Enum(AgeRange, values_callable=lambda obj: [e.value for e in obj], name="agerange"),
@@ -640,8 +640,34 @@ class Story(Base):
     audience: Mapped[str] = mapped_column(String(16), default="friends")  # friends | followers | public
     province: Mapped[str | None] = mapped_column(String(64), nullable=True)
     hidden_from: Mapped[list] = mapped_column(JSONB, default=list)  # people it is not shown to
+    # where the text goes and how it looks, emoji stickers and a filter: {text: {x, y, size, color, font, bg, align},
+    # stickers: [{e, x, y, size}], filter}
+    layout: Mapped[dict] = mapped_column(JSONB, default=dict)
+    music: Mapped[dict | None] = mapped_column(JSONB, nullable=True)  # {id, start}: a song of the library, from a second
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+
+
+class MusicTrack(Base):
+    """A song stories can have: famous works in free recordings (with their licence and author) and MeetGo's own music
+    by mood, built in; and those the administration uploads."""
+    __tablename__ = "music_tracks"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    key: Mapped[str] = mapped_column(String(64), unique=True)
+    kind: Mapped[str] = mapped_column(String(16), default="classic")  # classic | mood
+    mood: Mapped[str | None] = mapped_column(String(24), nullable=True)
+    title: Mapped[str] = mapped_column(String(160))
+    artist: Mapped[str] = mapped_column(String(160), default="")
+    performer: Mapped[str] = mapped_column(String(200), default="")
+    file: Mapped[str] = mapped_column(String(200))
+    duration: Mapped[int] = mapped_column(Integer, default=30)
+    license: Mapped[str] = mapped_column(String(64), default="")
+    license_url: Mapped[str | None] = mapped_column(String(300), nullable=True)
+    source_url: Mapped[str | None] = mapped_column(String(400), nullable=True)
+    builtin: Mapped[bool] = mapped_column(Boolean, default=False)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    position: Mapped[int] = mapped_column(Integer, default=500)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
 class StoryView(Base):

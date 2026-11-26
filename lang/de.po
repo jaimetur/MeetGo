@@ -5939,6 +5939,159 @@ msgstr "1 Kommentar"
 msgid "ui_feed_one_share"
 msgstr "1-mal geteilt"
 
+msgid "ui_music_title"
+msgstr "Musik"
+
+msgid "ui_music_tab_classic"
+msgstr "Bekannte Stücke"
+
+msgid "ui_music_tab_mood"
+msgstr "Stimmungen"
+
+msgid "ui_music_all"
+msgstr "Alle"
+
+msgid "ui_music_search"
+msgstr "Stück oder Komponist suchen"
+
+msgid "ui_music_none"
+msgstr "Keine Musik"
+
+msgid "ui_music_listen"
+msgstr "Anhören"
+
+msgid "ui_music_use"
+msgstr "Dieses Stück verwenden"
+
+msgid "ui_music_remove"
+msgstr "Musik entfernen"
+
+msgid "ui_music_from"
+msgstr "Beginnt bei Sekunde {s}"
+
+msgid "ui_music_license"
+msgstr "Aufnahme unter {license} · {performer}"
+
+msgid "ui_mood_happy"
+msgstr "Fröhlich"
+
+msgid "ui_mood_chill"
+msgstr "Entspannt"
+
+msgid "ui_mood_romantic"
+msgstr "Romantisch"
+
+msgid "ui_mood_epic"
+msgstr "Episch"
+
+msgid "ui_mood_sad"
+msgstr "Melancholisch"
+
+msgid "ui_mood_energetic"
+msgstr "Energisch"
+
+msgid "ui_mood_mysterious"
+msgstr "Geheimnisvoll"
+
+msgid "ui_mood_party"
+msgstr "Party"
+
+msgid "ui_mood_dreamy"
+msgstr "Verträumt"
+
+msgid "ui_mood_summer"
+msgstr "Sommer"
+
+msgid "ui_story_tool_text"
+msgstr "Text"
+
+msgid "ui_story_tool_stickers"
+msgstr "Emojis"
+
+msgid "ui_story_tool_filters"
+msgstr "Filter"
+
+msgid "ui_story_tool_music"
+msgstr "Musik"
+
+msgid "ui_story_drag_hint"
+msgstr "Zieh Text und Emojis, wohin du willst."
+
+msgid "ui_story_sticker_hint"
+msgstr "Tippe auf ein Emoji, um es zu wählen, und zieh es; mit dem Regler änderst du die Größe."
+
+msgid "ui_story_size"
+msgstr "Größe"
+
+msgid "ui_story_font_classic"
+msgstr "Klassisch"
+
+msgid "ui_story_font_bold"
+msgstr "Fett"
+
+msgid "ui_story_font_typewriter"
+msgstr "Schreibmaschine"
+
+msgid "ui_story_font_neon"
+msgstr "Neon"
+
+msgid "ui_story_font_hand"
+msgstr "Handschrift"
+
+msgid "ui_story_bg_none"
+msgstr "Ohne Hintergrund"
+
+msgid "ui_story_bg_solid"
+msgstr "Mit Hintergrund"
+
+msgid "ui_story_bg_soft"
+msgstr "Schatten"
+
+msgid "ui_story_align_left"
+msgstr "Links"
+
+msgid "ui_story_align_center"
+msgstr "Mitte"
+
+msgid "ui_story_align_right"
+msgstr "Rechts"
+
+msgid "ui_story_filter_none"
+msgstr "Normal"
+
+msgid "ui_story_filter_bw"
+msgstr "S/W"
+
+msgid "ui_story_filter_sepia"
+msgstr "Sepia"
+
+msgid "ui_story_filter_warm"
+msgstr "Warm"
+
+msgid "ui_story_filter_cool"
+msgstr "Kühl"
+
+msgid "ui_story_filter_vivid"
+msgstr "Lebhaft"
+
+msgid "ui_story_filter_fade"
+msgstr "Sanft"
+
+msgid "ui_story_mute"
+msgstr "Stumm"
+
+msgid "ui_story_unmute"
+msgstr "Ton an"
+
+msgid "err_music_not_found"
+msgstr "Dieses Stück ist nicht mehr verfügbar"
+
+msgid "err_music_invalid"
+msgstr "Ungültige Audiodatei oder Daten"
+
+msgid "err_music_builtin"
+msgstr "MeetGos Stücke können nicht gelöscht werden: du kannst sie ausblenden"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

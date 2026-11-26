@@ -36,6 +36,8 @@ class PostEditIn(BaseModel):
     body: str | None = Field(default=None, max_length=5000)
     audience: str | None = None
     place: str | None = Field(default=None, max_length=120)
+    add_media: list[int] = Field(default_factory=list, max_length=MAX_MEDIA)  # photos or videos just uploaded
+    remove_media: list[int] = Field(default_factory=list, max_length=MAX_MEDIA)
 
 
 class ReactionIn(BaseModel):
@@ -59,6 +61,8 @@ class StoryIn(BaseModel):
     audience: str = "friends"
     hidden_from: list[int] = Field(default_factory=list, max_length=500)
     attachment_id: int | None = None
+    layout: dict = Field(default_factory=dict)  # text position and style, stickers, filter
+    music: dict | None = None  # {id, start}
 
 
 class StoryViewIn(BaseModel):
@@ -137,8 +141,27 @@ async def edit_post(post_id: int, payload: PostEditIn, db: AsyncSession = Depend
         post.audience = _audience(payload.audience)
     if payload.place is not None:
         post.place = payload.place.strip() or None
+    gone_files: list[str] = []
+    if payload.remove_media:
+        for a in (await db.execute(select(Attachment).where(Attachment.id.in_(payload.remove_media), Attachment.feed_post_id == post.id))).scalars().all():
+            gone_files += [k for k in (a.storage_key, a.thumb_key) if k]
+            await db.delete(a)
+    if payload.add_media:
+        have = (await db.execute(select(Attachment.id).where(Attachment.feed_post_id == post.id))).scalars().all()
+        new = list((await db.execute(select(Attachment).where(
+            Attachment.id.in_(payload.add_media), Attachment.uploader_id == user.id, Attachment.message_id.is_(None),
+            Attachment.feed_post_id.is_(None), Attachment.story_id.is_(None)))).scalars().all())
+        if any(not (a.mime.startswith("image/") or a.mime.startswith("video/")) for a in new):
+            raise HTTPException(400, t("err_feed_media"))
+        if len(have) - len(payload.remove_media) + len(new) > MAX_MEDIA:
+            raise HTTPException(400, t("err_feed_media"))
+        for a in new:
+            a.feed_post_id = post.id
     post.edited_at = utcnow()
     await db.commit()
+    if gone_files:  # the photos taken off, unless another copy uses them
+        from app.messaging.retention import _remove_files, _unused
+        _remove_files(await _unused(db, gone_files))
     feed.check_later("post", post.id)
     return (await feed.posts_out(db, user, [post]))[0]
 
@@ -292,7 +315,10 @@ async def create_story(payload: StoryIn, db: AsyncSession = Depends(get_db), use
             raise HTTPException(400, t("err_feed_media"))
     elif not payload.text.strip():
         raise HTTPException(400, t("err_empty_message"))
+    from app.feed.music import story_music
+    music = await story_music(db, payload.music)
     story = Story(user_id=user.id, kind=payload.kind, text=payload.text.strip(), bg=payload.bg, audience=_audience(payload.audience),
+                  layout=feed.clean_layout(payload.layout), music=music,
                   province=user.province, hidden_from=sorted(set(payload.hidden_from) - {user.id}), created_at=utcnow(),
                   expires_at=feed.story_expiry())
     db.add(story)

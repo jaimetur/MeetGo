@@ -88,6 +88,8 @@ const PATHS: Record<string, string> = {
   door: "M14 4H6v16h8M10 12h10M17 9l3 3-3 3",
   layers: "M12 3 3 8l9 5 9-5zM3 13l9 5 9-5",
   bookmark: "M6 3h12v18l-6-4-6 4z",
+  volume: "M4 9v6h4l5 4V5L8 9H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11",
+  mute: "M4 9v6h4l5 4V5L8 9H4zM16 9l6 6M22 9l-6 6",
   play: "M7 4l13 8-13 8z",
   pause: "M7 4h3v16H7zM14 4h3v16h-3z",
   eye: "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",
@@ -143,7 +145,7 @@ export function fullName(u: { first_name?: string | null; last_name?: string | n
 export function shownName(u: { display_name: string; first_name?: string | null }): string {
   // the alias in brackets only when it says something else than the name ("Lucy", not "Lucy (Lucy)")
   if (!u.first_name || u.first_name.toLocaleLowerCase() === u.display_name.toLocaleLowerCase()) return u.first_name || u.display_name;
-  return `${u.first_name} (${u.display_name})`;
+  return `${u.first_name} (@${u.display_name})`;
 }
 
 export function convTitle(conv: Conversation): string {

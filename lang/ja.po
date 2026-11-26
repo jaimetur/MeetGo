@@ -5072,6 +5072,159 @@ msgstr "コメント1件"
 msgid "ui_feed_one_share"
 msgstr "1回シェア"
 
+msgid "ui_music_title"
+msgstr "音楽"
+
+msgid "ui_music_tab_classic"
+msgstr "有名な曲"
+
+msgid "ui_music_tab_mood"
+msgstr "気分"
+
+msgid "ui_music_all"
+msgstr "すべて"
+
+msgid "ui_music_search"
+msgstr "曲名・作曲者で検索"
+
+msgid "ui_music_none"
+msgstr "曲がありません"
+
+msgid "ui_music_listen"
+msgstr "試聴"
+
+msgid "ui_music_use"
+msgstr "この曲を使う"
+
+msgid "ui_music_remove"
+msgstr "音楽を外す"
+
+msgid "ui_music_from"
+msgstr "{s}秒から開始"
+
+msgid "ui_music_license"
+msgstr "ライセンス {license} の録音 · {performer}"
+
+msgid "ui_mood_happy"
+msgstr "明るい"
+
+msgid "ui_mood_chill"
+msgstr "まったり"
+
+msgid "ui_mood_romantic"
+msgstr "ロマンチック"
+
+msgid "ui_mood_epic"
+msgstr "壮大"
+
+msgid "ui_mood_sad"
+msgstr "切ない"
+
+msgid "ui_mood_energetic"
+msgstr "元気"
+
+msgid "ui_mood_mysterious"
+msgstr "ミステリアス"
+
+msgid "ui_mood_party"
+msgstr "パーティー"
+
+msgid "ui_mood_dreamy"
+msgstr "夢見心地"
+
+msgid "ui_mood_summer"
+msgstr "夏"
+
+msgid "ui_story_tool_text"
+msgstr "テキスト"
+
+msgid "ui_story_tool_stickers"
+msgstr "絵文字"
+
+msgid "ui_story_tool_filters"
+msgstr "フィルター"
+
+msgid "ui_story_tool_music"
+msgstr "音楽"
+
+msgid "ui_story_drag_hint"
+msgstr "テキストや絵文字はドラッグして好きな場所に置けます。"
+
+msgid "ui_story_sticker_hint"
+msgstr "絵文字をタップして選び、ドラッグします。スライダーで大きさを変えられます。"
+
+msgid "ui_story_size"
+msgstr "大きさ"
+
+msgid "ui_story_font_classic"
+msgstr "クラシック"
+
+msgid "ui_story_font_bold"
+msgstr "太字"
+
+msgid "ui_story_font_typewriter"
+msgstr "タイプライター"
+
+msgid "ui_story_font_neon"
+msgstr "ネオン"
+
+msgid "ui_story_font_hand"
+msgstr "手書き"
+
+msgid "ui_story_bg_none"
+msgstr "背景なし"
+
+msgid "ui_story_bg_solid"
+msgstr "背景あり"
+
+msgid "ui_story_bg_soft"
+msgstr "影"
+
+msgid "ui_story_align_left"
+msgstr "左"
+
+msgid "ui_story_align_center"
+msgstr "中央"
+
+msgid "ui_story_align_right"
+msgstr "右"
+
+msgid "ui_story_filter_none"
+msgstr "通常"
+
+msgid "ui_story_filter_bw"
+msgstr "モノクロ"
+
+msgid "ui_story_filter_sepia"
+msgstr "セピア"
+
+msgid "ui_story_filter_warm"
+msgstr "暖色"
+
+msgid "ui_story_filter_cool"
+msgstr "寒色"
+
+msgid "ui_story_filter_vivid"
+msgstr "鮮やか"
+
+msgid "ui_story_filter_fade"
+msgstr "ソフト"
+
+msgid "ui_story_mute"
+msgstr "ミュート"
+
+msgid "ui_story_unmute"
+msgstr "音を出す"
+
+msgid "err_music_not_found"
+msgstr "その曲はもう利用できません"
+
+msgid "err_music_invalid"
+msgstr "音声ファイルまたはデータが無効です"
+
+msgid "err_music_builtin"
+msgstr "MeetGoの曲は削除できません（非表示にできます）"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

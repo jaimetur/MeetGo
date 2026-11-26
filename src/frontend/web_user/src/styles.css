@@ -1911,3 +1911,63 @@ button.fwho-row:hover { background: var(--panel2); }
 .streply .inp { flex: 1; background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); color: #fff; border-radius: 999px; }
 .streply .iconbtn { color: #fff; }
 .stsent { text-align: center; font-size: 13px; opacity: .85; }
+
+/* stories: the canvas (made and seen alike; sizes relative to its width) */
+.stcanvas { position: relative; width: 100%; height: 100%; overflow: hidden; container-type: inline-size; touch-action: none; display: grid; place-items: center; }
+.stcanvas > img, .stcanvas > video { width: 100%; height: 100%; object-fit: cover; }
+.stview .stcanvas > img, .stview .stcanvas > video { object-fit: contain; }
+.sttxt { position: absolute; transform: translate(-50%, -50%); max-width: 90%; padding: .15em .35em; border-radius: .25em; font-weight: 700; line-height: 1.2; white-space: pre-wrap; word-break: break-word; user-select: none; }
+.stcanvas.edit .sttxt, .stcanvas.edit .ststicker { cursor: grab; }
+.sttxt.sel, .ststicker.sel { outline: 2px dashed rgba(255,255,255,.8); outline-offset: 4px; }
+.sttxt.f-classic { font-family: var(--sans, system-ui); }
+.sttxt.f-bold { font-family: var(--display, system-ui); text-transform: uppercase; letter-spacing: .02em; font-weight: 900; }
+.sttxt.f-typewriter { font-family: "Courier New", Courier, monospace; font-weight: 600; }
+.sttxt.f-neon { font-family: var(--display, system-ui); font-weight: 600; }
+.sttxt.f-hand { font-family: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive; font-weight: 600; }
+.sttxt:not(.boxed) { text-shadow: 0 1px 6px rgba(0,0,0,.45); }
+.sttxt.f-neon:not(.boxed) { text-shadow: inherit; }
+.ststicker { position: absolute; transform: translate(-50%, -50%); line-height: 1; user-select: none; }
+.stmusic-chip { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 999px; background: var(--panel2); font-size: 12.5px; max-width: 100%; }
+.stmusic-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stmusic-chip.over { position: absolute; top: calc(64px + env(safe-area-inset-top, 0px)); left: 12px; z-index: 2; background: rgba(0,0,0,.45); color: #fff; margin: 0; }
+/* making one */
+.stedit { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 16px; align-items: start; }
+@media (max-width: 700px) { .stedit { grid-template-columns: 1fr; } }
+.stedit-canvas { display: flex; flex-direction: column; align-items: center; }
+.stedit-canvas .stpreview { cursor: default; }
+.stedit-tools { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.sttools, .stfonts, .strow { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.sttools .chip { display: inline-flex; align-items: center; gap: 5px; }
+.stpanel { display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: 12px; background: var(--panel2); }
+.stfonts .f-typewriter { font-family: "Courier New", monospace; }
+.stfonts .f-hand { font-family: "Bradley Hand", "Comic Sans MS", cursive; }
+.stfonts .f-bold { text-transform: uppercase; font-weight: 900; }
+.stswatches { display: flex; gap: 6px; flex-wrap: wrap; }
+.stswatches button { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line2); }
+.stswatches button.on { outline: 2px solid var(--fg); outline-offset: 2px; }
+.strange { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.strange input { flex: 1; }
+.ststickers { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 4px; }
+.ststickers button { font-size: 24px; height: 40px; border-radius: 10px; }
+.ststickers button:hover { background: var(--panel); }
+.stfilters { flex-direction: row; overflow-x: auto; }
+.stfilters button { flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px; border-radius: 10px; border: 2px solid transparent; }
+.stfilters button.on { border-color: var(--accent, #1a73e8); }
+.stfilters img, .stfthumb { width: 56px; height: 72px; object-fit: cover; border-radius: 8px; display: block; }
+.stfilters small { font-size: 11px; }
+/* music */
+.mtags { margin-top: 8px; flex-wrap: wrap; }
+.mlist { display: flex; flex-direction: column; gap: 2px; max-height: 42vh; overflow: auto; }
+.mrow { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 10px; }
+.mrow.on { background: var(--panel2); }
+.mplay { flex: none; background: var(--panel2); }
+.mtxt { flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: left; color: inherit; }
+.mtxt b, .mtxt small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mstart { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.mlic { font-size: 11.5px; }
+/* Administration → Music */
+.mu-list { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.mu-row { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
+.mu-row.dim { opacity: .55; }
+.mu-txt { display: flex; flex-direction: column; min-width: 0; }
+.mu-txt b, .mu-txt small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
