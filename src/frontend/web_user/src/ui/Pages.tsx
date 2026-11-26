@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, DESIGN_FAMILIES, THEMES, THEME_FAMILIES, type ThemeChoice, type ThemeMode, applyChatSize, readThemeChoice, saveThemeChoice, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, LAYOUTS, applyLayout, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
+import { AboutModal, Avatar, Icon, LAYOUTS, applyLayout, getRailIcons, setRailIcons, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -831,6 +831,7 @@ const LAYOUT_THEMES: Record<Layout, string> = { actual: "meetgo", conversa: "con
 
 function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: ThemeChoice) => void }) {
   const [value, setValue] = useState<Layout>(getLayout);
+  const [rail, setRail] = useState(getRailIcons);
   const pick = (v: Layout) => {
     setValue(v);
     try {
@@ -853,6 +854,11 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
         ))}
       </div>
       <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_layout_hint")}</div>
+      <label className="tgl railtgl" htmlFor="set-rail-icons">
+        <span className="grow">{t("ui_rail_icons")}<small>{t("ui_rail_icons_hint")}</small></span>
+        <input id="set-rail-icons" type="checkbox" role="switch" checked={rail} onChange={(e) => { setRail(e.target.checked); setRailIcons(e.target.checked); }} />
+        <span className="sw" aria-hidden="true" />
+      </label>
     </div>
   );
 }

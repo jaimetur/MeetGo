@@ -6116,6 +6116,12 @@ msgstr "Temi dei layout"
 msgid "ui_theme_group_more"
 msgstr "Altri temi"
 
+msgid "ui_rail_icons"
+msgstr "Menu laterale solo con icone"
+
+msgid "ui_rail_icons_hint"
+msgstr "Sugli schermi grandi il menu a sinistra si restringe e lascia più spazio ai contenuti."
+
 msgid "ui_theme_plum"
 msgstr "Prugna"
 

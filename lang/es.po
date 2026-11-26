@@ -6117,6 +6117,12 @@ msgstr "Temas de los diseños"
 msgid "ui_theme_group_more"
 msgstr "Más temas"
 
+msgid "ui_rail_icons"
+msgstr "Menú lateral solo con iconos"
+
+msgid "ui_rail_icons_hint"
+msgstr "En pantallas grandes, el menú de la izquierda se estrecha y deja más sitio al contenido."
+
 msgid "ui_theme_plum"
 msgstr "Ciruela"
 

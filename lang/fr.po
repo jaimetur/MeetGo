@@ -4423,6 +4423,12 @@ msgstr "Thèmes des mises en page"
 msgid "ui_theme_group_more"
 msgstr "Plus de thèmes"
 
+msgid "ui_rail_icons"
+msgstr "Menu latéral avec icônes seules"
+
+msgid "ui_rail_icons_hint"
+msgstr "Sur les grands écrans, le menu de gauche se rétrécit et laisse plus de place au contenu."
+
 msgid "ui_theme_plum"
 msgstr "Prune"
 

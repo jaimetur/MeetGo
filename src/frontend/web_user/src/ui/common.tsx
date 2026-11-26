@@ -356,6 +356,24 @@ export function getLayout(): Layout {
 /** The design on the whole app (menu, shapes, buttons, lists): `data-layout` on the page, with styles.css. */
 export function applyLayout(v: Layout = getLayout()) {
   document.documentElement.dataset.layout = v;
+  document.documentElement.dataset.rail = getRailIcons() ? "icons" : "full";
+}
+
+/** Settings → Design: the side menu with only its icons (any design; off by default). */
+export function getRailIcons(): boolean {
+  try {
+    return localStorage.getItem("railIcons") === "1";
+  } catch {
+    return false;
+  }
+}
+export function setRailIcons(on: boolean) {
+  try {
+    localStorage.setItem("railIcons", on ? "1" : "0");
+  } catch {
+    /* per-device preference */
+  }
+  applyLayout();
 }
 
 /** The community's own colour, as a CSS variable for the pastel themes' icons. */

@@ -6115,6 +6115,12 @@ msgstr "Temas dos layouts"
 msgid "ui_theme_group_more"
 msgstr "Mais temas"
 
+msgid "ui_rail_icons"
+msgstr "Menu lateral só com ícones"
+
+msgid "ui_rail_icons_hint"
+msgstr "Em ecrãs grandes, o menu da esquerda fica estreito e deixa mais espaço para o conteúdo."
+
 msgid "ui_theme_plum"
 msgstr "Ameixa"
 

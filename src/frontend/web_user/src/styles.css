@@ -2420,17 +2420,17 @@ button.fwho-row:hover { background: var(--panel2); }
 [data-layout="quedadas"] .planrow > .grow { padding: 10px 12px 4px; }
 [data-layout="quedadas"] .planrow > .btn, [data-layout="quedadas"] .planrow > .iconbtn { margin: 0 12px 12px auto; }
 [data-layout="quedadas"] .chero { height: 180px; }
-/* Mosaico: a board of pictures: the menu as a rail of icons, big round shapes, plans and people in a grid */
+/* Settings → Design → "only icons in the menu" (data-rail="icons", any design): the side menu as a rail of icons */
 @media (min-width: 821px) {
-  [data-layout="mosaico"] .shell { --menuw: 76px; }
-  [data-layout="mosaico"] .dnav { align-items: center; padding: 14px 8px; }
-  [data-layout="mosaico"] .dlogo { padding: 0 0 14px; }
-  [data-layout="mosaico"] .dlogo .wordmark, [data-layout="mosaico"] .dnav .dl { display: none; }
-  [data-layout="mosaico"] .dnav .di { width: 48px; justify-content: center; padding: 0; border-radius: 16px; }
-  [data-layout="mosaico"] .dnav .di .bdg { position: absolute; top: 2px; right: 0; }
-  [data-layout="mosaico"] .dnav .dpub { width: 48px; padding: 0; border-radius: 50%; }
-  [data-layout="mosaico"] .dnav .dpub .dl, [data-layout="mosaico"] .dnav .dnav-foot .appver { display: none; }
-  [data-layout="mosaico"] .dnav .zonetag { padding: 6px; } [data-layout="mosaico"] .dnav .zonetag span { display: none; }
+  [data-rail="icons"] .shell { --menuw: 76px; }
+  [data-rail="icons"] .dnav { align-items: center; padding: 14px 8px; }
+  [data-rail="icons"] .dlogo { padding: 0 0 14px; }
+  [data-rail="icons"] .dlogo .wordmark, [data-rail="icons"] .dnav .dl { display: none; }
+  [data-rail="icons"] .dnav .di { width: 48px; justify-content: center; padding: 0; border-radius: 16px; }
+  [data-rail="icons"] .dnav .di .bdg { position: absolute; top: 2px; right: 0; }
+  [data-rail="icons"] .dnav .dpub { width: 48px; padding: 0; border-radius: 50%; }
+  [data-rail="icons"] .dnav .dpub .dl, [data-rail="icons"] .dnav .dnav-foot .appver { display: none; }
+  [data-rail="icons"] .dnav .zonetag { padding: 6px; } [data-rail="icons"] .dnav .zonetag span { display: none; }
 }
 [data-layout="mosaico"] :is(.box, .mini, .pcard, .ccard) { border-radius: 20px; }
 [data-layout="mosaico"] .btn { border-radius: 999px; }

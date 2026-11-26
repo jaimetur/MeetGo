@@ -6116,6 +6116,12 @@ msgstr "Temes dels dissenys"
 msgid "ui_theme_group_more"
 msgstr "Més temes"
 
+msgid "ui_rail_icons"
+msgstr "Menú lateral només amb icones"
+
+msgid "ui_rail_icons_hint"
+msgstr "En pantalles grans, el menú de l'esquerra s'estreny i deixa més lloc al contingut."
+
 msgid "ui_theme_plum"
 msgstr "Pruna"
 

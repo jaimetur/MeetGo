@@ -6116,6 +6116,12 @@ msgstr "布局主题"
 msgid "ui_theme_group_more"
 msgstr "更多主题"
 
+msgid "ui_rail_icons"
+msgstr "侧边菜单仅显示图标"
+
+msgid "ui_rail_icons_hint"
+msgstr "在大屏幕上，左侧菜单变窄，为内容留出更多空间。"
+
 msgid "ui_theme_plum"
 msgstr "梅紫"
 

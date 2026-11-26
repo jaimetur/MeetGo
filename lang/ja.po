@@ -6116,6 +6116,12 @@ msgstr "レイアウトのテーマ"
 msgid "ui_theme_group_more"
 msgstr "その他のテーマ"
 
+msgid "ui_rail_icons"
+msgstr "サイドメニューをアイコンのみに"
+
+msgid "ui_rail_icons_hint"
+msgstr "大きな画面では左のメニューが細くなり、内容に広いスペースを使えます。"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 
