@@ -2623,3 +2623,4 @@ button.fwho-row:hover { background: var(--panel2); }
 /* a post's cover without a picture: with a coloured side menu, the theme's light colour (like a community's) */
 :root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"], [data-palette="momentos"], [data-palette="momentosdark"]) .hero.grad { background: color-mix(in srgb, var(--blue) 16%, var(--panel)) !important; }
 :root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"], [data-palette="momentos"], [data-palette="momentosdark"]) .hero.grad::after { display: none; }
+[data-layout="muro"] .dnav .di > .av { width: 34px !important; height: 34px !important; font-size: 13px; }  /* as big as the round icons beside it */
