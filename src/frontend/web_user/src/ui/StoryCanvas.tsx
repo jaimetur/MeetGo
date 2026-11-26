@@ -128,7 +128,9 @@ export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicT
   const list = tab === "hits" ? (found ?? hits)
     : (library || []).filter((m) => m.kind === tab && (!mood || m.mood === mood) && (!q || plain(`${m.title} ${m.artist}`).includes(plain(q))));
   const loading = tab === "hits" ? (q.trim().length >= 2 ? found === null : hits === null) : library === null;
-  const tabs: [Tab, string][] = [["hits", t("ui_music_tab_hits")], ["popular", t("ui_music_tab_popular")], ["classic", t("ui_music_tab_classic")], ["mood", t("ui_music_tab_mood")]];
+  // the tabs that have songs (the library's, once it has arrived); hits always
+  const tabs = ([["hits", t("ui_music_tab_hits")], ["popular", t("ui_music_tab_popular")], ["classic", t("ui_music_tab_classic")], ["mood", t("ui_music_tab_mood")]] as [Tab, string][])
+    .filter(([k]) => k === "hits" || library === null || library.some((m) => m.kind === k));
   const max = chosen ? Math.max(0, chosen.track.duration - MUSIC_SECONDS) : 0;
   return (
     <Modal wide title={t("ui_music_title")} onClose={() => { audio.current?.pause(); onClose(); }} footer={(

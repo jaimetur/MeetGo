@@ -59,7 +59,7 @@ def main(sources: Path, picked: list[Path]) -> None:
                         "performer": clean_performer(p.get("performer", "")), "file": name, "duration": int(duration(OUT / name)),
                         "license": p["license"], "license_url": p.get("license_url") or None, "source_url": p.get("page")})
         print(name, f"{int(start)}s", p["license"])
-    for mood in MOODS:
+    for mood in MOODS if "--moods" in sys.argv else []:  # MeetGo's synthesised pieces, only if asked for
         name = f"mood_{mood[0]}_{slug(mood[1])}.m4a"
         if (OUT / name).exists():
             catalog.append({"key": name[:-4], "kind": "mood", "mood": mood[0], "title": mood[1], "artist": "MeetGo", "performer": "",
@@ -70,4 +70,4 @@ def main(sources: Path, picked: list[Path]) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]), [Path(a) for a in sys.argv[2:]])
+    main(Path(sys.argv[1]), [Path(a) for a in sys.argv[2:] if not a.startswith("--")])

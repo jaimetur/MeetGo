@@ -38,8 +38,14 @@ async def ensure_music(db: AsyncSession) -> None:
     path = BUILTIN_DIR / "catalog.json"
     if not path.exists():
         return
+    catalog = json.loads(path.read_text(encoding="utf-8"))
+    keys = {item["key"] for item in catalog}
+    # built-in songs taken out of the catalog leave the library (the stories that had them keep playing without music)
+    for gone in (await db.execute(select(MusicTrack).where(MusicTrack.builtin.is_(True), MusicTrack.key.not_in(keys or {""})))).scalars().all():
+        await db.delete(gone)
+    await db.flush()
     have = set((await db.execute(select(MusicTrack.key))).scalars().all())
-    for i, item in enumerate(json.loads(path.read_text(encoding="utf-8"))):
+    for i, item in enumerate(catalog):
         if item["key"] in have or not (BUILTIN_DIR / item["file"]).exists():
             continue
         db.add(MusicTrack(key=item["key"], kind=item.get("kind", "classic"), mood=item.get("mood"), title=item["title"],
