@@ -1242,7 +1242,13 @@ function CommunityStatsView({ c }: { c: Community }) {
       </div>
       <section className="box">
         <h3 className="boxtitle">{t("ui_stats_joined_weeks")}</h3>
-        <div className="cbars">{s.joined_by_week.map((w) => <span key={w.week} title={`${w.week}: ${w.count}`}><i style={{ height: `${Math.max(w.count ? 8 : 3, (w.count / max) * 100)}%` }} className={w.count ? "" : "zero"} /></span>)}</div>
+        {/* each week: how many joined above its bar, and the day it starts below */}
+        <div className="cbars">{s.joined_by_week.map((w) => (
+          <span key={w.week} title={`${w.week}: ${w.count}`}>
+            <em><b className={w.count ? "" : "zero"}>{w.count}</b><i style={{ height: `${Math.max(w.count ? 8 : 3, (w.count / max) * 100)}%` }} className={w.count ? "" : "zero"} /></em>
+            <small>{new Date(w.week + "T12:00:00").toLocaleDateString(getLang(), { day: "numeric", month: "short" })}</small>
+          </span>
+        ))}</div>
       </section>
       {s.top_organisers.length ? (
         <section className="box">
