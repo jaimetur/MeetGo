@@ -5333,11 +5333,20 @@ msgstr "Symbolen"
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 
+msgid "ui_cbadge_active"
+msgstr "Actief"
+
+msgid "ui_cbadge_plans"
+msgstr "Plannen"
+
+msgid "ui_cbadge_new"
+msgstr "Nieuw"
+
 msgid "ui_cflag_active"
 msgstr "Actief"
 
 msgid "ui_cflag_new"
-msgstr "Pas aangemaakt"
+msgstr "Nieuw"
 
 msgid "ui_cflag_default"
 msgstr "Standaard"

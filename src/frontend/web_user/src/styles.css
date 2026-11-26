@@ -864,6 +864,13 @@ input.inp[type="date"]::-webkit-date-and-time-value, input.inp[type="time"]::-we
 .cbadge-ic { width: 52%; height: 52%; stroke: #fff; stroke-width: 2; }
 .cbadge { border-radius: 18px; display: grid; place-items: center; color: #fff; font-family: var(--display); font-weight: 700; flex: none; object-fit: cover; border: 3px solid var(--panel); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18); }
 .cbody .cbadge { border: 0; }
+/* Active, With plans, New: small marks in the top right corner of a community's card */
+.cmarks { position: absolute; top: 10px; right: 10px; z-index: 2; display: flex; gap: 4px; pointer-events: none; }
+.cmark-b { font-size: 10.5px; font-weight: 700; letter-spacing: .02em; padding: 3px 8px; border-radius: 999px; color: #fff; white-space: nowrap; box-shadow: 0 2px 6px rgb(0 0 0 / .15); }
+.cmark-b.active { background: linear-gradient(135deg, #22c55e, #14b8a6); }
+.cmark-b.plans { background: linear-gradient(135deg, #f97316, #f59e0b); }
+.cmark-b.fresh { background: linear-gradient(135deg, #3b82f6, #8b5cf6); }
+.ccard:has(.cmarks) .cbody { padding-top: 30px; }
 .cbadge.sm { width: 34px; height: 34px; border-radius: 11px; border: 0; box-shadow: none; }
 .ctitle { font-family: var(--display); font-weight: 700; font-size: 16.5px; color: var(--strong); overflow-wrap: anywhere; }
 .cdesc { margin: 0; color: var(--muted); font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

@@ -93,6 +93,11 @@ function JoinQuestionsModal({ c, onClose, onDone }: { c: Community; onClose: () 
   );
 }
 
+// what the filters on top of the list look at: activity or creation in the last 30 days, plans to come
+const MONTH = 30 * 86400e3;
+export const isActive = (c: Community) => !!c.last_activity_at && Date.now() - new Date(c.last_activity_at).getTime() <= MONTH;
+export const isFresh = (c: Community) => Date.now() - new Date(c.created_at).getTime() <= MONTH;
+
 function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community) => void }) {
   const browse = useStore((s) => s.browseZone);
   const wide = !!browse && !browse.province;  // several provinces: say which one each community is in
@@ -101,6 +106,13 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
       onClick={() => c.my_zone !== false && navigate(communityPath(c.id))} onKeyDown={(e) => e.key === "Enter" && c.my_zone !== false && navigate(communityPath(c.id))}>
       {/* the hobby's silhouette as a soft watermark, tinted with the community's colours */}
       <span className="cwm" style={{ background: communityCover(c.slug, "c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+      {isActive(c) || c.upcoming_count > 0 || isFresh(c) ? (
+        <div className="cmarks">
+          {isActive(c) ? <span className="cmark-b active">{t("ui_cbadge_active")}</span> : null}
+          {c.upcoming_count > 0 ? <span className="cmark-b plans">{t("ui_cbadge_plans")}</span> : null}
+          {isFresh(c) ? <span className="cmark-b fresh">{t("ui_cbadge_new")}</span> : null}
+        </div>
+      ) : null}
       <div className="cbody">
         <div className="ctop">
           <CommunityBadge c={c} />
@@ -268,14 +280,12 @@ export function CommunitiesPage() {
     }
     return next;
   });
-  const monthAgo = Date.now() - 30 * 86400e3;
   const [zone, setZone] = useState("");
   const [age, setAge] = useState("");
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
   const shown = listed.filter((c) => browse || view === "all"
     || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
-    .filter((c) => (!flags.active || (!!c.last_activity_at && new Date(c.last_activity_at).getTime() >= monthAgo))
-      && (!flags.plans || c.upcoming_count > 0) && (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo))
+    .filter((c) => (!flags.active || isActive(c)) && (!flags.plans || c.upcoming_count > 0) && (!flags.fresh || isFresh(c)))
     .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
   const groups = byCategory(shown);
   // the zones and age bands of the list, for the filters beside the search

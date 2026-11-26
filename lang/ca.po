@@ -5333,11 +5333,20 @@ msgstr "Símbols"
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 
+msgid "ui_cbadge_active"
+msgstr "Activa"
+
+msgid "ui_cbadge_plans"
+msgstr "Amb plans"
+
+msgid "ui_cbadge_new"
+msgstr "Nova"
+
 msgid "ui_cflag_active"
 msgstr "Actives"
 
 msgid "ui_cflag_new"
-msgstr "Acabades de crear"
+msgstr "Noves"
 
 msgid "ui_cflag_default"
 msgstr "Per defecte"

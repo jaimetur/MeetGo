@@ -5334,11 +5334,20 @@ msgstr "Symbols"
 msgid "ui_community_category_proposal_hint"
 msgstr "The administration will review it; meanwhile your community shows under «Other»."
 
+msgid "ui_cbadge_active"
+msgstr "Active"
+
+msgid "ui_cbadge_plans"
+msgstr "Plans"
+
+msgid "ui_cbadge_new"
+msgstr "New"
+
 msgid "ui_cflag_active"
 msgstr "Active"
 
 msgid "ui_cflag_new"
-msgstr "Just created"
+msgstr "New"
 
 msgid "ui_cflag_default"
 msgstr "Default"

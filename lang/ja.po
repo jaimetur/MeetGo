@@ -5333,11 +5333,20 @@ msgstr "記号"
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 
+msgid "ui_cbadge_active"
+msgstr "アクティブ"
+
+msgid "ui_cbadge_plans"
+msgstr "予定あり"
+
+msgid "ui_cbadge_new"
+msgstr "新着"
+
 msgid "ui_cflag_active"
 msgstr "アクティブ"
 
 msgid "ui_cflag_new"
-msgstr "新しく作成"
+msgstr "新着"
 
 msgid "ui_cflag_default"
 msgstr "デフォルト"

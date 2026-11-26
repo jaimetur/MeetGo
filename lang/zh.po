@@ -5333,11 +5333,20 @@ msgstr "符号"
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 
+msgid "ui_cbadge_active"
+msgstr "活跃"
+
+msgid "ui_cbadge_plans"
+msgstr "有计划"
+
+msgid "ui_cbadge_new"
+msgstr "新"
+
 msgid "ui_cflag_active"
 msgstr "活跃"
 
 msgid "ui_cflag_new"
-msgstr "新建"
+msgstr "最新"
 
 msgid "ui_cflag_default"
 msgstr "默认"
