@@ -796,6 +796,9 @@ a.logo { text-decoration: none; }
 .seg button.on { background: var(--grad); color: #fff; box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3); }
 .grid2c { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
 .grid2c .inp { min-width: 0; }
+/* iPhone gives date and time fields a width of their own, wider than half a phone: they fill their cell instead */
+input.inp[type="date"], input.inp[type="time"] { -webkit-appearance: none; appearance: none; display: block; width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
+input.inp[type="date"]::-webkit-date-and-time-value, input.inp[type="time"]::-webkit-date-and-time-value { text-align: left; }
 .fld > span:first-child { color: var(--muted); }
 .coverpick { height: 120px; border-radius: 16px; display: flex; align-items: flex-end; gap: 8px; padding: 10px; }
 .glassbtn { background: rgba(0, 0, 0, 0.4); color: #fff; border: 0; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
@@ -893,6 +896,11 @@ a.logo { text-decoration: none; }
   .dbar.phoneonly { display: flex !important; }
   .screen { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
   .screen.detail { padding-bottom: 0; }
+  /* the tab bar stays at the bottom of these screens too: their action bar (Publish, Join…) sits just above it */
+  .shell.conv .screen.detail { padding-bottom: calc(var(--mnavh, 70px) + env(safe-area-inset-bottom, 0px)); }
+  .shell.conv .screen.detail .dbar { bottom: 0; padding-bottom: 12px; }
+  .kb .shell.conv .screen.detail, .writing .shell.conv .screen.detail { padding-bottom: 0; }
+  .kb .shell.conv .screen.detail .dbar, .writing .shell.conv .screen.detail .dbar { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
   .shell.detail .toasts { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
   html:has(.shell.detail), html:has(.shell.detail) body { background: var(--panel); }
   .swrap { padding: 12px 14px 20px; }

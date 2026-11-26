@@ -15,6 +15,7 @@ import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage
 import { signOut } from "./App";
 import { COVER_ARTS, coverArtUrl } from "../coverArts";
 import { categoryName, communityCategory } from "./Communities";
+import { useSwipeDown } from "./swipeClose";
 import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
@@ -1147,6 +1148,8 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   useEffect(() => { if (!loading && !saved) setSaved(form); }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
   const dirty = !!saved && JSON.stringify(form) !== JSON.stringify(saved);
   const leave = () => (dirty ? setLeaving(true) : goBack("/"));
+  // dragged down from the top of the page, it leaves, like a window (asking first if something was written)
+  const swipe = useSwipeDown(leave, "textarea, .screen");
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       // Escape leaves the form, unless a window of its own is open (it closes that one)
@@ -1281,7 +1284,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   }
 
   return (
-    <main className="screen detail">
+    <main className="screen detail" {...swipe.handlers} style={swipe.style}>
       <div className="formtop">
         <button className="iconbtn" onClick={leave} aria-label={t("ui_cancel")}><Icon name="x" /></button>
         <h1 className="grow">{edit ? t("ui_publish_edit_title") : repeat ? t("ui_publish_repeat_title") : t("ui_publish_title")}</h1>
