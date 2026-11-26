@@ -1431,6 +1431,12 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-tile-txt small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .adm-tiles .adm-tile-txt small { white-space: normal; line-height: 1.35; }  /* interests: its counts, whole */
 .adm-tiles .adm-tile-txt small.adm-tile-zones { display: flex; align-items: center; gap: 4px; margin-top: 4px; white-space: nowrap; color: var(--fg); font-weight: 600; }
+/* interests: each row one kind of thing, on one line (what does not fit is cut, never moved to another line) */
+.adm-tile-row { display: flex; gap: 4px; margin-top: 4px; flex-wrap: nowrap; overflow: hidden; min-width: 0; }
+.adm-tile-row > * { flex: none; white-space: nowrap; }
+.adm-tile-name { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.adm-tile-name b { min-width: 0; }
+.adm-tile-name > :not(b) { flex: none; }
 .adm-tile-zones .ic { flex: none; color: var(--accent, #1a73e8); }
 .adm-tile-zones span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .adm-tile-edit { display: flex; gap: 4px; min-width: 0; }
