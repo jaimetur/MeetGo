@@ -5641,6 +5641,303 @@ msgstr "Tranche d'âge"
 msgid "ui_cfilter_age_all"
 msgstr "Tous les âges"
 
+msgid "err_feed_audience"
+msgstr "Choisis qui peut le voir : amis, abonnés ou public"
+
+msgid "err_feed_post_not_found"
+msgstr "Cette publication n'est plus disponible"
+
+msgid "err_feed_media"
+msgstr "Seules des photos ou des vidéos peuvent être ajoutées"
+
+msgid "err_story_not_found"
+msgstr "Cette story n'est plus disponible"
+
+msgid "ui_story_reply_body"
+msgstr "💬 Réponse à ta story «{story}» : {text}"
+
+msgid "ui_story_reply_body_media"
+msgstr "💬 Réponse à ta story : {text}"
+
+msgid "email_feed_mention_subject"
+msgstr "Tu as été mentionné"
+
+msgid "email_feed_mention_body"
+msgstr "{name} t'a mentionné dans une publication"
+
+msgid "email_feed_share_subject"
+msgstr "Ta publication a été partagée"
+
+msgid "email_feed_share_body"
+msgstr "{name} a partagé ta publication"
+
+msgid "email_feed_reaction_subject"
+msgstr "Nouvelle réaction"
+
+msgid "email_feed_reaction_body"
+msgstr "{name} a réagi {emoji} à ta publication"
+
+msgid "email_feed_comment_subject"
+msgstr "Nouveau commentaire"
+
+msgid "email_feed_comment_body"
+msgstr "{name} a commenté une publication"
+
+msgid "email_story_reaction_subject"
+msgstr "Réaction à ta story"
+
+msgid "email_story_reaction_body"
+msgstr "{name} a réagi {emoji} à ta story"
+
+msgid "ui_avatar_adjust"
+msgstr "Ajuster la photo"
+
+msgid "ui_copy_link"
+msgstr "Copier le lien"
+
+msgid "ui_next"
+msgstr "Suivant"
+
+msgid "ui_previous"
+msgstr "Précédent"
+
+msgid "ui_feed_tab_communities"
+msgstr "Communautés"
+
+msgid "ui_feed_tab_wall"
+msgstr "Mon mur"
+
+msgid "ui_feed_tab_friends"
+msgstr "Mes amis"
+
+msgid "ui_feed_wall"
+msgstr "Mur"
+
+msgid "ui_feed_wall_of"
+msgstr "Mur de {name}"
+
+msgid "ui_feed_post"
+msgstr "Publication"
+
+msgid "ui_feed_compose_ph"
+msgstr "Qu'as-tu envie de raconter ?"
+
+msgid "ui_feed_add_media"
+msgstr "Photos ou vidéo"
+
+msgid "ui_feed_add_place"
+msgstr "Lieu"
+
+msgid "ui_feed_place_ph"
+msgstr "Où es-tu ?"
+
+msgid "ui_feed_audience"
+msgstr "Qui le voit"
+
+msgid "ui_feed_aud_friends"
+msgstr "Amis"
+
+msgid "ui_feed_aud_followers"
+msgstr "Abonnés"
+
+msgid "ui_feed_aud_public"
+msgstr "Public (ta zone)"
+
+msgid "ui_feed_publish"
+msgstr "Publier"
+
+msgid "ui_feed_posted"
+msgstr "Publié"
+
+msgid "ui_feed_max_media"
+msgstr "Au maximum {n} photos ou vidéos"
+
+msgid "ui_feed_more"
+msgstr "Voir plus"
+
+msgid "ui_feed_my_posts"
+msgstr "Mes publications"
+
+msgid "ui_feed_saved"
+msgstr "Enregistrées"
+
+msgid "ui_feed_saved_empty"
+msgstr "Tu n'as encore enregistré aucune publication"
+
+msgid "ui_feed_wall_empty"
+msgstr "Ton mur est vide"
+
+msgid "ui_feed_wall_empty_body"
+msgstr "Raconte quelque chose, partage des photos de tes plans… Seules les personnes choisies le verront."
+
+msgid "ui_feed_wall_empty_other"
+msgstr "Aucune publication que tu puisses voir"
+
+msgid "ui_feed_friends_empty"
+msgstr "Rien de tes amis pour l'instant"
+
+msgid "ui_feed_friends_empty_body"
+msgstr "Quand tes amis ou les personnes que tu suis publieront, ça apparaîtra ici."
+
+msgid "ui_feed_find_people"
+msgstr "Trouver des gens"
+
+msgid "ui_feed_edited"
+msgstr "modifié"
+
+msgid "ui_feed_react"
+msgstr "Réagir"
+
+msgid "ui_feed_reactions"
+msgstr "Réactions"
+
+msgid "ui_feed_comment"
+msgstr "Commenter"
+
+msgid "ui_feed_comment_ph"
+msgstr "Écris un commentaire…"
+
+msgid "ui_feed_n_comments"
+msgstr "{n} commentaires"
+
+msgid "ui_feed_n_shares"
+msgstr "Partagé {n} fois"
+
+msgid "ui_feed_reply"
+msgstr "Répondre"
+
+msgid "ui_feed_replying_to"
+msgstr "En réponse à {name}"
+
+msgid "ui_feed_share"
+msgstr "Partager"
+
+msgid "ui_feed_share_wall"
+msgstr "Partager sur mon mur"
+
+msgid "ui_feed_share_chat"
+msgstr "Envoyer par chat"
+
+msgid "ui_feed_share_ph"
+msgstr "Ajoute un commentaire (facultatif)"
+
+msgid "ui_feed_shared_toast"
+msgstr "Partagé sur ton mur"
+
+msgid "ui_feed_shared_gone"
+msgstr "La publication d'origine n'est plus disponible"
+
+msgid "ui_feed_chat_note_ph"
+msgstr "Ajoute un message (facultatif)"
+
+msgid "ui_feed_chat_post_by"
+msgstr "Publication de {name} :"
+
+msgid "ui_feed_sent_chat"
+msgstr "Envoyé"
+
+msgid "ui_feed_save"
+msgstr "Enregistrer"
+
+msgid "ui_feed_saved_on"
+msgstr "Enregistrée"
+
+msgid "ui_feed_saved_toast"
+msgstr "Enregistrée dans ta liste"
+
+msgid "ui_feed_unsaved"
+msgstr "Retirée des enregistrements"
+
+msgid "ui_feed_edit_title"
+msgstr "Modifier la publication"
+
+msgid "ui_feed_delete_title"
+msgstr "Supprimer la publication ?"
+
+msgid "ui_feed_delete_body"
+msgstr "Elle sera retirée de ton mur et de partout où elle a été partagée."
+
+msgid "ui_feed_deleted"
+msgstr "Publication supprimée"
+
+msgid "ui_feed_report_title"
+msgstr "Signaler la publication"
+
+msgid "ui_stories"
+msgstr "Stories"
+
+msgid "ui_story_yours"
+msgstr "Ta story"
+
+msgid "ui_story_new"
+msgstr "Nouvelle story"
+
+msgid "ui_story_kind_media"
+msgstr "Photo ou vidéo"
+
+msgid "ui_story_kind_text"
+msgstr "Texte"
+
+msgid "ui_story_pick"
+msgstr "Choisir une photo ou une vidéo"
+
+msgid "ui_story_change"
+msgstr "Changer"
+
+msgid "ui_story_caption_ph"
+msgstr "Texte par-dessus (facultatif)"
+
+msgid "ui_story_text_ph"
+msgstr "Écris quelque chose…"
+
+msgid "ui_story_hide_from"
+msgstr "Masquer pour…"
+
+msgid "ui_story_hidden_n"
+msgstr "Masquée pour {n} personnes"
+
+msgid "ui_story_no_friends"
+msgstr "Tu n'as pas encore d'amis"
+
+msgid "ui_story_video_long"
+msgstr "La vidéo doit durer 15 secondes au maximum"
+
+msgid "ui_story_posted"
+msgstr "Story publiée : visible 24 heures"
+
+msgid "ui_story_play"
+msgstr "Reprendre"
+
+msgid "ui_story_pause"
+msgstr "Pause"
+
+msgid "ui_story_seen_by"
+msgstr "Vue par {n}"
+
+msgid "ui_story_viewers"
+msgstr "Qui l'a vue"
+
+msgid "ui_story_no_views"
+msgstr "Personne ne l'a encore vue"
+
+msgid "ui_story_reply_ph"
+msgstr "Répondre à {name}…"
+
+msgid "ui_story_reply_sent"
+msgstr "Réponse envoyée en message privé"
+
+msgid "ui_story_reacted"
+msgstr "Tu as réagi {emoji}"
+
+msgid "ui_story_deleted"
+msgstr "Story supprimée"
+
+msgid "ui_feed_one_comment"
+msgstr "1 commentaire"
+
+msgid "ui_feed_one_share"
+msgstr "Partagé 1 fois"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administration l'examinera ; en attendant, votre communauté apparaîtra dans « Autres »."
 

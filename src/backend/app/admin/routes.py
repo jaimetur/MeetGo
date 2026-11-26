@@ -723,14 +723,26 @@ async def list_reports(status: str = "open", db: AsyncSession = Depends(get_db),
         (Report.reason == "child_safety").desc(), Report.id.desc()).limit(200))).scalars().all()
     msgs = {m.id: m for m in (await db.execute(select(Message).where(Message.id.in_([r.message_id for r in rows if r.message_id])))).scalars().all()}
     posts = {p.id: p for p in (await db.execute(select(BoardPost).where(BoardPost.id.in_([r.post_id for r in rows if r.post_id])))).scalars().all()}
-    user_ids = {r.reporter_id for r in rows} | {p.author_id for p in posts.values() if p.author_id}
+    from app.core.models import Attachment, FeedPost
+    from app.messaging.storage import attachment_out
+    walls = {p.id: p for p in (await db.execute(select(FeedPost).where(FeedPost.id.in_([r.feed_post_id for r in rows if r.feed_post_id] or [0])))).scalars().all()}
+    wall_media: dict[int, list] = {}
+    for a in (await db.execute(select(Attachment).where(Attachment.feed_post_id.in_(list(walls) or [0])).order_by(Attachment.id))).scalars().all():
+        wall_media.setdefault(a.feed_post_id, []).append(attachment_out(a))
+    user_ids = {r.reporter_id for r in rows} | {p.author_id for p in posts.values() if p.author_id} | {p.user_id for p in walls.values()}
     users = {u.id: u for u in (await db.execute(select(User).where(User.id.in_(user_ids)))).scalars().all()}
     out = []
     for r in rows:
-        item = {"id": r.id, "kind": "post" if r.post_id else "message", "reason": r.reason, "details": r.details,
+        item = {"id": r.id, "kind": "post" if r.post_id else "feed" if r.feed_post_id else "message", "reason": r.reason, "details": r.details,
                 "status": r.status, "created_at": r.created_at.isoformat(), "reporter": user_summary(users.get(r.reporter_id)),
                 "message": None, "post": None}
-        if r.post_id:
+        if r.feed_post_id:
+            w = walls.get(r.feed_post_id)
+            if w:  # a post of someone's wall, shown as a message
+                item["message"] = {"id": w.id, "conversation_id": None, "sender": user_summary(users.get(w.user_id)),
+                                   "body": w.body, "created_at": w.created_at.isoformat(), "deleted": bool(w.deleted_at),
+                                   "original_body": w.body if w.deleted_at else None, "attachments": wall_media.get(w.id, [])}
+        elif r.post_id:
             p = posts.get(r.post_id)
             if p:
                 item["post"] = {"id": p.id, "community_id": p.conversation_id, "kind": p.kind, "title": p.title,
@@ -757,7 +769,13 @@ async def resolve_report(report_id: int, payload: ReportResolveIn, db: AsyncSess
     report = await db.get(Report, report_id)
     if not report:
         raise HTTPException(404, t("err_request_not_found"))
-    if report.post_id:
+    if report.feed_post_id:
+        from app.core.models import FeedPost
+        wall_post = await db.get(FeedPost, report.feed_post_id)
+        if payload.delete_message and wall_post and not wall_post.deleted_at:
+            wall_post.deleted_at = utcnow()
+        same = Report.feed_post_id == report.feed_post_id
+    elif report.post_id:
         post = await db.get(BoardPost, report.post_id)
         if payload.delete_message and post and not post.deleted_at:
             await delete_post_data(db, post)

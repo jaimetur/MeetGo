@@ -7,7 +7,9 @@ import {
   type BoardEvent, coverGradient, dateTile, emitBoardEvent, eventPostId, fromLocalParts, hourOf, isDated, isPast, longWhen, onBoardEvent, relative,
   timeRange, toLocalParts,
 } from "../board";
-import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
+import { chatPath, communityPath, goBack, navigate, postPath, useRoute } from "../router";
+import { FriendsFeed, MyWall } from "./Feed";
+import { StoriesBar } from "./Stories";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
@@ -425,6 +427,8 @@ export function AvatarMenu() {
 }
 
 export function HomePage() {
+  const route = useRoute();
+  const tab = route.name === "home" ? route.tab : "communities";
   const me = useStore((s) => s.me);
   const myCommunities = useStore((s) => s.myCommunities);
   const [filter, setFilter] = useState<FilterKey>("all");
@@ -452,9 +456,20 @@ export function HomePage() {
           </div>
           <button className="btn go" onClick={() => navigate("/publish")}><Icon name="plus" size="sm" />{t("ui_nav_publish")}</button>
         </header>
-        <SuggestedCommunities />
-        <FilterChips value={filter} onChange={setFilter} />
-        <PostList feed={feed} empty={empty} />
+        <StoriesBar />
+        <div className="segtabs htabs" role="tablist" aria-label={t("ui_nav_home")}>
+          {([["communities", t("ui_feed_tab_communities")], ["wall", t("ui_feed_tab_wall")], ["friends", t("ui_feed_tab_friends")]] as const).map(([k, label]) => (
+            <button key={k} id={`home-tab-${k}`} role="tab" aria-selected={tab === k} className={tab === k ? "on" : ""}
+              onClick={() => navigate(k === "communities" ? "/" : `/?tab=${k}`)}>{label}</button>
+          ))}
+        </div>
+        {tab === "wall" ? <MyWall /> : tab === "friends" ? <FriendsFeed /> : (
+          <>
+            <SuggestedCommunities />
+            <FilterChips value={filter} onChange={setFilter} />
+            <PostList feed={feed} empty={empty} />
+          </>
+        )}
       </div>
     </main>
   );

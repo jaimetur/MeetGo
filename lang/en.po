@@ -4776,6 +4776,303 @@ msgstr "Age band"
 msgid "ui_cfilter_age_all"
 msgstr "All ages"
 
+msgid "err_feed_audience"
+msgstr "Choose who can see it: friends, followers or public"
+
+msgid "err_feed_post_not_found"
+msgstr "This post is no longer available"
+
+msgid "err_feed_media"
+msgstr "Only photos or videos can be added"
+
+msgid "err_story_not_found"
+msgstr "This story is no longer available"
+
+msgid "ui_story_reply_body"
+msgstr "💬 Reply to your story «{story}»: {text}"
+
+msgid "ui_story_reply_body_media"
+msgstr "💬 Reply to your story: {text}"
+
+msgid "email_feed_mention_subject"
+msgstr "You were mentioned"
+
+msgid "email_feed_mention_body"
+msgstr "{name} mentioned you in a post"
+
+msgid "email_feed_share_subject"
+msgstr "Your post was shared"
+
+msgid "email_feed_share_body"
+msgstr "{name} shared your post"
+
+msgid "email_feed_reaction_subject"
+msgstr "New reaction"
+
+msgid "email_feed_reaction_body"
+msgstr "{name} reacted {emoji} to your post"
+
+msgid "email_feed_comment_subject"
+msgstr "New comment"
+
+msgid "email_feed_comment_body"
+msgstr "{name} commented on a post"
+
+msgid "email_story_reaction_subject"
+msgstr "Reaction to your story"
+
+msgid "email_story_reaction_body"
+msgstr "{name} reacted {emoji} to your story"
+
+msgid "ui_avatar_adjust"
+msgstr "Adjust photo"
+
+msgid "ui_copy_link"
+msgstr "Copy link"
+
+msgid "ui_next"
+msgstr "Next"
+
+msgid "ui_previous"
+msgstr "Previous"
+
+msgid "ui_feed_tab_communities"
+msgstr "Communities"
+
+msgid "ui_feed_tab_wall"
+msgstr "My wall"
+
+msgid "ui_feed_tab_friends"
+msgstr "My friends"
+
+msgid "ui_feed_wall"
+msgstr "Wall"
+
+msgid "ui_feed_wall_of"
+msgstr "{name}'s wall"
+
+msgid "ui_feed_post"
+msgstr "Post"
+
+msgid "ui_feed_compose_ph"
+msgstr "What's on your mind?"
+
+msgid "ui_feed_add_media"
+msgstr "Photos or video"
+
+msgid "ui_feed_add_place"
+msgstr "Place"
+
+msgid "ui_feed_place_ph"
+msgstr "Where are you?"
+
+msgid "ui_feed_audience"
+msgstr "Who sees it"
+
+msgid "ui_feed_aud_friends"
+msgstr "Friends"
+
+msgid "ui_feed_aud_followers"
+msgstr "Followers"
+
+msgid "ui_feed_aud_public"
+msgstr "Public (your area)"
+
+msgid "ui_feed_publish"
+msgstr "Post"
+
+msgid "ui_feed_posted"
+msgstr "Posted"
+
+msgid "ui_feed_max_media"
+msgstr "At most {n} photos or videos"
+
+msgid "ui_feed_more"
+msgstr "See more"
+
+msgid "ui_feed_my_posts"
+msgstr "My posts"
+
+msgid "ui_feed_saved"
+msgstr "Saved"
+
+msgid "ui_feed_saved_empty"
+msgstr "You haven't saved any post yet"
+
+msgid "ui_feed_wall_empty"
+msgstr "Your wall is empty"
+
+msgid "ui_feed_wall_empty_body"
+msgstr "Share something, upload photos of your plans… Only the people you choose will see it."
+
+msgid "ui_feed_wall_empty_other"
+msgstr "There are no posts you can see"
+
+msgid "ui_feed_friends_empty"
+msgstr "Nothing from your friends yet"
+
+msgid "ui_feed_friends_empty_body"
+msgstr "When your friends or the people you follow post something, it will show here."
+
+msgid "ui_feed_find_people"
+msgstr "Find people"
+
+msgid "ui_feed_edited"
+msgstr "edited"
+
+msgid "ui_feed_react"
+msgstr "React"
+
+msgid "ui_feed_reactions"
+msgstr "Reactions"
+
+msgid "ui_feed_comment"
+msgstr "Comment"
+
+msgid "ui_feed_comment_ph"
+msgstr "Write a comment…"
+
+msgid "ui_feed_n_comments"
+msgstr "{n} comments"
+
+msgid "ui_feed_n_shares"
+msgstr "Shared {n} times"
+
+msgid "ui_feed_reply"
+msgstr "Reply"
+
+msgid "ui_feed_replying_to"
+msgstr "Replying to {name}"
+
+msgid "ui_feed_share"
+msgstr "Share"
+
+msgid "ui_feed_share_wall"
+msgstr "Share on my wall"
+
+msgid "ui_feed_share_chat"
+msgstr "Send in a chat"
+
+msgid "ui_feed_share_ph"
+msgstr "Add a comment (optional)"
+
+msgid "ui_feed_shared_toast"
+msgstr "Shared on your wall"
+
+msgid "ui_feed_shared_gone"
+msgstr "The original post is no longer available"
+
+msgid "ui_feed_chat_note_ph"
+msgstr "Add a message (optional)"
+
+msgid "ui_feed_chat_post_by"
+msgstr "Post by {name}:"
+
+msgid "ui_feed_sent_chat"
+msgstr "Sent"
+
+msgid "ui_feed_save"
+msgstr "Save"
+
+msgid "ui_feed_saved_on"
+msgstr "Saved"
+
+msgid "ui_feed_saved_toast"
+msgstr "Saved to your list"
+
+msgid "ui_feed_unsaved"
+msgstr "Removed from saved"
+
+msgid "ui_feed_edit_title"
+msgstr "Edit post"
+
+msgid "ui_feed_delete_title"
+msgstr "Delete the post?"
+
+msgid "ui_feed_delete_body"
+msgstr "It will be removed from your wall and wherever it was shared."
+
+msgid "ui_feed_deleted"
+msgstr "Post deleted"
+
+msgid "ui_feed_report_title"
+msgstr "Report post"
+
+msgid "ui_stories"
+msgstr "Stories"
+
+msgid "ui_story_yours"
+msgstr "Your story"
+
+msgid "ui_story_new"
+msgstr "New story"
+
+msgid "ui_story_kind_media"
+msgstr "Photo or video"
+
+msgid "ui_story_kind_text"
+msgstr "Text"
+
+msgid "ui_story_pick"
+msgstr "Choose a photo or video"
+
+msgid "ui_story_change"
+msgstr "Change"
+
+msgid "ui_story_caption_ph"
+msgstr "Text on top (optional)"
+
+msgid "ui_story_text_ph"
+msgstr "Write something…"
+
+msgid "ui_story_hide_from"
+msgstr "Hide from…"
+
+msgid "ui_story_hidden_n"
+msgstr "Hidden from {n} people"
+
+msgid "ui_story_no_friends"
+msgstr "You have no friends yet"
+
+msgid "ui_story_video_long"
+msgstr "The video must be 15 seconds at most"
+
+msgid "ui_story_posted"
+msgstr "Story posted: it will show for 24 hours"
+
+msgid "ui_story_play"
+msgstr "Resume"
+
+msgid "ui_story_pause"
+msgstr "Pause"
+
+msgid "ui_story_seen_by"
+msgstr "Seen by {n}"
+
+msgid "ui_story_viewers"
+msgstr "Who saw it"
+
+msgid "ui_story_no_views"
+msgstr "Nobody has seen it yet"
+
+msgid "ui_story_reply_ph"
+msgstr "Reply to {name}…"
+
+msgid "ui_story_reply_sent"
+msgstr "Reply sent as a direct message"
+
+msgid "ui_story_reacted"
+msgstr "You reacted {emoji}"
+
+msgid "ui_story_deleted"
+msgstr "Story deleted"
+
+msgid "ui_feed_one_comment"
+msgstr "1 comment"
+
+msgid "ui_feed_one_share"
+msgstr "Shared once"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "The administration will review it; meanwhile your community shows under «Other»."
 

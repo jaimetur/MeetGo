@@ -361,6 +361,9 @@ class Attachment(Base):
     __tablename__ = "attachments"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id", ondelete="CASCADE"), nullable=True, index=True)
+    # or the photo or video of a post of someone's wall, or of a story
+    feed_post_id: Mapped[int | None] = mapped_column(ForeignKey("feed_posts.id", ondelete="CASCADE"), nullable=True, index=True)
+    story_id: Mapped[int | None] = mapped_column(ForeignKey("stories.id", ondelete="CASCADE"), nullable=True, index=True)
     uploader_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
     storage_key: Mapped[str] = mapped_column(String(255))
     thumb_key: Mapped[str | None] = mapped_column(String(255), nullable=True)
@@ -390,6 +393,7 @@ class Report(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id", ondelete="CASCADE"), index=True, nullable=True)
     post_id: Mapped[int | None] = mapped_column(ForeignKey("board_posts.id", ondelete="CASCADE"), index=True, nullable=True)
+    feed_post_id: Mapped[int | None] = mapped_column(ForeignKey("feed_posts.id", ondelete="CASCADE"), index=True, nullable=True)
     reporter_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     reason: Mapped[str] = mapped_column(String(64))
     details: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -580,6 +584,72 @@ class PlaySubscription(Base):
     expiry: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     checked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class FeedPost(Base):
+    """A post of someone's wall: text, photos or a video, for their friends, their followers or everyone of their
+    zone; or a share of another post (with a comment)."""
+    __tablename__ = "feed_posts"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    body: Mapped[str] = mapped_column(Text, default="")
+    audience: Mapped[str] = mapped_column(String(16), default="friends")  # friends | followers | public
+    place: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    province: Mapped[str | None] = mapped_column(String(64), nullable=True)  # the author's, for «public»
+    mentions: Mapped[list] = mapped_column(JSONB, default=list)
+    shared_from_id: Mapped[int | None] = mapped_column(ForeignKey("feed_posts.id", ondelete="SET NULL"), nullable=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    edited_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class FeedReaction(Base):
+    __tablename__ = "feed_reactions"
+    post_id: Mapped[int] = mapped_column(ForeignKey("feed_posts.id", ondelete="CASCADE"), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    emoji: Mapped[str] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class FeedComment(Base):
+    __tablename__ = "feed_comments"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("feed_posts.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    parent_id: Mapped[int | None] = mapped_column(ForeignKey("feed_comments.id", ondelete="CASCADE"), nullable=True)
+    body: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class FeedSave(Base):
+    __tablename__ = "feed_saves"
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("feed_posts.id", ondelete="CASCADE"), primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class Story(Base):
+    """A story: a photo, a short video or a text on a colour, seen for 24 hours."""
+    __tablename__ = "stories"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    kind: Mapped[str] = mapped_column(String(8))  # photo | video | text
+    text: Mapped[str] = mapped_column(Text, default="")  # the text, or the caption over the photo or video
+    bg: Mapped[str | None] = mapped_column(String(32), nullable=True)  # a text story's background
+    audience: Mapped[str] = mapped_column(String(16), default="friends")  # friends | followers | public
+    province: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    hidden_from: Mapped[list] = mapped_column(JSONB, default=list)  # people it is not shown to
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+
+
+class StoryView(Base):
+    __tablename__ = "story_views"
+    story_id: Mapped[int] = mapped_column(ForeignKey("stories.id", ondelete="CASCADE"), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    viewed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    reaction: Mapped[str | None] = mapped_column(String(32), nullable=True)
 
 
 class RequestLog(Base):

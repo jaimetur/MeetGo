@@ -86,6 +86,19 @@ async def purge_archived(db: AsyncSession) -> int:
     return gone
 
 
+async def purge_stories(db: AsyncSession) -> int:
+    """Stories go after 24 hours, with their photo or video. Returns how many."""
+    from app.core.models import Story
+    rows = (await db.execute(select(Story).where(Story.expires_at < utcnow()))).scalars().all()
+    for story in rows:
+        files = [k for row in (await db.execute(select(Attachment.storage_key, Attachment.thumb_key).where(
+            Attachment.story_id == story.id))).all() for k in row if k]
+        await db.execute(delete(Story).where(Story.id == story.id))  # its views and file rows cascade
+        await db.commit()
+        _remove_files(await _unused(db, files))
+    return len(rows)
+
+
 async def purge_once(db: AsyncSession) -> int:
     """The automatic round: every community with old messages (the pinned one does not count). Returns how many
     messages were deleted."""
@@ -96,6 +109,7 @@ async def purge_once(db: AsyncSession) -> int:
         func.coalesce(Message.thread_root_id, 0) != func.coalesce(Conversation.pinned_message_id, 0)).group_by(Conversation.id).having(
         oldest < func.now() - func.make_interval(0, 0, 0, Conversation.retention_days)))).scalars().all()
     total = 0
+    await purge_stories(db)
     if await purge_archived(db):
         logger.info("Retention: archived zone chats deleted")
     for conv in rows:

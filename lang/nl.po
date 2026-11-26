@@ -4775,6 +4775,303 @@ msgstr "Leeftijdsgroep"
 msgid "ui_cfilter_age_all"
 msgstr "Alle leeftijden"
 
+msgid "err_feed_audience"
+msgstr "Kies wie het kan zien: vrienden, volgers of openbaar"
+
+msgid "err_feed_post_not_found"
+msgstr "Dit bericht is niet meer beschikbaar"
+
+msgid "err_feed_media"
+msgstr "Je kunt alleen foto's of video's toevoegen"
+
+msgid "err_story_not_found"
+msgstr "Dit verhaal is niet meer beschikbaar"
+
+msgid "ui_story_reply_body"
+msgstr "💬 Reactie op je verhaal «{story}»: {text}"
+
+msgid "ui_story_reply_body_media"
+msgstr "💬 Reactie op je verhaal: {text}"
+
+msgid "email_feed_mention_subject"
+msgstr "Je bent genoemd"
+
+msgid "email_feed_mention_body"
+msgstr "{name} heeft je genoemd in een bericht"
+
+msgid "email_feed_share_subject"
+msgstr "Je bericht is gedeeld"
+
+msgid "email_feed_share_body"
+msgstr "{name} heeft je bericht gedeeld"
+
+msgid "email_feed_reaction_subject"
+msgstr "Nieuwe reactie"
+
+msgid "email_feed_reaction_body"
+msgstr "{name} reageerde {emoji} op je bericht"
+
+msgid "email_feed_comment_subject"
+msgstr "Nieuwe opmerking"
+
+msgid "email_feed_comment_body"
+msgstr "{name} heeft gereageerd op een bericht"
+
+msgid "email_story_reaction_subject"
+msgstr "Reactie op je verhaal"
+
+msgid "email_story_reaction_body"
+msgstr "{name} reageerde {emoji} op je verhaal"
+
+msgid "ui_avatar_adjust"
+msgstr "Foto aanpassen"
+
+msgid "ui_copy_link"
+msgstr "Link kopiëren"
+
+msgid "ui_next"
+msgstr "Volgende"
+
+msgid "ui_previous"
+msgstr "Vorige"
+
+msgid "ui_feed_tab_communities"
+msgstr "Community's"
+
+msgid "ui_feed_tab_wall"
+msgstr "Mijn prikbord"
+
+msgid "ui_feed_tab_friends"
+msgstr "Mijn vrienden"
+
+msgid "ui_feed_wall"
+msgstr "Prikbord"
+
+msgid "ui_feed_wall_of"
+msgstr "Prikbord van {name}"
+
+msgid "ui_feed_post"
+msgstr "Bericht"
+
+msgid "ui_feed_compose_ph"
+msgstr "Wat wil je vertellen?"
+
+msgid "ui_feed_add_media"
+msgstr "Foto's of video"
+
+msgid "ui_feed_add_place"
+msgstr "Plaats"
+
+msgid "ui_feed_place_ph"
+msgstr "Waar ben je?"
+
+msgid "ui_feed_audience"
+msgstr "Wie het ziet"
+
+msgid "ui_feed_aud_friends"
+msgstr "Vrienden"
+
+msgid "ui_feed_aud_followers"
+msgstr "Volgers"
+
+msgid "ui_feed_aud_public"
+msgstr "Openbaar (jouw regio)"
+
+msgid "ui_feed_publish"
+msgstr "Plaatsen"
+
+msgid "ui_feed_posted"
+msgstr "Geplaatst"
+
+msgid "ui_feed_max_media"
+msgstr "Hoogstens {n} foto's of video's"
+
+msgid "ui_feed_more"
+msgstr "Meer tonen"
+
+msgid "ui_feed_my_posts"
+msgstr "Mijn berichten"
+
+msgid "ui_feed_saved"
+msgstr "Opgeslagen"
+
+msgid "ui_feed_saved_empty"
+msgstr "Je hebt nog geen berichten opgeslagen"
+
+msgid "ui_feed_wall_empty"
+msgstr "Je prikbord is leeg"
+
+msgid "ui_feed_wall_empty_body"
+msgstr "Vertel iets, deel foto's van je plannen… Alleen wie jij kiest ziet het."
+
+msgid "ui_feed_wall_empty_other"
+msgstr "Er zijn geen berichten die je kunt zien"
+
+msgid "ui_feed_friends_empty"
+msgstr "Nog niets van je vrienden"
+
+msgid "ui_feed_friends_empty_body"
+msgstr "Als je vrienden of mensen die je volgt iets plaatsen, verschijnt het hier."
+
+msgid "ui_feed_find_people"
+msgstr "Mensen zoeken"
+
+msgid "ui_feed_edited"
+msgstr "bewerkt"
+
+msgid "ui_feed_react"
+msgstr "Reageren"
+
+msgid "ui_feed_reactions"
+msgstr "Reacties"
+
+msgid "ui_feed_comment"
+msgstr "Opmerking"
+
+msgid "ui_feed_comment_ph"
+msgstr "Schrijf een opmerking…"
+
+msgid "ui_feed_n_comments"
+msgstr "{n} opmerkingen"
+
+msgid "ui_feed_n_shares"
+msgstr "{n} keer gedeeld"
+
+msgid "ui_feed_reply"
+msgstr "Antwoorden"
+
+msgid "ui_feed_replying_to"
+msgstr "Antwoord aan {name}"
+
+msgid "ui_feed_share"
+msgstr "Delen"
+
+msgid "ui_feed_share_wall"
+msgstr "Delen op mijn prikbord"
+
+msgid "ui_feed_share_chat"
+msgstr "Versturen in een chat"
+
+msgid "ui_feed_share_ph"
+msgstr "Voeg een opmerking toe (optioneel)"
+
+msgid "ui_feed_shared_toast"
+msgstr "Gedeeld op je prikbord"
+
+msgid "ui_feed_shared_gone"
+msgstr "Het oorspronkelijke bericht is niet meer beschikbaar"
+
+msgid "ui_feed_chat_note_ph"
+msgstr "Voeg een bericht toe (optioneel)"
+
+msgid "ui_feed_chat_post_by"
+msgstr "Bericht van {name}:"
+
+msgid "ui_feed_sent_chat"
+msgstr "Verstuurd"
+
+msgid "ui_feed_save"
+msgstr "Opslaan"
+
+msgid "ui_feed_saved_on"
+msgstr "Opgeslagen"
+
+msgid "ui_feed_saved_toast"
+msgstr "Opgeslagen in je lijst"
+
+msgid "ui_feed_unsaved"
+msgstr "Verwijderd uit opgeslagen"
+
+msgid "ui_feed_edit_title"
+msgstr "Bericht bewerken"
+
+msgid "ui_feed_delete_title"
+msgstr "Bericht verwijderen?"
+
+msgid "ui_feed_delete_body"
+msgstr "Het verdwijnt van je prikbord en overal waar het gedeeld is."
+
+msgid "ui_feed_deleted"
+msgstr "Bericht verwijderd"
+
+msgid "ui_feed_report_title"
+msgstr "Bericht melden"
+
+msgid "ui_stories"
+msgstr "Verhalen"
+
+msgid "ui_story_yours"
+msgstr "Jouw verhaal"
+
+msgid "ui_story_new"
+msgstr "Nieuw verhaal"
+
+msgid "ui_story_kind_media"
+msgstr "Foto of video"
+
+msgid "ui_story_kind_text"
+msgstr "Tekst"
+
+msgid "ui_story_pick"
+msgstr "Kies foto of video"
+
+msgid "ui_story_change"
+msgstr "Wijzigen"
+
+msgid "ui_story_caption_ph"
+msgstr "Tekst erover (optioneel)"
+
+msgid "ui_story_text_ph"
+msgstr "Schrijf iets…"
+
+msgid "ui_story_hide_from"
+msgstr "Verbergen voor…"
+
+msgid "ui_story_hidden_n"
+msgstr "Verborgen voor {n} mensen"
+
+msgid "ui_story_no_friends"
+msgstr "Je hebt nog geen vrienden"
+
+msgid "ui_story_video_long"
+msgstr "De video mag hoogstens 15 seconden duren"
+
+msgid "ui_story_posted"
+msgstr "Verhaal geplaatst: 24 uur zichtbaar"
+
+msgid "ui_story_play"
+msgstr "Hervatten"
+
+msgid "ui_story_pause"
+msgstr "Pauzeren"
+
+msgid "ui_story_seen_by"
+msgstr "Gezien door {n}"
+
+msgid "ui_story_viewers"
+msgstr "Wie het zag"
+
+msgid "ui_story_no_views"
+msgstr "Nog niemand heeft het gezien"
+
+msgid "ui_story_reply_ph"
+msgstr "Antwoord {name}…"
+
+msgid "ui_story_reply_sent"
+msgstr "Antwoord verstuurd als privébericht"
+
+msgid "ui_story_reacted"
+msgstr "Je reageerde {emoji}"
+
+msgid "ui_story_deleted"
+msgstr "Verhaal verwijderd"
+
+msgid "ui_feed_one_comment"
+msgstr "1 opmerking"
+
+msgid "ui_feed_one_share"
+msgstr "1 keer gedeeld"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

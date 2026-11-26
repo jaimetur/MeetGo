@@ -1,7 +1,9 @@
 import { useSyncExternalStore } from "react";
 
 export type Route =
-  | { name: "home" }
+  | { name: "home"; tab: "communities" | "wall" | "friends" }
+  | { name: "feedpost"; id: number }
+  | { name: "wall"; id: number }
   | { name: "chat"; id: number; thread: number | null; panel: "members" | "info" | null; around: number | null }
   | { name: "chats" }
   | { name: "plans" }
@@ -35,6 +37,10 @@ function parse(): Route {
       around: q.get("around") ? Number(q.get("around")) : null,
     };
   }
+  const f = rest.match(/^\/f\/(\d+)$/);
+  if (f) return { name: "feedpost", id: Number(f[1]) };
+  const w = rest.match(/^\/u\/(\d+)$/);
+  if (w) return { name: "wall", id: Number(w[1]) };
   const p = rest.match(/^\/p\/(\d+)$/);
   if (p) return { name: "post", id: Number(p[1]) };
   const cm = rest.match(/^\/communities\/(\d+)$/);
@@ -56,7 +62,10 @@ function parse(): Route {
     case "/account": return { name: "account" };
     case "/share": return { name: "share" };
     case "/admin": return { name: "admin" };
-    default: return { name: "home" };
+    default: {
+      const tab = q.get("tab");
+      return { name: "home", tab: tab === "wall" || tab === "friends" ? tab : "communities" };
+    }
   }
 }
 

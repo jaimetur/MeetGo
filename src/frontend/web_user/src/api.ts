@@ -1,7 +1,7 @@
 import { getLang, t } from "@lang";
 import type {
   Attendee, BillingStatus, Comment, Community, CommunityMember, CommunityStats, Conversation, FeedFilter, Interest, Me, Member, Message, Plans, Post,
-  PostPage, UserSummary,
+  FeedComment, FeedPost, PostPage, StoryGroup, UserSummary,
 } from "./types";
 
 function computeApiBase(): string {
@@ -192,9 +192,10 @@ export const api = {
     return req<any>("/uploads", { method: "POST", body: form });
   },
   // my photo: cropped square by the server, at a fixed address
-  uploadAvatar: (file: File) => {
+  uploadAvatar: (file: File, original?: File) => {
     const form = new FormData();
     form.append("file", file, file.name || "avatar.jpg");
+    if (original) form.append("original", original, original.name || "original.jpg");  // kept, to frame it again
     return req<Me>("/me/avatar", { method: "POST", body: form });
   },
   deleteAvatar: () => req<Me>("/me/avatar", { method: "DELETE" }),
@@ -205,6 +206,29 @@ export const api = {
   ticket: () => req<{ ticket: string }>("/realtime/ticket", { method: "POST" }),
 
   // social
+  // everyone's wall and stories
+  feedWall: (userId: number, before?: number) => req<{ posts: FeedPost[]; more: boolean }>(`/feed/wall/${userId}${before ? `?before_id=${before}` : ""}`),
+  feedFriends: (before?: number) => req<{ posts: FeedPost[]; more: boolean }>(`/feed/friends${before ? `?before_id=${before}` : ""}`),
+  feedSaved: (before?: number) => req<{ posts: FeedPost[]; more: boolean }>(`/feed/saved${before ? `?before_id=${before}` : ""}`),
+  feedPost: (id: number) => req<FeedPost>(`/feed/posts/${id}`),
+  feedCreate: (payload: { body: string; audience: string; place?: string | null; attachment_ids?: number[]; shared_from_id?: number }) =>
+    req<FeedPost>("/feed/posts", { method: "POST", json: payload }),
+  feedEdit: (id: number, payload: { body?: string; audience?: string; place?: string | null }) => req<FeedPost>(`/feed/posts/${id}`, { method: "PATCH", json: payload }),
+  feedDelete: (id: number) => req(`/feed/posts/${id}`, { method: "DELETE" }),
+  feedReact: (id: number, emoji: string | null) => req<FeedPost>(`/feed/posts/${id}/reaction`, { method: "PUT", json: { emoji } }),
+  feedReactions: (id: number) => req<{ user: UserSummary; emoji: string }[]>(`/feed/posts/${id}/reactions`),
+  feedComments: (id: number) => req<FeedComment[]>(`/feed/posts/${id}/comments`),
+  feedComment: (id: number, body: string, parentId?: number | null) => req<FeedComment>(`/feed/posts/${id}/comments`, { method: "POST", json: { body, parent_id: parentId || null } }),
+  feedDeleteComment: (id: number) => req(`/feed/comments/${id}`, { method: "DELETE" }),
+  feedSave: (id: number, on: boolean) => req(`/feed/posts/${id}/save`, { method: on ? "POST" : "DELETE" }),
+  feedReport: (id: number, reason: string, details?: string) => req(`/feed/posts/${id}/report`, { method: "POST", json: { reason, details } }),
+  stories: () => req<StoryGroup[]>("/stories"),
+  storyCreate: (payload: { kind: string; text?: string; bg?: string | null; audience: string; hidden_from?: number[]; attachment_id?: number }) =>
+    req<{ ok: boolean; id: number }>("/stories", { method: "POST", json: payload }),
+  storyView: (id: number, reaction?: string) => req(`/stories/${id}/view`, { method: "POST", json: { reaction: reaction || null } }),
+  storyViewers: (id: number) => req<{ user: UserSummary; reaction: string | null; viewed_at: string }[]>(`/stories/${id}/viewers`),
+  storyReply: (id: number, body: string) => req<{ ok: boolean; conversation_id: number }>(`/stories/${id}/reply`, { method: "POST", json: { body } }),
+  storyDelete: (id: number) => req(`/stories/${id}`, { method: "DELETE" }),
   friends: () => req<(UserSummary & { online: boolean })[]>("/friends"),
   removeFriend: (id: number) => req(`/friends/${id}`, { method: "DELETE" }),
   friendRequest: (to_user_id: number) => req<any>("/friends/requests", { method: "POST", json: { to_user_id } }),

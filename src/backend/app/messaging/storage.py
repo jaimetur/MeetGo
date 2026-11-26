@@ -23,7 +23,7 @@ FILE_TYPES = IMAGE_TYPES | {
     "application/pdf", "text/plain", "application/zip",
     "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "audio/mpeg", "audio/ogg", "audio/mp4", "video/mp4",
+    "audio/mpeg", "audio/ogg", "audio/mp4", "video/mp4", "video/quicktime", "video/webm",
     # voice notes as browsers record them: WebM/Opus (Chrome, Android), MP4/AAC (Safari, iPhone)
     "audio/webm", "audio/aac", "audio/x-m4a", "audio/wav",
 }

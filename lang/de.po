@@ -5642,6 +5642,303 @@ msgstr "Altersgruppe"
 msgid "ui_cfilter_age_all"
 msgstr "Alle Altersgruppen"
 
+msgid "err_feed_audience"
+msgstr "Wähle, wer es sehen kann: Freunde, Follower oder öffentlich"
+
+msgid "err_feed_post_not_found"
+msgstr "Dieser Beitrag ist nicht mehr verfügbar"
+
+msgid "err_feed_media"
+msgstr "Es können nur Fotos oder Videos hinzugefügt werden"
+
+msgid "err_story_not_found"
+msgstr "Diese Story ist nicht mehr verfügbar"
+
+msgid "ui_story_reply_body"
+msgstr "💬 Antwort auf deine Story «{story}»: {text}"
+
+msgid "ui_story_reply_body_media"
+msgstr "💬 Antwort auf deine Story: {text}"
+
+msgid "email_feed_mention_subject"
+msgstr "Du wurdest erwähnt"
+
+msgid "email_feed_mention_body"
+msgstr "{name} hat dich in einem Beitrag erwähnt"
+
+msgid "email_feed_share_subject"
+msgstr "Dein Beitrag wurde geteilt"
+
+msgid "email_feed_share_body"
+msgstr "{name} hat deinen Beitrag geteilt"
+
+msgid "email_feed_reaction_subject"
+msgstr "Neue Reaktion"
+
+msgid "email_feed_reaction_body"
+msgstr "{name} hat mit {emoji} auf deinen Beitrag reagiert"
+
+msgid "email_feed_comment_subject"
+msgstr "Neuer Kommentar"
+
+msgid "email_feed_comment_body"
+msgstr "{name} hat einen Beitrag kommentiert"
+
+msgid "email_story_reaction_subject"
+msgstr "Reaktion auf deine Story"
+
+msgid "email_story_reaction_body"
+msgstr "{name} hat mit {emoji} auf deine Story reagiert"
+
+msgid "ui_avatar_adjust"
+msgstr "Foto anpassen"
+
+msgid "ui_copy_link"
+msgstr "Link kopieren"
+
+msgid "ui_next"
+msgstr "Weiter"
+
+msgid "ui_previous"
+msgstr "Zurück"
+
+msgid "ui_feed_tab_communities"
+msgstr "Communities"
+
+msgid "ui_feed_tab_wall"
+msgstr "Meine Pinnwand"
+
+msgid "ui_feed_tab_friends"
+msgstr "Meine Freunde"
+
+msgid "ui_feed_wall"
+msgstr "Pinnwand"
+
+msgid "ui_feed_wall_of"
+msgstr "Pinnwand von {name}"
+
+msgid "ui_feed_post"
+msgstr "Beitrag"
+
+msgid "ui_feed_compose_ph"
+msgstr "Was möchtest du erzählen?"
+
+msgid "ui_feed_add_media"
+msgstr "Fotos oder Video"
+
+msgid "ui_feed_add_place"
+msgstr "Ort"
+
+msgid "ui_feed_place_ph"
+msgstr "Wo bist du?"
+
+msgid "ui_feed_audience"
+msgstr "Wer es sieht"
+
+msgid "ui_feed_aud_friends"
+msgstr "Freunde"
+
+msgid "ui_feed_aud_followers"
+msgstr "Follower"
+
+msgid "ui_feed_aud_public"
+msgstr "Öffentlich (deine Region)"
+
+msgid "ui_feed_publish"
+msgstr "Posten"
+
+msgid "ui_feed_posted"
+msgstr "Gepostet"
+
+msgid "ui_feed_max_media"
+msgstr "Höchstens {n} Fotos oder Videos"
+
+msgid "ui_feed_more"
+msgstr "Mehr anzeigen"
+
+msgid "ui_feed_my_posts"
+msgstr "Meine Beiträge"
+
+msgid "ui_feed_saved"
+msgstr "Gespeichert"
+
+msgid "ui_feed_saved_empty"
+msgstr "Du hast noch keinen Beitrag gespeichert"
+
+msgid "ui_feed_wall_empty"
+msgstr "Deine Pinnwand ist leer"
+
+msgid "ui_feed_wall_empty_body"
+msgstr "Erzähl etwas, lade Fotos deiner Pläne hoch… Nur wen du wählst, sieht es."
+
+msgid "ui_feed_wall_empty_other"
+msgstr "Es gibt keine Beiträge, die du sehen kannst"
+
+msgid "ui_feed_friends_empty"
+msgstr "Noch nichts von deinen Freunden"
+
+msgid "ui_feed_friends_empty_body"
+msgstr "Wenn deine Freunde oder Leute, denen du folgst, etwas posten, erscheint es hier."
+
+msgid "ui_feed_find_people"
+msgstr "Leute finden"
+
+msgid "ui_feed_edited"
+msgstr "bearbeitet"
+
+msgid "ui_feed_react"
+msgstr "Reagieren"
+
+msgid "ui_feed_reactions"
+msgstr "Reaktionen"
+
+msgid "ui_feed_comment"
+msgstr "Kommentieren"
+
+msgid "ui_feed_comment_ph"
+msgstr "Schreib einen Kommentar…"
+
+msgid "ui_feed_n_comments"
+msgstr "{n} Kommentare"
+
+msgid "ui_feed_n_shares"
+msgstr "{n}-mal geteilt"
+
+msgid "ui_feed_reply"
+msgstr "Antworten"
+
+msgid "ui_feed_replying_to"
+msgstr "Antwort an {name}"
+
+msgid "ui_feed_share"
+msgstr "Teilen"
+
+msgid "ui_feed_share_wall"
+msgstr "Auf meiner Pinnwand teilen"
+
+msgid "ui_feed_share_chat"
+msgstr "Im Chat senden"
+
+msgid "ui_feed_share_ph"
+msgstr "Kommentar hinzufügen (optional)"
+
+msgid "ui_feed_shared_toast"
+msgstr "Auf deiner Pinnwand geteilt"
+
+msgid "ui_feed_shared_gone"
+msgstr "Der ursprüngliche Beitrag ist nicht mehr verfügbar"
+
+msgid "ui_feed_chat_note_ph"
+msgstr "Nachricht hinzufügen (optional)"
+
+msgid "ui_feed_chat_post_by"
+msgstr "Beitrag von {name}:"
+
+msgid "ui_feed_sent_chat"
+msgstr "Gesendet"
+
+msgid "ui_feed_save"
+msgstr "Speichern"
+
+msgid "ui_feed_saved_on"
+msgstr "Gespeichert"
+
+msgid "ui_feed_saved_toast"
+msgstr "In deiner Liste gespeichert"
+
+msgid "ui_feed_unsaved"
+msgstr "Aus Gespeichert entfernt"
+
+msgid "ui_feed_edit_title"
+msgstr "Beitrag bearbeiten"
+
+msgid "ui_feed_delete_title"
+msgstr "Beitrag löschen?"
+
+msgid "ui_feed_delete_body"
+msgstr "Er wird von deiner Pinnwand und überall, wo er geteilt wurde, entfernt."
+
+msgid "ui_feed_deleted"
+msgstr "Beitrag gelöscht"
+
+msgid "ui_feed_report_title"
+msgstr "Beitrag melden"
+
+msgid "ui_stories"
+msgstr "Storys"
+
+msgid "ui_story_yours"
+msgstr "Deine Story"
+
+msgid "ui_story_new"
+msgstr "Neue Story"
+
+msgid "ui_story_kind_media"
+msgstr "Foto oder Video"
+
+msgid "ui_story_kind_text"
+msgstr "Text"
+
+msgid "ui_story_pick"
+msgstr "Foto oder Video wählen"
+
+msgid "ui_story_change"
+msgstr "Ändern"
+
+msgid "ui_story_caption_ph"
+msgstr "Text darüber (optional)"
+
+msgid "ui_story_text_ph"
+msgstr "Schreib etwas…"
+
+msgid "ui_story_hide_from"
+msgstr "Verbergen vor…"
+
+msgid "ui_story_hidden_n"
+msgstr "Vor {n} Personen verborgen"
+
+msgid "ui_story_no_friends"
+msgstr "Du hast noch keine Freunde"
+
+msgid "ui_story_video_long"
+msgstr "Das Video darf höchstens 15 Sekunden lang sein"
+
+msgid "ui_story_posted"
+msgstr "Story gepostet: 24 Stunden sichtbar"
+
+msgid "ui_story_play"
+msgstr "Fortsetzen"
+
+msgid "ui_story_pause"
+msgstr "Pause"
+
+msgid "ui_story_seen_by"
+msgstr "Gesehen von {n}"
+
+msgid "ui_story_viewers"
+msgstr "Wer sie gesehen hat"
+
+msgid "ui_story_no_views"
+msgstr "Noch niemand hat sie gesehen"
+
+msgid "ui_story_reply_ph"
+msgstr "{name} antworten…"
+
+msgid "ui_story_reply_sent"
+msgstr "Antwort als Direktnachricht gesendet"
+
+msgid "ui_story_reacted"
+msgstr "Du hast mit {emoji} reagiert"
+
+msgid "ui_story_deleted"
+msgstr "Story gelöscht"
+
+msgid "ui_feed_one_comment"
+msgstr "1 Kommentar"
+
+msgid "ui_feed_one_share"
+msgstr "1-mal geteilt"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

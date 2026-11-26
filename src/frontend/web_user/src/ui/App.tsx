@@ -9,6 +9,7 @@ import { getState, loadBlocks, loadConversations, loadAdminPending, loadCategori
 import { AuthScreen, CompleteProfile } from "./Auth";
 import { ChatView } from "./Chat";
 import { UpdateNotice } from "./UpdateNotice";
+import { FeedPostPage, WallPage } from "./Feed";
 import { useNoAutofill } from "../noAutofill";
 import { HomePage, PostPage, PublishPage } from "./Board";
 import { AboutModal, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
@@ -241,7 +242,7 @@ function Shell() {
   const chatsMode = route.name === "chats" || route.name === "chat";
   const panelOpen = route.name === "chat" && (!!route.thread || !!route.panel);
   // Detail screens (a post, publishing) hide the phone tab bar, like a conversation.
-  const detail = route.name === "post" || route.name === "publish";
+  const detail = route.name === "post" || route.name === "publish" || route.name === "feedpost" || route.name === "wall";
   const withRight = ["home", "plans", "communities", "post"].includes(route.name) || (route.name === "community" && route.tab !== "chat");
   const shellClass = [
     "shell", chatsMode ? "chats" : "pages", panelOpen ? "with-panel" : "", withRight ? "has-right" : "",
@@ -250,7 +251,7 @@ function Shell() {
   const requestsTotal = requests.friends + requests.dms + (requests.communities || 0);
 
   // Which tab is lit for the current screen.
-  const current = ({ chat: "chats", post: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;
+  const current = ({ chat: "chats", post: "home", feedpost: "home", wall: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;
   const go = (name: string) => navigate(name === "home" ? "/" : "/" + name);
 
   const menu = [
@@ -339,6 +340,8 @@ function Shell() {
       {route.name === "plans" ? <PlansPage /> : null}
       {route.name === "publish" ? <PublishPage key={`${route.community}:${route.repeat}:${route.edit}`} community={route.community} repeat={route.repeat} edit={route.edit} /> : null}
       {route.name === "post" ? <PostPage key={route.id} id={route.id} /> : null}
+      {route.name === "feedpost" ? <FeedPostPage key={route.id} id={route.id} /> : null}
+      {route.name === "wall" ? <WallPage key={route.id} id={route.id} /> : null}
       {route.name === "communities" ? <CommunitiesPage /> : null}
       {route.name === "community" ? <CommunityPage key={route.id} id={route.id} tab={route.tab} /> : null}
       {route.name === "people" ? <PeoplePage /> : null}
@@ -412,8 +415,20 @@ function AdminNotice() {
 
 function Toasts() {
   const toasts = useStore((s) => s.toasts);
+  // stacked above the notices at the bottom (update, administration), never on top of them
+  const [bottom, setBottom] = useState<number | null>(null);
+  useEffect(() => {
+    if (!toasts.length) return;
+    const place = () => {
+      const tops = Array.from(document.querySelectorAll<HTMLElement>(".updnote, .admin-notice")).map((el) => el.getBoundingClientRect()).filter((r) => r.height).map((r) => r.top);
+      setBottom(tops.length ? Math.round(window.innerHeight - Math.min(...tops) + 10) : null);
+    };
+    place();
+    const timer = window.setInterval(place, 500);
+    return () => window.clearInterval(timer);
+  }, [toasts.length]);
   return (
-    <div className="toasts" role="status" aria-live="polite">
+    <div className="toasts" role="status" aria-live="polite" style={bottom != null ? { bottom } : undefined}>
       {toasts.map((x) => <div key={x.id} className={"toast " + x.kind}>{x.text}</div>)}
     </div>
   );

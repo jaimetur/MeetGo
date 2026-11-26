@@ -4775,6 +4775,303 @@ msgstr "年龄段"
 msgid "ui_cfilter_age_all"
 msgstr "所有年龄"
 
+msgid "err_feed_audience"
+msgstr "选择谁可以查看：好友、关注者或公开"
+
+msgid "err_feed_post_not_found"
+msgstr "此帖子已不可用"
+
+msgid "err_feed_media"
+msgstr "只能添加照片或视频"
+
+msgid "err_story_not_found"
+msgstr "此快拍已不可用"
+
+msgid "ui_story_reply_body"
+msgstr "💬 回复你的快拍「{story}」：{text}"
+
+msgid "ui_story_reply_body_media"
+msgstr "💬 回复你的快拍：{text}"
+
+msgid "email_feed_mention_subject"
+msgstr "有人提到了你"
+
+msgid "email_feed_mention_body"
+msgstr "{name} 在帖子中提到了你"
+
+msgid "email_feed_share_subject"
+msgstr "你的帖子被分享了"
+
+msgid "email_feed_share_body"
+msgstr "{name} 分享了你的帖子"
+
+msgid "email_feed_reaction_subject"
+msgstr "新的回应"
+
+msgid "email_feed_reaction_body"
+msgstr "{name} 对你的帖子回应了 {emoji}"
+
+msgid "email_feed_comment_subject"
+msgstr "新评论"
+
+msgid "email_feed_comment_body"
+msgstr "{name} 评论了一条帖子"
+
+msgid "email_story_reaction_subject"
+msgstr "快拍回应"
+
+msgid "email_story_reaction_body"
+msgstr "{name} 对你的快拍回应了 {emoji}"
+
+msgid "ui_avatar_adjust"
+msgstr "调整照片"
+
+msgid "ui_copy_link"
+msgstr "复制链接"
+
+msgid "ui_next"
+msgstr "下一个"
+
+msgid "ui_previous"
+msgstr "上一个"
+
+msgid "ui_feed_tab_communities"
+msgstr "社区"
+
+msgid "ui_feed_tab_wall"
+msgstr "我的动态墙"
+
+msgid "ui_feed_tab_friends"
+msgstr "我的好友"
+
+msgid "ui_feed_wall"
+msgstr "动态墙"
+
+msgid "ui_feed_wall_of"
+msgstr "{name} 的动态墙"
+
+msgid "ui_feed_post"
+msgstr "帖子"
+
+msgid "ui_feed_compose_ph"
+msgstr "想分享什么？"
+
+msgid "ui_feed_add_media"
+msgstr "照片或视频"
+
+msgid "ui_feed_add_place"
+msgstr "地点"
+
+msgid "ui_feed_place_ph"
+msgstr "你在哪里？"
+
+msgid "ui_feed_audience"
+msgstr "谁能看到"
+
+msgid "ui_feed_aud_friends"
+msgstr "好友"
+
+msgid "ui_feed_aud_followers"
+msgstr "关注者"
+
+msgid "ui_feed_aud_public"
+msgstr "公开（你的区域）"
+
+msgid "ui_feed_publish"
+msgstr "发布"
+
+msgid "ui_feed_posted"
+msgstr "已发布"
+
+msgid "ui_feed_max_media"
+msgstr "最多 {n} 张照片或视频"
+
+msgid "ui_feed_more"
+msgstr "查看更多"
+
+msgid "ui_feed_my_posts"
+msgstr "我的帖子"
+
+msgid "ui_feed_saved"
+msgstr "已收藏"
+
+msgid "ui_feed_saved_empty"
+msgstr "你还没有收藏任何帖子"
+
+msgid "ui_feed_wall_empty"
+msgstr "你的动态墙还是空的"
+
+msgid "ui_feed_wall_empty_body"
+msgstr "分享些什么，上传你的计划照片……只有你选择的人能看到。"
+
+msgid "ui_feed_wall_empty_other"
+msgstr "没有你能查看的帖子"
+
+msgid "ui_feed_friends_empty"
+msgstr "好友还没有发布内容"
+
+msgid "ui_feed_friends_empty_body"
+msgstr "当你的好友或你关注的人发布内容时，会显示在这里。"
+
+msgid "ui_feed_find_people"
+msgstr "查找用户"
+
+msgid "ui_feed_edited"
+msgstr "已编辑"
+
+msgid "ui_feed_react"
+msgstr "回应"
+
+msgid "ui_feed_reactions"
+msgstr "回应"
+
+msgid "ui_feed_comment"
+msgstr "评论"
+
+msgid "ui_feed_comment_ph"
+msgstr "写评论……"
+
+msgid "ui_feed_n_comments"
+msgstr "{n} 条评论"
+
+msgid "ui_feed_n_shares"
+msgstr "被分享 {n} 次"
+
+msgid "ui_feed_reply"
+msgstr "回复"
+
+msgid "ui_feed_replying_to"
+msgstr "正在回复 {name}"
+
+msgid "ui_feed_share"
+msgstr "分享"
+
+msgid "ui_feed_share_wall"
+msgstr "分享到我的动态墙"
+
+msgid "ui_feed_share_chat"
+msgstr "通过聊天发送"
+
+msgid "ui_feed_share_ph"
+msgstr "添加评论（可选）"
+
+msgid "ui_feed_shared_toast"
+msgstr "已分享到你的动态墙"
+
+msgid "ui_feed_shared_gone"
+msgstr "原帖已不可用"
+
+msgid "ui_feed_chat_note_ph"
+msgstr "添加消息（可选）"
+
+msgid "ui_feed_chat_post_by"
+msgstr "{name} 的帖子："
+
+msgid "ui_feed_sent_chat"
+msgstr "已发送"
+
+msgid "ui_feed_save"
+msgstr "收藏"
+
+msgid "ui_feed_saved_on"
+msgstr "已收藏"
+
+msgid "ui_feed_saved_toast"
+msgstr "已加入收藏"
+
+msgid "ui_feed_unsaved"
+msgstr "已取消收藏"
+
+msgid "ui_feed_edit_title"
+msgstr "编辑帖子"
+
+msgid "ui_feed_delete_title"
+msgstr "删除这条帖子？"
+
+msgid "ui_feed_delete_body"
+msgstr "它将从你的动态墙以及被分享的地方删除。"
+
+msgid "ui_feed_deleted"
+msgstr "帖子已删除"
+
+msgid "ui_feed_report_title"
+msgstr "举报帖子"
+
+msgid "ui_stories"
+msgstr "快拍"
+
+msgid "ui_story_yours"
+msgstr "你的快拍"
+
+msgid "ui_story_new"
+msgstr "新快拍"
+
+msgid "ui_story_kind_media"
+msgstr "照片或视频"
+
+msgid "ui_story_kind_text"
+msgstr "文字"
+
+msgid "ui_story_pick"
+msgstr "选择照片或视频"
+
+msgid "ui_story_change"
+msgstr "更换"
+
+msgid "ui_story_caption_ph"
+msgstr "叠加文字（可选）"
+
+msgid "ui_story_text_ph"
+msgstr "写点什么……"
+
+msgid "ui_story_hide_from"
+msgstr "不给谁看……"
+
+msgid "ui_story_hidden_n"
+msgstr "对 {n} 人隐藏"
+
+msgid "ui_story_no_friends"
+msgstr "你还没有好友"
+
+msgid "ui_story_video_long"
+msgstr "视频最长 15 秒"
+
+msgid "ui_story_posted"
+msgstr "快拍已发布：显示 24 小时"
+
+msgid "ui_story_play"
+msgstr "继续"
+
+msgid "ui_story_pause"
+msgstr "暂停"
+
+msgid "ui_story_seen_by"
+msgstr "{n} 人看过"
+
+msgid "ui_story_viewers"
+msgstr "谁看过"
+
+msgid "ui_story_no_views"
+msgstr "还没有人看过"
+
+msgid "ui_story_reply_ph"
+msgstr "回复 {name}……"
+
+msgid "ui_story_reply_sent"
+msgstr "已通过私信回复"
+
+msgid "ui_story_reacted"
+msgstr "你回应了 {emoji}"
+
+msgid "ui_story_deleted"
+msgstr "快拍已删除"
+
+msgid "ui_feed_one_comment"
+msgstr "1 条评论"
+
+msgid "ui_feed_one_share"
+msgstr "被分享 1 次"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

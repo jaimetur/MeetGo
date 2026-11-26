@@ -4775,6 +4775,303 @@ msgstr "年齢層"
 msgid "ui_cfilter_age_all"
 msgstr "すべての年齢"
 
+msgid "err_feed_audience"
+msgstr "公開範囲を選んでください：友達・フォロワー・公開"
+
+msgid "err_feed_post_not_found"
+msgstr "この投稿はもう表示できません"
+
+msgid "err_feed_media"
+msgstr "追加できるのは写真か動画のみです"
+
+msgid "err_story_not_found"
+msgstr "このストーリーはもう表示できません"
+
+msgid "ui_story_reply_body"
+msgstr "💬 あなたのストーリー「{story}」への返信：{text}"
+
+msgid "ui_story_reply_body_media"
+msgstr "💬 あなたのストーリーへの返信：{text}"
+
+msgid "email_feed_mention_subject"
+msgstr "メンションされました"
+
+msgid "email_feed_mention_body"
+msgstr "{name}さんが投稿であなたをメンションしました"
+
+msgid "email_feed_share_subject"
+msgstr "投稿がシェアされました"
+
+msgid "email_feed_share_body"
+msgstr "{name}さんがあなたの投稿をシェアしました"
+
+msgid "email_feed_reaction_subject"
+msgstr "新しいリアクション"
+
+msgid "email_feed_reaction_body"
+msgstr "{name}さんがあなたの投稿に{emoji}しました"
+
+msgid "email_feed_comment_subject"
+msgstr "新しいコメント"
+
+msgid "email_feed_comment_body"
+msgstr "{name}さんが投稿にコメントしました"
+
+msgid "email_story_reaction_subject"
+msgstr "ストーリーへのリアクション"
+
+msgid "email_story_reaction_body"
+msgstr "{name}さんがあなたのストーリーに{emoji}しました"
+
+msgid "ui_avatar_adjust"
+msgstr "写真を調整"
+
+msgid "ui_copy_link"
+msgstr "リンクをコピー"
+
+msgid "ui_next"
+msgstr "次へ"
+
+msgid "ui_previous"
+msgstr "前へ"
+
+msgid "ui_feed_tab_communities"
+msgstr "コミュニティ"
+
+msgid "ui_feed_tab_wall"
+msgstr "マイウォール"
+
+msgid "ui_feed_tab_friends"
+msgstr "友達"
+
+msgid "ui_feed_wall"
+msgstr "ウォール"
+
+msgid "ui_feed_wall_of"
+msgstr "{name}さんのウォール"
+
+msgid "ui_feed_post"
+msgstr "投稿"
+
+msgid "ui_feed_compose_ph"
+msgstr "何を伝えたいですか？"
+
+msgid "ui_feed_add_media"
+msgstr "写真・動画"
+
+msgid "ui_feed_add_place"
+msgstr "場所"
+
+msgid "ui_feed_place_ph"
+msgstr "どこにいますか？"
+
+msgid "ui_feed_audience"
+msgstr "公開範囲"
+
+msgid "ui_feed_aud_friends"
+msgstr "友達"
+
+msgid "ui_feed_aud_followers"
+msgstr "フォロワー"
+
+msgid "ui_feed_aud_public"
+msgstr "公開（あなたの地域）"
+
+msgid "ui_feed_publish"
+msgstr "投稿する"
+
+msgid "ui_feed_posted"
+msgstr "投稿しました"
+
+msgid "ui_feed_max_media"
+msgstr "写真・動画は最大{n}件です"
+
+msgid "ui_feed_more"
+msgstr "もっと見る"
+
+msgid "ui_feed_my_posts"
+msgstr "自分の投稿"
+
+msgid "ui_feed_saved"
+msgstr "保存済み"
+
+msgid "ui_feed_saved_empty"
+msgstr "保存した投稿はまだありません"
+
+msgid "ui_feed_wall_empty"
+msgstr "ウォールはまだ空です"
+
+msgid "ui_feed_wall_empty_body"
+msgstr "近況や予定の写真を投稿しましょう。選んだ人だけが見られます。"
+
+msgid "ui_feed_wall_empty_other"
+msgstr "表示できる投稿はありません"
+
+msgid "ui_feed_friends_empty"
+msgstr "友達の投稿はまだありません"
+
+msgid "ui_feed_friends_empty_body"
+msgstr "友達やフォローしている人が投稿すると、ここに表示されます。"
+
+msgid "ui_feed_find_people"
+msgstr "人を探す"
+
+msgid "ui_feed_edited"
+msgstr "編集済み"
+
+msgid "ui_feed_react"
+msgstr "リアクション"
+
+msgid "ui_feed_reactions"
+msgstr "リアクション"
+
+msgid "ui_feed_comment"
+msgstr "コメント"
+
+msgid "ui_feed_comment_ph"
+msgstr "コメントを書く…"
+
+msgid "ui_feed_n_comments"
+msgstr "コメント{n}件"
+
+msgid "ui_feed_n_shares"
+msgstr "{n}回シェア"
+
+msgid "ui_feed_reply"
+msgstr "返信"
+
+msgid "ui_feed_replying_to"
+msgstr "{name}さんに返信中"
+
+msgid "ui_feed_share"
+msgstr "シェア"
+
+msgid "ui_feed_share_wall"
+msgstr "自分のウォールでシェア"
+
+msgid "ui_feed_share_chat"
+msgstr "チャットで送る"
+
+msgid "ui_feed_share_ph"
+msgstr "コメントを追加（任意）"
+
+msgid "ui_feed_shared_toast"
+msgstr "ウォールでシェアしました"
+
+msgid "ui_feed_shared_gone"
+msgstr "元の投稿は表示できません"
+
+msgid "ui_feed_chat_note_ph"
+msgstr "メッセージを追加（任意）"
+
+msgid "ui_feed_chat_post_by"
+msgstr "{name}さんの投稿："
+
+msgid "ui_feed_sent_chat"
+msgstr "送信しました"
+
+msgid "ui_feed_save"
+msgstr "保存"
+
+msgid "ui_feed_saved_on"
+msgstr "保存済み"
+
+msgid "ui_feed_saved_toast"
+msgstr "リストに保存しました"
+
+msgid "ui_feed_unsaved"
+msgstr "保存を解除しました"
+
+msgid "ui_feed_edit_title"
+msgstr "投稿を編集"
+
+msgid "ui_feed_delete_title"
+msgstr "投稿を削除しますか？"
+
+msgid "ui_feed_delete_body"
+msgstr "あなたのウォールとシェア先から削除されます。"
+
+msgid "ui_feed_deleted"
+msgstr "投稿を削除しました"
+
+msgid "ui_feed_report_title"
+msgstr "投稿を報告"
+
+msgid "ui_stories"
+msgstr "ストーリー"
+
+msgid "ui_story_yours"
+msgstr "あなたのストーリー"
+
+msgid "ui_story_new"
+msgstr "新しいストーリー"
+
+msgid "ui_story_kind_media"
+msgstr "写真・動画"
+
+msgid "ui_story_kind_text"
+msgstr "テキスト"
+
+msgid "ui_story_pick"
+msgstr "写真か動画を選ぶ"
+
+msgid "ui_story_change"
+msgstr "変更"
+
+msgid "ui_story_caption_ph"
+msgstr "上に表示するテキスト（任意）"
+
+msgid "ui_story_text_ph"
+msgstr "何か書いてください…"
+
+msgid "ui_story_hide_from"
+msgstr "非表示にする相手…"
+
+msgid "ui_story_hidden_n"
+msgstr "{n}人に非表示"
+
+msgid "ui_story_no_friends"
+msgstr "まだ友達がいません"
+
+msgid "ui_story_video_long"
+msgstr "動画は15秒以内にしてください"
+
+msgid "ui_story_posted"
+msgstr "ストーリーを投稿しました（24時間表示）"
+
+msgid "ui_story_play"
+msgstr "再開"
+
+msgid "ui_story_pause"
+msgstr "一時停止"
+
+msgid "ui_story_seen_by"
+msgstr "{n}人が閲覧"
+
+msgid "ui_story_viewers"
+msgstr "閲覧した人"
+
+msgid "ui_story_no_views"
+msgstr "まだ誰も見ていません"
+
+msgid "ui_story_reply_ph"
+msgstr "{name}さんに返信…"
+
+msgid "ui_story_reply_sent"
+msgstr "個人メッセージで返信しました"
+
+msgid "ui_story_reacted"
+msgstr "{emoji}でリアクションしました"
+
+msgid "ui_story_deleted"
+msgstr "ストーリーを削除しました"
+
+msgid "ui_feed_one_comment"
+msgstr "コメント1件"
+
+msgid "ui_feed_one_share"
+msgstr "1回シェア"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

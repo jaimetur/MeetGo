@@ -228,3 +228,18 @@ export type PostPage = { posts: Post[]; has_more: boolean };
 export type Attendee = UserSummary & { status: AttendStatus; guests?: number; attended?: boolean | null };
 export type Comment = { id: number; post_id: number; author: UserSummary; body: string; created_at: string; can_delete: boolean };
 export type FeedFilter = { kind?: PostKind | "plan"; when?: "all" | "today" | "weekend" | "week" | "upcoming" | "past"; community_id?: number; before_id?: number; limit?: number };
+
+/** A post of someone's wall (Inicio → My wall / My friends). */
+export type FeedMedia = { id: number; file_name: string; mime: string; size: number; width: number | null; height: number | null; url: string; thumb_url: string | null };
+export type FeedPost = {
+  id: number; author: UserSummary; body: string; audience: "friends" | "followers" | "public"; place: string | null;
+  created_at: string; edited: boolean; media: FeedMedia[]; shared_from_id: number | null; shared: FeedPost | null;
+  reactions: Record<string, number>; my_reaction: string | null; comments: number; shares: number; saved: boolean; mine: boolean;
+};
+export type FeedComment = { id: number; post_id: number; parent_id: number | null; author: UserSummary; body: string; created_at: string; mine: boolean };
+/** A story (24 hours) and the stories of one person, as the strip shows them. */
+export type StoryItem = {
+  id: number; kind: "photo" | "video" | "text"; text: string; bg: string | null; media: FeedMedia | null;
+  created_at: string; expires_at: string; seen: boolean; my_reaction: string | null; views: number | null; audience: string | null;
+};
+export type StoryGroup = { user: UserSummary; mine: boolean; stories: StoryItem[]; all_seen: boolean; last_at: string };

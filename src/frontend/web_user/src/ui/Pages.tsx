@@ -34,19 +34,18 @@ function PageShell({ title, lead, children, tab }: { title: string; lead?: strin
 
 export function PeoplePage() {
   // a notice can open a tab directly (?tab=requests: an invitation to a community)
-  const [tab, setTab] = useState<"friends" | "requests" | "search" | "feed">(() => (["friends", "requests", "search", "feed"] as const).find((k) => k === queryParam("tab")) || "friends");
+  const [tab, setTab] = useState<"friends" | "requests" | "search">(() => (["friends", "requests", "search"] as const).find((k) => k === queryParam("tab")) || "friends");
   const requests = useStore((s) => s.requests);
   return (
     <PageShell title={t("ui_people_title")} tab>
       <div className="tabs" role="tablist">
-        {([["friends", t("ui_friends")], ["requests", t("ui_requests") + (requests.friends + requests.dms + (requests.communities || 0) ? ` (${requests.friends + requests.dms + (requests.communities || 0)})` : "")], ["search", t("ui_find_people")], ["feed", t("ui_activity")]] as const).map(([k, label]) => (
+        {([["friends", t("ui_friends")], ["requests", t("ui_requests") + (requests.friends + requests.dms + (requests.communities || 0) ? ` (${requests.friends + requests.dms + (requests.communities || 0)})` : "")], ["search", t("ui_find_people")]] as const).map(([k, label]) => (
           <button key={k} role="tab" aria-selected={tab === k} className={"chip" + (tab === k ? " on" : "")} onClick={() => setTab(k)}>{label}</button>
         ))}
       </div>
       {tab === "friends" ? <Friends /> : null}
       {tab === "requests" ? <Requests /> : null}
       {tab === "search" ? <FindPeople /> : null}
-      {tab === "feed" ? <Feed /> : null}
     </PageShell>
   );
 }
@@ -196,39 +195,6 @@ function FindPeople() {
         ))}
         {!res.length ? <div className="muted" style={{ padding: 8 }}>{t("ui_search_people_hint")}</div> : null}
       </div>
-    </div>
-  );
-}
-
-function Feed() {
-  const [posts, setPosts] = useState<any[] | null>(null);
-  const [text, setText] = useState("");
-  const load = () => api.feed().then(setPosts).catch(() => setPosts([]));
-  useEffect(() => {
-    load();
-  }, []);
-  async function post() {
-    try {
-      await api.post(text.trim());
-      setText("");
-      load();
-    } catch (e: any) {
-      toast(e.message, "error");
-    }
-  }
-  return (
-    <div className="stack">
-      <div className="box stack">
-        <textarea id="feed-post" className="inp" rows={3} maxLength={4000} value={text} onChange={(e) => setText(e.target.value)} placeholder={t("ui_feed_placeholder")} />
-        <div className="row"><span className="muted grow" style={{ fontSize: 12 }}>{t("ui_feed_hint")}</span><button className="btn pri sm" disabled={!text.trim()} onClick={post}>{t("ui_publish")}</button></div>
-      </div>
-      {posts?.map((p) => (
-        <div key={p.id} className="box">
-          <div className="row"><Avatar user={p.user} size={32} /><b>{p.user.display_name}</b><span className="muted" style={{ fontSize: 12 }}>{dayLabel(p.created_at)} · {timeOf(p.created_at)}</span></div>
-          <div style={{ marginTop: 8, whiteSpace: "pre-wrap" }}>{p.content}</div>
-        </div>
-      ))}
-      {posts && !posts.length ? <div className="empty">{t("ui_feed_empty")}</div> : null}
     </div>
   );
 }
@@ -643,6 +609,20 @@ function AvatarPicker() {
   const [busy, setBusy] = useState(false);
   const [crop, setCrop] = useState<File | null>(null);  // the photo chosen, to frame before uploading it
   if (!me) return null;
+  // my current photo, whole (as uploaded; the framed one for photos from before), to frame it again
+  async function adjust() {
+    if (!me?.avatar_url) return;
+    setBusy(true);
+    try {
+      const r = await fetch(fileUrl(me.avatar_url.replace("/avatars/", "/avatars/orig/")));
+      if (!r.ok) throw new Error(t("err_file_not_found"));
+      setCrop(new File([await r.blob()], "avatar.webp", { type: "image/webp" }));
+    } catch (e: any) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
   async function run(fn: () => Promise<any>) {
     setBusy(true);
     try {
@@ -662,6 +642,7 @@ function AvatarPicker() {
       </button>
       <div className="stack" style={{ gap: 6 }}>
         <button type="button" className="btn sm pri" disabled={busy} onClick={() => input.current?.click()}>{busy ? t("ui_uploading") : t("ui_avatar_change")}</button>
+        {me.avatar_url ? <button id="avatar-adjust" type="button" className="btn sm" disabled={busy} onClick={() => adjust()}>{t("ui_avatar_adjust")}</button> : null}
         {me.avatar_url ? <button type="button" className="btn sm" disabled={busy} onClick={() => run(() => api.deleteAvatar())}>{t("ui_avatar_remove")}</button> : null}
       </div>
       <input ref={input} type="file" accept="image/*" hidden onChange={(e) => {
@@ -669,7 +650,7 @@ function AvatarPicker() {
         e.target.value = "";
         if (f) setCrop(f);
       }} />
-      {crop ? <AvatarCrop file={crop} onCancel={() => setCrop(null)} onDone={(cut) => { setCrop(null); run(() => api.uploadAvatar(cut)); }} /> : null}
+      {crop ? <AvatarCrop file={crop} onCancel={() => setCrop(null)} onDone={(cut) => { const whole = crop; setCrop(null); run(() => api.uploadAvatar(cut, whole)); }} /> : null}
     </div>
   );
 }
