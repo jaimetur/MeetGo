@@ -13,7 +13,11 @@ from app.core.models import Category
 OTHER = "ui_cat_other"
 # The built-in categories, in the order the lists show them; "Other" always last.
 BUILTIN = ("ui_cat_social", "ui_cat_sports", "ui_cat_nature", "ui_cat_culture", "ui_cat_education", "ui_cat_skills",
-           "ui_cat_motor", OTHER)
+           "ui_cat_motor", "ui_cat_opinion", OTHER)
+# Categories the administration made that are now built in: their communities move to the built-in one.
+FOLDED = {"cat_opinion": "ui_cat_opinion"}
+# The category of MeetGo's own interests, set while an interest has none (what the administration chose is kept).
+INTEREST_CATEGORY = {"economia": "ui_cat_opinion", "politica": "ui_cat_opinion"}
 
 
 def builtin_names(key: str) -> dict[str, str]:
@@ -27,6 +31,17 @@ async def ensure_categories(db: AsyncSession) -> None:
     for i, key in enumerate(BUILTIN):
         if key not in have:
             db.add(Category(key=key, names=builtin_names(key), position=(999 if key == OTHER else i * 10), builtin=True))
+    await db.flush()
+    from sqlalchemy import update
+    from app.core.models import CategoryProposal, Conversation, Interest
+    for old, new in FOLDED.items():
+        if old in have:
+            await db.execute(update(Conversation).where(Conversation.category_key == old).values(category_key=new))
+            await db.execute(update(Interest).where(Interest.category == old).values(category=new))
+            await db.execute(update(CategoryProposal).where(CategoryProposal.category_key == old).values(category_key=new))
+            await db.delete(await db.get(Category, old))
+    for slug, key in INTEREST_CATEGORY.items():
+        await db.execute(update(Interest).where(Interest.slug == slug, Interest.category.is_(None)).values(category=key))
     await db.commit()
 
 

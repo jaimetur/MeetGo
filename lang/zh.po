@@ -5432,6 +5432,9 @@ msgstr "教育"
 msgid "ui_cat_skills"
 msgstr "技能"
 
+msgid "ui_cat_opinion"
+msgstr "观点"
+
 msgid "ui_cat_motor"
 msgstr "汽车摩托"
 

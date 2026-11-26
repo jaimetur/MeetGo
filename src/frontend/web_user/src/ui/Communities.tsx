@@ -135,6 +135,7 @@ const CATEGORIES: [string, RegExp][] = [
   ["ui_cat_education", /aprend|idioma|ingl[eé]s|alem[aá]n|franc[eé]s|learn|language|educa|curso|course/],
   ["ui_cat_skills", /cocina|cook|guitar|bater[ií]a|drum|teclado|keyboard|piano|baile|danc/],
   ["ui_cat_motor", /coche|car\b|auto|moto/],
+  ["ui_cat_opinion", /econom|pol[ií]tic|opini|debate|actualidad|news/],
 ];
 
 /** The category keys, in the order the lists show them: the built-in ones until the server's list arrives (then the

@@ -13,7 +13,7 @@ async def _create(client, headers, title, **kw):
 async def test_built_in_categories_choose_and_propose(client, db_session):
     cats = (await client.get("/categories", headers={"X-Lang": "es"})).json()
     keys = [c["key"] for c in cats]
-    assert keys[0] == "ui_cat_social" and keys[-1] == "ui_cat_other" and len(keys) == 8
+    assert keys[0] == "ui_cat_social" and keys[-1] == "ui_cat_other" and len(keys) == 9
     assert next(c for c in cats if c["key"] == "ui_cat_sports")["name"] == "Deportes"
     assert next(c for c in (await client.get("/categories", headers={"X-Lang": "en"})).json() if c["key"] == "ui_cat_sports")["name"] == "Sports"
 
@@ -97,3 +97,11 @@ async def test_proposals_notify_admins_and_approval_translates(client, db_sessio
     assert (await client.get("/admin/categories/pending", headers=admin)).json() == {"categories": 0}  # gone for all
     assert len(events) == 2
     assert next(c for c in (await client.get("/categories", headers={"X-Lang": "de"})).json() if c["key"] == key)["name"] == "Opinión (de)"
+
+
+async def test_opinion_is_built_in_with_economy_and_politics(client, db_session):
+    cats = (await client.get("/categories", headers={"X-Lang": "es"})).json()
+    assert next(c for c in cats if c["key"] == "ui_cat_opinion")["name"] == "Opinión"
+    admin = await admin_headers(client)
+    interests = {i["slug"]: i for i in (await client.get("/admin/categories", headers=admin)).json()["interests"]}
+    assert interests["economia"]["category"] == interests["politica"]["category"] == "ui_cat_opinion"

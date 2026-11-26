@@ -5432,6 +5432,9 @@ msgstr "学び"
 msgid "ui_cat_skills"
 msgstr "スキル"
 
+msgid "ui_cat_opinion"
+msgstr "オピニオン"
+
 msgid "ui_cat_motor"
 msgstr "モーター"
 

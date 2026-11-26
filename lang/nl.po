@@ -5432,6 +5432,9 @@ msgstr "Onderwijs"
 msgid "ui_cat_skills"
 msgstr "Vaardigheden"
 
+msgid "ui_cat_opinion"
+msgstr "Opinie"
+
 msgid "ui_cat_motor"
 msgstr "Motor"
 

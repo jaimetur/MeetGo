@@ -5432,6 +5432,9 @@ msgstr "Educació"
 msgid "ui_cat_skills"
 msgstr "Habilitats"
 
+msgid "ui_cat_opinion"
+msgstr "Opinió"
+
 msgid "ui_cat_motor"
 msgstr "Motor"
 

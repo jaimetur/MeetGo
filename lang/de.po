@@ -4343,6 +4343,9 @@ msgstr "Bildung"
 msgid "ui_cat_skills"
 msgstr "Fähigkeiten"
 
+msgid "ui_cat_opinion"
+msgstr "Meinung"
+
 msgid "ui_cat_motor"
 msgstr "Motor"
 
