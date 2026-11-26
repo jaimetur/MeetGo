@@ -378,9 +378,24 @@ function AdminNotice() {
   const where = (["communities", "categories", "moderation"] as const).find((k) => (waiting?.[k] || 0) > 0);
   const route = useRoute();
   const [closedAt, setClosedAt] = useState(0);
-  if (!pending || pending <= closedAt || route.name === "admin") return null;
+  const showing = !!pending && pending > closedAt && route.name !== "admin";
+  // stacked above the update notice when both show (they share the bottom of the screen)
+  const [bottom, setBottom] = useState<number | null>(null);
+  useEffect(() => {
+    if (!showing) return;
+    const place = () => {
+      const other = document.querySelector<HTMLElement>(".updnote");
+      const r = other?.getBoundingClientRect();
+      setBottom(r && r.height ? Math.round(window.innerHeight - r.top + 10) : null);
+    };
+    place();
+    const timer = window.setInterval(place, 700);
+    window.addEventListener("resize", place);
+    return () => { window.clearInterval(timer); window.removeEventListener("resize", place); };
+  }, [showing]);
+  if (!showing) return null;
   return (
-    <div className="admin-notice" role="alert">
+    <div className="admin-notice" role="alert" style={bottom != null ? { bottom } : undefined}>
       <Icon name="shield" />
       <span className="grow">{t("ui_admin_pending", { n: pending })}</span>
       <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate(where ? `/admin?s=${where}` : "/admin"); }}>{t("ui_admin_review")}</button>
