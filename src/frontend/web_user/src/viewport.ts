@@ -24,7 +24,10 @@ export function setupViewport() {
     // (vh, dvh) are not reliable inside Android's WebView (they can come as almost nothing)
     root.style.setProperty("--screen-h", `${Math.round(window.innerHeight || height)}px`);
     const el = document.activeElement;
-    const typing = !!el && ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName);
+    // only fields that open the keyboard: a checkbox, a switch or a radio does not (tapping one is not writing)
+    const NO_KEYBOARD = ["checkbox", "radio", "range", "button", "submit", "reset", "color", "file", "image"];
+    const typing = !!el && (el.tagName === "TEXTAREA" || el.tagName === "SELECT" || (el as HTMLElement).isContentEditable
+      || (el.tagName === "INPUT" && !NO_KEYBOARD.includes((el as HTMLInputElement).type)));
     if (!typing) tallest = Math.max(tallest, height);
     const keyboard = typing && (window.innerHeight - height > 120 || tallest - height > 120);
     root.classList.toggle("kb", keyboard);

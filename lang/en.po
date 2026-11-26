@@ -6121,7 +6121,7 @@ msgid "ui_rail_icons"
 msgstr "Side menu with icons only"
 
 msgid "ui_rail_icons_hint"
-msgstr "On large screens the left menu gets narrow and leaves more room for the content."
+msgstr "The left menu (on large screens) or the bottom bar (on phones) with icons only, no names."
 
 msgid "ui_email_categories"
 msgstr "New proposed categories (administration)"

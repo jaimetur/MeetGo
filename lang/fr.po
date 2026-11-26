@@ -4427,7 +4427,7 @@ msgid "ui_rail_icons"
 msgstr "Menu latéral avec icônes seules"
 
 msgid "ui_rail_icons_hint"
-msgstr "Sur les grands écrans, le menu de gauche se rétrécit et laisse plus de place au contenu."
+msgstr "Le menu de gauche (sur grand écran) ou la barre du bas (sur mobile) avec seulement les icônes, sans les noms."
 
 msgid "ui_email_categories"
 msgstr "Nouvelles catégories proposées (administration)"

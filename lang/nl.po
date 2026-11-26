@@ -6120,7 +6120,7 @@ msgid "ui_rail_icons"
 msgstr "Zijmenu alleen met pictogrammen"
 
 msgid "ui_rail_icons_hint"
-msgstr "Op grote schermen wordt het linkermenu smal en blijft er meer ruimte over voor de inhoud."
+msgstr "Het linkermenu (op grote schermen) of de onderste balk (op de telefoon) alleen met pictogrammen, zonder namen."
 
 msgid "ui_email_categories"
 msgstr "Nieuwe voorgestelde categorieën (beheer)"

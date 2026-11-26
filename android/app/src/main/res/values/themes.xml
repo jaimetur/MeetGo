@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- the app after the start screen: the web app fills it; this is only what shows behind it -->
-    <style name="Theme.MeetGo" parent="@android:style/Theme.Material.NoActionBar">
+    <!-- the app after the start screen: the web app fills it; this is only what shows behind it. Light by day (and dark
+         in values-night): the WebView takes the page's prefers-color-scheme from it, so the theme "Auto" follows the phone -->
+    <style name="Theme.MeetGo" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/meetgo_background</item>
     </style>
 

@@ -6119,7 +6119,7 @@ msgid "ui_rail_icons"
 msgstr "Menu lateral só com ícones"
 
 msgid "ui_rail_icons_hint"
-msgstr "Em ecrãs grandes, o menu da esquerda fica estreito e deixa mais espaço para o conteúdo."
+msgstr "O menu da esquerda (em ecrãs grandes) ou a barra de baixo (no telemóvel) só com ícones, sem nomes."
 
 msgid "ui_email_categories"
 msgstr "Novas categorias propostas (administração)"

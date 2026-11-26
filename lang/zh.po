@@ -6120,7 +6120,7 @@ msgid "ui_rail_icons"
 msgstr "侧边菜单仅显示图标"
 
 msgid "ui_rail_icons_hint"
-msgstr "在大屏幕上，左侧菜单变窄，为内容留出更多空间。"
+msgstr "左侧菜单（大屏幕）或底部栏（手机）只显示图标，不显示名称。"
 
 msgid "ui_email_categories"
 msgstr "新提议的类别（管理）"

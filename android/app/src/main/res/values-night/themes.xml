@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- at night the app's theme is dark, so the WebView tells the page prefers-color-scheme: dark -->
+    <style name="Theme.MeetGo" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/meetgo_background</item>
+    </style>
+</resources>

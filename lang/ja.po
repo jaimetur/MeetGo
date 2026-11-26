@@ -6120,7 +6120,7 @@ msgid "ui_rail_icons"
 msgstr "サイドメニューをアイコンのみに"
 
 msgid "ui_rail_icons_hint"
-msgstr "大きな画面では左のメニューが細くなり、内容に広いスペースを使えます。"
+msgstr "左のメニュー（大きな画面）または下のバー（スマホ）を名前なしのアイコンだけにします。"
 
 msgid "ui_email_categories"
 msgstr "新しく提案されたカテゴリ（管理）"

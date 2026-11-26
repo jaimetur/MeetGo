@@ -2624,3 +2624,9 @@ button.fwho-row:hover { background: var(--panel2); }
 :root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"], [data-palette="momentos"], [data-palette="momentosdark"]) .hero.grad { background: color-mix(in srgb, var(--blue) 16%, var(--panel)) !important; }
 :root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"], [data-palette="momentos"], [data-palette="momentosdark"]) .hero.grad::after { display: none; }
 [data-layout="muro"] .dnav .di > .av { width: 34px !important; height: 34px !important; font-size: 13px; }  /* as big as the round icons beside it */
+/* "only icons in the menu" on phones: the bottom tab bar without its labels, a little lower */
+@media (max-width: 820px) {
+  [data-rail="icons"] .mnav .ml { display: none; }
+  [data-rail="icons"] .mnav button { height: 46px; gap: 0; }
+  [data-rail="icons"] .mnav button .ic { width: 28px; height: 28px; }
+}

@@ -4428,7 +4428,7 @@ msgid "ui_rail_icons"
 msgstr "Seitenmenü nur mit Symbolen"
 
 msgid "ui_rail_icons_hint"
-msgstr "Auf großen Bildschirmen wird das linke Menü schmal und lässt mehr Platz für den Inhalt."
+msgstr "Das linke Menü (auf großen Bildschirmen) oder die untere Leiste (auf dem Handy) nur mit Symbolen, ohne Namen."
 
 msgid "ui_email_categories"
 msgstr "Neue vorgeschlagene Kategorien (Verwaltung)"

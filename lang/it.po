@@ -6120,7 +6120,7 @@ msgid "ui_rail_icons"
 msgstr "Menu laterale solo con icone"
 
 msgid "ui_rail_icons_hint"
-msgstr "Sugli schermi grandi il menu a sinistra si restringe e lascia più spazio ai contenuti."
+msgstr "Il menu a sinistra (sugli schermi grandi) o la barra in basso (sul telefono) solo con icone, senza nomi."
 
 msgid "ui_email_categories"
 msgstr "Nuove categorie proposte (amministrazione)"
