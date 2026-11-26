@@ -477,19 +477,19 @@ async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depe
     from app.communities.zones import JOIN_UNDER, SPLIT_AT
     # per interest: its zones and age ranges apart, and its biggest and smallest community (members, not away)
     rows = (await db.execute(select(Conversation.interest_id, Conversation.province, Conversation.age_range, func.count(ConversationMember.user_id),
-                                    Conversation.scope_label, Conversation.scope_provinces)
+                                    Conversation.scope_label, Conversation.scope_provinces, Conversation.scope_kind)
                              .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
                                                                  ConversationMember.away.is_(False), ConversationMember.banned.is_(False)))
                              .where(Conversation.kind == "channel", Conversation.interest_id.is_not(None))
                              .group_by(Conversation.interest_id, Conversation.id, Conversation.province, Conversation.age_range,
-                                       Conversation.scope_label, Conversation.scope_provinces))).all()
+                                       Conversation.scope_label, Conversation.scope_provinces, Conversation.scope_kind))).all()
     stats: dict[int, dict] = {}
     from app.communities.zones import geo_data, place_names
     data = await geo_data(db)
     labels: dict[str, str] = {}
     places: dict[int, set[str]] = {}
-    for iid, zone, age, n, label, provinces in rows:
-        places.setdefault(iid, set()).update(place_names(data, list(provinces or ([zone] if zone else [])))) 
+    for iid, zone, age, n, label, provinces, scope_kind in rows:
+        places.setdefault(iid, set()).update(place_names(data, scope_kind, list(provinces or ([zone] if zone else []))))
         s = stats.setdefault(iid, {"zones": set(), "ages": set(), "sizes": []})
         s["zones"].add(zone)
         labels[zone] = label or zone

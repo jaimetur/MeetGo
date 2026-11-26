@@ -131,3 +131,18 @@ async def test_archived_zone_chats_go_into_their_community(client, db_session):
         assert not (await db.execute(select(Conversation.id).where(Conversation.id == old_id))).first()
         bodies = (await db.execute(select(Message.body).where(Message.conversation_id == target))).scalars().all()
         assert "Ruta del sábado" in bodies
+
+
+async def test_search_places_are_the_zone_and_what_contains_it(client, db_session):
+    """A national community is found by its country, not by a province inside it; a province's, by the province, its
+    region and its country."""
+    bea, _ = await make_user(client, db_session, "bea@example.com", "Bea", province="Huelva")
+    admin = await admin_headers(client)
+    hike = await _interest(client, bea, "senderismo")
+    await client.post(f"/channels/{hike['id']}/join", headers=bea)
+    rows = {i["slug"]: i for i in (await client.get("/admin/interests", headers=admin)).json()}
+    assert "España" in rows["senderismo"]["places"] and "Huelva" not in rows["senderismo"]["places"]
+    await client.patch(f"/admin/interests/{hike['id']}", json={"slug": "senderismo", "name": "Senderismo", "geo_level": "province"}, headers=admin)
+    rows = {i["slug"]: i for i in (await client.get("/admin/interests", headers=admin)).json()}
+    places = set(rows["senderismo"]["places"])
+    assert {"Huelva", "España"} <= places and any("Andaluc" in p for p in places)

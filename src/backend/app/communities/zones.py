@@ -87,22 +87,28 @@ async def fill_languages(db: AsyncSession) -> None:
         await db.commit()
 
 
-def place_names(data: dict, provinces: list[str]) -> set[str]:
-    """Every place a zone covers, by name: its provinces, the regions (autonomous communities, states…) they are in
-    and their country, to find a community by any of them."""
+def place_names(data: dict, kind: str | None, provinces: list[str]) -> set[str]:
+    """The places a zone is in, by name, to find its community: the zone itself and what contains it (a province:
+    its region and its country; a region: its country), never what is inside it (a national community is not «in
+    Galicia»)."""
     out: set[str] = set()
     if not provinces:
         return out
+    kind = kind or "province"
     wanted = set(provinces)
     for code, rows in (data.get("provinces_by_country") or {}).items():
         names = {p.get("value"): p.get("name") or p.get("value") for p in rows or []}
         if not wanted & set(names):
             continue
-        out |= {names[v] for v in wanted if v in names} | (wanted & set(names))
         out |= {c.get("name") or code for c in data.get("countries") or [] if c.get("code") == code} or {code}
-        for g in (data.get("region_groups") or {}).get(code, []):
-            if wanted & set(g.get("regions") or []):
-                out.add(g.get("name") or g.get("value"))
+        if kind in ("region", "province"):
+            for g in (data.get("region_groups") or {}).get(code, []):
+                regions = set(g.get("regions") or [])
+                # a region: the one it is; a province: the one it belongs to
+                if (kind == "region" and wanted <= regions) or (kind == "province" and wanted & regions):
+                    out.add(g.get("name") or g.get("value"))
+        if kind == "province":
+            out |= {names[v] for v in wanted if v in names} | (wanted & set(names))
     return {x for x in out if x}
 
 
