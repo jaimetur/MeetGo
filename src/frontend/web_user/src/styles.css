@@ -1231,6 +1231,12 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 /* Clásico, Menta, Lavanda, Arena and Melocotón tint the cards, icons, covers and dates with their own colour (the sober rules) */
 :root:is([data-palette="light"], [data-palette="dark"], [data-palette="mint"], [data-palette="forest"], [data-palette="lavender"], [data-palette="plum"], [data-palette="sand"], [data-palette="sanddark"], [data-palette="peach"], [data-palette="peachdark"]) { --acc-soft: color-mix(in srgb, var(--blue) 14%, var(--panel)); }
 
+/* MeetGo (Muro's colours): the zone and age tags keep the colours they had (teal and pink) */
+:root[data-palette="muro"] { --m-zone: #0d9488; --m-age: #db2777; }
+:root[data-palette="murodark"] { --m-zone: #2dd4bf; --m-age: #f472b6; }
+:root:is([data-palette="muro"], [data-palette="murodark"]) .ktag.kscope { color: var(--m-zone); background: color-mix(in srgb, var(--m-zone) 12%, var(--panel)); }
+:root:is([data-palette="muro"], [data-palette="murodark"]) .ktag.kage { color: var(--m-age); background: color-mix(in srgb, var(--m-age) 11%, var(--panel)); }
+
 /* the theme swatches in Settings */
 .themefld { display: flex; flex-direction: column; gap: 8px; grid-column: 1 / -1; }
 .themepick { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
