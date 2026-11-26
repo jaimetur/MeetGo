@@ -24,7 +24,7 @@ Repository layout (the same as BodyLens):
 ```text
 android/            Android app (Kotlin shell around the web app)
 assets/branding/    icons, logos and the social sharing image
-docker/             Dockerfile (API), Dockerfile.web (sites), nginx.conf, compose.yml, .env, start scripts
+docker/             Dockerfile (API and web site), compose.yml, .env, start scripts
 docs/               Android, Firebase and Google Play setup
 lang/               translations (es.po, en.po) shared by the backend and the web sites
 src/backend/app/    API by module: auth, accounts, social, conversations, messaging, realtime, push, mail,
@@ -61,10 +61,12 @@ printed once in the `app` logs.
 
 - API (Swagger): http://localhost:18000/docs
 - Landing: http://localhost:5173/ and the app: http://localhost:5173/app/
-- Administration: http://localhost:5174
+- Administration: http://localhost:5174 (redirects to the administration inside the app)
 
-The web services build the sites with Vite and serve them with nginx (`docker/Dockerfile.web`,
-`docker/nginx.conf`); `VITE_API_BASE` comes from `PUBLIC_API_BASE`. Put a TLS reverse proxy in
+The `app` container also serves the web site (built with Vite into its image; `VITE_API_BASE` comes from
+`PUBLIC_API_BASE`) on `PORT_USER`, and on `PORT_ADMIN` sends people to the administration inside the app
+(`src/backend/app/web.py`). A newer build copied to the stack's `web/` folder replaces the image's without
+rebuilding anything. Put a TLS reverse proxy in
 front: `meetgo.app` → `PORT_USER`, `admin.meetgo.app` → `PORT_ADMIN`, `api.meetgo.app` →
 port 18000 (it must pass WebSocket upgrades for `/ws`). Uploaded files and the Android APK
 live in the `meetgo_data` volume.
@@ -208,7 +210,7 @@ Without Tk it asks in the terminal. It also accepts
 `--update VERSION DATE` and `--create VERSION DATE [--dirty commit|carry|discard]`.
 
 ## Docker commands
-Everything Docker is in `docker/` (`Dockerfile`, `Dockerfile.web`, `nginx.conf`, `compose.yml`, `.env`).
+Everything Docker is in `docker/` (`Dockerfile`, `compose.yml`, `.env`).
 Run the commands from that folder and pass both env files, for example
 `cd docker && docker compose --env-file .env --env-file .env.local up -d`.
 

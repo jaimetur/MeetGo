@@ -61,6 +61,10 @@ from app.admin import request_log  # noqa: E402
 
 app.middleware("http")(request_log.middleware)  # every call, for Administration → Logs
 
+from app.web import WebSite  # noqa: E402
+
+app.add_middleware(WebSite)  # outermost: the web site's and admin.meetgo.app's ports never reach the API (app/web.py)
+
 
 for module in (public, feed, deezer, music, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, business, categories, admin, age_ranges, communities, board):
     app.include_router(module.router)

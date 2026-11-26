@@ -1,4 +1,4 @@
-# MeetGo: API, user web site, administration, PostgreSQL and Redis. Paths are relative to this folder (docker/).
+# MeetGo: the app (API, web site and the old administration address, app/web.py), PostgreSQL and Redis. Paths are relative to this folder (docker/).
 # Start it with docker/dockers_run.sh (it passes .env and the secrets in .env.local).
 name: meetgo
 services:
@@ -7,6 +7,8 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      args:
+        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
     environment:
       MEETGO_ENV: production
       DATABASE_URL: postgresql+asyncpg://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.local}@db:5432/meetgo
@@ -23,7 +25,9 @@ services:
       DATA_DIR: /data
       COMPOSE_PROJECT_NAME: meetgo
     ports:
-      - "18000:8000"
+      - "18000:8000"                # API (api.meetgo.app)
+      - "${PORT_USER}:8080"         # web site (www.meetgo.app)
+      - "${PORT_ADMIN}:8081"        # admin.meetgo.app: sends people to the administration inside the app
     depends_on:
       - db
       - redis
@@ -31,38 +35,12 @@ services:
       # Hot code: the code and translations of the stack folder replace those in the image.
       - ../src/backend/app:/srv/app
       - ../lang:/srv/lang
+      # Hot web site: a build copied to the stack's web/ folder replaces the image's (empty folder: the image's).
+      - ../web:/srv/web-hot:ro
       - meetgo_data:/data
       # Administration → Backups writes to /data/backups: the stack's backups folder, visible on the host (File Station)
       - ../backups:/data/backups
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
-    restart: unless-stopped
-
-
-  web_user:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.web
-      args:
-        VITE_ROOT: web_user
-        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
-    ports:
-      - "${PORT_USER}:80"
-    depends_on:
-      - app
-    restart: unless-stopped
-
-
-  web_admin:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.web
-      args:
-        VITE_ROOT: web_admin
-        VITE_API_BASE: ${PUBLIC_API_BASE:-https://api.meetgo.app}
-    ports:
-      - "${PORT_ADMIN}:80"
-    depends_on:
-      - app
+    command: python -m app.serve
     restart: unless-stopped
 
 

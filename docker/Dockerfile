@@ -1,5 +1,18 @@
-# MeetGo API (FastAPI). Build from the repository root:
+# MeetGo: the API, the web site (landing and app) and the old administration address, in one container
+# (app/serve.py listens on 8000, 8080 and 8081; app/web.py). Build from the repository root:
 #   docker build -f docker/Dockerfile .
+
+# The web site, built with Vite (it needs src/frontend/, lang/ and assets/branding/).
+FROM node:20-alpine AS web
+WORKDIR /srv/src/frontend
+COPY src/frontend/package.json src/frontend/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY src/frontend/ ./
+COPY lang/ /srv/lang/
+COPY assets/branding/ /srv/assets/branding/
+ARG VITE_API_BASE=https://api.meetgo.app
+RUN VITE_ROOT=web_user VITE_API_BASE=$VITE_API_BASE ./node_modules/.bin/vite build
+
 FROM python:3.11-slim
 WORKDIR /srv
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -12,5 +25,9 @@ RUN python -c "import tomllib; print('\\n'.join(tomllib.load(open('pyproject.tom
     && pip install --no-cache-dir -r /tmp/req.txt
 COPY src/backend/app /srv/app
 COPY lang /srv/lang
-EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# The web site of this image; a newer build in the stack folder's web/ (mounted at /srv/web-hot) wins.
+COPY --from=web /srv/src/frontend/dist/web_user /srv/web
+# Some hosts (Synology ACL shares) send the build context with mode 000: the files must be readable.
+RUN chmod -R a+rX /srv/web
+EXPOSE 8000 8080 8081
+CMD ["python", "-m", "app.serve"]
