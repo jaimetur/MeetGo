@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.i18n import t
 from app.core.models import (
-    BoardPost, CommunityRequest, Conversation, ConversationMember, Interest, User, utcnow,
+    BoardPost, CommunityRequest, Conversation, ConversationMember, Interest, Message, User, utcnow,
 )
 from app.conversations.service import DEFAULT_RULES, age_fits_sql, fits_age, get_membership, in_scope, iso, scope_sql, user_age_key
 from app.realtime.service import online_ids
@@ -219,6 +219,15 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
     upcoming = dict((await db.execute(select(BoardPost.conversation_id, func.count()).where(
         BoardPost.conversation_id.in_(ids), BoardPost.kind.in_(("meetup", "event")), BoardPost.deleted_at.is_(None),
         func.coalesce(BoardPost.ends_at, BoardPost.starts_at) >= utcnow()).group_by(BoardPost.conversation_id))).all())
+    # activity of the last 30 days: someone wrote in its chat (not the automatic notices) or published on its board
+    since = utcnow() - timedelta(days=30)
+    activity: dict[int, object] = dict((await db.execute(select(Message.conversation_id, func.max(Message.created_at)).where(
+        Message.conversation_id.in_(ids), Message.created_at >= since, Message.sender_id.is_not(None),
+        Message.kind != "system", Message.deleted_at.is_(None)).group_by(Message.conversation_id))).all())
+    for cid, at in (await db.execute(select(BoardPost.conversation_id, func.max(BoardPost.created_at)).where(
+            BoardPost.conversation_id.in_(ids), BoardPost.created_at >= since, BoardPost.deleted_at.is_(None))
+            .group_by(BoardPost.conversation_id))).all():
+        activity[cid] = max(activity[cid], at) if cid in activity else at
     out = []
     for c in convs:
         interest = interests.get(c.interest_id)
@@ -249,7 +258,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "invite_code": c.invite_code if detail and admin_of(member, user) else None,
             "ban_until": iso(member.ban_until) if joined and banned_now(member) else None,
             "created_at": iso(c.created_at),
-            "last_activity_at": iso(c.last_message_at),  # its last message (posts on its board leave one too)
+            "last_activity_at": iso(activity.get(c.id)),  # within the last 30 days only (None: no activity in them)
             "retention_days": c.retention_days,
             # the interests it is about: suggestions to people with those interests
             "tags": (list(interest.tags or [interest.slug]) if interest else list(c.interest_tags or [])),
