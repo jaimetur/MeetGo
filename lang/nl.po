@@ -6005,6 +6005,12 @@ msgstr "OLED-zwart"
 msgid "ui_theme_forest"
 msgstr "Bos"
 
+msgid "ui_theme_pro"
+msgstr "Sober"
+
+msgid "ui_theme_prodark"
+msgstr "Sober nacht"
+
 msgid "ui_theme_plum"
 msgstr "Pruim"
 

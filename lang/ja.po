@@ -6005,6 +6005,12 @@ msgstr "OLED ブラック"
 msgid "ui_theme_forest"
 msgstr "フォレスト"
 
+msgid "ui_theme_pro"
+msgstr "シンプル"
+
+msgid "ui_theme_prodark"
+msgstr "シンプル（夜）"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 

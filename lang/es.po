@@ -6006,6 +6006,12 @@ msgstr "Negro OLED"
 msgid "ui_theme_forest"
 msgstr "Bosque"
 
+msgid "ui_theme_pro"
+msgstr "Sobrio"
+
+msgid "ui_theme_prodark"
+msgstr "Sobrio noche"
+
 msgid "ui_theme_plum"
 msgstr "Ciruela"
 

@@ -4312,6 +4312,12 @@ msgstr "Noir OLED"
 msgid "ui_theme_forest"
 msgstr "Forêt"
 
+msgid "ui_theme_pro"
+msgstr "Sobre"
+
+msgid "ui_theme_prodark"
+msgstr "Sobre nuit"
+
 msgid "ui_theme_plum"
 msgstr "Prune"
 

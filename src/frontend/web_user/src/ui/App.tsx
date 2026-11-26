@@ -22,7 +22,7 @@ import { ZoneTag } from "./Board";
 import { Paywall } from "./Paywall";
 import { NewChatModal, Sidebar } from "./Sidebar";
 
-/** Colour themes: six light and four dark (the colours are in styles.css, :root[data-palette=…]); `bg`, `panel` and
+/** Colour themes: seven light and five dark (the colours are in styles.css, :root[data-palette=…]); `bg`, `panel` and
  *  `accent` are only for the swatches in Settings. "system" follows the device: Light or Night. */
 export const THEMES: Record<string, { dark: boolean; label: string; bg: string; panel: string; accent: string; accent2: string }> = {
   light: { dark: false, label: "ui_theme_light", bg: "#f4f6fa", panel: "#ffffff", accent: "#1670e0", accent2: "#0a96cc" },
@@ -31,9 +31,11 @@ export const THEMES: Record<string, { dark: boolean; label: string; bg: string; 
   lavender: { dark: false, label: "ui_theme_lavender", bg: "#f3f1fb", panel: "#ffffff", accent: "#6d4ae0", accent2: "#9b6cf0" },
   peach: { dark: false, label: "ui_theme_peach", bg: "#fcf1ec", panel: "#ffffff", accent: "#e0563b", accent2: "#f08a5d" },
   sky: { dark: false, label: "ui_theme_sky", bg: "#e9f4fd", panel: "#ffffff", accent: "#1286d6", accent2: "#22a6e6" },
+  pro: { dark: false, label: "ui_theme_pro", bg: "#f6f7f9", panel: "#ffffff", accent: "#1d6fe0", accent2: "#1d6fe0" },
   dark: { dark: true, label: "ui_theme_dark", bg: "#0b1220", panel: "#0f192b", accent: "#1e90ff", accent2: "#00c2ff" },
   oled: { dark: true, label: "ui_theme_oled", bg: "#000000", panel: "#0b0b0b", accent: "#1e90ff", accent2: "#00c2ff" },
   forest: { dark: true, label: "ui_theme_forest", bg: "#0b1712", panel: "#0f1f18", accent: "#2fbf71", accent2: "#3dd6a3" },
+  prodark: { dark: true, label: "ui_theme_prodark", bg: "#0b0f17", panel: "#121826", accent: "#4c8dff", accent2: "#4c8dff" },
   plum: { dark: true, label: "ui_theme_plum", bg: "#150e1e", panel: "#1d1429", accent: "#a66cff", accent2: "#e070d8" },
 };
 

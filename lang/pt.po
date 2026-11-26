@@ -6004,6 +6004,12 @@ msgstr "Preto OLED"
 msgid "ui_theme_forest"
 msgstr "Floresta"
 
+msgid "ui_theme_pro"
+msgstr "Sóbrio"
+
+msgid "ui_theme_prodark"
+msgstr "Sóbrio noite"
+
 msgid "ui_theme_plum"
 msgstr "Ameixa"
 

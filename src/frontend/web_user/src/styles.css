@@ -1090,6 +1090,44 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   --blue: #a66cff; --cyan: #e070d8; --sel: rgba(166, 108, 255, 0.16); --quote: rgba(166, 108, 255, 0.08);
 }
 
+/* Sober (light) and Sober night: one accent and neutral greys; communities, buttons, marks and tabs lose their own colours */
+:root[data-palette="pro"] {
+  --bg: #f6f7f9; --rail: #ffffff; --panel: #ffffff; --panel2: #f1f3f6; --raise: #ffffff; --bubble: #ffffff;
+  --line: #e5e8ed; --line2: #d4d9e1; --fg: #1d2939; --strong: #101828; --muted: #667085;
+  --blue: #1d6fe0; --cyan: #1d6fe0; --green: #12a150; --teal: #1d6fe0; --sel: #eef2f7; --quote: rgba(29, 111, 224, 0.06);
+  --acc-soft: #e8f0fc; --card-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+}
+:root[data-palette="prodark"] {
+  --bg: #0b0f17; --rail: #0e131e; --panel: #121826; --panel2: #1a2131; --raise: #1f2737; --bubble: #1a2131;
+  --line: #232b3b; --line2: #303a4d; --fg: #e4e8ef; --strong: #ffffff; --muted: #8b95a7;
+  --blue: #4c8dff; --cyan: #4c8dff; --green: #34c26f; --teal: #4c8dff; --sel: #1a2131; --quote: rgba(76, 141, 255, 0.08);
+  --acc-soft: #17284a; --card-shadow: none;
+}
+:root:is([data-palette="pro"], [data-palette="prodark"]) { --grad: var(--blue); --grad2: var(--blue); --grad-go: var(--blue); --on-go: #fff; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .btn.go { box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) span.cbadge { background: var(--acc-soft) !important; color: var(--blue); box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .cbadge-ic { stroke: var(--blue); stroke-width: 1.7; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .cwm { display: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .chero { background: var(--acc-soft) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .chero-art { color: var(--blue); opacity: 0.5; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .chero::before { display: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .ccard { border-radius: 12px; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .ccard:hover { transform: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .cmark-b { color: var(--muted) !important; border: 0; background: var(--panel2); border-radius: 6px; font-weight: 600; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .cmark-b.active { color: var(--green) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .cflag { --fc: var(--line2) !important; color: var(--fg) !important; font-weight: 600; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .cflag.on { --fc: var(--strong) !important; background: var(--strong); color: var(--bg) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .segtabs.cfilter .cfn { color: var(--muted) !important; background: var(--panel2) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button { --tc: var(--muted) !important; --tc2: var(--muted) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button .ic { fill: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button.on { background: var(--acc-soft) !important; box-shadow: none !important; color: var(--blue) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button.on .ic { color: var(--blue) !important; fill: var(--blue) !important; fill-opacity: 0.15 !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .msg.mine .mbody { background: var(--blue); }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .composer .sendb { background: var(--blue); box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) .dlogo .appicon { box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) :is(.plantile, .minitile, .forme-ic) { background: var(--acc-soft) !important; color: var(--blue) !important; box-shadow: none !important; text-shadow: none !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"]) :is(.plantile, .minitile, .forme-ic) :is(b, small, .ic) { color: var(--blue) !important; stroke: var(--blue); }
+
 /* the theme swatches in Settings */
 .themefld { display: flex; flex-direction: column; gap: 8px; grid-column: 1 / -1; }
 .themepick { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
