@@ -11,6 +11,7 @@ from app.mail import notify_email
 from app.core.migrate import run_migrations
 from app.core.redis_conn import close_redis
 from app.admin import routes as admin
+from app.admin import age_ranges
 from app.backups import routes as backups
 from app.business import routes as business
 from app.categories import routes as categories
@@ -61,7 +62,7 @@ from app.admin import request_log  # noqa: E402
 app.middleware("http")(request_log.middleware)  # every call, for Administration → Logs
 
 
-for module in (public, feed, deezer, music, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, business, categories, admin, communities, board):
+for module in (public, feed, deezer, music, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, business, categories, admin, age_ranges, communities, board):
     app.include_router(module.router)
 
 

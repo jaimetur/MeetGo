@@ -376,6 +376,19 @@ export function setRailIcons(on: boolean) {
   applyLayout();
 }
 
+/** The age ranges as the server says (their limits move in Settings → Age ranges): "18_30" → "18-30". */
+let ageRangeList: { key: string; label: string; empty?: boolean }[] = [];
+export function setAgeRanges(list: { key: string; label: string; empty?: boolean }[] | undefined) {
+  if (Array.isArray(list) && list.length) ageRangeList = list;
+}
+export function ageRangeLabel(key?: string | null): string {
+  const r = ageRangeList.find((x) => x.key === key);
+  return r?.label || (key || "").replace("_plus", "+").replace("_", "-");
+}
+export function ageRangesShown() {
+  return ageRangeList.filter((r) => !r.empty);
+}
+
 /** The community's own colour, as a CSS variable for the pastel themes' icons. */
 export function communityTint(slug: string | null | undefined, seed: string | number): React.CSSProperties {
   return { ["--cc" as string]: interestLook(slug).color || coverColor(seed) };

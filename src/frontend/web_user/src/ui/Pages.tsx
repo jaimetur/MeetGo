@@ -10,7 +10,7 @@ import { dayLabel, timeOf } from "../util";
 import { reportNativeNow } from "../viewport";
 import { CHAT_SIZES, DESIGN_FAMILIES, THEMES, THEME_FAMILIES, type ThemeChoice, type ThemeMode, applyChatSize, readThemeChoice, saveThemeChoice, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, LAYOUTS, applyLayout, getRailIcons, setRailIcons, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
+import { AboutModal, Avatar, Icon, LAYOUTS, ageRangeLabel, applyLayout, getRailIcons, setRailIcons, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -355,7 +355,7 @@ export function AccountPage() {
     window.location.reload();
   }
 
-  const ageLabel = (me.age_range || "").replace("_plus", "+").replace("_", "-");
+  const ageLabel = ageRangeLabel(me.age_range);
   const tabs: [Section, string, string][] = [
     ["profile", "user", t("ui_acc_tab_profile")], ["interests", "star", t("ui_acc_tab_interests")], ["notifications", "bell", t("ui_acc_tab_notifications")],
     ...(showPlans ? [["plan", "ticket", t("ui_acc_tab_plan")] as [Section, string, string]] : []), ["settings", "sliders", t("ui_acc_tab_settings")],

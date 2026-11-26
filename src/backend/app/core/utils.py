@@ -10,11 +10,8 @@ def age_range_from_dob(dob_yyyy_mm_dd: str) -> AgeRange:
     age = age_from_dob(dob_yyyy_mm_dd)
     if age < 18:
         raise ValueError("User must be 18+")
-    if age <= 30:
-        return AgeRange.R18_30
-    if age <= 60:
-        return AgeRange.R31_60
-    return AgeRange.R61_PLUS
+    from app.core.age_bounds import key_for_age  # the limits the administration set (Settings → Age ranges)
+    return AgeRange(key_for_age(age))
 
 # Earlier values, used only when a date of birth cannot be read.
 _OLD = {
@@ -37,12 +34,19 @@ def can_access_age_range(user_age: int, user_range: AgeRange, room_range: AgeRan
     room_range = normalize_age_range(room_range)
     if user_range == room_range:
         return True
+    # a year of overlap at each border (the last age of a range also enters the next one, and the first age the one
+    # before), as long as that range has years
+    from app.core.age_bounds import bounds, ranges
+    b = bounds()
+    empty = {r["key"] for r in ranges() if r["empty"]}
+    if room_range.value in empty:
+        return False
     if user_range == AgeRange.R18_30 and room_range == AgeRange.R31_60:
-        return user_age >= 30
+        return user_age >= b["young"]
     if user_range == AgeRange.R31_60 and room_range == AgeRange.R18_30:
-        return user_age <= 31
+        return user_age <= b["young"] + 1
     if user_range == AgeRange.R31_60 and room_range == AgeRange.R61_PLUS:
-        return user_age >= 60
+        return user_age >= b["middle"]
     if user_range == AgeRange.R61_PLUS and room_range == AgeRange.R31_60:
-        return user_age <= 61
+        return user_age <= b["middle"] + 1
     return False

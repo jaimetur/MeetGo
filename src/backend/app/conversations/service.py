@@ -18,7 +18,7 @@ from app.core.utils import age_range_from_dob, normalize_age_range, can_access_a
 from app.realtime.service import online_ids
 from app.messaging.storage import attachment_out
 
-AGE_LABELS = {"18_30": "18-30", "31_60": "31-60", "61_plus": "61+"}
+from app.core.age_bounds import label as age_label  # "18-30", from the limits of Settings → Age ranges
 SNIPPET = 140
 
 
@@ -377,7 +377,7 @@ def conversation_base(conv: Conversation, member: ConversationMember, interest: 
         if conv.min_age is not None or conv.max_age is not None:
             ages = f"{conv.min_age or 18}–{conv.max_age}" if conv.max_age is not None else f"{conv.min_age}+"
         else:
-            ages = AGE_LABELS.get(conv.age_range or "", conv.age_range or "")
+            ages = age_label(conv.age_range) if conv.age_range else ""
         subtitle = f"{conv.scope_label or conv.province} · {ages}"
     elif conv.kind == "dm":
         title = other.shown_name if other else "—"

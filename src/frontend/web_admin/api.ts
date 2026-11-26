@@ -126,6 +126,15 @@ export const api = {
   async saveSettings(payload: any) {
     return await req("/admin/settings", { method: "PUT", body: JSON.stringify(payload) });
   },
+  async ageRanges() {
+    return await req("/admin/age-ranges");
+  },
+  async ageRangesPreview(young: number, middle: number) {
+    return await req("/admin/age-ranges/preview", { method: "POST", body: JSON.stringify({ young, middle }) });
+  },
+  async saveAgeRanges(young: number, middle: number) {
+    return await req("/admin/age-ranges", { method: "PUT", body: JSON.stringify({ young, middle }) });
+  },
   async smtpTest(to_email: string) {
     return await req("/admin/smtp/test", { method: "POST", body: JSON.stringify({ to_email }) });
   },

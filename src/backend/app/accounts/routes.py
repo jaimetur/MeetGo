@@ -15,9 +15,10 @@ from app.core.schemas import EmailPrefsIn, InterestOut, MeOut, SetInterestsIn, U
 from app.communities.service import interest_allows
 from app.core.app_settings import get_settings_row
 from app.conversations.service import (
-    AGE_LABELS, can_join_channel, channel_for, get_membership, join, join_interest_channel, leave_interest_channel,
+    can_join_channel, channel_for, get_membership, join, join_interest_channel, leave_interest_channel,
     move_channels_to_zone, scope_sql, user_age_key,
 )
+from app.core.age_bounds import label as age_label, ranges as age_ranges
 from app.mail.notify_email import ADMIN_KINDS, account_email
 from app.realtime.service import online_ids
 from app.core.security import hash_password
@@ -37,6 +38,7 @@ async def public_settings(db: AsyncSession = Depends(get_db)):
     out = {key: data.get(key) or ([] if key not in ("provinces_by_country", "cities_by_country", "region_kinds", "group_kinds", "region_groups") else {})
            for key in ("languages", "age_ranges", "countries", "calling_codes", "provinces_by_country", "cities_by_country", "region_kinds", "group_kinds", "region_groups")}
     # While subscriptions are off, the apps hide everything about plans and codes.
+    out["age_ranges"] = age_ranges()  # from the limits of Settings → Age ranges (not the stored list)
     out["subscriptions"] = bool((data.get("billing") or {}).get("enabled"))
     # Notification emails switched off in the administration: the account's email choices show as off.
     out["email_notifications"] = (data.get("email_notifications") or {}).get("enabled", True) is not False
@@ -260,7 +262,7 @@ async def explore_channels(db: AsyncSession = Depends(get_db), user: User = Depe
             continue
         out.append({"interest": {"id": i.id, "slug": i.slug, "name": i.label()}, "conversation_id": cid,
                     "member_count": n, "joined": bool(cid and cid in mine), "access_mode": mode,
-                    "zone": f"{user.province} · {AGE_LABELS.get(age, age)}"})
+                    "zone": f"{user.province} · {age_label(age)}"})
     out.sort(key=lambda c: (-c["member_count"], c["interest"]["name"]))
     return out
 

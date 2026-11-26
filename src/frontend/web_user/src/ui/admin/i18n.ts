@@ -5,6 +5,12 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  ag_hint: "Arrastra los bordes entre rangos (con el ratón o el dedo) para mover sus límites. Si un rango se queda sin años desaparece y su gente pasa al rango vecino; sus comunidades se guardan y vuelven cuando lo ensanches de nuevo.",
+  ag_people: "{n} personas",
+  ag_handle: "Borde del rango: {age} años",
+  ag_moving: "{n} personas cambiarán de rango al guardar.",
+  ag_save: "Guardar rangos",
+  ag_saved: "Rangos guardados: {n} personas han cambiado de rango.",
   mu_deezer: "Éxitos de Deezer",
   mu_deezer_hint: "Muestra en las historias la lista de éxitos de cada país y un buscador de canciones, con fragmentos de 30 segundos que sirve Deezer. Antes de dejarlo activado, revisa que sus condiciones permiten este uso.",
   mu_deezer_terms: "Condiciones de la API de Deezer",
@@ -659,6 +665,12 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  ag_hint: "Drag the borders between ranges (with the mouse or your finger) to move their limits. A range left with no years disappears and its people go to the next range; its communities are kept and come back when you widen it again.",
+  ag_people: "{n} people",
+  ag_handle: "Range border: {age} years",
+  ag_moving: "{n} people will change range when you save.",
+  ag_save: "Save ranges",
+  ag_saved: "Ranges saved: {n} people changed range.",
   mu_deezer: "Deezer hits",
   mu_deezer_hint: "Shows each country's chart and a song search in stories, with 30-second clips served by Deezer. Before leaving it on, check that their terms allow this use.",
   mu_deezer_terms: "Deezer API terms",
@@ -1314,6 +1326,12 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  ag_hint: "Arrossega les vores entre rangs (amb el ratolí o el dit) per moure'n els límits. Si un rang es queda sense anys desapareix i la seva gent passa al rang veí; les seves comunitats es guarden i tornen quan l'eixamplis de nou.",
+  ag_people: "{n} persones",
+  ag_handle: "Vora del rang: {age} anys",
+  ag_moving: "{n} persones canviaran de rang en desar.",
+  ag_save: "Desar rangs",
+  ag_saved: "Rangs desats: {n} persones han canviat de rang.",
   mu_deezer: "Èxits de Deezer",
   mu_deezer_hint: "Mostra a les històries la llista d'èxits de cada país i un cercador de cançons, amb fragments de 30 segons que serveix Deezer. Abans de deixar-ho activat, revisa que les seves condicions permeten aquest ús.",
   mu_deezer_terms: "Condicions de l'API de Deezer",
@@ -1959,6 +1977,12 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  ag_hint: "Ziehe die Grenzen zwischen den Bereichen (mit Maus oder Finger), um ihre Grenzen zu verschieben. Ein Bereich ohne Jahre verschwindet und seine Leute wechseln in den Nachbarbereich; seine Communities bleiben erhalten und kehren zurück, wenn du ihn wieder verbreiterst.",
+  ag_people: "{n} Personen",
+  ag_handle: "Bereichsgrenze: {age} Jahre",
+  ag_moving: "{n} Personen wechseln beim Speichern den Bereich.",
+  ag_save: "Bereiche speichern",
+  ag_saved: "Bereiche gespeichert: {n} Personen haben den Bereich gewechselt.",
   mu_deezer: "Deezer-Hits",
   mu_deezer_hint: "Zeigt in Storys die Charts jedes Landes und eine Liedsuche, mit 30-Sekunden-Ausschnitten von Deezer. Prüfe vor dem Aktivieren, ob deren Bedingungen diese Nutzung erlauben.",
   mu_deezer_terms: "Nutzungsbedingungen der Deezer-API",
@@ -2604,6 +2628,12 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  ag_hint: "Fais glisser les bords entre les tranches (souris ou doigt) pour déplacer leurs limites. Une tranche sans années disparaît et ses membres passent à la tranche voisine ; ses communautés sont gardées et reviennent quand tu l'élargis de nouveau.",
+  ag_people: "{n} personnes",
+  ag_handle: "Bord de la tranche : {age} ans",
+  ag_moving: "{n} personnes changeront de tranche à l'enregistrement.",
+  ag_save: "Enregistrer les tranches",
+  ag_saved: "Tranches enregistrées : {n} personnes ont changé de tranche.",
   mu_deezer: "Tubes Deezer",
   mu_deezer_hint: "Affiche dans les stories le classement de chaque pays et une recherche de chansons, avec des extraits de 30 secondes fournis par Deezer. Avant de l'activer, vérifie que leurs conditions autorisent cet usage.",
   mu_deezer_terms: "Conditions de l'API Deezer",
@@ -3249,6 +3279,12 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  ag_hint: "Trascina i bordi tra le fasce (con il mouse o il dito) per spostarne i limiti. Una fascia senza anni scompare e le sue persone passano alla fascia vicina; le sue community restano salvate e tornano quando la allarghi di nuovo.",
+  ag_people: "{n} persone",
+  ag_handle: "Bordo della fascia: {age} anni",
+  ag_moving: "{n} persone cambieranno fascia al salvataggio.",
+  ag_save: "Salva fasce",
+  ag_saved: "Fasce salvate: {n} persone hanno cambiato fascia.",
   mu_deezer: "Successi di Deezer",
   mu_deezer_hint: "Mostra nelle storie la classifica di ogni paese e una ricerca di brani, con estratti di 30 secondi forniti da Deezer. Prima di lasciarlo attivo, verifica che le loro condizioni consentano questo uso.",
   mu_deezer_terms: "Condizioni dell'API di Deezer",
@@ -3894,6 +3930,12 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  ag_hint: "Arrasta os limites entre faixas (com o rato ou o dedo) para os mover. Uma faixa sem anos desaparece e as suas pessoas passam para a faixa vizinha; as suas comunidades ficam guardadas e voltam quando a alargares de novo.",
+  ag_people: "{n} pessoas",
+  ag_handle: "Limite da faixa: {age} anos",
+  ag_moving: "{n} pessoas vão mudar de faixa ao guardar.",
+  ag_save: "Guardar faixas",
+  ag_saved: "Faixas guardadas: {n} pessoas mudaram de faixa.",
   mu_deezer: "Êxitos do Deezer",
   mu_deezer_hint: "Mostra nas histórias a tabela de cada país e uma pesquisa de músicas, com excertos de 30 segundos servidos pelo Deezer. Antes de o deixar ativo, confirma que as condições deles permitem este uso.",
   mu_deezer_terms: "Condições da API do Deezer",
@@ -4539,6 +4581,12 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  ag_hint: "Sleep de randen tussen de groepen (met muis of vinger) om hun grenzen te verschuiven. Een groep zonder jaren verdwijnt en de mensen gaan naar de buurgroep; de communities blijven bewaard en komen terug als je hem weer breder maakt.",
+  ag_people: "{n} mensen",
+  ag_handle: "Rand van de groep: {age} jaar",
+  ag_moving: "{n} mensen wisselen van groep bij het opslaan.",
+  ag_save: "Groepen opslaan",
+  ag_saved: "Groepen opgeslagen: {n} mensen zijn van groep gewisseld.",
   mu_deezer: "Deezer-hits",
   mu_deezer_hint: "Toont in verhalen de hitlijst van elk land en een zoekfunctie, met fragmenten van 30 seconden van Deezer. Controleer vóór het inschakelen of hun voorwaarden dit gebruik toestaan.",
   mu_deezer_terms: "Voorwaarden van de Deezer-API",
@@ -5184,6 +5232,12 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  ag_hint: "年齢層の境目を（マウスや指で）ドラッグして範囲を変えます。年数がなくなった年齢層は消え、その人たちは隣の年齢層に移ります。そのコミュニティは保存され、再び広げると戻ります。",
+  ag_people: "{n}人",
+  ag_handle: "年齢層の境目：{age}歳",
+  ag_moving: "保存すると{n}人の年齢層が変わります。",
+  ag_save: "年齢層を保存",
+  ag_saved: "保存しました：{n}人の年齢層が変わりました。",
   mu_deezer: "Deezerのヒット曲",
   mu_deezer_hint: "ストーリーに各国のヒットチャートと曲の検索を表示します（Deezerが配信する30秒プレビュー）。有効にする前に、この使い方が規約で認められているか確認してください。",
   mu_deezer_terms: "Deezer APIの利用規約",
@@ -5829,6 +5883,12 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  ag_hint: "拖动年龄段之间的边界（鼠标或手指）来调整范围。没有年份的年龄段会消失，其中的人会转到相邻年龄段；其社区会被保留，再次扩大时恢复。",
+  ag_people: "{n} 人",
+  ag_handle: "年龄段边界：{age} 岁",
+  ag_moving: "保存后 {n} 人将更换年龄段。",
+  ag_save: "保存年龄段",
+  ag_saved: "已保存：{n} 人更换了年龄段。",
   mu_deezer: "Deezer 热门",
   mu_deezer_hint: "在快拍中显示各国热门榜和歌曲搜索，使用 Deezer 提供的 30 秒片段。开启前请确认其条款允许这种用法。",
   mu_deezer_terms: "Deezer API 使用条款",

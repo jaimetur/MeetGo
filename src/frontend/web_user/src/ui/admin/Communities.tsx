@@ -5,7 +5,7 @@ import { LANGUAGES, t } from "@lang";
 import { api, type AdminInterest } from "../../../../web_admin/api";
 import { toast } from "../../store";
 import { CATEGORY_KEYS, categoryName, guessCategory } from "../Communities";
-import { Icon, Modal, guessIcon, hobbyIcon, setInterestLooks } from "../common";
+import { Icon, Modal, ageRangeLabel, guessIcon, hobbyIcon, setInterestLooks } from "../common";
 import { colorFor } from "../../util";
 import { SectionHead } from "./AdminPage";
 import { a } from "./i18n";
@@ -29,7 +29,7 @@ function bandsOf(i: AdminInterest): string[] {
 }
 function bandName(k: string): string {
   if (k.startsWith("span:")) { const [min, max] = k.slice(5).split("-"); return max ? `${min}-${max}` : `${min}+`; }
-  return AGES.find(([x]) => x === k)?.[1] || k;
+  return ageRangeLabel(k);  // from the limits of Settings → Age ranges
 }
 
 const autoCategory = (i: { slug: string; name: string }) => guessCategory(i.slug, i.name);

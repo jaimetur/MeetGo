@@ -6,7 +6,7 @@ import { coverColor, coverGradient, dateTile, hourOf } from "../board";
 import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, CommunityStats, Post, UserSummary } from "../types";
-import { Avatar, Icon, Modal, communityCover, communityTint, getLayout, hobbyIcon, interestLook } from "./common";
+import { Avatar, Icon, Modal, ageRangeLabel, communityCover, communityTint, getLayout, hobbyIcon, interestLook } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, Skeletons, usePostFeed } from "./Board";
 
@@ -412,7 +412,7 @@ export function CommunitiesPage() {
         {browse ? (
           <div className="zonebar">
             <Icon name="place" size="sm" />
-            <span className="grow">{t("ui_zone_browsing", { zone: `${browse.label} · ${browse.age_range.replace("_plus", "+").replace("_", "-")}` })}</span>
+            <span className="grow">{t("ui_zone_browsing", { zone: `${browse.label} · ${ageRangeLabel(browse.age_range).replace("_plus", "+").replace("_", "-")}` })}</span>
             <button className="btn sm" onClick={() => setState({ browseZone: null })}>{t("ui_zone_back_mine")}</button>
           </div>
         ) : null}
@@ -1196,7 +1196,7 @@ function ageText(k: string): string {
 
 /** "31_60" → "31-60", "61_plus" → "61+". */
 function rangeLabel(r: string): string {
-  return r.replace("_plus", "+").replace("_", "-");
+  return ageRangeLabel(r);
 }
 
 /** Where and for whom a community is, as tags: the place, and its own age span or its age ranges (one tag each). */

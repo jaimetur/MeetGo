@@ -336,12 +336,15 @@ async def merge_interests(db: AsyncSession, old_slugs: tuple[str, ...], new_slug
 
 
 async def update_age_ranges(db: AsyncSession) -> None:
-    """The stored age range of each person follows the current ranges (18-30, 31-60, 61+) and their age."""
+    """The stored age range of each person follows the current limits (Settings → Age ranges) and their age."""
+    from app.core.age_bounds import bounds, load
+    await load(db)
+    b = bounds()
     age = "date_part('year', age(current_date, dob::date))"
+    case = f"(CASE WHEN {age} <= {int(b['young'])} THEN '18_30' WHEN {age} <= {int(b['middle'])} THEN '31_60' ELSE '61_plus' END)"
     await db.execute(text(f"""
-        UPDATE users SET age_range = (CASE WHEN {age} <= 30 THEN '18_30' WHEN {age} <= 60 THEN '31_60' ELSE '61_plus' END)::agerange
-        WHERE dob ~ '^[0-9]{{4}}-[0-9]{{2}}-[0-9]{{2}}$' AND {age} >= 18
-          AND age_range::text <> (CASE WHEN {age} <= 30 THEN '18_30' WHEN {age} <= 60 THEN '31_60' ELSE '61_plus' END)"""))
+        UPDATE users SET age_range = {case}::agerange
+        WHERE dob ~ '^[0-9]{{4}}-[0-9]{{2}}-[0-9]{{2}}$' AND {age} >= 18 AND age_range::text <> {case}"""))
     await db.commit()
 
 

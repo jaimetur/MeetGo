@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { t } from "@lang";
 import { api } from "../../../../web_admin/api";
 import { toast } from "../../store";
-import { Icon } from "../common";
+import { Icon, ageRangesShown } from "../common";
 import { AgeRanges, Countries } from "./Geography";
 import { Languages } from "./Languages";
 import { SectionHead } from "./AdminPage";
@@ -112,7 +112,7 @@ export function Settings() {
         <Countries s={s} patch={patch} />
       </Fold>
 
-      <Fold icon="calendar" title={a("se_ages")} summary={(s.age_ranges || []).map((r: Row) => r.label || r.key).join(" · ")}>
+      <Fold icon="calendar" title={a("se_ages")} summary={ageRangesShown().map((r) => r.label).join(" · ")}>
         <AgeRanges s={s} />
       </Fold>
 

@@ -16,7 +16,7 @@ import { signOut } from "./App";
 import { COVER_ARTS, coverArtUrl } from "../coverArts";
 import { categoryName, communityCategory } from "./Communities";
 import { useSwipeDown } from "./swipeClose";
-import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, communityTint, getLayout, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, Modal, Wordmark, ageRangeLabel, communityCover, communityTint, getLayout, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -1432,7 +1432,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   );
 }
 
-export const ageText = (a?: string | null) => (a || "").replace("_plus", "+").replace("_", "-");
+export const ageText = (a?: string | null) => ageRangeLabel(a);
 
 /** My zone (or the one I am looking at) always in view; tapping it lets me look at another zone's communities. */
 export function ZoneTag() {

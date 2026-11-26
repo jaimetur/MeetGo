@@ -1,9 +1,11 @@
 /** Countries (name, calling code, kind of region, regions) and the age ranges, edited visually. */
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { t } from "@lang";
 import { Icon, Modal } from "../common";
 import { a } from "./i18n";
+import { api as adminApi } from "../../../../web_admin/api";
+import { toast } from "../../store";
 import { Badge, Field } from "./kit";
 
 type Row = Record<string, any>;
@@ -226,23 +228,100 @@ function CountryEditor({ s, code, onClose, onApply }: { s: Settings; code: strin
   );
 }
 
-/** The age ranges: fixed in the database (communities are made per range), shown as a scale. */
+/** The age ranges as a bar: drag the two borders (mouse or finger) to move the limits; a range of 0 years disappears
+ *  (its people go to the range that took its years) and dragging its border again brings it back. Saving moves people. */
 export function AgeRanges({ s }: { s: Settings }) {
-  const ranges: Row[] = s.age_ranges || [];
-  const tones = ["#1e90ff", "#14b8a6", "#f59e0b", "#ec4899"];
-  const span = (r: Row) => ((r.max ?? 80) - r.min + 1);
-  const total = ranges.reduce((n, r) => n + span(r), 0) || 1;
+  type Info = { young: number; middle: number; min_age: number; max_age: number; moving: number; ranges: (Row & { people: number; empty: boolean })[] };
+  const [info, setInfo] = useState<Info | null>(null);
+  const [b, setB] = useState<{ young: number; middle: number } | null>(null);
+  const [preview, setPreview] = useState<Info | null>(null);
+  const [busy, setBusy] = useState(false);
+  const bar = useRef<HTMLDivElement>(null);
+  const drag = useRef<"young" | "middle" | null>(null);
+  useEffect(() => { adminApi.ageRanges().then((r: Info) => { setInfo(r); setB({ young: r.young, middle: r.middle }); }).catch(() => undefined); }, []);
+  useEffect(() => {
+    if (!b || !info || (b.young === info.young && b.middle === info.middle)) { setPreview(null); return; }
+    const id = window.setTimeout(() => adminApi.ageRangesPreview(b.young, b.middle).then(setPreview).catch(() => undefined), 250);
+    return () => window.clearTimeout(id);
+  }, [b, info]);
+  if (!info || !b) return <div className="adm-ages-wrap"><div className="adm-ages sk" style={{ height: 64 }} /></div>;
+  const lo = info.min_age - 1, hi = info.max_age;  // the scale: 17 (nothing young) to 100 (nothing old)
+  const pos = (age: number) => ((age - lo) / (hi - lo)) * 100;
+  const ageAt = (clientX: number) => {
+    const r = bar.current!.getBoundingClientRect();
+    return Math.round(lo + Math.min(1, Math.max(0, (clientX - r.left) / r.width)) * (hi - lo));
+  };
+  const move = (clientX: number) => {
+    const which = drag.current;
+    if (!which) return;
+    const age = ageAt(clientX);
+    setB((p) => p && (which === "young" ? { young: Math.min(age, p.middle), middle: p.middle } : { young: p.young, middle: Math.max(age, p.young) }));
+  };
+  const start = (which: "young" | "middle") => (e: React.PointerEvent) => {
+    e.preventDefault();
+    drag.current = which;
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+  };
+  const keys = (which: "young" | "middle") => (e: React.KeyboardEvent) => {
+    const d = e.key === "ArrowLeft" || e.key === "ArrowDown" ? -1 : e.key === "ArrowRight" || e.key === "ArrowUp" ? 1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    setB((p) => {
+      if (!p) return p;
+      const v = Math.max(lo, Math.min(hi, p[which] + d));
+      return which === "young" ? { young: Math.min(v, p.middle), middle: p.middle } : { young: p.young, middle: Math.max(v, p.young) };
+    });
+  };
+  const shown = preview || info;
+  const ranges = [
+    { key: "18_30", from: lo, to: b.young },
+    { key: "31_60", from: b.young, to: b.middle },
+    { key: "61_plus", from: b.middle, to: hi },
+  ];
+  const tones = ["#1e90ff", "#14b8a6", "#f59e0b"];
+  const changed = b.young !== info.young || b.middle !== info.middle;
+  const save = async () => {
+    setBusy(true);
+    try {
+      const r = await adminApi.saveAgeRanges(b.young, b.middle);
+      setInfo({ ...info, ...r });
+      setPreview(null);
+      toast(a("ag_saved", { n: r.moved ?? 0 }));
+    } catch (e: any) {
+      toast(e?.message || "Error", "error");
+    } finally {
+      setBusy(false);
+    }
+  };
   return (
-    <>
-      <div className="adm-ages" role="img" aria-label={ranges.map((r) => r.label).join(", ")}>
-        {ranges.map((r, i) => (
-          <div key={r.key} style={{ flex: span(r) / total, background: tones[i % tones.length] }}>
-            <b>{r.label}</b>
-            <small>{r.max ? a("ag_years", { min: r.min, max: r.max }) : a("ag_plus", { min: r.min })}</small>
-          </div>
+    <div className="adm-ages-wrap">
+      <div className="adm-ages adm-ages-edit" ref={bar} onPointerMove={(e) => move(e.clientX)} onPointerUp={() => { drag.current = null; }}
+        onPointerCancel={() => { drag.current = null; }}>
+        {ranges.map((r, i) => {
+          const info2 = shown.ranges.find((x) => x.key === r.key)!;
+          const width = pos(r.to) - pos(r.from);
+          return (
+            <div key={r.key} className={"adm-age-seg" + (info2.empty ? " empty" : "")} style={{ width: `${width}%`, background: tones[i] }}>
+              {info2.empty ? null : <><b>{info2.label}</b><small>{a("ag_people", { n: info2.people })}</small></>}
+            </div>
+          );
+        })}
+        {(["young", "middle"] as const).map((w) => (
+          <button key={w} type="button" className="adm-age-handle" style={{ left: `${pos(b[w])}%` }} onPointerDown={start(w)} onKeyDown={keys(w)}
+            aria-label={a("ag_handle", { age: b[w] })} title={String(b[w])} role="slider" aria-valuemin={lo} aria-valuemax={hi} aria-valuenow={b[w]}>
+            <span>{b[w] < info.min_age ? "–" : b[w] >= hi ? "–" : b[w]}</span>
+          </button>
         ))}
       </div>
-      <p className="muted adm-note">{a("ag_fixed")}</p>
-    </>
+      <div className="adm-ages-scale"><span>{info.min_age}</span><span>{Math.round((lo + hi) / 2)}</span><span>{hi}</span></div>
+      <p className="muted adm-note">{a("ag_hint")}</p>
+      {changed ? (
+        <div className="adm-ages-save">
+          <span className="grow">{preview ? a("ag_moving", { n: preview.moving }) : a("loading")}</span>
+          <button className="btn sm" onClick={() => setB({ young: info.young, middle: info.middle })}>{a("se_discard")}</button>
+          <button id="adm-ages-save" className="btn pri sm" disabled={busy || !preview} onClick={save}>{a("ag_save")}</button>
+        </div>
+      ) : null}
+    </div>
   );
 }

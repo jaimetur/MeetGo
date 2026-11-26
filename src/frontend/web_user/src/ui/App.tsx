@@ -13,7 +13,7 @@ import { UpdateNotice } from "./UpdateNotice";
 import { FeedPostPage, WallPage } from "./Feed";
 import { useNoAutofill } from "../noAutofill";
 import { HomePage, PostPage, PublishPage } from "./Board";
-import { AboutModal, Avatar, Icon, InstallHint, applyLayout, Splash, Wordmark, setInterestLooks } from "./common";
+import { AboutModal, Avatar, Icon, InstallHint, applyLayout, setAgeRanges, Splash, Wordmark, setInterestLooks } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
 import { SidePanel } from "./Panels";
 import { AccountPage, JoinPage, MentionsPage, PeoplePage, SharePage, accountMemory } from "./Pages";
@@ -160,6 +160,7 @@ export async function refreshRequests() {
 export async function refreshBilling() {
   try {
     const [billing, settings] = await Promise.all([api.billing(), api.publicSettings()]);
+    setAgeRanges(settings?.age_ranges);
     setState({ billing, subscriptions: !!settings?.subscriptions, emailsOn: settings?.email_notifications !== false });
   } catch {
     /* not critical */
