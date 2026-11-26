@@ -377,8 +377,9 @@ export function setRailIcons(on: boolean) {
 }
 
 /** The age ranges as the server says (their limits move in Settings → Age ranges): "18_30" → "18-30". */
-let ageRangeList: { key: string; label: string; empty?: boolean }[] = [];
-export function setAgeRanges(list: { key: string; label: string; empty?: boolean }[] | undefined) {
+type AgeRange = { key: string; label: string; empty?: boolean; min?: number; max?: number | null };
+let ageRangeList: AgeRange[] = [];
+export function setAgeRanges(list: AgeRange[] | undefined) {
   if (Array.isArray(list) && list.length) ageRangeList = list;
 }
 export function ageRangeLabel(key?: string | null): string {

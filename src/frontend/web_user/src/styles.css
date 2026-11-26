@@ -2645,3 +2645,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .adm-age-handle:focus-visible::before { box-shadow: 0 0 0 2px var(--blue); }
 .adm-ages-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 18px; }
 .adm-ages-save { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: var(--panel2); }
+/* Community form → Limit by age: the MeetGo ranges as buttons (only the creator's own one can be picked). */
+.chip.agechip { background: none; font: inherit; font-size: 13px; padding: 6px 14px; cursor: pointer; }
+.chip.agechip.on { background: var(--grad); }
+.chip.agechip:disabled { opacity: .4; cursor: not-allowed; }

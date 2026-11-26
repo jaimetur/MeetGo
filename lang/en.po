@@ -3413,6 +3413,12 @@ msgstr "Make a new one"
 msgid "ui_calendar_reset_done"
 msgstr "New link made: the old one no longer works"
 
+msgid "ui_community_age_official"
+msgstr "MeetGo ranges"
+
+msgid "ui_community_age_official_hint"
+msgstr "Tap one to use its ages, or set your own below. You can only pick one you are in."
+
 msgid "ui_community_age_limit"
 msgstr "Limit by age"
 

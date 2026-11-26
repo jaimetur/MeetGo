@@ -3412,6 +3412,12 @@ msgstr "En créer un nouveau"
 msgid "ui_calendar_reset_done"
 msgstr "Nouveau lien créé : l’ancien ne marche plus"
 
+msgid "ui_community_age_official"
+msgstr "Tranches de MeetGo"
+
+msgid "ui_community_age_official_hint"
+msgstr "Touchez-en une pour utiliser ses âges, ou indiquez les vôtres ci-dessous. Vous ne pouvez choisir que celle où vous êtes."
+
 msgid "ui_community_age_limit"
 msgstr "Limiter par âge"
 

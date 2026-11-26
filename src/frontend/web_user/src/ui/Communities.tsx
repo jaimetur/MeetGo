@@ -6,7 +6,7 @@ import { coverColor, coverGradient, dateTile, hourOf } from "../board";
 import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, CommunityStats, Post, UserSummary } from "../types";
-import { Avatar, Icon, Modal, ageRangeLabel, communityCover, communityTint, getLayout, hobbyIcon, interestLook } from "./common";
+import { Avatar, Icon, Modal, ageRangeLabel, ageRangesShown, communityCover, communityTint, getLayout, hobbyIcon, interestLook } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, Skeletons, usePostFeed } from "./Board";
 
@@ -677,6 +677,22 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
             <input id="cm-age-limit" type="checkbox" role="switch" checked={form.ageLimit} onChange={(e) => set({ ageLimit: e.target.checked })} />
             <span className="sw" aria-hidden="true" />
           </label>
+          {form.ageLimit && ageRangesShown().length ? (
+            <div className="fld">{t("ui_community_age_official")}
+              <div className="chips wrapchips">
+                {ageRangesShown().map((r) => {
+                  const lo = r.min ?? 18, hi = r.max ?? null;
+                  const mine = myAge >= lo && (hi == null || myAge <= hi);
+                  const on = form.min_age === String(lo) && form.max_age === (hi == null ? "" : String(hi));
+                  return (
+                    <button key={r.key} type="button" className={"chip agechip" + (on ? " on" : "")} disabled={!mine} aria-pressed={on}
+                      onClick={() => set({ min_age: String(lo), max_age: hi == null ? "" : String(hi) })}>{r.label}</button>
+                  );
+                })}
+              </div>
+              <small className="muted">{t("ui_community_age_official_hint")}</small>
+            </div>
+          ) : null}
           {form.ageLimit ? (
             <div className="grid2c">
               <label className="fld">{t("ui_community_min_age")}<input id="cm-min-age" className="inp" type="number" inputMode="numeric" min={18} max={myAge} placeholder="18" value={form.min_age} onChange={(e) => set({ min_age: e.target.value })} /></label>

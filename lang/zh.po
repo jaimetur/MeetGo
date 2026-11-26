@@ -3413,6 +3413,12 @@ msgstr "重新生成"
 msgid "ui_calendar_reset_done"
 msgstr "已生成新链接，旧链接失效"
 
+msgid "ui_community_age_official"
+msgstr "MeetGo 年龄段"
+
+msgid "ui_community_age_official_hint"
+msgstr "点击一个即可使用其年龄范围，或在下方自行设置。只能选择包含你自己的年龄段。"
+
 msgid "ui_community_age_limit"
 msgstr "按年龄限制"
 

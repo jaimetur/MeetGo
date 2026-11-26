@@ -3413,6 +3413,12 @@ msgstr "Nieuwe maken"
 msgid "ui_calendar_reset_done"
 msgstr "Nieuwe link gemaakt: de oude werkt niet meer"
 
+msgid "ui_community_age_official"
+msgstr "MeetGo-leeftijdsgroepen"
+
+msgid "ui_community_age_official_hint"
+msgstr "Tik op een groep om de leeftijden over te nemen, of vul hieronder je eigen in. Je kunt alleen een groep kiezen waar je zelf in valt."
+
 msgid "ui_community_age_limit"
 msgstr "Beperken op leeftijd"
 
