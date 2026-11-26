@@ -20,7 +20,7 @@ export function Overview({ onReports }: { onReports: (n: number) => void }) {
   const attention: [string, string, number, () => void][] = [
     ["flag", a("ov_reports") + `: ${s.reports_open}`, s.reports_open, () => goSection("moderation")],
     ["layers", a("ov_pending_categories", { n: waiting?.categories || 0 }), waiting?.categories || 0, () => goSection("categories")],
-    ["compass", a("ov_pending_communities", { n: waiting?.communities || 0 }), waiting?.communities || 0, () => goSection("communities")],
+    ["compass", a("ov_pending_communities", { n: waiting?.communities || 0 }), waiting?.communities || 0, () => goSection("communities", "suggested")],
     ["info", a("ov_unverified", { n: u.unverified }), u.unverified, () => goSection("users", "unverified")],
     ["shield", a("ov_banned", { n: u.banned }), u.banned, () => goSection("users", "banned")],
   ];

@@ -35,11 +35,13 @@ function bandName(k: string): string {
 const autoCategory = (i: { slug: string; name: string }) => guessCategory(i.slug, i.name);
 const autoIcon = (i: { slug: string; name: string }) => guessIcon(i.slug, i.name);
 
-export function Communities() {
+/** `initialFilter` "suggested": only the interests the app suggests joining or splitting (from a notice). */
+export function Communities({ initialFilter }: { initialFilter?: string }) {
   const [list, setList] = useState<AdminInterest[] | null>(null);
   const [q, setQ] = useState("");
   const [zone, setZone] = useState("");  // only the interests with a community in this zone…
   const [age, setAge] = useState("");  // …or for this age band
+  const [suggested, setSuggested] = useState(initialFilter === "suggested" ? "any" : "");  // …or to join or split
   const [open, setOpen] = useState<AdminInterest | "new" | null>(null);
 
   const load = () => api.adminInterests().then((l) => { setList(l); setInterestLooks(l); }).catch((e) => { setList([]); toast(e.message, "error"); });
@@ -50,13 +52,16 @@ export function Communities() {
     const needle = plain(q.trim());
     const out = new Map<string, AdminInterest[]>();
     for (const i of (list || []).filter((i) => (!needle || [i.name, i.slug, ...(i.places || [])].some((x) => plain(x).includes(needle)))
-        && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || bandsOf(i).includes(age)))) {
+        && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || bandsOf(i).includes(age))
+        && (!suggested || (suggested === "any" ? !!i.suggest : i.suggest === suggested)))) {
       const cat = i.category || autoCategory(i);
       out.set(cat, [...(out.get(cat) || []), i]);
     }
     for (const v of out.values()) v.sort((x, y) => x.name.localeCompare(y.name, undefined, { sensitivity: "base" }));
     return CATEGORY_KEYS.filter((k) => out.has(k)).map((k) => [k, out.get(k)!] as const);
-  }, [list, q, zone, age]);
+  }, [list, q, zone, age, suggested]);
+  const toJoin = (list || []).filter((i) => i.suggest === "join").length;
+  const toSplit = (list || []).filter((i) => i.suggest === "split").length;
   // every zone and age band some interest has, for the filters
   const zones = useMemo(() => {
     const seen = new Map<string, string>();
@@ -82,6 +87,12 @@ export function Communities() {
         <select id="adm-co-age" className="inp adm-sort" value={age} onChange={(e) => setAge(e.target.value)} aria-label={a("co_f_age")}>
           <option value="">{a("co_f_age_all")}</option>
           {ages.map((k) => <option key={k} value={k}>{bandName(k)}</option>)}
+        </select>
+        <select id="adm-co-suggest" className="inp adm-sort" value={suggested} onChange={(e) => setSuggested(e.target.value)} aria-label={a("co_f_suggest")}>
+          <option value="">{a("co_f_suggest_all")}</option>
+          <option value="any">{a("co_f_suggest_any", { n: toJoin + toSplit })}</option>
+          <option value="join">{a("co_f_suggest_join", { n: toJoin })}</option>
+          <option value="split">{a("co_f_suggest_split", { n: toSplit })}</option>
         </select>
       </div>
 

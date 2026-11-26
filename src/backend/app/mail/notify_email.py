@@ -355,6 +355,8 @@ async def _loop() -> None:
                 await plans_pushes_once(db)
                 from app.board.service import series_once
                 await series_once(db)
+                from app.admin.pending import check_suggestions
+                await check_suggestions(db)  # interests to join or split: tell the administrators
                 loop_time = asyncio.get_running_loop().time()
                 if loop_time - last_reminders >= REMINDERS_EVERY or last_reminders == 0.0:
                     last_reminders = loop_time

@@ -73,3 +73,30 @@ async def test_official_language(client, db_session):
     bea, _ = await make_user(client, db_session, "bea@example.com", "Bea", province="Huelva")
     hers = (await client.post("/communities", json={"title": "Playas de Huelva", "category": "ui_cat_culture"}, headers=bea)).json()
     assert hers["language"] == "es"
+
+
+async def test_new_suggestions_notify_admins(client, db_session, monkeypatch):
+    """A suggestion that appears (here: two tiny province communities, to join) reaches the administrators once."""
+    import app.admin.pending as pending
+    from app.core.redis_conn import get_redis
+    sent, events = [], []
+    monkeypatch.setattr("app.push.service.push_notice", lambda users, kind, key, params, url: sent.append((key, params["name"])))
+
+    async def fake_publish(to, event):
+        events.append(event)
+    monkeypatch.setattr("app.realtime.service.publish", fake_publish)
+    await get_redis().delete("admin:suggestions")
+    from app.core.db import SessionLocal
+    async with SessionLocal() as db:
+        assert await pending.check_suggestions(db) == 0  # the first round only remembers what there is
+    ana, _ = await make_user(client, db_session, "ana@example.com", "Ana", province="Madrid")
+    bea, _ = await make_user(client, db_session, "bea@example.com", "Bea", province="Huelva")
+    admin = await admin_headers(client)
+    hike = await _interest(client, ana, "senderismo")
+    for h in (ana, bea):
+        await client.post(f"/channels/{hike['id']}/join", headers=h)
+    await client.patch(f"/admin/interests/{hike['id']}", json={"slug": "senderismo", "name": "Senderismo", "geo_level": "province"}, headers=admin)
+    async with SessionLocal() as db:
+        assert await pending.check_suggestions(db) >= 1
+        assert await pending.check_suggestions(db) == 0  # once
+    assert ("email_suggest_join", "Senderismo") in sent and {"type": "admin.pending"} in events

@@ -398,7 +398,7 @@ function AdminNotice() {
     <div className="admin-notice" role="alert" style={bottom != null ? { bottom } : undefined}>
       <Icon name="shield" />
       <span className="grow">{t("ui_admin_pending", { n: pending })}</span>
-      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate(where ? `/admin?s=${where}` : "/admin"); }}>{t("ui_admin_review")}</button>
+      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate(where ? `/admin?s=${where}${where === "communities" ? "&f=suggested" : ""}` : "/admin"); }}>{t("ui_admin_review")}</button>
       <button className="iconbtn" aria-label={t("ui_close")} onClick={() => setClosedAt(pending)}><Icon name="x" size="sm" /></button>
     </div>
   );

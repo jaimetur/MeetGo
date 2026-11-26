@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 LEVELS = ("country", "region", "province")
 DEFAULT_LEVEL = "country"
 SPLIT_AT = 500  # members of one community from which the administration is told to split it further
+JOIN_UNDER = 10  # when every community of an interest has fewer members, it is told to join them a level up
 
 
 async def geo_data(db: AsyncSession) -> dict:

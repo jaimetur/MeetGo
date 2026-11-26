@@ -82,7 +82,7 @@ export function AdminPage() {
           {section === "overview" ? <Overview onReports={setOpenReports} /> : null}
           {section === "users" ? <Users initialFilter={filter} /> : null}
           {section === "moderation" ? <Moderation onCount={setOpenReports} /> : null}
-          {section === "communities" ? <Communities /> : null}
+          {section === "communities" ? <Communities key={filter || ""} initialFilter={filter} /> : null}
           {section === "interests" ? <Interests /> : null}
           {section === "categories" ? <Categories /> : null}
           {section === "business" ? <Business /> : null}

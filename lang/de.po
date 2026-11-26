@@ -5606,6 +5606,18 @@ msgstr "Neue Kategorie vorgeschlagen"
 msgid "email_category_proposal_body"
 msgstr "Jemand hat die Kategorie «{name}» vorgeschlagen. Prüfe sie unter Verwaltung → Kategorien."
 
+msgid "email_suggest_join_subject"
+msgstr "Communities zum Zusammenlegen"
+
+msgid "email_suggest_join_body"
+msgstr "Alle Communities von «{name}» haben weniger als 10 Personen: Leg sie zu einem größeren Gebiet zusammen."
+
+msgid "email_suggest_split_subject"
+msgstr "Community zum Aufteilen"
+
+msgid "email_suggest_split_body"
+msgstr "Eine Community von «{name}» hat mehr als 500 Personen: Teile sie in kleinere Gebiete auf."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

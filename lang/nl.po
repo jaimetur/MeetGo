@@ -4739,6 +4739,18 @@ msgstr "Nieuwe categorie voorgesteld"
 msgid "email_category_proposal_body"
 msgstr "Iemand heeft de categorie «{name}» voorgesteld. Beoordeel haar in Beheer → Categorieën."
 
+msgid "email_suggest_join_subject"
+msgstr "Community's om samen te voegen"
+
+msgid "email_suggest_join_body"
+msgstr "Alle community's van «{name}» hebben minder dan 10 mensen: voeg ze samen tot een groter gebied."
+
+msgid "email_suggest_split_subject"
+msgstr "Community om te splitsen"
+
+msgid "email_suggest_split_body"
+msgstr "Een community van «{name}» heeft meer dan 500 mensen: splits haar in kleinere gebieden."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

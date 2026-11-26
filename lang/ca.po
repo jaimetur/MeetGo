@@ -4739,6 +4739,18 @@ msgstr "Nova categoria proposada"
 msgid "email_category_proposal_body"
 msgstr "Algú ha proposat la categoria «{name}». Revisa-la a Administració → Categories."
 
+msgid "email_suggest_join_subject"
+msgstr "Comunitats per ajuntar"
+
+msgid "email_suggest_join_body"
+msgstr "Totes les comunitats de «{name}» tenen menys de 10 persones: convé ajuntar-les en una zona més àmplia."
+
+msgid "email_suggest_split_subject"
+msgstr "Comunitat per dividir"
+
+msgid "email_suggest_split_body"
+msgstr "Una comunitat de «{name}» supera les 500 persones: convé dividir-la en zones més petites."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 

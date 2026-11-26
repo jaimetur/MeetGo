@@ -1345,7 +1345,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .adm-search .ic { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 .adm-search .inp { padding-left: 36px; border-radius: 12px; height: 42px; }
 .adm-toolbar select.adm-sort { width: auto; flex: none; border-radius: 12px; height: 42px; }
-@media (max-width: 640px) { .adm-toolbar:has(#adm-co-zone) { flex-wrap: wrap; } .adm-toolbar:has(#adm-co-zone) .adm-search { flex-basis: 100%; } .adm-toolbar select#adm-co-zone, .adm-toolbar select#adm-co-age { flex: 1; } }
+@media (max-width: 640px) { .adm-toolbar:has(#adm-co-zone) { flex-wrap: wrap; } .adm-toolbar:has(#adm-co-zone) .adm-search { flex-basis: 100%; } .adm-toolbar select#adm-co-zone, .adm-toolbar select#adm-co-age, .adm-toolbar select#adm-co-suggest { flex: 1; } }
 .adm-chips { padding: 2px 0; }
 .adm-chips .chip { font-size: 12.5px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px; }
 .adm-chips .chip .cnt { font-size: 11px; font-weight: 700; padding: 0 6px; border-radius: 999px; background: var(--panel2); color: var(--muted); }

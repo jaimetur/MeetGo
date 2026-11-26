@@ -4739,6 +4739,18 @@ msgstr "新しいカテゴリの提案"
 msgid "email_category_proposal_body"
 msgstr "カテゴリ「{name}」が提案されました。管理 → カテゴリで確認してください。"
 
+msgid "email_suggest_join_subject"
+msgstr "統合候補のコミュニティ"
+
+msgid "email_suggest_join_body"
+msgstr "「{name}」のコミュニティはすべて10人未満です。より広い地域に統合することをおすすめします。"
+
+msgid "email_suggest_split_subject"
+msgstr "分割候補のコミュニティ"
+
+msgid "email_suggest_split_body"
+msgstr "「{name}」のコミュニティが500人を超えました。より小さな地域に分割することをおすすめします。"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

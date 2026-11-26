@@ -23,3 +23,29 @@ async def tell_admins(db: AsyncSession) -> None:
     from app.realtime.service import publish
     ids = (await db.execute(select(User.id).where(User.role == "admin"))).scalars().all()
     await publish(list(ids), {"type": "admin.pending"})
+
+
+async def check_suggestions(db: AsyncSession) -> int:
+    """Every round of the background loop: interests newly suggested to join or split notify the administrators (a
+    push, and the counts in their apps), once per suggestion. Returns how many were new."""
+    import json
+    from app.admin.routes import admin_interests
+    from app.core.redis_conn import get_redis
+    now = {f"{i['id']}:{i['suggest']}": i for i in await admin_interests(db=db, admin=None) if i.get("suggest") and i.get("active", True)}
+    redis = get_redis()
+    raw = await redis.get("admin:suggestions")
+    before = set(json.loads(raw)) if raw else None
+    await redis.set("admin:suggestions", json.dumps(sorted(now)))
+    if before is None:  # first round after starting: what is there now is already shown in the apps
+        return 0
+    new = [now[k] for k in now if k not in before]
+    if not new and before == set(now):
+        return 0
+    await tell_admins(db)  # appeared or went away: the counts in their apps
+    if new:
+        from app.push.service import push_notice
+        admins = list((await db.execute(select(User).where(User.role == "admin"))).scalars().all())
+        for i in new:
+            push_notice(admins, "admin.community", f"email_suggest_{i['suggest']}", {"name": i["name"]},
+                        "/app/admin?s=communities&f=suggested")
+    return len(new)

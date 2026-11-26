@@ -4738,6 +4738,18 @@ msgstr "Nova categoria proposta"
 msgid "email_category_proposal_body"
 msgstr "Alguém propôs a categoria «{name}». Revê-a em Administração → Categorias."
 
+msgid "email_suggest_join_subject"
+msgstr "Comunidades para juntar"
+
+msgid "email_suggest_join_body"
+msgstr "Todas as comunidades de «{name}» têm menos de 10 pessoas: convém juntá-las numa zona mais ampla."
+
+msgid "email_suggest_split_subject"
+msgstr "Comunidade para dividir"
+
+msgid "email_suggest_split_body"
+msgstr "Uma comunidade de «{name}» tem mais de 500 pessoas: convém dividi-la em zonas mais pequenas."
+
 msgid "ui_community_category_proposal_hint"
 msgstr "A administração irá revê-la; entretanto, a sua comunidade aparecerá em «Outras»."
 

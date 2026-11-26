@@ -421,7 +421,7 @@ async def pending(db: AsyncSession = Depends(get_db), admin: User = Depends(requ
 async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
     """Every interest with how many zones have its community and how many people are in them."""
     from app.accounts.routes import interest_out
-    from app.communities.zones import SPLIT_AT
+    from app.communities.zones import JOIN_UNDER, SPLIT_AT
     # per interest: its zones and age ranges apart, and its biggest and smallest community (members, not away)
     rows = (await db.execute(select(Conversation.interest_id, Conversation.province, Conversation.age_range, func.count(ConversationMember.user_id),
                                     Conversation.scope_label, Conversation.scope_provinces)
@@ -449,9 +449,10 @@ async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depe
         s = stats.get(i.id, {"zones": set(), "ages": set(), "sizes": []})
         level = i.geo_level or "country"
         biggest = max(s["sizes"], default=0)
-        # split when one community passes SPLIT_AT; join into the wider level when they are all small (under 10)
+        # split when one community passes SPLIT_AT people; join into the wider level when every one has fewer than
+        # JOIN_UNDER (and it has some: an interest nobody has chosen yet suggests nothing)
         suggest = ("split" if level != "province" and biggest > SPLIT_AT
-                   else "join" if level != "country" and len(s["zones"]) > 1 and biggest < 10 else None)
+                   else "join" if level != "country" and s["sizes"] and biggest < JOIN_UNDER else None)
         out.append({**interest_out(i).model_dump(), "zones": len(s["zones"]), "age_bands": len(s["ages"]),
                     "communities": len(s["sizes"]), "people": int(people.get(i.id, 0)), "biggest": biggest, "suggest": suggest,
                     # which zones (key and name) and age bands it has, to filter by them

@@ -4739,6 +4739,18 @@ msgstr "新的分类提议"
 msgid "email_category_proposal_body"
 msgstr "有人提议了分类「{name}」。请在 管理 → 分类 中审核。"
 
+msgid "email_suggest_join_subject"
+msgstr "建议合并的社区"
+
+msgid "email_suggest_join_body"
+msgstr "「{name}」的所有社区都少于 10 人：建议合并到更大的区域。"
+
+msgid "email_suggest_split_subject"
+msgstr "建议拆分的社区"
+
+msgid "email_suggest_split_body"
+msgstr "「{name}」有一个社区超过 500 人：建议拆分为更小的区域。"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 
