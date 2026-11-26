@@ -299,8 +299,8 @@ function Shell() {
   return (
     <div className={shellClass} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <nav className="dnav" aria-label={t("ui_nav")}>
-        {/* a right click on the logo opens About MeetGo */}
-        <button className="dlogo" onClick={() => go("home")} onContextMenu={(e) => { e.preventDefault(); setAbout(true); }} aria-label="MeetGo">
+        {/* the logo opens About MeetGo */}
+        <button className="dlogo" onClick={() => setAbout(true)} aria-label={t("ui_about_title")}>
           <img className="appicon" src="/apple-touch-icon.png" alt="" />
           <Wordmark size={24} />
         </button>
@@ -316,7 +316,11 @@ function Shell() {
           <Icon name="plus" /><span className="dl">{t("ui_nav_publish")}</span>
         </button>
         <div className="grow" />
-        <span className={"conn" + (connected ? " on" : "")} title={connected ? t("ui_connected") : t("ui_reconnecting")} />
+        {/* the connection to the server, and the app's version (opens About MeetGo) */}
+        <div className="dnav-foot">
+          <span className={"conn" + (connected ? " on" : "")} title={connected ? t("ui_connected") : t("ui_reconnecting")} />
+          <button type="button" className="appver" onClick={() => setAbout(true)} title={t("ui_about_title")}>v{__APP_VERSION__}</button>
+        </div>
       </nav>
 
       {chatsMode ? <Sidebar activeId={activeId} /> : null}

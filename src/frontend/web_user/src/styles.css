@@ -63,6 +63,10 @@ a { color: var(--cyan); }
 .dnav .dpub { margin-top: 14px; height: 44px; border-radius: 14px; font-size: 14px; }
 .conn { width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin: 6px 12px 0; }
 .conn.on { background: var(--green); }
+.dnav-foot { display: flex; align-items: center; gap: 8px; margin: 6px 12px 0; }
+.dnav-foot .conn { margin: 0; flex: none; }
+.appver { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; padding: 0; background: none; border: 0; cursor: pointer; }
+.appver:hover { color: var(--fg); }
 .bdg { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--grad); color: var(--on-accent); font-size: 11px; font-weight: 700; display: inline-grid; place-items: center; font-variant-numeric: tabular-nums; }
 .bdg.at { background: var(--yellow); color: #1a1300; }
 .bdg.mute { background: var(--line2); color: var(--fg); }
