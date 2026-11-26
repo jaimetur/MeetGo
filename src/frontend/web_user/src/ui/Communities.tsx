@@ -793,7 +793,7 @@ export function CommunityPage({ id, tab }: { id: number; tab: "board" | "chat" |
 
   return (
     <main className="screen community">
-      <div className="chero" style={{ background: communityCover(c.slug, "c" + c.id, 120) }}>
+      <div className="chero" style={{ background: communityCover(c.slug, "c" + c.id, 120), ["--cg" as string]: communityCover(c.slug, "c" + c.id, 120), ...communityTint(c.slug, "c" + c.id) }}>
         <HeroArt c={c} />
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/communities")} aria-label={t("ui_back")}><Icon name="back" /></button>
