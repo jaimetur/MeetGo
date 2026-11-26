@@ -224,7 +224,7 @@ export const api = {
   feedReport: (id: number, reason: string, details?: string) => req(`/feed/posts/${id}/report`, { method: "POST", json: { reason, details } }),
   stories: () => req<StoryGroup[]>("/stories"),
   music: () => req<MusicTrack[]>("/music"),
-  musicHits: () => req<MusicTrack[]>("/music/hits"),
+  musicHits: (list = "country") => req<MusicTrack[]>(`/music/hits?list=${list}`),
   musicSearch: (q: string) => req<MusicTrack[]>(`/music/search?q=${encodeURIComponent(q)}`),
   storyCreate: (payload: { kind: string; text?: string; bg?: string | null; audience: string; hidden_from?: number[]; attachment_id?: number;
     layout?: StoryLayout; music?: { id?: number | string; source?: string; deezer_id?: number; start: number } | null }) =>

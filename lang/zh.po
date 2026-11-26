@@ -5246,6 +5246,63 @@ msgstr "在 Deezer 收听"
 msgid "err_music_unavailable"
 msgstr "音乐暂时不可用，请稍后再试"
 
+msgid "ui_hits_country"
+msgstr "你的国家"
+
+msgid "ui_hits_world"
+msgstr "全球"
+
+msgid "ui_hits_pop"
+msgstr "流行"
+
+msgid "ui_hits_latin"
+msgstr "拉丁"
+
+msgid "ui_hits_reggaeton"
+msgstr "雷鬼动"
+
+msgid "ui_hits_rap"
+msgstr "说唱"
+
+msgid "ui_hits_dance"
+msgstr "舞曲"
+
+msgid "ui_hits_rock"
+msgstr "摇滚"
+
+msgid "ui_hits_rnb"
+msgstr "节奏布鲁斯"
+
+msgid "ui_hits_electro"
+msgstr "电子"
+
+msgid "ui_hits_salsa"
+msgstr "萨尔萨"
+
+msgid "ui_hits_cumbia"
+msgstr "昆比亚"
+
+msgid "ui_hits_kids"
+msgstr "儿童"
+
+msgid "ui_hits_70s"
+msgstr "70 年代"
+
+msgid "ui_hits_80s"
+msgstr "80 年代"
+
+msgid "ui_hits_90s"
+msgstr "90 年代"
+
+msgid "ui_hits_00s"
+msgstr "2000 年代"
+
+msgid "ui_hits_10s"
+msgstr "2010 年代"
+
+msgid "ui_hits_20s"
+msgstr "2020 年代"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

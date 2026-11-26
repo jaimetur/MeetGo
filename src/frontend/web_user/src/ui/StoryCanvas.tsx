@@ -89,10 +89,14 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
 export const MOODS = ["happy", "chill", "romantic", "epic", "sad", "energetic", "mysterious", "party", "dreamy", "summer"];
 
 type Tab = "hits" | "popular" | "classic" | "mood";
+// the lists of hits: my country's chart, the world's, by genre and by decade
+const HIT_LISTS = ["country", "world", "pop", "latin", "reggaeton", "rap", "dance", "rock", "rnb", "electro", "salsa", "cumbia", "kids",
+  "70s", "80s", "90s", "00s", "10s", "20s"];
 
 export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicTrack; start: number } | null; onPick: (v: { track: MusicTrack; start: number } | null) => void; onClose: () => void }) {
   const [library, setLibrary] = useState<MusicTrack[] | null>(null);
   const [hits, setHits] = useState<MusicTrack[] | null>(null);
+  const [hitList, setHitList] = useState("country");
   const [found, setFound] = useState<MusicTrack[] | null>(null);  // the search among all songs (hits)
   const [tab, setTab] = useState<Tab>(value?.track.kind || "hits");
   const [mood, setMood] = useState("");
@@ -104,9 +108,9 @@ export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicT
   const timer = useRef<number>();
   useEffect(() => {
     api.music().then(setLibrary).catch(() => setLibrary([]));
-    api.musicHits().then(setHits).catch(() => setHits([]));
     return () => { audio.current?.pause(); };
   }, []);
+  useEffect(() => { setHits(null); api.musicHits(hitList).then(setHits).catch(() => setHits([])); }, [hitList]);
   // searching hits asks Deezer (after a moment without typing); the other tabs filter their list
   useEffect(() => {
     window.clearTimeout(timer.current);
@@ -141,9 +145,9 @@ export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicT
         <button id="music-use" className="btn pri" disabled={!chosen} onClick={() => { audio.current?.pause(); onPick(chosen); }}>{t("ui_music_use")}</button>
       </>
     )}>
-      <div className="segtabs mtabs" role="tablist">
+      {tabs.length > 1 ? <div className="segtabs mtabs" role="tablist">
         {tabs.map(([k, label]) => <button key={k} id={`music-tab-${k}`} role="tab" className={tab === k ? "on" : ""} onClick={() => { setTab(k); setMood(""); }}>{label}</button>)}
-      </div>
+      </div> : null}
       {tab === "mood" ? (
         <div className="chips mtags">
           <button className={"chip" + (!mood ? " on" : "")} onClick={() => setMood("")}>{t("ui_music_all")}</button>
@@ -151,7 +155,11 @@ export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicT
         </div>
       ) : null}
       <input id="music-search" className="inp" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={tab === "hits" ? t("ui_music_search_hits") : t("ui_music_search")} style={{ margin: "8px 0" }} />
-      {tab === "hits" && !found ? <small className="muted">{t("ui_music_hits_lead")}</small> : null}
+      {tab === "hits" && !found ? (
+        <div className="chips mtags mlists">
+          {HIT_LISTS.map((k) => <button key={k} id={`music-list-${k}`} className={"chip" + (hitList === k ? " on" : "")} onClick={() => setHitList(k)}>{t(`ui_hits_${k}`)}</button>)}
+        </div>
+      ) : null}
       <div className="mlist">
         {loading ? <span className="muted">{t("ui_loading")}</span> : !list || !list.length ? <span className="muted">{t("ui_music_none")}</span> : list.map((m) => (
           <div key={m.id} className={"mrow" + (chosen?.track.id === m.id ? " on" : "")}>

@@ -157,6 +157,9 @@ async def test_hits_from_deezer(client, db_session, monkeypatch):
     hits = (await client.get("/music/hits", headers=ana[0])).json()
     assert hits[0]["title"] == "Despacito" and hits[0]["source"] == "deezer"
     assert (await client.get("/music/search", params={"q": "fonsi"}, headers=ana[0])).json()[0]["artist"] == "Luis Fonsi"
+    for name in ("world", "latin", "80s"):
+        assert (await client.get("/music/hits", params={"list": name}, headers=ana[0])).json()[0]["title"] == "Despacito"
+    assert (await client.get("/music/hits", params={"list": "nope"}, headers=ana[0])).status_code == 400
     res = await client.post("/stories", json={"kind": "text", "text": "¡Verano!", "music": {"source": "deezer", "deezer_id": 623698142, "start": 40}}, headers=ana[0])
     assert res.status_code == 200, res.text
     music = (await client.get("/stories", headers=ana[0])).json()[0]["stories"][0]["music"]

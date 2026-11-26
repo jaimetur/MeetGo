@@ -403,7 +403,7 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .updnote .iconbtn { color: #fff; opacity: 0.75; }
 .toast { background: var(--raise); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); font-size: 13.5px; }
 .toast.error { border-color: rgba(255, 107, 107, 0.6); }
-.modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 40; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); }
+.modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 40; display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); }
 .modal { transition: transform .18s ease, opacity .18s ease; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); width: min(480px, 100%); max-height: calc(100% - 32px); display: flex; flex-direction: column; }
 .modal header { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); font-family: var(--display); font-weight: 650; font-size: 16px; }
 .modal .mbody { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
@@ -1962,7 +1962,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .mrow { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 10px; }
 .mrow.on { background: var(--panel2); }
 .mplay { flex: none; background: var(--panel2); }
-.mtxt { flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: left; color: inherit; }
+.mtxt { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; text-align: left; color: inherit; }
 .mtxt b, .mtxt small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mstart { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
 .mlic { font-size: 11.5px; }
@@ -1978,3 +1978,8 @@ button.fwho-row:hover { background: var(--panel2); }
 .stmusic-chip img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; }
 .stmusic-chip a { color: inherit; text-decoration: underline; white-space: nowrap; font-weight: 600; }
 .mu-deezer { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.mlists { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; margin-bottom: 4px; width: 100%; min-width: 0; max-width: 100%; }
+.modal .mbody { min-width: 0; }
+.modal .mbody > * { max-width: 100%; }
+.mlists::-webkit-scrollbar { display: none; }
+.mlists .chip { flex: none; }

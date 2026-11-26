@@ -5246,6 +5246,63 @@ msgstr "Deezerで聴く"
 msgid "err_music_unavailable"
 msgstr "現在音楽を利用できません。しばらくしてからお試しください"
 
+msgid "ui_hits_country"
+msgstr "あなたの国"
+
+msgid "ui_hits_world"
+msgstr "世界"
+
+msgid "ui_hits_pop"
+msgstr "ポップ"
+
+msgid "ui_hits_latin"
+msgstr "ラテン"
+
+msgid "ui_hits_reggaeton"
+msgstr "レゲトン"
+
+msgid "ui_hits_rap"
+msgstr "ラップ"
+
+msgid "ui_hits_dance"
+msgstr "ダンス"
+
+msgid "ui_hits_rock"
+msgstr "ロック"
+
+msgid "ui_hits_rnb"
+msgstr "R&B"
+
+msgid "ui_hits_electro"
+msgstr "エレクトロ"
+
+msgid "ui_hits_salsa"
+msgstr "サルサ"
+
+msgid "ui_hits_cumbia"
+msgstr "クンビア"
+
+msgid "ui_hits_kids"
+msgstr "キッズ"
+
+msgid "ui_hits_70s"
+msgstr "70年代"
+
+msgid "ui_hits_80s"
+msgstr "80年代"
+
+msgid "ui_hits_90s"
+msgstr "90年代"
+
+msgid "ui_hits_00s"
+msgstr "2000年代"
+
+msgid "ui_hits_10s"
+msgstr "2010年代"
+
+msgid "ui_hits_20s"
+msgstr "2020年代"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

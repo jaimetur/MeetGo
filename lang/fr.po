@@ -6112,6 +6112,63 @@ msgstr "Écouter sur Deezer"
 msgid "err_music_unavailable"
 msgstr "La musique n'est pas disponible pour l'instant ; réessaie plus tard"
 
+msgid "ui_hits_country"
+msgstr "Ton pays"
+
+msgid "ui_hits_world"
+msgstr "Monde"
+
+msgid "ui_hits_pop"
+msgstr "Pop"
+
+msgid "ui_hits_latin"
+msgstr "Latino"
+
+msgid "ui_hits_reggaeton"
+msgstr "Reggaeton"
+
+msgid "ui_hits_rap"
+msgstr "Rap"
+
+msgid "ui_hits_dance"
+msgstr "Dance"
+
+msgid "ui_hits_rock"
+msgstr "Rock"
+
+msgid "ui_hits_rnb"
+msgstr "R&B"
+
+msgid "ui_hits_electro"
+msgstr "Électro"
+
+msgid "ui_hits_salsa"
+msgstr "Salsa"
+
+msgid "ui_hits_cumbia"
+msgstr "Cumbia"
+
+msgid "ui_hits_kids"
+msgstr "Enfants"
+
+msgid "ui_hits_70s"
+msgstr "Années 70"
+
+msgid "ui_hits_80s"
+msgstr "Années 80"
+
+msgid "ui_hits_90s"
+msgstr "Années 90"
+
+msgid "ui_hits_00s"
+msgstr "Années 2000"
+
+msgid "ui_hits_10s"
+msgstr "Années 2010"
+
+msgid "ui_hits_20s"
+msgstr "Années 2020"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administration l'examinera ; en attendant, votre communauté apparaîtra dans « Autres »."
 
