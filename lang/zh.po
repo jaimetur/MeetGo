@@ -5225,6 +5225,27 @@ msgstr "音频文件或数据无效"
 msgid "err_music_builtin"
 msgstr "MeetGo 自带的歌曲不能删除：可以隐藏"
 
+msgid "ui_music_tab_hits"
+msgstr "热门"
+
+msgid "ui_music_tab_popular"
+msgstr "经典民歌"
+
+msgid "ui_music_search_hits"
+msgstr "搜索任何歌曲或歌手"
+
+msgid "ui_music_hits_lead"
+msgstr "你所在国家现在最热门的歌曲。在上方输入即可搜索任何歌曲。"
+
+msgid "ui_music_by_deezer"
+msgstr "来自 Deezer 的 30 秒片段。"
+
+msgid "ui_music_on_deezer"
+msgstr "在 Deezer 收听"
+
+msgid "err_music_unavailable"
+msgstr "音乐暂时不可用，请稍后再试"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

@@ -6092,6 +6092,27 @@ msgstr "Ungültige Audiodatei oder Daten"
 msgid "err_music_builtin"
 msgstr "MeetGos Stücke können nicht gelöscht werden: du kannst sie ausblenden"
 
+msgid "ui_music_tab_hits"
+msgstr "Hits"
+
+msgid "ui_music_tab_popular"
+msgstr "Volkslieder"
+
+msgid "ui_music_search_hits"
+msgstr "Beliebiges Lied oder Künstler suchen"
+
+msgid "ui_music_hits_lead"
+msgstr "Das Meistgehörte gerade in deinem Land. Tippe oben, um ein beliebiges Lied zu suchen."
+
+msgid "ui_music_by_deezer"
+msgstr "30-Sekunden-Ausschnitte von Deezer."
+
+msgid "ui_music_on_deezer"
+msgstr "Auf Deezer anhören"
+
+msgid "err_music_unavailable"
+msgstr "Musik ist gerade nicht verfügbar; versuch es später erneut"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

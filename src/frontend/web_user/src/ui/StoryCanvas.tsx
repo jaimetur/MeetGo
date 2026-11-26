@@ -88,30 +88,48 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
 
 export const MOODS = ["happy", "chill", "romantic", "epic", "sad", "energetic", "mysterious", "party", "dreamy", "summer"];
 
+type Tab = "hits" | "popular" | "classic" | "mood";
+
 export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicTrack; start: number } | null; onPick: (v: { track: MusicTrack; start: number } | null) => void; onClose: () => void }) {
-  const [tracks, setTracks] = useState<MusicTrack[] | null>(null);
-  const [tab, setTab] = useState<"classic" | "mood">(value?.track.kind || "classic");
+  const [library, setLibrary] = useState<MusicTrack[] | null>(null);
+  const [hits, setHits] = useState<MusicTrack[] | null>(null);
+  const [found, setFound] = useState<MusicTrack[] | null>(null);  // the search among all songs (hits)
+  const [tab, setTab] = useState<Tab>(value?.track.kind || "hits");
   const [mood, setMood] = useState("");
   const [q, setQ] = useState("");
   const [chosen, setChosen] = useState(value);
-  const [playing, setPlaying] = useState<number | null>(null);
+  const [playing, setPlaying] = useState<number | string | null>(null);
   const audio = useRef<HTMLAudioElement | null>(null);
   const stopAt = useRef<number>(0);
-  useEffect(() => { api.music().then(setTracks).catch((e) => { toast(e.message, "error"); setTracks([]); }); }, []);
-  useEffect(() => () => { audio.current?.pause(); }, []);
+  const timer = useRef<number>();
+  useEffect(() => {
+    api.music().then(setLibrary).catch(() => setLibrary([]));
+    api.musicHits().then(setHits).catch(() => setHits([]));
+    return () => { audio.current?.pause(); };
+  }, []);
+  // searching hits asks Deezer (after a moment without typing); the other tabs filter their list
+  useEffect(() => {
+    window.clearTimeout(timer.current);
+    if (tab !== "hits" || q.trim().length < 2) { setFound(null); return; }
+    timer.current = window.setTimeout(() => { api.musicSearch(q.trim()).then(setFound).catch(() => setFound([])); }, 350);
+  }, [q, tab]);
   const play = (track: MusicTrack, from: number) => {
     if (!audio.current) audio.current = new Audio();
     const a = audio.current;
-    if (playing === track.id && !a.paused && Math.abs(a.currentTime - from) < 0.5) { a.pause(); setPlaying(null); return; }
+    if (playing === track.id && !a.paused) { a.pause(); setPlaying(null); return; }
     a.src = fileUrl(track.url);
     a.currentTime = from;
     stopAt.current = from + MUSIC_SECONDS;
     a.ontimeupdate = () => { if (a.currentTime >= stopAt.current) { a.pause(); setPlaying(null); } };
     a.onended = () => setPlaying(null);
-    void a.play().then(() => setPlaying(track.id)).catch(() => setPlaying(null));
+    void a.play().then(() => setPlaying(track.id)).catch(() => { setPlaying(null); toast(t("err_music_unavailable"), "error"); });
   };
-  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const list = (tracks || []).filter((m) => m.kind === tab && (!mood || m.mood === mood) && (!q || plain(`${m.title} ${m.artist}`).includes(plain(q))));
+  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const list = tab === "hits" ? (found ?? hits)
+    : (library || []).filter((m) => m.kind === tab && (!mood || m.mood === mood) && (!q || plain(`${m.title} ${m.artist}`).includes(plain(q))));
+  const loading = tab === "hits" ? (q.trim().length >= 2 ? found === null : hits === null) : library === null;
+  const tabs: [Tab, string][] = [["hits", t("ui_music_tab_hits")], ["popular", t("ui_music_tab_popular")], ["classic", t("ui_music_tab_classic")], ["mood", t("ui_music_tab_mood")]];
+  const max = chosen ? Math.max(0, chosen.track.duration - MUSIC_SECONDS) : 0;
   return (
     <Modal wide title={t("ui_music_title")} onClose={() => { audio.current?.pause(); onClose(); }} footer={(
       <>
@@ -121,9 +139,8 @@ export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicT
         <button id="music-use" className="btn pri" disabled={!chosen} onClick={() => { audio.current?.pause(); onPick(chosen); }}>{t("ui_music_use")}</button>
       </>
     )}>
-      <div className="segtabs" role="tablist">
-        <button id="music-tab-classic" role="tab" className={tab === "classic" ? "on" : ""} onClick={() => setTab("classic")}>{t("ui_music_tab_classic")}</button>
-        <button id="music-tab-mood" role="tab" className={tab === "mood" ? "on" : ""} onClick={() => setTab("mood")}>{t("ui_music_tab_mood")}</button>
+      <div className="segtabs mtabs" role="tablist">
+        {tabs.map(([k, label]) => <button key={k} id={`music-tab-${k}`} role="tab" className={tab === k ? "on" : ""} onClick={() => { setTab(k); setMood(""); }}>{label}</button>)}
       </div>
       {tab === "mood" ? (
         <div className="chips mtags">
@@ -131,25 +148,30 @@ export function MusicPicker({ value, onPick, onClose }: { value: { track: MusicT
           {MOODS.map((m) => <button key={m} className={"chip" + (mood === m ? " on" : "")} onClick={() => setMood(m)}>{t(`ui_mood_${m}`)}</button>)}
         </div>
       ) : null}
-      <input className="inp" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_music_search")} style={{ margin: "8px 0" }} />
+      <input id="music-search" className="inp" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={tab === "hits" ? t("ui_music_search_hits") : t("ui_music_search")} style={{ margin: "8px 0" }} />
+      {tab === "hits" && !found ? <small className="muted">{t("ui_music_hits_lead")}</small> : null}
       <div className="mlist">
-        {tracks === null ? <span className="muted">{t("ui_loading")}</span> : !list.length ? <span className="muted">{t("ui_music_none")}</span> : list.map((m) => (
+        {loading ? <span className="muted">{t("ui_loading")}</span> : !list || !list.length ? <span className="muted">{t("ui_music_none")}</span> : list.map((m) => (
           <div key={m.id} className={"mrow" + (chosen?.track.id === m.id ? " on" : "")}>
+            {m.cover ? <img className="mcover" src={m.cover} alt="" loading="lazy" /> : null}
             <button type="button" className="iconbtn mplay" onClick={() => play(m, chosen?.track.id === m.id ? chosen.start : 0)} aria-label={t("ui_music_listen")}>
               <Icon name={playing === m.id ? "pause" : "play"} size="sm" />
             </button>
             <button type="button" className="mtxt" onClick={() => setChosen({ track: m, start: chosen?.track.id === m.id ? chosen.start : 0 })}>
-              <b>{m.title}</b><small className="muted">{m.artist}{m.kind === "mood" && m.mood ? ` · ${t(`ui_mood_${m.mood}`)}` : ""}</small>
+              <b>{m.title}{m.explicit ? " 🅴" : ""}</b><small className="muted">{m.artist}{m.kind === "mood" && m.mood ? ` · ${t(`ui_mood_${m.mood}`)}` : ""}</small>
             </button>
             {chosen?.track.id === m.id ? <Icon name="check2" /> : null}
           </div>
         ))}
       </div>
+      {tab === "hits" ? <small className="muted mlic">{t("ui_music_by_deezer")}</small> : null}
       {chosen ? (
         <div className="mstart">
           <span className="muted">{t("ui_music_from", { s: chosen.start })}</span>
-          <input id="music-start" type="range" min={0} max={Math.max(0, chosen.track.duration - MUSIC_SECONDS)} value={chosen.start}
-            onChange={(e) => setChosen({ ...chosen, start: Number(e.target.value) })} onMouseUp={() => play(chosen.track, chosen.start)} onTouchEnd={() => play(chosen.track, chosen.start)} />
+          {max > 0 ? (
+            <input id="music-start" type="range" min={0} max={max} value={chosen.start}
+              onChange={(e) => setChosen({ ...chosen, start: Number(e.target.value) })} onMouseUp={() => play(chosen.track, chosen.start)} onTouchEnd={() => play(chosen.track, chosen.start)} />
+          ) : null}
           {chosen.track.license ? <small className="muted mlic">{t("ui_music_license", { license: chosen.track.license, performer: chosen.track.performer || chosen.track.artist })}</small> : null}
         </div>
       ) : null}

@@ -61,7 +61,7 @@ def track_out(m: MusicTrack, admin: bool = False) -> dict:
 
 @router.get("/music", response_model=list[dict])
 async def music(db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    """The songs to choose for a story: famous ones first (classic), then MeetGo's by mood."""
+    """The songs of the library to choose for a story: popular songs with lyrics, famous works, MeetGo's by mood."""
     rows = (await db.execute(select(MusicTrack).where(MusicTrack.active.is_(True)).order_by(MusicTrack.kind, MusicTrack.position, MusicTrack.id))).scalars().all()
     return [track_out(m) for m in rows]
 
@@ -80,8 +80,16 @@ async def music_file(name: str):
 
 
 async def story_music(db: AsyncSession, value: dict | None) -> dict | None:
-    """A story's song as stored: {id, start} of an active song, the start within it."""
-    if not value or not value.get("id"):
+    """A story's song as stored: {id, start} of an active song of the library, the start within it; or a hit
+    ({source: "deezer", deezer_id, start})."""
+    if not value:
+        return None
+    if value.get("source") == "deezer" and value.get("deezer_id"):
+        from app.feed.deezer import enabled, story_track
+        if not await enabled(db):
+            raise HTTPException(400, t("err_music_not_found"))
+        return await story_track(db, value)
+    if not value.get("id"):
         return None
     track = await db.get(MusicTrack, int(value["id"]))
     if not track or not track.active:
@@ -105,7 +113,7 @@ async def add_music(file: UploadFile = File(...), title: str = Form(..., max_len
     """A song uploaded by the administration (MP3, M4A, OGG or WAV), cut to its first minute."""
     import subprocess
     import tempfile
-    if kind not in ("classic", "mood") or (mood and mood not in MOODS):
+    if kind not in ("popular", "classic", "mood") or (mood and mood not in MOODS):
         raise HTTPException(400, t("err_music_invalid"))
     data = await file.read(MAX_BYTES + 1)
     if len(data) > MAX_BYTES:

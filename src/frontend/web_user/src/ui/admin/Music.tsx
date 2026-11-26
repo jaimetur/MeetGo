@@ -13,12 +13,13 @@ import { Badge, Empty, Field, Switch } from "./kit";
 
 export function Music() {
   const [list, setList] = useState<AdminTrack[] | null>(null);
-  const [tab, setTab] = useState<"classic" | "mood">("classic");
+  const [tab, setTab] = useState<"popular" | "classic" | "mood">("popular");
+  const [deezer, setDeezer] = useState<boolean | null>(null);
   const [adding, setAdding] = useState(false);
   const [playing, setPlaying] = useState<number | null>(null);
   const audio = useRef<HTMLAudioElement | null>(null);
   const load = () => api.adminMusic().then(setList).catch((e) => { toast(e.message, "error"); setList([]); });
-  useEffect(() => { load(); return () => audio.current?.pause(); }, []);
+  useEffect(() => { load(); api.musicSettings().then((x) => setDeezer(x.deezer)).catch(() => undefined); return () => audio.current?.pause(); }, []);
   const play = (m: AdminTrack) => {
     if (!audio.current) audio.current = new Audio();
     if (playing === m.id) { audio.current.pause(); setPlaying(null); return; }
@@ -32,9 +33,13 @@ export function Music() {
       <SectionHead title={a("sec_music")} sub={list ? a("mu_count", { n: list.length }) : undefined}>
         <button id="adm-music-new" className="btn pri sm" onClick={() => setAdding(true)}><Icon name="plus" size="sm" />{a("mu_add")}</button>
       </SectionHead>
+      <section className="adm-card mu-deezer">
+        <Switch id="adm-music-deezer" label={a("mu_deezer")} hint={a("mu_deezer_hint")} on={!!deezer} disabled={deezer === null}
+          onChange={(v) => api.saveMusicSettings({ deezer: v }).then((x) => setDeezer(x.deezer)).catch((e) => toast(e.message, "error"))} />
+        <a className="linkbtn" href="https://developers.deezer.com/termsofuse" target="_blank" rel="noreferrer">{a("mu_deezer_terms")}</a>
+      </section>
       <div className="segtabs" role="tablist">
-        <button role="tab" className={tab === "classic" ? "on" : ""} onClick={() => setTab("classic")}>{t("ui_music_tab_classic")}</button>
-        <button role="tab" className={tab === "mood" ? "on" : ""} onClick={() => setTab("mood")}>{t("ui_music_tab_mood")}</button>
+        {(["popular", "classic", "mood"] as const).map((k) => <button key={k} role="tab" className={tab === k ? "on" : ""} onClick={() => setTab(k)}>{t(`ui_music_tab_${k}`)}</button>)}
       </div>
       {list === null ? <div className="adm-loading">{a("loading")}</div> : !shown.length ? <Empty icon="music" text={a("mu_empty")} /> : (
         <div className="mu-list">
@@ -61,7 +66,7 @@ export function Music() {
   );
 }
 
-function AddTrack({ kind: start, onClose, onDone }: { kind: "classic" | "mood"; onClose: () => void; onDone: () => void }) {
+function AddTrack({ kind: start, onClose, onDone }: { kind: "popular" | "classic" | "mood"; onClose: () => void; onDone: () => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
@@ -86,8 +91,8 @@ function AddTrack({ kind: start, onClose, onDone }: { kind: "classic" | "mood"; 
       <Field label={a("mu_title")}><input className="inp" maxLength={160} value={title} onChange={(e) => setTitle(e.target.value)} /></Field>
       <Field label={a("mu_artist")}><input className="inp" maxLength={160} value={artist} onChange={(e) => setArtist(e.target.value)} /></Field>
       <Field label={a("mu_kind")}>
-        <select className="inp" value={kind} onChange={(e) => setKind(e.target.value as "classic" | "mood")}>
-          <option value="classic">{t("ui_music_tab_classic")}</option><option value="mood">{t("ui_music_tab_mood")}</option>
+        <select className="inp" value={kind} onChange={(e) => setKind(e.target.value as "popular" | "classic" | "mood")}>
+          <option value="popular">{t("ui_music_tab_popular")}</option><option value="classic">{t("ui_music_tab_classic")}</option><option value="mood">{t("ui_music_tab_mood")}</option>
         </select>
       </Field>
       {kind === "mood" ? (

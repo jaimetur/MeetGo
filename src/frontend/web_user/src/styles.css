@@ -1886,15 +1886,17 @@ button.fwho-row:hover { background: var(--panel2); }
 .sthide-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
 /* watching */
 .stview { position: fixed; inset: 0; z-index: 90; background: #000; display: grid; place-items: center; }
-.stframe { position: relative; width: min(calc(100vw / var(--z, 1)), calc(100dvh / var(--z, 1) * 9 / 16)); height: calc(100dvh / var(--z, 1)); display: flex; flex-direction: column; background: #111; color: #fff; }
-.stbars { position: absolute; top: calc(8px + env(safe-area-inset-top, 0px)); left: 8px; right: 8px; z-index: 3; display: flex; gap: 4px; }
+.stframe { position: relative; width: min(calc(100vw / var(--z, 1)), 560px); height: calc(100dvh / var(--z, 1)); display: flex; flex-direction: column; background: #111; color: #fff; }
+.sthead { flex: none; display: flex; flex-direction: column; gap: 8px; padding: calc(8px + env(safe-area-inset-top, 0px)) 8px 8px; background: #000; }
+.stbars { display: flex; gap: 4px; }
 .stbars span { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.35); overflow: hidden; }
 .stbars i { display: block; height: 100%; background: #fff; }
-.sttop { position: absolute; top: calc(18px + env(safe-area-inset-top, 0px)); left: 8px; right: 8px; z-index: 3; display: flex; align-items: center; gap: 6px; }
+.sttop { display: flex; align-items: center; gap: 6px; }
 .sttop .iconbtn { color: #fff; }
 .stwho { display: flex; align-items: center; gap: 8px; color: #fff; }
 .stwho small { opacity: .75; }
-.stbody { position: relative; flex: 1; display: grid; place-items: center; overflow: hidden; user-select: none; }
+.stbody { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; user-select: none; container-type: size; background: #000; }
+.stfit { width: min(100cqw, 100cqh * 9 / 16); aspect-ratio: 9 / 16; border-radius: 10px; overflow: hidden; }
 .stbody img, .stbody video { width: 100%; height: 100%; object-fit: contain; }
 .sttext { padding: 32px; font-size: 26px; font-weight: 700; text-align: center; white-space: pre-wrap; word-break: break-word; }
 .stcaption { position: absolute; left: 0; right: 0; bottom: 24px; text-align: center; padding: 8px 16px; font-size: 17px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,.8); color: #fff; }
@@ -1915,8 +1917,7 @@ button.fwho-row:hover { background: var(--panel2); }
 /* stories: the canvas (made and seen alike; sizes relative to its width) */
 .stcanvas { position: relative; width: 100%; height: 100%; overflow: hidden; container-type: inline-size; touch-action: none; display: grid; place-items: center; }
 .stcanvas > img, .stcanvas > video { width: 100%; height: 100%; object-fit: cover; }
-.stview .stcanvas > img, .stview .stcanvas > video { object-fit: contain; }
-.sttxt { position: absolute; transform: translate(-50%, -50%); max-width: 90%; padding: .15em .35em; border-radius: .25em; font-weight: 700; line-height: 1.2; white-space: pre-wrap; word-break: break-word; user-select: none; }
+.sttxt { position: absolute; transform: translate(-50%, -50%); width: max-content; max-width: 90cqw; padding: .15em .35em; border-radius: .25em; font-weight: 700; line-height: 1.2; white-space: pre-wrap; word-break: break-word; user-select: none; }
 .stcanvas.edit .sttxt, .stcanvas.edit .ststicker { cursor: grab; }
 .sttxt.sel, .ststicker.sel { outline: 2px dashed rgba(255,255,255,.8); outline-offset: 4px; }
 .sttxt.f-classic { font-family: var(--sans, system-ui); }
@@ -1929,7 +1930,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .ststicker { position: absolute; transform: translate(-50%, -50%); line-height: 1; user-select: none; }
 .stmusic-chip { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border-radius: 999px; background: var(--panel2); font-size: 12.5px; max-width: 100%; }
 .stmusic-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.stmusic-chip.over { position: absolute; top: calc(64px + env(safe-area-inset-top, 0px)); left: 12px; z-index: 2; background: rgba(0,0,0,.45); color: #fff; margin: 0; }
+.stmusic-chip.over { align-self: flex-start; background: rgba(255,255,255,.12); color: #fff; margin: 0; }
 /* making one */
 .stedit { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 16px; align-items: start; }
 @media (max-width: 700px) { .stedit { grid-template-columns: 1fr; } }
@@ -1971,3 +1972,9 @@ button.fwho-row:hover { background: var(--panel2); }
 .mu-row.dim { opacity: .55; }
 .mu-txt { display: flex; flex-direction: column; min-width: 0; }
 .mu-txt b, .mu-txt small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mtabs { flex-wrap: wrap; }
+.mcover { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; flex: none; }
+.stmusic-chip img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; }
+.stmusic-chip a { color: inherit; text-decoration: underline; white-space: nowrap; font-weight: 600; }
+.mu-deezer { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }

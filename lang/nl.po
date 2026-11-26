@@ -5225,6 +5225,27 @@ msgstr "Ongeldig audiobestand of gegevens"
 msgid "err_music_builtin"
 msgstr "MeetGo's stukken kun je niet verwijderen: je kunt ze verbergen"
 
+msgid "ui_music_tab_hits"
+msgstr "Hits"
+
+msgid "ui_music_tab_popular"
+msgstr "Volksliedjes"
+
+msgid "ui_music_search_hits"
+msgstr "Zoek elk nummer of elke artiest"
+
+msgid "ui_music_hits_lead"
+msgstr "Het meest beluisterd nu in jouw land. Typ hierboven om elk nummer te zoeken."
+
+msgid "ui_music_by_deezer"
+msgstr "Fragmenten van 30 seconden van Deezer."
+
+msgid "ui_music_on_deezer"
+msgstr "Luister op Deezer"
+
+msgid "err_music_unavailable"
+msgstr "Muziek is nu niet beschikbaar; probeer het later opnieuw"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

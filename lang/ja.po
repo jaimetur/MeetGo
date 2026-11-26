@@ -5225,6 +5225,27 @@ msgstr "音声ファイルまたはデータが無効です"
 msgid "err_music_builtin"
 msgstr "MeetGoの曲は削除できません（非表示にできます）"
 
+msgid "ui_music_tab_hits"
+msgstr "ヒット曲"
+
+msgid "ui_music_tab_popular"
+msgstr "定番の歌"
+
+msgid "ui_music_search_hits"
+msgstr "曲名・アーティストで検索"
+
+msgid "ui_music_hits_lead"
+msgstr "あなたの国で今いちばん聴かれている曲です。上で検索すると、どんな曲でも探せます。"
+
+msgid "ui_music_by_deezer"
+msgstr "Deezerの30秒プレビュー。"
+
+msgid "ui_music_on_deezer"
+msgstr "Deezerで聴く"
+
+msgid "err_music_unavailable"
+msgstr "現在音楽を利用できません。しばらくしてからお試しください"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

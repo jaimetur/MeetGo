@@ -140,3 +140,29 @@ async def test_admin_music(client, db_session):
     assert (await client.patch(f"/admin/music/{tid}", json={"active": False}, headers=admin)).json()["active"] is False
     ana = await make_user(client, db_session, "ana@example.com", "Ana")
     assert all(m["id"] != tid for m in (await client.get("/music", headers=ana[0])).json())
+
+
+async def test_hits_from_deezer(client, db_session, monkeypatch):
+    """Hits: the country's chart and the search come from Deezer (here a stand-in); a story keeps the song's id and its
+    clip is asked for again when it plays; the administration can turn it off."""
+    import app.feed.deezer as dz
+    song = {"id": 623698142, "title": "Despacito", "title_short": "Despacito", "artist": {"name": "Luis Fonsi"},
+            "album": {"cover_medium": "https://e-cdns-images.dzcdn.net/x.jpg"}, "preview": "https://cdnt-preview.dzcdn.net/x.mp3?hdnea=1",
+            "link": "https://www.deezer.com/track/623698142", "readable": True}
+
+    async def fake_get(path, key, ttl):
+        return song if path.startswith("/track/") else {"data": [song]}
+    monkeypatch.setattr(dz, "_get", fake_get)
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    hits = (await client.get("/music/hits", headers=ana[0])).json()
+    assert hits[0]["title"] == "Despacito" and hits[0]["source"] == "deezer"
+    assert (await client.get("/music/search", params={"q": "fonsi"}, headers=ana[0])).json()[0]["artist"] == "Luis Fonsi"
+    res = await client.post("/stories", json={"kind": "text", "text": "¡Verano!", "music": {"source": "deezer", "deezer_id": 623698142, "start": 40}}, headers=ana[0])
+    assert res.status_code == 200, res.text
+    music = (await client.get("/stories", headers=ana[0])).json()[0]["stories"][0]["music"]
+    assert music["title"] == "Despacito" and music["start"] == 15 and music["url"] == "/music/deezer/623698142/play"
+    play = await client.get("/music/deezer/623698142/play", follow_redirects=False)
+    assert play.status_code == 302 and play.headers["location"].startswith("https://cdnt-preview.dzcdn.net/")
+    admin = await admin_headers(client)
+    assert (await client.patch("/admin/music/settings", json={"deezer": False}, headers=admin)).json() == {"deezer": False}
+    assert (await client.get("/music/hits", headers=ana[0])).json() == []

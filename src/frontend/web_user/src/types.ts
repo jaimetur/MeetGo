@@ -239,8 +239,10 @@ export type FeedPost = {
 export type FeedComment = { id: number; post_id: number; parent_id: number | null; author: UserSummary; body: string; created_at: string; mine: boolean };
 /** A story (24 hours) and the stories of one person, as the strip shows them. */
 /** A song of the library, for stories. */
-export type MusicTrack = { id: number; kind: "classic" | "mood"; mood: string | null; title: string; artist: string; performer: string;
-  url: string; duration: number; license: string; license_url: string | null; source_url: string | null };
+export type MusicTrack = { id: number | string; kind: "hits" | "popular" | "classic" | "mood"; mood?: string | null; title: string; artist: string; performer?: string;
+  url: string; duration: number; license?: string; license_url?: string | null; source_url?: string | null;
+  // a hit: Deezer's song (its clip is asked for when it plays)
+  source?: "deezer"; deezer_id?: number; cover?: string | null; link?: string | null; explicit?: boolean };
 /** Where a story's text goes and how it looks, its emoji stickers and its filter (positions from 0 to 1). */
 export type StoryLayout = {
   text?: { x: number; y: number; size: number; color: string; font: string; bg: string; align: "left" | "center" | "right" };

@@ -84,7 +84,7 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   async function publish() {
     setBusy(true);
     try {
-      const common = { text: text.trim(), audience, hidden_from: hidden, layout, music: music ? { id: music.track.id, start: music.start } : null };
+      const common = { text: text.trim(), audience, hidden_from: hidden, layout, music: !music ? null : music.track.source === "deezer" ? { source: "deezer", deezer_id: music.track.deezer_id, start: music.start } : { id: music.track.id, start: music.start } };
       if (kind === "media") {
         if (!file) return;
         if (video && (await duration(preview)) > 16) throw new Error(t("ui_story_video_long"));
@@ -301,6 +301,8 @@ function StoryViewer({ groups, start, onClose, onChanged }: { groups: StoryGroup
   return (
     <div className="stview" role="dialog" aria-modal="true" aria-label={t("ui_stories")}>
       <div className="stframe">
+        {/* the bars, who and the buttons, and the song: a band of their own above the story, never on it */}
+        <div className="sthead">
         <div className="stbars">
           {group.stories.map((s, k) => <span key={s.id}><i style={{ width: `${k < i ? 100 : k === i ? progress * 100 : 0}%` }} /></span>)}
         </div>
@@ -313,10 +315,20 @@ function StoryViewer({ groups, start, onClose, onChanged }: { groups: StoryGroup
           <button type="button" className="iconbtn" onClick={() => setPaused(!paused)} aria-label={paused ? t("ui_story_play") : t("ui_story_pause")}><Icon name={paused ? "play" : "pause"} /></button>
           <button type="button" className="iconbtn" onClick={onClose} aria-label={t("ui_close")}><Icon name="x" /></button>
         </div>
+        {story.music ? (
+          <div className="stmusic-chip over">
+            {story.music.cover ? <img src={story.music.cover} alt="" /> : <Icon name="music" size="sm" />}
+            <span>{story.music.title} · {story.music.artist}</span>
+            {story.music.source === "deezer" && story.music.link ? <a href={story.music.link} target="_blank" rel="noreferrer">{t("ui_music_on_deezer")}</a> : null}
+          </div>
+        ) : null}
+        </div>
         <div className="stbody" onPointerDown={() => setPaused(true)} onPointerUp={() => setPaused(false)} onPointerLeave={() => setPaused(false)}>
+          {/* the same 9:16 frame as when it was made, as big as fits: the text and emojis where they were put */}
+          <div className="stfit">
           <StoryCanvas kind={story.kind} text={story.text} bg={story.bg} mediaUrl={story.media ? fileUrl(story.media.url) : null} video={story.kind === "video"}
             layout={story.layout || {}} videoRef={video} muted={!!story.music || muted} onVideoTime={(p) => !story.music && setProgress(p)} onVideoEnd={() => !story.music && next()} />
-          {story.music ? <div className="stmusic-chip over"><Icon name="music" size="sm" /><span>{story.music.title} · {story.music.artist}</span></div> : null}
+          </div>
           <button type="button" className="sttap left" onClick={prev} aria-label={t("ui_previous")} />
           <button type="button" className="sttap right" onClick={next} aria-label={t("ui_next")} />
         </div>

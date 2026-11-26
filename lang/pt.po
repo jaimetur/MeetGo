@@ -5224,6 +5224,27 @@ msgstr "Ficheiro de áudio ou dados inválidos"
 msgid "err_music_builtin"
 msgstr "As músicas do MeetGo não se apagam: podes ocultá-las"
 
+msgid "ui_music_tab_hits"
+msgstr "Êxitos"
+
+msgid "ui_music_tab_popular"
+msgstr "Populares"
+
+msgid "ui_music_search_hits"
+msgstr "Procura qualquer música ou artista"
+
+msgid "ui_music_hits_lead"
+msgstr "O mais ouvido agora no teu país. Escreve acima para procurar qualquer música."
+
+msgid "ui_music_by_deezer"
+msgstr "Excertos de 30 segundos do Deezer."
+
+msgid "ui_music_on_deezer"
+msgstr "Ouvir no Deezer"
+
+msgid "err_music_unavailable"
+msgstr "A música não está disponível agora; tenta mais tarde"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "A administração irá revê-la; entretanto, a sua comunidade aparecerá em «Outras»."
 

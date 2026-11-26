@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Music of stories in four tabs: Hits (each country's Deezer chart and a search of any song, as 30-second clips Deezer serves; a story keeps the song and its clip is asked for again when it plays; the administration can turn it off), Popular (well-known songs with lyrics in public-domain or Creative Commons recordings), Famous works and Moods.
 - Stories: the text goes anywhere (dragged), with five fonts, colours, a background or shadow, size and alignment; emoji stickers placed and sized freely; filters for photos and videos; and music: famous works in free recordings (public domain or Creative Commons, each with its author and licence, from Wikimedia Commons) and MeetGo's own music by mood (tools/make_moods.py), in two tabs, with a preview and the 15 seconds chosen. Administration → Music to hide built-in songs or upload new ones (tools/make_music_library.py builds the library).
 - Editing a post of my wall can add or take away photos and videos.
 - Aliases are shown with @: «Jaime (@jaimetur)».

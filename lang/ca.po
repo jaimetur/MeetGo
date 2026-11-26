@@ -5225,6 +5225,27 @@ msgstr "Fitxer d'àudio o dades no vàlids"
 msgid "err_music_builtin"
 msgstr "Les cançons de MeetGo no s'esborren: les pots amagar"
 
+msgid "ui_music_tab_hits"
+msgstr "Èxits"
+
+msgid "ui_music_tab_popular"
+msgstr "Populars"
+
+msgid "ui_music_search_hits"
+msgstr "Cerca qualsevol cançó o artista"
+
+msgid "ui_music_hits_lead"
+msgstr "El més escoltat ara al teu país. Escriu a dalt per cercar qualsevol cançó."
+
+msgid "ui_music_by_deezer"
+msgstr "Fragments de 30 segons de Deezer."
+
+msgid "ui_music_on_deezer"
+msgstr "Escolta a Deezer"
+
+msgid "err_music_unavailable"
+msgstr "La música no està disponible ara mateix; torna-ho a provar més tard"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 

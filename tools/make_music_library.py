@@ -2,7 +2,9 @@
 Creative Commons, chosen and checked on Wikimedia Commons), plus MeetGo's own music by mood (tools/make_moods.py).
 Writes src/backend/app/feed/music/*.m4a and catalog.json (title, composer, performer, licence and source of each).
 
-    python tools/make_music_library.py <picked.json> <folder with the downloaded recordings>
+    python tools/make_music_library.py <folder with the downloaded recordings> <picked.json> [<more picked.json>…]
+
+Each picked entry has kind "classic" (famous works, the default) or "popular" (well-known songs with lyrics).
 """
 
 from __future__ import annotations
@@ -34,10 +36,12 @@ def clean_performer(text: str) -> str:
     return text[:120]
 
 
-def main(picked: Path, sources: Path) -> None:
+def main(sources: Path, picked: list[Path]) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     catalog = []
-    for p in json.loads(picked.read_text(encoding="utf-8")):
+    entries = [p for f in picked for p in json.loads(f.read_text(encoding="utf-8"))]
+    for p in sorted(entries, key=lambda e: e.get("kind", "classic") != "popular"):  # the popular songs first
+        kind = p.get("kind", "classic")
         src = sources / f'{p["key"]}.{p["file"].rsplit(".", 1)[-1].lower()}'
         if not src.exists():
             print("falta", p["key"])
@@ -47,11 +51,11 @@ def main(picked: Path, sources: Path) -> None:
         start = max(0, total + start if start < 0 else start)
         if start + SECONDS > total:
             start = max(0, total - SECONDS)
-        name = f"classic_{p['key']}.m4a"
+        name = f"{kind}_{p['key']}.m4a"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(start), "-t", str(SECONDS), "-i", str(src), "-vn", "-ac", "2",
                         "-af", f"afade=t=in:d=1.5,afade=t=out:st={SECONDS - 2.5}:d=2.5,loudnorm=I=-16:TP=-1.5",
                         "-c:a", "aac", "-b:a", "112k", str(OUT / name)], check=True)
-        catalog.append({"key": f"classic_{p['key']}", "kind": "classic", "title": p["title"], "artist": p["composer"],
+        catalog.append({"key": f"{kind}_{p['key']}", "kind": kind, "title": p["title"], "artist": p["composer"],
                         "performer": clean_performer(p.get("performer", "")), "file": name, "duration": int(duration(OUT / name)),
                         "license": p["license"], "license_url": p.get("license_url") or None, "source_url": p.get("page")})
         print(name, f"{int(start)}s", p["license"])
@@ -66,4 +70,4 @@ def main(picked: Path, sources: Path) -> None:
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]), Path(sys.argv[2]))
+    main(Path(sys.argv[1]), [Path(a) for a in sys.argv[2:]])

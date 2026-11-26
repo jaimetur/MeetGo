@@ -6091,6 +6091,27 @@ msgstr "Fichier audio ou données non valides"
 msgid "err_music_builtin"
 msgstr "Les morceaux de MeetGo ne se suppriment pas : tu peux les masquer"
 
+msgid "ui_music_tab_hits"
+msgstr "Tubes"
+
+msgid "ui_music_tab_popular"
+msgstr "Populaires"
+
+msgid "ui_music_search_hits"
+msgstr "Cherche n'importe quelle chanson ou artiste"
+
+msgid "ui_music_hits_lead"
+msgstr "Le plus écouté en ce moment dans ton pays. Écris ci-dessus pour chercher n'importe quelle chanson."
+
+msgid "ui_music_by_deezer"
+msgstr "Extraits de 30 secondes de Deezer."
+
+msgid "ui_music_on_deezer"
+msgstr "Écouter sur Deezer"
+
+msgid "err_music_unavailable"
+msgstr "La musique n'est pas disponible pour l'instant ; réessaie plus tard"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administration l'examinera ; en attendant, votre communauté apparaîtra dans « Autres »."
 

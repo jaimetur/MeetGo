@@ -5,6 +5,9 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  mu_deezer: "Éxitos de Deezer",
+  mu_deezer_hint: "Muestra en las historias la lista de éxitos de cada país y un buscador de canciones, con fragmentos de 30 segundos que sirve Deezer. Antes de dejarlo activado, revisa que sus condiciones permiten este uso.",
+  mu_deezer_terms: "Condiciones de la API de Deezer",
   sec_music: "Música",
   mu_count: "{n} canciones",
   mu_add: "Subir canción",
@@ -656,6 +659,9 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  mu_deezer: "Deezer hits",
+  mu_deezer_hint: "Shows each country's chart and a song search in stories, with 30-second clips served by Deezer. Before leaving it on, check that their terms allow this use.",
+  mu_deezer_terms: "Deezer API terms",
   sec_music: "Music",
   mu_count: "{n} songs",
   mu_add: "Upload song",
@@ -1308,6 +1314,9 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  mu_deezer: "Èxits de Deezer",
+  mu_deezer_hint: "Mostra a les històries la llista d'èxits de cada país i un cercador de cançons, amb fragments de 30 segons que serveix Deezer. Abans de deixar-ho activat, revisa que les seves condicions permeten aquest ús.",
+  mu_deezer_terms: "Condicions de l'API de Deezer",
   sec_music: "Música",
   mu_count: "{n} cançons",
   mu_add: "Puja una cançó",
@@ -1950,6 +1959,9 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  mu_deezer: "Deezer-Hits",
+  mu_deezer_hint: "Zeigt in Storys die Charts jedes Landes und eine Liedsuche, mit 30-Sekunden-Ausschnitten von Deezer. Prüfe vor dem Aktivieren, ob deren Bedingungen diese Nutzung erlauben.",
+  mu_deezer_terms: "Nutzungsbedingungen der Deezer-API",
   sec_music: "Musik",
   mu_count: "{n} Stücke",
   mu_add: "Stück hochladen",
@@ -2592,6 +2604,9 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  mu_deezer: "Tubes Deezer",
+  mu_deezer_hint: "Affiche dans les stories le classement de chaque pays et une recherche de chansons, avec des extraits de 30 secondes fournis par Deezer. Avant de l'activer, vérifie que leurs conditions autorisent cet usage.",
+  mu_deezer_terms: "Conditions de l'API Deezer",
   sec_music: "Musique",
   mu_count: "{n} morceaux",
   mu_add: "Importer un morceau",
@@ -3234,6 +3249,9 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  mu_deezer: "Successi di Deezer",
+  mu_deezer_hint: "Mostra nelle storie la classifica di ogni paese e una ricerca di brani, con estratti di 30 secondi forniti da Deezer. Prima di lasciarlo attivo, verifica che le loro condizioni consentano questo uso.",
+  mu_deezer_terms: "Condizioni dell'API di Deezer",
   sec_music: "Musica",
   mu_count: "{n} brani",
   mu_add: "Carica brano",
@@ -3876,6 +3894,9 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  mu_deezer: "Êxitos do Deezer",
+  mu_deezer_hint: "Mostra nas histórias a tabela de cada país e uma pesquisa de músicas, com excertos de 30 segundos servidos pelo Deezer. Antes de o deixar ativo, confirma que as condições deles permitem este uso.",
+  mu_deezer_terms: "Condições da API do Deezer",
   sec_music: "Música",
   mu_count: "{n} músicas",
   mu_add: "Carregar música",
@@ -4518,6 +4539,9 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  mu_deezer: "Deezer-hits",
+  mu_deezer_hint: "Toont in verhalen de hitlijst van elk land en een zoekfunctie, met fragmenten van 30 seconden van Deezer. Controleer vóór het inschakelen of hun voorwaarden dit gebruik toestaan.",
+  mu_deezer_terms: "Voorwaarden van de Deezer-API",
   sec_music: "Muziek",
   mu_count: "{n} stukken",
   mu_add: "Stuk uploaden",
@@ -5160,6 +5184,9 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  mu_deezer: "Deezerのヒット曲",
+  mu_deezer_hint: "ストーリーに各国のヒットチャートと曲の検索を表示します（Deezerが配信する30秒プレビュー）。有効にする前に、この使い方が規約で認められているか確認してください。",
+  mu_deezer_terms: "Deezer APIの利用規約",
   sec_music: "音楽",
   mu_count: "{n}曲",
   mu_add: "曲をアップロード",
@@ -5802,6 +5829,9 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  mu_deezer: "Deezer 热门",
+  mu_deezer_hint: "在快拍中显示各国热门榜和歌曲搜索，使用 Deezer 提供的 30 秒片段。开启前请确认其条款允许这种用法。",
+  mu_deezer_terms: "Deezer API 使用条款",
   sec_music: "音乐",
   mu_count: "{n} 首",
   mu_add: "上传歌曲",

@@ -176,14 +176,14 @@ async def stories_out(db: AsyncSession, viewer: User, stories: list[Story]) -> l
     media = {a.story_id: attachment_out(a) for a in (await db.execute(select(Attachment).where(Attachment.story_id.in_(ids)))).scalars().all()}
     from app.core.models import MusicTrack
     from app.feed.music import track_out
-    track_ids = {int(s.music["id"]) for s in stories if s.music and s.music.get("id")}
+    track_ids = {int(s.music["id"]) for s in stories if s.music and s.music.get("id") and s.music.get("source") != "deezer"}
     tracks = {m.id: track_out(m) for m in (await db.execute(select(MusicTrack).where(MusicTrack.id.in_(track_ids or {0})))).scalars().all()}
     users = {u.id: u for u in (await db.execute(select(User).where(User.id.in_({s.user_id for s in stories})))).scalars().all()}
     groups: dict[int, list] = {}
     for s in sorted(stories, key=lambda s: s.created_at):
         groups.setdefault(s.user_id, []).append({
             "id": s.id, "kind": s.kind, "text": s.text, "bg": s.bg, "media": media.get(s.id), "layout": s.layout or {},
-            "music": {**tracks[int(s.music["id"])], "start": s.music.get("start", 0)} if s.music and int(s.music.get("id") or 0) in tracks else None,
+            "music": _music_of(s, tracks),
             "created_at": s.created_at.isoformat(), "expires_at": s.expires_at.isoformat(),
             "seen": s.id in seen or s.user_id == viewer.id, "my_reaction": seen.get(s.id),
             "views": int(views.get(s.id, 0)) if s.user_id == viewer.id else None,
@@ -193,6 +193,18 @@ async def stories_out(db: AsyncSession, viewer: User, stories: list[Story]) -> l
             "all_seen": all(i["seen"] for i in items), "last_at": items[-1]["created_at"]} for uid, items in groups.items()]
     out.sort(key=lambda g: (not g["mine"], g["all_seen"], _neg(g["last_at"])))
     return out
+
+
+def _music_of(s: Story, tracks: dict) -> dict | None:
+    """A story's song as the viewer plays it: a hit (Deezer's clip, asked for when it plays) or one of the library."""
+    m = s.music
+    if not m:
+        return None
+    if m.get("source") == "deezer":
+        return {"source": "deezer", "title": m.get("title", ""), "artist": m.get("artist", ""), "cover": m.get("cover"),
+                "link": m.get("link"), "url": f"/music/deezer/{m['deezer_id']}/play", "start": m.get("start", 0), "kind": "hits"}
+    track = tracks.get(int(m.get("id") or 0))
+    return {**track, "start": m.get("start", 0)} if track else None
 
 
 def _neg(iso: str) -> str:

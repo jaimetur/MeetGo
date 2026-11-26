@@ -654,7 +654,7 @@ class MusicTrack(Base):
     __tablename__ = "music_tracks"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     key: Mapped[str] = mapped_column(String(64), unique=True)
-    kind: Mapped[str] = mapped_column(String(16), default="classic")  # classic | mood
+    kind: Mapped[str] = mapped_column(String(16), default="classic")  # popular | classic | mood
     mood: Mapped[str | None] = mapped_column(String(24), nullable=True)
     title: Mapped[str] = mapped_column(String(160))
     artist: Mapped[str] = mapped_column(String(160), default="")

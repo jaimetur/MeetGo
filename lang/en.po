@@ -5226,6 +5226,27 @@ msgstr "Invalid audio file or data"
 msgid "err_music_builtin"
 msgstr "MeetGo's songs can't be deleted: you can hide them"
 
+msgid "ui_music_tab_hits"
+msgstr "Hits"
+
+msgid "ui_music_tab_popular"
+msgstr "Popular"
+
+msgid "ui_music_search_hits"
+msgstr "Search any song or artist"
+
+msgid "ui_music_hits_lead"
+msgstr "The most played now in your country. Type above to search any song."
+
+msgid "ui_music_by_deezer"
+msgstr "30-second clips from Deezer."
+
+msgid "ui_music_on_deezer"
+msgstr "Listen on Deezer"
+
+msgid "err_music_unavailable"
+msgstr "Music isn't available right now; try again later"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "The administration will review it; meanwhile your community shows under «Other»."
 

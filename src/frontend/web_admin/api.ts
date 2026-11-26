@@ -211,6 +211,12 @@ export const api = {
   async deleteLanguage(code: string): Promise<AdminLanguage[]> {
     return await req(`/admin/languages/${encodeURIComponent(code)}`, { method: "DELETE" });
   },
+  async musicSettings(): Promise<{ deezer: boolean }> {
+    return await req("/admin/music/settings");
+  },
+  async saveMusicSettings(payload: { deezer: boolean }): Promise<{ deezer: boolean }> {
+    return await req("/admin/music/settings", { method: "PATCH", body: JSON.stringify(payload) });
+  },
   async adminMusic(): Promise<AdminTrack[]> {
     return await req("/admin/music");
   },
@@ -513,5 +519,5 @@ export type AdminLog = {
 };
 
 /** A song of the stories' library, for Administration → Music. */
-export type AdminTrack = { id: number; key: string; kind: "classic" | "mood"; mood: string | null; title: string; artist: string; performer: string;
+export type AdminTrack = { id: number; key: string; kind: "popular" | "classic" | "mood"; mood: string | null; title: string; artist: string; performer: string;
   url: string; duration: number; license: string; license_url: string | null; source_url: string | null; builtin: boolean; active: boolean };
