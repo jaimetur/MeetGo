@@ -1678,7 +1678,8 @@ a.btn { text-decoration: none; }
 .mt .ctime { margin-left: 8px; white-space: nowrap; }
 .mt .ctime + .ticks { margin-left: 3px; }
 /* drop-downs in windows: as tall as the other fields and easy to tap */
-.modal select.inp { min-height: 46px; padding: 11px 12px; font-size: 15px; }
+.modal select.inp { min-height: 54px; padding: 13px 14px; font-size: 16.5px; border-radius: 12px; }
+.modal .fld:has(> select.inp) { font-size: 14.5px; gap: 7px; }
 
 /* chats of a community's plans, under its chat and indented, folded or unfolded with their row */
 .csubs { margin-left: 26px; border-left: 2px solid var(--line); padding-left: 2px; }
