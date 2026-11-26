@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { t } from "@lang";
 import { api } from "../api";
-import { coverGradient, dateTile, hourOf, onBoardEvent, relative, shortDay } from "../board";
+import { coverColor, coverGradient, dateTile, hourOf, onBoardEvent, relative, shortDay } from "../board";
 import { chatPath, communityPath, navigate, postPath } from "../router";
 import { useStore } from "../store";
 import type { Post } from "../types";
-import { Icon, communityCover, hobbyIcon } from "./common";
+import { Icon, communityCover, communityTint, hobbyIcon } from "./common";
 import { EmptyState, KindTag, PhoneTop, placesText } from "./Board";
 
 type Tab = "upcoming" | "organizing" | "past";
@@ -17,7 +17,7 @@ function PlanRow({ post, tab }: { post: Post; tab: Tab }) {
   const status = post.my_status === "waitlist" ? t("ui_post_on_waitlist") : post.my_status === "pending" ? t("ui_post_request_sent") : null;
   return (
     <div className="planrow" role="link" tabIndex={0} onClick={() => navigate(postPath(post.id))} onKeyDown={(e) => e.key === "Enter" && navigate(postPath(post.id))}>
-      <span className="plantile" style={{ background: coverGradient("p" + post.id) }}>
+      <span className="plantile" style={{ background: coverGradient("p" + post.id), ["--cc" as string]: coverColor("p" + post.id) }}>
         {d ? <><small>{d.weekday}</small><b>{d.day}</b></> : <Icon name="calendar" />}
       </span>
       <div className="grow" style={{ minWidth: 0 }}>
@@ -128,7 +128,7 @@ export function RightColumn() {
           const d = p.starts_at ? dateTile(p.starts_at) : null;
           return (
             <button key={p.id} className="mini" onClick={() => navigate(postPath(p.id))}>
-              <span className="minitile" style={{ background: coverGradient("p" + p.id) }}>{d ? <><small>{d.weekday}</small><b>{d.day}</b></> : null}</span>
+              <span className="minitile" style={{ background: coverGradient("p" + p.id), ["--cc" as string]: coverColor("p" + p.id) }}>{d ? <><small>{d.weekday}</small><b>{d.day}</b></> : null}</span>
               <span className="grow" style={{ minWidth: 0 }}>
                 <b>{p.title}</b>
                 <span className="muted">{p.starts_at ? hourOf(p.starts_at) + " · " : ""}{p.my_status === "waitlist" ? t("ui_post_on_waitlist") : placesText(p)}</span>
@@ -150,7 +150,7 @@ export function RightColumn() {
         {[...(communities || [])].sort((a, b) => (activity(b) - activity(a)) || a.title.localeCompare(b.title, undefined, { sensitivity: "base" })).map((c) => (
           <div key={c.id} className="minirow">
             <button className="mini" onClick={() => navigate(communityPath(c.id))}>
-              <span className="minitile round" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+              <span className="minitile round" style={{ background: communityCover(c.slug, "c" + c.id), ...communityTint(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
               <span className="grow" style={{ minWidth: 0 }}>
                 <b>{c.title}</b>
                 <span className="muted">

@@ -6011,6 +6011,12 @@ msgstr "シンプル"
 msgid "ui_theme_prodark"
 msgstr "シンプル（夜）"
 
+msgid "ui_theme_pastel"
+msgstr "パステル"
+
+msgid "ui_theme_pasteldark"
+msgstr "パステル（夜）"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 

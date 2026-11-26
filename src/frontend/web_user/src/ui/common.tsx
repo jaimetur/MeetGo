@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { t, getLang } from "@lang";
 import { fileUrl } from "../api";
-import { coverGradient } from "../board";
+import { coverColor, coverGradient } from "../board";
 import type { Conversation, UserSummary } from "../types";
 import { colorFor, initials } from "../util";
 import { useSwipeDown } from "./swipeClose";
@@ -336,6 +336,11 @@ export function interestLook(slug?: string | null): Look {
 export function communityCover(slug: string | null | undefined, seed: string | number, angle = 135): string {
   const color = interestLook(slug).color;
   return color ? `linear-gradient(${angle}deg, ${color}, color-mix(in srgb, ${color} 55%, #0b1220))` : coverGradient(seed, angle);
+}
+
+/** The community's own colour, as a CSS variable for the pastel themes' icons. */
+export function communityTint(slug: string | null | undefined, seed: string | number): React.CSSProperties {
+  return { ["--cc" as string]: interestLook(slug).color || coverColor(seed) };
 }
 
 export function hobbyIcon(slug?: string | null, title?: string | null): string {

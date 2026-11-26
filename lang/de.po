@@ -4319,6 +4319,12 @@ msgstr "Schlicht"
 msgid "ui_theme_prodark"
 msgstr "Schlicht Nacht"
 
+msgid "ui_theme_pastel"
+msgstr "Pastell"
+
+msgid "ui_theme_pasteldark"
+msgstr "Pastell Nacht"
+
 msgid "ui_theme_plum"
 msgstr "Pflaume"
 

@@ -6011,6 +6011,12 @@ msgstr "Sobrio"
 msgid "ui_theme_prodark"
 msgstr "Sobrio notte"
 
+msgid "ui_theme_pastel"
+msgstr "Pastello"
+
+msgid "ui_theme_pasteldark"
+msgstr "Pastello notte"
+
 msgid "ui_theme_plum"
 msgstr "Prugna"
 

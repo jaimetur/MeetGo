@@ -6012,6 +6012,12 @@ msgstr "Sober"
 msgid "ui_theme_prodark"
 msgstr "Sober night"
 
+msgid "ui_theme_pastel"
+msgstr "Pastel"
+
+msgid "ui_theme_pasteldark"
+msgstr "Pastel night"
+
 msgid "ui_theme_plum"
 msgstr "Plum"
 

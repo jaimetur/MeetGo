@@ -6,7 +6,7 @@ import { coverGradient } from "../board";
 import { chatPath, communityPath, goBack, navigate } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, CommunityStats, Post, UserSummary } from "../types";
-import { Avatar, Icon, Modal, communityCover, hobbyIcon, interestLook } from "./common";
+import { Avatar, Icon, Modal, communityCover, communityTint, hobbyIcon, interestLook } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, Skeletons, usePostFeed } from "./Board";
 
@@ -17,7 +17,7 @@ const RANK: Record<string, number> = { owner: 3, admin: 2, moderator: 1, member:
 function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
   if (c.avatar_url) return <img className="cbadge" src={fileUrl(c.avatar_url)} alt="" style={{ width: size, height: size }} />;
   return (
-    <span className="cbadge" style={{ width: size, height: size, background: communityCover(c.slug, "c" + c.id) }} aria-hidden="true">
+    <span className="cbadge" style={{ width: size, height: size, background: communityCover(c.slug, "c" + c.id), ...communityTint(c.slug, "c" + c.id) }} aria-hidden="true">
       <Icon name={hobbyIcon(c.slug, c.title)} className="cbadge-ic" />
     </span>
   );
@@ -780,7 +780,7 @@ function CommunityBoard({ c, staff }: { c: Community; staff: boolean }) {
     <div className="swrap">
       {canPublish ? (
         <button className="composebar" onClick={() => navigate(`/publish?community=${c.id}`)}>
-          <span className="cbadge sm" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name="plus" size="sm" /></span>
+          <span className="cbadge sm" style={{ background: communityCover(c.slug, "c" + c.id), ...communityTint(c.slug, "c" + c.id) }}><Icon name="plus" size="sm" /></span>
           <span className="grow">{t("ui_community_publish_prompt", { name: c.title })}</span>
           <span className="btn go sm">{t("ui_nav_publish")}</span>
         </button>

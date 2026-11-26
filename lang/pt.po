@@ -6010,6 +6010,12 @@ msgstr "Sóbrio"
 msgid "ui_theme_prodark"
 msgstr "Sóbrio noite"
 
+msgid "ui_theme_pastel"
+msgstr "Pastel"
+
+msgid "ui_theme_pasteldark"
+msgstr "Pastel noite"
+
 msgid "ui_theme_plum"
 msgstr "Ameixa"
 

@@ -4318,6 +4318,12 @@ msgstr "Sobre"
 msgid "ui_theme_prodark"
 msgstr "Sobre nuit"
 
+msgid "ui_theme_pastel"
+msgstr "Pastel"
+
+msgid "ui_theme_pasteldark"
+msgstr "Pastel nuit"
+
 msgid "ui_theme_plum"
 msgstr "Prune"
 

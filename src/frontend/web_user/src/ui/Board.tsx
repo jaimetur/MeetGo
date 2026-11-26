@@ -16,7 +16,7 @@ import { signOut } from "./App";
 import { COVER_ARTS, coverArtUrl } from "../coverArts";
 import { categoryName, communityCategory } from "./Communities";
 import { useSwipeDown } from "./swipeClose";
-import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, communityTint, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -506,7 +506,7 @@ function SuggestedCommunities() {
       {folded ? null : <div className="forme-row">
         {list.map((c) => (
           <button key={c.id} className="forme-card" onClick={() => navigate(communityPath(c.id))}>
-            <span className="forme-ic" style={{ background: communityCover(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
+            <span className="forme-ic" style={{ background: communityCover(c.slug, "c" + c.id), ...communityTint(c.slug, "c" + c.id) }}><Icon name={hobbyIcon(c.slug, c.title)} /></span>
             <b>{c.title}</b>
             <small className="muted">{t("ui_members_n", { n: c.member_count })}{c.kind === "custom" ? ` · ${t("ui_suggest_by_people")}` : ""}</small>
             <span className="forme-why">{t("ui_suggest_because", { list: (c.matches || []).map((m) => interests[m] || m).slice(0, 3).join(", ") })}</span>

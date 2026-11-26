@@ -106,6 +106,14 @@ const COVERS = [
 ];
 
 /** A gradient that is always the same for the same seed (community or post id). */
+/** The first colour of the seed's gradient (the pastel themes tint icons with it). */
+export function coverColor(seed: string | number) {
+  const s = String(seed);
+  let h = 7;
+  for (let i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) >>> 0;
+  return COVERS[h % COVERS.length][0];
+}
+
 export function coverGradient(seed: string | number, angle = 135) {
   const s = String(seed);
   let h = 7;

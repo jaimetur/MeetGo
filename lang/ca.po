@@ -6011,6 +6011,12 @@ msgstr "Sobri"
 msgid "ui_theme_prodark"
 msgstr "Sobri nit"
 
+msgid "ui_theme_pastel"
+msgstr "Pastel"
+
+msgid "ui_theme_pasteldark"
+msgstr "Pastel nit"
+
 msgid "ui_theme_plum"
 msgstr "Pruna"
 

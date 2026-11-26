@@ -6011,6 +6011,12 @@ msgstr "简约"
 msgid "ui_theme_prodark"
 msgstr "简约夜间"
 
+msgid "ui_theme_pastel"
+msgstr "柔彩"
+
+msgid "ui_theme_pasteldark"
+msgstr "柔彩夜间"
+
 msgid "ui_theme_plum"
 msgstr "梅紫"
 

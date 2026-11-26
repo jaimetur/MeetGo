@@ -1091,42 +1091,61 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 }
 
 /* Sober (light) and Sober night: one accent and neutral greys; communities, buttons, marks and tabs lose their own colours */
-:root[data-palette="pro"] {
+:root:is([data-palette="pro"], [data-palette="pastel"]) {
   --bg: #f6f7f9; --rail: #ffffff; --panel: #ffffff; --panel2: #f1f3f6; --raise: #ffffff; --bubble: #ffffff;
   --line: #e5e8ed; --line2: #d4d9e1; --fg: #1d2939; --strong: #101828; --muted: #667085;
   --blue: #1d6fe0; --cyan: #1d6fe0; --green: #12a150; --teal: #1d6fe0; --sel: #eef2f7; --quote: rgba(29, 111, 224, 0.06);
   --acc-soft: #e8f0fc; --card-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
 }
-:root[data-palette="prodark"] {
+:root:is([data-palette="prodark"], [data-palette="pasteldark"]) {
   --bg: #0b0f17; --rail: #0e131e; --panel: #121826; --panel2: #1a2131; --raise: #1f2737; --bubble: #1a2131;
   --line: #232b3b; --line2: #303a4d; --fg: #e4e8ef; --strong: #ffffff; --muted: #8b95a7;
   --blue: #4c8dff; --cyan: #4c8dff; --green: #34c26f; --teal: #4c8dff; --sel: #1a2131; --quote: rgba(76, 141, 255, 0.08);
   --acc-soft: #17284a; --card-shadow: none;
 }
-:root:is([data-palette="pro"], [data-palette="prodark"]) { --grad: var(--blue); --grad2: var(--blue); --grad-go: var(--blue); --on-go: #fff; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .btn.go { box-shadow: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) span.cbadge { background: var(--acc-soft) !important; color: var(--blue); box-shadow: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .cbadge-ic { stroke: var(--blue); stroke-width: 1.7; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .cwm { display: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .chero { background: var(--acc-soft) !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .chero-art { color: var(--blue); opacity: 0.5; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .chero::before { display: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .ccard { border-radius: 12px; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .ccard:hover { transform: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .cmark-b { color: var(--muted) !important; border: 0; background: var(--panel2); border-radius: 6px; font-weight: 600; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .cmark-b.active { color: var(--green) !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .cflag { --fc: var(--line2) !important; color: var(--fg) !important; font-weight: 600; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .cflag.on { --fc: var(--strong) !important; background: var(--strong); color: var(--bg) !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .segtabs.cfilter .cfn { color: var(--muted) !important; background: var(--panel2) !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button { --tc: var(--muted) !important; --tc2: var(--muted) !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button .ic { fill: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button.on { background: var(--acc-soft) !important; box-shadow: none !important; color: var(--blue) !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .mnav button.on .ic { color: var(--blue) !important; fill: var(--blue) !important; fill-opacity: 0.15 !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .msg.mine .mbody { background: var(--blue); }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .composer .sendb { background: var(--blue); box-shadow: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) .dlogo .appicon { box-shadow: none; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) :is(.plantile, .minitile, .forme-ic) { background: var(--acc-soft) !important; color: var(--blue) !important; box-shadow: none !important; text-shadow: none !important; }
-:root:is([data-palette="pro"], [data-palette="prodark"]) :is(.plantile, .minitile, .forme-ic) :is(b, small, .ic) { color: var(--blue) !important; stroke: var(--blue); }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) { --grad: var(--blue); --grad2: var(--blue); --grad-go: var(--blue); --on-go: #fff; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .btn.go { box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) span.cbadge { background: var(--acc-soft) !important; color: var(--blue); box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .cbadge-ic { stroke: var(--blue); stroke-width: 1.7; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .cwm { display: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .chero { background: var(--acc-soft) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .chero-art { color: var(--blue); opacity: 0.5; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .chero::before { display: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .ccard { border-radius: 12px; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .ccard:hover { transform: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .cmark-b { color: var(--muted) !important; border: 0; background: var(--panel2); border-radius: 6px; font-weight: 600; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .cmark-b.active { color: var(--green) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .cflag { --fc: var(--line2) !important; color: var(--fg) !important; font-weight: 600; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .cflag.on { --fc: var(--strong) !important; background: var(--strong); color: var(--bg) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .segtabs.cfilter .cfn { color: var(--muted) !important; background: var(--panel2) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .mnav button { --tc: var(--muted) !important; --tc2: var(--muted) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .mnav button .ic { fill: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .mnav button.on { background: var(--acc-soft) !important; box-shadow: none !important; color: var(--blue) !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .mnav button.on .ic { color: var(--blue) !important; fill: var(--blue) !important; fill-opacity: 0.15 !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .msg.mine .mbody { background: var(--blue); }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .composer .sendb { background: var(--blue); box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) .dlogo .appicon { box-shadow: none; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) :is(.plantile, .minitile, .forme-ic) { background: var(--acc-soft) !important; color: var(--blue) !important; box-shadow: none !important; text-shadow: none !important; }
+:root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"]) :is(.plantile, .minitile, .forme-ic) :is(b, small, .ic) { color: var(--blue) !important; stroke: var(--blue); }
+
+/* Pastel and Pastel night: the sober ones, with each community's icon and the key marks in soft colours */
+:root[data-palette="pastel"] { --pa: 17%; --pi: 62%; --pmix: #1d2939; }
+:root[data-palette="pasteldark"] { --pa: 22%; --pi: 62%; --pmix: #ffffff; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) :is(span.cbadge, .forme-ic, .plantile, .minitile) {
+  background: color-mix(in srgb, var(--cc, var(--blue)) var(--pa), var(--panel)) !important; color: color-mix(in srgb, var(--cc, var(--blue)) var(--pi), var(--pmix)) !important; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) span.cbadge .cbadge-ic { stroke: currentColor; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) :is(.plantile, .minitile, .forme-ic) :is(b, small, .ic) { color: inherit !important; stroke: currentColor; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) { --m-act: #16a34a; --m-plan: #ea580c; --m-new: #7c3aed; --m-zone: #0d9488; --m-age: #db2777; }
+:root[data-palette="pasteldark"] { --m-act: #4ade80; --m-plan: #fb923c; --m-new: #a78bfa; --m-zone: #2dd4bf; --m-age: #f472b6; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cmark-b.active { color: var(--m-act) !important; background: color-mix(in srgb, var(--m-act) 14%, var(--panel)); }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cmark-b.plans { color: var(--m-plan) !important; background: color-mix(in srgb, var(--m-plan) 14%, var(--panel)); }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cmark-b.fresh { color: var(--m-new) !important; background: color-mix(in srgb, var(--m-new) 14%, var(--panel)); }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .ktag.kscope { color: var(--m-zone); background: color-mix(in srgb, var(--m-zone) 12%, var(--panel)); }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .ktag.kage { color: var(--m-age); background: color-mix(in srgb, var(--m-age) 11%, var(--panel)); }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cflag.active { --fc: var(--m-act) !important; color: var(--m-act) !important; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cflag.plans { --fc: var(--m-plan) !important; color: var(--m-plan) !important; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cflag.fresh { --fc: var(--m-new) !important; color: var(--m-new) !important; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"]) .cflag.on { background: color-mix(in srgb, var(--fc) 16%, var(--panel)); color: var(--fc) !important; }
 
 /* the theme swatches in Settings */
 .themefld { display: flex; flex-direction: column; gap: 8px; grid-column: 1 / -1; }
