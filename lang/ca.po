@@ -6083,15 +6083,6 @@ msgstr "A tot el país"
 msgid "ui_people_where_all"
 msgstr "A qualsevol lloc"
 
-msgid "ui_layout_theme_title"
-msgstr "Canviar també el tema?"
-
-msgid "ui_layout_theme_body"
-msgstr "El disseny {name} té els seus propis colors. Tria un dels seus temes o mantén el que tens."
-
-msgid "ui_layout_theme_keep"
-msgstr "Mantenir el meu tema"
-
 msgid "ui_theme_classic"
 msgstr "Clàssic"
 

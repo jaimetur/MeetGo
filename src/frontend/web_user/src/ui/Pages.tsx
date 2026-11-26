@@ -9,7 +9,7 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, DESIGN_FAMILIES, THEMES, THEME_FAMILIES, type ThemeChoice, type ThemeMode, applyChatSize, readThemeChoice, saveThemeChoice, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, LAYOUTS, Modal, applyLayout, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
+import { AboutModal, Avatar, Icon, LAYOUTS, applyLayout, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
@@ -826,12 +826,11 @@ function LayoutMini({ k }: { k: Layout }) {
   return <span className="lm lm-actual">{card(4)}</span>;
 }
 
-/** Each design's own theme (with its day and night versions): choosing the design offers it. */
+/** Each design's own theme (with its day and night versions): choosing the design applies it. */
 const LAYOUT_THEMES: Record<Layout, string> = { actual: "meetgo", conversa: "conversa", momentos: "momentos", muro: "muro", chispa: "chispa", quedadas: "quedadas", mosaico: "mosaico" };
 
 function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: ThemeChoice) => void }) {
   const [value, setValue] = useState<Layout>(getLayout);
-  const [offer, setOffer] = useState<Layout | null>(null);
   const pick = (v: Layout) => {
     setValue(v);
     try {
@@ -840,7 +839,8 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
       /* per-device preference */
     }
     applyLayout(v);
-    if (LAYOUT_THEMES[v] !== theme.family) setOffer(v);
+    // the design brings its theme, by day, night or auto as I had it; the themes below can change it afterwards
+    onTheme({ family: LAYOUT_THEMES[v], mode: theme.mode });
   };
   return (
     <div className="fld setfld layoutfld">{t("ui_layout")}
@@ -853,25 +853,6 @@ function LayoutPicker({ theme, onTheme }: { theme: ThemeChoice; onTheme: (v: The
         ))}
       </div>
       <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_layout_hint")}</div>
-      {offer ? (
-        <Modal title={t("ui_layout_theme_title")} onClose={() => setOffer(null)}
-          footer={<button className="btn" onClick={() => setOffer(null)}>{t("ui_layout_theme_keep")}</button>}>
-          <p className="muted" style={{ marginTop: 0 }}>{t("ui_layout_theme_body", { name: t("ui_layout_" + offer) })}</p>
-          <div className="themepick three">
-            {(["light", "dark", "auto"] as const).map((m) => {
-              const f = THEME_FAMILIES[LAYOUT_THEMES[offer]];
-              return (
-                <button key={m} id={`layout-theme-${m}`} type="button" className="themesw" onClick={() => { onTheme({ family: LAYOUT_THEMES[offer], mode: m }); setOffer(null); }}>
-                  {m === "auto"
-                    ? <span className="themesw-prev split"><span className="half">{themeMini(THEMES[f.light])}</span><span className="half">{themeMini(THEMES[f.dark])}</span></span>
-                    : <span className="themesw-prev">{themeMini(THEMES[f[m]])}</span>}
-                  <span className="themesw-name">{m === "auto" ? `${t(f.label)} · ${t("ui_theme_mode_auto")}` : t(THEMES[f[m]].label)}</span>
-                </button>
-              );
-            })}
-          </div>
-        </Modal>
-      ) : null}
     </div>
   );
 }
