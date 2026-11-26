@@ -256,7 +256,7 @@ export function CommunitiesPage() {
   // the ones I run: created by me or where I am a co-administrator
   const created = (c: Community) => c.joined && (c.role === "owner" || c.role === "admin");
   const createdCount = listed.filter(created).length;
-  const mineCount = listed.length - notMine - createdCount;
+  const mineCount = listed.length - notMine;  // joined: the ones I run too
   // without communities of my own, that tab is not there: its place goes back to all of them
   const view: Show = show === "created" && !createdCount ? "all" : show;
   // filters on top of the list, to narrow a long one: with activity in the last 30 days, with plans coming, created in
@@ -284,7 +284,7 @@ export function CommunitiesPage() {
   const [age, setAge] = useState("");
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
   const shown = listed.filter((c) => browse || view === "all"
-    || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
+    || (view === "created" ? created(c) : view === "mine" ? c.joined : !c.joined))
     .filter((c) => (!flags.active || isActive(c)) && (!flags.plans || c.upcoming_count > 0) && (!flags.fresh || isFresh(c)))
     .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
   const groups = byCategory(shown);
