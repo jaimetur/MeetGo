@@ -111,6 +111,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- The chat of a plan or event opens its plan from the header, and every plan chat (past ones too) goes under its community in Chats. The suggested communities take the whole width of the board when the six fit.
 - Publishing or editing a post: Escape leaves it, and leaving with changes not published (Escape or the close button) asks first. The chats fold is called «Plans or Events (n)».
 - Your communities: the latest active first, each with a «+» button to publish in it straight away.
 - Plans and events are one kind of post with a type: one «Plan or Event» tab when publishing (Type: Plan / Event; an event adds its end and a tickets link), one «Plans or Events» filter on the board, and in Chats their chats go under their community's chat, indented, in one «Plans (n)» fold, each marked as plan or event (remembered on each device). The «meetup» kind is now called «plan» in every language.

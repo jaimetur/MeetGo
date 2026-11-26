@@ -3,7 +3,7 @@ import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import { t } from "@lang";
 import { api, fileUrl } from "../api";
 import { sendTyping } from "../realtime";
-import { chatPath, communityPath, navigate } from "../router";
+import { chatPath, communityPath, navigate, postPath } from "../router";
 import {
   addMessage, getState, loadConversations, loadMessages, patchConversation, refreshConversation, removeConversation,
   removeLocal, setState, toast, updateMessage, useStore, forgetConversation } from "../store";
@@ -437,7 +437,7 @@ function ChatHeader({ conv }: { conv: Conversation }) {
   return (
     <header className="chead">
       <button className="iconbtn back" onClick={() => navigate("/chats")} aria-label={t("ui_back")}><Icon name="back" /></button>
-      <button className="row" style={{ minWidth: 0, textAlign: "left" }} onClick={() => navigate(conv.kind === "channel" ? communityPath(conv.id) : chatPath(conv.id, { panel: conv.kind === "dm" ? "info" : "members" }))}>
+      <button className="row" style={{ minWidth: 0, textAlign: "left" }} onClick={() => navigate(conv.kind === "channel" ? communityPath(conv.id) : conv.plan ? postPath(conv.plan.post_id) : chatPath(conv.id, { panel: conv.kind === "dm" ? "info" : "members" }))}>
         <ConvIcon conv={conv} size={36} />
         <div style={{ minWidth: 0 }}>
           <div className="ttl">{convTitle(conv)}{muted ? <Icon name="belloff" size="sm" /> : null}</div>

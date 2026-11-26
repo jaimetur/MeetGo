@@ -42,12 +42,18 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
   const [newChat, setNewChat] = useState(false);
   // Plan chats are groups: the ones of my plans are listed apart.
   const myPlans = useStore((s) => s.myPlans);
-  const planChats = useMemo(() => new Set((myPlans || []).map((p) => p.chat_conversation_id).filter((x): x is number => !!x)), [myPlans]);
+  const planChats = useMemo(() => new Set([...(myPlans || []).map((p) => p.chat_conversation_id).filter((x): x is number => !!x),
+    ...all.filter((c) => c.plan).map((c) => c.id)]), [myPlans, all]);
   const kindOf = (c: Conversation): Filter => (c.kind === "group" && planChats.has(c.id) ? "plan" : c.kind);
   // each plan chat belongs to its community's chat: listed under it, indented, and folded or unfolded per community
-  const parentOf = useMemo(() => new Map((myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.community.id])), [myPlans]);
+  // from the chat itself (the server says its plan), or from my plans while the list is still the old one
+  const parentOf = useMemo(() => new Map<number, number>([
+    ...(myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.community.id] as [number, number]),
+    ...all.filter((c) => c.plan).map((c) => [c.id, c.plan!.community_id] as [number, number])]), [myPlans, all]);
   // two folds per community: its plans and its events ("<community>:meetup" / "<community>:event")
-  const kindOfChat = useMemo(() => new Map((myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.kind])), [myPlans]);
+  const kindOfChat = useMemo(() => new Map<number, string>([
+    ...(myPlans || []).filter((p) => p.chat_conversation_id).map((p) => [p.chat_conversation_id as number, p.kind] as [number, string]),
+    ...all.filter((c) => c.plan).map((c) => [c.id, c.plan!.kind] as [number, string])]), [myPlans, all]);
   const [folded, setFolded] = useState<Set<string>>(() => {
     try {
       return new Set((JSON.parse(localStorage.getItem("chats.foldedPlans") || "[]") as unknown[]).map(String).map((k) => (k.includes(":") ? k : `${k}:meetup`)));

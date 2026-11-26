@@ -60,6 +60,7 @@ export type Conversation = {
   last_message_at: string | null;
   slow_mode_seconds: number;
   pinned_message_id: number | null;
+  plan?: { post_id: number; kind: "meetup" | "event"; community_id: number } | null;  // the chat of a plan or event
   description: string | null;
   member_count: number;
   unread_count: number;

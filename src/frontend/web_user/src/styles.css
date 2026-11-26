@@ -1695,3 +1695,8 @@ a.btn { text-decoration: none; }
 .covergal-it img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .covergal-it.on { border-color: var(--cyan); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 30%, transparent); }
 .covergal-it:hover { filter: brightness(1.06); }
+/* the suggested communities: when the six fit, equal columns as wide as the board below; narrower, they scroll */
+.forme { container-type: inline-size; }
+@container (min-width: 880px) {
+  .forme-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); overflow: visible; }
+}

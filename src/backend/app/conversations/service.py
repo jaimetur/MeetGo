@@ -296,6 +296,14 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
     if interest_ids:
         interests = {i.id: i for i in (await db.execute(select(Interest).where(Interest.id.in_(interest_ids)))).scalars().all()}
 
+    # the chat of a plan or event: its post and kind, so the app opens the plan from the chat and groups it under its
+    # community (whether the plan is still to come or already past)
+    from app.core.models import BoardPost
+    group_ids = [c.id for _, c in rows if c.kind == "group"]
+    plans = {cid: (pid, kind, community) for cid, pid, kind, community in (await db.execute(
+        select(BoardPost.chat_conversation_id, BoardPost.id, BoardPost.kind, BoardPost.conversation_id)
+        .where(BoardPost.chat_conversation_id.in_(group_ids)))).all()} if group_ids else {}
+
     out = []
     for member, conv in rows:
         last = last_msgs.get(conv.last_message_id or 0)
@@ -311,6 +319,8 @@ async def conversations_out(db: AsyncSession, user: User, only_ids: list[int] | 
             "member_count": counts.get(conv.id, 0),
             "unread_count": 0 if expelled else min(unread.get(conv.id, 0), 999),
             "mention_count": 0 if expelled else mentions.get(conv.id, 0),
+            "plan": ({"post_id": plans[conv.id][0], "kind": plans[conv.id][1], "community_id": plans[conv.id][2]}
+                     if conv.id in plans else None),
             "last_message": {**last_message_out(last, senders.get(last.sender_id) if last else None,
                                                 bool(last and last.id in attach_ids)), "voice": last.id in voice_ids} if last else None,
         })
