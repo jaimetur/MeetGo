@@ -1041,19 +1041,40 @@ function ReportPostModal({ postId, onClose }: { postId: number; onClose: () => v
   );
 }
 
-/** The gallery of cover illustrations; those of the community's category first. */
-function CoverGallery({ category, value, onPick, onClose }: { category: string | null; value: string | null; onPick: (name: string) => void; onClose: () => void }) {
-  const list = [...COVER_ARTS].sort(([, a], [, b]) => Number(b === category) - Number(a === category));
+/** The gallery of cover illustrations: those of the community's interest first, then of its category; with a search by
+ * the cover's name, its interests and its category (in the reader's language, accents ignored). */
+function CoverGallery({ community, value, onPick, onClose }: { community: Community | null; value: string | null; onPick: (name: string) => void; onClose: () => void }) {
+  const [q, setQ] = useState("");
+  const [interestNames, setInterestNames] = useState<Record<string, string>>({});
+  useEffect(() => { api.interests().then((l) => setInterestNames(Object.fromEntries(l.map((i) => [i.slug, i.name])))).catch(() => undefined); }, []);
+  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const category = community ? communityCategory(community) : null;
+  const slug = community?.slug || "";
+  const rank = ([, cat, tags]: [string, string, string[]]) => (slug && tags.includes(slug) ? 2 : cat === category ? 1 : 0);
+  const words = plain(q).split(/\s+/).filter(Boolean);
+  const list = [...COVER_ARTS].sort((a, b) => rank(b) - rank(a)).filter(([name, cat, tags]) => {
+    if (!words.length) return true;
+    const text = plain([t(`cover_${name}`), t(cat), ...tags.map((tg) => interestNames[tg] || tg)].join(" "));
+    return words.every((w) => text.includes(w));
+  });
   return (
     <Modal wide title={t("ui_publish_cover_gallery_title")} onClose={onClose}>
-      <div className="covergal">
-        {list.map(([name]) => (
-          <button key={name} type="button" className={"covergal-it" + (value === name ? " on" : "")} aria-pressed={value === name}
-            aria-label={t("ui_publish_cover_option", { name })} onClick={() => onPick(name)}>
-            <img src={coverArtUrl(name)} alt="" loading="lazy" />
-          </button>
-        ))}
+      <div className="search">
+        <Icon name="search" size="sm" />
+        <input id="cover-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_publish_cover_search")} aria-label={t("ui_publish_cover_search")} autoFocus />
+        {q ? <button className="iconbtn" style={{ width: 24, height: 24 }} onClick={() => setQ("")} aria-label={t("ui_clear")}><Icon name="x" size="sm" /></button> : null}
       </div>
+      {list.length ? (
+        <div className="covergal">
+          {list.map(([name]) => (
+            <button key={name} type="button" className={"covergal-it" + (value === name ? " on" : "")} aria-pressed={value === name}
+              onClick={() => onPick(name)} title={t(`cover_${name}`)}>
+              <img src={coverArtUrl(name)} alt="" loading="lazy" />
+              <span>{t(`cover_${name}`)}</span>
+            </button>
+          ))}
+        </div>
+      ) : <p className="muted" style={{ margin: 0 }}>{t("ui_no_results")}</p>}
     </Modal>
   );
 }
@@ -1377,10 +1398,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
         </Modal>
       ) : null}
       {gallery ? (
-        <CoverGallery category={(() => {
-          const c = (myCommunities || []).find((x) => x.id === form.community_id);
-          return c ? communityCategory(c) : null;
-        })()} value={form.art} onPick={(art) => { set({ art, cover: null }); setGallery(false); }} onClose={() => setGallery(false)} />
+        <CoverGallery community={(myCommunities || []).find((x) => x.id === form.community_id) || null} value={form.art} onPick={(art) => { set({ art, cover: null }); setGallery(false); }} onClose={() => setGallery(false)} />
       ) : null}
       {leaving ? (
         <ConfirmModal title={t("ui_publish_leave_title")} body={edit ? t("ui_publish_leave_body_edit") : t("ui_publish_leave_body")} danger

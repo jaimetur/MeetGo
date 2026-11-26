@@ -5077,6 +5077,459 @@ msgstr "Les modifications non enregistrées seront perdues."
 msgid "ui_publish_leave_yes"
 msgstr "Quitter"
 
+msgid "ui_publish_cover_search"
+msgstr "Chercher une couverture (vote, plage, padel…)"
+
+msgid "cover_hiking"
+msgstr "Randonnée"
+
+msgid "cover_summit"
+msgstr "Ascension du sommet"
+
+msgid "cover_forest_walk"
+msgstr "Balade en forêt"
+
+msgid "cover_night_hike"
+msgstr "Randonnée nocturne"
+
+msgid "cover_river_walk"
+msgstr "Balade au bord de la rivière"
+
+msgid "cover_camping"
+msgstr "Camping"
+
+msgid "cover_stargazing"
+msgstr "Observation des étoiles"
+
+msgid "cover_sunrise"
+msgstr "Voir le lever du soleil"
+
+msgid "cover_dog_walk"
+msgstr "Balade avec les chiens"
+
+msgid "cover_climbing"
+msgstr "Escalade"
+
+msgid "cover_orienteering"
+msgstr "Course d'orientation"
+
+msgid "cover_trail_running"
+msgstr "Trail running"
+
+msgid "cover_garden"
+msgstr "Potager et jardin"
+
+msgid "cover_beach"
+msgstr "Journée à la plage"
+
+msgid "cover_beach_volley"
+msgstr "Beach-volley"
+
+msgid "cover_beach_sunset"
+msgstr "Coucher de soleil sur la plage"
+
+msgid "cover_beach_cleanup"
+msgstr "Nettoyage de plage"
+
+msgid "cover_beach_bbq"
+msgstr "Barbecue sur la plage"
+
+msgid "cover_swimming"
+msgstr "Natation"
+
+msgid "cover_open_water"
+msgstr "Traversée à la nage"
+
+msgid "cover_surf"
+msgstr "Surf"
+
+msgid "cover_kayak"
+msgstr "Kayak"
+
+msgid "cover_sailing"
+msgstr "Voile"
+
+msgid "cover_snorkel"
+msgstr "Snorkeling"
+
+msgid "cover_picnic"
+msgstr "Pique-nique"
+
+msgid "cover_park_picnic"
+msgstr "Pique-nique au parc"
+
+msgid "cover_barbecue"
+msgstr "Barbecue"
+
+msgid "cover_travel"
+msgstr "Voyage"
+
+msgid "cover_train_trip"
+msgstr "Escapade en train"
+
+msgid "cover_city_break"
+msgstr "City break"
+
+msgid "cover_backpacking"
+msgstr "Voyage en sac à dos"
+
+msgid "cover_cruise"
+msgstr "Croisière"
+
+msgid "cover_world_trip"
+msgstr "Tour du monde"
+
+msgid "cover_cycling"
+msgstr "Sortie à vélo"
+
+msgid "cover_road_cycling"
+msgstr "Cyclisme sur route"
+
+msgid "cover_city_bike"
+msgstr "Balade à vélo en ville"
+
+msgid "cover_mtb_trail"
+msgstr "Sortie VTT"
+
+msgid "cover_mtb_downhill"
+msgstr "Descente en VTT"
+
+msgid "cover_motorbike"
+msgstr "Balade à moto"
+
+msgid "cover_moto_meet"
+msgstr "Rassemblement de motards"
+
+msgid "cover_moto_track"
+msgstr "Journée circuit"
+
+msgid "cover_roadtrip"
+msgstr "Road trip"
+
+msgid "cover_car_meet"
+msgstr "Rassemblement auto"
+
+msgid "cover_classic_cars"
+msgstr "Voitures anciennes"
+
+msgid "cover_karting"
+msgstr "Karting"
+
+msgid "cover_rally"
+msgstr "Rallye"
+
+msgid "cover_tournament"
+msgstr "Tournoi"
+
+msgid "cover_sports_day"
+msgstr "Journée sportive"
+
+msgid "cover_watch_game"
+msgstr "Regarder un match"
+
+msgid "cover_football"
+msgstr "Match de foot"
+
+msgid "cover_football7"
+msgstr "Foot à 7"
+
+msgid "cover_football_watch"
+msgstr "Regarder le foot"
+
+msgid "cover_futsal"
+msgstr "Futsal"
+
+msgid "cover_futsal_league"
+msgstr "Ligue de futsal"
+
+msgid "cover_tennis"
+msgstr "Match de tennis"
+
+msgid "cover_tennis_class"
+msgstr "Cours de tennis"
+
+msgid "cover_racket"
+msgstr "Padel"
+
+msgid "cover_padel_tournament"
+msgstr "Tournoi de padel"
+
+msgid "cover_padel_mixed"
+msgstr "Padel mixte"
+
+msgid "cover_basketball"
+msgstr "Basket"
+
+msgid "cover_streetball"
+msgstr "Basket de rue"
+
+msgid "cover_fitness"
+msgstr "Entraînement"
+
+msgid "cover_running"
+msgstr "Sortie running"
+
+msgid "cover_race"
+msgstr "Course populaire"
+
+msgid "cover_outdoor_workout"
+msgstr "Entraînement en plein air"
+
+msgid "cover_yoga"
+msgstr "Yoga"
+
+msgid "cover_crossfit"
+msgstr "CrossFit"
+
+msgid "cover_crossfit_wod"
+msgstr "WOD en groupe"
+
+msgid "cover_coffee"
+msgstr "Café"
+
+msgid "cover_drinks"
+msgstr "Un verre"
+
+msgid "cover_cocktails"
+msgstr "Cocktails"
+
+msgid "cover_wine_tasting"
+msgstr "Dégustation de vins"
+
+msgid "cover_tapas"
+msgstr "Tapas"
+
+msgid "cover_dinner"
+msgstr "Dîner"
+
+msgid "cover_brunch"
+msgstr "Brunch"
+
+msgid "cover_terrace"
+msgstr "Terrasse"
+
+msgid "cover_party"
+msgstr "Soirée"
+
+msgid "cover_disco"
+msgstr "Boîte de nuit"
+
+msgid "cover_karaoke"
+msgstr "Karaoké"
+
+msgid "cover_birthday"
+msgstr "Anniversaire"
+
+msgid "cover_new_year"
+msgstr "Nouvel An"
+
+msgid "cover_costume_party"
+msgstr "Soirée déguisée"
+
+msgid "cover_friends"
+msgstr "Faire des rencontres"
+
+msgid "cover_welcome"
+msgstr "Rencontre de bienvenue"
+
+msgid "cover_afterwork"
+msgstr "Afterwork"
+
+msgid "cover_games"
+msgstr "Jeux de société"
+
+msgid "cover_trivia"
+msgstr "Soirée quiz"
+
+msgid "cover_networking"
+msgstr "Networking"
+
+msgid "cover_talk"
+msgstr "Conférence"
+
+msgid "cover_startups"
+msgstr "Entrepreneurs"
+
+msgid "cover_job_fair"
+msgstr "Salon de l'emploi"
+
+msgid "cover_cinema"
+msgstr "Cinéma"
+
+msgid "cover_film_club"
+msgstr "Ciné-club"
+
+msgid "cover_outdoor_cinema"
+msgstr "Cinéma en plein air"
+
+msgid "cover_theatre"
+msgstr "Théâtre"
+
+msgid "cover_books"
+msgstr "Club de lecture"
+
+msgid "cover_book_fair"
+msgstr "Salon du livre"
+
+msgid "cover_poetry"
+msgstr "Récital de poésie"
+
+msgid "cover_concert"
+msgstr "Concert"
+
+msgid "cover_festival"
+msgstr "Festival"
+
+msgid "cover_music"
+msgstr "Musique live"
+
+msgid "cover_eighties"
+msgstr "Soirée années 80"
+
+msgid "cover_vinyl_night"
+msgstr "Soirée vinyles"
+
+msgid "cover_rock"
+msgstr "Concert de rock"
+
+msgid "cover_rock_bar"
+msgstr "Bar rock"
+
+msgid "cover_flamenco"
+msgstr "Flamenco"
+
+msgid "cover_tablao"
+msgstr "Tablao"
+
+msgid "cover_art"
+msgstr "Art"
+
+msgid "cover_museum"
+msgstr "Visite de musée"
+
+msgid "cover_photography"
+msgstr "Photographie"
+
+msgid "cover_photo_walk"
+msgstr "Balade photo"
+
+msgid "cover_language"
+msgstr "Échange linguistique"
+
+msgid "cover_english_talk"
+msgstr "Conversation en anglais"
+
+msgid "cover_german_talk"
+msgstr "Stammtisch en allemand"
+
+msgid "cover_french_talk"
+msgstr "Café en français"
+
+msgid "cover_workshop"
+msgstr "Atelier"
+
+msgid "cover_study_group"
+msgstr "Groupe d'étude"
+
+msgid "cover_cooking"
+msgstr "Cours de cuisine"
+
+msgid "cover_cook_together"
+msgstr "Cuisiner ensemble"
+
+msgid "cover_pizza_night"
+msgstr "Soirée pizza"
+
+msgid "cover_baking"
+msgstr "Pâtisserie"
+
+msgid "cover_paella"
+msgstr "Paella"
+
+msgid "cover_burger_night"
+msgstr "Soirée burgers"
+
+msgid "cover_dance"
+msgstr "Danse"
+
+msgid "cover_salsa"
+msgstr "Salsa"
+
+msgid "cover_dance_class"
+msgstr "Cours de danse"
+
+msgid "cover_jam"
+msgstr "Jam session"
+
+msgid "cover_campfire_guitar"
+msgstr "Guitare au coin du feu"
+
+msgid "cover_guitar_class"
+msgstr "Cours de guitare"
+
+msgid "cover_drums"
+msgstr "Batterie"
+
+msgid "cover_piano"
+msgstr "Piano"
+
+msgid "cover_debate"
+msgstr "Débat"
+
+msgid "cover_voting"
+msgstr "Votes"
+
+msgid "cover_election_night"
+msgstr "Soirée électorale"
+
+msgid "cover_parliament"
+msgstr "Visite du Parlement"
+
+msgid "cover_politics_talk"
+msgstr "Conférence politique"
+
+msgid "cover_news_club"
+msgstr "Débat d'actualité"
+
+msgid "cover_economy"
+msgstr "Économie"
+
+msgid "cover_investing"
+msgstr "Investissement"
+
+msgid "cover_personal_finance"
+msgstr "Finances personnelles"
+
+msgid "cover_business"
+msgstr "Entreprise et affaires"
+
+msgid "cover_pets"
+msgstr "Animaux de compagnie"
+
+msgid "cover_volunteering"
+msgstr "Bénévolat"
+
+msgid "cover_charity"
+msgstr "Collecte solidaire"
+
+msgid "cover_market"
+msgstr "Marché local"
+
+msgid "cover_gaming"
+msgstr "Jeux vidéo"
+
+msgid "cover_online"
+msgstr "Rencontre en ligne"
+
+msgid "cover_meeting"
+msgstr "Réunion"
+
+msgid "cover_celebration"
+msgstr "Célébration"
+
+msgid "cover_christmas"
+msgstr "Noël"
+
 msgid "ui_sec_plans"
 msgstr "Chats des plans"
 

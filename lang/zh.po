@@ -4214,6 +4214,459 @@ msgstr "未保存的更改将会丢失。"
 msgid "ui_publish_leave_yes"
 msgstr "离开"
 
+msgid "ui_publish_cover_search"
+msgstr "搜索封面（投票、海滩、板式网球…）"
+
+msgid "cover_hiking"
+msgstr "徒步路线"
+
+msgid "cover_summit"
+msgstr "登顶"
+
+msgid "cover_forest_walk"
+msgstr "森林漫步"
+
+msgid "cover_night_hike"
+msgstr "夜间徒步"
+
+msgid "cover_river_walk"
+msgstr "河边漫步"
+
+msgid "cover_camping"
+msgstr "露营"
+
+msgid "cover_stargazing"
+msgstr "观星"
+
+msgid "cover_sunrise"
+msgstr "看日出"
+
+msgid "cover_dog_walk"
+msgstr "遛狗"
+
+msgid "cover_climbing"
+msgstr "攀岩"
+
+msgid "cover_orienteering"
+msgstr "定向越野"
+
+msgid "cover_trail_running"
+msgstr "越野跑"
+
+msgid "cover_garden"
+msgstr "菜园和花园"
+
+msgid "cover_beach"
+msgstr "海滩日"
+
+msgid "cover_beach_volley"
+msgstr "沙滩排球"
+
+msgid "cover_beach_sunset"
+msgstr "海滩日落"
+
+msgid "cover_beach_cleanup"
+msgstr "海滩清洁"
+
+msgid "cover_beach_bbq"
+msgstr "海滩烧烤"
+
+msgid "cover_swimming"
+msgstr "游泳"
+
+msgid "cover_open_water"
+msgstr "公开水域游泳"
+
+msgid "cover_surf"
+msgstr "冲浪"
+
+msgid "cover_kayak"
+msgstr "皮划艇"
+
+msgid "cover_sailing"
+msgstr "帆船航行"
+
+msgid "cover_snorkel"
+msgstr "浮潜"
+
+msgid "cover_picnic"
+msgstr "野餐"
+
+msgid "cover_park_picnic"
+msgstr "公园野餐"
+
+msgid "cover_barbecue"
+msgstr "烧烤"
+
+msgid "cover_travel"
+msgstr "旅行"
+
+msgid "cover_train_trip"
+msgstr "火车小旅行"
+
+msgid "cover_city_break"
+msgstr "城市短途游"
+
+msgid "cover_backpacking"
+msgstr "背包旅行"
+
+msgid "cover_cruise"
+msgstr "邮轮游"
+
+msgid "cover_world_trip"
+msgstr "环球旅行"
+
+msgid "cover_cycling"
+msgstr "骑行"
+
+msgid "cover_road_cycling"
+msgstr "公路自行车"
+
+msgid "cover_city_bike"
+msgstr "城市骑行"
+
+msgid "cover_mtb_trail"
+msgstr "山地车骑行"
+
+msgid "cover_mtb_downhill"
+msgstr "山地车速降"
+
+msgid "cover_motorbike"
+msgstr "摩托车骑行"
+
+msgid "cover_moto_meet"
+msgstr "摩托车聚会"
+
+msgid "cover_moto_track"
+msgstr "赛道日"
+
+msgid "cover_roadtrip"
+msgstr "自驾游"
+
+msgid "cover_car_meet"
+msgstr "车友聚会"
+
+msgid "cover_classic_cars"
+msgstr "经典汽车"
+
+msgid "cover_karting"
+msgstr "卡丁车"
+
+msgid "cover_rally"
+msgstr "拉力赛"
+
+msgid "cover_tournament"
+msgstr "锦标赛"
+
+msgid "cover_sports_day"
+msgstr "运动日"
+
+msgid "cover_watch_game"
+msgstr "看比赛"
+
+msgid "cover_football"
+msgstr "足球比赛"
+
+msgid "cover_football7"
+msgstr "七人制足球"
+
+msgid "cover_football_watch"
+msgstr "看足球"
+
+msgid "cover_futsal"
+msgstr "五人制足球"
+
+msgid "cover_futsal_league"
+msgstr "五人制足球联赛"
+
+msgid "cover_tennis"
+msgstr "网球比赛"
+
+msgid "cover_tennis_class"
+msgstr "网球课"
+
+msgid "cover_racket"
+msgstr "帕德尔"
+
+msgid "cover_padel_tournament"
+msgstr "帕德尔比赛"
+
+msgid "cover_padel_mixed"
+msgstr "混双帕德尔"
+
+msgid "cover_basketball"
+msgstr "篮球"
+
+msgid "cover_streetball"
+msgstr "街头篮球"
+
+msgid "cover_fitness"
+msgstr "健身训练"
+
+msgid "cover_running"
+msgstr "一起跑步"
+
+msgid "cover_race"
+msgstr "趣味跑"
+
+msgid "cover_outdoor_workout"
+msgstr "户外健身"
+
+msgid "cover_yoga"
+msgstr "瑜伽"
+
+msgid "cover_crossfit"
+msgstr "CrossFit"
+
+msgid "cover_crossfit_wod"
+msgstr "团体WOD"
+
+msgid "cover_coffee"
+msgstr "咖啡"
+
+msgid "cover_drinks"
+msgstr "喝一杯"
+
+msgid "cover_cocktails"
+msgstr "鸡尾酒"
+
+msgid "cover_wine_tasting"
+msgstr "品酒"
+
+msgid "cover_tapas"
+msgstr "Tapas小吃"
+
+msgid "cover_dinner"
+msgstr "晚餐"
+
+msgid "cover_brunch"
+msgstr "早午餐"
+
+msgid "cover_terrace"
+msgstr "露台小酌"
+
+msgid "cover_party"
+msgstr "派对"
+
+msgid "cover_disco"
+msgstr "夜店"
+
+msgid "cover_karaoke"
+msgstr "卡拉OK"
+
+msgid "cover_birthday"
+msgstr "生日"
+
+msgid "cover_new_year"
+msgstr "跨年夜"
+
+msgid "cover_costume_party"
+msgstr "化装派对"
+
+msgid "cover_friends"
+msgstr "结识新朋友"
+
+msgid "cover_welcome"
+msgstr "欢迎聚会"
+
+msgid "cover_afterwork"
+msgstr "下班小聚"
+
+msgid "cover_games"
+msgstr "桌游"
+
+msgid "cover_trivia"
+msgstr "知识问答"
+
+msgid "cover_networking"
+msgstr "商务社交"
+
+msgid "cover_talk"
+msgstr "讲座"
+
+msgid "cover_startups"
+msgstr "创业者"
+
+msgid "cover_job_fair"
+msgstr "招聘会"
+
+msgid "cover_cinema"
+msgstr "看电影"
+
+msgid "cover_film_club"
+msgstr "电影俱乐部"
+
+msgid "cover_outdoor_cinema"
+msgstr "露天电影"
+
+msgid "cover_theatre"
+msgstr "话剧"
+
+msgid "cover_books"
+msgstr "读书会"
+
+msgid "cover_book_fair"
+msgstr "书展"
+
+msgid "cover_poetry"
+msgstr "诗歌朗诵会"
+
+msgid "cover_concert"
+msgstr "音乐会"
+
+msgid "cover_festival"
+msgstr "音乐节"
+
+msgid "cover_music"
+msgstr "现场音乐"
+
+msgid "cover_eighties"
+msgstr "80年代派对"
+
+msgid "cover_vinyl_night"
+msgstr "黑胶之夜"
+
+msgid "cover_rock"
+msgstr "摇滚演唱会"
+
+msgid "cover_rock_bar"
+msgstr "摇滚酒吧"
+
+msgid "cover_flamenco"
+msgstr "弗拉门戈"
+
+msgid "cover_tablao"
+msgstr "Tablao"
+
+msgid "cover_art"
+msgstr "艺术"
+
+msgid "cover_museum"
+msgstr "参观博物馆"
+
+msgid "cover_photography"
+msgstr "摄影"
+
+msgid "cover_photo_walk"
+msgstr "摄影漫步"
+
+msgid "cover_language"
+msgstr "语言交换"
+
+msgid "cover_english_talk"
+msgstr "英语交流"
+
+msgid "cover_german_talk"
+msgstr "德语Stammtisch"
+
+msgid "cover_french_talk"
+msgstr "法语咖啡聊天"
+
+msgid "cover_workshop"
+msgstr "工作坊"
+
+msgid "cover_study_group"
+msgstr "学习小组"
+
+msgid "cover_cooking"
+msgstr "烹饪课"
+
+msgid "cover_cook_together"
+msgstr "一起做饭"
+
+msgid "cover_pizza_night"
+msgstr "披萨之夜"
+
+msgid "cover_baking"
+msgstr "烘焙"
+
+msgid "cover_paella"
+msgstr "西班牙海鲜饭"
+
+msgid "cover_burger_night"
+msgstr "汉堡之夜"
+
+msgid "cover_dance"
+msgstr "跳舞"
+
+msgid "cover_salsa"
+msgstr "萨尔萨舞"
+
+msgid "cover_dance_class"
+msgstr "舞蹈课"
+
+msgid "cover_jam"
+msgstr "Jam session"
+
+msgid "cover_campfire_guitar"
+msgstr "篝火吉他"
+
+msgid "cover_guitar_class"
+msgstr "吉他课"
+
+msgid "cover_drums"
+msgstr "架子鼓"
+
+msgid "cover_piano"
+msgstr "钢琴"
+
+msgid "cover_debate"
+msgstr "辩论"
+
+msgid "cover_voting"
+msgstr "投票"
+
+msgid "cover_election_night"
+msgstr "选举之夜"
+
+msgid "cover_parliament"
+msgstr "参观议会"
+
+msgid "cover_politics_talk"
+msgstr "政治讲座"
+
+msgid "cover_news_club"
+msgstr "时事茶话会"
+
+msgid "cover_economy"
+msgstr "经济"
+
+msgid "cover_investing"
+msgstr "投资"
+
+msgid "cover_personal_finance"
+msgstr "个人理财"
+
+msgid "cover_business"
+msgstr "商业与企业"
+
+msgid "cover_pets"
+msgstr "宠物"
+
+msgid "cover_volunteering"
+msgstr "志愿活动"
+
+msgid "cover_charity"
+msgstr "爱心募捐"
+
+msgid "cover_market"
+msgstr "跳蚤市场"
+
+msgid "cover_gaming"
+msgstr "电子游戏"
+
+msgid "cover_online"
+msgstr "线上聚会"
+
+msgid "cover_meeting"
+msgstr "会议"
+
+msgid "cover_celebration"
+msgstr "庆祝活动"
+
+msgid "cover_christmas"
+msgstr "圣诞节"
+
 msgid "ui_sec_plans"
 msgstr "计划聊天"
 

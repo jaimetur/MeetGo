@@ -4214,6 +4214,459 @@ msgstr "保存していない変更は失われます。"
 msgid "ui_publish_leave_yes"
 msgstr "終了"
 
+msgid "ui_publish_cover_search"
+msgstr "カバーを検索（投票、ビーチ、パデル…）"
+
+msgid "cover_hiking"
+msgstr "ハイキング"
+
+msgid "cover_summit"
+msgstr "山頂を目指す"
+
+msgid "cover_forest_walk"
+msgstr "森の散歩"
+
+msgid "cover_night_hike"
+msgstr "ナイトハイク"
+
+msgid "cover_river_walk"
+msgstr "川沿いの散歩"
+
+msgid "cover_camping"
+msgstr "キャンプ"
+
+msgid "cover_stargazing"
+msgstr "星空観察"
+
+msgid "cover_sunrise"
+msgstr "日の出を見る"
+
+msgid "cover_dog_walk"
+msgstr "犬の散歩"
+
+msgid "cover_climbing"
+msgstr "クライミング"
+
+msgid "cover_orienteering"
+msgstr "オリエンテーリング"
+
+msgid "cover_trail_running"
+msgstr "トレイルランニング"
+
+msgid "cover_garden"
+msgstr "家庭菜園とガーデン"
+
+msgid "cover_beach"
+msgstr "ビーチの一日"
+
+msgid "cover_beach_volley"
+msgstr "ビーチバレー"
+
+msgid "cover_beach_sunset"
+msgstr "ビーチの夕日"
+
+msgid "cover_beach_cleanup"
+msgstr "ビーチ清掃"
+
+msgid "cover_beach_bbq"
+msgstr "ビーチバーベキュー"
+
+msgid "cover_swimming"
+msgstr "水泳"
+
+msgid "cover_open_water"
+msgstr "オープンウォータースイム"
+
+msgid "cover_surf"
+msgstr "サーフィン"
+
+msgid "cover_kayak"
+msgstr "カヤック"
+
+msgid "cover_sailing"
+msgstr "セーリング"
+
+msgid "cover_snorkel"
+msgstr "シュノーケリング"
+
+msgid "cover_picnic"
+msgstr "ピクニック"
+
+msgid "cover_park_picnic"
+msgstr "公園でピクニック"
+
+msgid "cover_barbecue"
+msgstr "バーベキュー"
+
+msgid "cover_travel"
+msgstr "旅行"
+
+msgid "cover_train_trip"
+msgstr "電車旅"
+
+msgid "cover_city_break"
+msgstr "シティブレイク"
+
+msgid "cover_backpacking"
+msgstr "バックパッカー旅"
+
+msgid "cover_cruise"
+msgstr "クルーズ"
+
+msgid "cover_world_trip"
+msgstr "世界一周"
+
+msgid "cover_cycling"
+msgstr "サイクリング"
+
+msgid "cover_road_cycling"
+msgstr "ロードバイク"
+
+msgid "cover_city_bike"
+msgstr "街乗りサイクリング"
+
+msgid "cover_mtb_trail"
+msgstr "MTBツーリング"
+
+msgid "cover_mtb_downhill"
+msgstr "MTBダウンヒル"
+
+msgid "cover_motorbike"
+msgstr "バイクツーリング"
+
+msgid "cover_moto_meet"
+msgstr "バイカーの集まり"
+
+msgid "cover_moto_track"
+msgstr "サーキット走行"
+
+msgid "cover_roadtrip"
+msgstr "ドライブ旅行"
+
+msgid "cover_car_meet"
+msgstr "カーミーティング"
+
+msgid "cover_classic_cars"
+msgstr "クラシックカー"
+
+msgid "cover_karting"
+msgstr "カート"
+
+msgid "cover_rally"
+msgstr "ラリー"
+
+msgid "cover_tournament"
+msgstr "トーナメント"
+
+msgid "cover_sports_day"
+msgstr "スポーツデー"
+
+msgid "cover_watch_game"
+msgstr "試合観戦"
+
+msgid "cover_football"
+msgstr "サッカーの試合"
+
+msgid "cover_football7"
+msgstr "7人制サッカー"
+
+msgid "cover_football_watch"
+msgstr "サッカー観戦"
+
+msgid "cover_futsal"
+msgstr "フットサル"
+
+msgid "cover_futsal_league"
+msgstr "フットサルリーグ"
+
+msgid "cover_tennis"
+msgstr "テニスの試合"
+
+msgid "cover_tennis_class"
+msgstr "テニスレッスン"
+
+msgid "cover_racket"
+msgstr "パデル"
+
+msgid "cover_padel_tournament"
+msgstr "パデル大会"
+
+msgid "cover_padel_mixed"
+msgstr "ミックスパデル"
+
+msgid "cover_basketball"
+msgstr "バスケットボール"
+
+msgid "cover_streetball"
+msgstr "ストリートバスケ"
+
+msgid "cover_fitness"
+msgstr "トレーニング"
+
+msgid "cover_running"
+msgstr "ランニング"
+
+msgid "cover_race"
+msgstr "市民マラソン"
+
+msgid "cover_outdoor_workout"
+msgstr "屋外トレーニング"
+
+msgid "cover_yoga"
+msgstr "ヨガ"
+
+msgid "cover_crossfit"
+msgstr "クロスフィット"
+
+msgid "cover_crossfit_wod"
+msgstr "グループWOD"
+
+msgid "cover_coffee"
+msgstr "コーヒー"
+
+msgid "cover_drinks"
+msgstr "一杯飲む"
+
+msgid "cover_cocktails"
+msgstr "カクテル"
+
+msgid "cover_wine_tasting"
+msgstr "ワインテイスティング"
+
+msgid "cover_tapas"
+msgstr "タパス"
+
+msgid "cover_dinner"
+msgstr "ディナー"
+
+msgid "cover_brunch"
+msgstr "ブランチ"
+
+msgid "cover_terrace"
+msgstr "テラスで一杯"
+
+msgid "cover_party"
+msgstr "パーティー"
+
+msgid "cover_disco"
+msgstr "クラブ"
+
+msgid "cover_karaoke"
+msgstr "カラオケ"
+
+msgid "cover_birthday"
+msgstr "誕生日"
+
+msgid "cover_new_year"
+msgstr "大晦日"
+
+msgid "cover_costume_party"
+msgstr "仮装パーティー"
+
+msgid "cover_friends"
+msgstr "新しい友達づくり"
+
+msgid "cover_welcome"
+msgstr "歓迎会"
+
+msgid "cover_afterwork"
+msgstr "アフターワーク"
+
+msgid "cover_games"
+msgstr "ボードゲーム"
+
+msgid "cover_trivia"
+msgstr "クイズ大会"
+
+msgid "cover_networking"
+msgstr "ネットワーキング"
+
+msgid "cover_talk"
+msgstr "講演会"
+
+msgid "cover_startups"
+msgstr "起業家"
+
+msgid "cover_job_fair"
+msgstr "就職フェア"
+
+msgid "cover_cinema"
+msgstr "映画館"
+
+msgid "cover_film_club"
+msgstr "映画クラブ"
+
+msgid "cover_outdoor_cinema"
+msgstr "野外映画"
+
+msgid "cover_theatre"
+msgstr "演劇"
+
+msgid "cover_books"
+msgstr "読書会"
+
+msgid "cover_book_fair"
+msgstr "ブックフェア"
+
+msgid "cover_poetry"
+msgstr "詩の朗読会"
+
+msgid "cover_concert"
+msgstr "コンサート"
+
+msgid "cover_festival"
+msgstr "フェス"
+
+msgid "cover_music"
+msgstr "ライブ演奏"
+
+msgid "cover_eighties"
+msgstr "80年代パーティー"
+
+msgid "cover_vinyl_night"
+msgstr "レコードナイト"
+
+msgid "cover_rock"
+msgstr "ロックコンサート"
+
+msgid "cover_rock_bar"
+msgstr "ロックバー"
+
+msgid "cover_flamenco"
+msgstr "フラメンコ"
+
+msgid "cover_tablao"
+msgstr "タブラオ"
+
+msgid "cover_art"
+msgstr "アート"
+
+msgid "cover_museum"
+msgstr "博物館見学"
+
+msgid "cover_photography"
+msgstr "写真撮影"
+
+msgid "cover_photo_walk"
+msgstr "フォトウォーク"
+
+msgid "cover_language"
+msgstr "言語交換"
+
+msgid "cover_english_talk"
+msgstr "英会話"
+
+msgid "cover_german_talk"
+msgstr "ドイツ語のStammtisch"
+
+msgid "cover_french_talk"
+msgstr "フランス語カフェ"
+
+msgid "cover_workshop"
+msgstr "ワークショップ"
+
+msgid "cover_study_group"
+msgstr "勉強会"
+
+msgid "cover_cooking"
+msgstr "料理教室"
+
+msgid "cover_cook_together"
+msgstr "みんなで料理"
+
+msgid "cover_pizza_night"
+msgstr "ピザナイト"
+
+msgid "cover_baking"
+msgstr "お菓子作り"
+
+msgid "cover_paella"
+msgstr "パエリア"
+
+msgid "cover_burger_night"
+msgstr "ハンバーガーナイト"
+
+msgid "cover_dance"
+msgstr "ダンス"
+
+msgid "cover_salsa"
+msgstr "サルサ"
+
+msgid "cover_dance_class"
+msgstr "ダンスレッスン"
+
+msgid "cover_jam"
+msgstr "ジャムセッション"
+
+msgid "cover_campfire_guitar"
+msgstr "焚き火とギター"
+
+msgid "cover_guitar_class"
+msgstr "ギターレッスン"
+
+msgid "cover_drums"
+msgstr "ドラム"
+
+msgid "cover_piano"
+msgstr "ピアノ"
+
+msgid "cover_debate"
+msgstr "ディベート"
+
+msgid "cover_voting"
+msgstr "投票"
+
+msgid "cover_election_night"
+msgstr "選挙の夜"
+
+msgid "cover_parliament"
+msgstr "議会見学"
+
+msgid "cover_politics_talk"
+msgstr "政治講演会"
+
+msgid "cover_news_club"
+msgstr "時事ミーティング"
+
+msgid "cover_economy"
+msgstr "経済"
+
+msgid "cover_investing"
+msgstr "投資"
+
+msgid "cover_personal_finance"
+msgstr "家計管理"
+
+msgid "cover_business"
+msgstr "ビジネス"
+
+msgid "cover_pets"
+msgstr "ペット"
+
+msgid "cover_volunteering"
+msgstr "ボランティア"
+
+msgid "cover_charity"
+msgstr "チャリティー募金"
+
+msgid "cover_market"
+msgstr "フリーマーケット"
+
+msgid "cover_gaming"
+msgstr "ゲーム"
+
+msgid "cover_online"
+msgstr "オンライン交流会"
+
+msgid "cover_meeting"
+msgstr "ミーティング"
+
+msgid "cover_celebration"
+msgstr "お祝い"
+
+msgid "cover_christmas"
+msgstr "クリスマス"
+
 msgid "ui_sec_plans"
 msgstr "予定のチャット"
 

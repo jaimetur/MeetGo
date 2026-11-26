@@ -4214,6 +4214,459 @@ msgstr "Niet-opgeslagen wijzigingen gaan verloren."
 msgid "ui_publish_leave_yes"
 msgstr "Weggaan"
 
+msgid "ui_publish_cover_search"
+msgstr "Omslag zoeken (stemmen, strand, padel…)"
+
+msgid "cover_hiking"
+msgstr "Wandeling"
+
+msgid "cover_summit"
+msgstr "Bergtop beklimmen"
+
+msgid "cover_forest_walk"
+msgstr "Boswandeling"
+
+msgid "cover_night_hike"
+msgstr "Nachtwandeling"
+
+msgid "cover_river_walk"
+msgstr "Rivierwandeling"
+
+msgid "cover_camping"
+msgstr "Kamperen"
+
+msgid "cover_stargazing"
+msgstr "Sterren kijken"
+
+msgid "cover_sunrise"
+msgstr "Zonsopgang kijken"
+
+msgid "cover_dog_walk"
+msgstr "Hondenwandeling"
+
+msgid "cover_climbing"
+msgstr "Klimmen"
+
+msgid "cover_orienteering"
+msgstr "Oriëntatieloop"
+
+msgid "cover_trail_running"
+msgstr "Trail running"
+
+msgid "cover_garden"
+msgstr "Moestuin en tuin"
+
+msgid "cover_beach"
+msgstr "Dagje strand"
+
+msgid "cover_beach_volley"
+msgstr "Beachvolleybal"
+
+msgid "cover_beach_sunset"
+msgstr "Zonsondergang op het strand"
+
+msgid "cover_beach_cleanup"
+msgstr "Strandopruimactie"
+
+msgid "cover_beach_bbq"
+msgstr "Barbecue op het strand"
+
+msgid "cover_swimming"
+msgstr "Zwemmen"
+
+msgid "cover_open_water"
+msgstr "Open water zwemmen"
+
+msgid "cover_surf"
+msgstr "Surfen"
+
+msgid "cover_kayak"
+msgstr "Kajakken"
+
+msgid "cover_sailing"
+msgstr "Zeilen"
+
+msgid "cover_snorkel"
+msgstr "Snorkelen"
+
+msgid "cover_picnic"
+msgstr "Picknick"
+
+msgid "cover_park_picnic"
+msgstr "Picknick in het park"
+
+msgid "cover_barbecue"
+msgstr "Barbecue"
+
+msgid "cover_travel"
+msgstr "Reis"
+
+msgid "cover_train_trip"
+msgstr "Treinreis"
+
+msgid "cover_city_break"
+msgstr "Stedentrip"
+
+msgid "cover_backpacking"
+msgstr "Backpacken"
+
+msgid "cover_cruise"
+msgstr "Cruise"
+
+msgid "cover_world_trip"
+msgstr "Wereldreis"
+
+msgid "cover_cycling"
+msgstr "Fietstocht"
+
+msgid "cover_road_cycling"
+msgstr "Wielrennen"
+
+msgid "cover_city_bike"
+msgstr "Fietsen door de stad"
+
+msgid "cover_mtb_trail"
+msgstr "MTB-route"
+
+msgid "cover_mtb_downhill"
+msgstr "MTB-afdaling"
+
+msgid "cover_motorbike"
+msgstr "Motortocht"
+
+msgid "cover_moto_meet"
+msgstr "Motortreffen"
+
+msgid "cover_moto_track"
+msgstr "Circuitdag"
+
+msgid "cover_roadtrip"
+msgstr "Roadtrip"
+
+msgid "cover_car_meet"
+msgstr "Autotreffen"
+
+msgid "cover_classic_cars"
+msgstr "Klassieke auto's"
+
+msgid "cover_karting"
+msgstr "Karting"
+
+msgid "cover_rally"
+msgstr "Rally"
+
+msgid "cover_tournament"
+msgstr "Toernooi"
+
+msgid "cover_sports_day"
+msgstr "Sportdag"
+
+msgid "cover_watch_game"
+msgstr "Wedstrijd kijken"
+
+msgid "cover_football"
+msgstr "Voetbalwedstrijd"
+
+msgid "cover_football7"
+msgstr "Voetbal 7 tegen 7"
+
+msgid "cover_football_watch"
+msgstr "Voetbal kijken"
+
+msgid "cover_futsal"
+msgstr "Zaalvoetbal"
+
+msgid "cover_futsal_league"
+msgstr "Zaalvoetbalcompetitie"
+
+msgid "cover_tennis"
+msgstr "Tennispartij"
+
+msgid "cover_tennis_class"
+msgstr "Tennisles"
+
+msgid "cover_racket"
+msgstr "Padel"
+
+msgid "cover_padel_tournament"
+msgstr "Padeltoernooi"
+
+msgid "cover_padel_mixed"
+msgstr "Gemengd padel"
+
+msgid "cover_basketball"
+msgstr "Basketbal"
+
+msgid "cover_streetball"
+msgstr "Streetball"
+
+msgid "cover_fitness"
+msgstr "Training"
+
+msgid "cover_running"
+msgstr "Samen hardlopen"
+
+msgid "cover_race"
+msgstr "Loopwedstrijd"
+
+msgid "cover_outdoor_workout"
+msgstr "Buitentraining"
+
+msgid "cover_yoga"
+msgstr "Yoga"
+
+msgid "cover_crossfit"
+msgstr "CrossFit"
+
+msgid "cover_crossfit_wod"
+msgstr "Groeps-WOD"
+
+msgid "cover_coffee"
+msgstr "Koffie"
+
+msgid "cover_drinks"
+msgstr "Een drankje"
+
+msgid "cover_cocktails"
+msgstr "Cocktails"
+
+msgid "cover_wine_tasting"
+msgstr "Wijnproeverij"
+
+msgid "cover_tapas"
+msgstr "Tapas"
+
+msgid "cover_dinner"
+msgstr "Etentje"
+
+msgid "cover_brunch"
+msgstr "Brunch"
+
+msgid "cover_terrace"
+msgstr "Terrasje pakken"
+
+msgid "cover_party"
+msgstr "Feest"
+
+msgid "cover_disco"
+msgstr "Clubavond"
+
+msgid "cover_karaoke"
+msgstr "Karaoke"
+
+msgid "cover_birthday"
+msgstr "Verjaardag"
+
+msgid "cover_new_year"
+msgstr "Oudejaarsavond"
+
+msgid "cover_costume_party"
+msgstr "Verkleedfeest"
+
+msgid "cover_friends"
+msgstr "Nieuwe mensen ontmoeten"
+
+msgid "cover_welcome"
+msgstr "Welkomstborrel"
+
+msgid "cover_afterwork"
+msgstr "Afterwork"
+
+msgid "cover_games"
+msgstr "Bordspellen"
+
+msgid "cover_trivia"
+msgstr "Pubquiz"
+
+msgid "cover_networking"
+msgstr "Networking"
+
+msgid "cover_talk"
+msgstr "Lezing"
+
+msgid "cover_startups"
+msgstr "Ondernemers"
+
+msgid "cover_job_fair"
+msgstr "Banenbeurs"
+
+msgid "cover_cinema"
+msgstr "Bioscoop"
+
+msgid "cover_film_club"
+msgstr "Filmclub"
+
+msgid "cover_outdoor_cinema"
+msgstr "Openluchtbioscoop"
+
+msgid "cover_theatre"
+msgstr "Theater"
+
+msgid "cover_books"
+msgstr "Boekenclub"
+
+msgid "cover_book_fair"
+msgstr "Boekenbeurs"
+
+msgid "cover_poetry"
+msgstr "Poëzieavond"
+
+msgid "cover_concert"
+msgstr "Concert"
+
+msgid "cover_festival"
+msgstr "Festival"
+
+msgid "cover_music"
+msgstr "Livemuziek"
+
+msgid "cover_eighties"
+msgstr "Jaren 80-feest"
+
+msgid "cover_vinyl_night"
+msgstr "Vinylavond"
+
+msgid "cover_rock"
+msgstr "Rockconcert"
+
+msgid "cover_rock_bar"
+msgstr "Rockkroeg"
+
+msgid "cover_flamenco"
+msgstr "Flamenco"
+
+msgid "cover_tablao"
+msgstr "Tablao"
+
+msgid "cover_art"
+msgstr "Kunst"
+
+msgid "cover_museum"
+msgstr "Museumbezoek"
+
+msgid "cover_photography"
+msgstr "Fotografie"
+
+msgid "cover_photo_walk"
+msgstr "Fotowandeling"
+
+msgid "cover_language"
+msgstr "Taaluitwisseling"
+
+msgid "cover_english_talk"
+msgstr "Engels praten"
+
+msgid "cover_german_talk"
+msgstr "Duitse Stammtisch"
+
+msgid "cover_french_talk"
+msgstr "Frans café"
+
+msgid "cover_workshop"
+msgstr "Workshop"
+
+msgid "cover_study_group"
+msgstr "Studiegroep"
+
+msgid "cover_cooking"
+msgstr "Kookworkshop"
+
+msgid "cover_cook_together"
+msgstr "Samen koken"
+
+msgid "cover_pizza_night"
+msgstr "Pizza-avond"
+
+msgid "cover_baking"
+msgstr "Bakken"
+
+msgid "cover_paella"
+msgstr "Paella"
+
+msgid "cover_burger_night"
+msgstr "Burgeravond"
+
+msgid "cover_dance"
+msgstr "Dansen"
+
+msgid "cover_salsa"
+msgstr "Salsa"
+
+msgid "cover_dance_class"
+msgstr "Dansles"
+
+msgid "cover_jam"
+msgstr "Jam session"
+
+msgid "cover_campfire_guitar"
+msgstr "Gitaar bij het kampvuur"
+
+msgid "cover_guitar_class"
+msgstr "Gitaarles"
+
+msgid "cover_drums"
+msgstr "Drummen"
+
+msgid "cover_piano"
+msgstr "Piano"
+
+msgid "cover_debate"
+msgstr "Debat"
+
+msgid "cover_voting"
+msgstr "Stemmen"
+
+msgid "cover_election_night"
+msgstr "Verkiezingsavond"
+
+msgid "cover_parliament"
+msgstr "Bezoek aan het parlement"
+
+msgid "cover_politics_talk"
+msgstr "Politieke lezing"
+
+msgid "cover_news_club"
+msgstr "Nieuwsclub"
+
+msgid "cover_economy"
+msgstr "Economie"
+
+msgid "cover_investing"
+msgstr "Beleggen"
+
+msgid "cover_personal_finance"
+msgstr "Persoonlijke financiën"
+
+msgid "cover_business"
+msgstr "Zakelijk"
+
+msgid "cover_pets"
+msgstr "Huisdieren"
+
+msgid "cover_volunteering"
+msgstr "Vrijwilligerswerk"
+
+msgid "cover_charity"
+msgstr "Inzamelactie"
+
+msgid "cover_market"
+msgstr "Markt"
+
+msgid "cover_gaming"
+msgstr "Gamen"
+
+msgid "cover_online"
+msgstr "Online ontmoeting"
+
+msgid "cover_meeting"
+msgstr "Bijeenkomst"
+
+msgid "cover_celebration"
+msgstr "Viering"
+
+msgid "cover_christmas"
+msgstr "Kerst"
+
 msgid "ui_sec_plans"
 msgstr "Plan-chats"
 

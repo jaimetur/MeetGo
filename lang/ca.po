@@ -4214,6 +4214,459 @@ msgstr "Es perdran els canvis que no has desat."
 msgid "ui_publish_leave_yes"
 msgstr "Surt"
 
+msgid "ui_publish_cover_search"
+msgstr "Cerca una portada (votacions, platja, pàdel…)"
+
+msgid "cover_hiking"
+msgstr "Ruta de senderisme"
+
+msgid "cover_summit"
+msgstr "Pujada al cim"
+
+msgid "cover_forest_walk"
+msgstr "Passeig pel bosc"
+
+msgid "cover_night_hike"
+msgstr "Ruta nocturna"
+
+msgid "cover_river_walk"
+msgstr "Ruta pel riu"
+
+msgid "cover_camping"
+msgstr "Acampada"
+
+msgid "cover_stargazing"
+msgstr "Observar estrelles"
+
+msgid "cover_sunrise"
+msgstr "Veure l'albada"
+
+msgid "cover_dog_walk"
+msgstr "Passeig amb gossos"
+
+msgid "cover_climbing"
+msgstr "Escalada"
+
+msgid "cover_orienteering"
+msgstr "Orientació"
+
+msgid "cover_trail_running"
+msgstr "Trail running"
+
+msgid "cover_garden"
+msgstr "Hort i jardí"
+
+msgid "cover_beach"
+msgstr "Dia de platja"
+
+msgid "cover_beach_volley"
+msgstr "Vòlei platja"
+
+msgid "cover_beach_sunset"
+msgstr "Posta de sol a la platja"
+
+msgid "cover_beach_cleanup"
+msgstr "Neteja de platja"
+
+msgid "cover_beach_bbq"
+msgstr "Barbacoa a la platja"
+
+msgid "cover_swimming"
+msgstr "Natació"
+
+msgid "cover_open_water"
+msgstr "Travessia a nedar"
+
+msgid "cover_surf"
+msgstr "Surf"
+
+msgid "cover_kayak"
+msgstr "Caiac"
+
+msgid "cover_sailing"
+msgstr "Vela"
+
+msgid "cover_snorkel"
+msgstr "Snorkel"
+
+msgid "cover_picnic"
+msgstr "Pícnic"
+
+msgid "cover_park_picnic"
+msgstr "Pícnic al parc"
+
+msgid "cover_barbecue"
+msgstr "Barbacoa"
+
+msgid "cover_travel"
+msgstr "Viatge"
+
+msgid "cover_train_trip"
+msgstr "Escapada en tren"
+
+msgid "cover_city_break"
+msgstr "Escapada urbana"
+
+msgid "cover_backpacking"
+msgstr "Viatge de motxiller"
+
+msgid "cover_cruise"
+msgstr "Creuer"
+
+msgid "cover_world_trip"
+msgstr "Volta al món"
+
+msgid "cover_cycling"
+msgstr "Sortida en bici"
+
+msgid "cover_road_cycling"
+msgstr "Ciclisme de carretera"
+
+msgid "cover_city_bike"
+msgstr "Passeig en bici per la ciutat"
+
+msgid "cover_mtb_trail"
+msgstr "Ruta de MTB"
+
+msgid "cover_mtb_downhill"
+msgstr "Descens en MTB"
+
+msgid "cover_motorbike"
+msgstr "Ruta en moto"
+
+msgid "cover_moto_meet"
+msgstr "Quedada motera"
+
+msgid "cover_moto_track"
+msgstr "Tanda en circuit"
+
+msgid "cover_roadtrip"
+msgstr "Viatge en cotxe"
+
+msgid "cover_car_meet"
+msgstr "Quedada de cotxes"
+
+msgid "cover_classic_cars"
+msgstr "Cotxes clàssics"
+
+msgid "cover_karting"
+msgstr "Karting"
+
+msgid "cover_rally"
+msgstr "Ral·li"
+
+msgid "cover_tournament"
+msgstr "Torneig"
+
+msgid "cover_sports_day"
+msgstr "Jornada esportiva"
+
+msgid "cover_watch_game"
+msgstr "Veure un partit"
+
+msgid "cover_football"
+msgstr "Partit de futbol"
+
+msgid "cover_football7"
+msgstr "Futbol 7"
+
+msgid "cover_football_watch"
+msgstr "Veure el partit de futbol"
+
+msgid "cover_futsal"
+msgstr "Futbol sala"
+
+msgid "cover_futsal_league"
+msgstr "Lliga de futbol sala"
+
+msgid "cover_tennis"
+msgstr "Partit de tennis"
+
+msgid "cover_tennis_class"
+msgstr "Classe de tennis"
+
+msgid "cover_racket"
+msgstr "Pàdel"
+
+msgid "cover_padel_tournament"
+msgstr "Torneig de pàdel"
+
+msgid "cover_padel_mixed"
+msgstr "Pàdel mixt"
+
+msgid "cover_basketball"
+msgstr "Bàsquet"
+
+msgid "cover_streetball"
+msgstr "Bàsquet de carrer"
+
+msgid "cover_fitness"
+msgstr "Entrenament"
+
+msgid "cover_running"
+msgstr "Sortir a córrer"
+
+msgid "cover_race"
+msgstr "Cursa popular"
+
+msgid "cover_outdoor_workout"
+msgstr "Entrenament a l'aire lliure"
+
+msgid "cover_yoga"
+msgstr "Yoga"
+
+msgid "cover_crossfit"
+msgstr "CrossFit"
+
+msgid "cover_crossfit_wod"
+msgstr "WOD en grup"
+
+msgid "cover_coffee"
+msgstr "Cafè"
+
+msgid "cover_drinks"
+msgstr "Unes canyes"
+
+msgid "cover_cocktails"
+msgstr "Còctels"
+
+msgid "cover_wine_tasting"
+msgstr "Tast de vins"
+
+msgid "cover_tapas"
+msgstr "Tapes"
+
+msgid "cover_dinner"
+msgstr "Sopar"
+
+msgid "cover_brunch"
+msgstr "Brunch"
+
+msgid "cover_terrace"
+msgstr "Terrasseig"
+
+msgid "cover_party"
+msgstr "Festa"
+
+msgid "cover_disco"
+msgstr "Discoteca"
+
+msgid "cover_karaoke"
+msgstr "Karaoke"
+
+msgid "cover_birthday"
+msgstr "Aniversari"
+
+msgid "cover_new_year"
+msgstr "Cap d'Any"
+
+msgid "cover_costume_party"
+msgstr "Festa de disfresses"
+
+msgid "cover_friends"
+msgstr "Conèixer gent"
+
+msgid "cover_welcome"
+msgstr "Trobada de benvinguda"
+
+msgid "cover_afterwork"
+msgstr "Afterwork"
+
+msgid "cover_games"
+msgstr "Jocs de taula"
+
+msgid "cover_trivia"
+msgstr "Trivial"
+
+msgid "cover_networking"
+msgstr "Networking"
+
+msgid "cover_talk"
+msgstr "Xerrada"
+
+msgid "cover_startups"
+msgstr "Emprenedors"
+
+msgid "cover_job_fair"
+msgstr "Fira d'ocupació"
+
+msgid "cover_cinema"
+msgstr "Cinema"
+
+msgid "cover_film_club"
+msgstr "Cineforum"
+
+msgid "cover_outdoor_cinema"
+msgstr "Cinema d'estiu"
+
+msgid "cover_theatre"
+msgstr "Teatre"
+
+msgid "cover_books"
+msgstr "Club de lectura"
+
+msgid "cover_book_fair"
+msgstr "Fira del llibre"
+
+msgid "cover_poetry"
+msgstr "Recital de poesia"
+
+msgid "cover_concert"
+msgstr "Concert"
+
+msgid "cover_festival"
+msgstr "Festival"
+
+msgid "cover_music"
+msgstr "Música en directe"
+
+msgid "cover_eighties"
+msgstr "Festa dels 80"
+
+msgid "cover_vinyl_night"
+msgstr "Nit de vinils"
+
+msgid "cover_rock"
+msgstr "Concert de rock"
+
+msgid "cover_rock_bar"
+msgstr "Bar de rock"
+
+msgid "cover_flamenco"
+msgstr "Flamenco"
+
+msgid "cover_tablao"
+msgstr "Tablao"
+
+msgid "cover_art"
+msgstr "Art"
+
+msgid "cover_museum"
+msgstr "Visita al museu"
+
+msgid "cover_photography"
+msgstr "Fotografia"
+
+msgid "cover_photo_walk"
+msgstr "Passeig fotogràfic"
+
+msgid "cover_language"
+msgstr "Intercanvi d'idiomes"
+
+msgid "cover_english_talk"
+msgstr "Conversa en anglès"
+
+msgid "cover_german_talk"
+msgstr "Stammtisch en alemany"
+
+msgid "cover_french_talk"
+msgstr "Cafè en francès"
+
+msgid "cover_workshop"
+msgstr "Taller"
+
+msgid "cover_study_group"
+msgstr "Grup d'estudi"
+
+msgid "cover_cooking"
+msgstr "Classe de cuina"
+
+msgid "cover_cook_together"
+msgstr "Cuinar junts"
+
+msgid "cover_pizza_night"
+msgstr "Nit de pizza"
+
+msgid "cover_baking"
+msgstr "Rebosteria"
+
+msgid "cover_paella"
+msgstr "Paella"
+
+msgid "cover_burger_night"
+msgstr "Nit d'hamburgueses"
+
+msgid "cover_dance"
+msgstr "Ball"
+
+msgid "cover_salsa"
+msgstr "Salsa"
+
+msgid "cover_dance_class"
+msgstr "Classe de ball"
+
+msgid "cover_jam"
+msgstr "Jam session"
+
+msgid "cover_campfire_guitar"
+msgstr "Guitarra vora el foc"
+
+msgid "cover_guitar_class"
+msgstr "Classe de guitarra"
+
+msgid "cover_drums"
+msgstr "Bateria"
+
+msgid "cover_piano"
+msgstr "Piano"
+
+msgid "cover_debate"
+msgstr "Debat"
+
+msgid "cover_voting"
+msgstr "Votacions"
+
+msgid "cover_election_night"
+msgstr "Nit electoral"
+
+msgid "cover_parliament"
+msgstr "Visita al Parlament"
+
+msgid "cover_politics_talk"
+msgstr "Xerrada política"
+
+msgid "cover_news_club"
+msgstr "Tertúlia d'actualitat"
+
+msgid "cover_economy"
+msgstr "Economia"
+
+msgid "cover_investing"
+msgstr "Inversió"
+
+msgid "cover_personal_finance"
+msgstr "Finances personals"
+
+msgid "cover_business"
+msgstr "Empresa i negocis"
+
+msgid "cover_pets"
+msgstr "Mascotes"
+
+msgid "cover_volunteering"
+msgstr "Voluntariat"
+
+msgid "cover_charity"
+msgstr "Recollida solidària"
+
+msgid "cover_market"
+msgstr "Mercadet"
+
+msgid "cover_gaming"
+msgstr "Videojocs"
+
+msgid "cover_online"
+msgstr "Quedada en línia"
+
+msgid "cover_meeting"
+msgstr "Reunió"
+
+msgid "cover_celebration"
+msgstr "Celebració"
+
+msgid "cover_christmas"
+msgstr "Nadal"
+
 msgid "ui_sec_plans"
 msgstr "Xats de plans"
 
