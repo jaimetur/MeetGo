@@ -1490,6 +1490,9 @@ msgstr "Xats de {zone}. Uneix-te als que t'agradin."
 msgid "ui_explore_title"
 msgstr "Xats"
 
+msgid "ui_f_active"
+msgstr "Actius"
+
 msgid "ui_f_all"
 msgstr "Tot"
 

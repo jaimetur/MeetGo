@@ -1490,6 +1490,9 @@ msgstr "Chats in {zone}. Sluit je aan bij de chats die je leuk vindt."
 msgid "ui_explore_title"
 msgstr "Chats"
 
+msgid "ui_f_active"
+msgstr "Actief"
+
 msgid "ui_f_all"
 msgstr "Alles"
 

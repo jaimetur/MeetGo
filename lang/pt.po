@@ -1489,6 +1489,9 @@ msgstr "Chats em {zone}. Entra nos que gostares."
 msgid "ui_explore_title"
 msgstr "Chats"
 
+msgid "ui_f_active"
+msgstr "Ativos"
+
 msgid "ui_f_all"
 msgstr "Todas"
 

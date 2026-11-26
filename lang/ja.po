@@ -1490,6 +1490,9 @@ msgstr "{zone}のチャットです。気に入ったものに参加しましょ
 msgid "ui_explore_title"
 msgstr "チャット"
 
+msgid "ui_f_active"
+msgstr "アクティブ"
+
 msgid "ui_f_all"
 msgstr "すべて"
 

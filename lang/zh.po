@@ -1490,6 +1490,9 @@ msgstr "{zone}的聊天。加入你喜欢的吧。"
 msgid "ui_explore_title"
 msgstr "聊天"
 
+msgid "ui_f_active"
+msgstr "活跃"
+
 msgid "ui_f_all"
 msgstr "全部"
 

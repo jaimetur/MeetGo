@@ -1489,6 +1489,9 @@ msgstr "Les chats de {zone}. Rejoins ceux qui te plaisent."
 msgid "ui_explore_title"
 msgstr "Chats"
 
+msgid "ui_f_active"
+msgstr "Actifs"
+
 msgid "ui_f_all"
 msgstr "Tout"
 

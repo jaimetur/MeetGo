@@ -10,8 +10,8 @@ import { PhoneTop } from "./Board";
 import { ConvMenuItems } from "./Chat";
 import { Avatar, ConvIcon, Icon, Modal, convTitle } from "./common";
 
-type Filter = "all" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
-const FILTER_KEYS: Filter[] = ["all", "unread", "dm", "mentions", "channel", "plan", "group"];
+type Filter = "all" | "active" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
+const FILTER_KEYS: Filter[] = ["all", "active", "unread", "dm", "mentions", "channel", "group", "plan"];
 
 export function Sidebar({ activeId }: { activeId: number | null }) {
   const conversations = useStore((s) => s.conversations);
@@ -81,6 +81,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
 
   const visible = all.filter((c) => {
     if (q && !convTitle(c).toLowerCase().includes(q.toLowerCase())) return false;
+    // active: with messages in the last 30 days (by the last message itself: without any, the list gives the creation date)
+    if (filter === "active") return !!c.last_message?.created_at && Date.now() - new Date(c.last_message.created_at).getTime() <= 30 * 86400e3;
     if (filter === "unread") return c.unread_count > 0;
     if (filter === "mentions") return c.mention_count > 0;
     if (filter !== "all") return kindOf(c) === filter;
@@ -101,8 +103,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     [t("ui_sec_direct"), visible.filter((c) => !c.pinned && c.kind === "dm")],
   ];
   const filters: [Filter, string][] = [
-    ["all", t("ui_f_all")], ["unread", t("ui_f_unread")], ["dm", t("ui_f_direct")], ["mentions", t("ui_f_mentions")],
-    ["channel", t("ui_f_communities")], ["plan", t("ui_f_plans")], ["group", t("ui_f_groups")],
+    ["all", t("ui_f_all")], ["active", t("ui_f_active")], ["unread", t("ui_f_unread")], ["dm", t("ui_f_direct")], ["mentions", t("ui_f_mentions")],
+    ["channel", t("ui_f_communities")], ["group", t("ui_f_groups")], ["plan", t("ui_f_plans")],
   ];
 
   return (

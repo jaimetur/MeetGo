@@ -1490,6 +1490,9 @@ msgstr "Chat di {zone}. Unisciti a quelle che ti piacciono."
 msgid "ui_explore_title"
 msgstr "Chat"
 
+msgid "ui_f_active"
+msgstr "Attivi"
+
 msgid "ui_f_all"
 msgstr "Tutte"
 
