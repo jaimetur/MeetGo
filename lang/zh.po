@@ -4836,7 +4836,7 @@ msgid "ui_previous"
 msgstr "上一个"
 
 msgid "ui_feed_tab_communities"
-msgstr "社区"
+msgstr "公告板"
 
 msgid "ui_feed_tab_wall"
 msgstr "我的动态墙"

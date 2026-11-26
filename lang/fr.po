@@ -5702,7 +5702,7 @@ msgid "ui_previous"
 msgstr "Précédent"
 
 msgid "ui_feed_tab_communities"
-msgstr "Communautés"
+msgstr "Tableau"
 
 msgid "ui_feed_tab_wall"
 msgstr "Mon mur"

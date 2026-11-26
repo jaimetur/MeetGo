@@ -5703,7 +5703,7 @@ msgid "ui_previous"
 msgstr "Zurück"
 
 msgid "ui_feed_tab_communities"
-msgstr "Communities"
+msgstr "Pinnwand"
 
 msgid "ui_feed_tab_wall"
 msgstr "Meine Pinnwand"

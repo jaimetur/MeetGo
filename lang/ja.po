@@ -4836,7 +4836,7 @@ msgid "ui_previous"
 msgstr "前へ"
 
 msgid "ui_feed_tab_communities"
-msgstr "コミュニティ"
+msgstr "掲示板"
 
 msgid "ui_feed_tab_wall"
 msgstr "マイウォール"

@@ -4836,7 +4836,7 @@ msgid "ui_previous"
 msgstr "Vorige"
 
 msgid "ui_feed_tab_communities"
-msgstr "Community's"
+msgstr "Prikbord"
 
 msgid "ui_feed_tab_wall"
 msgstr "Mijn prikbord"

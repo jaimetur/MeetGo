@@ -4836,7 +4836,7 @@ msgid "ui_previous"
 msgstr "Indietro"
 
 msgid "ui_feed_tab_communities"
-msgstr "Community"
+msgstr "Avvisi"
 
 msgid "ui_feed_tab_wall"
 msgstr "La mia bacheca"

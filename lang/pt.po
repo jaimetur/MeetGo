@@ -4835,7 +4835,7 @@ msgid "ui_previous"
 msgstr "Anterior"
 
 msgid "ui_feed_tab_communities"
-msgstr "Comunidades"
+msgstr "Quadro"
 
 msgid "ui_feed_tab_wall"
 msgstr "O meu mural"
