@@ -1411,7 +1411,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
           </>
         )}
       </div>
-      <div className="dbar single phoneonly">
+      <div className="dbar single phoneonly pubbar">
         <button className="btn go" disabled={busy || loading || uploading} onClick={() => submit()}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
       </div>
       {askScope ? (
