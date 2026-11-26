@@ -95,14 +95,14 @@ export const DESIGN_FAMILIES = ["meetgo", "conversa", "momentos", "muro", "chisp
 export type ThemeMode = "light" | "dark" | "auto";
 export type ThemeChoice = { family: string; mode: ThemeMode };
 
-/** Once on every device: the MeetGo design and theme (keeping day, night or auto); the person can change them afterwards. */
-const STYLE_VERSION = "2";
+/** Once on every device: the MeetGo design, the MeetGo theme and Auto (day or night as the device); the person can change
+ *  them afterwards. */
+const STYLE_VERSION = "3";
 export function resetStyleOnce() {
   try {
     if (localStorage.getItem("styleVersion") === STYLE_VERSION) return;
-    const { mode } = readThemeChoice();  // also from a theme saved the earlier way
     localStorage.setItem("themeFamily", "meetgo");
-    localStorage.setItem("themeMode", mode);
+    localStorage.setItem("themeMode", "auto");
     localStorage.setItem("communityLayout", "actual");
     localStorage.setItem("styleVersion", STYLE_VERSION);
   } catch {
