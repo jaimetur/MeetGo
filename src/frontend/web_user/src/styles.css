@@ -1757,6 +1757,7 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 .lg-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
 .lg-filters .adm-search { flex: 1 1 220px; }
 .lg-filters select.inp { flex: 0 0 auto; width: auto; height: 42px; border-radius: 12px; }
+.lg-dates { display: flex; gap: 8px; flex: none; }  /* from and to, always together */
 .lg-date { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); }
 .lg-date .inp { height: 42px; border-radius: 12px; padding: 8px 10px; }
 .lg-list { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; }

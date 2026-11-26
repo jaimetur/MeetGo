@@ -70,8 +70,10 @@ export function Logs({ initialUser }: { initialUser?: string }) {
           <option value="">{a("lg_method_all")}</option>
           {METHODS.map((m) => <option key={m} value={m}>{m}</option>)}
         </select>
+        <div className="lg-dates">
         <label className="lg-date">{a("lg_since")}<input id="lg-since" className="inp" type="datetime-local" value={f.since} onChange={(e) => set({ since: e.target.value })} /></label>
         <label className="lg-date">{a("lg_until")}<input id="lg-until" className="inp" type="datetime-local" value={f.until} onChange={(e) => set({ until: e.target.value })} /></label>
+        </div>
         {filtered ? <button className="btn sm" onClick={() => setF(EMPTY)}>{a("lg_clear")}</button> : null}
       </div>
 
