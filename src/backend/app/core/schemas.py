@@ -447,6 +447,7 @@ class BoardPostIn(BaseModel):
     capacity: int | None = Field(default=None, ge=1, le=10000)
     link_url: str | None = Field(default=None, max_length=512)
     cover_attachment_id: int | None = None
+    cover_art: str | None = Field(default=None, max_length=32)  # a gallery illustration instead of a photo
     comments_mode: str | None = Field(default=None, pattern="^(all|attendees|off)$")
     join_mode: str | None = Field(default=None, pattern="^(open|approval)$")
     mode: str | None = Field(default=None, pattern="^(in_person|online|hybrid)$")
@@ -467,6 +468,7 @@ class BoardPostUpdateIn(BaseModel):
     capacity: int | None = Field(default=None, ge=0, le=10000)  # 0: no limit
     link_url: str | None = Field(default=None, max_length=512)
     cover_attachment_id: int | None = None  # 0: no cover
+    cover_art: str | None = Field(default=None, max_length=32)  # "": none
     comments_mode: str | None = Field(default=None, pattern="^(all|attendees|off)$")
     join_mode: str | None = Field(default=None, pattern="^(open|approval)$")
     pinned: bool | None = None

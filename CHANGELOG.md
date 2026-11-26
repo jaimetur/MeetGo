@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Restricted the container logs endpoint to administrators, fixed its server error, and turned off the debug panel of the user interface.
 
 #### 🌟 New Features:
+- Covers of plans and events: besides an uploaded photo, one of 38 illustrations of a gallery made for MeetGo (sports, nature, food and drinks, music, culture, debate, travel…), those of the community's category first (`tools/make_covers.py`).
 - Administration → Business: a dashboard (users, subscriptions, MRR, Stripe revenue, trial conversion and cancellations, Google Play earnings and installs from its reports, direct APK downloads, the version on each Play track, last backup, mail and disk) by period, each figure with its source and age, and below it the settings of subscriptions, Stripe, Google Play (with its reports bucket), Firebase, Claude, mail tests and codes, each with «Test connection». Keys only show their last characters, mail passwords are never sent back, and the APK downloads are counted from now on.
 - Administration → Interests: add, rename (in the 10 languages), hide or delete the interests people choose in their profile and for their communities.
 - The emoji picker has every emoji, by category as in WhatsApp (smileys and people, animals, food, activities, travel, objects, symbols, flags), with your most used and recent ones on top; it stays open to add several, and puts them where the cursor is. Swipe sideways to go from one category to the next, or search emojis by their (English) name.
@@ -110,6 +111,7 @@ All notable changes to this project will be documented in this file.
 - The sign-in screen can send the confirmation email again, and a notice goes out when the password changes.
 
 #### 🚀 Enhancements:
+- Publishing or editing a post: Escape leaves it, and leaving with changes not published (Escape or the close button) asks first. The chats fold is called «Plans or Events (n)».
 - Your communities: the latest active first, each with a «+» button to publish in it straight away.
 - Plans and events are one kind of post with a type: one «Plan or Event» tab when publishing (Type: Plan / Event; an event adds its end and a tickets link), one «Plans or Events» filter on the board, and in Chats their chats go under their community's chat, indented, in one «Plans (n)» fold, each marked as plan or event (remembered on each device). The «meetup» kind is now called «plan» in every language.
 - Play screenshots wait until the screen is still and only replace the stored ones that look different (more than 0.5 % of their pixels), and the store listing only receives the texts and images that differ from what Google has, so runs without visible changes neither commit nor send anything for review. The Android workflow's artifact upload moves to actions/upload-artifact v7 (Node 24).

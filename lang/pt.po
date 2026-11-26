@@ -3871,6 +3871,9 @@ msgstr "O organizador não pode sair do seu próprio plano: cancela-o"
 msgid "err_attendee_not_found"
 msgstr "Não há nenhum pedido pendente desta pessoa"
 
+msgid "err_invalid_cover"
+msgstr "Essa capa não está na galeria"
+
 msgid "err_invalid_filter"
 msgstr "Filtro inválido"
 
@@ -4175,7 +4178,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Comunidades · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Planos ({n})"
+msgstr "Planos ou Eventos ({n})"
 
 msgid "ui_sub_events"
 msgstr "Eventos ({n})"
@@ -4188,6 +4191,27 @@ msgstr "Plano ou Evento"
 
 msgid "ui_board_f_plans_events"
 msgstr "Planos ou Eventos"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Escolher da galeria"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Galeria de capas"
+
+msgid "ui_publish_cover_option"
+msgstr "Capa {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Sair sem publicar?"
+
+msgid "ui_publish_leave_body"
+msgstr "O que escreveste vai perder-se."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "As alterações não guardadas vão perder-se."
+
+msgid "ui_publish_leave_yes"
+msgstr "Sair"
 
 msgid "ui_sec_plans"
 msgstr "Conversas dos planos"

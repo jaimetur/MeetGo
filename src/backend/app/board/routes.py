@@ -52,7 +52,7 @@ async def _apply_to_following(db: AsyncSession, post: BoardPost, data: dict, old
         BoardPost.starts_at > old_start))).scalars().all())
     delta = (post.starts_at - old_start) if post.starts_at and old_start else timedelta(0)
     duration = (post.ends_at - post.starts_at) if post.ends_at and post.starts_at else None
-    fields = ("title", "body", "place", "place_url", "capacity", "link_url", "cover_attachment_id", "comments_mode",
+    fields = ("title", "body", "place", "place_url", "capacity", "link_url", "cover_attachment_id", "cover_art", "comments_mode",
               "join_mode", "mode", "online_url", "max_guests")
     for other in others:
         for f in fields:
@@ -118,6 +118,7 @@ async def create_post(community_id: int, payload: BoardPostIn, db: AsyncSession 
         conversation_id=conv.id, author_id=user.id, kind=payload.kind, title=payload.title.strip(),
         body=(payload.body or "").strip(), link_url=payload.link_url or None,
         cover_attachment_id=await board.check_cover(db, payload.cover_attachment_id, user),
+        cover_art=None if payload.cover_attachment_id else board.check_cover_art(payload.cover_art),
         comments_mode=payload.comments_mode or "all", created_at=utcnow(), updated_at=utcnow(),
     )
     if plan:
@@ -184,6 +185,12 @@ async def update_post(post_id: int, payload: BoardPostUpdateIn, db: AsyncSession
         post.link_url = payload.link_url or None
     if "cover_attachment_id" in data:
         post.cover_attachment_id = await board.check_cover(db, payload.cover_attachment_id, user)
+        if post.cover_attachment_id:  # a photo replaces the illustration
+            post.cover_art = None
+    if "cover_art" in data:
+        post.cover_art = board.check_cover_art(payload.cover_art)
+        if post.cover_art:  # and an illustration the photo
+            post.cover_attachment_id = None
     if payload.comments_mode:
         post.comments_mode = payload.comments_mode
     if payload.pinned is not None:

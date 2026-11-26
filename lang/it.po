@@ -3872,6 +3872,9 @@ msgstr "L'organizzatore non può lasciare il proprio piano: annullalo"
 msgid "err_attendee_not_found"
 msgstr "Non c'è nessuna richiesta in sospeso di questa persona"
 
+msgid "err_invalid_cover"
+msgstr "Questa copertina non è nella galleria"
+
 msgid "err_invalid_filter"
 msgstr "Filtro non valido"
 
@@ -4176,7 +4179,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Comunità · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Piani ({n})"
+msgstr "Piani o Eventi ({n})"
 
 msgid "ui_sub_events"
 msgstr "Eventi ({n})"
@@ -4189,6 +4192,27 @@ msgstr "Piano o Evento"
 
 msgid "ui_board_f_plans_events"
 msgstr "Piani o Eventi"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Scegli dalla galleria"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Galleria di copertine"
+
+msgid "ui_publish_cover_option"
+msgstr "Copertina {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Uscire senza pubblicare?"
+
+msgid "ui_publish_leave_body"
+msgstr "Ciò che hai scritto andrà perso."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "Le modifiche non salvate andranno perse."
+
+msgid "ui_publish_leave_yes"
+msgstr "Esci"
 
 msgid "ui_sec_plans"
 msgstr "Chat dei piani"

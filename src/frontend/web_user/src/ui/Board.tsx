@@ -11,6 +11,8 @@ import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toast, useStore } from "../store";
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
+import { COVER_ARTS, coverArtUrl } from "../coverArts";
+import { communityCategory } from "./Communities";
 import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
@@ -185,13 +187,13 @@ function CardAttend({ post }: { post: Post }) {
 // ---------- the card ----------
 export function PostCard({ post, showCommunity = true }: { post: Post; showCommunity?: boolean }) {
   const dated = isDated(post);
-  const withCover = post.kind === "meetup" || post.kind === "event" || !!post.cover_url;
+  const withCover = post.kind === "meetup" || post.kind === "event" || !!post.cover_url || !!post.cover_art;
   const open = () => navigate(postPath(post.id));
   const past = isPast(post);
   return (
     <article className={"pcard k-" + post.kind + (past ? " past" : "")} onClick={open} onKeyDown={(e) => e.key === "Enter" && open()} tabIndex={0} role="link" aria-label={post.title}>
       {withCover ? (
-        <div className="pcover" style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : coverGradient("p" + post.id) }}>
+        <div className="pcover" style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : post.cover_art ? `center / cover no-repeat url("${coverArtUrl(post.cover_art)}")` : coverGradient("p" + post.id) }}>
           {post.starts_at ? <DateTile iso={post.starts_at} /> : null}
           <div className="pflags">
             {post.pinned ? <span className="pflag"><Icon name="pin" size="sm" />{t("ui_post_pinned")}</span> : null}
@@ -607,7 +609,7 @@ export function PostPage({ id }: { id: number }) {
 
   return (
     <main className="screen detail">
-      <div className="hero" style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : coverGradient("p" + post.id) }}>
+      <div className="hero" style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : post.cover_art ? `center / cover no-repeat url("${coverArtUrl(post.cover_art)}")` : coverGradient("p" + post.id) }}>
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/")} aria-label={t("ui_back")}><Icon name="back" /></button>
           <span className="grow" />
@@ -1039,19 +1041,37 @@ function ReportPostModal({ postId, onClose }: { postId: number; onClose: () => v
   );
 }
 
+/** The gallery of cover illustrations; those of the community's category first. */
+function CoverGallery({ category, value, onPick, onClose }: { category: string | null; value: string | null; onPick: (name: string) => void; onClose: () => void }) {
+  const list = [...COVER_ARTS].sort(([, a], [, b]) => Number(b === category) - Number(a === category));
+  return (
+    <Modal wide title={t("ui_publish_cover_gallery_title")} onClose={onClose}>
+      <div className="covergal">
+        {list.map(([name]) => (
+          <button key={name} type="button" className={"covergal-it" + (value === name ? " on" : "")} aria-pressed={value === name}
+            aria-label={t("ui_publish_cover_option", { name })} onClick={() => onPick(name)}>
+            <img src={coverArtUrl(name)} alt="" loading="lazy" />
+          </button>
+        ))}
+      </div>
+    </Modal>
+  );
+}
+
 // ---------- publish ----------
 type Form = {
   kind: PostKind; community_id: number | null; title: string; body: string;
   date: string; time: string; endDate: string; endTime: string; place: string; place_url: string;
   limit: boolean; capacity: number; link_url: string; comments_mode: "all" | "attendees" | "off"; approval: boolean;
   cover: { id: number; url: string } | null;
+  art: string | null;  // a gallery illustration instead of a photo
   mode: "in_person" | "online" | "hybrid"; online_url: string; guests: boolean; max_guests: number;
   repeat: "none" | "weekly" | "biweekly" | "monthly"; repeat_until: string;
 };
 
 const EMPTY_FORM: Form = {
   kind: "meetup", community_id: null, title: "", body: "", date: "", time: "", endDate: "", endTime: "", place: "", place_url: "",
-  limit: false, capacity: 8, link_url: "", comments_mode: "all", approval: false, cover: null,
+  limit: false, capacity: 8, link_url: "", comments_mode: "all", approval: false, cover: null, art: null,
   mode: "in_person", online_url: "", guests: false, max_guests: 1, repeat: "none", repeat_until: "",
 };
 
@@ -1084,6 +1104,23 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   const [series, setSeries] = useState<Post["series"]>(null);
   const [askScope, setAskScope] = useState(false);
   const set = (patch: Partial<Form>) => setForm((f) => ({ ...f, ...patch }));
+  const [gallery, setGallery] = useState(false);
+  // What the form had when it opened (or loaded the post): leaving with anything else asks first.
+  const [saved, setSaved] = useState<Form | null>(null);
+  const [leaving, setLeaving] = useState(false);
+  useEffect(() => { if (!loading && !saved) setSaved(form); }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+  const dirty = !!saved && JSON.stringify(form) !== JSON.stringify(saved);
+  const leave = () => (dirty ? setLeaving(true) : goBack("/"));
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      // Escape leaves the form, unless a window of its own is open (it closes that one)
+      if (e.key !== "Escape" || document.querySelector(".modal, .sheet")) return;
+      e.preventDefault();
+      leave();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
 
   useEffect(() => {
     if (myCommunities === null) loadMyCommunities();
@@ -1100,7 +1137,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
         kind: p.kind, community_id: p.community.id, title: p.title, body: p.body || "",
         date: edit ? start.date : "", time: start.time, endDate: edit ? end.date : "", endTime: end.time,
         place: p.place || "", place_url: p.place_url || "", limit: !!p.capacity, capacity: p.capacity || 8, link_url: p.link_url || "",
-        comments_mode: p.comments_mode, approval: p.join_mode === "approval", cover: null,
+        comments_mode: p.comments_mode, approval: p.join_mode === "approval", cover: null, art: p.cover_art || null,
         mode: p.mode || "in_person", online_url: p.online_url || "", guests: (p.max_guests || 0) > 0, max_guests: p.max_guests || 1,
         repeat: "none", repeat_until: "",
       });
@@ -1131,7 +1168,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
     setUploading(true);
     try {
       const res = await api.upload(file);
-      set({ cover: { id: res.id, url: res.url } });
+      set({ cover: { id: res.id, url: res.url }, art: null });
     } catch (e: any) {
       toast(e.message, "error");
     } finally {
@@ -1173,6 +1210,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
       if (scope) payload.scope = scope;
     }
     if (form.cover) payload.cover_attachment_id = form.cover.id;
+    else if (form.art !== (saved?.art ?? null)) payload.cover_art = form.art || "";
     try {
       const post = edit ? await api.updatePost(edit, payload) : await api.createPost(form.community_id!, payload);
       emitBoardEvent({ type: edit ? "post.updated" : "post.created", post });
@@ -1209,7 +1247,7 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
   return (
     <main className="screen detail">
       <div className="formtop">
-        <button className="iconbtn" onClick={() => goBack("/")} aria-label={t("ui_cancel")}><Icon name="x" /></button>
+        <button className="iconbtn" onClick={leave} aria-label={t("ui_cancel")}><Icon name="x" /></button>
         <h1 className="grow">{edit ? t("ui_publish_edit_title") : repeat ? t("ui_publish_repeat_title") : t("ui_publish_title")}</h1>
         <button className="btn go sm deskonly" disabled={busy || loading || uploading} onClick={() => submit()}>{edit ? t("ui_save") : t("ui_publish_button")}</button>
       </div>
@@ -1284,12 +1322,13 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
                 ) : null}
                 <div className="fld">
                   <span>{t("ui_publish_f_cover")}</span>
-                  <div className="coverpick" style={{ background: form.cover ? `center / cover no-repeat url("${fileUrl(form.cover.url)}")` : coverGradient(form.title || "new") }}>
+                  <div className="coverpick" style={{ background: form.cover ? `center / cover no-repeat url("${fileUrl(form.cover.url)}")` : form.art ? `center / cover no-repeat url("${coverArtUrl(form.art)}")` : coverGradient(form.title || "new") }}>
                     <label className="btn sm glassbtn">
                       <Icon name="image" size="sm" />{uploading ? t("ui_loading") : form.cover ? t("ui_publish_cover_change") : t("ui_publish_cover_add")}
                       <input type="file" accept="image/*" hidden onChange={(e) => e.target.files?.[0] && uploadCover(e.target.files[0])} />
                     </label>
-                    {form.cover ? <button className="btn sm glassbtn" onClick={() => set({ cover: null })}>{t("ui_remove")}</button> : null}
+                    <button type="button" id="pub-gallery" className="btn sm glassbtn" onClick={() => setGallery(true)}><Icon name="palette" size="sm" />{t("ui_publish_cover_gallery")}</button>
+                    {form.cover || form.art ? <button className="btn sm glassbtn" onClick={() => set({ cover: null, art: null })}>{t("ui_remove")}</button> : null}
                   </div>
                 </div>
               </>
@@ -1336,6 +1375,16 @@ export function PublishPage({ community, repeat, edit }: { community: number | n
           <button id="pub-scope-one" className="btn block" onClick={() => submit("one")}>{t("ui_series_scope_one")}</button>
           <button id="pub-scope-following" className="btn pri block" onClick={() => submit("following")}>{t("ui_series_scope_following")}</button>
         </Modal>
+      ) : null}
+      {gallery ? (
+        <CoverGallery category={(() => {
+          const c = (myCommunities || []).find((x) => x.id === form.community_id);
+          return c ? communityCategory(c) : null;
+        })()} value={form.art} onPick={(art) => { set({ art, cover: null }); setGallery(false); }} onClose={() => setGallery(false)} />
+      ) : null}
+      {leaving ? (
+        <ConfirmModal title={t("ui_publish_leave_title")} body={edit ? t("ui_publish_leave_body_edit") : t("ui_publish_leave_body")} danger
+          confirm={t("ui_publish_leave_yes")} onClose={() => setLeaving(false)} onConfirm={() => { setLeaving(false); goBack("/"); }} />
       ) : null}
     </main>
   );

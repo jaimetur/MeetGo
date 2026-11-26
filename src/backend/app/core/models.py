@@ -437,6 +437,8 @@ class BoardPost(Base):
     capacity: Mapped[int | None] = mapped_column(Integer, nullable=True)
     link_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
     cover_attachment_id: Mapped[int | None] = mapped_column(ForeignKey("attachments.id", ondelete="SET NULL"), nullable=True)
+    # or an illustration of the gallery (app/board/cover_arts.py), served at /covers/<name>.svg
+    cover_art: Mapped[str | None] = mapped_column(String(32), nullable=True)
     comments_mode: Mapped[str] = mapped_column(String(16), default="all")  # all | attendees | off
     join_mode: Mapped[str] = mapped_column(String(16), default="open")  # open | approval
     pinned: Mapped[bool] = mapped_column(Boolean, default=False)

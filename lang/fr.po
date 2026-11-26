@@ -3955,6 +3955,9 @@ msgstr "Communauté introuvable"
 msgid "err_community_other_zone"
 msgstr "Cette communauté appartient à une autre zone : seules les personnes de sa province et de sa tranche d’âge peuvent la rejoindre"
 
+msgid "err_invalid_cover"
+msgstr "Cette couverture n'est pas dans la galerie"
+
 msgid "err_invalid_filter"
 msgstr "Filtre non valide"
 
@@ -5039,7 +5042,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Communautés · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Plans ({n})"
+msgstr "Plans ou Événements ({n})"
 
 msgid "ui_sub_events"
 msgstr "Événements ({n})"
@@ -5052,6 +5055,27 @@ msgstr "Plan ou Événement"
 
 msgid "ui_board_f_plans_events"
 msgstr "Plans ou Événements"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Choisir dans la galerie"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Galerie de couvertures"
+
+msgid "ui_publish_cover_option"
+msgstr "Couverture {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Quitter sans publier ?"
+
+msgid "ui_publish_leave_body"
+msgstr "Ce que tu as écrit sera perdu."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "Les modifications non enregistrées seront perdues."
+
+msgid "ui_publish_leave_yes"
+msgstr "Quitter"
 
 msgid "ui_sec_plans"
 msgstr "Chats des plans"

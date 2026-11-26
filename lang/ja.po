@@ -3872,6 +3872,9 @@ msgstr "主催者は自分の予定から抜けられません。代わりに予
 msgid "err_attendee_not_found"
 msgstr "この人からの保留中のリクエストはありません"
 
+msgid "err_invalid_cover"
+msgstr "そのカバーはギャラリーにありません"
+
 msgid "err_invalid_filter"
 msgstr "無効なフィルターです"
 
@@ -4176,7 +4179,7 @@ msgid "ui_sec_communities_zone"
 msgstr "コミュニティ · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "予定（{n}）"
+msgstr "予定・イベント（{n}）"
 
 msgid "ui_sub_events"
 msgstr "イベント（{n}）"
@@ -4189,6 +4192,27 @@ msgstr "予定・イベント"
 
 msgid "ui_board_f_plans_events"
 msgstr "予定・イベント"
+
+msgid "ui_publish_cover_gallery"
+msgstr "ギャラリーから選ぶ"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "カバーギャラリー"
+
+msgid "ui_publish_cover_option"
+msgstr "カバー {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "投稿せずに終了しますか？"
+
+msgid "ui_publish_leave_body"
+msgstr "書いた内容は失われます。"
+
+msgid "ui_publish_leave_body_edit"
+msgstr "保存していない変更は失われます。"
+
+msgid "ui_publish_leave_yes"
+msgstr "終了"
 
 msgid "ui_sec_plans"
 msgstr "予定のチャット"

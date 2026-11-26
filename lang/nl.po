@@ -3872,6 +3872,9 @@ msgstr "De organisator kan zijn eigen plan niet verlaten: annuleer het"
 msgid "err_attendee_not_found"
 msgstr "Deze persoon heeft geen openstaand verzoek"
 
+msgid "err_invalid_cover"
+msgstr "Die omslag staat niet in de galerij"
+
 msgid "err_invalid_filter"
 msgstr "Ongeldig filter"
 
@@ -4176,7 +4179,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Communities · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Plannen ({n})"
+msgstr "Plannen of Evenementen ({n})"
 
 msgid "ui_sub_events"
 msgstr "Evenementen ({n})"
@@ -4189,6 +4192,27 @@ msgstr "Plan of Evenement"
 
 msgid "ui_board_f_plans_events"
 msgstr "Plannen of Evenementen"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Kies uit de galerij"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Omslaggalerij"
+
+msgid "ui_publish_cover_option"
+msgstr "Omslag {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Weggaan zonder te plaatsen?"
+
+msgid "ui_publish_leave_body"
+msgstr "Wat je hebt geschreven gaat verloren."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "Niet-opgeslagen wijzigingen gaan verloren."
+
+msgid "ui_publish_leave_yes"
+msgstr "Weggaan"
 
 msgid "ui_sec_plans"
 msgstr "Plan-chats"

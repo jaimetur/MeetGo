@@ -103,6 +103,16 @@ async def my_status(db: AsyncSession, post_id: int, user_id: int) -> str | None:
     return a.status if a else None
 
 
+def check_cover_art(name: str | None) -> str | None:
+    """A gallery illustration (app/board/cover_arts.py) or none ("")."""
+    from app.board.cover_arts import COVER_ARTS
+    if not name:
+        return None
+    if name not in COVER_ARTS:
+        raise HTTPException(400, t("err_invalid_cover"))
+    return name
+
+
 async def check_cover(db: AsyncSession, attachment_id: int | None, user: User) -> int | None:
     if not attachment_id:
         return None
@@ -186,6 +196,7 @@ async def posts_out(db: AsyncSession, user: User, posts: list[BoardPost]) -> lis
             "waitlist_count": counts.get((p.id, "waitlist"), 0),
             "link_url": p.link_url,
             "cover_url": signed_url(cover) if cover else None,
+            "cover_art": p.cover_art if not cover else None,
             "comments_mode": p.comments_mode,
             "join_mode": p.join_mode,
             "comment_count": comments.get(p.id, 0),
@@ -548,7 +559,7 @@ async def ensure_series(db: AsyncSession, series: BoardSeries, author: User | No
             conversation_id=series.conversation_id, author_id=author.id, kind=tpl.get("kind", "meetup"),
             title=tpl.get("title", "")[:160], body=tpl.get("body") or "", starts_at=when,
             ends_at=when + timedelta(minutes=minutes) if minutes else None, place=tpl.get("place"), place_url=tpl.get("place_url"),
-            capacity=tpl.get("capacity"), link_url=tpl.get("link_url"), cover_attachment_id=tpl.get("cover_attachment_id"),
+            capacity=tpl.get("capacity"), link_url=tpl.get("link_url"), cover_attachment_id=tpl.get("cover_attachment_id"), cover_art=tpl.get("cover_art"),
             comments_mode=tpl.get("comments_mode") or "all", join_mode=tpl.get("join_mode") or "open",
             mode=tpl.get("mode") or "in_person", online_url=tpl.get("online_url"), max_guests=tpl.get("max_guests") or 0,
             cohost_ids=tpl.get("cohost_ids") or [], series_id=series.id, created_at=now, updated_at=now)
@@ -568,7 +579,7 @@ async def ensure_series(db: AsyncSession, series: BoardSeries, author: User | No
 def series_template(post: BoardPost) -> dict:
     return {
         "kind": post.kind, "title": post.title, "body": post.body, "place": post.place, "place_url": post.place_url,
-        "capacity": post.capacity, "link_url": post.link_url, "cover_attachment_id": post.cover_attachment_id,
+        "capacity": post.capacity, "link_url": post.link_url, "cover_attachment_id": post.cover_attachment_id, "cover_art": post.cover_art,
         "comments_mode": post.comments_mode, "join_mode": post.join_mode, "mode": post.mode, "online_url": post.online_url,
         "max_guests": post.max_guests, "cohost_ids": post.cohost_ids or [],
         "duration_minutes": int((as_utc(post.ends_at) - as_utc(post.starts_at)).total_seconds() // 60) if post.ends_at and post.starts_at else None,

@@ -3872,6 +3872,9 @@ msgstr "组织者不能退出自己的计划:请改为取消计划"
 msgid "err_attendee_not_found"
 msgstr "此人没有待处理的申请"
 
+msgid "err_invalid_cover"
+msgstr "该封面不在图库中"
+
 msgid "err_invalid_filter"
 msgstr "无效的筛选条件"
 
@@ -4176,7 +4179,7 @@ msgid "ui_sec_communities_zone"
 msgstr "社区 · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "计划（{n}）"
+msgstr "计划或活动（{n}）"
 
 msgid "ui_sub_events"
 msgstr "活动（{n}）"
@@ -4189,6 +4192,27 @@ msgstr "计划或活动"
 
 msgid "ui_board_f_plans_events"
 msgstr "计划或活动"
+
+msgid "ui_publish_cover_gallery"
+msgstr "从图库选择"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "封面图库"
+
+msgid "ui_publish_cover_option"
+msgstr "封面 {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "不发布就离开？"
+
+msgid "ui_publish_leave_body"
+msgstr "你写的内容将会丢失。"
+
+msgid "ui_publish_leave_body_edit"
+msgstr "未保存的更改将会丢失。"
+
+msgid "ui_publish_leave_yes"
+msgstr "离开"
 
 msgid "ui_sec_plans"
 msgstr "计划聊天"

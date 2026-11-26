@@ -298,3 +298,20 @@ async def test_away_communities_leave_the_feed(client, db_session):
     assert (await client.get("/board/feed", headers=bea[0])).json()["posts"] == []
     res = await client.post(f"/communities/{com['id']}/posts", json={"kind": "thread", "title": "x"}, headers=bea[0])
     assert res.status_code == 404
+
+
+async def test_gallery_cover_and_plans_filter(client, db_session):
+    """A plan can take a gallery illustration instead of a photo; the «plan» filter brings plans and events."""
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    com = await _community(client, ana)
+    plan = await _post(client, ana[0], com["id"], cover_art="hiking")
+    assert plan["cover_art"] == "hiking" and plan["cover_url"] is None
+    bad = await client.post(f"/communities/{com['id']}/posts", headers=ana[0],
+                            json={"kind": "meetup", "title": "x", "starts_at": soon(), "cover_art": "../etc/passwd"})
+    assert bad.status_code == 400
+    assert (await client.patch(f"/posts/{plan['id']}", json={"cover_art": "beach"}, headers=ana[0])).json()["cover_art"] == "beach"
+    assert (await client.patch(f"/posts/{plan['id']}", json={"cover_art": ""}, headers=ana[0])).json()["cover_art"] is None
+    event = await _post(client, ana[0], com["id"], kind="event", title="Concierto", cover_art="concert")
+    await _post(client, ana[0], com["id"], kind="notice", title="Aviso", starts_at=None)
+    kinds = {p["kind"] for p in (await client.get("/board/feed", params={"kind": "plan"}, headers=ana[0])).json()["posts"]}
+    assert kinds == {"meetup", "event"} and event["cover_art"] == "concert"

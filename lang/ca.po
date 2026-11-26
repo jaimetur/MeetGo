@@ -3872,6 +3872,9 @@ msgstr "L'organitzador no pot abandonar el seu propi pla: cancel·la'l"
 msgid "err_attendee_not_found"
 msgstr "Aquesta persona no té cap sol·licitud pendent"
 
+msgid "err_invalid_cover"
+msgstr "Aquesta portada no és a la galeria"
+
 msgid "err_invalid_filter"
 msgstr "Filtre no vàlid"
 
@@ -4176,7 +4179,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Comunitats · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Plans ({n})"
+msgstr "Plans o Esdeveniments ({n})"
 
 msgid "ui_sub_events"
 msgstr "Esdeveniments ({n})"
@@ -4189,6 +4192,27 @@ msgstr "Pla o Esdeveniment"
 
 msgid "ui_board_f_plans_events"
 msgstr "Plans o Esdeveniments"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Tria de la galeria"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Galeria de portades"
+
+msgid "ui_publish_cover_option"
+msgstr "Portada {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Vols sortir sense publicar?"
+
+msgid "ui_publish_leave_body"
+msgstr "Es perdrà el que has escrit."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "Es perdran els canvis que no has desat."
+
+msgid "ui_publish_leave_yes"
+msgstr "Surt"
 
 msgid "ui_sec_plans"
 msgstr "Xats de plans"

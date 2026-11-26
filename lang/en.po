@@ -3873,6 +3873,9 @@ msgstr "The organiser cannot leave their own plan: cancel it instead"
 msgid "err_attendee_not_found"
 msgstr "There is no pending request from this person"
 
+msgid "err_invalid_cover"
+msgstr "That cover is not in the gallery"
+
 msgid "err_invalid_filter"
 msgstr "Invalid filter"
 
@@ -4177,7 +4180,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Communities · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Plans ({n})"
+msgstr "Plans or Events ({n})"
 
 msgid "ui_sub_events"
 msgstr "Events ({n})"
@@ -4190,6 +4193,27 @@ msgstr "Plan or Event"
 
 msgid "ui_board_f_plans_events"
 msgstr "Plans or Events"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Choose from the gallery"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Cover gallery"
+
+msgid "ui_publish_cover_option"
+msgstr "Cover {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Leave without publishing?"
+
+msgid "ui_publish_leave_body"
+msgstr "What you have written will be lost."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "The changes you have not saved will be lost."
+
+msgid "ui_publish_leave_yes"
+msgstr "Leave"
 
 msgid "ui_sec_plans"
 msgstr "Plan chats"

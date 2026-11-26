@@ -3873,6 +3873,9 @@ msgstr "El organizador no puede salir de su propio plan: cancélalo"
 msgid "err_attendee_not_found"
 msgstr "No hay ninguna solicitud pendiente de esta persona"
 
+msgid "err_invalid_cover"
+msgstr "Esa portada no está en la galería"
+
 msgid "err_invalid_filter"
 msgstr "Filtro no válido"
 
@@ -4177,7 +4180,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Comunidades · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Planes ({n})"
+msgstr "Planes o Eventos ({n})"
 
 msgid "ui_sub_events"
 msgstr "Eventos ({n})"
@@ -4190,6 +4193,27 @@ msgstr "Plan o Evento"
 
 msgid "ui_board_f_plans_events"
 msgstr "Planes o Eventos"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Elegir de la galería"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Galería de portadas"
+
+msgid "ui_publish_cover_option"
+msgstr "Portada {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "¿Salir sin publicar?"
+
+msgid "ui_publish_leave_body"
+msgstr "Lo que has escrito se perderá."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "Los cambios que no has guardado se perderán."
+
+msgid "ui_publish_leave_yes"
+msgstr "Salir"
 
 msgid "ui_sec_plans"
 msgstr "Chats de planes"

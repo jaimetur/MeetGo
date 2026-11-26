@@ -3956,6 +3956,9 @@ msgstr "Community nicht gefunden"
 msgid "err_community_other_zone"
 msgstr "Diese Community gehört zu einer anderen Gegend: Nur Leute aus ihrer Provinz und Altersgruppe können beitreten"
 
+msgid "err_invalid_cover"
+msgstr "Dieses Titelbild ist nicht in der Galerie"
+
 msgid "err_invalid_filter"
 msgstr "Ungültiger Filter"
 
@@ -5040,7 +5043,7 @@ msgid "ui_sec_communities_zone"
 msgstr "Communities · {zone}"
 
 msgid "ui_sub_plans"
-msgstr "Pläne ({n})"
+msgstr "Pläne oder Events ({n})"
 
 msgid "ui_sub_events"
 msgstr "Events ({n})"
@@ -5053,6 +5056,27 @@ msgstr "Plan oder Event"
 
 msgid "ui_board_f_plans_events"
 msgstr "Pläne oder Events"
+
+msgid "ui_publish_cover_gallery"
+msgstr "Aus der Galerie wählen"
+
+msgid "ui_publish_cover_gallery_title"
+msgstr "Titelbild-Galerie"
+
+msgid "ui_publish_cover_option"
+msgstr "Titelbild {name}"
+
+msgid "ui_publish_leave_title"
+msgstr "Ohne zu veröffentlichen verlassen?"
+
+msgid "ui_publish_leave_body"
+msgstr "Was du geschrieben hast, geht verloren."
+
+msgid "ui_publish_leave_body_edit"
+msgstr "Nicht gespeicherte Änderungen gehen verloren."
+
+msgid "ui_publish_leave_yes"
+msgstr "Verlassen"
 
 msgid "ui_sec_plans"
 msgstr "Plan-Chats"

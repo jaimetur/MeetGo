@@ -195,6 +195,7 @@ export type Post = {
   waitlist_count: number;
   link_url: string | null;
   cover_url: string | null;
+  cover_art?: string | null;  // a gallery illustration (/covers/<name>.svg) when there is no photo
   comments_mode: CommentsMode;
   join_mode: "open" | "approval";
   comment_count: number;
