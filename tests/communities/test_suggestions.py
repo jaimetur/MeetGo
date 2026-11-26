@@ -13,7 +13,7 @@ async def test_other_zones_always_with_my_own_age(client, db_session):
     young = await make_user(client, db_session, "young.zone@example.com", "Joven", province="Sevilla", dob="2000-01-01")
     await client.post("/me/interests", json={"interest_slugs": ["cine"]}, headers=young[0])
     res = (await client.get("/communities", params={"province": "Sevilla", "age_range": "18_30"}, headers=ana[0])).json()
-    assert all(c["age_range"] == "31_60" for c in res)  # asking for 18-30 shows her own range
+    assert all(c["age_range"] in ("31_60", "custom") for c in res)  # asking for 18-30 shows her own range (or every age)
 
 
 async def test_suggestions_by_interests(client, db_session):

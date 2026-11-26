@@ -5,6 +5,7 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  co_scope_badge: "Ámbito: {scope}",
   co_f_zone: "Zona",
   co_f_zone_all: "Todas las zonas",
   co_f_age: "Franja de edad",
@@ -418,7 +419,7 @@ const ES: Dict = {
   mo_banned: "{name} bloqueado 7 días",
   mo_in_chat: "en el chat #{id}",
 
-  co_search: "Buscar comunidad",
+  co_search: "Buscar por nombre o lugar (país, comunidad, provincia)",
   co_new: "Nueva comunidad",
   co_new_ph: "Nombre de la comunidad",
   co_add: "Añadir",
@@ -593,6 +594,7 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  co_scope_badge: "Scope: {scope}",
   co_f_zone: "Area",
   co_f_zone_all: "All areas",
   co_f_age: "Age band",
@@ -1006,7 +1008,7 @@ const EN: Dict = {
   mo_banned: "{name} blocked for 7 days",
   mo_in_chat: "in chat #{id}",
 
-  co_search: "Search communities",
+  co_search: "Search by name or place (country, region, province)",
   co_new: "New community",
   co_new_ph: "Community name",
   co_add: "Add",
@@ -1182,6 +1184,7 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  co_scope_badge: "Àmbit: {scope}",
   co_f_zone: "Zona",
   co_f_zone_all: "Totes les zones",
   co_f_age: "Franja d'edat",
@@ -1590,7 +1593,7 @@ const CA: Dict = {
   mo_ban7: "Bloqueja 7 dies",
   mo_banned: "{name} bloquejat 7 dies",
   mo_in_chat: "al xat #{id}",
-  co_search: "Cerca una comunitat",
+  co_search: "Cerca per nom o lloc (país, comunitat, província)",
   co_new: "Comunitat nova",
   co_new_ph: "Nom de la comunitat",
   co_add: "Afegeix",
@@ -1761,6 +1764,7 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  co_scope_badge: "Bereich: {scope}",
   co_f_zone: "Gebiet",
   co_f_zone_all: "Alle Gebiete",
   co_f_age: "Altersgruppe",
@@ -2169,7 +2173,7 @@ const DE: Dict = {
   mo_ban7: "7 Tage sperren",
   mo_banned: "{name} für 7 Tage gesperrt",
   mo_in_chat: "im Chat #{id}",
-  co_search: "Communities suchen",
+  co_search: "Nach Name oder Ort suchen (Land, Region, Provinz)",
   co_new: "Neue Community",
   co_new_ph: "Name der Community",
   co_add: "Hinzufügen",
@@ -2340,6 +2344,7 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  co_scope_badge: "Portée : {scope}",
   co_f_zone: "Zone",
   co_f_zone_all: "Toutes les zones",
   co_f_age: "Tranche d'âge",
@@ -2748,7 +2753,7 @@ const FR: Dict = {
   mo_ban7: "Bloquer 7 jours",
   mo_banned: "{name} bloqué pendant 7 jours",
   mo_in_chat: "dans le chat #{id}",
-  co_search: "Rechercher une communauté",
+  co_search: "Rechercher par nom ou lieu (pays, région, province)",
   co_new: "Nouvelle communauté",
   co_new_ph: "Nom de la communauté",
   co_add: "Ajouter",
@@ -2919,6 +2924,7 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  co_scope_badge: "Ambito: {scope}",
   co_f_zone: "Zona",
   co_f_zone_all: "Tutte le zone",
   co_f_age: "Fascia d'età",
@@ -3327,7 +3333,7 @@ const IT: Dict = {
   mo_ban7: "Blocca 7 giorni",
   mo_banned: "{name} bloccato per 7 giorni",
   mo_in_chat: "nella chat #{id}",
-  co_search: "Cerca community",
+  co_search: "Cerca per nome o luogo (paese, regione, provincia)",
   co_new: "Nuova community",
   co_new_ph: "Nome della community",
   co_add: "Aggiungi",
@@ -3498,6 +3504,7 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  co_scope_badge: "Âmbito: {scope}",
   co_f_zone: "Zona",
   co_f_zone_all: "Todas as zonas",
   co_f_age: "Faixa etária",
@@ -3906,7 +3913,7 @@ const PT: Dict = {
   mo_ban7: "Bloquear 7 dias",
   mo_banned: "{name} bloqueado durante 7 dias",
   mo_in_chat: "no chat #{id}",
-  co_search: "Pesquisar comunidades",
+  co_search: "Pesquisar por nome ou lugar (país, região, província)",
   co_new: "Nova comunidade",
   co_new_ph: "Nome da comunidade",
   co_add: "Adicionar",
@@ -4077,6 +4084,7 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  co_scope_badge: "Bereik: {scope}",
   co_f_zone: "Gebied",
   co_f_zone_all: "Alle gebieden",
   co_f_age: "Leeftijdsgroep",
@@ -4485,7 +4493,7 @@ const NL: Dict = {
   mo_ban7: "7 dagen blokkeren",
   mo_banned: "{name} 7 dagen geblokkeerd",
   mo_in_chat: "in chat #{id}",
-  co_search: "Community's zoeken",
+  co_search: "Zoeken op naam of plaats (land, regio, provincie)",
   co_new: "Nieuwe community",
   co_new_ph: "Naam van de community",
   co_add: "Toevoegen",
@@ -4656,6 +4664,7 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  co_scope_badge: "範囲：{scope}",
   co_f_zone: "地域",
   co_f_zone_all: "すべての地域",
   co_f_age: "年齢層",
@@ -5064,7 +5073,7 @@ const JA: Dict = {
   mo_ban7: "7日間ブロック",
   mo_banned: "{name}さんを7日間ブロックしました",
   mo_in_chat: "チャット #{id} 内",
-  co_search: "コミュニティを検索",
+  co_search: "名前または場所で検索（国・地方・県）",
   co_new: "新しいコミュニティ",
   co_new_ph: "コミュニティ名",
   co_add: "追加",
@@ -5235,6 +5244,7 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  co_scope_badge: "范围：{scope}",
   co_f_zone: "区域",
   co_f_zone_all: "所有区域",
   co_f_age: "年龄段",
@@ -5643,7 +5653,7 @@ const ZH: Dict = {
   mo_ban7: "封禁 7 天",
   mo_banned: "{name} 已被封禁 7 天",
   mo_in_chat: "在聊天 #{id} 中",
-  co_search: "搜索社区",
+  co_search: "按名称或地点搜索（国家、地区、省份）",
   co_new: "新建社区",
   co_new_ph: "社区名称",
   co_add: "添加",

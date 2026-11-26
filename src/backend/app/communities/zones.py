@@ -86,6 +86,25 @@ async def fill_languages(db: AsyncSession) -> None:
         await db.commit()
 
 
+def place_names(data: dict, provinces: list[str]) -> set[str]:
+    """Every place a zone covers, by name: its provinces, the regions (autonomous communities, states…) they are in
+    and their country, to find a community by any of them."""
+    out: set[str] = set()
+    if not provinces:
+        return out
+    wanted = set(provinces)
+    for code, rows in (data.get("provinces_by_country") or {}).items():
+        names = {p.get("value"): p.get("name") or p.get("value") for p in rows or []}
+        if not wanted & set(names):
+            continue
+        out |= {names[v] for v in wanted if v in names} | (wanted & set(names))
+        out |= {c.get("name") or code for c in data.get("countries") or [] if c.get("code") == code} or {code}
+        for g in (data.get("region_groups") or {}).get(code, []):
+            if wanted & set(g.get("regions") or []):
+                out.add(g.get("name") or g.get("value"))
+    return {x for x in out if x}
+
+
 def scope_values(zone: dict) -> dict:
     """The columns of a channel for its zone."""
     return {"province": zone["key"], "scope_kind": zone["kind"], "scope_value": zone["value"], "scope_label": zone["label"],

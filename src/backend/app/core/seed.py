@@ -184,6 +184,9 @@ DEFAULT_INTERESTS = [
     ("politica", "Política"),
 ]
 
+# Interests whose communities are for every adult (18 and over) instead of one per age range.
+ADULT_SPAN = {"economia": 18, "politica": 18}
+
 # Interests whose name changed: (old name, new name). Only a name still as it was is changed (not one an administrator
 # renamed); the communities show the interest's name, so they follow.
 # The interests each interest community is about (its own first, 1-5): people with any of them get it suggested.
@@ -243,7 +246,7 @@ async def seed(db: AsyncSession) -> None:
     existing = set((await db.execute(select(Interest.slug))).scalars().all())
     for slug, name in DEFAULT_INTERESTS:
         if slug not in existing:
-            db.add(Interest(slug=slug, name=name, names=BUILTIN_NAMES.get(slug, {})))
+            db.add(Interest(slug=slug, name=name, names=BUILTIN_NAMES.get(slug, {}), min_age=ADULT_SPAN.get(slug)))
     await db.commit()
     await merge_interests(db, MERGED_INTERESTS, "tomar_algo")
     await merge_interests(db, MERGED_SPORTS, "deporte")
@@ -262,6 +265,8 @@ async def seed(db: AsyncSession) -> None:
     await regroup_all_once(db)
     from app.communities.zones import fill_languages
     await fill_languages(db)
+    from app.communities.interest_settings import adult_span_once
+    await adult_span_once(db, ADULT_SPAN)
 
 
 # Interests that became one: a coffee, a beer and drinks are now "Tomar algo".

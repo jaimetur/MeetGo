@@ -105,3 +105,10 @@ async def test_opinion_is_built_in_with_economy_and_politics(client, db_session)
     admin = await admin_headers(client)
     interests = {i["slug"]: i for i in (await client.get("/admin/categories", headers=admin)).json()["interests"]}
     assert interests["economia"]["category"] == interests["politica"]["category"] == "ui_cat_opinion"
+
+
+async def test_economy_and_politics_are_for_every_adult(client, db_session):
+    admin = await admin_headers(client)
+    rows = {i["slug"]: i for i in (await client.get("/admin/interests", headers=admin)).json()}
+    assert rows["politica"]["min_age"] == 18 and rows["politica"]["max_age"] is None
+    assert rows["cine"]["min_age"] is None

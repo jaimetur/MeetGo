@@ -282,3 +282,19 @@ async def regroup_all_once(db: AsyncSession) -> None:
         await regroup_geo(db, interest)
         await apply_interest_settings(db, interest, has_span(interest))
     await set_section(db, "migrations", {**done, "geo_levels": True})
+
+
+async def adult_span_once(db: AsyncSession, slugs: dict[str, int]) -> None:
+    """Once: these interests (Economy, Politics) become for every adult from that age, their communities of each zone
+    joined with their members and messages. Later changes in the administration are kept. Commits."""
+    from app.core.app_settings import get_section, set_section
+    done = await get_section(db, "migrations")
+    if done.get("adult_span"):
+        return
+    for slug, min_age in slugs.items():
+        interest = (await db.execute(select(Interest).where(Interest.slug == slug))).scalar_one_or_none()
+        if interest and not has_span(interest):
+            interest.min_age, interest.max_age = min_age, None
+            await db.flush()
+            await apply_interest_settings(db, interest, had_span=False)
+    await set_section(db, "migrations", {**done, "adult_span": True})

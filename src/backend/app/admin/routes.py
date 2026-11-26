@@ -424,15 +424,19 @@ async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depe
     from app.communities.zones import SPLIT_AT
     # per interest: its zones and age ranges apart, and its biggest and smallest community (members, not away)
     rows = (await db.execute(select(Conversation.interest_id, Conversation.province, Conversation.age_range, func.count(ConversationMember.user_id),
-                                    Conversation.scope_label)
+                                    Conversation.scope_label, Conversation.scope_provinces)
                              .outerjoin(ConversationMember, and_(ConversationMember.conversation_id == Conversation.id,
                                                                  ConversationMember.away.is_(False), ConversationMember.banned.is_(False)))
                              .where(Conversation.kind == "channel", Conversation.interest_id.is_not(None))
                              .group_by(Conversation.interest_id, Conversation.id, Conversation.province, Conversation.age_range,
-                                       Conversation.scope_label))).all()
+                                       Conversation.scope_label, Conversation.scope_provinces))).all()
     stats: dict[int, dict] = {}
+    from app.communities.zones import geo_data, place_names
+    data = await geo_data(db)
     labels: dict[str, str] = {}
-    for iid, zone, age, n, label in rows:
+    places: dict[int, set[str]] = {}
+    for iid, zone, age, n, label, provinces in rows:
+        places.setdefault(iid, set()).update(place_names(data, list(provinces or ([zone] if zone else [])))) 
         s = stats.setdefault(iid, {"zones": set(), "ages": set(), "sizes": []})
         s["zones"].add(zone)
         labels[zone] = label or zone
@@ -452,7 +456,8 @@ async def admin_interests(db: AsyncSession = Depends(get_db), admin: User = Depe
                     "communities": len(s["sizes"]), "people": int(people.get(i.id, 0)), "biggest": biggest, "suggest": suggest,
                     # which zones (key and name) and age bands it has, to filter by them
                     "zone_list": sorted(({"key": z, "label": labels.get(z, z)} for z in s["zones"] if z), key=lambda x: x["label"]),
-                    "age_list": sorted(a for a in s["ages"] if a)})
+                    "age_list": sorted(a for a in s["ages"] if a),
+                    "places": sorted(places.get(i.id, set()))})
     return out
 
 

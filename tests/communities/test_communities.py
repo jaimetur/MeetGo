@@ -196,7 +196,7 @@ async def test_discovering_another_zone(client, db_session):
     assert res.status_code == 200, res.text
     other = res.json()
     # another place, but always my own age range (asking for 18-30 shows 31-60)
-    assert other and all(c["province"] == "Barcelona" and c["age_range"] == "31_60" and c["my_zone"] is False for c in other)
+    assert other and all(c["province"] == "Barcelona" and c["age_range"] in ("31_60", "custom") and c["my_zone"] is False for c in other)
     # only my zone's can be joined
     assert (await client.post(f"/communities/{other[0]['id']}/join", headers=ana[0])).status_code == 403
     assert (await client.get("/communities", params={"province": "Atlantis", "age_range": "18_30"}, headers=ana[0])).status_code == 400

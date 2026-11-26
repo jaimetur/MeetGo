@@ -21,6 +21,17 @@ function slugify(name: string) {
   return name.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
 }
 
+/** The age bands an interest's communities are for, as set (not only those someone is in yet): its span ("18+",
+ * "25-40") or its fixed ranges (all three when none is chosen). */
+function bandsOf(i: AdminInterest): string[] {
+  if (i.min_age != null || i.max_age != null) return [`span:${i.min_age ?? 18}-${i.max_age ?? ""}`];
+  return i.age_ranges.length ? AGES.map(([k]) => k).filter((k) => i.age_ranges.includes(k)) : AGES.map(([k]) => k);
+}
+function bandName(k: string): string {
+  if (k.startsWith("span:")) { const [min, max] = k.slice(5).split("-"); return max ? `${min}-${max}` : `${min}+`; }
+  return AGES.find(([x]) => x === k)?.[1] || k;
+}
+
 const autoCategory = (i: { slug: string; name: string }) => guessCategory(i.slug, i.name);
 const autoIcon = (i: { slug: string; name: string }) => guessIcon(i.slug, i.name);
 
@@ -35,10 +46,11 @@ export function Communities() {
   useEffect(() => { load(); }, []);
 
   const groups = useMemo(() => {
-    const needle = q.trim().toLowerCase();
+    const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const needle = plain(q.trim());
     const out = new Map<string, AdminInterest[]>();
-    for (const i of (list || []).filter((i) => (!needle || i.name.toLowerCase().includes(needle) || i.slug.includes(needle))
-        && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || (i.age_list || []).includes(age)))) {
+    for (const i of (list || []).filter((i) => (!needle || [i.name, i.slug, ...(i.places || [])].some((x) => plain(x).includes(needle)))
+        && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || bandsOf(i).includes(age)))) {
       const cat = i.category || autoCategory(i);
       out.set(cat, [...(out.get(cat) || []), i]);
     }
@@ -51,8 +63,7 @@ export function Communities() {
     for (const i of list || []) for (const z of i.zone_list || []) seen.set(z.key, z.label);
     return [...seen].sort((x, y) => x[1].localeCompare(y[1], undefined, { sensitivity: "base" }));
   }, [list]);
-  const ages = useMemo(() => [...new Set((list || []).flatMap((i) => i.age_list || []))].sort(), [list]);
-  const ageName = (k: string) => (k === "custom" ? a("co_age_span") : k.replace("_plus", "+").replace("_", "-"));
+  const ages = useMemo(() => [...new Set((list || []).flatMap(bandsOf))].sort(), [list]);
 
   return (
     <div className="adm-sec">
@@ -70,7 +81,7 @@ export function Communities() {
         </select>
         <select id="adm-co-age" className="inp adm-sort" value={age} onChange={(e) => setAge(e.target.value)} aria-label={a("co_f_age")}>
           <option value="">{a("co_f_age_all")}</option>
-          {ages.map((k) => <option key={k} value={k}>{ageName(k)}</option>)}
+          {ages.map((k) => <option key={k} value={k}>{bandName(k)}</option>)}
         </select>
       </div>
 
@@ -85,16 +96,15 @@ export function Communities() {
                   <span className="adm-tile-ic" style={{ color, background: `color-mix(in srgb, ${color} 15%, transparent)` }}><Icon name={hobbyIcon(i.slug, i.name)} /></span>
                   <span className="grow adm-tile-txt">
                     <b>{i.name}</b>
-                    {/* the counts, then which zones and age bands they are */}
-                    <small>{[a(`co_geo_${i.geo_level || "country"}`), a(i.zones === 1 ? "co_zone" : "co_zones_n", { n: i.zones }),
-                      a((i.age_bands ?? 0) === 1 ? "co_band" : "co_bands_n", { n: i.age_bands ?? 0 }),
-                      a(i.people === 1 ? "co_person" : "co_people_n", { n: i.people })].join(" · ")}</small>
+                    <small>{a(i.people === 1 ? "co_person" : "co_people_n", { n: i.people })}</small>
+                    <small>{a(i.zones === 1 ? "co_zone" : "co_zones_n", { n: i.zones })} · {a(bandsOf(i).length === 1 ? "co_band" : "co_bands_n", { n: bandsOf(i).length })}</small>
                     <span className="adm-tile-badges">
                       {!i.active ? <Badge tone="gray">{a("co_off")}</Badge> : null}
+                      <Badge tone="gray">{a("co_scope_badge", { scope: a(`co_geo_${i.geo_level || "country"}`) })}</Badge>
                       {i.suggest ? <Badge tone={i.suggest === "split" ? "orange" : "blue"}>{a(i.suggest === "split" ? "co_suggest_split" : "co_suggest_join")}</Badge> : null}
                       {(i.zone_list || []).slice(0, 3).map((z) => <Badge key={z.key} tone="blue">{z.label}</Badge>)}
                       {(i.zone_list || []).length > 3 ? <Badge tone="blue">+{(i.zone_list || []).length - 3}</Badge> : null}
-                      {(i.age_list || []).map((k) => <Badge key={k} tone="teal">{ageName(k)}</Badge>)}
+                      {bandsOf(i).map((k) => <Badge key={k} tone="teal">{bandName(k)}</Badge>)}
                     </span>
                   </span>
                   <span className="adm-chev" aria-hidden="true">›</span>
