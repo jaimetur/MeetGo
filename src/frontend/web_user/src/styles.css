@@ -409,8 +409,7 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .modal .mbody { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
 /* never taller than the screen: the body scrolls and the title and the buttons stay in view. Inside a zoomed screen
    (text size, computers) a length is multiplied by the zoom, so the screen's height is divided by it (--z) */
-.modal { max-height: calc((100vh - 32px) / var(--z, 1)); }  /* browsers without dvh (older Android WebViews) */
-.modal { max-height: calc((100dvh - max(16px, env(safe-area-inset-top, 0px)) - max(16px, env(safe-area-inset-bottom, 0px))) / var(--z, 1)); }
+.modal { max-height: calc((var(--screen-h, 100vh) - 32px) / var(--z, 1)); }  /* the height measured by viewport.ts: vh and dvh fail in Android's WebView */
 .modal header, .modal footer { flex: none; }
 .modal header { touch-action: none; }  /* the drag to close is ours, not a scroll of the page */
 .modal .mbody { flex: 1 1 auto; min-height: 0; -webkit-overflow-scrolling: touch; }
@@ -420,7 +419,7 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .sheet { position: relative; transition: transform .18s ease, opacity .18s ease; }
 .sheet .sheet-close { position: absolute; top: 6px; right: calc(8px + env(safe-area-inset-right, 0px)); }
 .minfo { display: flex; flex-direction: column; gap: 12px; }
-.minfo-msg { background: var(--panel2); border-radius: 12px; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 30vh; overflow-y: auto; }
+.minfo-msg { background: var(--panel2); border-radius: 12px; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: calc(var(--screen-h, 100vh) * .3); overflow-y: auto; }
 .minfo-sent { font-size: 13px; }
 .minfo h4 { display: flex; align-items: center; gap: 6px; margin: 4px 0 6px; font-size: 13px; }
 .minfo h4 .ticks { margin: 0; }
@@ -1195,7 +1194,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .segtabs.cfilter .cfn { opacity: 0.75; font-weight: 700; margin-left: 2px; font-variant-numeric: tabular-nums; }
 
 /* right-click menu of a chat in the list */
-.menu.ctxmenu { z-index: 60; min-width: 230px; max-height: calc(100vh - 16px); overflow-y: auto; }
+.menu.ctxmenu { z-index: 60; min-width: 230px; max-height: calc(var(--screen-h, 100vh) - 16px); overflow-y: auto; }
 .crow.ctx { background: var(--line); }
 
 /* chat text size (Settings): normal is a little bigger than before; small is the earlier size */
@@ -1822,7 +1821,7 @@ select.inp.faud { width: auto; height: 36px; min-height: 0; padding-top: 6px; pa
 .fmedia.n1 .fm img, .fmedia.n1 .fm video { object-fit: contain; background: #000; }
 .fmore { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.5); color: #fff; font-size: 26px; font-weight: 700; }
 .flight { position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.92); display: grid; place-items: center; }
-.flight img, .flight video { max-width: calc(94vw / var(--z, 1)); max-height: calc(90dvh / var(--z, 1)); object-fit: contain; }
+.flight img, .flight video { max-width: calc(94vw / var(--z, 1)); max-height: calc(var(--screen-h, 100vh) * .9 / var(--z, 1)); object-fit: contain; }
 .flight .iconbtn { position: absolute; color: #fff; background: rgba(255,255,255,.12); }
 .flight-x { top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px; }
 .flight-prev { left: 14px; top: 50%; }
@@ -1858,7 +1857,7 @@ select.inp.faud { width: auto; height: 36px; min-height: 0; padding-top: 6px; pa
 .fcreplying { font-size: 12.5px; }
 .fcinput { display: flex; gap: 8px; }
 .fcinput .inp { flex: 1; min-width: 0; }
-.fwho-list { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; max-height: 60vh; overflow: auto; }
+.fwho-list { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; max-height: calc(var(--screen-h, 100vh) * .6); overflow: auto; }
 .fwho-row { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 10px; text-align: left; color: inherit; }
 button.fwho-row:hover { background: var(--panel2); }
 
@@ -1874,7 +1873,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .stname { font-size: 11.5px; max-width: 72px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
 /* making one */
 .stkind { margin-bottom: 10px; }
-.stpreview { position: relative; border-radius: 14px; overflow: hidden; background: var(--panel2); aspect-ratio: 9 / 16; max-height: 52vh; margin: 0 auto; width: 100%; max-width: 300px; display: grid; place-items: center; }
+.stpreview { position: relative; border-radius: 14px; overflow: hidden; background: var(--panel2); aspect-ratio: 9 / 16; max-height: calc(var(--screen-h, 100vh) * .52); margin: 0 auto; width: 100%; max-width: 300px; display: grid; place-items: center; }
 .stpreview img, .stpreview video { width: 100%; height: 100%; object-fit: cover; }
 .stpreview.text textarea { width: 100%; height: 100%; background: transparent; border: 0; outline: none; resize: none; color: #fff; font-size: 22px; font-weight: 700; text-align: center; padding: 24px; display: flex; align-items: center; }
 .stpreview.text textarea::placeholder { color: rgba(255,255,255,.7); }
@@ -1886,7 +1885,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .sthide-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
 /* watching */
 .stview { position: fixed; inset: 0; z-index: 90; background: #000; display: grid; place-items: center; }
-.stframe { position: relative; width: min(calc(100vw / var(--z, 1)), 560px); height: calc(100dvh / var(--z, 1)); display: flex; flex-direction: column; background: #111; color: #fff; }
+.stframe { position: relative; width: min(calc(100vw / var(--z, 1)), 560px); height: calc(var(--screen-h, 100vh) / var(--z, 1)); display: flex; flex-direction: column; background: #111; color: #fff; }
 .sthead { flex: none; display: flex; flex-direction: column; gap: 8px; padding: calc(8px + env(safe-area-inset-top, 0px)) 8px 8px; background: #000; }
 .stbars { display: flex; gap: 4px; }
 .stbars span { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.35); overflow: hidden; }
@@ -1958,7 +1957,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .stfilters small { font-size: 11px; }
 /* music */
 .mtags { margin-top: 8px; flex-wrap: wrap; }
-.mlist { display: flex; flex-direction: column; gap: 2px; max-height: 42vh; overflow: auto; }
+.mlist { display: flex; flex-direction: column; gap: 2px; max-height: calc(var(--screen-h, 100vh) * .42); overflow: auto; }
 .mrow { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 10px; }
 .mrow.on { background: var(--panel2); }
 .mplay { flex: none; background: var(--panel2); }

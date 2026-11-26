@@ -20,6 +20,9 @@ export function setupViewport() {
 
   const update = () => {
     const height = vv ? vv.height : window.innerHeight;
+    // the screen's height as JavaScript measures it, for the windows and the story viewer: the viewport units of CSS
+    // (vh, dvh) are not reliable inside Android's WebView (they can come as almost nothing)
+    root.style.setProperty("--screen-h", `${Math.round(window.innerHeight || height)}px`);
     const el = document.activeElement;
     const typing = !!el && ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName);
     if (!typing) tallest = Math.max(tallest, height);
@@ -47,6 +50,7 @@ export function setupViewport() {
     }
   };
   update();
+  reportNative();
   vv?.addEventListener("resize", update);
   vv?.addEventListener("scroll", update);
   window.addEventListener("resize", update);
@@ -116,3 +120,29 @@ export function viewportDiagnostics() {
   timer = window.setInterval(show, 1000);
 }
 
+
+
+/** Inside the Android app, once: what its WebView says of the screen (in the request logs of the administration), to
+ * see how it measures it. */
+function reportNative() {
+  if (!/MeetGoApp\//.test(navigator.userAgent)) return;
+  try {
+    if (sessionStorage.getItem("mg.diag")) return;
+    sessionStorage.setItem("mg.diag", "1");
+  } catch { /* a report more is fine */ }
+  window.setTimeout(() => {
+    const probe = document.createElement("div");
+    probe.style.cssText = "position:fixed;top:0;left:0;width:1px;height:100dvh;visibility:hidden;padding-top:env(safe-area-inset-top,0px)";
+    document.body.appendChild(probe);
+    const dvh = probe.getBoundingClientRect().height;
+    probe.style.height = "100vh";
+    const vh = probe.getBoundingClientRect().height;
+    const top = parseFloat(getComputedStyle(probe).paddingTop) || 0;
+    probe.remove();
+    const screenEl = document.querySelector(".screen");
+    const d = { ih: innerHeight, iw: innerWidth, vv: Math.round(window.visualViewport?.height || 0), dvh: Math.round(dvh), vh: Math.round(vh), sat: top,
+      dpr: devicePixelRatio, zoom: screenEl ? getComputedStyle(screenEl).zoom : "-", size: document.documentElement.dataset.chatsize || "normal" };
+    const q = Object.entries(d).map(([k, v]) => `${k}:${v}`).join(",");
+    import("./api").then(({ API_BASE }) => fetch(`${API_BASE}/settings/public?diag=${encodeURIComponent(q)}`).catch(() => undefined));
+  }, 3000);
+}
