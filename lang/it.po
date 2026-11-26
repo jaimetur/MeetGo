@@ -4751,6 +4751,30 @@ msgstr "Community da dividere"
 msgid "email_suggest_split_body"
 msgstr "Una community di «{name}» supera le 500 persone: conviene dividerla in zone più piccole."
 
+msgid "ui_cflag_people"
+msgstr "Con persone"
+
+msgid "ui_cflag_plans"
+msgstr "Con piani"
+
+msgid "ui_cflag_online"
+msgstr "Persone online"
+
+msgid "ui_cflag_open"
+msgstr "Aperte"
+
+msgid "ui_cfilter_zone"
+msgstr "Zona"
+
+msgid "ui_cfilter_zone_all"
+msgstr "Tutte le zone"
+
+msgid "ui_cfilter_age"
+msgstr "Fascia d'età"
+
+msgid "ui_cfilter_age_all"
+msgstr "Tutte le età"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'amministrazione la esaminerà; nel frattempo la tua community comparirà in «Altre»."
 

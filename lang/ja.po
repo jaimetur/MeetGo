@@ -4751,6 +4751,30 @@ msgstr "分割候補のコミュニティ"
 msgid "email_suggest_split_body"
 msgstr "「{name}」のコミュニティが500人を超えました。より小さな地域に分割することをおすすめします。"
 
+msgid "ui_cflag_people"
+msgstr "メンバーあり"
+
+msgid "ui_cflag_plans"
+msgstr "予定あり"
+
+msgid "ui_cflag_online"
+msgstr "オンライン中"
+
+msgid "ui_cflag_open"
+msgstr "参加自由"
+
+msgid "ui_cfilter_zone"
+msgstr "地域"
+
+msgid "ui_cfilter_zone_all"
+msgstr "すべての地域"
+
+msgid "ui_cfilter_age"
+msgstr "年齢層"
+
+msgid "ui_cfilter_age_all"
+msgstr "すべての年齢"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
 

@@ -4751,6 +4751,30 @@ msgstr "Community om te splitsen"
 msgid "email_suggest_split_body"
 msgstr "Een community van «{name}» heeft meer dan 500 mensen: splits haar in kleinere gebieden."
 
+msgid "ui_cflag_people"
+msgstr "Met mensen"
+
+msgid "ui_cflag_plans"
+msgstr "Met plannen"
+
+msgid "ui_cflag_online"
+msgstr "Mensen online"
+
+msgid "ui_cflag_open"
+msgstr "Open"
+
+msgid "ui_cfilter_zone"
+msgstr "Gebied"
+
+msgid "ui_cfilter_zone_all"
+msgstr "Alle gebieden"
+
+msgid "ui_cfilter_age"
+msgstr "Leeftijdsgroep"
+
+msgid "ui_cfilter_age_all"
+msgstr "Alle leeftijden"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
 

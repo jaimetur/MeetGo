@@ -1772,3 +1772,10 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 .lg-more { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 3px; padding: 6px 2px 2px; font-size: 12px; color: var(--muted); word-break: break-all; }
 .lg-more b { color: var(--fg); margin-right: 4px; }
 @media (max-width: 640px) { .lg-main .badge:nth-of-type(2), .lg-ms { display: none; } .lg-who { max-width: 90px; } }
+
+/* Communities: the search with the zone and age filters beside it (below it on phones) */
+.csearchrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.csearchrow .search.big { flex: 1 1 220px; min-width: 0; margin: 0; }
+.csearchrow select.inp { flex: 0 1 auto; width: auto; max-width: 220px; border-radius: 12px; height: 52px; min-height: 0; font-size: 15px; }
+@media (max-width: 640px) { .csearchrow select.inp { flex: 1 1 40%; } }
+.cflags { flex-wrap: wrap; }

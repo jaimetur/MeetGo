@@ -5618,6 +5618,30 @@ msgstr "Community zum Aufteilen"
 msgid "email_suggest_split_body"
 msgstr "Eine Community von «{name}» hat mehr als 500 Personen: Teile sie in kleinere Gebiete auf."
 
+msgid "ui_cflag_people"
+msgstr "Mit Leuten"
+
+msgid "ui_cflag_plans"
+msgstr "Mit Plänen"
+
+msgid "ui_cflag_online"
+msgstr "Leute online"
+
+msgid "ui_cflag_open"
+msgstr "Offen"
+
+msgid "ui_cfilter_zone"
+msgstr "Gebiet"
+
+msgid "ui_cfilter_zone_all"
+msgstr "Alle Gebiete"
+
+msgid "ui_cfilter_age"
+msgstr "Altersgruppe"
+
+msgid "ui_cfilter_age_all"
+msgstr "Alle Altersgruppen"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "Die Administration prüft den Vorschlag; bis dahin erscheint deine Community unter „Sonstige“."
 

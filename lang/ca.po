@@ -4751,6 +4751,30 @@ msgstr "Comunitat per dividir"
 msgid "email_suggest_split_body"
 msgstr "Una comunitat de «{name}» supera les 500 persones: convé dividir-la en zones més petites."
 
+msgid "ui_cflag_people"
+msgstr "Amb gent"
+
+msgid "ui_cflag_plans"
+msgstr "Amb plans"
+
+msgid "ui_cflag_online"
+msgstr "Gent en línia"
+
+msgid "ui_cflag_open"
+msgstr "Obertes"
+
+msgid "ui_cfilter_zone"
+msgstr "Zona"
+
+msgid "ui_cfilter_zone_all"
+msgstr "Totes les zones"
+
+msgid "ui_cfilter_age"
+msgstr "Franja d'edat"
+
+msgid "ui_cfilter_age_all"
+msgstr "Totes les edats"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
 

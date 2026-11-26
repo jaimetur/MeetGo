@@ -4751,6 +4751,30 @@ msgstr "建议拆分的社区"
 msgid "email_suggest_split_body"
 msgstr "「{name}」有一个社区超过 500 人：建议拆分为更小的区域。"
 
+msgid "ui_cflag_people"
+msgstr "有成员"
+
+msgid "ui_cflag_plans"
+msgstr "有计划"
+
+msgid "ui_cflag_online"
+msgstr "有人在线"
+
+msgid "ui_cflag_open"
+msgstr "开放加入"
+
+msgid "ui_cfilter_zone"
+msgstr "区域"
+
+msgid "ui_cfilter_zone_all"
+msgstr "所有区域"
+
+msgid "ui_cfilter_age"
+msgstr "年龄段"
+
+msgid "ui_cfilter_age_all"
+msgstr "所有年龄"
+
 msgid "ui_community_category_proposal_hint"
 msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
 

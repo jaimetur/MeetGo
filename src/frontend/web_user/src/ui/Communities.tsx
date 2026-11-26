@@ -245,15 +245,19 @@ export function CommunitiesPage() {
   const mineCount = (list || []).length - notMine - createdCount;
   // without communities of my own, that tab is not there: its place goes back to all of them
   const view: Show = show === "created" && !createdCount ? "all" : show;
-  // two switches on top of the tabs: only those created in the last 30 days, only MeetGo's own (interest) ones
-  const [flags, setFlagsState] = useState<{ fresh: boolean; builtin: boolean }>(() => {
+  // switches on top of the tabs, to narrow a long list: created in the last 30 days, with people, with plans coming,
+  // with someone online now, open (no request needed); kept on this device
+  type Flag = "fresh" | "people" | "plans" | "online" | "open";
+  const NO_FLAGS: Record<Flag, boolean> = { fresh: false, people: false, plans: false, online: false, open: false };
+  const [flags, setFlagsState] = useState<Record<Flag, boolean>>(() => {
     try {
-      return { fresh: false, builtin: false, ...JSON.parse(localStorage.getItem("communities.flags") || "{}") };
+      const saved = JSON.parse(localStorage.getItem("communities.flags") || "{}");
+      return Object.fromEntries(Object.keys(NO_FLAGS).map((k) => [k, !!saved[k]])) as Record<Flag, boolean>;
     } catch {
-      return { fresh: false, builtin: false };
+      return NO_FLAGS;
     }
   });
-  const setFlag = (k: "fresh" | "builtin", v: boolean) => setFlagsState((f) => {
+  const setFlag = (k: Flag, v: boolean) => setFlagsState((f) => {
     const next = { ...f, [k]: v };
     try {
       localStorage.setItem("communities.flags", JSON.stringify(next));
@@ -263,11 +267,18 @@ export function CommunitiesPage() {
     return next;
   });
   const monthAgo = Date.now() - 30 * 86400e3;
+  const [zone, setZone] = useState("");
+  const [age, setAge] = useState("");
   useStore((s) => s.categories);  // re-drawn when the categories' names arrive
   const shown = (list || []).filter((c) => browse || view === "all"
     || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
-    .filter((c) => (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo) && (!flags.builtin || c.kind === "interest"));
+    .filter((c) => (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo) && (!flags.people || c.member_count > 0)
+      && (!flags.plans || c.upcoming_count > 0) && (!flags.online || c.online_count > 0) && (!flags.open || c.access_mode === "open"))
+    .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
   const groups = byCategory(shown);
+  // the zones and age bands of the list, for the filters beside the search
+  const zones = [...new Set((list || []).map((c) => c.province).filter(Boolean))].sort((x, y) => x.localeCompare(y));
+  const ages = [...new Set((list || []).map(ageKey))].sort();
 
   return (
     <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
@@ -280,10 +291,24 @@ export function CommunitiesPage() {
           </div>
           <button className="btn go" onClick={() => setCreate(true)}><Icon name="plus" size="sm" />{t("ui_community_create")}</button>
         </header>
-        <div className="search big">
-          <Icon name="search" size="sm" />
-          <input id="community-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_community_search_ph")} aria-label={t("ui_community_search_ph")} />
-          {q ? <button className="iconbtn" style={{ width: 26, height: 26 }} onClick={() => setQ("")} aria-label={t("ui_clear")}><Icon name="x" size="sm" /></button> : null}
+        <div className="csearchrow">
+          <div className="search big">
+            <Icon name="search" size="sm" />
+            <input id="community-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_community_search_ph")} aria-label={t("ui_community_search_ph")} />
+            {q ? <button className="iconbtn" style={{ width: 26, height: 26 }} onClick={() => setQ("")} aria-label={t("ui_clear")}><Icon name="x" size="sm" /></button> : null}
+          </div>
+          {zones.length > 1 ? (
+            <select id="community-zone" className="inp" value={zone} onChange={(e) => setZone(e.target.value)} aria-label={t("ui_cfilter_zone")}>
+              <option value="">{t("ui_cfilter_zone_all")}</option>
+              {zones.map((z) => <option key={z} value={z}>{z}</option>)}
+            </select>
+          ) : null}
+          {ages.length > 1 ? (
+            <select id="community-age" className="inp" value={age} onChange={(e) => setAge(e.target.value)} aria-label={t("ui_cfilter_age")}>
+              <option value="">{t("ui_cfilter_age_all")}</option>
+              {ages.map((k) => <option key={k} value={k}>{ageText(k)}</option>)}
+            </select>
+          ) : null}
         </div>
         {browse ? (
           <div className="zonebar">
@@ -311,10 +336,12 @@ export function CommunitiesPage() {
               <input id="communities-fresh" type="checkbox" role="switch" checked={flags.fresh} onChange={(e) => setFlag("fresh", e.target.checked)} />
               <span className="sw" aria-hidden="true" />{t("ui_cflag_new")}
             </label>
-            <label className="cflag" htmlFor="communities-builtin">
-              <input id="communities-builtin" type="checkbox" role="switch" checked={flags.builtin} onChange={(e) => setFlag("builtin", e.target.checked)} />
-              <span className="sw" aria-hidden="true" />{t("ui_cflag_default")}
-            </label>
+            {([["people", "ui_cflag_people"], ["plans", "ui_cflag_plans"], ["online", "ui_cflag_online"], ["open", "ui_cflag_open"]] as [Flag, string][]).map(([k, key]) => (
+              <label key={k} className="cflag" htmlFor={`communities-${k}`}>
+                <input id={`communities-${k}`} type="checkbox" role="switch" checked={flags[k]} onChange={(e) => setFlag(k, e.target.checked)} />
+                <span className="sw" aria-hidden="true" />{t(key)}
+              </label>
+            ))}
           </div>
         ) : null}
         {list === null ? (
@@ -1056,6 +1083,16 @@ function Members({ c, onChange }: { c: Community; onChange: () => void }) {
 
 
 type ScopeOf = { language?: string | null; province?: string | null; age_range?: string | null; min_age?: number | null; max_age?: number | null; age_ranges?: string[] | null };
+
+/** A community's age band as a key: its own span ("span:25-40", "span:18-") or its range ("31_60"). */
+function ageKey(c: Community): string {
+  return c.min_age != null || c.max_age != null ? `span:${c.min_age ?? 18}-${c.max_age ?? ""}` : c.age_range;
+}
+/** "31_60" → "31-60", "span:18-" → "18+". */
+function ageText(k: string): string {
+  if (k.startsWith("span:")) { const [min, max] = k.slice(5).split("-"); return max ? `${min}-${max}` : `${min}+`; }
+  return rangeLabel(k);
+}
 
 /** "31_60" → "31-60", "61_plus" → "61+". */
 function rangeLabel(r: string): string {
