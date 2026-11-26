@@ -2615,3 +2615,7 @@ button.fwho-row:hover { background: var(--panel2); }
 :root:is([data-palette="meetgo"], [data-palette="meetgodark"], [data-palette="mosaico"], [data-palette="mosaicodark"], [data-palette="chispa"], [data-palette="chispadark"]) .screen.community .chero { background: var(--cg) !important; }
 :root:is([data-palette="meetgo"], [data-palette="meetgodark"], [data-palette="mosaico"], [data-palette="mosaicodark"], [data-palette="chispa"], [data-palette="chispadark"]) .screen.community .chero::before { display: block; }
 :root:is([data-palette="meetgo"], [data-palette="meetgodark"], [data-palette="mosaico"], [data-palette="mosaicodark"], [data-palette="chispa"], [data-palette="chispadark"]) .screen.community .chero-art { color: #ffffff !important; opacity: 1; }
+
+/* my chat bubbles: a plain colour in every theme of a design but Momentos, which keeps a gradient (pink to blue); MeetGo untouched */
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="mosaico"], [data-palette="mosaicodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="chispa"], [data-palette="chispadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .msg.mine .mbody { background: var(--blue) !important; }
+:root:is([data-palette="momentos"], [data-palette="momentosdark"]) .msg.mine .mbody { background: linear-gradient(135deg, #fd3f6b, #2f9bff) !important; }
