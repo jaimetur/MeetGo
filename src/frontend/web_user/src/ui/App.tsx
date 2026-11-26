@@ -372,7 +372,10 @@ function Shell() {
  * join), when they open MeetGo or something new arrives. Closing it hides it until something new arrives; once
  * reviewed (by anyone) it goes away for everybody. */
 function AdminNotice() {
-  const pending = useStore((s) => s.adminPending?.total || 0);
+  const waiting = useStore((s) => s.adminPending);
+  const pending = waiting?.total || 0;
+  // the tab with something to review (the first one, in the order of the tabs)
+  const where = (["communities", "categories", "moderation"] as const).find((k) => (waiting?.[k] || 0) > 0);
   const route = useRoute();
   const [closedAt, setClosedAt] = useState(0);
   if (!pending || pending <= closedAt || route.name === "admin") return null;
@@ -380,7 +383,7 @@ function AdminNotice() {
     <div className="admin-notice" role="alert">
       <Icon name="shield" />
       <span className="grow">{t("ui_admin_pending", { n: pending })}</span>
-      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate("/admin"); }}>{t("ui_admin_review")}</button>
+      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate(where ? `/admin?s=${where}` : "/admin"); }}>{t("ui_admin_review")}</button>
       <button className="iconbtn" aria-label={t("ui_close")} onClick={() => setClosedAt(pending)}><Icon name="x" size="sm" /></button>
     </div>
   );
