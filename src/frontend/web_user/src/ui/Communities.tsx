@@ -562,6 +562,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
   }, [owner, community?.id]);
   const minAge = Number(form.min_age) || 18;
   const maxAge = form.max_age.trim() ? Number(form.max_age) : null;
+  const myRange = ageRangesShown().find((r) => myAge >= (r.min ?? 18) && (r.max == null || myAge <= r.max));
   const ageWrong = form.ageLimit && (minAge > myAge || (maxAge != null && (maxAge < myAge || minAge > maxAge)));
   const filterBody = () => ({ scope_kind: scope, age_limit: form.ageLimit, min_age: form.ageLimit ? minAge : null, max_age: form.ageLimit ? maxAge : null });
   const filtersChanged = () => !!filters && (scope !== filters.scope_kind || form.ageLimit !== filters.age_limit
@@ -677,20 +678,19 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
             <input id="cm-age-limit" type="checkbox" role="switch" checked={form.ageLimit} onChange={(e) => set({ ageLimit: e.target.checked })} />
             <span className="sw" aria-hidden="true" />
           </label>
-          {form.ageLimit && ageRangesShown().length ? (
+          {form.ageLimit && myRange ? (
             <div className="fld">{t("ui_community_age_official")}
               <div className="chips wrapchips">
                 {ageRangesShown().map((r) => {
-                  const lo = r.min ?? 18, hi = r.max ?? null;
-                  const mine = myAge >= lo && (hi == null || myAge <= hi);
-                  const on = form.min_age === String(lo) && form.max_age === (hi == null ? "" : String(hi));
+                  const lo = String(r.min ?? 18), hi = r.max == null ? "" : String(r.max);
+                  const on = form.min_age === lo && form.max_age === hi;
                   return (
-                    <button key={r.key} type="button" className={"chip agechip" + (on ? " on" : "")} disabled={!mine} aria-pressed={on}
-                      onClick={() => set({ min_age: String(lo), max_age: hi == null ? "" : String(hi) })}>{r.label}</button>
+                    <button key={r.key} type="button" className={"chip agechip" + (on ? " on" : "")} disabled={r.key !== myRange.key} aria-pressed={on}
+                      onClick={() => set({ min_age: lo, max_age: hi })}>{r.label}</button>
                   );
                 })}
               </div>
-              <small className="muted">{t("ui_community_age_official_hint")}</small>
+              <small className="muted">{t("ui_community_age_official_hint", { range: myRange.label })}</small>
             </div>
           ) : null}
           {form.ageLimit ? (

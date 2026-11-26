@@ -3413,11 +3413,11 @@ msgstr "新しく作る"
 msgid "ui_calendar_reset_done"
 msgstr "新しいリンクを作りました。以前のものは使えません"
 
+msgid "ui_community_age_official_hint"
+msgstr "自分の年齢層（{range}）を使うか、下で別の年齢を設定できます。ただし自分の年齢が含まれている必要があります。"
+
 msgid "ui_community_age_official"
 msgstr "MeetGoの年齢層"
-
-msgid "ui_community_age_official_hint"
-msgstr "タップするとその年齢が入ります。下で自分で設定することもできます。選べるのは自分が含まれる年齢層だけです。"
 
 msgid "ui_community_age_limit"
 msgstr "年齢で制限"

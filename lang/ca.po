@@ -3413,11 +3413,11 @@ msgstr "Crear-ne un de nou"
 msgid "ui_calendar_reset_done"
 msgstr "Enllaç nou creat: l’anterior ja no funciona"
 
+msgid "ui_community_age_official_hint"
+msgstr "Pots fer servir la teva ({range}) o posar altres edats a sota, sempre que la teva edat hi quedi dins."
+
 msgid "ui_community_age_official"
 msgstr "Franges de MeetGo"
-
-msgid "ui_community_age_official_hint"
-msgstr "Toca'n una per fer servir les seves edats, o posa les teves a sota. Només pots triar-ne una en què hi siguis."
 
 msgid "ui_community_age_limit"
 msgstr "Limitar per edat"

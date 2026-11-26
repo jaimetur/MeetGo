@@ -3413,11 +3413,11 @@ msgstr "Creane uno nuovo"
 msgid "ui_calendar_reset_done"
 msgstr "Nuovo link creato: il precedente non funziona più"
 
+msgid "ui_community_age_official_hint"
+msgstr "Puoi usare la tua ({range}) o indicare altre età qui sotto, purché la tua età resti dentro."
+
 msgid "ui_community_age_official"
 msgstr "Fasce di MeetGo"
-
-msgid "ui_community_age_official_hint"
-msgstr "Toccane una per usare le sue età, o imposta le tue qui sotto. Puoi scegliere solo una in cui rientri."
 
 msgid "ui_community_age_limit"
 msgstr "Limita per età"
