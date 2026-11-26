@@ -2,7 +2,7 @@ import secrets
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import and_, delete, func, or_, select
+from sqlalchemy import and_, delete, func, or_, select, true
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import get_current_user, get_db, require_write_access
@@ -133,19 +133,29 @@ async def update_email_prefs(payload: EmailPrefsIn, db: AsyncSession = Depends(g
 
 
 @router.get("/users/search", response_model=list[dict])
-async def search_users(q: str = "", db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
-    """People you can talk to: your friends and people from your province."""
+async def search_users(q: str = "", where: str = "province", db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+    """People you can talk to: your friends and the people of your province (`where`: "province"), of your country
+    ("country") or of anywhere ("all")."""
     q = q.strip()
     if len(q) < 2:
         return []
     friend_ids = select(Friendship.friend_id).where(Friendship.user_id == user.id)
+    if where == "all":
+        zone = true()
+    elif where == "country":
+        from app.communities.zones import country_of, geo_data
+        data = await geo_data(db)
+        provinces = [p.get("value") for p in (data.get("provinces_by_country") or {}).get(country_of(data, user.province or ""), []) or []]
+        zone = User.province.in_(provinces or [user.province])
+    else:
+        zone = User.province == user.province
     res = await db.execute(select(User).where(
         User.id != user.id, User.is_banned.is_(False),
         # by alias, or by first name and surnames ("javier calde")
         or_(User.display_name.ilike(f"%{q.lstrip('@')}%"),
             func.concat_ws(" ", User.first_name, User.last_name).ilike(f"%{q}%")),
-        or_(User.id.in_(friend_ids), User.province == user.province),
-    ).order_by(User.display_name).limit(20))
+        or_(User.id.in_(friend_ids), zone),
+    ).order_by(User.display_name).limit(30))
     users = res.scalars().all()
     friends = set((await db.execute(friend_ids)).scalars().all())
     online = await online_ids([u.id for u in users])

@@ -151,7 +151,7 @@ export const api = {
   myInterests: () => req<string[]>("/me/interests"),
   setInterests: (slugs: string[]) => req("/me/interests", { method: "POST", json: { interest_slugs: slugs } }),
   user: (id: number) => req<any>(`/users/${id}`),
-  searchUsers: (q: string) => req<any[]>(`/users/search?q=${encodeURIComponent(q)}`),
+  searchUsers: (q: string, where: "province" | "country" | "all" = "province") => req<any[]>(`/users/search?q=${encodeURIComponent(q)}&where=${where}`),
 
   // conversations
   conversations: () => req<Conversation[]>("/conversations"),

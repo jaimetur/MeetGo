@@ -338,6 +338,18 @@ export function communityCover(slug: string | null | undefined, seed: string | n
   return color ? `linear-gradient(${angle}deg, ${color}, color-mix(in srgb, ${color} 55%, #0b1220))` : coverGradient(seed, angle);
 }
 
+/** How Home, Chats and Communities are laid out (Settings → Design, this device): the cards as they were, or one of five styles. */
+export const LAYOUTS = ["actual", "conversa", "momentos", "muro", "chispa", "quedadas"] as const;
+export type Layout = (typeof LAYOUTS)[number];
+export function getLayout(): Layout {
+  try {
+    const v = localStorage.getItem("communityLayout") as Layout;
+    return LAYOUTS.includes(v) ? v : "actual";
+  } catch {
+    return "actual";
+  }
+}
+
 /** The community's own colour, as a CSS variable for the pastel themes' icons. */
 export function communityTint(slug: string | null | undefined, seed: string | number): React.CSSProperties {
   return { ["--cc" as string]: interestLook(slug).color || coverColor(seed) };

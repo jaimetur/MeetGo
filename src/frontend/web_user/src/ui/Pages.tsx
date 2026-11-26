@@ -9,12 +9,11 @@ import type { Interest, Message, UserSummary } from "../types";
 import { dayLabel, timeOf } from "../util";
 import { CHAT_SIZES, THEMES, applyChatSize, applyTheme, refreshBilling, refreshRequests, signOut } from "./App";
 import { sendMessage } from "./Chat";
-import { AboutModal, Avatar, Icon, convTitle, countryOptions, regionLabel, fullName, shownName } from "./common";
+import { AboutModal, Avatar, Icon, LAYOUTS, type Layout, convTitle, getLayout, countryOptions, regionLabel, fullName, shownName } from "./common";
 import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
-import { LAYOUTS, type Layout, getLayout } from "./Communities";
 
 function PageShell({ title, lead, children, tab }: { title: string; lead?: string; children: React.ReactNode; tab?: boolean }) {
   // `tab`: a screen of the phone's tab bar (People): the usual top bar instead of a back button
@@ -163,16 +162,26 @@ function Requests() {
 }
 
 function FindPeople() {
+  const me = useStore((s) => s.me);
   const [q, setQ] = useState("");
+  const [where, setWhere] = useState<"province" | "country" | "all">("province");
   const [res, setRes] = useState<any[]>([]);
   useEffect(() => {
     if (q.trim().length < 2) return setRes([]);
-    const id = window.setTimeout(() => api.searchUsers(q).then(setRes).catch(() => setRes([])), 300);
+    const id = window.setTimeout(() => api.searchUsers(q, where).then(setRes).catch(() => setRes([])), 300);
     return () => window.clearTimeout(id);
-  }, [q]);
+  }, [q, where]);
   return (
     <div className="stack">
-      <div className="search"><Icon name="search" size="sm" /><input id="people-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_search_people")} /></div>
+      {/* where to look: my province (the default), my whole country or anywhere */}
+      <div className="peoplesearch">
+        <div className="search"><Icon name="search" size="sm" /><input id="people-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_search_people")} /></div>
+        <select id="people-where" className="inp" value={where} onChange={(e) => setWhere(e.target.value as typeof where)} aria-label={t("ui_people_where")}>
+          <option value="province">{t("ui_people_where_province", { zone: me?.province || "" })}</option>
+          <option value="country">{t("ui_people_where_country")}</option>
+          <option value="all">{t("ui_people_where_all")}</option>
+        </select>
+      </div>
       <div className="box plist">
         {res.map((p) => (
           <div key={p.id} className="item">

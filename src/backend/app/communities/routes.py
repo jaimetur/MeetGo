@@ -506,7 +506,7 @@ async def invite_candidates(community_id: int, q: str = "", db: AsyncSession = D
     q = q.strip().lstrip("@")
     friend_ids = set((await db.execute(select(Friendship.friend_id).where(Friendship.user_id == user.id))).scalars().all())
     query = select(User).where(User.id != user.id, User.bot_role.is_(None), User.is_banned.is_(False),
-                               or_(User.id.in_(friend_ids or {0}), User.province == conv.province))
+                               or_(User.id.in_(friend_ids or {0}), User.province.in_(conv.scope_provinces or [conv.province])))
     if q:
         like = f"%{q}%"
         query = query.where(or_(User.display_name.ilike(like), func.concat_ws(" ", User.first_name, User.last_name).ilike(like)))

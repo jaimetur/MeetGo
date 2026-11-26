@@ -1145,7 +1145,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 :root:is([data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .cflag.active { --fc: var(--m-act) !important; color: var(--m-act) !important; }
 :root:is([data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .cflag.plans { --fc: var(--m-plan) !important; color: var(--m-plan) !important; }
 :root:is([data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .cflag.fresh { --fc: var(--m-new) !important; color: var(--m-new) !important; }
-:root:is([data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .cflag.on { background: color-mix(in srgb, var(--fc) 16%, var(--panel)); color: var(--fc) !important; }
+:root:is([data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .cflag.on { background: var(--fc); color: var(--panel) !important; }  /* filled when on, outlined when off */
 
 /* The five styles (Settings → Theme), each light and night. Conversa and Quedadas take the pastel icons, Momentos the sober
    ones; Muro and Chispa keep each community's colours. */
@@ -2202,3 +2202,45 @@ button.fwho-row:hover { background: var(--panel2); }
 :root:is([data-palette="pro"], [data-palette="prodark"], [data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="momentos"], [data-palette="momentosdark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .cfeat-foot { background: linear-gradient(transparent, color-mix(in srgb, var(--strong) 55%, transparent)); color: #fff; }
 :root:is([data-palette="pastel"], [data-palette="pasteldark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) :is(.ccover2, .cplan-cover, .cfeat-card) { background: color-mix(in srgb, var(--cc, var(--blue)) calc(var(--pa) + 8%), var(--panel)) !important; color: color-mix(in srgb, var(--cc, var(--blue)) var(--pi), var(--pmix)) !important; }
 @media (max-width: 640px) { .cplans { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scrollbar-width: none; } .cfeat-card { height: 380px; } }
+
+/* ---- Settings → Design on Home (the board) ---- */
+.clay-conversa .plist2 { grid-template-columns: 1fr !important; gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--panel); }
+.clay-conversa .pcard { border-radius: 0; border: 0; border-bottom: 1px solid var(--line); box-shadow: none; }
+.clay-conversa .pcard:last-child { border-bottom: 0; }
+.clay-conversa .pcard:hover { transform: none; }
+.clay-conversa .pcover, .clay-conversa .pexcerpt, .clay-conversa .pcard .pbar { display: none; }
+.clay-conversa .pbody { padding: 12px 16px; gap: 4px; }
+.clay-momentos .plist2, .clay-muro .plist2 { grid-template-columns: 1fr !important; margin-inline: auto; }
+.clay-momentos .plist2 { max-width: 560px; }
+.clay-muro .plist2 { max-width: 640px; }
+.clay-momentos .pcard { border-radius: 6px; box-shadow: none; }
+.clay-momentos .pcover { height: 300px; }
+.clay-muro .pcard { border-radius: 10px; }
+.clay-muro .pcover { height: 200px; }
+.clay-chispa .pcard { border-radius: 18px; }
+.clay-chispa .plist2 > .pcard:first-child { grid-column: 1 / -1; }
+.clay-chispa .plist2 > .pcard:first-child .pcover { height: 280px; }
+.clay-chispa .plist2 > .pcard:first-child .ptitle { font-size: 22px; }
+.screen:is(.clay-quedadas, .clay-chispa) > .swrap:not(.wide) { max-width: 1080px; }
+.clay-quedadas .plist2 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; }
+.clay-quedadas .pcard { border-radius: 16px; }
+.clay-quedadas .pcard:has(.nocover) { order: 1; }
+.clay-quedadas .pcover { height: 110px; }
+
+/* ---- Settings → Design on Chats (the list of conversations) ---- */
+.list.clay-conversa .crow { grid-template-columns: 40px minmax(0, 1fr) auto; margin: 0; width: 100%; border-radius: 0; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+.list.clay-conversa .crow.unr .cmeta { color: var(--blue); font-weight: 600; }
+.list.clay-momentos .chatstories { padding: 8px 12px 12px; margin: 0 0 6px; }
+.list.clay-momentos .chatstories .cring .av, .list.clay-momentos .chatstories .cring .chan { border: 3px solid var(--panel); box-sizing: content-box; }
+.list.clay-momentos .crow { padding: 9px 12px; }
+.list:is(.clay-muro, .clay-quedadas) .crow { background: var(--panel); margin: 6px 10px; width: calc(100% - 20px); padding: 10px 12px; }
+.list.clay-muro .crow { border-radius: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+.list.clay-muro .lbody { background: var(--bg); }
+.list.clay-quedadas .crow { border: 1px solid var(--line); border-radius: 14px; }
+.list.clay-quedadas .crow:has(.cmark) { border-left: 4px solid var(--blue); }
+.list:is(.clay-muro, .clay-quedadas) .crow.sel { background: var(--sel); }
+.list.clay-chispa .crow { border-radius: 16px; padding: 10px 12px; }
+.list.clay-chispa .crow.unr { background: color-mix(in srgb, var(--blue) 8%, transparent); }
+.list.clay-chispa .crow.unr.sel, .list.clay-chispa .crow.sel { background: var(--sel); }
+.peoplesearch { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
+.peoplesearch .inp { width: auto; max-width: 46vw; }

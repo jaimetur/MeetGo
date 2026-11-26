@@ -8,7 +8,7 @@ import type { Conversation, Message, UserSummary } from "../types";
 import { shortWhen } from "../util";
 import { PhoneTop } from "./Board";
 import { ConvMenuItems } from "./Chat";
-import { Avatar, ConvIcon, Icon, Modal, convTitle } from "./common";
+import { Avatar, ConvIcon, Icon, Modal, convTitle, getLayout } from "./common";
 
 type Filter = "all" | "active" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
 const FILTER_KEYS: Filter[] = ["all", "active", "unread", "dm", "mentions", "channel", "group", "plan"];
@@ -112,8 +112,9 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     ["channel", t("ui_f_communities")], ["group", t("ui_f_groups")], ["plan", t("ui_f_plans")],
   ];
 
+  const layout = getLayout();
   return (
-    <aside className="list" aria-label={t("ui_nav_chats")}>
+    <aside className={"list clay-" + layout} aria-label={t("ui_nav_chats")}>
       <PhoneTop title={t("ui_nav_chats")} />
       <div className="lhead">
         <div className="row titlerow">
@@ -132,6 +133,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
         </div>
       </div>
       <div className="lbody">
+        {layout === "momentos" && !q ? <ChatStories list={visible} /> : null}
         {sections.map(([label, items]) => items.length ? (
           <div key={label}>
             <div className="lsec">{label}</div>
@@ -184,6 +186,22 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
       </div>
       {newChat ? <NewChatModal onClose={() => setNewChat(false)} /> : null}
     </aside>
+  );
+}
+
+/** Momentos: the latest chats as round icons, a coloured ring on the ones with something unread. */
+function ChatStories({ list }: { list: Conversation[] }) {
+  const row = [...list].sort((a, b) => Number(!!b.unread_count) - Number(!!a.unread_count)).slice(0, 12);
+  if (!row.length) return null;
+  return (
+    <div className="cstories chatstories">
+      {row.map((c) => (
+        <button key={c.id} className={"cstory" + (c.unread_count ? " on" : "")} onClick={() => navigate(chatPath(c.id))}>
+          <span className="cring"><ConvIcon conv={c} size={54} /></span>
+          <span className="cstory-name">{convTitle(c)}</span>
+        </button>
+      ))}
+    </div>
   );
 }
 

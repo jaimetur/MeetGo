@@ -16,7 +16,7 @@ import { signOut } from "./App";
 import { COVER_ARTS, coverArtUrl } from "../coverArts";
 import { categoryName, communityCategory } from "./Communities";
 import { useSwipeDown } from "./swipeClose";
-import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, communityTint, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
+import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, communityTint, getLayout, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
   meetup: "ui_post_kind_meetup", event: "ui_post_kind_event", notice: "ui_post_kind_notice", thread: "ui_post_kind_thread",
@@ -447,7 +447,7 @@ export function HomePage() {
   }
 
   return (
-    <main className="screen">
+    <main className={"screen clay-" + getLayout()}>
       <PhoneTop />
       <div className="swrap">
         <header className="shead deskonly">

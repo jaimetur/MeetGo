@@ -4379,6 +4379,18 @@ msgstr "Chispa"
 msgid "ui_layout_quedadas"
 msgstr "Quedadas"
 
+msgid "ui_people_where"
+msgstr "Wo suchen"
+
+msgid "ui_people_where_province"
+msgstr "In {zone}"
+
+msgid "ui_people_where_country"
+msgstr "Im ganzen Land"
+
+msgid "ui_people_where_all"
+msgstr "Überall"
+
 msgid "ui_theme_plum"
 msgstr "Pflaume"
 

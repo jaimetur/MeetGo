@@ -6,7 +6,7 @@ import { coverColor, coverGradient, dateTile, hourOf } from "../board";
 import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, CommunityStats, Post, UserSummary } from "../types";
-import { Avatar, Icon, Modal, communityCover, communityTint, hobbyIcon, interestLook } from "./common";
+import { Avatar, Icon, Modal, communityCover, communityTint, getLayout, hobbyIcon, interestLook } from "./common";
 import { RichEditor, RichText } from "./RichText";
 import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTop, PostCard, PostList, STAFF_ROLES, Seg, Skeletons, usePostFeed } from "./Board";
 
@@ -14,17 +14,6 @@ const ACCESS_KEYS: Record<AccessMode, string> = { open: "ui_community_access_ope
 const ROLE_KEYS: Record<string, string> = { owner: "ui_role_owner", admin: "ui_role_admin", moderator: "ui_role_moderator", member: "ui_role_member" };
 const RANK: Record<string, number> = { owner: 3, admin: 2, moderator: 1, member: 0 };
 
-/** How the list of communities is laid out (Settings → Design, this device): the cards as they were, or one of five styles. */
-export const LAYOUTS = ["actual", "conversa", "momentos", "muro", "chispa", "quedadas"] as const;
-export type Layout = (typeof LAYOUTS)[number];
-export function getLayout(): Layout {
-  try {
-    const v = localStorage.getItem("communityLayout") as Layout;
-    return LAYOUTS.includes(v) ? v : "actual";
-  } catch {
-    return "actual";
-  }
-}
 
 function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
   if (c.avatar_url) return <img className="cbadge" src={fileUrl(c.avatar_url)} alt="" style={{ width: size, height: size }} />;

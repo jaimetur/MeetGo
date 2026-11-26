@@ -6071,6 +6071,18 @@ msgstr "Chispa"
 msgid "ui_layout_quedadas"
 msgstr "Quedadas"
 
+msgid "ui_people_where"
+msgstr "検索する場所"
+
+msgid "ui_people_where_province"
+msgstr "{zone}"
+
+msgid "ui_people_where_country"
+msgstr "国内全体"
+
+msgid "ui_people_where_all"
+msgstr "どこでも"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 
