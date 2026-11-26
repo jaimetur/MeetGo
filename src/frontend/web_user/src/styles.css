@@ -1731,7 +1731,7 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 }
 
 /* Communities: the switches «New» and «Default» */
-.cflags { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: -6px 0 14px; }
+.cflags { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 14px; margin: -6px 0 14px; }  /* columns of the same width: each switch under the one above */
 .cflag { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--fg); cursor: pointer; user-select: none; position: relative; }
 .cflag input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .cflag .sw { position: relative; width: 36px; height: 21px; border-radius: 999px; background: var(--line2, #475569); transition: background .15s; flex: none; }
@@ -1781,7 +1781,6 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 .csearchrow .search.big { flex: 1 1 220px; min-width: 0; margin: 0; }
 .csearchrow select.inp { flex: 0 1 auto; width: auto; max-width: 220px; border-radius: 12px; height: 52px; min-height: 0; font-size: 15px; }
 @media (max-width: 640px) { .csearchrow select.inp { flex: 1 1 40%; } }
-.cflags { flex-wrap: wrap; }
 
 /* ---------- Inicio: tabs, everyone's wall and stories ---------- */
 .htabs { margin: 4px 0 14px; }
