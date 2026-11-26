@@ -1731,14 +1731,10 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 }
 
 /* Communities: the switches «New» and «Default» */
-.cflags { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 14px; margin: -6px 0 14px; }  /* columns of the same width: each switch under the one above */
-.cflag { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--fg); cursor: pointer; user-select: none; position: relative; }
-.cflag input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.cflag .sw { position: relative; width: 36px; height: 21px; border-radius: 999px; background: var(--line2, #475569); transition: background .15s; flex: none; }
-.cflag .sw::after { content: ""; position: absolute; left: 3px; top: 3px; width: 15px; height: 15px; border-radius: 50%; background: #fff; transition: transform .15s; }
-.cflag input:checked + .sw { background: var(--green, #22c55e); }
-.cflag input:checked + .sw::after { transform: translateX(15px); }
-.cflag input:focus-visible + .sw { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.cflags { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: -6px 0 12px; }  /* one row of chips; it scrolls sideways when narrow */
+.cflags::-webkit-scrollbar { display: none; }
+.cflag { flex: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; font-size: 13px; cursor: pointer; background: none; }
+.cflag .ic { width: 14px; height: 14px; }
 
 /* Administration → Categories */
 .cg-prop { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid var(--line); }
@@ -1778,9 +1774,13 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 
 /* Communities: the search with the zone and age filters beside it (below it on phones) */
 .csearchrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
-.csearchrow .search.big { flex: 1 1 220px; min-width: 0; margin: 0; }
-.csearchrow select.inp { flex: 0 1 auto; width: auto; max-width: 220px; border-radius: 12px; height: 52px; min-height: 0; font-size: 15px; }
-@media (max-width: 640px) { .csearchrow select.inp { flex: 1 1 40%; } }
+.csearchrow .search.big { flex: 1 1 160px; min-width: 0; margin: 0; }
+.csearchrow select.inp { flex: 0 1 auto; width: auto; min-width: 0; max-width: 200px; text-overflow: ellipsis; border-radius: 12px; height: 52px; min-height: 0; font-size: 15px; }
+@media (max-width: 640px) {  /* the search on its own row; the two drop-downs share the next one, half each */
+  .csearchrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .csearchrow .search.big { grid-column: 1 / -1; }
+  .csearchrow select.inp { width: 100%; min-width: 0; max-width: none; height: 46px; font-size: 14px; text-overflow: ellipsis; }
+}
 
 /* ---------- Inicio: tabs, everyone's wall and stories ---------- */
 .htabs { margin: 4px 0 14px; }

@@ -245,10 +245,10 @@ export function CommunitiesPage() {
   const mineCount = (list || []).length - notMine - createdCount;
   // without communities of my own, that tab is not there: its place goes back to all of them
   const view: Show = show === "created" && !createdCount ? "all" : show;
-  // switches on top of the tabs, to narrow a long list: created in the last 30 days, with people, with plans coming,
-  // with someone online now, open (no request needed); kept on this device
-  type Flag = "fresh" | "people" | "plans" | "online" | "open";
-  const NO_FLAGS: Record<Flag, boolean> = { fresh: false, people: false, plans: false, online: false, open: false };
+  // filters on top of the list, to narrow a long one: created in the last 30 days, with people, with plans coming,
+  // with someone online now; kept on this device
+  type Flag = "fresh" | "people" | "plans" | "online";
+  const NO_FLAGS: Record<Flag, boolean> = { fresh: false, people: false, plans: false, online: false };
   const [flags, setFlagsState] = useState<Record<Flag, boolean>>(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("communities.flags") || "{}");
@@ -273,7 +273,9 @@ export function CommunitiesPage() {
   const shown = (list || []).filter((c) => browse || view === "all"
     || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
     .filter((c) => (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo) && (!flags.people || c.member_count > 0)
-      && (!flags.plans || c.upcoming_count > 0) && (!flags.online || c.online_count > 0) && (!flags.open || c.access_mode === "open"))
+      && (!flags.plans || c.upcoming_count > 0) && (!flags.online || c.online_count > 0))
+    // private communities (by invitation only) are not shown in the list; the ones I run are, under Admin
+    .filter((c) => c.access_mode !== "invite" || view === "created")
     .filter((c) => (!zone || c.province === zone) && (!age || ageKey(c) === age));
   const groups = byCategory(shown);
   // the zones and age bands of the list, for the filters beside the search
@@ -331,16 +333,10 @@ export function CommunitiesPage() {
         ) : null}
 
         {list && list.length ? (
-          <div className="cflags">
-            <label className="cflag" htmlFor="communities-fresh">
-              <input id="communities-fresh" type="checkbox" role="switch" checked={flags.fresh} onChange={(e) => setFlag("fresh", e.target.checked)} />
-              <span className="sw" aria-hidden="true" />{t("ui_cflag_new")}
-            </label>
-            {([["people", "ui_cflag_people"], ["plans", "ui_cflag_plans"], ["online", "ui_cflag_online"], ["open", "ui_cflag_open"]] as [Flag, string][]).map(([k, key]) => (
-              <label key={k} className="cflag" htmlFor={`communities-${k}`}>
-                <input id={`communities-${k}`} type="checkbox" role="switch" checked={flags[k]} onChange={(e) => setFlag(k, e.target.checked)} />
-                <span className="sw" aria-hidden="true" />{t(key)}
-              </label>
+          <div className="cflags" role="group" aria-label={t("ui_story_tool_filters")}>
+            {([["fresh", "ui_cflag_new"], ["people", "ui_cflag_people"], ["plans", "ui_cflag_plans"], ["online", "ui_cflag_online"]] as [Flag, string][]).map(([k, key]) => (
+              <button key={k} id={`communities-${k}`} type="button" role="switch" aria-checked={flags[k]} className={"chip cflag" + (flags[k] ? " on" : "")}
+                onClick={() => setFlag(k, !flags[k])}>{flags[k] ? <Icon name="check" size="sm" /> : null}{t(key)}</button>
             ))}
           </div>
         ) : null}
