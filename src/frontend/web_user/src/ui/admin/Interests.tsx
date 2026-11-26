@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { LANGUAGES, t } from "@lang";
 import { api, type AdminInterest } from "../../../../web_admin/api";
 import { toast } from "../../store";
-import { CATEGORY_KEYS, guessCategory } from "../Communities";
+import { CATEGORY_KEYS, categoryName, guessCategory } from "../Communities";
 import { Icon, Modal, hobbyIcon, setInterestLooks } from "../common";
 import { colorFor } from "../../util";
 import { SectionHead, goSection } from "./AdminPage";
@@ -143,8 +143,8 @@ function InterestForm({ interest, all, onClose, onSaved }: { interest: AdminInte
       </div>
       <Field label={a("in_category")}>
         <select className="inp" value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="">{a("co_auto", { value: t(guessCategory(slug, name)) })}</option>
-          {CATEGORY_KEYS.map((k) => <option key={k} value={k}>{t(k)}</option>)}
+          <option value="">{a("co_auto", { value: categoryName(guessCategory(slug, name)) })}</option>
+          {CATEGORY_KEYS.map((k) => <option key={k} value={k}>{categoryName(k)}</option>)}
         </select>
       </Field>
       <Switch id="adm-in-active" label={a("in_visible")} hint={a("in_visible_hint")} on={active} onChange={setActive} />

@@ -3874,6 +3874,18 @@ msgstr "Não há nenhum pedido pendente desta pessoa"
 msgid "err_invalid_cover"
 msgstr "Essa capa não está na galeria"
 
+msgid "err_category_invalid"
+msgstr "Essa categoria não existe"
+
+msgid "err_category_name"
+msgstr "A categoria precisa de um nome em espanhol"
+
+msgid "err_category_exists"
+msgstr "Já existe uma categoria com esse nome"
+
+msgid "err_category_builtin"
+msgstr "As categorias do MeetGo não podem ser eliminadas; podes mudar-lhes o nome"
+
 msgid "err_invalid_filter"
 msgstr "Filtro inválido"
 
@@ -4680,6 +4692,27 @@ msgstr "Ténis de mesa"
 
 msgid "cover_skate"
 msgstr "Skate"
+
+msgid "ui_community_category"
+msgstr "Categoria"
+
+msgid "ui_community_category_choose"
+msgstr "Escolha uma categoria…"
+
+msgid "ui_community_category_propose"
+msgstr "Nenhuma serve: propor outra…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "Nome da categoria que propõe"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "A administração irá revê-la; entretanto, a sua comunidade aparecerá em «Outras»."
+
+msgid "ui_cflag_new"
+msgstr "Novas"
+
+msgid "ui_cflag_default"
+msgstr "Por defeito"
 
 msgid "ui_sec_plans"
 msgstr "Conversas dos planos"

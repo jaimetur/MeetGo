@@ -258,6 +258,8 @@ class Conversation(Base):
     # Communities: how many days their chat keeps its messages (older ones are deleted); None keeps them.
     # Communities made by people: the interests (slugs, up to 5) they are about, to suggest them to people.
     interest_tags: Mapped[list] = mapped_column(JSONB, default=list)
+    # Communities made by people: their category (Category.key); "ui_cat_other" while a proposed one waits
+    category_key: Mapped[str | None] = mapped_column(String(48), nullable=True)
     retention_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
@@ -492,6 +494,36 @@ class BoardComment(Base):
 
 
 # ---------------- Subscriptions ----------------
+
+class Category(Base):
+    """A category of communities (Sports, Culture…): the built-in ones keep their translation key as key
+    ("ui_cat_sports"); the ones the administration adds get "cat_<slug>". Names in every language."""
+    __tablename__ = "categories"
+    key: Mapped[str] = mapped_column(String(48), primary_key=True)
+    names: Mapped[dict] = mapped_column(JSONB, default=dict)
+    icon: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    color: Mapped[str | None] = mapped_column(String(16), nullable=True)
+    position: Mapped[int] = mapped_column(Integer, default=100)
+    builtin: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+    def label(self, lang: str | None = None) -> str:
+        from app.core.i18n import get_lang
+        names = self.names or {}
+        return names.get(lang or get_lang()) or names.get("es") or names.get("en") or self.key
+
+
+class CategoryProposal(Base):
+    """A category someone asked for when creating a community; the administration approves or rejects it."""
+    __tablename__ = "category_proposals"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(60))
+    user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    conversation_id: Mapped[int | None] = mapped_column(ForeignKey("conversations.id", ondelete="SET NULL"), nullable=True)
+    status: Mapped[str] = mapped_column(String(16), default="pending")  # pending | approved | rejected
+    category_key: Mapped[str | None] = mapped_column(String(48), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
 
 class DownloadCount(Base):
     """How many times something was downloaded from the server each day (Madrid time): "apk" is the Android app."""

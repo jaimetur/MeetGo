@@ -3876,6 +3876,18 @@ msgstr "There is no pending request from this person"
 msgid "err_invalid_cover"
 msgstr "That cover is not in the gallery"
 
+msgid "err_category_invalid"
+msgstr "That category does not exist"
+
+msgid "err_category_name"
+msgstr "The category needs a name in Spanish"
+
+msgid "err_category_exists"
+msgstr "A category with that name already exists"
+
+msgid "err_category_builtin"
+msgstr "MeetGo's own categories cannot be deleted; you can rename them"
+
 msgid "err_invalid_filter"
 msgstr "Invalid filter"
 
@@ -4682,6 +4694,27 @@ msgstr "Table tennis"
 
 msgid "cover_skate"
 msgstr "Skateboarding"
+
+msgid "ui_community_category"
+msgstr "Category"
+
+msgid "ui_community_category_choose"
+msgstr "Choose a category…"
+
+msgid "ui_community_category_propose"
+msgstr "None fits: propose another…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "Name of the category you propose"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "The administration will review it; meanwhile your community shows under «Other»."
+
+msgid "ui_cflag_new"
+msgstr "New"
+
+msgid "ui_cflag_default"
+msgstr "Default"
 
 msgid "ui_sec_plans"
 msgstr "Plan chats"

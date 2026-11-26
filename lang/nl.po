@@ -3875,6 +3875,18 @@ msgstr "Deze persoon heeft geen openstaand verzoek"
 msgid "err_invalid_cover"
 msgstr "Die omslag staat niet in de galerij"
 
+msgid "err_category_invalid"
+msgstr "Die categorie bestaat niet"
+
+msgid "err_category_name"
+msgstr "De categorie heeft een Spaanse naam nodig"
+
+msgid "err_category_exists"
+msgstr "Er bestaat al een categorie met die naam"
+
+msgid "err_category_builtin"
+msgstr "De eigen categorieën van MeetGo kunnen niet verwijderd worden; je kunt ze hernoemen"
+
 msgid "err_invalid_filter"
 msgstr "Ongeldig filter"
 
@@ -4681,6 +4693,27 @@ msgstr "Tafeltennis"
 
 msgid "cover_skate"
 msgstr "Skateboarden"
+
+msgid "ui_community_category"
+msgstr "Categorie"
+
+msgid "ui_community_category_choose"
+msgstr "Kies een categorie…"
+
+msgid "ui_community_category_propose"
+msgstr "Geen past: stel een andere voor…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "Naam van de categorie die je voorstelt"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "De beheerders bekijken het voorstel; ondertussen staat je community onder \"Overige\"."
+
+msgid "ui_cflag_new"
+msgstr "Nieuw"
+
+msgid "ui_cflag_default"
+msgstr "Standaard"
 
 msgid "ui_sec_plans"
 msgstr "Plan-chats"

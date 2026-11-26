@@ -107,8 +107,17 @@ async def create_community(payload: CommunityCreateIn, db: AsyncSession = Depend
                         interest_tags=await clean_interest_tags(db, payload.interest_tags))
     if not fits_age(user, conv):
         raise HTTPException(400, t("err_age_span_creator"))
+    # its category, or a new one proposed to the administration (in "Other" meanwhile)
+    from app.categories import service as cats
+    if payload.category_proposal and payload.category_proposal.strip():
+        conv.category_key = cats.OTHER
+    else:  # the app asks for one; without it (other clients), "Other"
+        conv.category_key = await cats.check_key(db, payload.category) if payload.category else cats.OTHER
     db.add(conv)
     await db.flush()
+    if payload.category_proposal and payload.category_proposal.strip():
+        from app.core.models import CategoryProposal
+        db.add(CategoryProposal(name=payload.category_proposal.strip(), user_id=user.id, conversation_id=conv.id, created_at=utcnow()))
     await join(db, conv, user.id, role="owner")
     await db.commit()
     await realtime.publish([user.id], {"type": "conversation.changed", "conversation_id": conv.id})
@@ -164,6 +173,14 @@ async def update_community(community_id: int, payload: CommunityUpdateIn, db: As
         conv.policy_json = {**(conv.policy_json or {}), "join_questions": clean_questions(payload.join_questions)}
     if payload.interest_tags is not None and not conv.interest_id:
         conv.interest_tags = await clean_interest_tags(db, payload.interest_tags)
+    if not conv.interest_id and (payload.category or (payload.category_proposal or "").strip()):
+        from app.categories import service as cats
+        if (payload.category_proposal or "").strip():
+            from app.core.models import CategoryProposal
+            conv.category_key = cats.OTHER
+            db.add(CategoryProposal(name=payload.category_proposal.strip(), user_id=user.id, conversation_id=conv.id, created_at=utcnow()))
+        else:
+            conv.category_key = await cats.check_key(db, payload.category)
     if payload.retention_days is not None:
         # interest communities always keep a year; people's communities choose among the fixed periods
         if conv.interest_id or payload.retention_days not in RETENTION_CHOICES:

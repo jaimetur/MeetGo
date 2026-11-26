@@ -140,6 +140,7 @@ export type CommunityRole = "owner" | "admin" | "moderator" | "member";
 export type Community = {
   id: number;
   kind: "interest" | "custom";
+  category?: string | null;  // its category's key (interest communities: set in the administration, or none)
   title: string;
   slug: string | null;
   description: string | null;

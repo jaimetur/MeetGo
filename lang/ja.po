@@ -3875,6 +3875,18 @@ msgstr "この人からの保留中のリクエストはありません"
 msgid "err_invalid_cover"
 msgstr "そのカバーはギャラリーにありません"
 
+msgid "err_category_invalid"
+msgstr "そのカテゴリはありません"
+
+msgid "err_category_name"
+msgstr "カテゴリにはスペイン語の名前が必要です"
+
+msgid "err_category_exists"
+msgstr "同じ名前のカテゴリがすでにあります"
+
+msgid "err_category_builtin"
+msgstr "MeetGoのカテゴリは削除できません。名前は変更できます"
+
 msgid "err_invalid_filter"
 msgstr "無効なフィルターです"
 
@@ -4681,6 +4693,27 @@ msgstr "卓球"
 
 msgid "cover_skate"
 msgstr "スケートボード"
+
+msgid "ui_community_category"
+msgstr "カテゴリ"
+
+msgid "ui_community_category_choose"
+msgstr "カテゴリを選択…"
+
+msgid "ui_community_category_propose"
+msgstr "合うものがない：別のカテゴリを提案…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "提案するカテゴリの名前"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "管理者が確認します。それまでの間、あなたのコミュニティは「その他」に表示されます。"
+
+msgid "ui_cflag_new"
+msgstr "新着"
+
+msgid "ui_cflag_default"
+msgstr "デフォルト"
 
 msgid "ui_sec_plans"
 msgstr "予定のチャット"

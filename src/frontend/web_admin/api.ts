@@ -211,6 +211,27 @@ export const api = {
   async deleteLanguage(code: string): Promise<AdminLanguage[]> {
     return await req(`/admin/languages/${encodeURIComponent(code)}`, { method: "DELETE" });
   },
+  async adminCategories(): Promise<AdminCategories> {
+    return await req("/admin/categories");
+  },
+  async createCategory(payload: { names: Record<string, string>; position?: number }) {
+    return await req("/admin/categories", { method: "POST", body: JSON.stringify(payload) });
+  },
+  async updateCategory(key: string, payload: { names?: Record<string, string>; position?: number }) {
+    return await req(`/admin/categories/${encodeURIComponent(key)}`, { method: "PATCH", body: JSON.stringify(payload) });
+  },
+  async deleteCategory(key: string) {
+    return await req(`/admin/categories/${encodeURIComponent(key)}`, { method: "DELETE" });
+  },
+  async assignCategory(payload: { key: string; community_ids: number[]; interest_ids: number[] }): Promise<{ changed: number }> {
+    return await req("/admin/categories/assign", { method: "POST", body: JSON.stringify(payload) });
+  },
+  async approveProposal(id: number, payload: { names?: Record<string, string>; key?: string }) {
+    return await req(`/admin/categories/proposals/${id}/approve`, { method: "POST", body: JSON.stringify(payload) });
+  },
+  async rejectProposal(id: number) {
+    return await req(`/admin/categories/proposals/${id}/reject`, { method: "POST" });
+  },
   async adminInterests(): Promise<AdminInterest[]> {
     return await req("/admin/interests");
   },
@@ -450,4 +471,12 @@ export type Business = {
     mail: { configured: boolean; ok?: boolean; at?: string; error?: string | null };
     disk: { free: number; total: number; low: boolean } | null;
   };
+};
+
+export type AdminCategory = { key: string; name: string; names: Record<string, string>; position: number; builtin: boolean; count: number };
+export type AdminCategories = {
+  categories: AdminCategory[];
+  proposals: { id: number; name: string; created_at: string; user: { id: number; name: string } | null; community: { id: number; title: string } | null }[];
+  communities: { id: number; title: string; kind: "custom"; category: string | null; province: string | null; members: number; created_at: string | null }[];
+  interests: { id: number; title: string; kind: "interest"; category: string | null; slug: string }[];
 };

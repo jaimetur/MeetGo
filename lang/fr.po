@@ -3958,6 +3958,18 @@ msgstr "Cette communauté appartient à une autre zone : seules les personnes d
 msgid "err_invalid_cover"
 msgstr "Cette couverture n'est pas dans la galerie"
 
+msgid "err_category_invalid"
+msgstr "Cette catégorie n'existe pas"
+
+msgid "err_category_name"
+msgstr "La catégorie a besoin d'un nom en espagnol"
+
+msgid "err_category_exists"
+msgstr "Une catégorie porte déjà ce nom"
+
+msgid "err_category_builtin"
+msgstr "Les catégories de MeetGo ne peuvent pas être supprimées ; tu peux les renommer"
+
 msgid "err_invalid_filter"
 msgstr "Filtre non valide"
 
@@ -5544,6 +5556,27 @@ msgstr "Ping-pong"
 
 msgid "cover_skate"
 msgstr "Skate"
+
+msgid "ui_community_category"
+msgstr "Catégorie"
+
+msgid "ui_community_category_choose"
+msgstr "Choisissez une catégorie…"
+
+msgid "ui_community_category_propose"
+msgstr "Aucune ne convient : en proposer une autre…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "Nom de la catégorie que vous proposez"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "L'administration l'examinera ; en attendant, votre communauté apparaîtra dans « Autres »."
+
+msgid "ui_cflag_new"
+msgstr "Nouvelles"
+
+msgid "ui_cflag_default"
+msgstr "Par défaut"
 
 msgid "ui_sec_plans"
 msgstr "Chats des plans"

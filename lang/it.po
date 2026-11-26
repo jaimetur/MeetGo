@@ -3875,6 +3875,18 @@ msgstr "Non c'è nessuna richiesta in sospeso di questa persona"
 msgid "err_invalid_cover"
 msgstr "Questa copertina non è nella galleria"
 
+msgid "err_category_invalid"
+msgstr "Questa categoria non esiste"
+
+msgid "err_category_name"
+msgstr "La categoria ha bisogno di un nome in spagnolo"
+
+msgid "err_category_exists"
+msgstr "Esiste già una categoria con questo nome"
+
+msgid "err_category_builtin"
+msgstr "Le categorie di MeetGo non si possono eliminare; puoi rinominarle"
+
 msgid "err_invalid_filter"
 msgstr "Filtro non valido"
 
@@ -4681,6 +4693,27 @@ msgstr "Ping-pong"
 
 msgid "cover_skate"
 msgstr "Skate"
+
+msgid "ui_community_category"
+msgstr "Categoria"
+
+msgid "ui_community_category_choose"
+msgstr "Scegli una categoria…"
+
+msgid "ui_community_category_propose"
+msgstr "Nessuna va bene: proponine un'altra…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "Nome della categoria che proponi"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "L'amministrazione la esaminerà; nel frattempo la tua community comparirà in «Altre»."
+
+msgid "ui_cflag_new"
+msgstr "Nuove"
+
+msgid "ui_cflag_default"
+msgstr "Predefinite"
 
 msgid "ui_sec_plans"
 msgstr "Chat dei piani"

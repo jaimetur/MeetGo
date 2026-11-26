@@ -256,6 +256,8 @@ async def seed(db: AsyncSession) -> None:
     await update_age_ranges(db)
     await ensure_admin(db)
     await ensure_bots(db)
+    from app.categories.service import ensure_categories
+    await ensure_categories(db)
 
 
 # Interests that became one: a coffee, a beer and drinks are now "Tomar algo".

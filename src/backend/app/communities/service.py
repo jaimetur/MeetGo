@@ -226,7 +226,7 @@ async def communities_out(db: AsyncSession, user: User, convs: list[Conversation
             "max_age": c.max_age,
             "join_questions": join_questions(c),
             # set in the administration (None: the app picks them from the name)
-            "category": interest.category if interest else None,
+            "category": (interest.category if interest else c.category_key),
             "icon": interest.icon if interest else None,
             "color": interest.color if interest else None,
         })

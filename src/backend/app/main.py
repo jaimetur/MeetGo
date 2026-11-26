@@ -13,6 +13,7 @@ from app.core.redis_conn import close_redis
 from app.admin import routes as admin
 from app.backups import routes as backups
 from app.business import routes as business
+from app.categories import routes as categories
 from app.backups import service as backup_service
 from app.auth import routes as auth
 from app.billing import routes as billing
@@ -52,7 +53,7 @@ async def i18n_middleware(request: Request, call_next):
     return await call_next(request)
 
 
-for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, business, admin, communities, board):
+for module in (public, auth, me, avatar, conversations, messages, realtime, devices, social, blocks, billing, backups, business, categories, admin, communities, board):
     app.include_router(module.router)
 
 

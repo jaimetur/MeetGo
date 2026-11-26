@@ -12,7 +12,7 @@ import { loadConversations, loadMyCommunities, refreshMyPlansSoon, setState, toa
 import type { Attendee, Comment, Community, FeedFilter, Post, PostKind, PostPage as PostPageData } from "../types";
 import { signOut } from "./App";
 import { COVER_ARTS, coverArtUrl } from "../coverArts";
-import { communityCategory } from "./Communities";
+import { categoryName, communityCategory } from "./Communities";
 import { AboutModal, Avatar, Icon, Modal, Wordmark, communityCover, hobbyIcon, useClickOutside, countryOptions, regionLabel } from "./common";
 
 export const KIND_KEYS: Record<PostKind, string> = {
@@ -1054,7 +1054,7 @@ function CoverGallery({ community, value, onPick, onClose }: { community: Commun
   const words = plain(q).split(/\s+/).filter(Boolean);
   const list = [...COVER_ARTS].sort((a, b) => rank(b) - rank(a)).filter(([name, cat, tags]) => {
     if (!words.length) return true;
-    const text = plain([t(`cover_${name}`), t(cat), ...tags.map((tg) => interestNames[tg] || tg)].join(" "));
+    const text = plain([t(`cover_${name}`), categoryName(cat), ...tags.map((tg) => interestNames[tg] || tg)].join(" "));
     return words.every((w) => text.includes(w));
   });
   return (

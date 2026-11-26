@@ -5,7 +5,7 @@ import { native, setNativeHandlers } from "../native";
 import { announceActiveConversation, registerServiceWorker, setupNativePush, subscribeExisting } from "../push";
 import { startRealtime, stopRealtime, setRealtimeHooks } from "../realtime";
 import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } from "../router";
-import { getState, loadBlocks, loadConversations, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
+import { getState, loadBlocks, loadConversations, loadCategories, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen, CompleteProfile } from "./Auth";
 import { ChatView } from "./Chat";
 import { UpdateNotice } from "./UpdateNotice";
@@ -202,6 +202,7 @@ function Shell() {
   const roomCount = Object.values(conversations).filter((c) => c.kind === "channel").length;
   useEffect(() => {
     loadMyPlans();
+    loadCategories();
   }, []);
   useEffect(() => {
     loadMyCommunities();

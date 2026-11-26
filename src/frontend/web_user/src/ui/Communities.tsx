@@ -137,8 +137,20 @@ const CATEGORIES: [string, RegExp][] = [
   ["ui_cat_motor", /coche|car\b|auto|moto/],
 ];
 
-/** The category keys, in the order the lists show them. */
-export const CATEGORY_KEYS = [...CATEGORIES.map(([k]) => k), "ui_cat_other"];
+/** The category keys, in the order the lists show them: the built-in ones until the server's list arrives (then the
+ * same array is updated, so every import sees it). */
+export const CATEGORY_KEYS: string[] = [...CATEGORIES.map(([k]) => k), "ui_cat_other"];
+const CATEGORY_NAMES: Record<string, string> = {};
+
+export function setCategories(list: { key: string; name: string }[]) {
+  if (!list.length) return;
+  CATEGORY_KEYS.splice(0, CATEGORY_KEYS.length, ...list.map((c) => c.key));
+  for (const k of Object.keys(CATEGORY_NAMES)) delete CATEGORY_NAMES[k];
+  for (const c of list) CATEGORY_NAMES[c.key] = c.name;
+}
+
+/** A category's name in the reader's language (the server's, or the translation of a built-in one). */
+export const categoryName = (key: string) => CATEGORY_NAMES[key] || t(key);
 
 export function communityCategory(c: Community): string {
   const own = (c as Community & { category?: string | null }).category || interestLook(c.slug).category;
@@ -156,7 +168,7 @@ const byTitle = (a: Community, b: Community) => a.title.localeCompare(b.title, u
 
 /** The communities by category (in the order above, "Other" last), each in alphabetical order. */
 function byCategory(list: Community[]): [string, Community[]][] {
-  const order = [...CATEGORIES.map(([k]) => k), "ui_cat_other"];
+  const order = CATEGORY_KEYS;
   const groups = new Map<string, Community[]>();
   for (const c of list) {
     const k = communityCategory(c);
@@ -232,8 +244,28 @@ export function CommunitiesPage() {
   const mineCount = (list || []).length - notMine - createdCount;
   // without communities of my own, that tab is not there: its place goes back to all of them
   const view: Show = show === "created" && !createdCount ? "all" : show;
+  // two switches on top of the tabs: only those created in the last 30 days, only MeetGo's own (interest) ones
+  const [flags, setFlagsState] = useState<{ fresh: boolean; builtin: boolean }>(() => {
+    try {
+      return { fresh: false, builtin: false, ...JSON.parse(localStorage.getItem("communities.flags") || "{}") };
+    } catch {
+      return { fresh: false, builtin: false };
+    }
+  });
+  const setFlag = (k: "fresh" | "builtin", v: boolean) => setFlagsState((f) => {
+    const next = { ...f, [k]: v };
+    try {
+      localStorage.setItem("communities.flags", JSON.stringify(next));
+    } catch {
+      /* per device */
+    }
+    return next;
+  });
+  const monthAgo = Date.now() - 30 * 86400e3;
+  useStore((s) => s.categories);  // re-drawn when the categories' names arrive
   const shown = (list || []).filter((c) => browse || view === "all"
-    || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined));
+    || (view === "created" ? created(c) : view === "mine" ? c.joined && !created(c) : !c.joined))
+    .filter((c) => (!flags.fresh || new Date(c.created_at).getTime() >= monthAgo) && (!flags.builtin || c.kind === "interest"));
   const groups = byCategory(shown);
 
   return (
@@ -272,6 +304,18 @@ export function CommunitiesPage() {
           </div>
         ) : null}
 
+        {list && list.length ? (
+          <div className="cflags">
+            <label className="cflag" htmlFor="communities-fresh">
+              <input id="communities-fresh" type="checkbox" role="switch" checked={flags.fresh} onChange={(e) => setFlag("fresh", e.target.checked)} />
+              <span className="sw" aria-hidden="true" />{t("ui_cflag_new")}
+            </label>
+            <label className="cflag" htmlFor="communities-builtin">
+              <input id="communities-builtin" type="checkbox" role="switch" checked={flags.builtin} onChange={(e) => setFlag("builtin", e.target.checked)} />
+              <span className="sw" aria-hidden="true" />{t("ui_cflag_default")}
+            </label>
+          </div>
+        ) : null}
         {list === null ? (
           <div className="cgrid">{[0, 1, 2, 3].map((i) => <div key={i} className="ccard skel"><div className="ccover shimmer" /><div className="cbody"><span className="sk w60 h18" /><span className="sk w80" /></div></div>)}</div>
         ) : error ? (
@@ -285,7 +329,7 @@ export function CommunitiesPage() {
           <>
             {groups.map(([cat, items]) => (
               <section key={cat} className="ccat">
-                <div className="lsec ccat-title">{t(cat)} <span className="muted">· {items.length}</span></div>
+                <div className="lsec ccat-title">{categoryName(cat)} <span className="muted">· {items.length}</span></div>
                 <div className="cgrid">{items.map((c) => <CommunityCard key={c.id} c={c} onChange={update} />)}</div>
               </section>
             ))}
@@ -365,6 +409,11 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
   });
   const [allInterests, setAllInterests] = useState<{ slug: string; name: string }[]>([]);
   const [pickTags, setPickTags] = useState(false);
+  // its category (required to create one), or a new one proposed to the administration ("Other" meanwhile)
+  const categories = useStore((s) => s.categories);
+  const [catKey, setCatKey] = useState(community && community.kind === "custom" ? community.category || "" : "");
+  const [proposing, setProposing] = useState(false);
+  const [proposal, setProposal] = useState("");
   useEffect(() => { api.interests().then((l) => setAllInterests(l.filter((i) => i.active !== false))).catch(() => undefined); }, []);
   const interest = community?.kind === "interest";
   const [busy, setBusy] = useState(false);
@@ -401,7 +450,8 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       }
       const questions = form.access_mode === "request" ? form.questions.map((q) => q.trim()).filter(Boolean) : [];
       const payload = { title: form.title.trim(), description: form.description.trim() || undefined, access_mode: form.access_mode, board_mode: form.board_mode, join_questions: questions,
-        ...(interest ? {} : { retention_days: form.retention, interest_tags: form.tags }) };
+        ...(interest ? {} : { retention_days: form.retention, interest_tags: form.tags }),
+        ...(interest ? {} : proposing ? { category_proposal: proposal.trim() } : catKey ? { category: catKey } : {}) };
       if (community) {
         let c: Community & { expelled?: number } = await api.updateCommunity(community.id, { ...payload, rules: form.rules.trim() || null });
         if (owner && filtersChanged()) {
@@ -433,7 +483,8 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     <Modal wide title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
       <>
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
-        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || ((!community || owner) && ageWrong)} onClick={() => save()}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
+        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || ((!community || owner) && ageWrong)
+          || (!community && !interest && !(proposing ? proposal.trim().length >= 2 : catKey))} onClick={() => save()}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
       </>
     )}>
       {!community ? <p className="muted" style={{ margin: 0, fontSize: 13 }}>{t("ui_community_create_lead")}</p> : null}
@@ -441,6 +492,22 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
       <section className="csec">
       <h3 className="csec-h"><Icon name="edit" size="sm" />{t("ui_csec_general")}</h3>
       <label className="fld">{t("ui_community_f_title")}<input id="cm-title" className="inp" maxLength={80} value={form.title} onChange={(e) => set({ title: e.target.value })} placeholder={t("ui_community_title_ph")} /></label>
+      {!interest ? (
+        <div className="fld"><span>{t("ui_community_category")}</span>
+          <select id="cm-category" className="inp" value={proposing ? "__new" : catKey} data-n={categories?.length || 0}
+            onChange={(e) => { if (e.target.value === "__new") setProposing(true); else { setProposing(false); setCatKey(e.target.value); } }}>
+            <option value="">{t("ui_community_category_choose")}</option>
+            {CATEGORY_KEYS.filter((k) => k !== "ui_cat_other" || catKey === "ui_cat_other").map((k) => <option key={k} value={k}>{categoryName(k)}</option>)}
+            <option value="__new">{t("ui_community_category_propose")}</option>
+          </select>
+          {proposing ? (
+            <>
+              <input id="cm-category-proposal" className="inp" maxLength={60} value={proposal} onChange={(e) => setProposal(e.target.value)} placeholder={t("ui_community_category_proposal_ph")} autoFocus />
+              <small className="muted">{t("ui_community_category_proposal_hint")}</small>
+            </>
+          ) : null}
+        </div>
+      ) : null}
       <label className="fld">{t("ui_description")}<textarea id="cm-desc" className="inp" rows={3} maxLength={1000} value={form.description} onChange={(e) => set({ description: e.target.value })} placeholder={t("ui_community_desc_ph")} /></label>
       {community ? <div className="fld">{t("ui_community_f_rules")}<RichEditor id="cm-rules" value={form.rules} onChange={(v) => set({ rules: v })} /></div> : null}
       </section>

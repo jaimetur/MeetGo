@@ -3875,6 +3875,18 @@ msgstr "Aquesta persona no té cap sol·licitud pendent"
 msgid "err_invalid_cover"
 msgstr "Aquesta portada no és a la galeria"
 
+msgid "err_category_invalid"
+msgstr "Aquesta categoria no existeix"
+
+msgid "err_category_name"
+msgstr "La categoria necessita un nom en castellà"
+
+msgid "err_category_exists"
+msgstr "Ja hi ha una categoria amb aquest nom"
+
+msgid "err_category_builtin"
+msgstr "Les categories de MeetGo no es poden esborrar; les pots canviar de nom"
+
 msgid "err_invalid_filter"
 msgstr "Filtre no vàlid"
 
@@ -4681,6 +4693,27 @@ msgstr "Ping-pong"
 
 msgid "cover_skate"
 msgstr "Skate"
+
+msgid "ui_community_category"
+msgstr "Categoria"
+
+msgid "ui_community_category_choose"
+msgstr "Tria una categoria…"
+
+msgid "ui_community_category_propose"
+msgstr "Cap encaixa: proposa'n una altra…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "Nom de la categoria que proposes"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "L'administració la revisarà; mentrestant, la teva comunitat apareixerà a «Altres»."
+
+msgid "ui_cflag_new"
+msgstr "Noves"
+
+msgid "ui_cflag_default"
+msgstr "Per defecte"
 
 msgid "ui_sec_plans"
 msgstr "Xats de plans"

@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { LANGUAGES, t } from "@lang";
 import { api, type AdminInterest } from "../../../../web_admin/api";
 import { toast } from "../../store";
-import { CATEGORY_KEYS, guessCategory } from "../Communities";
+import { CATEGORY_KEYS, categoryName, guessCategory } from "../Communities";
 import { Icon, Modal, guessIcon, hobbyIcon, setInterestLooks } from "../common";
 import { colorFor } from "../../util";
 import { SectionHead } from "./AdminPage";
@@ -57,7 +57,7 @@ export function Communities() {
 
       {list === null ? <div className="adm-loading">{a("loading")}</div> : groups.length === 0 ? <Empty icon="search" text={a("us_empty")} /> : groups.map(([cat, items]) => (
         <section key={cat} className="adm-group">
-          <h3>{t(cat)} <span className="muted">{items.length}</span></h3>
+          <h3>{categoryName(cat)} <span className="muted">{items.length}</span></h3>
           <div className="adm-tiles">
             {items.map((i) => {
               const color = i.color || colorFor(i.slug);
@@ -145,7 +145,7 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
     </>}>
       <div className="adm-preview" style={{ background: `linear-gradient(135deg, ${shownColor}, color-mix(in srgb, ${shownColor} 55%, #0b1220))` }}>
         <span><Icon name={shownIcon} /></span>
-        <div><b>{name || a("co_new_ph")}</b><small>{t(category || guess.category)}{interest ? ` · ${a("co_stats", { zones: interest.zones, people: interest.people })}` : ""}</small></div>
+        <div><b>{name || a("co_new_ph")}</b><small>{categoryName(category || guess.category)}{interest ? ` · ${a("co_stats", { zones: interest.zones, people: interest.people })}` : ""}</small></div>
       </div>
       {confirm ? <p className="adm-red adm-note">{a("co_delete_hint")}</p> : null}
 
@@ -161,8 +161,8 @@ function InterestEditor({ interest, onClose, onSaved }: { interest: AdminInteres
       </details>
       <Field label={a("co_category")}>
         <select className="inp" value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="">{a("co_auto", { value: t(guess.category) })}</option>
-          {CATEGORY_KEYS.map((k) => <option key={k} value={k}>{t(k)}</option>)}
+          <option value="">{a("co_auto", { value: categoryName(guess.category) })}</option>
+          {CATEGORY_KEYS.map((k) => <option key={k} value={k}>{categoryName(k)}</option>)}
         </select>
       </Field>
 

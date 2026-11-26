@@ -3875,6 +3875,18 @@ msgstr "此人没有待处理的申请"
 msgid "err_invalid_cover"
 msgstr "该封面不在图库中"
 
+msgid "err_category_invalid"
+msgstr "该类别不存在"
+
+msgid "err_category_name"
+msgstr "类别需要一个西班牙语名称"
+
+msgid "err_category_exists"
+msgstr "已有同名类别"
+
+msgid "err_category_builtin"
+msgstr "MeetGo 自带的类别不能删除；可以重命名"
+
 msgid "err_invalid_filter"
 msgstr "无效的筛选条件"
 
@@ -4681,6 +4693,27 @@ msgstr "乒乓球"
 
 msgid "cover_skate"
 msgstr "滑板"
+
+msgid "ui_community_category"
+msgstr "分类"
+
+msgid "ui_community_category_choose"
+msgstr "选择分类…"
+
+msgid "ui_community_category_propose"
+msgstr "没有合适的：提议其他分类…"
+
+msgid "ui_community_category_proposal_ph"
+msgstr "你提议的分类名称"
+
+msgid "ui_community_category_proposal_hint"
+msgstr "管理员将进行审核；在此期间，你的社区会显示在“其他”中。"
+
+msgid "ui_cflag_new"
+msgstr "最新"
+
+msgid "ui_cflag_default"
+msgstr "默认"
 
 msgid "ui_sec_plans"
 msgstr "计划聊天"

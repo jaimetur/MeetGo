@@ -26,6 +26,8 @@ export type State = {
   // Board: my upcoming plans and my communities (right column, Chats filters, Publish). null until loaded.
   myPlans: Post[] | null;
   myCommunities: Community[] | null;
+  // categories of communities, in order (from the server; the built-in ones until it answers)
+  categories: { key: string; name: string; icon: string | null; color: string | null; builtin: boolean }[] | null;
   // people I blocked: their messages are hidden from me
   blocked: number[];
   // another zone whose communities I am looking at (Communities), or null for mine
@@ -50,6 +52,7 @@ const initial: State = {
   subscriptions: false,
   myPlans: null,
   myCommunities: null,
+  categories: null,
   blocked: [],
   browseZone: null,
 };
@@ -301,6 +304,17 @@ export async function loadMyPlans() {
     setState({ myPlans: list });
   } catch {
     setState((s) => ({ myPlans: s.myPlans || [] }));
+  }
+}
+
+export async function loadCategories() {
+  try {
+    const list = await api.categories();
+    const { setCategories } = await import("./ui/Communities");
+    setCategories(list);
+    setState({ categories: list });
+  } catch {
+    /* the built-in ones stay */
   }
 }
 
