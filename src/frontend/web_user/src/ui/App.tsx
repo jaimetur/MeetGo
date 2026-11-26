@@ -28,7 +28,7 @@ import { NewChatModal, Sidebar } from "./Sidebar";
 export const THEMES: Record<string, { dark: boolean; label: string; bg: string; panel: string; accent: string; accent2: string }> = {
   pastel: { dark: false, label: "ui_theme_pastel", bg: "#f6f7f9", panel: "#ffffff", accent: "#1d6fe0", accent2: "#f0a6c8" },
   conversa: { dark: false, label: "ui_theme_conversa", bg: "#efeae2", panel: "#0b5c50", accent: "#128c7e", accent2: "#25d366" },
-  momentos: { dark: false, label: "ui_theme_momentos", bg: "#fff8fb", panel: "#ffffff", accent: "#fa7e1e", accent2: "#962fbf" },
+  momentos: { dark: false, label: "ui_theme_momentos", bg: "#f7f4ff", panel: "#962fbf", accent: "#fa7e1e", accent2: "#962fbf" },
   meetgo: { dark: false, label: "ui_theme_pastel", bg: "#eaf2fd", panel: "#ffffff", accent: "#1b74e4", accent2: "#1b74e4" },
   muro: { dark: false, label: "ui_theme_muro", bg: "#e9ebf0", panel: "#1c2b4b", accent: "#4267b2", accent2: "#4267b2" },
   chispa: { dark: false, label: "ui_theme_chispa", bg: "#fff4f5", panel: "#ffffff", accent: "#fd267a", accent2: "#ff7854" },
@@ -42,7 +42,7 @@ export const THEMES: Record<string, { dark: boolean; label: string; bg: string; 
   pro: { dark: false, label: "ui_theme_pro", bg: "#f6f7f9", panel: "#ffffff", accent: "#1d6fe0", accent2: "#1d6fe0" },
   pasteldark: { dark: true, label: "ui_theme_pasteldark", bg: "#0b0f17", panel: "#121826", accent: "#4c8dff", accent2: "#c4a5f5" },
   conversadark: { dark: true, label: "ui_theme_conversadark", bg: "#0b141a", panel: "#202c33", accent: "#00a884", accent2: "#25d366" },
-  momentosdark: { dark: true, label: "ui_theme_momentosdark", bg: "#000000", panel: "#0a0a0a", accent: "#fb923c", accent2: "#a855f7" },
+  momentosdark: { dark: true, label: "ui_theme_momentosdark", bg: "#0d0a14", panel: "#2a1146", accent: "#fb923c", accent2: "#a855f7" },
   meetgodark: { dark: true, label: "ui_theme_pasteldark", bg: "#18191a", panel: "#242526", accent: "#2d88ff", accent2: "#2d88ff" },
   murodark: { dark: true, label: "ui_theme_murodark", bg: "#121826", panel: "#0b1120", accent: "#6d8fd6", accent2: "#6d8fd6" },
   chispadark: { dark: true, label: "ui_theme_chispadark", bg: "#111418", panel: "#1b1f24", accent: "#fd267a", accent2: "#ff7854" },
