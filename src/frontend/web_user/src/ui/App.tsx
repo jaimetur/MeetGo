@@ -158,8 +158,25 @@ export function signOut() {
   navigate("/", true);
 }
 
-/** The chat I had open, while the app stays open: Chats opens on it again; going back to the list forgets it. */
-const chatMemory = { id: null as number | null };
+/** The chat I had open (kept on this device, also when the app or the server restarts): Chats opens on it again;
+ *  going back to the list forgets it. */
+const chatMemory = {
+  get id(): number | null {
+    try {
+      return Number(localStorage.getItem("lastChat")) || null;
+    } catch {
+      return null;
+    }
+  },
+  set id(v: number | null) {
+    try {
+      if (v) localStorage.setItem("lastChat", String(v));
+      else localStorage.removeItem("lastChat");
+    } catch {
+      /* per-device preference */
+    }
+  },
+};
 
 /** My name in the menu: first name and first surname, or the surname's initial when it does not fit. */
 function MyName({ me }: { me: Me }) {
@@ -360,7 +377,8 @@ function Shell() {
   }, [route]);
   // my account opens on the tab I was on in this session, and Chats on the chat I had open
   const go = (name: string) => {
-    if (name === "chats" && chatMemory.id && getState().conversations[chatMemory.id]) return navigate(chatPath(chatMemory.id));
+    const last = chatMemory.id;
+    if (name === "chats" && last && getState().conversations[last]) return navigate(chatPath(last));
     navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
   };
 
