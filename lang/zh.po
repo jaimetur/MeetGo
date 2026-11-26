@@ -4092,10 +4092,10 @@ msgid "ui_cshow_mine"
 msgstr "我的社区"
 
 msgid "ui_cshow_created"
-msgstr "管理"
+msgstr "我的"
 
 msgid "ui_cshow_created_short"
-msgstr "管理"
+msgstr "我的"
 
 msgid "ui_cshow_joined"
 msgstr "已加入"

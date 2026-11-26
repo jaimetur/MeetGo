@@ -4092,10 +4092,10 @@ msgid "ui_cshow_mine"
 msgstr "Le mie community"
 
 msgid "ui_cshow_created"
-msgstr "Admin"
+msgstr "Mie"
 
 msgid "ui_cshow_created_short"
-msgstr "Admin"
+msgstr "Mie"
 
 msgid "ui_cshow_joined"
 msgstr "Iscritte"

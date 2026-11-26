@@ -4093,10 +4093,10 @@ msgid "ui_cshow_mine"
 msgstr "My communities"
 
 msgid "ui_cshow_created"
-msgstr "Admin"
+msgstr "Mine"
 
 msgid "ui_cshow_created_short"
-msgstr "Admin"
+msgstr "Mine"
 
 msgid "ui_cshow_joined"
 msgstr "Joined"

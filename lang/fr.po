@@ -4958,10 +4958,10 @@ msgid "ui_cshow_mine"
 msgstr "Mes communautés"
 
 msgid "ui_cshow_created"
-msgstr "Admin"
+msgstr "Les miennes"
 
 msgid "ui_cshow_created_short"
-msgstr "Admin"
+msgstr "Les miennes"
 
 msgid "ui_cshow_joined"
 msgstr "Rejointes"

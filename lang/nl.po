@@ -4092,10 +4092,10 @@ msgid "ui_cshow_mine"
 msgstr "Mijn communities"
 
 msgid "ui_cshow_created"
-msgstr "Beheer"
+msgstr "Mijn"
 
 msgid "ui_cshow_created_short"
-msgstr "Beheer"
+msgstr "Mijn"
 
 msgid "ui_cshow_joined"
 msgstr "Lid van"
