@@ -9,6 +9,7 @@ import { getState, loadBlocks, loadConversations, loadAdminPending, loadCategori
 import { AuthScreen, CompleteProfile } from "./Auth";
 import { ChatView } from "./Chat";
 import { UpdateNotice } from "./UpdateNotice";
+import { useNoAutofill } from "../noAutofill";
 import { HomePage, PostPage, PublishPage } from "./Board";
 import { AboutModal, Icon, InstallHint, Splash, Wordmark, setInterestLooks } from "./common";
 import { CommunitiesPage, CommunityPage } from "./Communities";
@@ -93,6 +94,7 @@ export function signOut() {
 }
 
 export default function App() {
+  useNoAutofill();
   const me = useStore((s) => s.me);
   const [booting, setBooting] = useState(true);
   // The opening screen stays at least a moment the first time the app opens in this tab.

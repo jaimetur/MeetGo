@@ -53,9 +53,9 @@ export function Logs({ initialUser }: { initialUser?: string }) {
       </SectionHead>
       <div className="lg-filters">
         <div className="adm-search"><Icon name="user" size="sm" />
-          <input id="lg-user" className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("lg_user_ph")} value={f.user} onChange={(e) => set({ user: e.target.value })} /></div>
+          <input id="lg-search-user" className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("lg_user_ph")} value={f.user} onChange={(e) => set({ user: e.target.value })} /></div>
         <div className="adm-search"><Icon name="search" size="sm" />
-          <input id="lg-q" className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("lg_q_ph")} value={f.q} onChange={(e) => set({ q: e.target.value })} /></div>
+          <input id="lg-search-path" className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("lg_q_ph")} value={f.q} onChange={(e) => set({ q: e.target.value })} /></div>
         <select id="lg-kind" className="inp adm-sort" value={f.kind} onChange={(e) => set({ kind: e.target.value })} aria-label={a("lg_kind")}>
           <option value="">{a("lg_kind_all")}</option>
           {KINDS.map((k) => <option key={k} value={k}>{a(`lg_kind_${k}`)}</option>)}
