@@ -37,9 +37,9 @@ DEFAULT_SETTINGS = {
         {"code": "en", "name": "English"},
     ],
     "age_ranges": [
-        {"key": "18_30", "label": "18-30", "min": 18, "max": 30},
-        {"key": "31_60", "label": "31-60", "min": 31, "max": 60},
-        {"key": "61_plus", "label": "61+", "min": 61, "max": None},
+        {"key": "18_30", "label": "18-29", "min": 18, "max": 29},
+        {"key": "31_60", "label": "30-59", "min": 30, "max": 59},
+        {"key": "61_plus", "label": "60+", "min": 60, "max": None},
     ],
     "countries": [
         {"code": "ES", "name": "Espana"},

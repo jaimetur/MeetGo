@@ -6,7 +6,7 @@ import { api as appApi } from "../../api";
 import { api, type Plan, type UserActivity } from "../../../../web_admin/api";
 import { madridYmd, planLabel } from "../../../../web_admin/strings";
 import { toast, useStore } from "../../store";
-import { Avatar, Icon, countryOptions, fullName, regionLabel, shownName } from "../common";
+import { Avatar, Icon, ageRangeLabel, countryOptions, fullName, regionLabel, shownName } from "../common";
 import { SectionHead, goSection } from "./AdminPage";
 import { a, ago, duration, fmtDate, fmtDateTime } from "./i18n";
 import { Badge, Choice, Empty, Field, Switch } from "./kit";
@@ -58,7 +58,6 @@ export function blocked(u: AdminUser): boolean {
   return !!u.is_banned || (!!u.banned_until && new Date(u.banned_until).getTime() > Date.now());
 }
 
-const AGE: Record<string, string> = { "18_30": "18-30", "31_60": "31-60", "61_plus": "61+" };
 
 export function Users({ initialFilter }: { initialFilter?: string }) {
   const [users, setUsers] = useState<AdminUser[] | null>(null);
@@ -139,7 +138,7 @@ function UserBadges({ u }: { u: AdminUser }) {
 }
 
 function UserRow({ u, onOpen }: { u: AdminUser; onOpen: () => void }) {
-  const zone = [u.province, u.age_range ? AGE[u.age_range] || u.age_range : null].filter(Boolean).join(" · ");
+  const zone = [u.province, u.age_range ? ageRangeLabel(u.age_range) : null].filter(Boolean).join(" · ");
   return (
     <button className={"adm-urow" + (blocked(u) ? " dim" : "")} onClick={onOpen}>
       <Avatar user={u} size={44} online={!!u.online} />
@@ -233,7 +232,7 @@ function UserCard({ user, onClose, onChanged, onCreated, onDeleted }: {
   });
 
   const blockState: string = !user ? "none" : user.is_banned ? "forever" : user.banned_until && new Date(user.banned_until).getTime() > Date.now() ? "until" : "none";
-  const z = [user?.province, user?.age_range ? AGE[user.age_range] || user.age_range : null].filter(Boolean).join(" · ");
+  const z = [user?.province, user?.age_range ? ageRangeLabel(user.age_range) : null].filter(Boolean).join(" · ");
 
   return createPortal(
     <div className="modal-bg adm-sheet-bg" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>

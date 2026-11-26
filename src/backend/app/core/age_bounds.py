@@ -8,7 +8,7 @@ from __future__ import annotations
 
 MIN_AGE = 18
 MAX_AGE = 100          # the last age the scale shows; a third range ending here has no years left
-DEFAULT = {"young": 30, "middle": 60}
+DEFAULT = {"young": 29, "middle": 59}
 SECTION = "age_bounds"
 
 _bounds = dict(DEFAULT)
