@@ -22,7 +22,7 @@ import { ZoneTag } from "./Board";
 import { Paywall } from "./Paywall";
 import { NewChatModal, Sidebar } from "./Sidebar";
 
-/** Colour themes: eight light and six dark (the colours are in styles.css, :root[data-palette=…]); `bg`, `panel` and
+/** Colour themes: thirteen light and eleven dark (the colours are in styles.css, :root[data-palette=…]); `bg`, `panel` and
  *  `accent` are only for the swatches in Settings. "system" follows the device: Light or Night. */
 export const THEMES: Record<string, { dark: boolean; label: string; bg: string; panel: string; accent: string; accent2: string }> = {
   light: { dark: false, label: "ui_theme_light", bg: "#f4f6fa", panel: "#ffffff", accent: "#1670e0", accent2: "#0a96cc" },
@@ -33,12 +33,22 @@ export const THEMES: Record<string, { dark: boolean; label: string; bg: string; 
   sky: { dark: false, label: "ui_theme_sky", bg: "#e9f4fd", panel: "#ffffff", accent: "#1286d6", accent2: "#22a6e6" },
   pro: { dark: false, label: "ui_theme_pro", bg: "#f6f7f9", panel: "#ffffff", accent: "#1d6fe0", accent2: "#1d6fe0" },
   pastel: { dark: false, label: "ui_theme_pastel", bg: "#f6f7f9", panel: "#ffffff", accent: "#1d6fe0", accent2: "#f0a6c8" },
+  conversa: { dark: false, label: "ui_theme_conversa", bg: "#ffffff", panel: "#ffffff", accent: "#13896b", accent2: "#25b36f" },
+  momentos: { dark: false, label: "ui_theme_momentos", bg: "#ffffff", panel: "#ffffff", accent: "#0a0a0a", accent2: "#e91e63" },
+  muro: { dark: false, label: "ui_theme_muro", bg: "#f0f2f5", panel: "#ffffff", accent: "#1b74e4", accent2: "#1b74e4" },
+  chispa: { dark: false, label: "ui_theme_chispa", bg: "#ffffff", panel: "#ffffff", accent: "#fd267a", accent2: "#ff7854" },
+  quedadas: { dark: false, label: "ui_theme_quedadas", bg: "#fbf8f3", panel: "#ffffff", accent: "#e5484d", accent2: "#f08a5d" },
   dark: { dark: true, label: "ui_theme_dark", bg: "#0b1220", panel: "#0f192b", accent: "#1e90ff", accent2: "#00c2ff" },
   oled: { dark: true, label: "ui_theme_oled", bg: "#000000", panel: "#0b0b0b", accent: "#1e90ff", accent2: "#00c2ff" },
   forest: { dark: true, label: "ui_theme_forest", bg: "#0b1712", panel: "#0f1f18", accent: "#2fbf71", accent2: "#3dd6a3" },
   prodark: { dark: true, label: "ui_theme_prodark", bg: "#0b0f17", panel: "#121826", accent: "#4c8dff", accent2: "#4c8dff" },
   pasteldark: { dark: true, label: "ui_theme_pasteldark", bg: "#0b0f17", panel: "#121826", accent: "#4c8dff", accent2: "#c4a5f5" },
   plum: { dark: true, label: "ui_theme_plum", bg: "#150e1e", panel: "#1d1429", accent: "#a66cff", accent2: "#e070d8" },
+  conversadark: { dark: true, label: "ui_theme_conversadark", bg: "#0b141a", panel: "#111b21", accent: "#21c08b", accent2: "#21c08b" },
+  momentosdark: { dark: true, label: "ui_theme_momentosdark", bg: "#000000", panel: "#0a0a0a", accent: "#3797f0", accent2: "#e91e63" },
+  murodark: { dark: true, label: "ui_theme_murodark", bg: "#18191a", panel: "#242526", accent: "#2d88ff", accent2: "#2d88ff" },
+  chispadark: { dark: true, label: "ui_theme_chispadark", bg: "#111418", panel: "#1b1f24", accent: "#fd267a", accent2: "#ff7854" },
+  quedadasdark: { dark: true, label: "ui_theme_quedadasdark", bg: "#17120f", panel: "#221b17", accent: "#ff6b6b", accent2: "#f08a5d" },
 };
 
 /** Size of the chat's text (this device): small (the earlier size), normal or large. */

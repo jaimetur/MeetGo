@@ -6016,6 +6016,60 @@ msgstr "Pastel"
 msgid "ui_theme_pasteldark"
 msgstr "Pastel noite"
 
+msgid "ui_theme_conversa"
+msgstr "Conversa"
+
+msgid "ui_theme_conversadark"
+msgstr "Conversa noite"
+
+msgid "ui_theme_momentos"
+msgstr "Momentos"
+
+msgid "ui_theme_momentosdark"
+msgstr "Momentos noite"
+
+msgid "ui_theme_muro"
+msgstr "Muro"
+
+msgid "ui_theme_murodark"
+msgstr "Muro noite"
+
+msgid "ui_theme_chispa"
+msgstr "Chispa"
+
+msgid "ui_theme_chispadark"
+msgstr "Chispa noite"
+
+msgid "ui_theme_quedadas"
+msgstr "Quedadas"
+
+msgid "ui_theme_quedadasdark"
+msgstr "Quedadas noite"
+
+msgid "ui_layout"
+msgstr "Layout"
+
+msgid "ui_layout_actual"
+msgstr "Atual"
+
+msgid "ui_layout_hint"
+msgstr "Como as comunidades aparecem neste dispositivo; o tema muda as cores."
+
+msgid "ui_layout_conversa"
+msgstr "Conversa"
+
+msgid "ui_layout_momentos"
+msgstr "Momentos"
+
+msgid "ui_layout_muro"
+msgstr "Muro"
+
+msgid "ui_layout_chispa"
+msgstr "Chispa"
+
+msgid "ui_layout_quedadas"
+msgstr "Quedadas"
+
 msgid "ui_theme_plum"
 msgstr "Ameixa"
 

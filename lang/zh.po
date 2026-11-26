@@ -6017,6 +6017,60 @@ msgstr "柔彩"
 msgid "ui_theme_pasteldark"
 msgstr "柔彩夜间"
 
+msgid "ui_theme_conversa"
+msgstr "Conversa"
+
+msgid "ui_theme_conversadark"
+msgstr "Conversa 夜间"
+
+msgid "ui_theme_momentos"
+msgstr "Momentos"
+
+msgid "ui_theme_momentosdark"
+msgstr "Momentos 夜间"
+
+msgid "ui_theme_muro"
+msgstr "Muro"
+
+msgid "ui_theme_murodark"
+msgstr "Muro 夜间"
+
+msgid "ui_theme_chispa"
+msgstr "Chispa"
+
+msgid "ui_theme_chispadark"
+msgstr "Chispa 夜间"
+
+msgid "ui_theme_quedadas"
+msgstr "Quedadas"
+
+msgid "ui_theme_quedadasdark"
+msgstr "Quedadas 夜间"
+
+msgid "ui_layout"
+msgstr "布局"
+
+msgid "ui_layout_actual"
+msgstr "当前"
+
+msgid "ui_layout_hint"
+msgstr "此设备上社区的显示方式；主题改变颜色。"
+
+msgid "ui_layout_conversa"
+msgstr "Conversa"
+
+msgid "ui_layout_momentos"
+msgstr "Momentos"
+
+msgid "ui_layout_muro"
+msgstr "Muro"
+
+msgid "ui_layout_chispa"
+msgstr "Chispa"
+
+msgid "ui_layout_quedadas"
+msgstr "Quedadas"
+
 msgid "ui_theme_plum"
 msgstr "梅紫"
 

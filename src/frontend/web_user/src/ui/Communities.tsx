@@ -2,8 +2,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { LANGUAGES, getLang, t } from "@lang";
 import { api, fileUrl } from "../api";
-import { coverGradient } from "../board";
-import { chatPath, communityPath, goBack, navigate } from "../router";
+import { coverColor, coverGradient, dateTile, hourOf } from "../board";
+import { chatPath, communityPath, goBack, navigate, postPath } from "../router";
 import { getState, loadConversations, loadMyCommunities, setState, toast, useStore } from "../store";
 import type { AccessMode, BoardMode, Community, CommunityMember, CommunityStats, Post, UserSummary } from "../types";
 import { Avatar, Icon, Modal, communityCover, communityTint, hobbyIcon, interestLook } from "./common";
@@ -13,6 +13,18 @@ import { ConfirmModal, EmptyState, FilterChips, FILTERS, type FilterKey, PhoneTo
 const ACCESS_KEYS: Record<AccessMode, string> = { open: "ui_community_access_open", request: "ui_community_access_request", invite: "ui_community_access_invite" };
 const ROLE_KEYS: Record<string, string> = { owner: "ui_role_owner", admin: "ui_role_admin", moderator: "ui_role_moderator", member: "ui_role_member" };
 const RANK: Record<string, number> = { owner: 3, admin: 2, moderator: 1, member: 0 };
+
+/** How the list of communities is laid out (Settings → Design, this device): the cards as they were, or one of five styles. */
+export const LAYOUTS = ["actual", "conversa", "momentos", "muro", "chispa", "quedadas"] as const;
+export type Layout = (typeof LAYOUTS)[number];
+export function getLayout(): Layout {
+  try {
+    const v = localStorage.getItem("communityLayout") as Layout;
+    return LAYOUTS.includes(v) ? v : "actual";
+  } catch {
+    return "actual";
+  }
+}
 
 function CommunityBadge({ c, size = 52 }: { c: Community; size?: number }) {
   if (c.avatar_url) return <img className="cbadge" src={fileUrl(c.avatar_url)} alt="" style={{ width: size, height: size }} />;
@@ -65,6 +77,80 @@ function JoinButton({ c, onChange, big }: { c: Community; onChange: (c: Communit
   );
 }
 
+/** Momentos: the communities of the list in a row of round icons, a coloured ring on the active ones. */
+function StoriesRow({ list }: { list: Community[] }) {
+  const row = [...list].sort((a, b) => Number(isActive(b)) - Number(isActive(a))).slice(0, 14);
+  if (!row.length) return null;
+  return (
+    <div className="cstories">
+      {row.map((c) => (
+        <button key={c.id} className={"cstory" + (isActive(c) ? " on" : "")} onClick={() => c.my_zone !== false && navigate(communityPath(c.id))}>
+          <span className="cring"><CommunityBadge c={c} size={60} /></span>
+          <span className="cstory-name">{c.title}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Chispa: one community I have not joined, large, to join it or pass to the next one. */
+function Featured({ list, onChange }: { list: Community[]; onChange: (c: Community) => void }) {
+  const pool = useMemo(() => list.filter((c) => !c.joined && c.my_zone !== false && c.access_mode !== "invite")
+    .sort((a, b) => (b.online_count || 0) - (a.online_count || 0) || b.member_count - a.member_count), [list]);
+  const [i, setI] = useState(0);
+  if (!pool.length) return null;
+  const c = pool[i % pool.length];
+  return (
+    <div className="cfeat">
+      <div className="cfeat-card" style={{ background: communityCover(c.slug, "c" + c.id, 160), ...communityTint(c.slug, "c" + c.id) }} role="link" tabIndex={0} onClick={() => navigate(communityPath(c.id))}>
+        <Icon name={hobbyIcon(c.slug, c.title)} className="cfeat-art" />
+        <div className="cfeat-foot">
+          {isActive(c) ? <span className="cfeat-badge"><Icon name="star" size="sm" />{t("ui_cbadge_active")}</span> : null}
+          <div className="cfeat-title">{c.title}</div>
+          <div className="cfeat-sub">
+            {c.province ? <><Icon name="place" size="sm" />{c.province} · </> : null}{t("ui_members_n", { n: c.member_count })}
+            {c.online_count ? <> · {t("ui_community_online_n", { n: c.online_count })}</> : null}
+          </div>
+        </div>
+      </div>
+      <div className="cfeat-acts">
+        <button className="cfeat-b no" aria-label={t("ui_next")} title={t("ui_next")} onClick={() => setI(i + 1)}><Icon name="x" /></button>
+        <JoinButton c={c} big onChange={(next) => { onChange(next); setI(i + 1); }} />
+        <button className="cfeat-b" aria-label={t("ui_open")} title={t("ui_open")} onClick={() => navigate(communityPath(c.id))}><Icon name="chat" /></button>
+      </div>
+    </div>
+  );
+}
+
+/** Quedadas: my next plans first, each with its date, before the communities. */
+function NextPlans() {
+  const plans = useStore((s) => s.myPlans);
+  const next = (plans || []).filter((p) => p.starts_at && new Date(p.starts_at).getTime() > Date.now()).slice(0, 3);
+  if (!next.length) return null;
+  return (
+    <section className="ccat">
+      <div className="lsec ccat-title">{t("ui_plans_next")}</div>
+      <div className="cplans">
+        {next.map((p) => {
+          const d = dateTile(p.starts_at!);
+          return (
+            <button key={p.id} className="cplan" onClick={() => navigate(postPath(p.id))}>
+              <span className="cplan-cover" style={{ background: coverGradient("p" + p.id), ["--cc" as string]: coverColor("p" + p.id) }}>
+                <span className="cplan-date"><small>{d.weekday}</small><b>{d.day}</b></span>
+              </span>
+              <span className="cplan-body">
+                <span className="cplan-com">{p.community.title}</span>
+                <b>{p.title}</b>
+                <span className="muted">{hourOf(p.starts_at!)}</span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 /** A community that needs approval asks its questions first; the answers go with the request. */
 function JoinQuestionsModal({ c, onClose, onDone }: { c: Community; onClose: () => void; onDone: (c: Community) => void }) {
   const questions = c.join_questions || [];
@@ -113,6 +199,7 @@ function CommunityCard({ c, onChange }: { c: Community; onChange: (c: Community)
           {isFresh(c) ? <span className="cmark-b fresh">{t("ui_cbadge_new")}</span> : null}
         </div>
       ) : null}
+      <div className="ccover2" style={{ background: communityCover(c.slug, "c" + c.id), ...communityTint(c.slug, "c" + c.id) }} aria-hidden="true"><Icon name={hobbyIcon(c.slug, c.title)} /></div>
       <div className="cbody">
         <div className="ctop">
           <CommunityBadge c={c} />
@@ -297,12 +384,14 @@ export function CommunitiesPage() {
   // empty among mine because of the filters: the ones I have not joined that fit them are offered first
   const othersFitting = view === "mine" || view === "created" ? listed.filter((c) => !c.joined && fits(c)).length : 0;
   const groups = byCategory(shown);
+  const layout = getLayout();
+  const flat = groups.flatMap(([, items]) => items);
   // the zones and age bands of the list, for the filters beside the search
   const zones = [...new Set((list || []).map((c) => c.province).filter(Boolean))].sort((x, y) => x.localeCompare(y));
   const ages = [...new Set((list || []).map(ageKey))].sort();
 
   return (
-    <main className="screen" ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
+    <main className={"screen clay-" + layout} ref={scroller} onScroll={(e) => { listMemory.scroll = e.currentTarget.scrollTop; }}>
       <PhoneTop title={t("ui_nav_communities")} />
       <div className="swrap wide">
         <header className="shead">
@@ -370,6 +459,9 @@ export function CommunitiesPage() {
             : <EmptyState icon="compass" title={t("ui_community_empty_title")} body={t("ui_community_empty_body")} action={t("ui_community_create")} onAction={() => setCreate(true)} />
         ) : (
           <>
+            {layout === "momentos" ? <StoriesRow list={flat} /> : null}
+            {layout === "chispa" ? <Featured list={flat} onChange={update} /> : null}
+            {layout === "quedadas" ? <NextPlans /> : null}
             {groups.map(([cat, items]) => (
               <section key={cat} className="ccat">
                 <div className="lsec ccat-title">{categoryName(cat)} <span className="muted">· {items.length}</span></div>

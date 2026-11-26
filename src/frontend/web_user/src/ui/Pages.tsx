@@ -14,6 +14,7 @@ import { AliasField } from "./Auth";
 import { AvatarCrop } from "./AvatarCrop";
 import { PlanPicker, describeBilling } from "./Paywall";
 import { PhoneTop } from "./Board";
+import { LAYOUTS, type Layout, getLayout } from "./Communities";
 
 function PageShell({ title, lead, children, tab }: { title: string; lead?: string; children: React.ReactNode; tab?: boolean }) {
   // `tab`: a screen of the phone's tab bar (People): the usual top bar instead of a back button
@@ -489,6 +490,7 @@ export function AccountPage() {
               <ThemePicker value={theme} onChange={changeTheme} />
             </div>
             <ChatSizePicker />
+            <LayoutPicker />
             <label className="fld setfld">{t("ui_language")}
               <select id="acc-lang" className="inp" value={lang} onChange={(e) => changeLang(e.target.value)}>
                 {LANGUAGES.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
@@ -786,6 +788,32 @@ function AboutButton() {
       <button id="acc-about" className="btn aboutbtn" onClick={() => setOpen(true)}><Icon name="info" size="sm" />{t("ui_about_title")}</button>
       {open ? <AboutModal onClose={() => setOpen(false)} /> : null}
     </>
+  );
+}
+
+/** How the list of communities looks (this device): the cards as they were or one of the five styles. */
+function LayoutPicker() {
+  const [value, setValue] = useState<Layout>(getLayout);
+  const pick = (v: Layout) => {
+    setValue(v);
+    try {
+      localStorage.setItem("communityLayout", v);
+    } catch {
+      /* per-device preference */
+    }
+  };
+  return (
+    <div className="fld setfld layoutfld">{t("ui_layout")}
+      <div className="layoutpick" role="radiogroup" aria-label={t("ui_layout")}>
+        {LAYOUTS.map((k) => (
+          <button key={k} id={`layout-${k}`} type="button" role="radio" aria-checked={value === k} className={"lp-" + k + (value === k ? " on" : "")} onClick={() => pick(k)}>
+            <span className="lp-prev" aria-hidden="true"><i /><i /><i /><i /></span>
+            <span>{t("ui_layout_" + k)}</span>
+          </button>
+        ))}
+      </div>
+      <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_layout_hint")}</div>
+    </div>
   );
 }
 

@@ -4325,6 +4325,60 @@ msgstr "Pastell"
 msgid "ui_theme_pasteldark"
 msgstr "Pastell Nacht"
 
+msgid "ui_theme_conversa"
+msgstr "Conversa"
+
+msgid "ui_theme_conversadark"
+msgstr "Conversa Nacht"
+
+msgid "ui_theme_momentos"
+msgstr "Momentos"
+
+msgid "ui_theme_momentosdark"
+msgstr "Momentos Nacht"
+
+msgid "ui_theme_muro"
+msgstr "Muro"
+
+msgid "ui_theme_murodark"
+msgstr "Muro Nacht"
+
+msgid "ui_theme_chispa"
+msgstr "Chispa"
+
+msgid "ui_theme_chispadark"
+msgstr "Chispa Nacht"
+
+msgid "ui_theme_quedadas"
+msgstr "Quedadas"
+
+msgid "ui_theme_quedadasdark"
+msgstr "Quedadas Nacht"
+
+msgid "ui_layout"
+msgstr "Layout"
+
+msgid "ui_layout_actual"
+msgstr "Aktuell"
+
+msgid "ui_layout_hint"
+msgstr "Wie Communities auf diesem Gerät aussehen; das Design ändert die Farben."
+
+msgid "ui_layout_conversa"
+msgstr "Conversa"
+
+msgid "ui_layout_momentos"
+msgstr "Momentos"
+
+msgid "ui_layout_muro"
+msgstr "Muro"
+
+msgid "ui_layout_chispa"
+msgstr "Chispa"
+
+msgid "ui_layout_quedadas"
+msgstr "Quedadas"
+
 msgid "ui_theme_plum"
 msgstr "Pflaume"
 

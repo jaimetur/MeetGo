@@ -6017,6 +6017,60 @@ msgstr "パステル"
 msgid "ui_theme_pasteldark"
 msgstr "パステル（夜）"
 
+msgid "ui_theme_conversa"
+msgstr "Conversa"
+
+msgid "ui_theme_conversadark"
+msgstr "Conversa（夜）"
+
+msgid "ui_theme_momentos"
+msgstr "Momentos"
+
+msgid "ui_theme_momentosdark"
+msgstr "Momentos（夜）"
+
+msgid "ui_theme_muro"
+msgstr "Muro"
+
+msgid "ui_theme_murodark"
+msgstr "Muro（夜）"
+
+msgid "ui_theme_chispa"
+msgstr "Chispa"
+
+msgid "ui_theme_chispadark"
+msgstr "Chispa（夜）"
+
+msgid "ui_theme_quedadas"
+msgstr "Quedadas"
+
+msgid "ui_theme_quedadasdark"
+msgstr "Quedadas（夜）"
+
+msgid "ui_layout"
+msgstr "レイアウト"
+
+msgid "ui_layout_actual"
+msgstr "現在"
+
+msgid "ui_layout_hint"
+msgstr "この端末でのコミュニティの表示方法。テーマは色を変えます。"
+
+msgid "ui_layout_conversa"
+msgstr "Conversa"
+
+msgid "ui_layout_momentos"
+msgstr "Momentos"
+
+msgid "ui_layout_muro"
+msgstr "Muro"
+
+msgid "ui_layout_chispa"
+msgstr "Chispa"
+
+msgid "ui_layout_quedadas"
+msgstr "Quedadas"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 
