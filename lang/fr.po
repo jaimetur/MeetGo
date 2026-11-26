@@ -4429,6 +4429,33 @@ msgstr "Menu latéral avec icônes seules"
 msgid "ui_rail_icons_hint"
 msgstr "Sur les grands écrans, le menu de gauche se rétrécit et laisse plus de place au contenu."
 
+msgid "ui_email_categories"
+msgstr "Nouvelles catégories proposées (administration)"
+
+msgid "ui_email_communities"
+msgstr "Communautés à fusionner ou diviser (administration)"
+
+msgid "email_unsubscribed_categories"
+msgstr "Tu ne recevras plus d'emails sur les catégories proposées."
+
+msgid "email_unsubscribed_communities"
+msgstr "Tu ne recevras plus d'emails sur les communautés à fusionner ou diviser."
+
+msgid "email_footer_categories"
+msgstr "Tu reçois cet email parce que tu administres MeetGo."
+
+msgid "email_footer_communities"
+msgstr "Tu reçois cet email parce que tu administres MeetGo."
+
+msgid "email_category_proposal_title"
+msgstr "Nouvelle catégorie proposée"
+
+msgid "email_suggest_join_title"
+msgstr "Communautés à fusionner"
+
+msgid "email_suggest_split_title"
+msgstr "Communauté à diviser"
+
 msgid "ui_theme_plum"
 msgstr "Prune"
 

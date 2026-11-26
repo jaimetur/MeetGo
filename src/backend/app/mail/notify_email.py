@@ -39,11 +39,14 @@ from app.billing.service import access_status
 
 logger = logging.getLogger("meetgo.email")
 
-KINDS = ("mentions", "messages", "requests", "reports", "plans")
-DEFAULT_PREFS = {"mentions": True, "messages": True, "requests": True, "reports": True, "plans": True}
+KINDS = ("mentions", "messages", "requests", "reports", "plans", "categories", "communities")
+DEFAULT_PREFS = {"mentions": True, "messages": True, "requests": True, "reports": True, "plans": True, "categories": True,
+                 "communities": True}
+# Only for the administrators: what waits for their review.
+ADMIN_KINDS = ("reports", "categories", "communities")
 # What a "stop these emails" link turns off.
 UNSUBSCRIBE_GROUPS = {"digest": ("mentions", "messages"), "requests": ("requests",), "reports": ("reports",),
-                      "plans": ("plans",)}
+                      "plans": ("plans",), "categories": ("categories",), "communities": ("communities",)}
 DEFAULT_CONFIG = {"enabled": True, "delay_minutes": 15, "cooldown_hours": 3}
 DIGEST_EVERY = 300  # seconds
 REMINDERS_EVERY = 6 * 3600
@@ -56,7 +59,8 @@ def prefs_of(user: User) -> dict[str, bool]:
     stored = user.email_prefs or {}
     out = {k: bool(stored.get(k, DEFAULT_PREFS[k])) for k in KINDS}
     if user.role != "admin":
-        out.pop("reports")
+        for kind in ADMIN_KINDS:
+            out.pop(kind)
     return out
 
 
@@ -140,6 +144,13 @@ async def notify(db: AsyncSession, user: User | None, kind: str | None, key: str
         group = next(g for g, kinds in UNSUBSCRIBE_GROUPS.items() if kind in kinds)
     await _send(db, user, key, params, path, group)
     return True
+
+
+async def notify_admins(db: AsyncSession, kind: str, key: str, params: dict | None = None, path: str | None = None) -> None:
+    """Something new for the administrators to review (a proposed category, communities to join or split): an email to
+    each one who keeps that kind on."""
+    for admin in (await db.execute(select(User).where(User.role == "admin"))).scalars().all():
+        await notify(db, admin, kind, key, params, path)
 
 
 async def notify_admins_report(db: AsyncSession, reason: str) -> None:

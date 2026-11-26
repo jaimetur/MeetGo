@@ -78,6 +78,8 @@ class EmailPrefsIn(BaseModel):
     requests: bool | None = None
     reports: bool | None = None
     plans: bool | None = None
+    categories: bool | None = None
+    communities: bool | None = None
 
 class UserSummary(BaseModel):
     id: int

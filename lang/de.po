@@ -4430,6 +4430,33 @@ msgstr "Seitenmenü nur mit Symbolen"
 msgid "ui_rail_icons_hint"
 msgstr "Auf großen Bildschirmen wird das linke Menü schmal und lässt mehr Platz für den Inhalt."
 
+msgid "ui_email_categories"
+msgstr "Neue vorgeschlagene Kategorien (Verwaltung)"
+
+msgid "ui_email_communities"
+msgstr "Communities zum Zusammenlegen oder Teilen (Verwaltung)"
+
+msgid "email_unsubscribed_categories"
+msgstr "Du erhältst keine E-Mails mehr zu vorgeschlagenen Kategorien."
+
+msgid "email_unsubscribed_communities"
+msgstr "Du erhältst keine E-Mails mehr zu Communities zum Zusammenlegen oder Teilen."
+
+msgid "email_footer_categories"
+msgstr "Du erhältst diese E-Mail, weil du MeetGo verwaltest."
+
+msgid "email_footer_communities"
+msgstr "Du erhältst diese E-Mail, weil du MeetGo verwaltest."
+
+msgid "email_category_proposal_title"
+msgstr "Neue vorgeschlagene Kategorie"
+
+msgid "email_suggest_join_title"
+msgstr "Communities zum Zusammenlegen"
+
+msgid "email_suggest_split_title"
+msgstr "Community zum Teilen"
+
 msgid "ui_theme_plum"
 msgstr "Pflaume"
 

@@ -475,7 +475,7 @@ export function AccountPage() {
           <div className="box stack">
             <h3 className="boxtitle">{t("ui_emails")}</h3>
             {!me.email_verified ? <div className="muted" style={{ fontSize: 12.5 }}>{t("ui_emails_unverified")}</div> : null}
-            {["mentions", "messages", "requests", "plans", "reports"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
+            {["mentions", "messages", "requests", "plans", "reports", "categories", "communities"].filter((k) => me.email_prefs && k in me.email_prefs).map((k) => (
               <label key={k} className="check">
                 <input id={`acc-email-${k}`} type="checkbox" checked={!!me.email_prefs![k]}
                   onChange={(e) => api.emailPrefs({ [k]: e.target.checked }).then((u) => setState({ me: u })).catch((err) => toast(err.message, "error"))} />

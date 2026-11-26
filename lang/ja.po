@@ -6122,6 +6122,33 @@ msgstr "サイドメニューをアイコンのみに"
 msgid "ui_rail_icons_hint"
 msgstr "大きな画面では左のメニューが細くなり、内容に広いスペースを使えます。"
 
+msgid "ui_email_categories"
+msgstr "新しく提案されたカテゴリ（管理）"
+
+msgid "ui_email_communities"
+msgstr "統合・分割が必要なコミュニティ（管理）"
+
+msgid "email_unsubscribed_categories"
+msgstr "提案されたカテゴリのメールは今後届きません。"
+
+msgid "email_unsubscribed_communities"
+msgstr "統合・分割が必要なコミュニティのメールは今後届きません。"
+
+msgid "email_footer_categories"
+msgstr "MeetGoを管理しているため、このメールが届いています。"
+
+msgid "email_footer_communities"
+msgstr "MeetGoを管理しているため、このメールが届いています。"
+
+msgid "email_category_proposal_title"
+msgstr "新しいカテゴリの提案"
+
+msgid "email_suggest_join_title"
+msgstr "統合が必要なコミュニティ"
+
+msgid "email_suggest_split_title"
+msgstr "分割が必要なコミュニティ"
+
 msgid "ui_theme_plum"
 msgstr "プラム"
 

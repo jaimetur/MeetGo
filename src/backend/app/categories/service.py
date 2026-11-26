@@ -114,3 +114,5 @@ async def tell_admins(db: AsyncSession, proposal_name: str | None = None) -> Non
     if proposal_name:
         from app.push.service import push_notice
         push_notice(admins, "admin.category", "email_category_proposal", {"name": proposal_name}, "/app/admin?s=categories")
+        from app.mail.notify_email import notify_admins
+        await notify_admins(db, "categories", "email_category_proposal", {"name": proposal_name}, "/app/admin?s=categories")

@@ -6122,6 +6122,33 @@ msgstr "Menu laterale solo con icone"
 msgid "ui_rail_icons_hint"
 msgstr "Sugli schermi grandi il menu a sinistra si restringe e lascia più spazio ai contenuti."
 
+msgid "ui_email_categories"
+msgstr "Nuove categorie proposte (amministrazione)"
+
+msgid "ui_email_communities"
+msgstr "Community da unire o dividere (amministrazione)"
+
+msgid "email_unsubscribed_categories"
+msgstr "Non riceverai più email sulle categorie proposte."
+
+msgid "email_unsubscribed_communities"
+msgstr "Non riceverai più email sulle community da unire o dividere."
+
+msgid "email_footer_categories"
+msgstr "Ricevi questa email perché amministri MeetGo."
+
+msgid "email_footer_communities"
+msgstr "Ricevi questa email perché amministri MeetGo."
+
+msgid "email_category_proposal_title"
+msgstr "Nuova categoria proposta"
+
+msgid "email_suggest_join_title"
+msgstr "Community da unire"
+
+msgid "email_suggest_split_title"
+msgstr "Community da dividere"
+
 msgid "ui_theme_plum"
 msgstr "Prugna"
 

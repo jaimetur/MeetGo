@@ -6122,6 +6122,33 @@ msgstr "侧边菜单仅显示图标"
 msgid "ui_rail_icons_hint"
 msgstr "在大屏幕上，左侧菜单变窄，为内容留出更多空间。"
 
+msgid "ui_email_categories"
+msgstr "新提议的类别（管理）"
+
+msgid "ui_email_communities"
+msgstr "需要合并或拆分的社区（管理）"
+
+msgid "email_unsubscribed_categories"
+msgstr "你将不再收到关于提议类别的邮件。"
+
+msgid "email_unsubscribed_communities"
+msgstr "你将不再收到关于需要合并或拆分社区的邮件。"
+
+msgid "email_footer_categories"
+msgstr "你收到这封邮件是因为你管理 MeetGo。"
+
+msgid "email_footer_communities"
+msgstr "你收到这封邮件是因为你管理 MeetGo。"
+
+msgid "email_category_proposal_title"
+msgstr "新的类别提议"
+
+msgid "email_suggest_join_title"
+msgstr "需要合并的社区"
+
+msgid "email_suggest_split_title"
+msgstr "需要拆分的社区"
+
 msgid "ui_theme_plum"
 msgstr "梅紫"
 

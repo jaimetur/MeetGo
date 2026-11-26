@@ -68,7 +68,7 @@ async def test_friend_requests_email_unless_turned_off(client, db_session, outbo
     assert "Ana" in mail["subject"]
     assert "/email/unsubscribe?" in mail["text"] and mail["headers"]["List-Unsubscribe-Post"] == "List-Unsubscribe=One-Click"
 
-    me = (await client.patch("/me/email-prefs", json={"requests": False, "reports": True}, headers=bea[0])).json()
+    me = (await client.patch("/me/email-prefs", json={"requests": False, "reports": True, "categories": True}, headers=bea[0])).json()
     assert me["email_prefs"] == {"mentions": True, "messages": True, "requests": False, "plans": True}  # reports: administrators only
     await client.post("/friends/requests", json={"to_user_id": bea[1]["id"]}, headers=cris[0])
     assert len(to(outbox, "bea@example.com")) == 1
@@ -198,3 +198,31 @@ async def test_subscriptions_off_hides_campaigns(client, db_session):
         await db.commit()
     data = (await client.get("/billing/promos")).json()
     assert data["subscriptions"] is True and data["promos"][0]["code"] == "LANZAMIENTO"
+
+
+async def test_admin_only_emails_for_what_waits_for_review(client, db_session, outbox):
+    """Reports, proposed categories and communities to join or split: email choices only administrators have."""
+    from app.core.models import User
+    ana = await make_user(client, db_session, "ana@example.com", "Ana")
+    boss = await make_user(client, db_session, "boss@example.com", "Boss")
+    async with db_session() as db:
+        await db.execute(update(User).where(User.email == "boss@example.com").values(role="admin"))
+        await db.commit()
+    assert set((await client.get("/me", headers=boss[0])).json()["email_prefs"]) >= {"reports", "categories", "communities"}
+    assert not {"reports", "categories", "communities"} & set((await client.get("/me", headers=ana[0])).json()["email_prefs"])
+    me = (await client.patch("/me/email-prefs", json={"categories": True}, headers=ana[0])).json()
+    assert "categories" not in me["email_prefs"]
+
+    outbox.clear()
+    res = await client.post("/communities", json={"title": "Astrónomos", "access_mode": "open", "board_mode": "open",
+                                                  "category_proposal": "Astronomía"}, headers=ana[0])
+    assert res.status_code == 200, res.text
+    [mail] = to(outbox, "boss@example.com")
+    assert "Astronomía" in mail["text"]
+    assert not to(outbox, "ana@example.com")
+
+    await client.patch("/me/email-prefs", json={"categories": False}, headers=boss[0])
+    outbox.clear()
+    await client.post("/communities", json={"title": "Tertulias", "access_mode": "open", "board_mode": "open",
+                                            "category_proposal": "Opinión"}, headers=ana[0])
+    assert not to(outbox, "boss@example.com")

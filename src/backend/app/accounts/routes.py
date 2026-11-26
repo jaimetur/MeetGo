@@ -18,7 +18,7 @@ from app.conversations.service import (
     AGE_LABELS, can_join_channel, channel_for, get_membership, join, join_interest_channel, leave_interest_channel,
     move_channels_to_zone, scope_sql, user_age_key,
 )
-from app.mail.notify_email import account_email
+from app.mail.notify_email import ADMIN_KINDS, account_email
 from app.realtime.service import online_ids
 from app.core.security import hash_password
 from app.accounts.common import clean_alias, clean_person_name, me_out, normalize_phone, parse_dob, user_out, valid_email
@@ -124,7 +124,7 @@ async def update_email_prefs(payload: EmailPrefsIn, db: AsyncSession = Depends(g
     """Which automatic emails you get."""
     prefs = dict(user.email_prefs or {})
     for key, value in payload.model_dump(exclude_none=True).items():
-        if key != "reports" or user.role == "admin":
+        if key not in ADMIN_KINDS or user.role == "admin":
             prefs[key] = bool(value)
     user.email_prefs = prefs
     await db.commit()

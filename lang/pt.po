@@ -6121,6 +6121,33 @@ msgstr "Menu lateral só com ícones"
 msgid "ui_rail_icons_hint"
 msgstr "Em ecrãs grandes, o menu da esquerda fica estreito e deixa mais espaço para o conteúdo."
 
+msgid "ui_email_categories"
+msgstr "Novas categorias propostas (administração)"
+
+msgid "ui_email_communities"
+msgstr "Comunidades para juntar ou dividir (administração)"
+
+msgid "email_unsubscribed_categories"
+msgstr "Já não vais receber emails sobre categorias propostas."
+
+msgid "email_unsubscribed_communities"
+msgstr "Já não vais receber emails sobre comunidades para juntar ou dividir."
+
+msgid "email_footer_categories"
+msgstr "Recebes este email porque administras o MeetGo."
+
+msgid "email_footer_communities"
+msgstr "Recebes este email porque administras o MeetGo."
+
+msgid "email_category_proposal_title"
+msgstr "Nova categoria proposta"
+
+msgid "email_suggest_join_title"
+msgstr "Comunidades para juntar"
+
+msgid "email_suggest_split_title"
+msgstr "Comunidade para dividir"
+
 msgid "ui_theme_plum"
 msgstr "Ameixa"
 

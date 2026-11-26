@@ -6122,6 +6122,33 @@ msgstr "Zijmenu alleen met pictogrammen"
 msgid "ui_rail_icons_hint"
 msgstr "Op grote schermen wordt het linkermenu smal en blijft er meer ruimte over voor de inhoud."
 
+msgid "ui_email_categories"
+msgstr "Nieuwe voorgestelde categorieën (beheer)"
+
+msgid "ui_email_communities"
+msgstr "Communities om samen te voegen of te splitsen (beheer)"
+
+msgid "email_unsubscribed_categories"
+msgstr "Je krijgt geen e-mails meer over voorgestelde categorieën."
+
+msgid "email_unsubscribed_communities"
+msgstr "Je krijgt geen e-mails meer over communities om samen te voegen of te splitsen."
+
+msgid "email_footer_categories"
+msgstr "Je krijgt deze e-mail omdat je MeetGo beheert."
+
+msgid "email_footer_communities"
+msgstr "Je krijgt deze e-mail omdat je MeetGo beheert."
+
+msgid "email_category_proposal_title"
+msgstr "Nieuwe voorgestelde categorie"
+
+msgid "email_suggest_join_title"
+msgstr "Communities om samen te voegen"
+
+msgid "email_suggest_split_title"
+msgstr "Community om te splitsen"
+
 msgid "ui_theme_plum"
 msgstr "Pruim"
 

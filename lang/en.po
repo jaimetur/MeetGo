@@ -6123,6 +6123,33 @@ msgstr "Side menu with icons only"
 msgid "ui_rail_icons_hint"
 msgstr "On large screens the left menu gets narrow and leaves more room for the content."
 
+msgid "ui_email_categories"
+msgstr "New proposed categories (administration)"
+
+msgid "ui_email_communities"
+msgstr "Communities to join or split (administration)"
+
+msgid "email_unsubscribed_categories"
+msgstr "You will no longer get emails about proposed categories."
+
+msgid "email_unsubscribed_communities"
+msgstr "You will no longer get emails about communities to join or split."
+
+msgid "email_footer_categories"
+msgstr "You get this email because you run MeetGo."
+
+msgid "email_footer_communities"
+msgstr "You get this email because you run MeetGo."
+
+msgid "email_category_proposal_title"
+msgstr "New proposed category"
+
+msgid "email_suggest_join_title"
+msgstr "Communities to join"
+
+msgid "email_suggest_split_title"
+msgstr "Community to split"
+
 msgid "ui_theme_plum"
 msgstr "Plum"
 

@@ -48,4 +48,6 @@ async def check_suggestions(db: AsyncSession) -> int:
         for i in new:
             push_notice(admins, "admin.community", f"email_suggest_{i['suggest']}", {"name": i["name"]},
                         "/app/admin?s=communities&f=suggested")
+            from app.mail.notify_email import notify_admins
+            await notify_admins(db, "communities", f"email_suggest_{i['suggest']}", {"name": i["name"]}, "/app/admin?s=communities&f=suggested")
     return len(new)
