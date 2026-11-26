@@ -966,6 +966,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
   .infopanel .btn { padding: 12px 18px; font-size: 15px; border-radius: 12px; }
   .infopanel .btn.sm { padding: 10px 14px; font-size: 14px; }
   .infopanel select.inp, .infopanel .inp { padding: 12px 13px; }
+  .infopanel select.inp { padding-right: 36px; }
   .side .mrow { padding: 10px 16px; font-size: 16px; }
 }
 
@@ -1253,7 +1254,7 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 
 /* Settings: the field titles and the language list at the size of the rest of the page */
 .fld.setfld { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--fg); align-self: start; }
-.fld.setfld select.inp { font-size: 15px; padding: 11px 12px; min-height: 46px; max-width: 420px; }
+.fld.setfld select.inp { font-size: 15px; padding: 11px 36px 11px 12px; min-height: 46px; max-width: 420px; }
 
 /* the brand slogan (login and About) */
 .slogan { margin: 0; font-family: var(--display); font-weight: 650; text-align: center; background: linear-gradient(90deg, var(--blue), #00c2ff 55%, #18d7c8); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -1689,7 +1690,11 @@ a.btn { text-decoration: none; }
 .mt .ctime { margin-left: 8px; white-space: nowrap; }
 .mt .ctime + .ticks { margin-left: 3px; }
 /* drop-downs in windows: as tall as the other fields and easy to tap */
-.modal select.inp { min-height: 54px; padding: 13px 14px; font-size: 16.5px; border-radius: 12px; }
+/* drop-downs drawn by the app, not the system (Safari and the Mac app ignore the size of the system ones) */
+select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a94a6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 14px; }
+.modal select.inp { min-height: 54px; padding: 13px 38px 13px 14px; font-size: 16.5px; border-radius: 12px; }
 .modal .fld:has(> select.inp) { font-size: 14.5px; gap: 7px; }
 
 /* chats of a community's plans, under its chat and indented, folded or unfolded with their row */
