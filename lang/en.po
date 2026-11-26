@@ -2696,6 +2696,60 @@ msgstr "and {n} more…"
 msgid "email_digest_attachment"
 msgstr "📎 Attachment"
 
+msgid "email_owner_grace_subject"
+msgstr "You have {days} days to hand over {community}"
+
+msgid "email_owner_grace_title"
+msgstr "You no longer fit {community}"
+
+msgid "email_owner_grace_body"
+msgstr "Your age or your area no longer fit those of {community}, the community you run. You can keep running it until {date}: before then, hand it over to someone else in Community settings → Co-administrators, or widen its ages to fit again. Otherwise MeetGo will hand it to its longest-serving co-administrator or, if there is none, its longest-standing member."
+
+msgid "email_owner_new_subject"
+msgstr "You now run {community}"
+
+msgid "email_owner_new_title"
+msgstr "You now run {community}"
+
+msgid "email_owner_new_body"
+msgstr "You are now the person running {community}: you can change its settings, who can join and its team."
+
+msgid "email_owner_old_subject"
+msgstr "You no longer run {community}"
+
+msgid "email_owner_old_title"
+msgstr "You no longer run {community}"
+
+msgid "email_owner_old_body"
+msgstr "{new} now runs {community}. If you still fit its ages and area, you stay on as co-administrator."
+
+msgid "email_owner_auto_old_subject"
+msgstr "You no longer run {community}"
+
+msgid "email_owner_auto_old_title"
+msgstr "You no longer run {community}"
+
+msgid "email_owner_auto_old_body"
+msgstr "Your age or your area no longer fitted {community} and you did not hand it over in time, so MeetGo has handed it to {new}."
+
+msgid "email_coadmin_added_subject"
+msgstr "You are a co-administrator of {community}"
+
+msgid "email_coadmin_added_title"
+msgstr "You are a co-administrator of {community}"
+
+msgid "email_coadmin_added_body"
+msgstr "You can now change the settings of {community}, accept requests and name moderators."
+
+msgid "email_coadmin_removed_subject"
+msgstr "You are no longer a co-administrator of {community}"
+
+msgid "email_coadmin_removed_title"
+msgstr "You are no longer a co-administrator of {community}"
+
+msgid "email_coadmin_removed_body"
+msgstr "You are still in {community}, but you can no longer change its settings or accept requests."
+
 msgid "email_access_ending_subject"
 msgstr "Your free access to MeetGo ends on {date}"
 
@@ -3418,6 +3472,30 @@ msgstr "You can use yours ({range}) or set other ages below, as long as your age
 
 msgid "ui_community_age_official"
 msgstr "MeetGo ranges"
+
+msgid "ui_community_age_owner_warning"
+msgstr "If one day your age leaves this range, you will have 30 days to hand the community over to someone else. After that, MeetGo will hand it to its longest-serving co-administrator or, if there is none, its longest-standing member."
+
+msgid "ui_community_owner_grace"
+msgstr "Your age or your area no longer fit this community. Hand it over to someone else before {date}; otherwise MeetGo will hand it to its longest-serving co-administrator or, if there is none, its longest-standing member."
+
+msgid "ui_community_hand_over"
+msgstr "Hand the community over to…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "Whoever receives it will run it; you stay on as co-administrator if you still fit it."
+
+msgid "ui_community_hand_over_title"
+msgstr "Hand the community over?"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name} will run the community. To get it back, they will have to hand it back to you."
+
+msgid "ui_community_hand_over_confirm"
+msgstr "Hand over"
+
+msgid "ui_community_hand_over_done"
+msgstr "You handed the community over to {name}"
 
 msgid "ui_community_age_limit"
 msgstr "Limit by age"

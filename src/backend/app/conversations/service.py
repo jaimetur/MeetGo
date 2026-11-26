@@ -201,6 +201,8 @@ async def move_channels_to_zone(db: AsyncSession, user: User, old_province: str,
         Conversation, Conversation.id == ConversationMember.conversation_id).where(
         ConversationMember.user_id == user.id, Conversation.kind == "channel"))
     for member, conv in res.all():
+        if member.role == "owner" and conv.interest_id is None:
+            continue  # the owner of a community made by people keeps running it: 30 days to hand it over (ownership.py)
         if member.expelled_message_id is None:  # expelled ones stay out (read only)
             member.away = not (in_scope(user, conv) and fits_age(user, conv))
 

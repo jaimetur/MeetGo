@@ -12,14 +12,15 @@ from app.core.i18n import t
 from app.core.models import (
     CommunityInvite, CommunityRequest, Conversation, ConversationMember, Friendship, User, UserBlock, UserInterest, utcnow)
 from app.core.schemas import (
-    BanIn, CommunityCreateIn, CommunityFiltersIn, CommunityInviteIn, CommunityUpdateIn, JoinIn, MemberRoleIn, ResolveIn)
+    BanIn, CommunityCreateIn, CommunityFiltersIn, CommunityInviteIn, CommunityUpdateIn, JoinIn, MemberRoleIn, OwnerIn, ResolveIn)
+from app.communities import ownership
 from app.communities.service import (
     ROLE_RANK, active, admin_of, ban as ban_member, banned_now, bot_ids, communities_out, community_member_filter, get_community,
     NEW_COMMUNITY_RETENTION, RETENTION_CHOICES, clean_interest_tags, clean_questions, suggested_communities, hand_over_ownership, in_zone, join_questions, lift_ban, list_communities, pending_request, rank_of,
     staff_ids, staff_of, valid_zone,
 )
 from app.conversations.service import fits_age
-from app.conversations.service import get_membership, join, user_age_key, user_summary
+from app.conversations.service import get_membership, iso, join, user_age_key, user_summary
 from app.mail import notify_email
 from app.messaging.service import recipients
 from app.push.service import push_notice
@@ -270,12 +271,13 @@ async def leave(community_id: int, db: AsyncSession = Depends(get_db), user: Use
         return {"ok": True}  # the ban stays
     if banned_now(member):  # leaving does not end a ban
         raise HTTPException(409, t("err_banned_until", {"until": member.ban_until.strftime("%d/%m %H:%M")}))
-    if member.role == "owner":
-        await hand_over_ownership(db, conv, user.id)
+    nxt = await hand_over_ownership(db, conv, user.id) if member.role == "owner" else None
     await db.delete(member)
     if conv.interest_id:
         await db.execute(delete(UserInterest).where(UserInterest.user_id == user.id, UserInterest.interest_id == conv.interest_id))
     await db.commit()
+    if nxt:
+        await ownership.owner_changed(db, conv, user, await db.get(User, nxt.user_id))
     await _changed(db, conv.id, extra=[user.id])
     await realtime.publish([user.id], {"type": "membership.removed", "conversation_id": conv.id})
     return {"ok": True}
@@ -352,9 +354,31 @@ async def set_role(community_id: int, user_id: int, payload: MemberRoleIn, db: A
         raise HTTPException(404, t("err_user_not_found"))
     if (payload.role == "admin" or target.role == "admin") and not is_owner:
         raise HTTPException(403, t("err_forbidden"))
+    was_admin = target.role == "admin"
     target.role = payload.role
     await db.commit()
+    if was_admin != (payload.role == "admin"):
+        await ownership.coadmin_changed(db, conv, await db.get(User, user_id), payload.role == "admin")
     await _changed(db, conv.id)
+    return {"ok": True}
+
+
+@router.post("/communities/{community_id}/owner", response_model=dict)
+async def hand_over(community_id: int, payload: OwnerIn, db: AsyncSession = Depends(get_db),
+                    user: User = Depends(get_current_user)):
+    """The owner hands the community over to another member who fits it; they stay as co-administrator if they still
+    fit it (else away). Both get an email."""
+    conv, member = await _creator(db, community_id, user)
+    target = await get_membership(db, conv.id, payload.user_id)
+    new_owner = await db.get(User, payload.user_id)
+    if (payload.user_id == user.id or not active(target) or not new_owner or new_owner.bot_role
+            or not in_zone(new_owner, conv)):
+        raise HTTPException(404, t("err_user_not_found"))
+    target.role = "owner"
+    ownership.step_down(conv, member, user)
+    await db.commit()
+    await ownership.owner_changed(db, conv, user, new_owner)
+    await _changed(db, conv.id, extra=[user.id])
     return {"ok": True}
 
 
@@ -634,6 +658,7 @@ async def get_filters(community_id: int, db: AsyncSession = Depends(get_db), use
     options = await _scope_options(db, user.province, user.country)
     return {"scope_kind": conv.scope_kind or "province", "age_limit": conv.min_age is not None or conv.max_age is not None,
             "min_age": conv.min_age, "max_age": conv.max_age, "age_range": conv.age_range,
+            "owner_deadline": iso(ownership.deadline(conv)),
             "options": [{k: v for k, v in o.items() if k != "provinces"} for o in options.values()]}
 
 

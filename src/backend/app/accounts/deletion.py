@@ -36,8 +36,11 @@ async def delete_account(db: AsyncSession, user: User) -> None:
     # communities they own pass to someone else
     owned = (await db.execute(select(Conversation).join(ConversationMember, ConversationMember.conversation_id == Conversation.id).where(
         ConversationMember.user_id == uid, ConversationMember.role == "owner", Conversation.kind == "channel"))).scalars().all()
+    from app.communities.ownership import owner_changed
     for conv in owned:
-        await hand_over_ownership(db, conv, uid)
+        nxt = await hand_over_ownership(db, conv, uid)
+        if nxt:
+            await owner_changed(db, conv, None, await db.get(User, nxt.user_id))
     now = utcnow()
     await db.execute(update(Message).where(Message.sender_id == uid, Message.deleted_at.is_(None)).values(
         body="", deleted_at=now, moderation_reason="ACCOUNT_DELETED", mentions=[]))

@@ -314,6 +314,10 @@ class MemberRoleIn(BaseModel):
     role: str = Field(pattern="^(admin|moderator|member)$")
 
 
+class OwnerIn(BaseModel):
+    user_id: int
+
+
 class MemberSettingsIn(BaseModel):
     notify: str | None = Field(default=None, pattern="^(all|mentions|none)$")
     mute_minutes: int | None = Field(default=None, ge=0, le=60 * 24 * 365)

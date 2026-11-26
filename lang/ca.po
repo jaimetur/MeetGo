@@ -2696,6 +2696,60 @@ msgstr "i {n} més…"
 msgid "email_digest_attachment"
 msgstr "📎 Adjunt"
 
+msgid "email_owner_grace_subject"
+msgstr "Tens {days} dies per cedir {community}"
+
+msgid "email_owner_grace_title"
+msgstr "Ja no encaixes a {community}"
+
+msgid "email_owner_grace_body"
+msgstr "La teva edat o la teva zona ja no encaixen amb les de {community}, la comunitat que dirigeixes. Pots continuar dirigint-la fins al {date}: abans d'aquesta data, cedeix-la a una altra persona a Configuració de la comunitat → Coadministradors, o amplia'n les edats per tornar a encaixar-hi. Si no, MeetGo la cedirà al seu coadministrador més antic o, si no n'hi ha, al membre més antic."
+
+msgid "email_owner_new_subject"
+msgstr "Ara dirigeixes {community}"
+
+msgid "email_owner_new_title"
+msgstr "Ara dirigeixes {community}"
+
+msgid "email_owner_new_body"
+msgstr "Ara ets qui dirigeix {community}: pots canviar-ne els ajustos, qui hi pot entrar i l'equip."
+
+msgid "email_owner_old_subject"
+msgstr "Ja no dirigeixes {community}"
+
+msgid "email_owner_old_title"
+msgstr "Ja no dirigeixes {community}"
+
+msgid "email_owner_old_body"
+msgstr "{new} dirigeix ara {community}. Si encara encaixes en les seves edats i la seva zona, quedes com a coadministrador."
+
+msgid "email_owner_auto_old_subject"
+msgstr "Ja no dirigeixes {community}"
+
+msgid "email_owner_auto_old_title"
+msgstr "Ja no dirigeixes {community}"
+
+msgid "email_owner_auto_old_body"
+msgstr "La teva edat o la teva zona ja no encaixaven amb {community} i no la vas cedir a temps, així que MeetGo l'ha cedida a {new}."
+
+msgid "email_coadmin_added_subject"
+msgstr "Ets coadministrador de {community}"
+
+msgid "email_coadmin_added_title"
+msgstr "Ets coadministrador de {community}"
+
+msgid "email_coadmin_added_body"
+msgstr "Ara pots canviar els ajustos de {community}, acceptar sol·licituds i nomenar moderadors."
+
+msgid "email_coadmin_removed_subject"
+msgstr "Ja no ets coadministrador de {community}"
+
+msgid "email_coadmin_removed_title"
+msgstr "Ja no ets coadministrador de {community}"
+
+msgid "email_coadmin_removed_body"
+msgstr "Continues a {community}, però ja no en pots canviar els ajustos ni acceptar sol·licituds."
+
 msgid "email_access_ending_subject"
 msgstr "El teu accés gratuït a MeetGo acaba el {date}"
 
@@ -3418,6 +3472,30 @@ msgstr "Pots fer servir la teva ({range}) o posar altres edats a sota, sempre qu
 
 msgid "ui_community_age_official"
 msgstr "Franges de MeetGo"
+
+msgid "ui_community_age_owner_warning"
+msgstr "Si algun dia la teva edat surt d'aquesta franja, tindràs 30 dies per cedir la comunitat a una altra persona. Passat aquest termini, MeetGo la cedirà al seu coadministrador més antic o, si no n'hi ha, al membre més antic."
+
+msgid "ui_community_owner_grace"
+msgstr "La teva edat o la teva zona ja no encaixen amb aquesta comunitat. Cedeix-la a una altra persona abans del {date}; si no, MeetGo la cedirà al seu coadministrador més antic o, si no n'hi ha, al membre més antic."
+
+msgid "ui_community_hand_over"
+msgstr "Cedir la comunitat a…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "Qui la rebi passarà a dirigir-la; tu quedaràs com a coadministrador si encara hi encaixes."
+
+msgid "ui_community_hand_over_title"
+msgstr "Vols cedir la comunitat?"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name} passarà a dirigir la comunitat. Per recuperar-la, te l'haurà de cedir."
+
+msgid "ui_community_hand_over_confirm"
+msgstr "Cedir"
+
+msgid "ui_community_hand_over_done"
+msgstr "Has cedit la comunitat a {name}"
 
 msgid "ui_community_age_limit"
 msgstr "Limitar per edat"

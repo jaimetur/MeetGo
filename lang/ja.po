@@ -2696,6 +2696,60 @@ msgstr "ほか{n}件…"
 msgid "email_digest_attachment"
 msgstr "📎 添付ファイル"
 
+msgid "email_owner_grace_subject"
+msgstr "{community}を譲るまであと{days}日です"
+
+msgid "email_owner_grace_title"
+msgstr "{community}の条件に合わなくなりました"
+
+msgid "email_owner_grace_body"
+msgstr "あなたが運営している{community}の年齢または地域の条件に、あなたの年齢または地域が合わなくなりました。{date}までは引き続き運営できます。それまでに「コミュニティの設定 → 共同管理者」で別の人に譲るか、年齢の範囲を広げて再び条件に合うようにしてください。そうしない場合、MeetGoが最も古い共同管理者に、いなければ最も古いメンバーに譲ります。"
+
+msgid "email_owner_new_subject"
+msgstr "{community}の運営者になりました"
+
+msgid "email_owner_new_title"
+msgstr "{community}の運営者になりました"
+
+msgid "email_owner_new_body"
+msgstr "あなたが{community}の運営者になりました。設定、参加できる人、チームを変更できます。"
+
+msgid "email_owner_old_subject"
+msgstr "{community}の運営者ではなくなりました"
+
+msgid "email_owner_old_title"
+msgstr "{community}の運営者ではなくなりました"
+
+msgid "email_owner_old_body"
+msgstr "{community}は今後{new}さんが運営します。年齢と地域の条件に合っている場合、あなたは共同管理者として残ります。"
+
+msgid "email_owner_auto_old_subject"
+msgstr "{community}の運営者ではなくなりました"
+
+msgid "email_owner_auto_old_title"
+msgstr "{community}の運営者ではなくなりました"
+
+msgid "email_owner_auto_old_body"
+msgstr "あなたの年齢または地域が{community}の条件に合わなくなり、期限までに譲られなかったため、MeetGoが{new}さんに譲りました。"
+
+msgid "email_coadmin_added_subject"
+msgstr "{community}の共同管理者になりました"
+
+msgid "email_coadmin_added_title"
+msgstr "{community}の共同管理者になりました"
+
+msgid "email_coadmin_added_body"
+msgstr "{community}の設定変更、参加リクエストの承認、モデレーターの任命ができるようになりました。"
+
+msgid "email_coadmin_removed_subject"
+msgstr "{community}の共同管理者ではなくなりました"
+
+msgid "email_coadmin_removed_title"
+msgstr "{community}の共同管理者ではなくなりました"
+
+msgid "email_coadmin_removed_body"
+msgstr "{community}には引き続き参加していますが、設定の変更や参加リクエストの承認はできなくなりました。"
+
 msgid "email_access_ending_subject"
 msgstr "MeetGoの無料アクセスは{date}に終了します"
 
@@ -3418,6 +3472,30 @@ msgstr "自分の年齢層（{range}）を使うか、下で別の年齢を設�
 
 msgid "ui_community_age_official"
 msgstr "MeetGoの年齢層"
+
+msgid "ui_community_age_owner_warning"
+msgstr "いつかあなたの年齢がこの範囲から外れた場合、30日以内にコミュニティを別の人に譲る必要があります。期限を過ぎると、MeetGoが最も古い共同管理者に、いなければ最も古いメンバーに譲ります。"
+
+msgid "ui_community_owner_grace"
+msgstr "あなたの年齢または地域がこのコミュニティの条件に合わなくなりました。{date}までに別の人に譲ってください。譲らない場合、MeetGoが最も古い共同管理者に、いなければ最も古いメンバーに譲ります。"
+
+msgid "ui_community_hand_over"
+msgstr "コミュニティを譲る相手…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "受け取った人が運営者になります。あなたは条件に合っていれば共同管理者として残ります。"
+
+msgid "ui_community_hand_over_title"
+msgstr "コミュニティを譲りますか？"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name}さんがコミュニティを運営します。取り戻すには、その人から譲ってもらう必要があります。"
+
+msgid "ui_community_hand_over_confirm"
+msgstr "譲る"
+
+msgid "ui_community_hand_over_done"
+msgstr "コミュニティを{name}さんに譲りました"
 
 msgid "ui_community_age_limit"
 msgstr "年齢で制限"

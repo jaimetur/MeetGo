@@ -473,10 +473,11 @@ export function CommunitiesPage() {
 
 /** Co-administrators (optional), chosen by the creator among the members: they change the settings, accept requests and
  * name moderators. Applied at once, like the roles in Members. */
-function CoAdmins({ community }: { community: Community }) {
+function CoAdmins({ community, deadline, onHandedOver }: { community: Community; deadline?: string | null; onHandedOver: () => void }) {
   const me = useStore((s) => s.me);
   const [members, setMembers] = useState<CommunityMember[] | null>(null);
   const [busy, setBusy] = useState(false);
+  const [heir, setHeir] = useState<CommunityMember | null>(null);
   const load = () => api.communityMembers(community.id).then(setMembers).catch(() => setMembers([]));
   useEffect(() => { load(); }, [community.id]);
   const people = (members || []).filter((m) => !m.bot && m.id !== me?.id);
@@ -518,6 +519,29 @@ function CoAdmins({ community }: { community: Community }) {
         </select>
       ) : null}
       {people.length ? <small className="muted">{t("ui_community_coadmins_hint")}</small> : null}
+      {deadline ? <div className="note" id="cm-owner-grace"><Icon name="clock" size="sm" />{t("ui_community_owner_grace", { date: new Date(deadline).toLocaleDateString(getLang(), { day: "numeric", month: "long", year: "numeric" }) })}</div> : null}
+      {people.length ? (
+        <>
+          <select id="cm-hand-over" className="inp" value="" disabled={busy} onChange={(e) => setHeir(people.find((x) => String(x.id) === e.target.value) || null)}>
+            <option value="">{t("ui_community_hand_over")}</option>
+            {[...admins, ...others].map((m) => <option key={m.id} value={m.id}>{m.display_name}</option>)}
+          </select>
+          <small className="muted">{t("ui_community_hand_over_hint")}</small>
+        </>
+      ) : null}
+      {heir ? (
+        <ConfirmModal title={t("ui_community_hand_over_title")} body={t("ui_community_hand_over_body", { name: heir.display_name })}
+          confirm={t("ui_community_hand_over_confirm")} onClose={() => setHeir(null)} onConfirm={async () => {
+            try {
+              await api.handOverCommunity(community.id, heir.id);
+              toast(t("ui_community_hand_over_done", { name: heir.display_name }));
+              setHeir(null);
+              onHandedOver();
+            } catch (e) {
+              toast((e as Error).message, "error");
+            }
+          }} />
+      ) : null}
     </div>
   );
 }
@@ -614,7 +638,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
     <Modal wide title={community ? t("ui_community_settings") : t("ui_community_create")} onClose={onClose} footer={(
       <>
         <button className="btn" onClick={onClose}>{t("ui_cancel")}</button>
-        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || ((!community || owner) && ageWrong)
+        <button className="btn pri" disabled={busy || form.title.trim().length < 3 || ((!community || (owner && filtersChanged())) && ageWrong)
           || (!community && !interest && !(proposing ? proposal.trim().length >= 2 : catKey))} onClick={() => save()}>{community ? t("ui_save") : t("ui_community_create_button")}</button>
       </>
     )}>
@@ -700,7 +724,8 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
                 <small className="muted">{t("ui_age_no_limit_hint")}</small></label>
             </div>
           ) : null}
-          {ageWrong ? <small className="err">{t("ui_community_age_must_include", { age: myAge })}</small> : null}
+          {form.ageLimit ? <small className="muted">{t("ui_community_age_owner_warning")}</small> : null}
+          {ageWrong && (!community || filtersChanged()) ? <small className="err">{t("ui_community_age_must_include", { age: myAge })}</small> : null}
         </>
       ) : community.min_age != null || community.max_age != null ? (
         <div className="note"><Icon name="user" size="sm" />{ageSpanText(community)}</div>
@@ -740,7 +765,7 @@ function CommunityFormModal({ community, onClose, onSaved }: { community?: Commu
           ) : null}
         </section>
       ) : null}
-      {owner && community ? <section className="csec"><h3 className="csec-h"><Icon name="shield" size="sm" />{t("ui_csec_team")}</h3><CoAdmins community={community} /></section> : null}
+      {owner && community ? <section className="csec"><h3 className="csec-h"><Icon name="shield" size="sm" />{t("ui_csec_team")}</h3><CoAdmins community={community} deadline={filters?.owner_deadline} onHandedOver={onClose} /></section> : null}
       <section className="csec">
       <h3 className="csec-h"><Icon name="chat" size="sm" />{t("ui_csec_chat")}</h3>
       <label className="fld">{t("ui_community_retention")}

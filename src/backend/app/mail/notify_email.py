@@ -1,6 +1,7 @@
 """Automatic emails.
 
-- Account emails (verification, password reset, password changed) always go out when mail is configured.
+- Account emails (verification, password reset, password changed) and changes of who runs a community (owner,
+  co-administrators: communities/ownership.py) always go out when mail is configured.
 - Notification emails follow the administration switch ("email_notifications" settings) and each person's choices
   (`users.email_prefs`): mentions and replies, unread messages, requests (friends, direct messages, groups) and, for
   administrators, new reports; board plans (sign-ups, changes, the day-before reminder). Moderation and subscription
@@ -374,6 +375,8 @@ async def _loop() -> None:
                 if loop_time - last_reminders >= REMINDERS_EVERY or last_reminders == 0.0:
                     last_reminders = loop_time
                     await reminders_once(db)
+                    from app.communities.ownership import grace_once
+                    await grace_once(db)  # owners of communities who no longer fit them: 30 days, then hand-over
                     # communities' chats keep their messages for a limited time (every 6 hours is enough)
                     from app.messaging.retention import purge_once
                     await purge_once(db)

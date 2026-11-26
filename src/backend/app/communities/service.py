@@ -350,18 +350,19 @@ async def list_communities(db: AsyncSession, user: User, q: str = "", mine: bool
     return out
 
 
-async def hand_over_ownership(db: AsyncSession, conv: Conversation, leaving_user_id: int) -> None:
-    """The owner leaves: the oldest admin, or else the oldest member, becomes the owner."""
+async def hand_over_ownership(db: AsyncSession, conv: Conversation, leaving_user_id: int) -> ConversationMember | None:
+    """The owner leaves: the oldest admin, or else the oldest member, becomes the owner (someone who still fits it
+    first). Returns the new owner's membership, if there is anyone."""
     bots = set((await bot_ids(db)).values())
-    base = select(ConversationMember).where(
+    rows = (await db.execute(select(ConversationMember, User).join(User, User.id == ConversationMember.user_id).where(
         ConversationMember.conversation_id == conv.id, ConversationMember.user_id != leaving_user_id,
-        ConversationMember.user_id.not_in(bots or {0}),
-        ConversationMember.away.is_(False), ConversationMember.banned.is_(False))
-    nxt = (await db.execute(base.where(ConversationMember.role == "admin").order_by(ConversationMember.joined_at).limit(1))).scalar_one_or_none()
-    if not nxt:
-        nxt = (await db.execute(base.order_by(ConversationMember.joined_at).limit(1))).scalar_one_or_none()
+        ConversationMember.user_id.not_in(bots or {0}), ConversationMember.role != "owner",
+        ConversationMember.away.is_(False), ConversationMember.banned.is_(False)).order_by(
+        (ConversationMember.role != "admin"), ConversationMember.joined_at))).all()
+    nxt = next((m for m, u in rows if in_zone(u, conv)), rows[0][0] if rows else None)
     if nxt:
         nxt.role = "owner"
+    return nxt
 
 
 async def pending_request(db: AsyncSession, conversation_id: int, user_id: int) -> CommunityRequest | None:

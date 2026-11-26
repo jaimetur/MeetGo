@@ -257,7 +257,8 @@ export const api = {
   communityStats: (id: number) => req<CommunityStats>(`/communities/${id}/stats`),
   joinCommunityCode: (code: string) => req<{ status: "joined"; community_id: number }>(`/communities/join/${encodeURIComponent(code)}`, { method: "POST" }),
   communityInvite: (id: number) => req<{ code: string; url: string }>(`/communities/${id}/invite`, { method: "POST" }),
-  communityFilters: (id: number) => req<{ scope_kind: string; age_limit: boolean; min_age: number | null; max_age: number | null; options: { kind: string; value: string; label: string }[] }>(`/communities/${id}/filters`),
+  communityFilters: (id: number) => req<{ scope_kind: string; age_limit: boolean; min_age: number | null; max_age: number | null; owner_deadline?: string | null; options: { kind: string; value: string; label: string }[] }>(`/communities/${id}/filters`),
+  handOverCommunity: (id: number, userId: number) => req<{ ok: boolean }>(`/communities/${id}/owner`, { method: "POST", json: { user_id: userId } }),
   setCommunityFilters: (id: number, body: { scope_kind: string; age_limit: boolean; min_age: number | null; max_age: number | null; dry_run?: boolean }) =>
     req<any>(`/communities/${id}/filters`, { method: "POST", json: body }),
   inviteCandidates: (id: number, q: string) => req<(UserSummary & { friend: boolean; invited: boolean })[]>(`/communities/${id}/invite-candidates?q=${encodeURIComponent(q)}`),

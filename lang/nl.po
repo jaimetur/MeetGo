@@ -2696,6 +2696,60 @@ msgstr "en nog {n}…"
 msgid "email_digest_attachment"
 msgstr "📎 Bijlage"
 
+msgid "email_owner_grace_subject"
+msgstr "Je hebt {days} dagen om {community} over te dragen"
+
+msgid "email_owner_grace_title"
+msgstr "Je past niet meer bij {community}"
+
+msgid "email_owner_grace_body"
+msgstr "Je leeftijd of je regio passen niet meer bij die van {community}, de community die jij leidt. Je kunt haar nog leiden tot {date}: draag haar vóór die datum over aan iemand anders via Communityinstellingen → Mede-beheerders, of verruim de leeftijden zodat je er weer bij past. Anders draagt MeetGo haar over aan de langst zittende mede-beheerder of, als die er niet is, aan het langst zittende lid."
+
+msgid "email_owner_new_subject"
+msgstr "Je leidt nu {community}"
+
+msgid "email_owner_new_title"
+msgstr "Je leidt nu {community}"
+
+msgid "email_owner_new_body"
+msgstr "Jij leidt nu {community}: je kunt de instellingen wijzigen, bepalen wie mag deelnemen en het team samenstellen."
+
+msgid "email_owner_old_subject"
+msgstr "Je leidt {community} niet meer"
+
+msgid "email_owner_old_title"
+msgstr "Je leidt {community} niet meer"
+
+msgid "email_owner_old_body"
+msgstr "{new} leidt nu {community}. Als je nog bij de leeftijden en de regio past, blijf je mede-beheerder."
+
+msgid "email_owner_auto_old_subject"
+msgstr "Je leidt {community} niet meer"
+
+msgid "email_owner_auto_old_title"
+msgstr "Je leidt {community} niet meer"
+
+msgid "email_owner_auto_old_body"
+msgstr "Je leeftijd of je regio pasten niet meer bij {community} en je hebt haar niet op tijd overgedragen, dus heeft MeetGo haar overgedragen aan {new}."
+
+msgid "email_coadmin_added_subject"
+msgstr "Je bent mede-beheerder van {community}"
+
+msgid "email_coadmin_added_title"
+msgstr "Je bent mede-beheerder van {community}"
+
+msgid "email_coadmin_added_body"
+msgstr "Je kunt nu de instellingen van {community} wijzigen, verzoeken accepteren en moderators aanstellen."
+
+msgid "email_coadmin_removed_subject"
+msgstr "Je bent geen mede-beheerder meer van {community}"
+
+msgid "email_coadmin_removed_title"
+msgstr "Je bent geen mede-beheerder meer van {community}"
+
+msgid "email_coadmin_removed_body"
+msgstr "Je zit nog in {community}, maar je kunt de instellingen niet meer wijzigen en geen verzoeken meer accepteren."
+
 msgid "email_access_ending_subject"
 msgstr "Je gratis toegang tot MeetGo loopt af op {date}"
 
@@ -3418,6 +3472,30 @@ msgstr "Je kunt die van jou gebruiken ({range}) of hieronder andere leeftijden i
 
 msgid "ui_community_age_official"
 msgstr "MeetGo-leeftijdsgroepen"
+
+msgid "ui_community_age_owner_warning"
+msgstr "Als je leeftijd ooit buiten deze groep valt, heb je 30 dagen om de community aan iemand anders over te dragen. Daarna draagt MeetGo haar over aan de langst zittende mede-beheerder of, als die er niet is, aan het langst zittende lid."
+
+msgid "ui_community_owner_grace"
+msgstr "Je leeftijd of je regio passen niet meer bij deze community. Draag haar vóór {date} over aan iemand anders; anders draagt MeetGo haar over aan de langst zittende mede-beheerder of, als die er niet is, aan het langst zittende lid."
+
+msgid "ui_community_hand_over"
+msgstr "Community overdragen aan…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "Wie haar krijgt, gaat haar leiden; jij blijft mede-beheerder als je er nog bij past."
+
+msgid "ui_community_hand_over_title"
+msgstr "Community overdragen?"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name} gaat de community leiden. Om haar terug te krijgen, moet die haar aan jou teruggeven."
+
+msgid "ui_community_hand_over_confirm"
+msgstr "Overdragen"
+
+msgid "ui_community_hand_over_done"
+msgstr "Je hebt de community overgedragen aan {name}"
 
 msgid "ui_community_age_limit"
 msgstr "Beperken op leeftijd"

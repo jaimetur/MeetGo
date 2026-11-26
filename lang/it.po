@@ -2696,6 +2696,60 @@ msgstr "e altri {n}…"
 msgid "email_digest_attachment"
 msgstr "📎 Allegato"
 
+msgid "email_owner_grace_subject"
+msgstr "Hai {days} giorni per cedere {community}"
+
+msgid "email_owner_grace_title"
+msgstr "Non rientri più in {community}"
+
+msgid "email_owner_grace_body"
+msgstr "La tua età o la tua zona non rientrano più in quelle di {community}, la comunità che dirigi. Puoi continuare a dirigerla fino al {date}: prima di allora, cedila a un'altra persona in Impostazioni della comunità → Co-amministratori, oppure amplia le sue età per rientrarvi di nuovo. Altrimenti MeetGo la cederà al suo co-amministratore più anziano o, se non c'è, al membro più anziano."
+
+msgid "email_owner_new_subject"
+msgstr "Ora dirigi {community}"
+
+msgid "email_owner_new_title"
+msgstr "Ora dirigi {community}"
+
+msgid "email_owner_new_body"
+msgstr "Ora sei tu a dirigere {community}: puoi cambiarne le impostazioni, chi può entrare e il team."
+
+msgid "email_owner_old_subject"
+msgstr "Non dirigi più {community}"
+
+msgid "email_owner_old_title"
+msgstr "Non dirigi più {community}"
+
+msgid "email_owner_old_body"
+msgstr "{new} dirige ora {community}. Se rientri ancora nelle sue età e nella sua zona, resti co-amministratore."
+
+msgid "email_owner_auto_old_subject"
+msgstr "Non dirigi più {community}"
+
+msgid "email_owner_auto_old_title"
+msgstr "Non dirigi più {community}"
+
+msgid "email_owner_auto_old_body"
+msgstr "La tua età o la tua zona non rientravano più in {community} e non l'hai ceduta in tempo, quindi MeetGo l'ha ceduta a {new}."
+
+msgid "email_coadmin_added_subject"
+msgstr "Sei co-amministratore di {community}"
+
+msgid "email_coadmin_added_title"
+msgstr "Sei co-amministratore di {community}"
+
+msgid "email_coadmin_added_body"
+msgstr "Ora puoi cambiare le impostazioni di {community}, accettare richieste e nominare moderatori."
+
+msgid "email_coadmin_removed_subject"
+msgstr "Non sei più co-amministratore di {community}"
+
+msgid "email_coadmin_removed_title"
+msgstr "Non sei più co-amministratore di {community}"
+
+msgid "email_coadmin_removed_body"
+msgstr "Sei ancora in {community}, ma non puoi più cambiarne le impostazioni né accettare richieste."
+
 msgid "email_access_ending_subject"
 msgstr "Il tuo accesso gratuito a MeetGo termina il {date}"
 
@@ -3418,6 +3472,30 @@ msgstr "Puoi usare la tua ({range}) o indicare altre età qui sotto, purché la 
 
 msgid "ui_community_age_official"
 msgstr "Fasce di MeetGo"
+
+msgid "ui_community_age_owner_warning"
+msgstr "Se un giorno la tua età esce da questa fascia, avrai 30 giorni per cedere la comunità a un'altra persona. Trascorso questo periodo, MeetGo la cederà al suo co-amministratore più anziano o, se non c'è, al membro più anziano."
+
+msgid "ui_community_owner_grace"
+msgstr "La tua età o la tua zona non rientrano più in questa comunità. Cedila a un'altra persona prima del {date}; altrimenti MeetGo la cederà al suo co-amministratore più anziano o, se non c'è, al membro più anziano."
+
+msgid "ui_community_hand_over"
+msgstr "Cedi la comunità a…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "Chi la riceve la dirigerà; tu resterai co-amministratore se ci rientri ancora."
+
+msgid "ui_community_hand_over_title"
+msgstr "Cedere la comunità?"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name} dirigerà la comunità. Per riaverla, dovrà cedertela."
+
+msgid "ui_community_hand_over_confirm"
+msgstr "Cedi"
+
+msgid "ui_community_hand_over_done"
+msgstr "Hai ceduto la comunità a {name}"
 
 msgid "ui_community_age_limit"
 msgstr "Limita per età"

@@ -267,6 +267,8 @@ class Conversation(Base):
     retention_days: Mapped[int | None] = mapped_column(Integer, nullable=True)
     min_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
     max_age: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    # Made by people: since when its owner no longer fits its ages or zone (30 days to hand it over; see ownership.py).
+    owner_out_since: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     pinned_message_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     legacy_room_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)
     legacy_dm_id: Mapped[int | None] = mapped_column(Integer, nullable=True, unique=True)

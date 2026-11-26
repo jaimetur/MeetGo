@@ -2696,6 +2696,60 @@ msgstr "还有 {n} 条…"
 msgid "email_digest_attachment"
 msgstr "📎 附件"
 
+msgid "email_owner_grace_subject"
+msgstr "你有 {days} 天时间转让 {community}"
+
+msgid "email_owner_grace_title"
+msgstr "你已不符合 {community} 的条件"
+
+msgid "email_owner_grace_body"
+msgstr "你的年龄或地区已不符合你所管理的社区 {community} 的条件。你可以继续管理到 {date}：在此之前，请在“社区设置 → 共同管理员”中把它转让给其他人，或放宽年龄范围让自己重新符合条件。否则，MeetGo 将把它转让给资历最老的共同管理员；如果没有，则转让给最早加入的成员。"
+
+msgid "email_owner_new_subject"
+msgstr "你现在负责管理 {community}"
+
+msgid "email_owner_new_title"
+msgstr "你现在负责管理 {community}"
+
+msgid "email_owner_new_body"
+msgstr "你现在是 {community} 的负责人：可以修改设置、谁可以加入以及团队成员。"
+
+msgid "email_owner_old_subject"
+msgstr "你不再管理 {community}"
+
+msgid "email_owner_old_title"
+msgstr "你不再管理 {community}"
+
+msgid "email_owner_old_body"
+msgstr "{new} 现在负责管理 {community}。如果你仍符合其年龄和地区条件，你将继续担任共同管理员。"
+
+msgid "email_owner_auto_old_subject"
+msgstr "你不再管理 {community}"
+
+msgid "email_owner_auto_old_title"
+msgstr "你不再管理 {community}"
+
+msgid "email_owner_auto_old_body"
+msgstr "你的年龄或地区已不符合 {community} 的条件，且你没有按时转让，因此 MeetGo 已将它转让给 {new}。"
+
+msgid "email_coadmin_added_subject"
+msgstr "你成为了 {community} 的共同管理员"
+
+msgid "email_coadmin_added_title"
+msgstr "你成为了 {community} 的共同管理员"
+
+msgid "email_coadmin_added_body"
+msgstr "你现在可以修改 {community} 的设置、接受申请并任命版主。"
+
+msgid "email_coadmin_removed_subject"
+msgstr "你不再是 {community} 的共同管理员"
+
+msgid "email_coadmin_removed_title"
+msgstr "你不再是 {community} 的共同管理员"
+
+msgid "email_coadmin_removed_body"
+msgstr "你仍在 {community} 中，但不能再修改其设置或接受申请。"
+
 msgid "email_access_ending_subject"
 msgstr "你在 MeetGo 的免费使用将于 {date} 结束"
 
@@ -3418,6 +3472,30 @@ msgstr "你可以使用自己的年龄段（{range}），或在下方设置其�
 
 msgid "ui_community_age_official"
 msgstr "MeetGo 年龄段"
+
+msgid "ui_community_age_owner_warning"
+msgstr "如果有一天你的年龄超出这个范围，你将有 30 天时间把社区转让给其他人。逾期后，MeetGo 将把它转让给资历最老的共同管理员；如果没有，则转让给最早加入的成员。"
+
+msgid "ui_community_owner_grace"
+msgstr "你的年龄或地区已不符合这个社区的条件。请在 {date} 之前把它转让给其他人；否则 MeetGo 将把它转让给资历最老的共同管理员；如果没有，则转让给最早加入的成员。"
+
+msgid "ui_community_hand_over"
+msgstr "把社区转让给…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "接收者将负责管理社区；如果你仍符合条件，你将继续担任共同管理员。"
+
+msgid "ui_community_hand_over_title"
+msgstr "转让社区？"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name} 将负责管理社区。要拿回社区，需要对方再转让给你。"
+
+msgid "ui_community_hand_over_confirm"
+msgstr "转让"
+
+msgid "ui_community_hand_over_done"
+msgstr "你已把社区转让给 {name}"
 
 msgid "ui_community_age_limit"
 msgstr "按年龄限制"

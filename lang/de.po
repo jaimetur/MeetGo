@@ -2696,6 +2696,60 @@ msgstr "und {n} weitere…"
 msgid "email_digest_attachment"
 msgstr "📎 Anhang"
 
+msgid "email_owner_grace_subject"
+msgstr "Du hast {days} Tage, um {community} abzugeben"
+
+msgid "email_owner_grace_title"
+msgstr "Du passt nicht mehr zu {community}"
+
+msgid "email_owner_grace_body"
+msgstr "Dein Alter oder deine Region passen nicht mehr zu {community}, der Community, die du leitest. Du kannst sie bis zum {date} weiter leiten: Gib sie vorher unter Community-Einstellungen → Mitadministratoren an jemand anderen ab oder erweitere die Altersgrenzen, damit du wieder dazu passt. Sonst übergibt MeetGo sie an den dienstältesten Mitadministrator oder, falls es keinen gibt, an das älteste Mitglied."
+
+msgid "email_owner_new_subject"
+msgstr "Du leitest jetzt {community}"
+
+msgid "email_owner_new_title"
+msgstr "Du leitest jetzt {community}"
+
+msgid "email_owner_new_body"
+msgstr "Du leitest jetzt {community}: Du kannst die Einstellungen ändern, festlegen, wer beitreten darf, und das Team bestimmen."
+
+msgid "email_owner_old_subject"
+msgstr "Du leitest {community} nicht mehr"
+
+msgid "email_owner_old_title"
+msgstr "Du leitest {community} nicht mehr"
+
+msgid "email_owner_old_body"
+msgstr "{new} leitet jetzt {community}. Wenn du weiterhin zu Alter und Region passt, bleibst du Mitadministrator."
+
+msgid "email_owner_auto_old_subject"
+msgstr "Du leitest {community} nicht mehr"
+
+msgid "email_owner_auto_old_title"
+msgstr "Du leitest {community} nicht mehr"
+
+msgid "email_owner_auto_old_body"
+msgstr "Dein Alter oder deine Region passten nicht mehr zu {community} und du hast sie nicht rechtzeitig abgegeben. Deshalb hat MeetGo sie an {new} übergeben."
+
+msgid "email_coadmin_added_subject"
+msgstr "Du bist Mitadministrator von {community}"
+
+msgid "email_coadmin_added_title"
+msgstr "Du bist Mitadministrator von {community}"
+
+msgid "email_coadmin_added_body"
+msgstr "Du kannst jetzt die Einstellungen von {community} ändern, Anfragen annehmen und Moderatoren ernennen."
+
+msgid "email_coadmin_removed_subject"
+msgstr "Du bist nicht mehr Mitadministrator von {community}"
+
+msgid "email_coadmin_removed_title"
+msgstr "Du bist nicht mehr Mitadministrator von {community}"
+
+msgid "email_coadmin_removed_body"
+msgstr "Du bist weiterhin in {community}, kannst aber die Einstellungen nicht mehr ändern und keine Anfragen mehr annehmen."
+
 msgid "email_access_ending_subject"
 msgstr "Dein kostenloser Zugang zu MeetGo endet am {date}"
 
@@ -3418,6 +3472,30 @@ msgstr "Du kannst deine nehmen ({range}) oder unten andere Alter eingeben, solan
 
 msgid "ui_community_age_official"
 msgstr "MeetGo-Altersgruppen"
+
+msgid "ui_community_age_owner_warning"
+msgstr "Wenn dein Alter eines Tages aus diesem Bereich fällt, hast du 30 Tage Zeit, die Community an jemand anderen abzugeben. Danach übergibt MeetGo sie an den dienstältesten Mitadministrator oder, falls es keinen gibt, an das älteste Mitglied."
+
+msgid "ui_community_owner_grace"
+msgstr "Dein Alter oder deine Region passen nicht mehr zu dieser Community. Gib sie vor dem {date} an jemand anderen ab; sonst übergibt MeetGo sie an den dienstältesten Mitadministrator oder, falls es keinen gibt, an das älteste Mitglied."
+
+msgid "ui_community_hand_over"
+msgstr "Community abgeben an…"
+
+msgid "ui_community_hand_over_hint"
+msgstr "Wer sie erhält, leitet sie; du bleibst Mitadministrator, wenn du weiterhin dazu passt."
+
+msgid "ui_community_hand_over_title"
+msgstr "Community abgeben?"
+
+msgid "ui_community_hand_over_body"
+msgstr "{name} wird die Community leiten. Um sie zurückzubekommen, muss sie dir zurückgegeben werden."
+
+msgid "ui_community_hand_over_confirm"
+msgstr "Abgeben"
+
+msgid "ui_community_hand_over_done"
+msgstr "Du hast die Community an {name} abgegeben"
 
 msgid "ui_community_age_limit"
 msgstr "Nach Alter begrenzen"
