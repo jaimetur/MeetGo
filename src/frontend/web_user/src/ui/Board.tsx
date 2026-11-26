@@ -631,7 +631,7 @@ export function PostPage({ id }: { id: number }) {
 
   return (
     <main className="screen detail">
-      <div className="hero" style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : post.cover_art ? `center / cover no-repeat url("${coverArtUrl(post.cover_art)}")` : coverGradient("p" + post.id) }}>
+      <div className={"hero" + (post.cover_url || post.cover_art ? "" : " grad")} style={{ background: post.cover_url ? `center / cover no-repeat url("${fileUrl(post.cover_url)}")` : post.cover_art ? `center / cover no-repeat url("${coverArtUrl(post.cover_art)}")` : coverGradient("p" + post.id) }}>
         <div className="herobar">
           <button className="iconbtn glass" onClick={() => goBack("/")} aria-label={t("ui_back")}><Icon name="back" /></button>
           <span className="grow" />

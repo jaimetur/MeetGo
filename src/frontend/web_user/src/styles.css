@@ -2619,3 +2619,7 @@ button.fwho-row:hover { background: var(--panel2); }
 /* my chat bubbles: a plain colour in every theme of a design but Momentos, which keeps a gradient (pink to blue); MeetGo untouched */
 :root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="mosaico"], [data-palette="mosaicodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="chispa"], [data-palette="chispadark"], [data-palette="quedadas"], [data-palette="quedadasdark"]) .msg.mine .mbody { background: var(--blue) !important; }
 :root:is([data-palette="momentos"], [data-palette="momentosdark"]) .msg.mine .mbody { background: linear-gradient(135deg, #fd3f6b, #2f9bff) !important; }
+
+/* a post's cover without a picture: with a coloured side menu, the theme's light colour (like a community's) */
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"], [data-palette="momentos"], [data-palette="momentosdark"]) .hero.grad { background: color-mix(in srgb, var(--blue) 16%, var(--panel)) !important; }
+:root:is([data-palette="muro"], [data-palette="murodark"], [data-palette="conversa"], [data-palette="conversadark"], [data-palette="quedadas"], [data-palette="quedadasdark"], [data-palette="momentos"], [data-palette="momentosdark"]) .hero.grad::after { display: none; }
