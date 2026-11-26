@@ -1759,11 +1759,16 @@ select.inp { -webkit-appearance: none; appearance: none; padding-right: 36px;
 }
 
 /* Communities: the switches «New» and «Default» */
-.cflags { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: -6px 0 12px; }  /* one row of chips; it scrolls sideways when narrow */
+.cflags { display: flex; gap: 8px; padding-block: 9px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: -12px 0 4px; }  /* one row of chips; it scrolls sideways when narrow */
 .cflags::-webkit-scrollbar { display: none; }
-.cflag { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
-  color: var(--fg); background: color-mix(in srgb, var(--blue) 10%, var(--panel)); border: 1.5px solid color-mix(in srgb, var(--blue) 45%, transparent); }  /* tinted, so the row stands out */
-.cflag.on { border-color: transparent; }
+/* the filters look like the marks of the cards: outlined in their colour, filled when on */
+.cflag { --fc: #7c3aed; flex: none; position: relative; display: inline-flex; align-items: center; padding: 2px 9px; font-size: 11.5px; font-weight: 700; letter-spacing: .02em;
+  border-radius: 999px; cursor: pointer; color: var(--fc); background: transparent; border: 1.5px solid var(--fc); }
+.cflag::after { content: ""; position: absolute; inset: -9px -3px; }  /* a bigger place to tap than it looks */
+.cflag.active { --fc: #16a34a; } .cflag.plans { --fc: #ea580c; } .cflag.fresh { --fc: #7c3aed; }
+:root:not([data-theme="light"]) .cflag.active { --fc: #4ade80; } :root:not([data-theme="light"]) .cflag.plans { --fc: #fb923c; } :root:not([data-theme="light"]) .cflag.fresh { --fc: #a78bfa; }
+.cflag.on { background: var(--fc); color: #fff; border-color: var(--fc); }
+:root:not([data-theme="light"]) .cflag.on { color: #0b1020; }
 .cflag .ic { width: 14px; height: 14px; }
 
 /* Administration → Categories */

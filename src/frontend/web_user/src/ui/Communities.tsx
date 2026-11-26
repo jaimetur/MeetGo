@@ -345,8 +345,8 @@ export function CommunitiesPage() {
         {list && list.length ? (
           <div className="cflags" role="group" aria-label={t("ui_story_tool_filters")}>
             {([["active", "ui_cflag_active"], ["plans", "ui_cflag_plans"], ["fresh", "ui_cflag_new"]] as [Flag, string][]).map(([k, key]) => (
-              <button key={k} id={`communities-${k}`} type="button" role="switch" aria-checked={flags[k]} className={"chip cflag" + (flags[k] ? " on" : "")}
-                onClick={() => setFlag(k, !flags[k])}>{flags[k] ? <Icon name="check" size="sm" /> : null}{t(key)}</button>
+              <button key={k} id={`communities-${k}`} type="button" role="switch" aria-checked={flags[k]} className={"chip cflag " + k + (flags[k] ? " on" : "")}
+                onClick={() => setFlag(k, !flags[k])}>{t(key)}</button>
             ))}
           </div>
         ) : null}
