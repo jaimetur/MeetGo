@@ -342,7 +342,7 @@ export function communityCover(slug: string | null | undefined, seed: string | n
 }
 
 /** How Home, Chats and Communities are laid out (Settings → Design, this device): the cards as they were, or one of five styles. */
-export const LAYOUTS = ["actual", "muro", "mosaico", "conversa", "chispa", "quedadas", "momentos"] as const;  // in the order of their themes
+export const LAYOUTS = ["actual", "muro", "conversa", "mosaico", "quedadas", "chispa", "momentos"] as const;  // in the order of their themes
 export type Layout = (typeof LAYOUTS)[number];
 export function getLayout(): Layout {
   try {

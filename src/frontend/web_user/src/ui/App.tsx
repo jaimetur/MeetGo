@@ -76,10 +76,10 @@ export function applyChatSize(size?: string) {
 /** Each theme in its two versions, day and night: Settings shows one swatch per theme and a Day / Night / Auto switch.
  *  The first seven go with the seven designs (Settings → Design). */
 export const THEME_FAMILIES: Record<string, { label: string; light: string; dark: string }> = {
-  meetgo: { label: "ui_theme_pastel", light: "meetgo", dark: "meetgodark" },  // the colours of Muro, on a light blue ground by day
+  meetgo: { label: "ui_theme_pastel", light: "muro", dark: "murodark" },  // the default: a navy side menu, a grey ground, pastel icons
   conversa: { label: "ui_theme_conversa", light: "conversa", dark: "conversadark" },
   momentos: { label: "ui_theme_momentos", light: "momentos", dark: "momentosdark" },
-  muro: { label: "ui_theme_muro", light: "muro", dark: "murodark" },
+  muro: { label: "ui_theme_muro", light: "meetgo", dark: "meetgodark" },  // a white side menu on a light blue ground
   chispa: { label: "ui_theme_chispa", light: "chispa", dark: "chispadark" },
   quedadas: { label: "ui_theme_quedadas", light: "quedadas", dark: "quedadasdark" },
   mosaico: { label: "ui_theme_mosaico", light: "mosaico", dark: "mosaicodark" },
@@ -91,7 +91,7 @@ export const THEME_FAMILIES: Record<string, { label: string; light: string; dark
   peach: { label: "ui_theme_peach", light: "peach", dark: "peachdark" },
   bw: { label: "ui_theme_bw", light: "paper", dark: "oled" },
 };
-export const DESIGN_FAMILIES = ["meetgo", "muro", "mosaico", "conversa", "chispa", "quedadas", "momentos"];  // in pairs of similar colours
+export const DESIGN_FAMILIES = ["meetgo", "muro", "conversa", "mosaico", "quedadas", "chispa", "momentos"];  // in pairs of similar colours
 export type ThemeMode = "light" | "dark" | "auto";
 export type ThemeChoice = { family: string; mode: ThemeMode };
 
