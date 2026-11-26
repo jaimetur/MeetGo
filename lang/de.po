@@ -5588,6 +5588,9 @@ msgstr "Zur Community"
 msgid "err_language_invalid"
 msgstr "Ungültige Sprache"
 
+msgid "ui_admin_pending"
+msgstr "Offene Hinweise in der Verwaltung ({n})"
+
 msgid "ui_admin_pending_categories"
 msgstr "Vorgeschlagene Kategorien zu prüfen ({n})"
 

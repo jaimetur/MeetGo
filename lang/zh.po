@@ -4724,6 +4724,9 @@ msgstr "前往社区"
 msgid "err_language_invalid"
 msgstr "语言无效"
 
+msgid "ui_admin_pending"
+msgstr "管理中有待处理的提醒（{n}）"
+
 msgid "ui_admin_pending_categories"
 msgstr "待审核的分类提议（{n}）"
 

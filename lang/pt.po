@@ -4723,6 +4723,9 @@ msgstr "Ir para a comunidade"
 msgid "err_language_invalid"
 msgstr "Idioma inválido"
 
+msgid "ui_admin_pending"
+msgstr "Tens avisos pendentes na Administração ({n})"
+
 msgid "ui_admin_pending_categories"
 msgstr "Categorias propostas por rever ({n})"
 

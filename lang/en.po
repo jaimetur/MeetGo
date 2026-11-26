@@ -4725,6 +4725,9 @@ msgstr "Go to the community"
 msgid "err_language_invalid"
 msgstr "Invalid language"
 
+msgid "ui_admin_pending"
+msgstr "Things to review in Administration ({n})"
+
 msgid "ui_admin_pending_categories"
 msgstr "Proposed categories to review ({n})"
 

@@ -92,10 +92,10 @@ async def pending_count(db: AsyncSession) -> int:
 async def tell_admins(db: AsyncSession, proposal_name: str | None = None) -> None:
     """The administrators' apps reload what is waiting for review (a new proposal appears; one reviewed disappears
     for all); a new proposal also reaches their phones. Whoever is not connected sees it the next time they open MeetGo."""
+    from app.admin.pending import tell_admins as reload_counts
     from app.core.models import User
-    from app.realtime.service import publish
     admins = list((await db.execute(select(User).where(User.role == "admin"))).scalars().all())
-    await publish([a.id for a in admins], {"type": "admin.pending"})
+    await reload_counts(db)
     if proposal_name:
         from app.push.service import push_notice
         push_notice(admins, "admin.category", "email_category_proposal", {"name": proposal_name}, "/app/admin?s=categories")

@@ -1,6 +1,7 @@
 /** The administration at a glance: people, activity, what needs a look, sign-ups and where people are. */
 import React, { useEffect, useState } from "react";
 import { api, type AdminStats } from "../../../../web_admin/api";
+import { useStore } from "../../store";
 import { Icon } from "../common";
 import { SectionHead, goSection } from "./AdminPage";
 import { a } from "./i18n";
@@ -9,6 +10,7 @@ import { Stat } from "./kit";
 export function Overview({ onReports }: { onReports: (n: number) => void }) {
   const [s, setS] = useState<AdminStats | null>(null);
   const [error, setError] = useState("");
+  const waiting = useStore((st) => st.adminPending);
   const load = () => api.stats().then((r) => { setS(r); onReports(r.reports_open); }).catch((e) => setError(e.message));
   useEffect(() => { load(); }, []);
 
@@ -17,6 +19,8 @@ export function Overview({ onReports }: { onReports: (n: number) => void }) {
   const maxProv = Math.max(1, ...s.provinces.map((p) => p.count));
   const attention: [string, string, number, () => void][] = [
     ["flag", a("ov_reports") + `: ${s.reports_open}`, s.reports_open, () => goSection("moderation")],
+    ["layers", a("ov_pending_categories", { n: waiting?.categories || 0 }), waiting?.categories || 0, () => goSection("categories")],
+    ["compass", a("ov_pending_communities", { n: waiting?.communities || 0 }), waiting?.communities || 0, () => goSection("communities")],
     ["info", a("ov_unverified", { n: u.unverified }), u.unverified, () => goSection("users", "unverified")],
     ["shield", a("ov_banned", { n: u.banned }), u.banned, () => goSection("users", "banned")],
   ];
@@ -32,7 +36,8 @@ export function Overview({ onReports }: { onReports: (n: number) => void }) {
         <Stat icon="check2" tone="green" label={a("ov_online")} value={u.online} onClick={() => goSection("users", "online")} />
         <Stat icon="clock" tone="teal" label={a("ov_active")} value={u.active_24h} sub={a("ov_active_sub", { n: u.active_7d })} />
         <Stat icon="chat" tone="violet" label={a("ov_messages")} value={s.activity.messages_24h} sub={a("ov_messages_sub", { n: s.activity.messages_7d })} />
-        <Stat icon="compass" tone="teal" label={a("ov_communities")} value={s.activity.communities} onClick={() => goSection("communities")} />
+        <Stat icon="compass" tone="teal" label={a("ov_communities")} value={s.activity.communities}
+          sub={a("ov_communities_sub", { today: s.activity.communities_24h ?? 0, total: s.activity.communities_total ?? 0 })} onClick={() => goSection("communities")} />
         <Stat icon="calendar" tone="orange" label={a("ov_plans")} value={s.activity.upcoming_plans} />
         <Stat icon="flag" tone={s.reports_open ? "red" : "gray"} alert={s.reports_open > 0} label={a("ov_reports")} value={s.reports_open}
           sub={s.reports_open ? a("ov_reports_go") + " →" : a("ov_reports_none")} onClick={() => goSection("moderation")} />

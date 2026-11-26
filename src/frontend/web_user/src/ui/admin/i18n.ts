@@ -5,6 +5,11 @@ import { t2 } from "../../../../web_admin/strings";
 type Dict = Record<string, string>;
 
 const ES: Dict = {
+  ov_active: "Personas activas hoy",
+  ov_communities: "Comunidades activas (7 días)",
+  ov_communities_sub: "{today} hoy · {total} en total",
+  ov_pending_categories: "Categorías propuestas: {n}",
+  ov_pending_communities: "Intereses para segregar o juntar: {n}",
   cg_assign: "Asignar comunidades",
   cg_assign_hint: "Tiene {n} comunidades. Puedes traer otras que ya existen.",
   cg_assign_title: "Asignar comunidades a «{name}»",
@@ -292,11 +297,9 @@ const ES: Dict = {
   ov_people: "Personas",
   ov_people_sub: "+{n} esta semana",
   ov_online: "En línea ahora",
-  ov_active: "Activas hoy",
   ov_active_sub: "{n} esta semana",
   ov_messages: "Mensajes hoy",
   ov_messages_sub: "{n} esta semana",
-  ov_communities: "Comunidades con vida",
   ov_plans: "Planes próximos",
   ov_reports: "Denuncias abiertas",
   ov_reports_none: "Todo en orden",
@@ -578,6 +581,11 @@ const ES: Dict = {
 };
 
 const EN: Dict = {
+  ov_active: "People active today",
+  ov_communities: "Active communities (7 days)",
+  ov_communities_sub: "{today} today · {total} in all",
+  ov_pending_categories: "Proposed categories: {n}",
+  ov_pending_communities: "Interests to split or join: {n}",
   cg_assign: "Assign communities",
   cg_assign_hint: "It has {n} communities. You can bring in others that already exist.",
   cg_assign_title: "Assign communities to «{name}»",
@@ -865,11 +873,9 @@ const EN: Dict = {
   ov_people: "People",
   ov_people_sub: "+{n} this week",
   ov_online: "Online now",
-  ov_active: "Active today",
   ov_active_sub: "{n} this week",
   ov_messages: "Messages today",
   ov_messages_sub: "{n} this week",
-  ov_communities: "Lively communities",
   ov_plans: "Upcoming plans",
   ov_reports: "Open reports",
   ov_reports_none: "All clear",
@@ -1152,6 +1158,11 @@ const EN: Dict = {
 
 // Catalan
 const CA: Dict = {
+  ov_active: "Persones actives avui",
+  ov_communities: "Comunitats actives (7 dies)",
+  ov_communities_sub: "{today} avui · {total} en total",
+  ov_pending_categories: "Categories proposades: {n}",
+  ov_pending_communities: "Interessos per segregar o ajuntar: {n}",
   cg_assign: "Assignar comunitats",
   cg_assign_hint: "Té {n} comunitats. Pots portar-ne d'altres que ja existeixen.",
   cg_assign_title: "Assignar comunitats a «{name}»",
@@ -1438,11 +1449,9 @@ const CA: Dict = {
   ov_people: "Persones",
   ov_people_sub: "+{n} aquesta setmana",
   ov_online: "En línia ara",
-  ov_active: "Actives avui",
   ov_active_sub: "{n} aquesta setmana",
   ov_messages: "Missatges avui",
   ov_messages_sub: "{n} aquesta setmana",
-  ov_communities: "Comunitats amb vida",
   ov_plans: "Plans propers",
   ov_reports: "Denúncies obertes",
   ov_reports_none: "Tot en ordre",
@@ -1716,6 +1725,11 @@ const CA: Dict = {
 
 // German
 const DE: Dict = {
+  ov_active: "Heute aktive Personen",
+  ov_communities: "Aktive Communities (7 Tage)",
+  ov_communities_sub: "{today} heute · {total} insgesamt",
+  ov_pending_categories: "Vorgeschlagene Kategorien: {n}",
+  ov_pending_communities: "Interessen zum Aufteilen oder Zusammenlegen: {n}",
   cg_assign: "Communities zuordnen",
   cg_assign_hint: "Sie hat {n} Communities. Du kannst andere bestehende hinzufügen.",
   cg_assign_title: "Communities zu «{name}» zuordnen",
@@ -2002,11 +2016,9 @@ const DE: Dict = {
   ov_people: "Personen",
   ov_people_sub: "+{n} diese Woche",
   ov_online: "Gerade online",
-  ov_active: "Heute aktiv",
   ov_active_sub: "{n} diese Woche",
   ov_messages: "Nachrichten heute",
   ov_messages_sub: "{n} diese Woche",
-  ov_communities: "Lebendige Communities",
   ov_plans: "Anstehende Pläne",
   ov_reports: "Offene Meldungen",
   ov_reports_none: "Alles in Ordnung",
@@ -2280,6 +2292,11 @@ const DE: Dict = {
 
 // French
 const FR: Dict = {
+  ov_active: "Personnes actives aujourd'hui",
+  ov_communities: "Communautés actives (7 jours)",
+  ov_communities_sub: "{today} aujourd'hui · {total} au total",
+  ov_pending_categories: "Catégories proposées : {n}",
+  ov_pending_communities: "Centres d'intérêt à diviser ou regrouper : {n}",
   cg_assign: "Assigner des communautés",
   cg_assign_hint: "Elle compte {n} communautés. Tu peux en ajouter d'autres qui existent déjà.",
   cg_assign_title: "Assigner des communautés à «{name}»",
@@ -2566,11 +2583,9 @@ const FR: Dict = {
   ov_people: "Personnes",
   ov_people_sub: "+{n} cette semaine",
   ov_online: "En ligne maintenant",
-  ov_active: "Actifs aujourd'hui",
   ov_active_sub: "{n} cette semaine",
   ov_messages: "Messages aujourd'hui",
   ov_messages_sub: "{n} cette semaine",
-  ov_communities: "Communautés animées",
   ov_plans: "Plans à venir",
   ov_reports: "Signalements ouverts",
   ov_reports_none: "Tout est en ordre",
@@ -2844,6 +2859,11 @@ const FR: Dict = {
 
 // Italian
 const IT: Dict = {
+  ov_active: "Persone attive oggi",
+  ov_communities: "Community attive (7 giorni)",
+  ov_communities_sub: "{today} oggi · {total} in tutto",
+  ov_pending_categories: "Categorie proposte: {n}",
+  ov_pending_communities: "Interessi da dividere o unire: {n}",
   cg_assign: "Assegna community",
   cg_assign_hint: "Ha {n} community. Puoi aggiungerne altre già esistenti.",
   cg_assign_title: "Assegna community a «{name}»",
@@ -3130,11 +3150,9 @@ const IT: Dict = {
   ov_people: "Persone",
   ov_people_sub: "+{n} questa settimana",
   ov_online: "Online ora",
-  ov_active: "Attive oggi",
   ov_active_sub: "{n} questa settimana",
   ov_messages: "Messaggi oggi",
   ov_messages_sub: "{n} questa settimana",
-  ov_communities: "Community vivaci",
   ov_plans: "Prossimi piani",
   ov_reports: "Segnalazioni aperte",
   ov_reports_none: "Tutto in ordine",
@@ -3408,6 +3426,11 @@ const IT: Dict = {
 
 // European Portuguese
 const PT: Dict = {
+  ov_active: "Pessoas ativas hoje",
+  ov_communities: "Comunidades ativas (7 dias)",
+  ov_communities_sub: "{today} hoje · {total} no total",
+  ov_pending_categories: "Categorias propostas: {n}",
+  ov_pending_communities: "Interesses para dividir ou juntar: {n}",
   cg_assign: "Atribuir comunidades",
   cg_assign_hint: "Tem {n} comunidades. Podes trazer outras que já existem.",
   cg_assign_title: "Atribuir comunidades a «{name}»",
@@ -3694,11 +3717,9 @@ const PT: Dict = {
   ov_people: "Pessoas",
   ov_people_sub: "+{n} esta semana",
   ov_online: "Online agora",
-  ov_active: "Ativas hoje",
   ov_active_sub: "{n} esta semana",
   ov_messages: "Mensagens hoje",
   ov_messages_sub: "{n} esta semana",
-  ov_communities: "Comunidades com vida",
   ov_plans: "Próximos planos",
   ov_reports: "Denúncias abertas",
   ov_reports_none: "Tudo em ordem",
@@ -3972,6 +3993,11 @@ const PT: Dict = {
 
 // Dutch
 const NL: Dict = {
+  ov_active: "Vandaag actieve mensen",
+  ov_communities: "Actieve community's (7 dagen)",
+  ov_communities_sub: "{today} vandaag · {total} in totaal",
+  ov_pending_categories: "Voorgestelde categorieën: {n}",
+  ov_pending_communities: "Interesses om te splitsen of samen te voegen: {n}",
   cg_assign: "Community's toewijzen",
   cg_assign_hint: "Ze heeft {n} community's. Je kunt andere bestaande toevoegen.",
   cg_assign_title: "Community's toewijzen aan «{name}»",
@@ -4258,11 +4284,9 @@ const NL: Dict = {
   ov_people: "Mensen",
   ov_people_sub: "+{n} deze week",
   ov_online: "Nu online",
-  ov_active: "Vandaag actief",
   ov_active_sub: "{n} deze week",
   ov_messages: "Berichten vandaag",
   ov_messages_sub: "{n} deze week",
-  ov_communities: "Levendige community's",
   ov_plans: "Komende plannen",
   ov_reports: "Open meldingen",
   ov_reports_none: "Alles in orde",
@@ -4536,6 +4560,11 @@ const NL: Dict = {
 
 // Japanese
 const JA: Dict = {
+  ov_active: "今日アクティブな人",
+  ov_communities: "アクティブなコミュニティ（7日間）",
+  ov_communities_sub: "今日 {today} · 合計 {total}",
+  ov_pending_categories: "提案されたカテゴリ：{n}",
+  ov_pending_communities: "分割または統合する興味：{n}",
   cg_assign: "コミュニティを割り当てる",
   cg_assign_hint: "{n}件のコミュニティがあります。既存の他のコミュニティを追加できます。",
   cg_assign_title: "「{name}」にコミュニティを割り当てる",
@@ -4822,11 +4851,9 @@ const JA: Dict = {
   ov_people: "ユーザー数",
   ov_people_sub: "今週 +{n}",
   ov_online: "オンライン中",
-  ov_active: "今日のアクティブ",
   ov_active_sub: "今週 {n}",
   ov_messages: "今日のメッセージ",
   ov_messages_sub: "今週 {n}",
-  ov_communities: "活発なコミュニティ",
   ov_plans: "今後のプラン",
   ov_reports: "未対応の通報",
   ov_reports_none: "問題なし",
@@ -5100,6 +5127,11 @@ const JA: Dict = {
 
 // Simplified Chinese
 const ZH: Dict = {
+  ov_active: "今日活跃的人",
+  ov_communities: "活跃社区（7 天）",
+  ov_communities_sub: "今天 {today} · 共 {total}",
+  ov_pending_categories: "提议的分类：{n}",
+  ov_pending_communities: "待拆分或合并的兴趣：{n}",
   cg_assign: "分配社区",
   cg_assign_hint: "共有 {n} 个社区。你可以把其他已有的社区加入进来。",
   cg_assign_title: "将社区分配到「{name}」",
@@ -5386,11 +5418,9 @@ const ZH: Dict = {
   ov_people: "用户数",
   ov_people_sub: "本周 +{n}",
   ov_online: "当前在线",
-  ov_active: "今日活跃",
   ov_active_sub: "本周 {n}",
   ov_messages: "今日消息",
   ov_messages_sub: "本周 {n}",
-  ov_communities: "活跃社区",
   ov_plans: "即将开始的活动",
   ov_reports: "待处理举报",
   ov_reports_none: "一切正常",

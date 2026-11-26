@@ -205,7 +205,7 @@ function Shell() {
     loadCategories();
     loadAdminPending();
   }, []);
-  const adminPending = useStore((s) => s.adminPending);
+  const adminPending = useStore((s) => s.adminPending?.total || 0);
   useEffect(() => {
     loadMyCommunities();
     loadBlocks();
@@ -368,18 +368,19 @@ function Shell() {
   );
 }
 
-/** Administrators: a notice while category proposals wait for review, when they open MeetGo or one is proposed.
- * Closing it hides it until a new one arrives; once reviewed (by anyone) it goes away for everybody. */
+/** Administrators: a notice while something waits for review (reports, proposed categories, communities to split or
+ * join), when they open MeetGo or something new arrives. Closing it hides it until something new arrives; once
+ * reviewed (by anyone) it goes away for everybody. */
 function AdminNotice() {
-  const pending = useStore((s) => s.adminPending);
+  const pending = useStore((s) => s.adminPending?.total || 0);
   const route = useRoute();
   const [closedAt, setClosedAt] = useState(0);
-  if (!pending || pending <= closedAt || (route.name === "admin" && queryParam("s") === "categories")) return null;
+  if (!pending || pending <= closedAt || route.name === "admin") return null;
   return (
     <div className="admin-notice" role="alert">
       <Icon name="shield" />
-      <span className="grow">{t("ui_admin_pending_categories", { n: pending })}</span>
-      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate("/admin?s=categories"); }}>{t("ui_admin_review")}</button>
+      <span className="grow">{t("ui_admin_pending", { n: pending })}</span>
+      <button className="btn pri sm" onClick={() => { setClosedAt(pending); navigate("/admin"); }}>{t("ui_admin_review")}</button>
       <button className="iconbtn" aria-label={t("ui_close")} onClick={() => setClosedAt(pending)}><Icon name="x" size="sm" /></button>
     </div>
   );

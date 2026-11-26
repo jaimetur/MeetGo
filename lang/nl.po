@@ -4724,6 +4724,9 @@ msgstr "Naar de community"
 msgid "err_language_invalid"
 msgstr "Ongeldige taal"
 
+msgid "ui_admin_pending"
+msgstr "Openstaande meldingen in Beheer ({n})"
+
 msgid "ui_admin_pending_categories"
 msgstr "Voorgestelde categorieën om te beoordelen ({n})"
 

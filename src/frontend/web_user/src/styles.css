@@ -387,13 +387,13 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
   display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(560px, calc(100vw - 24px)); padding: 10px 8px 10px 14px;
   border-radius: 14px; background: #121a26; color: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28); font-size: 14px; line-height: 1.35; }
 .updnote b { display: block; }
-/* administrators: something waits for review (top right; on phones across the top) */
-.admin-notice { position: fixed; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); z-index: 60;
+/* administrators: something waits for review (bottom right; on phones above the tab bar and the ＋ button) */
+.admin-notice { position: fixed; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); z-index: 60;
   display: flex; align-items: center; gap: 10px; max-width: min(460px, calc(100vw - 32px)); padding: 10px 8px 10px 14px;
   border-radius: 14px; background: var(--raise); border: 1px solid var(--line2); box-shadow: var(--shadow); font-size: 14px; line-height: 1.35; }
 .admin-notice > .icon { color: var(--accent, #1a73e8); flex: none; }
 .admin-notice .btn { white-space: nowrap; }
-@media (max-width: 820px) { .admin-notice { left: 16px; right: 16px; max-width: none; } }
+@media (max-width: 820px) { .admin-notice { left: 16px; right: 16px; max-width: none; bottom: calc(var(--mnavh, 70px) + 78px + env(safe-area-inset-bottom, 0px)); } }
 .updnote span { opacity: 0.85; }
 .updnote .btn { white-space: nowrap; }
 .updnote .iconbtn { color: #fff; opacity: 0.75; }

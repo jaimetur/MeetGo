@@ -144,6 +144,8 @@ async def notify(db: AsyncSession, user: User | None, kind: str | None, key: str
 
 async def notify_admins_report(db: AsyncSession, reason: str) -> None:
     """New report in the moderation queue: tell administrators, at most once every 30 minutes each."""
+    from app.admin.pending import tell_admins
+    await tell_admins(db)  # the counts in their apps, now
     admins = (await db.execute(select(User).where(User.role == "admin"))).scalars().all()
     for admin in admins:
         if not can_email(admin) or not prefs_of(admin).get("reports"):

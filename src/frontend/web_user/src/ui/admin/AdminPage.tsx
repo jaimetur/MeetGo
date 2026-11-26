@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { t } from "@lang";
 import { navigate, queryParam, useRoute } from "../../router";
-import { useStore } from "../../store";
+import { loadAdminPending, useStore } from "../../store";
 import { Icon } from "../common";
 import { PhoneTop } from "../Board";
 import { a } from "./i18n";
@@ -22,10 +22,10 @@ export type Section = "overview" | "users" | "moderation" | "communities" | "int
 const SECTIONS: [Section, string, string][] = [
   ["overview", "home", "sec_overview"],
   ["users", "users", "sec_users"],
-  ["moderation", "flag", "sec_moderation"],
-  ["communities", "compass", "sec_communities"],
   ["interests", "smile", "sec_interests"],
+  ["communities", "compass", "sec_communities"],
   ["categories", "layers", "sec_categories"],
+  ["moderation", "flag", "sec_moderation"],
   ["business", "chart", "sec_business"],
   ["settings", "sliders", "sec_settings"],
   ["backups", "layers", "sec_backups"],
@@ -47,7 +47,11 @@ export function AdminPage() {
     return s && SECTIONS.some(([k]) => k === s) ? s : "overview";
   };
   const [section, setSection] = useState<Section>(read);
-  const [openReports, setOpenReports] = useState(0);
+  const [, setOpenReports] = useState(0);
+  // what waits in each section (kept current by the server's notices)
+  const pending = useStore((s) => s.adminPending);
+  useEffect(() => { loadAdminPending(); }, [section]);
+  const pendingOf = (k: Section) => (k === "moderation" || k === "categories" || k === "communities" ? pending?.[k] || 0 : 0);
   useEffect(() => setSection(read()), [route]);
   // on a phone the tabs scroll sideways: keep the open one in view
   useEffect(() => { document.getElementById(`adm-nav-${section}`)?.scrollIntoView({ block: "nearest", inline: "center" }); }, [section]);
@@ -70,7 +74,7 @@ export function AdminPage() {
               onClick={() => { if (k !== section) goSection(k); }}>
               <Icon name={icon} size="sm" />
               <span>{a(label)}</span>
-              {k === "moderation" && openReports ? <span className="bdg">{openReports}</span> : null}
+              {pendingOf(k) ? <span className="bdg">{pendingOf(k)}</span> : null}
             </button>
           ))}
         </nav>

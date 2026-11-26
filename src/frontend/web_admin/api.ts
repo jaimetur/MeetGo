@@ -395,7 +395,7 @@ export type ModerateAction = "silence" | "unsilence" | "ban" | "unban" | "remove
 export type AdminStats = {
   users: { total: number; online: number; new_7d: number; active_24h: number; active_7d: number; banned: number; unverified: number; admins: number };
   signups: { day: string; count: number }[];
-  activity: { messages_24h: number; messages_7d: number; communities: number; upcoming_plans: number };
+  activity: { messages_24h: number; messages_7d: number; communities: number; communities_24h?: number; communities_total?: number; upcoming_plans: number };
   reports_open: number;
   plans: { gift: number; web: number; play: number };
   provinces: { province: string; count: number }[];

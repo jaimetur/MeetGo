@@ -22,6 +22,9 @@ export function fileUrl(path: string): string {
 
 // ---- session token ----
 const TOKEN_KEY = "token";
+
+/** What waits for the administrators, per section of the administration. */
+export type AdminPending = { moderation: number; categories: number; communities: number; total: number };
 export function getToken(): string {
   try {
     return localStorage.getItem(TOKEN_KEY) || "";
@@ -142,7 +145,7 @@ export const api = {
   emailPrefs: (payload: Record<string, boolean>) => req<Me>("/me/email-prefs", { method: "PATCH", json: payload }),
   publicSettings: () => req<any>("/settings/public"),
   interests: () => req<Interest[]>("/interests"),
-  adminPending: () => req<{ categories: number }>("/admin/categories/pending"),
+  adminPending: () => req<AdminPending>("/admin/pending"),
   categories: () => req<{ key: string; name: string; icon: string | null; color: string | null; builtin: boolean }[]>("/categories"),
   myInterests: () => req<string[]>("/me/interests"),
   setInterests: (slugs: string[]) => req("/me/interests", { method: "POST", json: { interest_slugs: slugs } }),

@@ -163,8 +163,12 @@ async def stats(db: AsyncSession = Depends(get_db), admin: User = Depends(requir
         Message.created_at >= aware - timedelta(hours=24), Message.kind == "text"))).scalar() or 0)
     messages_7d = int((await db.execute(select(func.count()).select_from(Message).where(
         Message.created_at >= aware - timedelta(days=7), Message.kind == "text"))).scalar() or 0)
-    communities = int((await db.execute(select(func.count()).select_from(Conversation).where(
-        Conversation.kind == "channel", Conversation.last_message_at.is_not(None)))).scalar() or 0)
+    # communities with messages today and this week, of all there are (the chats of joined zones are not counted)
+    def channels(*where):
+        return select(func.count()).select_from(Conversation).where(Conversation.kind == "channel", *where)
+    communities = int((await db.execute(channels(Conversation.last_message_at >= aware - timedelta(days=7)))).scalar() or 0)
+    communities_24h = int((await db.execute(channels(Conversation.last_message_at >= aware - timedelta(hours=24)))).scalar() or 0)
+    communities_total = int((await db.execute(channels())).scalar() or 0)
     upcoming = int((await db.execute(select(func.count()).select_from(BoardPost).where(BoardPost.starts_at >= aware))).scalar() or 0)
     reports_open = int((await db.execute(select(func.count()).select_from(Report).where(Report.status == "open"))).scalar() or 0)
     provinces = [{"province": p, "count": int(c)} for p, c in (await db.execute(
@@ -182,7 +186,8 @@ async def stats(db: AsyncSession = Depends(get_db), admin: User = Depends(requir
             "admins": await count(User.role == "admin"),
         },
         "signups": series,
-        "activity": {"messages_24h": messages_24h, "messages_7d": messages_7d, "communities": communities, "upcoming_plans": upcoming},
+        "activity": {"messages_24h": messages_24h, "messages_7d": messages_7d, "communities": communities, "communities_24h": communities_24h,
+                     "communities_total": communities_total, "upcoming_plans": upcoming},
         "reports_open": reports_open,
         "plans": {k: sum(1 for p in plans.values() if p["kind"] == k) for k in ("gift", "web", "play")},
         "provinces": provinces,
@@ -403,6 +408,13 @@ def _apply_interest(it: Interest, payload: AdminInterestIn) -> None:
         # its own interest first, then up to 4 more
         tags = [it.slug] + [s for s in dict.fromkeys(payload.tags) if s != it.slug]
         it.tags = tags[:5]
+
+
+@router.get("/pending", response_model=dict)
+async def pending(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """What waits for review in each section (moderation, categories, communities) and in all."""
+    from app.admin.pending import pending_counts
+    return await pending_counts(db)
 
 
 @router.get("/interests", response_model=list[dict])
@@ -693,6 +705,8 @@ async def resolve_report(report_id: int, payload: ReportResolveIn, db: AsyncSess
     await db.execute(update(Report).where(same, Report.status == "open").values(
         status=payload.status, resolved_by_id=admin.id, resolved_at=utcnow()))
     await db.commit()
+    from app.admin.pending import tell_admins
+    await tell_admins(db)
     return {"ok": True}
 
 

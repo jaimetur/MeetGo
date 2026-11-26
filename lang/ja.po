@@ -4724,6 +4724,9 @@ msgstr "コミュニティへ"
 msgid "err_language_invalid"
 msgstr "無効な言語です"
 
+msgid "ui_admin_pending"
+msgstr "管理で確認待ちの通知（{n}）"
+
 msgid "ui_admin_pending_categories"
 msgstr "確認待ちのカテゴリ提案（{n}）"
 

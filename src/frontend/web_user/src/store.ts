@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import { api } from "./api";
+import { api, type AdminPending } from "./api";
 import type { BillingStatus, Community, Conversation, Me, Message, Post, Reaction } from "./types";
 
 export type MessageList = { items: Message[]; hasMoreBefore: boolean; loaded: boolean; loading: boolean };
@@ -20,7 +20,7 @@ export type State = {
   connected: boolean;
   activeConversation: number | null;
   toasts: Toast[];
-  adminPending: number;  // administrators: category proposals waiting for review
+  adminPending: AdminPending | null;  // administrators: what waits for review in each section
   paywall: boolean;
   // Subscriptions switched on in the administration; while off, nothing about plans is shown.
   subscriptions: boolean;
@@ -49,7 +49,7 @@ const initial: State = {
   connected: false,
   activeConversation: null,
   toasts: [],
-  adminPending: 0,
+  adminPending: null,
   paywall: false,
   subscriptions: false,
   myPlans: null,
@@ -320,12 +320,11 @@ export async function loadCategories() {
   }
 }
 
-/** Administrators: how many category proposals wait for review (one reviewed by anyone disappears for all). */
+/** Administrators: what waits for review in each section (anything reviewed by anyone disappears for all). */
 export async function loadAdminPending() {
   if (getState().me?.role !== "admin") return;
   try {
-    const p = await api.adminPending();
-    setState({ adminPending: p.categories });
+    setState({ adminPending: await api.adminPending() });
   } catch { /* not now: next time */ }
 }
 

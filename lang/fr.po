@@ -5587,6 +5587,9 @@ msgstr "Aller à la communauté"
 msgid "err_language_invalid"
 msgstr "Langue non valide"
 
+msgid "ui_admin_pending"
+msgstr "Éléments à examiner dans l'Administration ({n})"
+
 msgid "ui_admin_pending_categories"
 msgstr "Catégories proposées à examiner ({n})"
 

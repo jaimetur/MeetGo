@@ -84,6 +84,8 @@ async def test_proposals_notify_admins_and_approval_translates(client, db_sessio
     assert (await client.get("/admin/categories/pending", headers=admin)).json() == {"categories": 0}
     await _create(client, ana, "Tertulias", category_proposal="Opinión")
     assert (await client.get("/admin/categories/pending", headers=admin)).json() == {"categories": 1}
+    waiting = (await client.get("/admin/pending", headers=admin)).json()
+    assert waiting["categories"] == 1 and waiting["total"] == waiting["moderation"] + waiting["categories"] + waiting["communities"]
     assert len(events) == 1  # the administrators connected see it now
 
     [proposal] = (await client.get("/admin/categories", headers=admin)).json()["proposals"]
