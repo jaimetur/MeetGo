@@ -42,7 +42,7 @@ export function Interests() {
       <div className="adm-toolbar">
         <div className="adm-search">
           <Icon name="search" size="sm" />
-          <input className="inp" type="search" placeholder={a("in_search")} value={q} onChange={(e) => setQ(e.target.value)} />
+          <input className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("in_search")} value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
       </div>
 

@@ -96,7 +96,7 @@ export function Users({ initialFilter }: { initialFilter?: string }) {
       <div className="adm-toolbar">
         <div className="adm-search">
           <Icon name="search" size="sm" />
-          <input id="adm-user-search" className="inp" type="search" placeholder={a("us_search")} value={q} onChange={(e) => setQ(e.target.value)} />
+          <input id="adm-user-search" className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("us_search")} value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
         <select id="adm-user-sort" className="inp adm-sort" value={sort} onChange={(e) => setSort(e.target.value as Sort)} aria-label={a("us_sort_recent")}>
           <option value="recent">{a("us_sort_recent")}</option>

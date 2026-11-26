@@ -48,10 +48,13 @@ export function Communities({ initialFilter }: { initialFilter?: string }) {
   useEffect(() => { load(); }, []);
 
   const groups = useMemo(() => {
+    // from the start of words: «lu» finds Lugo, not Andalucía; «coruña» finds A Coruña
     const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const needle = plain(q.trim());
+    const words = (x: string) => plain(x).split(/[^a-z0-9]+/).filter(Boolean);
+    const terms = words(q);
+    const needle = terms.length > 0;
     const out = new Map<string, AdminInterest[]>();
-    for (const i of (list || []).filter((i) => (!needle || [i.name, i.slug, ...(i.places || [])].some((x) => plain(x).includes(needle)))
+    for (const i of (list || []).filter((i) => (!needle || ((all) => terms.every((t) => all.some((w) => w.startsWith(t))))([i.name, i.slug.replace(/_/g, " "), ...(i.places || [])].flatMap(words)))
         && (!zone || (i.zone_list || []).some((z) => z.key === zone)) && (!age || bandsOf(i).includes(age))
         && (!suggested || (suggested === "any" ? !!i.suggest : i.suggest === suggested)))) {
       const cat = i.category || autoCategory(i);
@@ -78,7 +81,7 @@ export function Communities({ initialFilter }: { initialFilter?: string }) {
       <div className="adm-toolbar">
         <div className="adm-search">
           <Icon name="search" size="sm" />
-          <input className="inp" type="search" placeholder={a("co_search")} value={q} onChange={(e) => setQ(e.target.value)} />
+          <input className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("co_search")} value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
         <select id="adm-co-zone" className="inp adm-sort" value={zone} onChange={(e) => setZone(e.target.value)} aria-label={a("co_f_zone")}>
           <option value="">{a("co_f_zone_all")}</option>

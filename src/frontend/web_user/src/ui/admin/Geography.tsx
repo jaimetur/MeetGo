@@ -34,7 +34,7 @@ export function Countries({ s, patch }: { s: Settings; patch: (p: Settings) => v
       <div className="adm-toolbar">
         <div className="adm-search">
           <Icon name="search" size="sm" />
-          <input className="inp" type="search" placeholder={a("ge_search")} value={q} onChange={(e) => setQ(e.target.value)} />
+          <input className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("ge_search")} value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
         <button id="adm-country-new" className="btn pri sm" onClick={() => setOpen("new")}><Icon name="plus" size="sm" />{a("ge_new")}</button>
       </div>
@@ -172,7 +172,7 @@ function CountryEditor({ s, code, onClose, onApply }: { s: Settings; code: strin
 
       <div className="adm-sub">
         <div className="adm-sub-head"><b>{kindLabel(kind)} · {regions.length}</b>{groups.length ? <span className="muted">{a("ge_groups", { n: groups.length })}</span> : null}</div>
-        {regions.length > 8 ? <input className="inp" type="search" placeholder={a("ge_filter")} value={filter} onChange={(e) => setFilter(e.target.value)} /> : null}
+        {regions.length > 8 ? <input className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("ge_filter")} value={filter} onChange={(e) => setFilter(e.target.value)} /> : null}
         <div className="adm-regions">
           {shown.map((r) => (
             <div key={r.value} className="adm-region">

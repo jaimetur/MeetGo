@@ -204,7 +204,7 @@ function BulkMove({ data, onDone, fixedTo }: { data: AdminCategories; onDone: ()
     <section className={"cg-bulk" + (fixedTo ? "" : " adm-card")}>
       {fixedTo ? null : <div className="adm-card-head"><b>{a("cg_bulk")}</b><span className="muted">{a("cg_bulk_hint")}</span></div>}
       <div className="adm-toolbar">
-        <div className="adm-search"><Icon name="search" size="sm" /><input className="inp" type="search" placeholder={a("cg_search")} value={q} onChange={(e) => setQ(e.target.value)} /></div>
+        <div className="adm-search"><Icon name="search" size="sm" /><input className="inp" type="search" autoComplete="off" autoCorrect="off" spellCheck={false} placeholder={a("cg_search")} value={q} onChange={(e) => setQ(e.target.value)} /></div>
         <select className="inp" value={from} onChange={(e) => setFrom(e.target.value)} aria-label={a("cg_from")}>
           <option value="">{a("cg_from_all")}</option>
           {data.categories.map((c) => <option key={c.key} value={c.key}>{c.name}</option>)}
