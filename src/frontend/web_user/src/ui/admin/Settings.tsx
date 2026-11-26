@@ -26,7 +26,7 @@ export function Settings() {
 
   if (!s) return <div className="adm-loading">{a("loading")}</div>;
   const put = (path: string, value: unknown) => setS((prev) => {
-    const next = structuredClone(prev || {});
+    const next = JSON.parse(JSON.stringify(prev || {}));  // not structuredClone: older WebViews (Chrome < 98) lack it
     const parts = path.split(".");
     let cur: any = next;
     for (const p of parts.slice(0, -1)) cur = cur[p] = cur[p] ?? {};
