@@ -1204,11 +1204,14 @@ ol.rt-list li::before { content: counter(rt); width: 20px; height: 20px; margin-
 .segtabs.cfilter { margin: 0 0 16px; max-width: 520px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .segtabs.cfilter.c4 { max-width: 640px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 /* four tabs on a phone: each as wide as its text, and the row scrolls sideways if they do not fit */
-@media (max-width: 520px) { .segtabs.cfilter.c4 { display: flex; overflow-x: auto; scrollbar-width: none; } .segtabs.cfilter.c4::-webkit-scrollbar { display: none; } .segtabs.cfilter.c4 button { flex: 1 0 auto; padding-inline: 8px; overflow: visible; } }
+@media (max-width: 520px) { .segtabs.cfilter.c4 { display: flex; overflow-x: auto; scrollbar-width: none; } .segtabs.cfilter.c4::-webkit-scrollbar { display: none; } .segtabs.cfilter.c4 button { flex: 1 0 auto; padding-inline: 5px; overflow: visible; } }
 .segtabs.cfilter button { min-width: 0; padding-inline: 6px; overflow: hidden; text-overflow: ellipsis; }
 .segtabs.cfilter .cfs { display: none; }
 @media (max-width: 520px) { .segtabs.cfilter .cfl { display: none; } .segtabs.cfilter .cfs { display: inline; } }
-.segtabs.cfilter .cfn { opacity: 0.75; font-weight: 700; margin-left: 2px; font-variant-numeric: tabular-nums; }
+.segtabs.cfilter .cfn { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 2px; line-height: 1.5; border-radius: 999px; font-size: 0.85em; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--blue); background: color-mix(in srgb, var(--blue) 16%, transparent); }  /* the counts in a colour of their own */
+:root:not([data-theme="light"]) .segtabs.cfilter .cfn { color: var(--cyan); background: color-mix(in srgb, var(--cyan) 16%, transparent); }
+.segtabs.cfilter button.on .cfn, :root:not([data-theme="light"]) .segtabs.cfilter button.on .cfn { color: #fff; background: rgb(255 255 255 / .25); }
 
 /* right-click menu of a chat in the list */
 .menu.ctxmenu { z-index: 60; min-width: 230px; max-height: calc(var(--screen-h, 100vh) - 16px); overflow-y: auto; }
