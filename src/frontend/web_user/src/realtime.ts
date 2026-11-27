@@ -194,9 +194,10 @@ function handle(ev: any) {
     case "post.updated":
     case "post.deleted":
     case "comment.created":
+    case "comment.updated":
     case "attendance.changed":
       emitBoardEvent(ev);
-      if (ev.type !== "comment.created") refreshMyPlansSoon();
+      if (ev.type !== "comment.created" && ev.type !== "comment.updated") refreshMyPlansSoon();
       break;
   }
 }

@@ -2073,6 +2073,7 @@ button.fwho-row:hover { background: var(--panel2); }
 .stcolors button { width: 30px; height: 30px; border-radius: 50%; border: 3px solid transparent; }
 .stcolors button.on { border-color: var(--fg); }
 .sthide-toggle { margin-top: 10px; display: block; }
+.stbg-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 1.5px var(--line2); }
 .sthide { display: flex; flex-direction: column; gap: 4px; max-height: 200px; overflow: auto; margin-top: 6px; }
 .sthide-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
 /* watching */
@@ -2681,8 +2682,15 @@ button.fwho-row:hover { background: var(--panel2); }
   .stmodal .strow .stbtn-label { display: none; }
   .stmodal .strow .strange, .stmodal .strow .strange input { min-width: 0; }
   .stmodal .stpanel { padding: 8px; gap: 6px; }
-  .stmodal .ststicker-pages { height: 132px; }
+  .stmodal .ststicker-pages { height: 100px; }
+  .stmodal .stkind { margin-bottom: 4px; }
+  .stmodal .stkind button { padding-block: 6px; }
+  .stmodal .ststickers button { height: 34px; font-size: 22px; }
   .stmodal .stcolors { justify-content: flex-start; margin-top: 0; }
   .stmodal .sthide-toggle { margin-top: 0; }
-  .stmodal .sthide { max-height: 120px; }
+  .stmodal .sthide { max-height: 140px; }
 }
+
+/* a reply being edited in its place */
+.cmt-editing { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.cmt-editing textarea { resize: vertical; min-height: 60px; }

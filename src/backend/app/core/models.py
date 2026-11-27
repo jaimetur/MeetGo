@@ -501,6 +501,7 @@ class BoardComment(Base):
     author_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     body: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    edited_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)  # its author changed it
 
 
 # ---------------- Subscriptions ----------------

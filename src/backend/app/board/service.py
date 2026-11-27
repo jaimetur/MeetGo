@@ -226,7 +226,8 @@ async def posts_out(db: AsyncSession, user: User, posts: list[BoardPost]) -> lis
 
 def comment_out(c: BoardComment, author: User | None, user: User, staff: bool) -> dict:
     return {"id": c.id, "post_id": c.post_id, "author": user_summary(author), "body": c.body,
-            "created_at": iso(c.created_at), "can_delete": staff or (c.author_id == user.id)}
+            "created_at": iso(c.created_at), "edited_at": iso(c.edited_at),
+            "can_delete": staff or (c.author_id == user.id), "can_edit": c.author_id == user.id}
 
 
 # ---------- feed ----------

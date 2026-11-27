@@ -44,22 +44,48 @@ export const native = {
     call((b) => JSON.parse(b.takeShared() || "{}"), {}),
 };
 
-/** A light tap of the phone when a button is pressed: the app's own (system touch feedback) or, in a browser that has
- *  it (Android's Chrome), a very short vibration. iPhones' browsers have none. */
+/** A light tap of the phone when a button is pressed: the app's own (system touch feedback); in a browser that has it
+ *  (Android's Chrome), a very short vibration; on iPhones (Safari has no vibration), the tap iOS 18 gives when a
+ *  system switch (<input type="checkbox" switch>) is toggled, through a hidden one. */
 let lastHaptic = 0;
+let iosSwitch: HTMLLabelElement | null = null;
+const canVibrate = typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
+function iosTap() {
+  if (!iosSwitch) {
+    const label = document.createElement("label");
+    label.setAttribute("aria-hidden", "true");
+    label.dataset.hapticSelf = "1";
+    // fixed in a corner, invisible and out of the way: it never scrolls the page nor takes the focus
+    label.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;";
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.setAttribute("switch", "");
+    input.tabIndex = -1;
+    label.appendChild(input);
+    document.body.appendChild(label);
+    iosSwitch = label;
+  }
+  iosSwitch.click();
+}
 export function haptic() {
   const now = Date.now();
   if (now - lastHaptic < 60) return;
   lastHaptic = now;
   if (bridge?.haptic) { call((b) => b.haptic!(), undefined); return; }
-  if (!bridge) try { navigator.vibrate?.(8); } catch { /* not allowed here */ }
+  if (bridge) return;  // an older app: nothing
+  try {
+    if (canVibrate) navigator.vibrate(8);
+    else iosTap();
+  } catch { /* not allowed here */ }
 }
 
 /** Every press of a button, tab, chip, switch or checkbox of the app gets the tap (once the press is done: not when a
  *  finger only starts a scroll on it). */
 export function enableHaptics() {
   document.addEventListener("click", (e) => {
-    const el = (e.target as Element | null)?.closest?.("button, [role=button], [role=tab], [role=switch], a.btn, .chip, label.tgl, input[type=checkbox], input[type=radio]");
+    const target = e.target as Element | null;
+    if (target?.closest?.("[data-haptic-self]")) return;  // the hidden switch of the iPhone's tap
+    const el = target?.closest?.("button, [role=button], [role=tab], [role=switch], a.btn, .chip, label.tgl, input[type=checkbox], input[type=radio]");
     if (el && !(el as HTMLButtonElement).disabled) haptic();
   }, { capture: true, passive: true });
 }

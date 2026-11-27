@@ -6247,6 +6247,9 @@ msgstr "Émojis"
 msgid "ui_story_tool_filters"
 msgstr "Filtres"
 
+msgid "ui_story_tool_bg"
+msgstr "Fond"
+
 msgid "ui_story_tool_music"
 msgstr "Musique"
 

@@ -5234,6 +5234,9 @@ msgstr "Emoji's"
 msgid "ui_story_tool_filters"
 msgstr "Filters"
 
+msgid "ui_story_tool_bg"
+msgstr "Achtergrond"
+
 msgid "ui_story_tool_music"
 msgstr "Muziek"
 

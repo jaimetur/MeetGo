@@ -5234,6 +5234,9 @@ msgstr "表情"
 msgid "ui_story_tool_filters"
 msgstr "滤镜"
 
+msgid "ui_story_tool_bg"
+msgstr "背景"
+
 msgid "ui_story_tool_music"
 msgstr "音乐"
 

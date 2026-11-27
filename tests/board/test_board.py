@@ -170,6 +170,13 @@ async def test_comments_modes(client, db_session):
     page = (await client.get(f"/posts/{open_post['id']}/comments", headers=cris[0])).json()
     assert [c["author"]["username"] for c in page["comments"]] == ["Bea"] and page["comments"][0]["can_delete"] is False
     assert (await client.get(f"/posts/{open_post['id']}", headers=cris[0])).json()["comment_count"] == 1
+    # its author edits a reply in a debate (it shows as edited); nobody else can
+    reply = page["comments"][0]
+    assert (await client.patch(f"/comments/{reply['id']}", json={"body": "Otra cosa"}, headers=cris[0])).status_code == 403
+    edited = (await client.patch(f"/comments/{reply['id']}", json={"body": "  Mejor así  "}, headers=bea[0])).json()
+    assert edited["body"] == "Mejor así" and edited["edited_at"] and edited["can_edit"] is True
+    again = (await client.get(f"/posts/{open_post['id']}/comments", headers=cris[0])).json()["comments"][0]
+    assert again["body"] == "Mejor así" and again["edited_at"] and again["can_edit"] is False
 
     plan = await _post(client, ana[0], com["id"], comments_mode="attendees")
     assert (await comment(plan, bea)).status_code == 403

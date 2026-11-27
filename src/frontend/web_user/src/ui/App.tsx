@@ -397,8 +397,16 @@ function Shell() {
   // my account opens on the tab I was on in this session, and Chats on the chat I had open
   const go = (name: string) => {
     const last = chatMemory.id;
-    // the list goes first in the history, so back (button or swipe) from that chat lands on the list, not on where I came from
-    if (name === "chats" && last && getState().conversations[last]) { navigate("/chats"); navigate(chatPath(last)); chatMemory.id = last; return; }
+    // the list goes first in the history, so back (button or swipe) from that chat lands on the list, not on where I came
+    // from. The chat opens once the list has been drawn: the iPhone's back swipe shows a picture of the previous screen
+    // taken when leaving it, and it must be the list's, not the module's I came from
+    if (name === "chats" && last && getState().conversations[last]) {
+      navigate("/chats");
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (window.location.pathname.endsWith("/chats")) { navigate(chatPath(last)); chatMemory.id = last; }
+      }));
+      return;
+    }
     navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
   };
 

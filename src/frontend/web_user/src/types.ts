@@ -228,7 +228,7 @@ export type Post = {
 
 export type PostPage = { posts: Post[]; has_more: boolean };
 export type Attendee = UserSummary & { status: AttendStatus; guests?: number; attended?: boolean | null };
-export type Comment = { id: number; post_id: number; author: UserSummary; body: string; created_at: string; can_delete: boolean };
+export type Comment = { id: number; post_id: number; author: UserSummary; body: string; created_at: string; edited_at?: string | null; can_delete: boolean; can_edit?: boolean };
 export type FeedFilter = { kind?: PostKind | "plan"; when?: "all" | "today" | "weekend" | "week" | "upcoming" | "past"; community_id?: number; before_id?: number; limit?: number };
 
 /** A post of someone's wall (Inicio → My wall / My friends). */

@@ -301,6 +301,7 @@ export const api = {
   comments: (id: number, beforeId?: number) => req<{ comments: Comment[]; has_more: boolean }>(`/posts/${id}/comments${qs({ before_id: beforeId })}`),
   addComment: (id: number, body: string) => req<Comment>(`/posts/${id}/comments`, { method: "POST", json: { body } }),
   deleteComment: (id: number) => req(`/comments/${id}`, { method: "DELETE" }),
+  editComment: (id: number, body: string) => req<Comment>(`/comments/${id}`, { method: "PATCH", json: { body } }),
   reportPost: (id: number, reason: string, details?: string) => req(`/posts/${id}/report`, { method: "POST", json: { reason, details } }),
   myPlans: (when: "upcoming" | "past" | "organizing") => req<Post[]>(`/me/plans?when=${when}`),
 

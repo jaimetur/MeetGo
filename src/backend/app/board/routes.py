@@ -408,6 +408,32 @@ async def add_comment(post_id: int, payload: CommentIn, db: AsyncSession = Depen
     return out
 
 
+@router.patch("/comments/{comment_id}", response_model=dict)
+async def edit_comment(comment_id: int, payload: CommentIn, db: AsyncSession = Depends(get_db),
+                       user: User = Depends(require_write_access)):
+    """Its author changes the text (while they can still comment there); it shows as edited. Moderation reads it again."""
+    comment = await db.get(BoardComment, comment_id)
+    if not comment:
+        raise HTTPException(404, t("err_comment_not_found"))
+    post, conv, member = await get_post(db, comment.post_id, user)
+    if comment.author_id != user.id:
+        raise HTTPException(403, t("err_forbidden"))
+    block = board.comment_block(post, member, user, await board.my_status(db, post.id, user.id))
+    if block:
+        raise HTTPException(403, t(block))
+    body = payload.body.strip()
+    if not body:
+        raise HTTPException(400, t("err_empty_message"))
+    if body != comment.body:
+        comment.body, comment.edited_at = body, utcnow()
+        await db.commit()
+        _background(automod.check_comment(comment.id))
+    out = board.comment_out(comment, user, user, staff_of(member, user))
+    await _publish(db, conv.id, {"type": "comment.updated", "community_id": conv.id, "post_id": post.id,
+                                 "comment": {**out, "can_delete": False, "can_edit": False}})
+    return out
+
+
 @router.delete("/comments/{comment_id}", response_model=dict)
 async def delete_comment(comment_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     comment = await db.get(BoardComment, comment_id)

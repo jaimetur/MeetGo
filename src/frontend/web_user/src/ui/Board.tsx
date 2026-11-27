@@ -753,10 +753,27 @@ function Comments({ post }: { post: Post }) {
   }, [post.id]);
 
   useEffect(() => onBoardEvent((ev) => {
-    if (ev.type !== "comment.created" || !ev.comment || ev.comment.post_id !== post.id) return;
+    if (!ev.comment || ev.comment.post_id !== post.id) return;
     const c = ev.comment;
-    setItems((xs) => (xs && !xs.some((x) => x.id === c.id) ? [...xs, c] : xs));
+    if (ev.type === "comment.created") setItems((xs) => (xs && !xs.some((x) => x.id === c.id) ? [...xs, c] : xs));
+    // someone else edited theirs: the new text (what I may do with it stays mine)
+    if (ev.type === "comment.updated") setItems((xs) => xs?.map((x) => (x.id === c.id ? { ...x, body: c.body, edited_at: c.edited_at } : x)) || null);
   }), [post.id]);
+  // the reply I am changing, and its text while I write
+  const [editing, setEditing] = useState<{ id: number; body: string } | null>(null);
+  async function saveEdit() {
+    if (!editing || !editing.body.trim()) return;
+    setBusy(true);
+    try {
+      const c = await api.editComment(editing.id, editing.body.trim());
+      setItems((xs) => xs?.map((x) => (x.id === c.id ? c : x)) || null);
+      setEditing(null);
+    } catch (e: any) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function older() {
     if (!items?.length) return;
@@ -809,10 +826,26 @@ function Comments({ post }: { post: Post }) {
         <div key={c.id} className="cmt">
           <Avatar user={c.author} size={30} />
           <div className="cmtb">
-            <div className="row" style={{ gap: 6 }}><b>{c.author.display_name}</b><span className="muted">{relative(c.created_at)}</span>
+            <div className="row" style={{ gap: 6 }}><b>{c.author.display_name}</b><span className="muted">{relative(c.created_at)}{c.edited_at ? ` · ${t("ui_edited")}` : ""}</span>
+              {c.can_edit && editing?.id !== c.id ? <button className="iconbtn tiny cmt-edit" aria-label={t("ui_edit")} title={t("ui_edit")} onClick={() => setEditing({ id: c.id, body: c.body })}><Icon name="edit" size="sm" /></button> : null}
               {c.can_delete ? <button className="iconbtn tiny" aria-label={t("ui_delete")} title={t("ui_delete")} onClick={() => remove(c)}><Icon name="trash" size="sm" /></button> : null}
             </div>
-            <div className="cmtt">{c.body}</div>
+            {editing?.id === c.id ? (
+              <div className="cmt-editing">
+                <textarea className="inp" rows={2} maxLength={2000} value={editing.body} autoFocus aria-label={t("ui_edit")}
+                  onChange={(e) => setEditing({ id: c.id, body: e.target.value })}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") setEditing(null);
+                    if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); saveEdit(); }
+                  }} />
+                {/* pressing them keeps the focus in the text: otherwise the screen moves under the finger (the keyboard
+                    closes) before the press ends, and it is lost */}
+                <div className="row" style={{ gap: 6, justifyContent: "flex-end" }} onMouseDown={(e) => e.preventDefault()}>
+                  <button className="btn sm" onClick={() => setEditing(null)}>{t("ui_cancel")}</button>
+                  <button className="btn sm pri" disabled={busy || !editing.body.trim()} onClick={saveEdit}>{t("ui_save")}</button>
+                </div>
+              </div>
+            ) : <div className="cmtt">{c.body}</div>}
           </div>
         </div>
       ))}

@@ -4,7 +4,7 @@ import type { Comment, Post } from "./types";
 
 // ---------- live events (post.created, post.updated, post.deleted, comment.created, attendance.changed) ----------
 export type BoardEvent = {
-  type: "post.created" | "post.updated" | "post.deleted" | "comment.created" | "attendance.changed";
+  type: "post.created" | "post.updated" | "post.deleted" | "comment.created" | "comment.updated" | "attendance.changed";
   post?: Post;
   post_id?: number;
   community_id?: number;

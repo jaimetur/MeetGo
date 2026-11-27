@@ -62,7 +62,8 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   const [bg, setBg] = useState(BACKGROUNDS[0]);
   const [layout, setLayout] = useState<StoryLayout>({ text: { ...DEFAULT_TEXT }, stickers: [], filter: "none" });
   const [selected, setSelected] = useState<number | "text" | null>(null);
-  const [tool, setTool] = useState<"text" | "stickers" | "filters" | null>("text");
+  // on phones every panel starts closed, so the preview is as big as it can be
+  const [tool, setTool] = useState<"text" | "stickers" | "filters" | "bg" | "hide" | null>(() => (window.matchMedia?.("(max-width: 700px)").matches ? null : "text"));
   const [group, setGroup] = useState("faces");
   const stickerPages = useRef<HTMLDivElement>(null);
   // opening the emojis again: the page of the category that was on
@@ -74,7 +75,7 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   const [picking, setPicking] = useState(false);
   const [audience, setAudience] = useState("friends");
   const [hidden, setHidden] = useState<number[]>([]);
-  const [hiding, setHiding] = useState(false);
+  const [friendQ, setFriendQ] = useState("");
   const [friends, setFriends] = useState<UserSummary[] | null>(null);
   const [busy, setBusy] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -84,7 +85,7 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
     setPreview(u);
     return () => URL.revokeObjectURL(u);
   }, [file]);
-  useEffect(() => { if (hiding && !friends) api.friends().then(setFriends).catch(() => setFriends([])); }, [hiding]);
+  useEffect(() => { if (tool === "hide" && !friends) api.friends().then(setFriends).catch(() => setFriends([])); }, [tool]);
   const video = !!file && file.type.startsWith("video/");
   const tx = { ...DEFAULT_TEXT, ...(layout.text || {}) };
   const setText2 = (patch: Partial<typeof tx>) => setLayout((l) => ({ ...l, text: { ...tx, ...patch } }));
@@ -147,7 +148,10 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
             <button type="button" className={"chip" + (tool === "text" ? " on" : "")} onClick={() => setTool(tool === "text" ? null : "text")}><Icon name="edit" size="sm" />{t("ui_story_tool_text")}</button>
             <button id="story-tool-stickers" type="button" className={"chip" + (tool === "stickers" ? " on" : "")} onClick={() => setTool(tool === "stickers" ? null : "stickers")}><Icon name="smile" size="sm" />{t("ui_story_tool_stickers")}</button>
             {kind === "media" && file ? <button type="button" className={"chip" + (tool === "filters" ? " on" : "")} onClick={() => setTool(tool === "filters" ? null : "filters")}><Icon name="image" size="sm" />{t("ui_story_tool_filters")}</button> : null}
+            {kind === "text" ? <button id="story-tool-bg" type="button" className={"chip" + (tool === "bg" ? " on" : "")} onClick={() => setTool(tool === "bg" ? null : "bg")}><span className="stbg-dot" style={{ background: bg }} />{t("ui_story_tool_bg")}</button> : null}
             <button id="story-tool-music" type="button" className={"chip" + (music ? " on" : "")} onClick={() => setPicking(true)}><Icon name="music" size="sm" />{t("ui_story_tool_music")}</button>
+            <button id="story-tool-hide" type="button" className={"chip" + (tool === "hide" ? " on" : "")} onClick={() => setTool(tool === "hide" ? null : "hide")}><Icon name="eye" size="sm" />{hidden.length ? t("ui_story_hidden_n", { n: hidden.length }) : t("ui_story_hide_from")}</button>
+            {kind === "media" && file ? <button type="button" className="chip" onClick={() => input.current?.click()}><Icon name="image" size="sm" />{t("ui_story_change")}</button> : null}
           </div>
           {tool === "text" ? (
             <div className="stpanel">
@@ -205,23 +209,34 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
               ))}
             </div>
           ) : null}
-          {kind === "text" ? (
-            <div className="stcolors">
-              {BACKGROUNDS.map((c) => <button key={c} type="button" className={bg === c ? "on" : ""} style={{ background: c }} onClick={() => setBg(c)} aria-label={c} />)}
+          {tool === "bg" && kind === "text" ? (
+            <div className="stpanel">
+              <div className="stcolors">
+                {BACKGROUNDS.map((c) => <button key={c} type="button" className={bg === c ? "on" : ""} style={{ background: c }} onClick={() => setBg(c)} aria-label={c} />)}
+              </div>
             </div>
-          ) : file ? <button type="button" className="linkbtn" onClick={() => input.current?.click()}>{t("ui_story_change")}</button> : null}
-          <button type="button" className="linkbtn sthide-toggle" onClick={() => setHiding(!hiding)}>
-            {hidden.length ? t("ui_story_hidden_n", { n: hidden.length }) : t("ui_story_hide_from")}
-          </button>
-          {hiding ? (
-            <div className="sthide">
-              {friends === null ? <span className="muted">{t("ui_loading")}</span> : friends.length === 0 ? <span className="muted">{t("ui_story_no_friends")}</span>
-                : friends.map((f) => (
-                  <label key={f.id} className="sthide-row">
-                    <input type="checkbox" checked={hidden.includes(f.id)} onChange={(e) => setHidden((h) => (e.target.checked ? [...h, f.id] : h.filter((x) => x !== f.id)))} />
-                    <Avatar user={f} size={28} /><span>{f.display_name}</span>
-                  </label>
-                ))}
+          ) : null}
+          {tool === "hide" ? (
+            <div className="stpanel">
+              {friends && friends.length > 0 ? (
+                <div className="search" id="story-hide-search"><Icon name="search" size="sm" />
+                  <input type="search" value={friendQ} onChange={(e) => setFriendQ(e.target.value)} placeholder={t("ui_search_friends")} aria-label={t("ui_search_friends")} autoComplete="off" />
+                </div>
+              ) : null}
+              <div className="sthide">
+                {friends === null ? <span className="muted">{t("ui_loading")}</span> : friends.length === 0 ? <span className="muted">{t("ui_story_no_friends")}</span> : (() => {
+                  // by the name shown or the alias, without accents
+                  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                  const words = plain(friendQ).split(/\s+/).filter(Boolean);
+                  const shown = friends.filter((f) => words.every((w) => plain(`${f.display_name} ${f.username || ""}`).includes(w)));
+                  return shown.length ? shown.map((f) => (
+                    <label key={f.id} className="sthide-row">
+                      <input type="checkbox" checked={hidden.includes(f.id)} onChange={(e) => setHidden((h) => (e.target.checked ? [...h, f.id] : h.filter((x) => x !== f.id)))} />
+                      <Avatar user={f} size={28} /><span>{f.display_name}</span>
+                    </label>
+                  )) : <span className="muted">{t("ui_no_results")}</span>;
+                })()}
+              </div>
             </div>
           ) : null}
         </div>
