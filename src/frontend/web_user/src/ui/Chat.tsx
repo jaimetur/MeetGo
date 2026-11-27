@@ -36,6 +36,14 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
   const [atBottom, setAtBottom] = useState(true);
   const [flashId, setFlashId] = useState<number | null>(around);
   const [firstItemIndex, setFirstItemIndex] = useState(START_INDEX);
+  // the messages stay invisible until the list has placed them (it draws them a moment after it appears): then they
+  // show at once, instead of an empty list, the start of the chat and the messages one after the other
+  const [placed, setPlaced] = useState(false);
+  useEffect(() => {
+    setPlaced(false);
+    const t = window.setTimeout(() => setPlaced(true), 400);  // never hidden for long
+    return () => window.clearTimeout(t);
+  }, [conversationId, around]);
   const [lastReadAtOpen, setLastReadAtOpen] = useState<number | null>(null);
   const virtuoso = useRef<VirtuosoHandle>(null);
   // The last message stays fully in view: after sending (the message box shrinks back, the keyboard may move) and
@@ -205,7 +213,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
       ) : null}
       {conv.slow_mode_seconds && !staff ? <div className="banner"><Icon name="info" size="sm" /><span className="txt">{t("ui_slow_mode", { seconds: conv.slow_mode_seconds })}</span></div> : null}
 
-      <div className="msgs">
+      <div className={"msgs" + (placed || !items.length ? " placed" : "")}>
         {list?.loaded ? (
           items.length ? (
             <Virtuoso
@@ -221,7 +229,8 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
               atBottomStateChange={(b) => { bottomRef.current = b; setAtBottom(b); }}
               atBottomThreshold={80}
               increaseViewportBy={{ top: 600, bottom: 300 }}
-              components={{ Header: () => (list.hasMoreBefore ? <div className="empty" style={{ padding: 12 }}>{t("ui_loading")}</div> : <ConversationStart conv={conv} />) }}
+              itemsRendered={(shown) => { if (shown.length) setPlaced(true); }}
+              components={{ Header: () => (list.hasMoreBefore ? (list.loading ? <div className="empty" style={{ padding: 12 }}>{t("ui_loading")}</div> : null) : <ConversationStart conv={conv} />) }}
               itemContent={(index, m) => {
                 const i = index - firstItemIndex;
                 const prev = i > 0 ? items[i - 1] : undefined;
