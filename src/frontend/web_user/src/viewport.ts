@@ -9,6 +9,12 @@
 // A web app added to the Mac's Dock also says `standalone`, but its window is not the whole screen: a Mac has no
 // touch screen, an iPhone or iPad does.
 const iosStandalone = () => (navigator as any).standalone === true && navigator.maxTouchPoints > 0;
+// The screen's height in the current orientation.
+const screenHeight = () => (window.innerHeight >= window.innerWidth ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height));
+// Really on the whole screen: installed, the visible area is the screen less the status bar (about 60 points). The
+// Safari panel an installed web app opens links in (jtgcloud.com from its icon) says `standalone` too, but it has
+// its own bars: there the visible area is much shorter, and the app must fit it like in a browser.
+const iosFullScreen = () => iosStandalone() && screenHeight() - window.innerHeight <= 100;
 
 export function setupViewport() {
   const root = document.documentElement;
@@ -37,11 +43,11 @@ export function setupViewport() {
       // Only with the keyboard open: fit the app above it, so the header and the composer stay visible.
       root.style.setProperty("--app-height", `${Math.round(height)}px`);
       root.style.setProperty("--app-top", `${Math.round(vv ? vv.offsetTop : 0)}px`);
-    } else if (iosStandalone()) {
+    } else if (iosFullScreen()) {
       // Installed on the iPhone, iOS reports a viewport shorter than the screen (it takes the status bar off) while
       // the app is drawn from the top of the screen: size it to the whole screen, edge to edge.
       const portrait = window.innerHeight >= window.innerWidth;
-      const full = portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+      const full = screenHeight();
       root.style.setProperty("--app-height", `${Math.max(full, window.innerHeight)}px`);
       root.style.setProperty("--app-top", "0px");
       // Phones with a home indicator (no home button): if iOS reports no bottom safe area, keep its space anyway.
