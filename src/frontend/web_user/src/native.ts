@@ -59,13 +59,15 @@ export function haptic() {
 
 /** iPhones (no vibration for web pages): the system gives its tap only when a finger really presses a switch
  *  (<input type="checkbox" switch>, iOS 18 on). So, for every button (as on Android), one invisible switch is put
- *  right under the finger when it touches one, and the press is handed to the button underneath. Not where holding
- *  the finger opens a menu (the chats of the list, the messages, the logo): the switch would take that hold. While waiting it is fully transparent and off the screen: iOS then does
+ *  right under the finger when it touches one, and the press is handed to the button underneath. Where holding the
+ *  finger opens a menu (the chats of the list, the logo), the hold is handed too (as a context menu). Not inside the
+ *  messages of a chat, which handle the finger themselves. While waiting it is fully transparent and off the screen: iOS then does
  *  not count its move as something appearing under the finger (it would drop that first tap). A move of the finger
  *  (a scroll) sends it away, so lists scroll as always. */
 // buttons, tabs, chips, switches, checkboxes and the cards that open something (role link) or links
 const TAP_TARGETS = "button, [role=button], [role=tab], [role=switch], [role=link], a[href], .chip, label.tgl, input[type=checkbox], input[type=radio]";
-const IOS_HOLD = ".crow, .appiconbtn, .msgs";
+const IOS_SKIP = ".msgs";
+const IOS_HOLD = ".crow, .appiconbtn";
 function iosTaps() {
   const sw = document.createElement("input");
   sw.type = "checkbox";
@@ -77,16 +79,42 @@ function iosTaps() {
   document.body.appendChild(sw);
   let target: HTMLElement | null = null;
   let from: { x: number; y: number } | null = null;
-  const park = () => { sw.style.left = "-200px"; sw.style.top = "-200px"; target = null; };
+  let held = false;
+  let holdTimer = 0;
+  let heldAt = 0;
+  let heldEl: HTMLElement | null = null;
+  // lifting the finger after a hold must not also open what was held
+  document.addEventListener("click", (e) => {
+    if (heldEl && Date.now() - heldAt < 1500 && heldEl.contains(e.target as Node)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    heldEl = null;
+  }, { capture: true });
+  const park = () => { sw.style.left = "-200px"; sw.style.top = "-200px"; target = null; window.clearTimeout(holdTimer); };
   document.addEventListener("touchstart", (e) => {
     const touched = e.target as Element | null;
     // a switch of the app: the whole row (its own checkbox is hidden inside it)
     const el = (touched?.closest?.("label.tgl") || touched?.closest?.(TAP_TARGETS)) as HTMLElement | null;
-    if (!el || e.touches.length > 1 || (el as HTMLButtonElement).disabled || touched?.closest?.(IOS_HOLD) || el === sw) return;
+    if (!el || e.touches.length > 1 || (el as HTMLButtonElement).disabled || touched?.closest?.(IOS_SKIP) || el === sw) return;
     const r = el.getBoundingClientRect();
     Object.assign(sw.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
     target = el;
     from = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    held = false;
+    window.clearTimeout(holdTimer);
+    // holding the finger on a chat of the list (or the logo): its menu, as a long press would open it
+    if (el.matches(IOS_HOLD)) {
+      const at = from;
+      holdTimer = window.setTimeout(() => {
+        if (target !== el) return;
+        held = true;
+        heldAt = Date.now();
+        heldEl = el;
+        park();
+        el.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true, cancelable: true, clientX: at.x, clientY: at.y }));
+      }, 500);
+    }
   }, { capture: true, passive: true });
   document.addEventListener("touchmove", (e) => {
     if (target && from && Math.hypot(e.touches[0].clientX - from.x, e.touches[0].clientY - from.y) > 8) park();
@@ -100,7 +128,8 @@ function iosTaps() {
   let field: HTMLElement | null = null;
   sw.addEventListener("mousedown", (e) => { field = writing(); if (field) e.preventDefault(); });
   sw.addEventListener("click", () => {
-    const el = target;
+    const el = held ? null : target;  // after a hold, the menu is open: no press as well
+    held = false;
     park();
     if (document.activeElement === sw) sw.blur();  // a focused hidden box could make the page scroll to it
     if (el && el.isConnected) el.click();
