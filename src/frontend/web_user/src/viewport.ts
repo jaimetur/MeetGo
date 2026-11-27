@@ -47,9 +47,17 @@ export function setupViewport() {
       // Phones with a home indicator (no home button): if iOS reports no bottom safe area, keep its space anyway.
       root.style.setProperty("--home-ind", portrait && Math.max(screen.width, screen.height) >= 812 ? "34px" : "0px");
     } else {
-      // Otherwise the app fills the whole screen, also the strip under Safari's own bottom bar.
-      root.style.removeProperty("--app-height");
-      root.style.removeProperty("--app-top");
+      // In a browser: the app fills the page. Some browsers (Brave with its address bar at the bottom) draw the page
+      // under their own bars and only the visible area says so: then fit the app to it, so its tab bar is not hidden
+      // behind theirs. Where both match (Safari) nothing changes.
+      const page = document.documentElement.clientHeight || window.innerHeight;
+      if (vv && coarse.matches && vv.scale <= 1.01 && page - vv.height > 20) {
+        root.style.setProperty("--app-height", `${Math.round(vv.height)}px`);
+        root.style.setProperty("--app-top", `${Math.round(vv.offsetTop)}px`);
+      } else {
+        root.style.removeProperty("--app-height");
+        root.style.removeProperty("--app-top");
+      }
     }
     // The page itself never scrolls (each screen scrolls inside): without the keyboard, if the phone moved it (Android
     // brings a focused switch or checkbox into view by moving the whole page up), put it back.
