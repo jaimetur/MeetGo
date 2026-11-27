@@ -230,7 +230,18 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
         <Wordmark size={34} />
         <p className="slogan">{SLOGAN}</p>
         <p className="muted">{t("ui_splash_tagline")}</p>
-        <p className="about-ver">{t("ui_about_version", { version: __APP_VERSION__ })}</p>
+        {/* five taps on the version: the screen's measures (viewport.ts), where no address can be typed (the Safari panel
+            other apps open links in) */}
+        <p className="about-ver" onClick={() => {
+          const w = window as unknown as { mgVerTaps?: number[] };
+          const now = Date.now();
+          w.mgVerTaps = [...(w.mgVerTaps || []).filter((x) => now - x < 2500), now];
+          if (w.mgVerTaps.length >= 5) {
+            w.mgVerTaps = [];
+            try { localStorage.setItem("vp.on", "1"); } catch { /* no storage */ }
+            import("../viewport").then((m) => m.viewportDiagnostics());
+          }
+        }}>{t("ui_about_version", { version: __APP_VERSION__ })}</p>
         <nav className="about-links">
           <a href={site} target="_blank" rel="noreferrer">meetgo.app</a>
           <a href={`${site}/terms.html`} target="_blank" rel="noreferrer">{t("ui_about_terms")}</a>
