@@ -38,14 +38,18 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
   const [firstItemIndex, setFirstItemIndex] = useState(START_INDEX);
   // the messages stay invisible until the list has placed them (it draws them a moment after it appears): then they
   // show at once, instead of an empty list, the start of the chat and the messages one after the other
+  // (and, when it opens on the newest message, until it is really at the bottom: not drawn higher up and then moved)
   const [placed, setPlaced] = useState(false);
-  useEffect(() => {
+  const drawn = useRef({ items: false });
+  React.useLayoutEffect(() => {
     setPlaced(false);
-    const t = window.setTimeout(() => setPlaced(true), 400);  // never hidden for long
+    drawn.current = { items: false };
+    const t = window.setTimeout(() => setPlaced(true), 700);  // never hidden for long
     return () => window.clearTimeout(t);
   }, [conversationId, around]);
-  // on phones the list of chats stays on the screen until then, so the chat appears whole (no empty moment)
-  useEffect(() => {
+  // on phones the list of chats stays on the screen until then, so the chat appears whole (no empty moment); set
+  // before the screen is painted
+  React.useLayoutEffect(() => {
     if (embedded) return;
     document.documentElement.classList.toggle("chat-placing", !placed);
     return () => document.documentElement.classList.remove("chat-placing");
@@ -155,11 +159,35 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
     if (lastReadAtOpen == null) return null;
     return items.find((m) => m.id > lastReadAtOpen && m.sender?.id !== me?.id && m.kind !== "system")?.id ?? null;
   }, [items, lastReadAtOpen, me?.id]);
-  const initialIndex = useMemo(() => {
-    if (around) return Math.max(0, items.findIndex((m) => m.id === around));
-    if (firstUnreadId) return Math.max(0, items.findIndex((m) => m.id === firstUnreadId) - 1);
-    return items.length - 1;
+  // where it opens: the searched message, the first unread one, or else the newest one at the bottom of the screen
+  const initialAt = useMemo(() => {
+    if (around) return { index: Math.max(0, items.findIndex((m) => m.id === around)), align: "center" as const, bottom: false };
+    if (firstUnreadId) return { index: Math.max(0, items.findIndex((m) => m.id === firstUnreadId) - 1), align: "start" as const, bottom: false };
+    return { index: "LAST" as const, align: "end" as const, bottom: true };
   }, [list?.loaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  const settle = () => {
+    if (drawn.current.items && !initialAt.bottom) requestAnimationFrame(() => setPlaced(true));
+  };
+  // opening on the newest message: shown once the list really is at the bottom with the newest message on the screen,
+  // and has not moved for two frames (it places the messages over several frames)
+  const msgsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (placed || !initialAt.bottom || !list?.loaded || !items.length) return;
+    let raf = 0, still = 0, lastTop = -1;
+    const check = () => {
+      const scroller = msgsRef.current?.querySelector<HTMLElement>("[data-virtuoso-scroller]");
+      const last = msgsRef.current?.querySelector<HTMLElement>(`[data-item-index="${firstItemIndex + items.length - 1}"]`);
+      if (scroller && last && last.offsetHeight > 0) {
+        const atEnd = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4;
+        still = atEnd && scroller.scrollTop === lastTop ? still + 1 : 0;
+        lastTop = scroller.scrollTop;
+        if (still >= 2) { setPlaced(true); return; }
+      }
+      raf = requestAnimationFrame(check);
+    };
+    raf = requestAnimationFrame(check);
+    return () => cancelAnimationFrame(raf);
+  }, [placed, initialAt, list?.loaded, items.length, firstItemIndex]);
 
   const jumpTo = useCallback((messageId: number) => {
     const idx = getState().messages[conversationId]?.items.findIndex((m) => m.id === messageId) ?? -1;
@@ -219,7 +247,7 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
       ) : null}
       {conv.slow_mode_seconds && !staff ? <div className="banner"><Icon name="info" size="sm" /><span className="txt">{t("ui_slow_mode", { seconds: conv.slow_mode_seconds })}</span></div> : null}
 
-      <div className={"msgs" + (placed || !items.length ? " placed" : "")}>
+      <div ref={msgsRef} className={"msgs" + (placed || !items.length ? " placed" : "")}>
         {list?.loaded ? (
           items.length ? (
             <Virtuoso
@@ -228,14 +256,14 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
               style={{ height: "100%" }}
               data={items}
               firstItemIndex={firstItemIndex}
-              initialTopMostItemIndex={{ index: Math.max(0, initialIndex), align: around ? "center" : "start" }}
+              initialTopMostItemIndex={{ index: initialAt.index, align: initialAt.align }}
               computeItemKey={(_, m) => m.client_id || m.id}
               startReached={() => list.hasMoreBefore && loadMessages(conversationId, true).catch(() => undefined)}
               followOutput={(bottom) => (bottom ? "smooth" : false)}
               atBottomStateChange={(b) => { bottomRef.current = b; setAtBottom(b); }}
               atBottomThreshold={80}
               increaseViewportBy={{ top: 600, bottom: 300 }}
-              itemsRendered={(shown) => { if (shown.length) setPlaced(true); }}
+              itemsRendered={(shown) => { if (shown.length) { drawn.current.items = true; settle(); } }}
               components={{ Header: () => (list.hasMoreBefore ? (list.loading ? <div className="empty" style={{ padding: 12 }}>{t("ui_loading")}</div> : null) : <ConversationStart conv={conv} />) }}
               itemContent={(index, m) => {
                 const i = index - firstItemIndex;

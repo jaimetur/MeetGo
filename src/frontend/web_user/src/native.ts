@@ -81,6 +81,7 @@ function iosTaps() {
   let from: { x: number; y: number } | null = null;
   let held = false;
   let holdTimer = 0;
+  let hideTimer = 0;
   let heldAt = 0;
   let heldEl: HTMLElement | null = null;
   // lifting the finger after a hold must not also open what was held
@@ -91,7 +92,7 @@ function iosTaps() {
     }
     heldEl = null;
   }, { capture: true });
-  const park = () => { sw.style.left = "-200px"; sw.style.top = "-200px"; target = null; window.clearTimeout(holdTimer); };
+  const park = () => { sw.style.left = "-200px"; sw.style.top = "-200px"; target = null; window.clearTimeout(holdTimer); window.clearTimeout(hideTimer); };
   document.addEventListener("touchstart", (e) => {
     const touched = e.target as Element | null;
     // a switch of the app: the whole row (its own checkbox is hidden inside it)
@@ -103,9 +104,13 @@ function iosTaps() {
     from = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     held = false;
     window.clearTimeout(holdTimer);
+    window.clearTimeout(hideTimer);
     // holding the finger on a chat of the list (or the logo): its menu, as a long press would open it
     if (el.matches(IOS_HOLD)) {
       const at = from;
+      // a hold is no tap: the switch goes away before iOS takes it as a hold (and gives its own tap), so the menu
+      // opens without one. A tap is shorter than this.
+      hideTimer = window.setTimeout(() => { if (target === el) { sw.style.left = "-200px"; sw.style.top = "-200px"; } }, 300);
       holdTimer = window.setTimeout(() => {
         if (target !== el) return;
         held = true;
