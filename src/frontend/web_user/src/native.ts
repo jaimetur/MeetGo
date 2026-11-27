@@ -13,6 +13,7 @@ type Bridge = {
   restorePurchase(): void;
   takeShared(): string;
   saveFile(name: string, mime: string, base64: string): void;
+  haptic?(): void;  // apps from 0.2.0 (23) on
 };
 
 const bridge = (window as unknown as { MeetGoNative?: Bridge }).MeetGoNative;
@@ -42,6 +43,26 @@ export const native = {
   takeShared: (): { text?: string; files?: { name: string; mime: string; base64: string }[] } =>
     call((b) => JSON.parse(b.takeShared() || "{}"), {}),
 };
+
+/** A light tap of the phone when a button is pressed: the app's own (system touch feedback) or, in a browser that has
+ *  it (Android's Chrome), a very short vibration. iPhones' browsers have none. */
+let lastHaptic = 0;
+export function haptic() {
+  const now = Date.now();
+  if (now - lastHaptic < 60) return;
+  lastHaptic = now;
+  if (bridge?.haptic) { call((b) => b.haptic!(), undefined); return; }
+  if (!bridge) try { navigator.vibrate?.(8); } catch { /* not allowed here */ }
+}
+
+/** Every press of a button, tab, chip, switch or checkbox of the app gets the tap (once the press is done: not when a
+ *  finger only starts a scroll on it). */
+export function enableHaptics() {
+  document.addEventListener("click", (e) => {
+    const el = (e.target as Element | null)?.closest?.("button, [role=button], [role=tab], [role=switch], a.btn, .chip, label.tgl, input[type=checkbox], input[type=radio]");
+    if (el && !(el as HTMLButtonElement).disabled) haptic();
+  }, { capture: true, passive: true });
+}
 
 type W = Window & {
   mgBack?: () => boolean;

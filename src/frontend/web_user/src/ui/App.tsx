@@ -397,7 +397,8 @@ function Shell() {
   // my account opens on the tab I was on in this session, and Chats on the chat I had open
   const go = (name: string) => {
     const last = chatMemory.id;
-    if (name === "chats" && last && getState().conversations[last]) return navigate(chatPath(last));
+    // the list goes first in the history, so back (button or swipe) from that chat lands on the list, not on where I came from
+    if (name === "chats" && last && getState().conversations[last]) { navigate("/chats"); navigate(chatPath(last)); chatMemory.id = last; return; }
     navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
   };
 

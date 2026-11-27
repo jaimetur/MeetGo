@@ -11,7 +11,7 @@ import { ConvMenuItems } from "./Chat";
 import { Avatar, ConvIcon, Icon, Modal, convTitle, getLayout } from "./common";
 
 type Filter = "all" | "active" | "unread" | "mentions" | "channel" | "plan" | "group" | "dm";
-const FILTER_KEYS: Filter[] = ["all", "active", "unread", "dm", "mentions", "channel", "group", "plan"];
+const FILTER_KEYS: Filter[] = ["all", "unread", "active", "dm", "mentions", "channel", "group", "plan"];
 
 export function Sidebar({ activeId }: { activeId: number | null }) {
   const conversations = useStore((s) => s.conversations);
@@ -108,7 +108,7 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
     [t("ui_sec_direct"), visible.filter((c) => !c.pinned && c.kind === "dm")],
   ];
   const filters: [Filter, string][] = [
-    ["all", t("ui_f_all")], ["active", t("ui_f_active")], ["unread", t("ui_f_unread")], ["dm", t("ui_f_direct")], ["mentions", t("ui_f_mentions")],
+    ["all", t("ui_f_all")], ["unread", t("ui_f_unread")], ["active", t("ui_f_active")], ["dm", t("ui_f_direct")], ["mentions", t("ui_f_mentions")],
     ["channel", t("ui_f_communities")], ["group", t("ui_f_groups")], ["plan", t("ui_f_plans")],
   ];
 

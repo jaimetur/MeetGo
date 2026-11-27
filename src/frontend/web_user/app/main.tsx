@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "../src/ui/App";
 import { setupViewport, viewportDiagnostics } from "../src/viewport";
 import { setupAutoUpdate } from "../src/update";
+import { enableHaptics } from "../src/native";
 import "../src/styles.css";
 import { API_BASE } from "../src/api";
 import { configureLanguages, needsTexts, storedLang } from "@lang";
 
 setupViewport();
 setupAutoUpdate();
+enableHaptics();  // a light tap of the phone on every button press
 window.addEventListener("load", viewportDiagnostics);
 
 /** The languages switched off or added in the administration (a slow or missing answer does not hold the app up). */

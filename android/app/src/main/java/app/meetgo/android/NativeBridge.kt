@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
+import android.view.HapticFeedbackConstants
 import android.webkit.JavascriptInterface
 import android.widget.Toast
 import androidx.core.content.FileProvider
@@ -18,6 +19,11 @@ class NativeBridge(private val activity: MainActivity) {
 
     @JavascriptInterface
     fun appVersion(): String = activity.appVersion()
+
+    /** A light tap of the phone when a button of the page is pressed (only if touch feedback is on in the phone's
+     *  settings: the system decides). */
+    @JavascriptInterface
+    fun haptic() = activity.runOnUiThread { activity.window.decorView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP) }
 
     /** After signing in, the API the page uses and the account's token (to reply from the notifications); an empty
      *  token when signing out, which forgets both and removes the notifications. */
