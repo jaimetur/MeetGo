@@ -44,47 +44,76 @@ export const native = {
     call((b) => JSON.parse(b.takeShared() || "{}"), {}),
 };
 
-/** A light tap of the phone when a button is pressed: the app's own (system touch feedback); in a browser that has it
- *  (Android's Chrome), a very short vibration; on iPhones (Safari has no vibration), the tap iOS 18 gives when a
- *  system switch (<input type="checkbox" switch>) is toggled, through a hidden one. */
+/** A light tap of the phone when a button is pressed: the app's own (system touch feedback) or, in a browser that has
+ *  it (Android's Chrome), a very short vibration. */
 let lastHaptic = 0;
-let iosSwitch: HTMLLabelElement | null = null;
 const canVibrate = typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
-function iosTap() {
-  if (!iosSwitch) {
-    const label = document.createElement("label");
-    label.setAttribute("aria-hidden", "true");
-    label.dataset.hapticSelf = "1";
-    // fixed in a corner, invisible and out of the way: it never scrolls the page nor takes the focus
-    label.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;";
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.setAttribute("switch", "");
-    input.tabIndex = -1;
-    label.appendChild(input);
-    document.body.appendChild(label);
-    iosSwitch = label;
-  }
-  iosSwitch.click();
-}
 export function haptic() {
   const now = Date.now();
   if (now - lastHaptic < 60) return;
   lastHaptic = now;
   if (bridge?.haptic) { call((b) => b.haptic!(), undefined); return; }
   if (bridge) return;  // an older app: nothing
-  try {
-    if (canVibrate) navigator.vibrate(8);
-    else iosTap();
-  } catch { /* not allowed here */ }
+  try { if (canVibrate) navigator.vibrate(8); } catch { /* not allowed here */ }
+}
+
+/** iPhones (no vibration for web pages): the system gives its tap only when a finger really presses a switch
+ *  (<input type="checkbox" switch>, iOS 18 on). So, for the most used buttons only (the modules' bar, the tabs inside
+ *  the modules and Send), one invisible switch is put right under the finger when it touches one of them, and the
+ *  press is handed to the button underneath. While waiting it is fully transparent and off the screen: iOS then does
+ *  not count its move as something appearing under the finger (it would drop that first tap). A move of the finger
+ *  (a scroll) sends it away, so lists scroll as always. */
+const IOS_TAP_TARGETS = ".mnav button, .dnav .di, [role=tab], .segtabs > button, .sendb:not(.mic)";
+function iosTaps() {
+  const sw = document.createElement("input");
+  sw.type = "checkbox";
+  sw.setAttribute("switch", "");
+  sw.tabIndex = -1;
+  sw.setAttribute("aria-hidden", "true");
+  sw.dataset.hapticSelf = "1";
+  sw.style.cssText = "position:fixed;margin:0;padding:0;opacity:0;z-index:2147483647;left:-200px;top:-200px;width:44px;height:44px;";
+  document.body.appendChild(sw);
+  let target: HTMLElement | null = null;
+  let from: { x: number; y: number } | null = null;
+  const park = () => { sw.style.left = "-200px"; sw.style.top = "-200px"; target = null; };
+  document.addEventListener("touchstart", (e) => {
+    const el = (e.target as Element | null)?.closest?.(IOS_TAP_TARGETS) as HTMLElement | null;
+    if (!el || e.touches.length > 1 || (el as HTMLButtonElement).disabled) return;
+    const r = el.getBoundingClientRect();
+    Object.assign(sw.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
+    target = el;
+    from = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { capture: true, passive: true });
+  document.addEventListener("touchmove", (e) => {
+    if (target && from && Math.hypot(e.touches[0].clientX - from.x, e.touches[0].clientY - from.y) > 8) park();
+  }, { capture: true, passive: true });
+  document.addEventListener("scroll", () => { if (target) park(); }, { capture: true, passive: true });
+  // while writing (Send), pressing it keeps the focus in the text, so the keyboard stays open
+  const writing = () => {
+    const a = document.activeElement as HTMLElement | null;
+    return a && (/^(INPUT|TEXTAREA)$/.test(a.tagName) || a.isContentEditable) && a !== sw ? a : null;
+  };
+  let field: HTMLElement | null = null;
+  sw.addEventListener("mousedown", (e) => { field = writing(); if (field) e.preventDefault(); });
+  sw.addEventListener("click", () => {
+    const el = target;
+    park();
+    if (el && el.isConnected) el.click();
+    if (field && document.activeElement !== field && field.isConnected) field.focus();
+    field = null;
+  });
 }
 
 /** Every press of a button, tab, chip, switch or checkbox of the app gets the tap (once the press is done: not when a
- *  finger only starts a scroll on it). */
+ *  finger only starts a scroll on it); on iPhones, the most used buttons (see iosTaps). */
 export function enableHaptics() {
+  if (!bridge && !canVibrate) {
+    const iphone = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    if (iphone) iosTaps();
+    return;
+  }
   document.addEventListener("click", (e) => {
     const target = e.target as Element | null;
-    if (target?.closest?.("[data-haptic-self]")) return;  // the hidden switch of the iPhone's tap
     const el = target?.closest?.("button, [role=button], [role=tab], [role=switch], a.btn, .chip, label.tgl, input[type=checkbox], input[type=radio]");
     if (el && !(el as HTMLButtonElement).disabled) haptic();
   }, { capture: true, passive: true });
