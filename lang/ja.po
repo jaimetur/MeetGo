@@ -4274,6 +4274,9 @@ msgstr "{area}全体"
 msgid "ui_zone_nobody"
 msgstr "{zone}のこの年齢層のコミュニティにはまだ誰もいません"
 
+msgid "ui_sec_last_chat"
+msgstr "最後のチャット"
+
 msgid "ui_sec_communities"
 msgstr "コミュニティ"
 

@@ -4273,6 +4273,9 @@ msgstr "Toda a zona: {area}"
 msgid "ui_zone_nobody"
 msgstr "Ainda não há ninguém nas comunidades de {zone} para esta idade"
 
+msgid "ui_sec_last_chat"
+msgstr "Última conversa"
+
 msgid "ui_sec_communities"
 msgstr "Comunidades"
 

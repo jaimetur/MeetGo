@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "re
 import { createPortal } from "react-dom";
 import { t } from "@lang";
 import { api } from "../api";
+import { lastChat } from "../lastChat";
 import { chatPath, navigate } from "../router";
 import { loadConversations, sortedConversations, toast, useStore } from "../store";
 import type { Conversation, Message, UserSummary } from "../types";
@@ -113,6 +114,8 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
   ];
 
   const layout = getLayout();
+  const resumeId = lastChat();
+  const resume = resumeId ? all.find((c) => c.id === resumeId) || null : null;
   return (
     <aside className={"list clay-" + layout} aria-label={t("ui_nav_chats")}>
       <PhoneTop title={t("ui_nav_chats")} />
@@ -134,6 +137,13 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
       </div>
       <div className="lbody">
         {layout === "momentos" && !q ? <ChatStories list={visible} /> : null}
+        {/* the last chat I opened, on top, to go back to it with one tap (not while it is open beside the list) */}
+        {!q && resume && resume.id !== activeId ? (
+          <div className="lresume">
+            <div className="lsec">{t("ui_sec_last_chat")}</div>
+            <ConvRow c={resume} active={false} typing={false} />
+          </div>
+        ) : null}
         {sections.map(([label, items]) => items.length ? (
           <div key={label}>
             <div className="lsec">{label}</div>

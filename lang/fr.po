@@ -5287,6 +5287,9 @@ msgstr "Toute la zone : {area}"
 msgid "ui_zone_nobody"
 msgstr "Personne n’est encore dans les communautés de {zone} pour cet âge"
 
+msgid "ui_sec_last_chat"
+msgstr "Dernière discussion"
+
 msgid "ui_sec_communities"
 msgstr "Communautés"
 

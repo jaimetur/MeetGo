@@ -4274,6 +4274,9 @@ msgstr "{area}: totes"
 msgid "ui_zone_nobody"
 msgstr "Encara no hi ha gent a les comunitats de {zone} per a aquesta edat"
 
+msgid "ui_sec_last_chat"
+msgstr "Últim xat"
+
 msgid "ui_sec_communities"
 msgstr "Comunitats"
 

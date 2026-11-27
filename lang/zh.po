@@ -4274,6 +4274,9 @@ msgstr "{area}全部"
 msgid "ui_zone_nobody"
 msgstr "{zone}该年龄段的社区里还没有人"
 
+msgid "ui_sec_last_chat"
+msgstr "最近的聊天"
+
 msgid "ui_sec_communities"
 msgstr "社区"
 

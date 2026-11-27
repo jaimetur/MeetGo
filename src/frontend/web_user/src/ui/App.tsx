@@ -5,6 +5,7 @@ import { API_BASE, api, getToken, setApiHandlers, setToken } from "../api";
 import { native, setNativeHandlers } from "../native";
 import { announceActiveConversation, registerServiceWorker, setupNativePush, subscribeExisting } from "../push";
 import { startRealtime, stopRealtime, setRealtimeHooks } from "../realtime";
+import { rememberChat } from "../lastChat";
 import { chatPath, dropQueryParams, goBack, navigate, queryParam, useRoute } from "../router";
 import { getState, loadBlocks, loadConversations, loadAdminPending, loadCategories, loadMyCommunities, loadMyPlans, resetState, setState, toast, useStore } from "../store";
 import { AuthScreen, CompleteProfile } from "./Auth";
@@ -175,26 +176,6 @@ export function signOut() {
   resetState();
   navigate("/", true);
 }
-
-/** The chat I had open (kept on this device, also when the app or the server restarts): Chats opens on it again;
- *  going back to the list forgets it. */
-const chatMemory = {
-  get id(): number | null {
-    try {
-      return Number(localStorage.getItem("lastChat")) || null;
-    } catch {
-      return null;
-    }
-  },
-  set id(v: number | null) {
-    try {
-      if (v) localStorage.setItem("lastChat", String(v));
-      else localStorage.removeItem("lastChat");
-    } catch {
-      /* per-device preference */
-    }
-  },
-};
 
 /** My name in the menu: first name and first surname, or the surname's initial when it does not fit. */
 function MyName({ me }: { me: Me }) {
@@ -391,14 +372,10 @@ function Shell() {
   // Which tab is lit for the current screen.
   const current = ({ chat: "chats", post: "home", feedpost: "home", wall: "home", community: "communities", join: "communities", share: "chats" } as Record<string, string>)[route.name] || route.name;
   useEffect(() => {
-    if (route.name === "chat") chatMemory.id = route.id;
-    else if (route.name === "chats") chatMemory.id = null;
+    if (route.name === "chat") rememberChat(route.id);
   }, [route]);
-  // my account opens on the tab I was on in this session, and Chats on the chat I had open
+  // my account opens on the tab I was on in this session; Chats opens on its list, with the last chat on top
   const go = (name: string) => {
-    const last = chatMemory.id;
-    // the list goes first in the history, so back (button or swipe) from that chat lands on the list, not on where I came from
-    if (name === "chats" && last && getState().conversations[last]) { navigate("/chats"); navigate(chatPath(last)); chatMemory.id = last; return; }
     navigate(name === "home" ? "/" : name === "account" && accountMemory.section !== "profile" ? `/account?section=${accountMemory.section}` : "/" + name);
   };
 
