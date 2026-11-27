@@ -155,7 +155,8 @@ export function enableHaptics() {
   document.addEventListener("click", (e) => {
     const target = e.target as Element | null;
     const el = target?.closest?.(TAP_TARGETS);
-    if (el && !(el as HTMLButtonElement).disabled) haptic();
+    // the chats of the list never vibrate (neither opening one nor its menu), as on iPhones
+    if (el && !(el as HTMLButtonElement).disabled && !target?.closest?.(".crow")) haptic();
   }, { capture: true, passive: true });
 }
 
