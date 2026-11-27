@@ -104,7 +104,15 @@ export function setupViewport() {
  * (sizes, safe areas, installed or not) and where the app and its tab bar end. Nothing shows otherwise.
  */
 export function viewportDiagnostics() {
-  if (!/[?&]vp=1\b/.test(window.location.search)) return;
+  // ?vpon=1 keeps it on (on this device) until its ✕ is tapped: to see the sizes when the app is reached by a link,
+  // as typing ?vp=1 in the address bar changes the browser's bars
+  const keep = /[?&]vpon=1\b/.test(window.location.search);
+  let kept = false;
+  try {
+    if (keep) localStorage.setItem("vp.on", "1");
+    kept = localStorage.getItem("vp.on") === "1";
+  } catch { /* no storage */ }
+  if (!/[?&]vp=1\b/.test(window.location.search) && !kept) return;
   const probe = document.createElement("div");
   probe.style.cssText = "position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)";
   const box = document.createElement("pre");
@@ -115,9 +123,11 @@ export function viewportDiagnostics() {
   // shown once: the address loses ?vp=1, and a tap on the box closes it
   const url = new URL(window.location.href);
   url.searchParams.delete("vp");
+  url.searchParams.delete("vpon");
   window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
   let timer = 0;
   box.addEventListener("click", () => {
+    try { localStorage.removeItem("vp.on"); } catch { /* no storage */ }
     window.clearInterval(timer);
     probe.remove();
     box.remove();
