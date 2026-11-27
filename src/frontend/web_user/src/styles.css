@@ -409,7 +409,9 @@ label.fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; 
 .modal .mbody { padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
 /* never taller than the screen: the body scrolls and the title and the buttons stay in view. Inside a zoomed screen
    (text size, computers) a length is multiplied by the zoom, so the screen's height is divided by it (--z) */
-.modal { max-height: calc((var(--screen-h, 100vh) - 32px) / var(--z, 1)); }  /* the height measured by viewport.ts: vh and dvh fail in Android's WebView */
+/* the height measured by viewport.ts (vh and dvh fail in Android's WebView), minus the window's margins: on phones
+   those are the notch and the home bar (safe areas), so the footer's buttons always fit on the screen */
+.modal { max-height: calc((var(--screen-h, 100vh) - max(16px, env(safe-area-inset-top, 0px)) - max(16px, env(safe-area-inset-bottom, 0px))) / var(--z, 1)); }
 .modal header, .modal footer { flex: none; }
 .modal header { touch-action: none; }  /* the drag to close is ours, not a scroll of the page */
 .modal .mbody { flex: 1 1 auto; min-height: 0; -webkit-overflow-scrolling: touch; }
@@ -2137,7 +2139,11 @@ button.fwho-row:hover { background: var(--panel2); }
 .stswatches button.on { outline: 2px solid var(--fg); outline-offset: 2px; }
 .strange { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
 .strange input { flex: 1; }
-.ststickers { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 4px; }
+.ststickers { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 4px; align-content: start; }
+/* the categories side by side: a swipe goes to the next one (scroll-snap, as the chat's emoji picker) */
+.ststicker-pages { display: flex; height: 190px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.ststicker-pages::-webkit-scrollbar { display: none; }
+.ststicker-pages > .ststickers { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; overflow-y: auto; overscroll-behavior-y: contain; }
 .ststickers button { font-size: 24px; height: 40px; border-radius: 10px; }
 .ststickers button:hover { background: var(--panel); }
 .stfilters { flex-direction: row; overflow-x: auto; }
@@ -2649,3 +2655,34 @@ button.fwho-row:hover { background: var(--panel2); }
 .chip.agechip { background: none; font: inherit; font-size: 13px; padding: 6px 14px; cursor: pointer; }
 .chip.agechip.on { background: var(--grad); }
 .chip.agechip:disabled { opacity: .4; cursor: not-allowed; }
+
+/* making a story on a phone: the whole window on the screen, no scrolling. The preview takes the height that is left
+   (keeping 9:16), the rows of choices slide sideways instead of wrapping, and the emoji pages are shorter. */
+.stsliders .strange { flex: 1 1 140px; }
+@media (max-width: 700px) {
+  .modal.stmodal { position: fixed; inset: 0; width: 100%; max-height: none; height: calc(var(--screen-h, 100vh) / var(--z, 1)); border: 0; border-radius: 0;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .stmodal header { padding: 8px 12px; }
+  .stmodal footer { padding: 8px 12px; }
+  .stmodal .mbody { padding: 8px 12px; overflow: hidden; display: flex; }
+  .stmodal .stedit { display: flex; flex-direction: column; align-items: stretch; gap: 8px; flex: 1 1 auto; min-height: 0; min-width: 0; width: 100%; }
+  .stmodal :is(.stedit-canvas, .stedit-tools, .stpanel, .stedit-tools > *) { min-width: 0; max-width: 100%; }
+  .stmodal .stedit-canvas { flex: 1 1 auto; min-height: 0; }
+  .stmodal .stkind { margin-bottom: 6px; flex: none; }
+  .stmodal .stpreview { flex: 1 1 0; min-height: 110px; height: auto; width: auto; max-width: 100%; max-height: none; }
+  .stmodal .stmusic-chip { margin-top: 4px; flex: none; }
+  .stmodal .stedit-tools { flex: none; gap: 6px; }
+  .stmodal #story-text { min-height: 0; height: 42px; resize: none; }
+  .stmodal .stedit-tools > small.muted { display: none; }
+  .stmodal :is(.sttools, .stfonts, .strow, .stswatches, .stcolors, .mlists) { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .stmodal :is(.sttools, .stfonts, .strow, .stswatches, .stcolors, .mlists)::-webkit-scrollbar { display: none; }
+  .stmodal :is(.sttools, .stfonts, .strow, .stcolors) > * { flex: none; }
+  .stmodal .stsliders .strange, .stmodal .strow .strange.grow { flex: 1 1 100px; }
+  .stmodal .strow .stbtn-label { display: none; }
+  .stmodal .strow .strange, .stmodal .strow .strange input { min-width: 0; }
+  .stmodal .stpanel { padding: 8px; gap: 6px; }
+  .stmodal .ststicker-pages { height: 132px; }
+  .stmodal .stcolors { justify-content: flex-start; margin-top: 0; }
+  .stmodal .sthide-toggle { margin-top: 0; }
+  .stmodal .sthide { max-height: 120px; }
+}

@@ -1,5 +1,6 @@
 /** A story as it is seen, also while making it: the photo, video or colour, the text where it was put with its style,
- * the emoji stickers and the filter. Editable: the text and the stickers are dragged with a finger or the mouse. And
+ * the emoji stickers and the filter. Editable: the text and the stickers are dragged with a finger or the mouse, and
+ * turned and resized with two fingers or by their corner. And
  * the music picker: famous works (free recordings) and MeetGo's own music by mood, in two tabs. */
 import React, { useEffect, useRef, useState } from "react";
 import { t } from "@lang";
@@ -29,7 +30,15 @@ export const MUSIC_SECONDS = 15;
 export const TEXT_MAX = 96;
 export const STICKER_MAX = 220;
 
-export const DEFAULT_TEXT = { x: 0.5, y: 0.5, size: 28, color: "#ffffff", font: "classic", bg: "none", align: "center" as const };
+export const DEFAULT_TEXT = { x: 0.5, y: 0.5, size: 28, color: "#ffffff", font: "classic", bg: "none", align: "center" as const, rot: 0 };
+
+/** Degrees between -180 and 180, held straight (0, ±90, 180) when within 4 degrees of it. */
+export function cleanRot(deg: number): number {
+  let r = ((deg % 360) + 540) % 360 - 180;
+  const near = Math.round(r / 90) * 90;
+  if (Math.abs(r - near) < 4) r = near === -180 ? 180 : near;
+  return Math.round(r);
+}
 
 const filterCss = (f?: string) => FILTERS.find(([k]) => k === f)?.[1] || "none";
 /** Black or white over a colour, whichever reads. */
@@ -47,21 +56,23 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
   const box = useRef<HTMLDivElement>(null);
   const tx = { ...DEFAULT_TEXT, ...(layout.text || {}) };
   // the fingers (or the mouse) on the canvas, and what they are doing: moving the text or an emoji, resizing it by its
-  // corner, or pinching it bigger or smaller with two fingers
+  // corner, or pinching it bigger or smaller with two fingers (both also turn it)
   type What = number | "text";
   const pointers = useRef(new Map<number, { x: number; y: number }>());
-  const gesture = useRef<{ kind: "drag"; what: What; dx: number; dy: number } | { kind: "pinch" | "corner"; what: What; dist: number; size: number } | null>(null);
+  const gesture = useRef<{ kind: "drag"; what: What; dx: number; dy: number } | { kind: "pinch" | "corner"; what: What; dist: number; size: number; angle: number; rot: number } | null>(null);
   const moved = useRef(false);
   const where = (e: React.PointerEvent) => {
     const r = box.current!.getBoundingClientRect();
     return { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
   };
   const sizeOf = (w: What) => (w === "text" ? tx.size : layout.stickers![w].size);
-  const setSize = (w: What, size: number) => {
+  const rotOf = (w: What) => (w === "text" ? tx.rot || 0 : layout.stickers![w].rot || 0);
+  const setSizeRot = (w: What, size: number, rot: number) => {
     if (!onLayout) return;
-    if (w === "text") onLayout({ ...layout, text: { ...tx, size: Math.round(Math.min(TEXT_MAX, Math.max(14, size))) } });
-    else onLayout({ ...layout, stickers: layout.stickers!.map((st, i) => (i === w ? { ...st, size: Math.round(Math.min(STICKER_MAX, Math.max(24, size))) } : st)) });
+    if (w === "text") onLayout({ ...layout, text: { ...tx, size: Math.round(Math.min(TEXT_MAX, Math.max(14, size))), rot: cleanRot(rot) } });
+    else onLayout({ ...layout, stickers: layout.stickers!.map((st, i) => (i === w ? { ...st, size: Math.round(Math.min(STICKER_MAX, Math.max(24, size))), rot: cleanRot(rot) } : st)) });
   };
+  const deg = (dx: number, dy: number) => Math.atan2(dy, dx) * 180 / Math.PI;
   const centre = (w: What) => {
     const r = box.current!.getBoundingClientRect();
     const at = w === "text" ? tx : layout.stickers![w];
@@ -71,7 +82,11 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
     const [a, b] = [...pointers.current.values()];
     return Math.max(1, Math.hypot(a.x - b.x, a.y - b.y));
   };
-  const pinch = (w: What) => { gesture.current = { kind: "pinch", what: w, dist: spread(), size: sizeOf(w) }; };
+  const twist = () => {
+    const [a, b] = [...pointers.current.values()];
+    return deg(b.x - a.x, b.y - a.y);
+  };
+  const pinch = (w: What) => { gesture.current = { kind: "pinch", what: w, dist: spread(), size: sizeOf(w), angle: twist(), rot: rotOf(w) }; };
   const start = (what: What) => (e: React.PointerEvent) => {
     if (!editable) return;
     e.stopPropagation();
@@ -95,7 +110,8 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
     e.stopPropagation();
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
     const c = centre(what);
-    gesture.current = { kind: "corner", what, dist: Math.max(1, Math.hypot(e.clientX - c.x, e.clientY - c.y)), size: sizeOf(what) };
+    gesture.current = { kind: "corner", what, dist: Math.max(1, Math.hypot(e.clientX - c.x, e.clientY - c.y)), size: sizeOf(what),
+      angle: deg(e.clientX - c.x, e.clientY - c.y), rot: rotOf(what) };
     moved.current = false;
   };
   const move = (e: React.PointerEvent) => {
@@ -111,10 +127,10 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
       if (g.what === "text") onLayout({ ...layout, text: { ...tx, x, y } });
       else onLayout({ ...layout, stickers: layout.stickers!.map((st, i) => (i === g.what ? { ...st, x, y } : st)) });
     } else if (g.kind === "pinch") {
-      if (pointers.current.size >= 2) setSize(g.what, g.size * spread() / g.dist);
+      if (pointers.current.size >= 2) setSizeRot(g.what, g.size * spread() / g.dist, g.rot + twist() - g.angle);
     } else {
       const c = centre(g.what);
-      setSize(g.what, g.size * Math.hypot(e.clientX - c.x, e.clientY - c.y) / g.dist);
+      setSizeRot(g.what, g.size * Math.hypot(e.clientX - c.x, e.clientY - c.y) / g.dist, g.rot + deg(e.clientX - c.x, e.clientY - c.y) - g.angle);
     }
   };
   const end = (e: React.PointerEvent) => {
@@ -124,6 +140,7 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
   };
   const textStyle: React.CSSProperties = {
     left: `${tx.x * 100}%`, top: `${tx.y * 100}%`, fontSize: `calc(${tx.size} * 100cqw / 360)`, textAlign: tx.align,
+    transform: `translate(-50%, -50%) rotate(${tx.rot || 0}deg)`,
     color: tx.bg === "solid" ? contrast(tx.color) : tx.color,
     background: tx.bg === "solid" ? tx.color : tx.bg === "soft" ? "rgba(0,0,0,.45)" : "transparent",
     ...(tx.font === "neon" ? { textShadow: `0 0 6px ${tx.color}, 0 0 16px ${tx.color}` } : {}),
@@ -143,7 +160,7 @@ export function StoryCanvas({ kind, text, bg, mediaUrl, video, layout, editable,
           {editable && selected === "text" ? <span className="sthandle" onPointerDown={corner("text")} onClick={(e) => e.stopPropagation()} aria-hidden="true" /> : null}</div>
       ) : null}
       {(layout.stickers || []).map((s, i) => (
-        <div key={i} className={"ststicker" + (selected === i ? " sel" : "")} style={{ left: `${s.x * 100}%`, top: `${s.y * 100}%`, fontSize: `calc(${s.size} * 100cqw / 360)` }}
+        <div key={i} className={"ststicker" + (selected === i ? " sel" : "")} style={{ left: `${s.x * 100}%`, top: `${s.y * 100}%`, fontSize: `calc(${s.size} * 100cqw / 360)`, transform: `translate(-50%, -50%) rotate(${s.rot || 0}deg)` }}
           onPointerDown={start(i)} onClick={(e) => e.stopPropagation()}>{s.e}
           {editable && selected === i ? <span className="sthandle" onPointerDown={corner(i)} onClick={(e) => e.stopPropagation()} aria-hidden="true" /> : null}</div>
       ))}

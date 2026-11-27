@@ -2210,6 +2210,9 @@ msgstr "{name}内を検索"
 msgid "ui_search_in_chat"
 msgstr "会話内を検索"
 
+msgid "ui_search_friends"
+msgstr "友達を検索"
+
 msgid "ui_search_members"
 msgstr "メンバーを検索"
 
@@ -5235,10 +5238,13 @@ msgid "ui_story_tool_music"
 msgstr "音楽"
 
 msgid "ui_story_drag_hint"
-msgstr "テキストや絵文字はドラッグして好きな場所に置けます。"
+msgstr "テキストや絵文字はドラッグして配置できます。2本指か角を引っ張ると、回転や大きさの変更ができます。"
 
 msgid "ui_story_sticker_hint"
-msgstr "絵文字をタップして選び、ドラッグします。スライダーで大きさを変えられます。"
+msgstr "絵文字をタップして選び、ドラッグします。2本指、角、またはスライダーで大きさと回転を変えられます。"
+
+msgid "ui_story_rotate"
+msgstr "回転"
 
 msgid "ui_story_size"
 msgstr "大きさ"

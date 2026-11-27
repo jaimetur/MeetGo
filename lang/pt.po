@@ -2209,6 +2209,9 @@ msgstr "Pesquisar em {name}"
 msgid "ui_search_in_chat"
 msgstr "Pesquisar na conversa"
 
+msgid "ui_search_friends"
+msgstr "Procurar entre os seus amigos"
+
 msgid "ui_search_members"
 msgstr "Pesquisar membros"
 
@@ -5234,10 +5237,13 @@ msgid "ui_story_tool_music"
 msgstr "Música"
 
 msgid "ui_story_drag_hint"
-msgstr "Arrasta o texto e os emojis para onde quiseres."
+msgstr "Arraste o texto e os emojis para os colocar; com dois dedos ou puxando o canto, roda-os e muda o tamanho."
 
 msgid "ui_story_sticker_hint"
-msgstr "Toca num emoji para o escolher e arrasta-o; com a barra mudas o tamanho."
+msgstr "Toque num emoji para o escolher e arraste-o; com dois dedos, o canto ou as barras muda o tamanho e a rotação."
+
+msgid "ui_story_rotate"
+msgstr "Rotação"
 
 msgid "ui_story_size"
 msgstr "Tamanho"

@@ -68,16 +68,31 @@ async function openDm(userId: number): Promise<boolean> {
   }
 }
 
+/** Lower case and without accents, to find "Jose" when the name is "José". */
+const plainText = (x: string) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
 function Friends() {
   const [friends, setFriends] = useState<any[] | null>(null);
+  const [q, setQ] = useState("");
   useEffect(() => {
     api.friends().then(setFriends).catch(() => setFriends([]));
   }, []);
   if (!friends) return <div className="empty">{t("ui_loading")}</div>;
   if (!friends.length) return <div className="empty"><h3>{t("ui_no_friends_yet")}</h3><p>{t("ui_no_friends_hint")}</p></div>;
+  // by the name shown or the alias (@username): every word typed must be in them
+  const words = plainText(q).split(/\s+/).filter(Boolean);
+  const shown = friends.filter((f) => {
+    const text = plainText([f.display_name, f.username].filter(Boolean).join(" "));
+    return words.every((w) => text.includes(w));
+  });
   return (
+    <>
+    <div className="search big" id="friends-search"><Icon name="search" size="sm" />
+      <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("ui_search_friends")} aria-label={t("ui_search_friends")} autoComplete="off" />
+    </div>
+    {!shown.length ? <div className="empty"><p>{t("ui_no_results")}</p></div> : (
     <div className="box plist">
-      {friends.map((f) => (
+      {shown.map((f) => (
         <div key={f.id} className="item">
           <Avatar user={f} size={36} online={f.online} />
           <div className="grow">{f.display_name}<div className="muted" style={{ fontSize: 12 }}>{f.online ? t("ui_online") : t("ui_offline")}</div></div>
@@ -85,6 +100,8 @@ function Friends() {
         </div>
       ))}
     </div>
+    )}
+    </>
   );
 }
 

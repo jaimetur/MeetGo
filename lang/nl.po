@@ -2210,6 +2210,9 @@ msgstr "Zoeken in {name}"
 msgid "ui_search_in_chat"
 msgstr "Zoeken in gesprek"
 
+msgid "ui_search_friends"
+msgstr "Zoeken in je vrienden"
+
 msgid "ui_search_members"
 msgstr "Leden zoeken"
 
@@ -5235,10 +5238,13 @@ msgid "ui_story_tool_music"
 msgstr "Muziek"
 
 msgid "ui_story_drag_hint"
-msgstr "Sleep de tekst en emoji's waar je wilt."
+msgstr "Sleep de tekst en emoji's naar hun plek; met twee vingers of aan hun hoek draai je ze en verander je hun grootte."
 
 msgid "ui_story_sticker_hint"
-msgstr "Tik op een emoji om hem te kiezen en sleep hem; met de schuif verander je de grootte."
+msgstr "Tik op een emoji om hem te kiezen en sleep hem; met twee vingers, zijn hoek of de schuifbalken verander je grootte en draaiing."
+
+msgid "ui_story_rotate"
+msgstr "Draaien"
 
 msgid "ui_story_size"
 msgstr "Grootte"

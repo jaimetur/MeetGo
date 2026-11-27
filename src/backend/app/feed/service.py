@@ -136,7 +136,8 @@ def _num(v, lo: int, hi: int, default: int) -> int:
 
 def clean_layout(layout: dict | None) -> dict:
     """A story's layout as stored: the text where it was put (0-1 of the width and height), its size, colour, font,
-    background and alignment; up to 12 emoji stickers; a filter for the photo or video."""
+    background, alignment and turn (degrees); up to 12 emoji stickers (each with its size and turn); a filter for the
+    photo or video."""
     layout = layout or {}
     text = layout.get("text") or {}
     out = {"text": {
@@ -146,13 +147,14 @@ def clean_layout(layout: dict | None) -> dict:
         "font": text.get("font") if text.get("font") in FONTS else "classic",
         "bg": text.get("bg") if text.get("bg") in TEXT_BGS else "none",
         "align": text.get("align") if text.get("align") in ("left", "center", "right") else "center",
+        "rot": _num(text.get("rot"), -180, 180, 0),
     }}
     stickers = []
     for st in (layout.get("stickers") or [])[:12]:
         e = st.get("e") if isinstance(st, dict) else None
         if isinstance(e, str) and 0 < len(e) <= 16:
             stickers.append({"e": e, "x": _unit(st.get("x")), "y": _unit(st.get("y")),
-                             "size": _num(st.get("size"), 24, 220, 56)})
+                             "size": _num(st.get("size"), 24, 220, 56), "rot": _num(st.get("rot"), -180, 180, 0)})
     out["stickers"] = stickers
     out["filter"] = layout.get("filter") if layout.get("filter") in FILTERS else "none"
     return out

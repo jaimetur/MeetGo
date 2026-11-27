@@ -9,7 +9,7 @@ import { api, fileUrl } from "../api";
 import { navigate } from "../router";
 import { toast, useStore } from "../store";
 import type { MusicTrack, StoryGroup, StoryItem, StoryLayout, UserSummary } from "../types";
-import { DEFAULT_TEXT, FILTERS, FONTS, MUSIC_SECONDS, MusicPicker, STICKER_GROUPS, STICKER_MAX, StoryCanvas, TEXT_BGS, TEXT_COLORS, TEXT_MAX } from "./StoryCanvas";
+import { DEFAULT_TEXT, FILTERS, cleanRot, FONTS, MUSIC_SECONDS, MusicPicker, STICKER_GROUPS, STICKER_MAX, StoryCanvas, TEXT_BGS, TEXT_COLORS, TEXT_MAX } from "./StoryCanvas";
 import { shortWhen } from "../util";
 import { Avatar, Icon, Modal, QUICK_REACTIONS } from "./common";
 
@@ -64,6 +64,12 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
   const [selected, setSelected] = useState<number | "text" | null>(null);
   const [tool, setTool] = useState<"text" | "stickers" | "filters" | null>("text");
   const [group, setGroup] = useState("faces");
+  const stickerPages = useRef<HTMLDivElement>(null);
+  // opening the emojis again: the page of the category that was on
+  useEffect(() => {
+    const el = stickerPages.current;
+    if (tool === "stickers" && el) el.scrollLeft = Math.max(0, STICKER_GROUPS.findIndex(([k]) => k === group)) * el.clientWidth;
+  }, [tool]);
   const [music, setMusic] = useState<{ track: MusicTrack; start: number } | null>(null);
   const [picking, setPicking] = useState(false);
   const [audience, setAudience] = useState("friends");
@@ -104,7 +110,7 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
     }
   }
   return (
-    <Modal wide title={t("ui_story_new")} onClose={onClose} footer={(
+    <Modal wide className="stmodal" title={t("ui_story_new")} onClose={onClose} footer={(
       <>
         <select id="story-audience" className="inp faud" value={audience} onChange={(e) => setAudience(e.target.value)} aria-label={t("ui_feed_audience")}>
           {["friends", "followers", "public"].map((a) => <option key={a} value={a}>{t(`ui_feed_aud_${a}`)}</option>)}
@@ -151,22 +157,40 @@ function StoryCreator({ onClose, onDone }: { onClose: () => void; onDone: () => 
                 {TEXT_BGS.map((b) => <button key={b} type="button" className={"chip" + (tx.bg === b ? " on" : "")} onClick={() => setText2({ bg: b })}>{t(`ui_story_bg_${b}`)}</button>)}
                 {(["left", "center", "right"] as const).map((al) => <button key={al} type="button" className={"chip" + (tx.align === al ? " on" : "")} onClick={() => setText2({ align: al })}>{t(`ui_story_align_${al}`)}</button>)}
               </div>
+              <div className="strow stsliders">
               <label className="strange">{t("ui_story_size")}<input type="range" min={14} max={TEXT_MAX} value={tx.size} onChange={(e) => setText2({ size: Number(e.target.value) })} /></label>
+              <label className="strange">{t("ui_story_rotate")}<input id="story-text-rot" type="range" min={-180} max={180} value={tx.rot || 0} onChange={(e) => setText2({ rot: cleanRot(Number(e.target.value)) })} /></label>
+              </div>
             </div>
           ) : null}
           {tool === "stickers" ? (
             <div className="stpanel">
-              <div className="chips mtags mlists">
-                {STICKER_GROUPS.map(([k]) => <button key={k} type="button" className={"chip" + (group === k ? " on" : "")} onClick={() => setGroup(k)}>{t(`ui_sticker_${k}`)}</button>)}
+              <div className="chips mtags mlists" role="tablist">
+                {STICKER_GROUPS.map(([k], i) => <button key={k} type="button" role="tab" aria-selected={group === k} className={"chip" + (group === k ? " on" : "")} onClick={() => {
+                  setGroup(k);
+                  const el = stickerPages.current;
+                  if (el) el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+                }}>{t(`ui_sticker_${k}`)}</button>)}
               </div>
-              <div className="ststickers">{(STICKER_GROUPS.find(([k]) => k === group)?.[1] || []).map((e) => (
-                <button key={e} type="button" onClick={() => { const list = [...(layout.stickers || []), { e, x: 0.5, y: 0.35, size: 56 }].slice(0, 12); setLayout({ ...layout, stickers: list }); setSelected(list.length - 1); }}>{e}</button>
-              ))}</div>
+              {/* one page per category, side by side: a swipe goes to the next or previous one, as in the chat */}
+              <div className="ststicker-pages" ref={stickerPages} onScroll={(ev) => {
+                const el = ev.currentTarget;
+                const k = el.clientWidth ? STICKER_GROUPS[Math.round(el.scrollLeft / el.clientWidth)]?.[0] : null;
+                if (k && k !== group) setGroup(k);
+              }}>
+                {STICKER_GROUPS.map(([k, emojis]) => (
+                  <div key={k} className="ststickers" data-g={k}>{emojis.map((e) => (
+                    <button key={e} type="button" onClick={() => { const list = [...(layout.stickers || []), { e, x: 0.5, y: 0.35, size: 56, rot: 0 }].slice(0, 12); setLayout({ ...layout, stickers: list }); setSelected(list.length - 1); }}>{e}</button>
+                  ))}</div>
+                ))}
+              </div>
               {sel ? (
                 <div className="strow">
                   <label className="strange grow">{t("ui_story_size")}<input type="range" min={24} max={STICKER_MAX} value={sel.size}
                     onChange={(e) => setLayout({ ...layout, stickers: layout.stickers!.map((s, i) => (i === selected ? { ...s, size: Number(e.target.value) } : s)) })} /></label>
-                  <button type="button" className="btn sm danger" onClick={() => { setLayout({ ...layout, stickers: layout.stickers!.filter((_, i) => i !== selected) }); setSelected(null); }}><Icon name="trash" size="sm" />{t("ui_remove")}</button>
+                  <label className="strange grow">{t("ui_story_rotate")}<input id="story-sticker-rot" type="range" min={-180} max={180} value={sel.rot || 0}
+                    onChange={(e) => setLayout({ ...layout, stickers: layout.stickers!.map((s, i) => (i === selected ? { ...s, rot: cleanRot(Number(e.target.value)) } : s)) })} /></label>
+                  <button type="button" className="btn sm danger" aria-label={t("ui_remove")} onClick={() => { setLayout({ ...layout, stickers: layout.stickers!.filter((_, i) => i !== selected) }); setSelected(null); }}><Icon name="trash" size="sm" /><span className="stbtn-label">{t("ui_remove")}</span></button>
                 </div>
               ) : <small className="muted">{t("ui_story_sticker_hint")}</small>}
             </div>

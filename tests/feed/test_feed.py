@@ -117,13 +117,14 @@ async def test_story_layout_and_music(client, db_session):
         track_id = (await db.execute(select(MusicTrack.id).where(MusicTrack.key == "t_one"))).scalar_one()
     tracks = (await client.get("/music", headers=ana[0])).json()
     assert any(m["id"] == track_id and m["kind"] == "mood" for m in tracks)
-    layout = {"text": {"x": 0.2, "y": 0.8, "size": 40, "color": "#facc15", "font": "neon", "bg": "soft", "align": "left"},
-              "stickers": [{"e": "🔥", "x": 0.7, "y": 0.2, "size": 80}], "filter": "warm"}
+    layout = {"text": {"x": 0.2, "y": 0.8, "size": 40, "color": "#facc15", "font": "neon", "bg": "soft", "align": "left", "rot": -15},
+              "stickers": [{"e": "🔥", "x": 0.7, "y": 0.2, "size": 80, "rot": 400}], "filter": "warm"}
     res = await client.post("/stories", json={"kind": "text", "text": "Hola", "bg": "#2563eb", "layout": layout,
                                               "music": {"id": track_id, "start": 99}}, headers=ana[0])
     assert res.status_code == 200, res.text
     mine = (await client.get("/stories", headers=ana[0])).json()[0]["stories"][0]
     assert mine["layout"]["text"]["font"] == "neon" and mine["layout"]["stickers"][0]["e"] == "🔥" and mine["layout"]["filter"] == "warm"
+    assert mine["layout"]["text"]["rot"] == -15 and mine["layout"]["stickers"][0]["rot"] == 180  # turned, within ±180
     assert mine["music"]["title"] == "Sol" and mine["music"]["start"] == 15  # within the song: 30 s minus the 15 s it plays
     assert (await client.post("/stories", json={"kind": "text", "text": "x", "music": {"id": 999999}}, headers=ana[0])).status_code == 400
 

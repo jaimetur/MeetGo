@@ -247,8 +247,8 @@ export type MusicTrack = { id: number | string; kind: "hits" | "popular" | "clas
   source?: "deezer"; deezer_id?: number; cover?: string | null; link?: string | null; explicit?: boolean };
 /** Where a story's text goes and how it looks, its emoji stickers and its filter (positions from 0 to 1). */
 export type StoryLayout = {
-  text?: { x: number; y: number; size: number; color: string; font: string; bg: string; align: "left" | "center" | "right" };
-  stickers?: { e: string; x: number; y: number; size: number }[];
+  text?: { x: number; y: number; size: number; color: string; font: string; bg: string; align: "left" | "center" | "right"; rot?: number };
+  stickers?: { e: string; x: number; y: number; size: number; rot?: number }[];
   filter?: string;
 };
 export type StoryItem = {

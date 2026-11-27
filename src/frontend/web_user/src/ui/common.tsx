@@ -158,7 +158,7 @@ export function convTitle(conv: Conversation): string {
   return `#${conv.slug || conv.title}`;
 }
 
-export function Modal({ title, onClose, children, footer, wide }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode; wide?: boolean }) {
+export function Modal({ title, onClose, children, footer, wide, className }: { title: string; onClose: () => void; children: React.ReactNode; footer?: React.ReactNode; wide?: boolean; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const swipe = useSwipeDown(onClose);
   const closing = useRef(onClose);
@@ -177,7 +177,7 @@ export function Modal({ title, onClose, children, footer, wide }: { title: strin
   useEffect(() => { ref.current?.querySelector<HTMLElement>(".mbody input, .mbody textarea, input, textarea, button")?.focus(); }, []);
   return (
     <div className="modal-bg" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className={"modal" + (wide ? " wide" : "")} role="dialog" aria-modal="true" aria-label={title} ref={ref} style={swipe.style}>
+      <div className={"modal" + (wide ? " wide" : "") + (className ? " " + className : "")} role="dialog" aria-modal="true" aria-label={title} ref={ref} style={swipe.style}>
         {/* dragged down by its title bar it closes (not from the body: a form's half-written fields would go) */}
         <header {...swipe.handlers}>
           <span className="grow">{title}</span>

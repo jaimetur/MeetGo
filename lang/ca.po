@@ -2210,6 +2210,9 @@ msgstr "Cerca a {name}"
 msgid "ui_search_in_chat"
 msgstr "Cerca a la conversa"
 
+msgid "ui_search_friends"
+msgstr "Cerca entre els teus amics"
+
 msgid "ui_search_members"
 msgstr "Cerca membres"
 
@@ -5235,10 +5238,13 @@ msgid "ui_story_tool_music"
 msgstr "Música"
 
 msgid "ui_story_drag_hint"
-msgstr "Arrossega el text i els emojis per posar-los on vulguis."
+msgstr "Arrossega el text i els emojis per col·locar-los; amb dos dits o estirant-ne la cantonada els gires i en canvies la mida."
 
 msgid "ui_story_sticker_hint"
-msgstr "Toca un emoji per triar-lo i arrossega'l; amb la barra en canvies la mida."
+msgstr "Toca un emoji per triar-lo i arrossega'l; amb dos dits, la seva cantonada o les barres en canvies la mida i el gir."
+
+msgid "ui_story_rotate"
+msgstr "Gir"
 
 msgid "ui_story_size"
 msgstr "Mida"
