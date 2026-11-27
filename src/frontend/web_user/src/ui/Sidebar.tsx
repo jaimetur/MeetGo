@@ -137,8 +137,9 @@ export function Sidebar({ activeId }: { activeId: number | null }) {
       </div>
       <div className="lbody">
         {layout === "momentos" && !q ? <ChatStories list={visible} /> : null}
-        {/* the last chat I opened, on top, to go back to it with one tap (not while it is open beside the list) */}
-        {!q && resume && resume.id !== activeId ? (
+        {/* the last chat I opened, on top, to go back to it with one tap (not while it is open beside the list, on wide
+            screens; on phones the list is not seen then, and it must not move while the chat is opening) */}
+        {!q && resume && (resume.id !== activeId || !window.matchMedia("(min-width: 821px)").matches) ? (
           <div className="lresume">
             <div className="lsec">{t("ui_sec_last_chat")}</div>
             <ConvRow c={resume} active={false} typing={false} />

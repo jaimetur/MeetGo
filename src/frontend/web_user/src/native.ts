@@ -63,7 +63,8 @@ export function haptic() {
  *  the finger opens a menu (the chats of the list, the messages, the logo): the switch would take that hold. While waiting it is fully transparent and off the screen: iOS then does
  *  not count its move as something appearing under the finger (it would drop that first tap). A move of the finger
  *  (a scroll) sends it away, so lists scroll as always. */
-const TAP_TARGETS = "button, [role=button], [role=tab], [role=switch], a.btn, .chip, label.tgl, input[type=checkbox], input[type=radio]";
+// buttons, tabs, chips, switches, checkboxes and the cards that open something (role link) or links
+const TAP_TARGETS = "button, [role=button], [role=tab], [role=switch], [role=link], a[href], .chip, label.tgl, input[type=checkbox], input[type=radio]";
 const IOS_HOLD = ".crow, .appiconbtn, .msgs";
 function iosTaps() {
   const sw = document.createElement("input");

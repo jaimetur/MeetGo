@@ -44,6 +44,12 @@ export function ChatView({ conversationId, around, embedded }: { conversationId:
     const t = window.setTimeout(() => setPlaced(true), 400);  // never hidden for long
     return () => window.clearTimeout(t);
   }, [conversationId, around]);
+  // on phones the list of chats stays on the screen until then, so the chat appears whole (no empty moment)
+  useEffect(() => {
+    if (embedded) return;
+    document.documentElement.classList.toggle("chat-placing", !placed);
+    return () => document.documentElement.classList.remove("chat-placing");
+  }, [placed, embedded]);
   const [lastReadAtOpen, setLastReadAtOpen] = useState<number | null>(null);
   const virtuoso = useRef<VirtuosoHandle>(null);
   // The last message stays fully in view: after sending (the message box shrinks back, the keyboard may move) and
